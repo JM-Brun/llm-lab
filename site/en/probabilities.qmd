@@ -30,33 +30,13 @@ tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "l
 
 {{< include ../includes/generated-guided-context-en-probabilities.qmd >}}
 ::: {.chapter-lead}
-An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.
+Why does “They” get 60% in the first turn of the Romans example? Start with four illustrative scores, then change the temperature to see how it redistributes the probabilities.
 :::
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Softmax turns logits into a **distribution conditioned on the prefix**. It guarantees positive values that sum to one; it does not guarantee calibration or factual truth.
 
-**First pass:** follow the two-logit example, then remember that $p_\theta(x_t\mid x_{<t})$ depends on context. Temperature changes the concentration of this distribution, not the learned parameters.
-
-**Go deeper:** distinguish normalization, calibration, and truth, then compare argmax with sampling. The distribution is used for generation; during training, logits are compared with target tokens through a loss function.
 :::
-
-<div class="pipeline-stepper meta-flow" role="group" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
-  <a class="step-item" href="logits.qmd">Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Optional temperature scaling of logits</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Softmax: initial distribution</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">Optional top-k / top-p filters, then renormalization</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Selection policy: argmax or sampling</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="generation.qmd">Selected token, fed back</a>
-</div>
-<p id="probability-flow-description" class="meta-flow__relation">Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
-
-![Pipeline from logits to a selected token, including the effect of temperature on a numerical example.](../images/probability-decoding-flow-en.svg){fig-alt="Logits optionally pass through temperature scaling, then softmax. Optional top-k or top-p filters may then be applied with renormalization, before selection by argmax or sampling. For z equal to (0, ln 3), probabilities change from 25/75 percent at temperature 1 to 36.6/63.4 percent at temperature 2; the ranking stays unchanged." fig-cap="The stages have distinct roles: transform scores, build a distribution, restrict candidates, then select a token." width=100%}
 
 ## From logits to a categorical distribution
 
@@ -72,11 +52,11 @@ Probabilities are positive and sum to one. This normalization does not prove tha
 
 ### Numerical example
 
-With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
-
 <a id="running-example-next-token"></a>
 
 For the prefix “What have the Romans ever done for us?”, take a toy vocabulary of four tokens. The logits are chosen to reproduce the probabilities of the first step in the running example. The exponentials sum to 10, so softmax divides each by 10.
+
+::: {.probability-example}
 
 | Candidate token | Logit | Exponential | Probability |
 |---|---:|---:|---:|
@@ -84,6 +64,8 @@ For the prefix “What have the Romans ever done for us?”, take a toy vocabula
 | “Aqueducts” | $\ln 2$ | 2 | 0.2 |
 | “Nothing” | $0$ | 1 | 0.1 |
 | “Well” | $0$ | 1 | 0.1 |
+:::
+
 
 The illustrative continuation takes “They”. Once this token is appended to the prefix, the [next generation step](generation.qmd) uses a new distribution.
 
@@ -105,74 +87,36 @@ $$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 $$
 
+### Explore the effect of temperature
+
+At $\tau=1$, “They” gets 60%. Before trying $\tau=0.5$, predict what will change. The probability distribution, the leading token, or both?
+
+```{=html}
+<div class="interactive-toy-box" id="temp-explorer-en" data-temperature-explorer hidden>
+  <label for="temp-slider-en">Temperature (τ) <output for="temp-slider-en">1</output></label>
+  <input type="range" class="form-range" id="temp-slider-en" min="0.1" max="3" step="0.05" value="1">
+  <div class="d-flex flex-wrap gap-2">
+    <button class="btn btn-sm btn-outline-secondary" type="button" data-temperature="0.5">τ = 0.5</button>
+    <button class="btn btn-sm btn-outline-secondary" type="button" data-temperature="1">τ = 1</button>
+    <button class="btn btn-sm btn-outline-secondary" type="button" data-temperature="2">τ = 2</button>
+  </div>
+  <div class="interactive-bars" data-temperature-bars></div>
+</div>
+<noscript><p>With JavaScript off, compare the table at τ = 1 with the calculation at τ = 0.5 below.</p></noscript>
+<script src="../scripts/temperature-explorer.js" defer></script>
+```
+
+<details>
+<summary>Check your prediction</summary>
+
+At $\tau=0.5$, dividing the logits by the temperature doubles them. Their exponentials go from $(6,2,1,1)$ to $(36,4,1,1)$. Softmax then divides each value by $42$. “They” goes from 60% to about 85.7% and remains first.
+
+</details>
+
 Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For $\tau>0$, logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
 
 Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
-### Explore the effect of temperature
-
-Adjust $\tau$ to observe how the distribution changes while the highest-scoring token remains the same.
-
-```{=html}
-<div class="interactive-toy-box" id="temp-explorer-en">
-  <h4>INTERACTIVE EXPLORER · TEMPERATURE SCALING ON LOGITS</h4>
-  <p style="font-size: 0.9rem; color: #475569;">
-    Adjust temperature <var>τ</var> to observe the transition between a more concentrated distribution (<var>τ</var> &lt; 1) and a flatter distribution that approaches uniformity as <var>τ</var> increases (<var>τ</var> &gt; 1).
-  </p>
-  <div class="interactive-controls">
-    <label for="temp-slider-en" style="font-weight: 700; font-size: 0.9rem;">Temperature (τ): <span id="temp-val-en" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
-    <input type="range" id="temp-slider-en" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
-  </div>
-  <div class="interactive-bars">
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token A (z=3.0)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-0" style="width: 70.5%;"></div></div>
-      <span class="prob-bar-value" id="val-en-0">70.5%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token B (z=1.5)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-1" style="width: 15.7%;"></div></div>
-      <span class="prob-bar-value" id="val-en-1">15.7%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token C (z=1.0)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-2" style="width: 9.5%;"></div></div>
-      <span class="prob-bar-value" id="val-en-2">9.5%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token D (z=0.2)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-3" style="width: 4.3%;"></div></div>
-      <span class="prob-bar-value" id="val-en-3">4.3%</span>
-    </div>
-  </div>
-  <script>
-    (function() {
-      const slider = document.getElementById('temp-slider-en');
-      const tempVal = document.getElementById('temp-val-en');
-      const logits = [3.0, 1.5, 1.0, 0.2];
-      function update() {
-        if (!slider) return;
-        const tau = parseFloat(slider.value);
-        if (tempVal) tempVal.textContent = tau.toFixed(2);
-        const scaled = logits.map(z => z / tau);
-        const maxVal = Math.max(...scaled);
-        const exp = scaled.map(s => Math.exp(s - maxVal));
-        const sumExp = exp.reduce((a, b) => a + b, 0);
-        const probs = exp.map(e => e / sumExp);
-        probs.forEach((p, idx) => {
-          const bar = document.getElementById('bar-en-' + idx);
-          const val = document.getElementById('val-en-' + idx);
-          const pct = (p * 100).toFixed(1) + '%';
-          if (bar) bar.style.width = pct;
-          if (val) val.textContent = pct;
-        });
-      }
-      if (slider) slider.addEventListener('input', update);
-    })();
-  </script>
-</div>
-
-```
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -183,28 +127,21 @@ Adjust $\tau$ to observe how the distribution changes while the highest-scoring 
 ```python
 import numpy as np
 
-logits = np.array([3.0, 1.5, 1.0, 0.2])
+logits = np.log([6, 2, 1, 1])
 
 def stable_softmax(z, temperature=1.0):
     scaled = z / temperature
     exp_z = np.exp(scaled - np.max(scaled))
     return exp_z / np.sum(exp_z)
 
-# 1. Standard temperature (T=1.0)
-p_standard = stable_softmax(logits, temperature=1.0)
+# Temperatures offered in the explorer
+p_cold, p_standard, p_hot = (stable_softmax(logits, t) for t in (0.5, 1, 2))
 
-# 2. Cold temperature (T=0.2): increases the top token's probability without forcing argmax
-p_cold = stable_softmax(logits, temperature=0.2)
-
-# 3. Hot temperature (T=5.0): flattens distribution toward uniform
-p_hot = stable_softmax(logits, temperature=5.0)
-
-print(f"Top-token probability (T=1.0): {p_standard[0]:.2%}")
-print(f"Top-token probability (T=0.2): {p_cold[0]:.2%}")
-print(f"Top-token probability (T=5.0): {p_hot[0]:.2%}")
+for temperature, probabilities in zip((0.5, 1, 2), (p_cold, p_standard, p_hot)):
+    print(f"Leading token probability (τ={temperature}) = {probabilities[0]:.2%}")
 
 assert p_cold[0] > p_standard[0] > p_hot[0]
-assert np.allclose(p_hot, 0.25, atol=0.1)
+assert np.argmax(p_cold) == np.argmax(p_standard) == np.argmax(p_hot)
 ```
 :::
 ::: {.micro-workbench-footer}
@@ -228,6 +165,23 @@ Temperature modulates distribution entropy without altering token ranking ($z_i 
 To reduce numerical overflow, implementations usually subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$. A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) and covered by `tests/unit/test_attention.py`.
 
 Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
+
+## From the distribution to a selected token
+
+<div class="pipeline-stepper meta-flow flex-wrap" role="group" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
+  <a class="step-item" href="logits.qmd">Logits</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Temperature ÷ τ</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Softmax</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Top-k/top-p filters</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Argmax or sampling</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">Append token</a>
+</div>
+<p id="probability-flow-description" class="meta-flow__relation">Temperature scaling and filtering are optional. Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
 
 ## Normalization, calibration, and truth
 
@@ -263,6 +217,12 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
 - [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
+
+### Another example with two candidates
+
+With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
+
+![Pipeline from logits to a selected token, including the effect of temperature on a numerical example.](../images/probability-decoding-flow-en.svg){fig-alt="Logits optionally pass through temperature scaling, then softmax. Optional top-k or top-p filters may then be applied with renormalization, before selection by argmax or sampling. For z equal to (0, ln 3), probabilities change from 25/75 percent at temperature 1 to 36.6/63.4 percent at temperature 2; the ranking stays unchanged." fig-cap="The stages have distinct roles: transform scores, build a distribution, restrict candidates, then select a token." width=100%}
 
 ### References
 

@@ -247,6 +247,47 @@ async function runCase(testCase, caseIndex) {
 
     item.title = await page.title();
 
+    if (["probabilites.html", "probabilities.html"].includes(pagePath)) {
+      const explorer = page.locator("[data-temperature-explorer]");
+      await explorer.waitFor({ state: "visible" });
+      const workedRows = await page.locator(".probability-example tbody tr").evaluateAll(rows =>
+        rows.map(row => ({
+          label: row.cells[0].textContent.trim(),
+          exponential: Number(row.cells[2].textContent),
+          probability: Number(row.cells[3].textContent.trim().replace(",", ".")),
+        }))
+      );
+      const readBars = () => explorer.locator(".prob-bar-row").evaluateAll(rows =>
+        rows.map(row => ({
+          label: row.querySelector(".prob-bar-label").textContent.trim(),
+          probability: parseFloat(row.querySelector(".prob-bar-value").textContent.replace(",", ".")) / 100,
+        }))
+      );
+      const baseline = await readBars();
+      if (workedRows.length !== 4 || JSON.stringify(baseline) !== JSON.stringify(workedRows.map(
+        ({ label, probability }) => ({ label, probability })
+      ))) {
+        throw new Error("The temperature explorer must start with the worked example's labels and probabilities.");
+      }
+      await explorer.locator('button[data-temperature="0.5"]').press("Enter");
+      const cold = await readBars();
+      const total = workedRows.reduce((sum, row) => sum + row.exponential ** 2, 0);
+      if (cold.length !== workedRows.length || cold.some((row, index) =>
+        row.label !== workedRows[index].label ||
+        Math.abs(row.probability - workedRows[index].exponential ** 2 / total) > 0.0005
+      )) {
+        throw new Error("The cold preset must normalize the squared exponentials of the worked example.");
+      }
+      await explorer.locator('button[data-temperature="1"]').press("Enter");
+      if (JSON.stringify(await readBars()) !== JSON.stringify(baseline)) {
+        throw new Error("The standard-temperature preset must restore the worked distribution.");
+      }
+      const flowFits = await page.locator(".pipeline-stepper.meta-flow").evaluate(
+        flow => flow.scrollWidth <= flow.clientWidth + 1
+      );
+      if (!flowFits) throw new Error("The probability flow must fit without horizontal scrolling.");
+    }
+
     if (pagePath === "scaled-dot-product-attention.html") {
       const lab = page.locator("[data-attention-intervention]");
       const summary = lab.locator(":scope > summary");
