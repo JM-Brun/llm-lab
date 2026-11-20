@@ -106,7 +106,7 @@ def test_page_without_route_membership_has_no_context_fragment() -> None:
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_writer_generates_page_contexts_for_every_route_member(
-    language: str, tmp_path: Path
+    language: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
@@ -115,14 +115,12 @@ def test_writer_generates_page_contexts_for_every_route_member(
         page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
 
-    original_site = GENERATOR["SITE"]
-    GENERATOR["SITE"] = tmp_path
-    try:
-        outputs = GENERATOR["write_guided_page_context_fragments"](language, stages)
-    finally:
-        GENERATOR["SITE"] = original_site
+    writer = GENERATOR["write_guided_page_context_fragments"]
+    monkeypatch.setitem(writer.__globals__, "SITE", tmp_path)
+    outputs = writer(language, stages)
 
     assert len(outputs) == len(memberships)
+    assert all(path.is_relative_to(tmp_path) for path in outputs)
     overview_id = f"{language}/llm-overview"
     generation_id = f"{language}/generation"
     output_by_name = {path.name: path for path in outputs}
