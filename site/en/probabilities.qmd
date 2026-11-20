@@ -54,7 +54,7 @@ Probabilities are positive and sum to one. This normalization does not prove tha
 
 <a id="running-example-next-token"></a>
 
-For the prefix “What have the Romans ever done for us?”, take a toy vocabulary of four tokens. The logits are chosen to reproduce the probabilities of the first step in the running example. The exponentials sum to 10, so softmax divides each by 10.
+For the prefix “What have the Romans ever done for us?”, take a toy vocabulary of four tokens. The logits in the [output projection example](logits.qmd#running-example-output-projection) are chosen to reproduce the probabilities of the first step in the running example. The exponentials sum to 10, so softmax divides each by 10.
 
 ::: {.probability-example}
 

@@ -61,7 +61,31 @@ Les **logits sont des scores, pas des probabilités**. À une position, le modè
 </div>
 
 
-Après le traitement de « C'est une bonne situation, ça, scribe ? », la tête de sortie lit l'état final du **dernier token du préfixe**. Elle lui associe un score par token du vocabulaire pour prédire la position suivante. Le [calcul sur quatre candidats](probabilites.qmd#running-example-next-token) montre comment ces scores deviennent la distribution du premier tour.
+## Du dernier état aux quatre scores {#running-example-output-projection}
+
+Après le traitement de « C'est une bonne situation, ça, scribe ? », la tête de sortie lit l'état final du **dernier token du préfixe**. Elle lui associe un score par token du vocabulaire pour prédire la position suivante.
+
+Prenons un état fictif $h=(1,-1)$ et un vocabulaire jouet de quatre tokens. La matrice de sortie a quatre lignes et deux colonnes. Dans cet exemple sans biais, le score $z_i$ est le produit scalaire de la ligne $w_i$ par $h$. Multipliez les coordonnées terme à terme, puis additionnez les produits.
+
+::: {.table-responsive}
+
+<table class="table d-table">
+<thead>
+<tr><th scope="col" class="px-1 px-sm-2">Token</th><th scope="col" class="px-1 px-sm-2">Ligne $w_i$</th><th scope="col" class="px-1 px-sm-2">Score $z_i$</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row" class="px-1 px-sm-2">« Vous »</th><td class="px-1 px-sm-2">$(\ln 3,-\ln 2)$</td><td class="px-1 px-sm-2">$\ln 6$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">« Je »</th><td class="px-1 px-sm-2">$(\ln 2,0)$</td><td class="px-1 px-sm-2">$\ln 2$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">« Moi »</th><td class="px-1 px-sm-2">$(1,1)$</td><td class="px-1 px-sm-2">$0$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">« Oui »</th><td class="px-1 px-sm-2">$(-1,-1)$</td><td class="px-1 px-sm-2">$0$</td></tr>
+</tbody>
+</table>
+
+:::
+
+Pour « Vous », le calcul donne $\ln 3-(-\ln 2)=\ln 6$. « Moi » et « Oui » obtiennent le même score pour cet état avec deux lignes différentes.
+
+Le [calcul sur ces quatre candidats](probabilites.qmd#running-example-next-token) reprend les mêmes scores pour obtenir la distribution du premier tour.
 
 ## Définition et dimensions
 

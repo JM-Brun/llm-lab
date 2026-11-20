@@ -54,7 +54,7 @@ Les probabilités sont positives et leur somme vaut un. Cette normalisation ne p
 
 <a id="running-example-next-token"></a>
 
-Pour le préfixe « C'est une bonne situation, ça, scribe ? », prenons un vocabulaire jouet de quatre tokens. Les logits sont choisis pour retrouver les probabilités du premier tour du fil rouge. Les exponentielles somment à 10, donc la softmax divise chacune par 10.
+Pour le préfixe « C'est une bonne situation, ça, scribe ? », prenons un vocabulaire jouet de quatre tokens. Les logits de l’[exemple de projection de sortie](logits.qmd#running-example-output-projection) sont choisis pour retrouver les probabilités du premier tour du fil rouge. Les exponentielles somment à 10, donc la softmax divise chacune par 10.
 
 ::: {.probability-example}
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -95,7 +96,7 @@ def test_english_understand_pages_keep_their_own_running_example(page_id: str) -
 @pytest.mark.parametrize(
     ("language", "probability_page"), [("fr", "probabilites"), ("en", "probabilities")]
 )
-def test_first_step_softmax_matches_generation(language: str, probability_page: str) -> None:
+def test_first_step_matches_generation(language: str, probability_page: str) -> None:
     site = ROOT / "site" / language
     generation = (site / "generation.qmd").read_text(encoding="utf-8")
     first_step = next(line for line in generation.splitlines() if line.startswith("| 1 |"))
@@ -109,6 +110,14 @@ def test_first_step_softmax_matches_generation(language: str, probability_page: 
         for line in data.splitlines()
         if line.startswith(("| «", "| “"))
     ]
+
+    logits_source = (site / "logits.qmd").read_text(encoding="utf-8")
+    _, _, projection = logits_source.partition("{#running-example-output-projection}")
+    projection = projection.split("\n## ", maxsplit=1)[0]
+    projection_scores = re.findall(
+        r'<th scope="row"[^>]*>([^<]+)</th><td[^>]*>[^<]+</td><td[^>]*>([^<]+)</td>', projection
+    )
+    assert projection_scores == [(token, score) for token, score, _, _ in rows]
 
     assert [f"{token} {probability}" for token, _, _, probability in rows] == candidates
     normalizer = sum(int(exponential) for _, _, exponential, _ in rows)

@@ -61,7 +61,31 @@ By the end of this page, you will be able to:
 </div>
 
 
-After the Transformer processes “What have the Romans ever done for us?”, the output head reads the final state of the **last token in the prefix**. It assigns one score per vocabulary token to predict the following position. The [four-candidate calculation](probabilities.qmd#running-example-next-token) shows how these scores become the first-step distribution.
+## From the final state to four scores {#running-example-output-projection}
+
+After the Transformer processes “What have the Romans ever done for us?”, the output head reads the final state of the **last token in the prefix**. It assigns one score per vocabulary token to predict the following position.
+
+Take an illustrative state $h=(1,-1)$ and a toy vocabulary of four tokens. The output matrix has four rows and two columns. In this example without a bias term, the score $z_i$ is the dot product of row $w_i$ and $h$. Multiply corresponding coordinates and add the products.
+
+::: {.table-responsive}
+
+<table class="table d-table">
+<thead>
+<tr><th scope="col" class="px-1 px-sm-2">Token</th><th scope="col" class="px-1 px-sm-2">Row $w_i$</th><th scope="col" class="px-1 px-sm-2">Score $z_i$</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row" class="px-1 px-sm-2">“They”</th><td class="px-1 px-sm-2">$(\ln 3,-\ln 2)$</td><td class="px-1 px-sm-2">$\ln 6$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">“Aqueducts”</th><td class="px-1 px-sm-2">$(\ln 2,0)$</td><td class="px-1 px-sm-2">$\ln 2$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">“Nothing”</th><td class="px-1 px-sm-2">$(1,1)$</td><td class="px-1 px-sm-2">$0$</td></tr>
+<tr><th scope="row" class="px-1 px-sm-2">“Well”</th><td class="px-1 px-sm-2">$(-1,-1)$</td><td class="px-1 px-sm-2">$0$</td></tr>
+</tbody>
+</table>
+
+:::
+
+For “They”, the calculation gives $\ln 3-(-\ln 2)=\ln 6$. “Nothing” and “Well” get the same score for this state from two different rows.
+
+The [calculation for these four candidates](probabilities.qmd#running-example-next-token) uses the same scores to obtain the first-step distribution.
 
 ## Definition and dimensions
 
