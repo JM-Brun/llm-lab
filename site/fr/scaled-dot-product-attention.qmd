@@ -41,7 +41,7 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 L'attention n'est pas une opération unique : elle enchaîne **scores → mise à l'échelle → masque éventuel → softmax → agrégation**. Les scores comparent Q et K ; les poids sont normalisés ligne par ligne ; la sortie est une combinaison des V.
 
-**Première lecture :** suivez le passage des scores aux poids, puis des poids à la sortie. Gardez ces trois objets distincts ; les calculs numériques et les formes détaillées sont travaillés dans la [collection d'exercices Attention](exercises-attention.qmd#at-0-scores-to-output).
+**Première lecture :** suivez le passage des scores aux poids, puis des poids à la sortie. Gardez ces trois objets distincts.
 
 **Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
@@ -67,7 +67,7 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
   <figcaption>Deux chemins se rejoignent : Q et K déterminent les poids, tandis que V fournit le contenu agrégé. Les scores bruts, les poids normalisés et la sortie sont trois objets différents ; pour chaque ligne non vide, les poids autorisés somment à 1.</figcaption>
 </figure>
 
-## Calcul en cinq étapes
+## Calcul en cinq étapes {#calcul-en-cinq-étapes}
 
 Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$, où $T$ désigne ici la longueur de la séquence.
 
@@ -89,7 +89,7 @@ Dans le fil rouge « C'est une bonne situation, ça, scribe ? », suivez la dern
 
 ## Passer du mécanisme au calcul
 
-Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l'échelle, le masque éventuel exclut les positions interdites, le softmax normalise les scores accessibles, puis les poids combinent les vecteurs V. Pour effectuer cette chaîne de calcul à la main, distinguer mélange pondéré et sélection, puis manipuler les projections dans un cas multi-têtes, utilisez les exercices de la collection [Attention](exercises-attention.qmd#at-0-scores-to-output), en particulier AT-A à AT-C.
+[Calculer les scores, les poids et la sortie pour une requête](exercises-attention.qmd#ex-attention-scores-to-output).
 
 {{< include ../includes/attention-intervention-fr.qmd >}}
 
@@ -176,6 +176,8 @@ Ces schémas sont des **reconstructions pédagogiques originales** fondées sur 
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/scaled-dot-product-attention.qmd).
+
+Deux exercices prolongent ce calcul en demandant de [distinguer mélange pondéré et sélection](exercises-attention.qmd#ex-attention-weighted-mixture-vs-selection), puis de [calculer une attention multi-têtes à la main](exercises-attention.qmd#ex-attention-multihead-manual-calculation).
 
 
 ### Complément côté Build (facultatif)

@@ -47,6 +47,8 @@ $$
 4. Calculez la combinaison pondérée des valeurs.
 5. Expliquez pourquoi les poids ne mesurent pas une pertinence sémantique absolue.
 
+[Revoir le calcul des scores, des poids et de la sortie](scaled-dot-product-attention.qmd#calcul-en-cinq-étapes).
+
 <details>
 <summary>Afficher le corrigé raisonné</summary>
 
@@ -152,6 +154,8 @@ $$
 2. Remplacer uniquement $W_V$ par $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculer $v'_t$.
 3. Quelles quantités parmi Q, K, V, les scores et les poids peuvent changer ? Justifier à partir des dépendances du mécanisme.
 4. Expliquer pourquoi la sortie agrégée peut changer même si les poids restent identiques.
+
+[Revoir les formules de projection et les dimensions de Q, K et V](queries-keys-values.qmd#pourquoi-trois-projections-à-partir-de-la-même-entrée).
 
 <details>
 <summary>Afficher le corrigé détaillé</summary>

@@ -41,7 +41,7 @@ Scaled dot-product attention turns learned compatibility scores between queries 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
 
-**First pass:** follow the transition from scores to weights, then from weights to the output. Keep these three objects distinct; numerical calculations and detailed shapes are practised in the [Attention exercise collection](exercises-attention.qmd#at-0-scores-to-output).
+**First pass:** follow the transition from scores to weights, then from weights to the output. Keep these three objects distinct.
 
 **Go deeper:** the derivation of the scaling factor — why divide by $\sqrt{d_k}$ and what the argument does not guarantee — is developed in [Why scale attention scores?](attention-score-scaling.qmd); changing which positions are accessible before softmax is the role of [causal masking](causal-masking.qmd).
 :::
@@ -67,7 +67,7 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
   <figcaption>Two paths meet: Q and K determine the weights, while V supplies the aggregated content. Raw scores, normalized weights, and the output are distinct objects; allowed weights sum to 1 in each non-empty row.</figcaption>
 </figure>
 
-## Five computation steps
+## Five computation steps {#five-computation-steps}
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$, where $T$ is the sequence length.
 
@@ -89,7 +89,7 @@ In the running example “What have the Romans ever done for us?”, follow the 
 
 ## From the mechanism to the calculation
 
-Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises-attention.qmd#at-0-scores-to-output), especially exercises AT-A to AT-C.
+[Compute the scores, weights, and output for one query](exercises-attention.qmd#ex-attention-scores-to-output).
 
 {{< include ../includes/attention-intervention-en.qmd >}}
 
@@ -176,6 +176,8 @@ These diagrams are **original pedagogical reconstructions** based on the FlashAt
 ### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
+
+Two follow-up exercises ask you to [distinguish weighted mixing from selection](exercises-attention.qmd#ex-attention-weighted-mixture-vs-selection) and [compute multi-head attention by hand](exercises-attention.qmd#ex-attention-multihead-manual-calculation).
 
 
 ### Optional Build-path companion
