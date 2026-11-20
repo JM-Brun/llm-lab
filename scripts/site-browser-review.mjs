@@ -75,7 +75,19 @@ const cases = [
       ],
     },
     { page: "exercises-foundations.html", exerciseIds: [] },
-    { page: "exercises-generation.html", exerciseIds: [] },
+    {
+      page: "exercises-generation.html",
+      exerciseIds: [
+        "ex-generation-distribution-selection",
+        "ex-generation-autoregressive-loop",
+        "ex-generation-stopping-criteria",
+        "ex-generation-prefill-incremental-decode",
+        "ex-generation-kv-cache",
+        "ex-generation-temperature",
+        "ex-generation-top-k-top-p",
+        "ex-generation-prefix-caching-continuous-batching",
+      ],
+    },
   ].map(collection => ({
     ...testCase, ...collection, kind: "exercise-collection",
   }))),
