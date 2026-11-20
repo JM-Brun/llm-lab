@@ -34,9 +34,9 @@ Sous l'hypothèse simplificatrice que toutes les composantes de requête et de c
 ### Dériver la variance, sans sauter d'étape
 
 Posons le produit scalaire
-$
+$$
 q\cdot k=\sum_{i=1}^{d_k}q_i k_i.
-$
+$$
 
 Les hypothèses donnent, pour chaque dimension, $\mathbb{E}[q_i]=\mathbb{E}[k_i]=0$, $\mathbb{E}[q_i^2]=\mathbb{E}[k_i^2]=1$, et l'indépendance de $q_i$ et $k_i$. On obtient donc :
 

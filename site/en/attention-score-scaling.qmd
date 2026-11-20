@@ -34,9 +34,9 @@ Under the simplifying assumption that all query and key components are independe
 ### Derive the variance, one step at a time
 
 Write the dot product as
-$
+$$
 q\cdot k=\sum_{i=1}^{d_k}q_i k_i.
-$
+$$
 
 The assumptions give, for each dimension, $\mathbb{E}[q_i]=\mathbb{E}[k_i]=0$, $\mathbb{E}[q_i^2]=\mathbb{E}[k_i^2]=1$, and independence between $q_i$ and $k_i$. Therefore:
 
