@@ -26,6 +26,4 @@ Choose a stage to find the ideas to master and review them with a question and a
 
 [Guided route and optional resources](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
-**Starting from the distribution.** [Generate](#inference) to select the next token, [score](#scoring) to measure the probability of an observed target, or [train](#training) to adjust the parameters. [Context](#context-use) extends inference at the application level.
-
 {{< include ../includes/generated-lesson-contracts-en.qmd >}}

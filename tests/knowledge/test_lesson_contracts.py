@@ -55,9 +55,6 @@ def test_core_contracts_expose_objectives_and_link_bilingual_syntheses(
             assert "review-path.qmd" in source
         assert contracts[f"{lang}/generation"].stage == "inference"
         assert sum(page.id == f"{lang}/generation" for stage in stages for page in stage.pages) == 1
-        source = (SITE / lang / "review-path.qmd").read_text(encoding="utf-8")
-        for branch in ("inference", "context-use", "scoring", "training"):
-            assert f"](#{branch})" in source
         topics = {page["id"]: page["topic"] for page in pages}
         memberships[lang] = [[topics[page.id] for page in stage.pages] for stage in stages]
     assert memberships["fr"] == memberships["en"]
