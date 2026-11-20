@@ -22,15 +22,15 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 [← Retour au catalogue des exercices](exercises.qmd)
 
-### Données textuelles {#donnees-textuelles}
+## Données textuelles {#donnees-textuelles}
 
 **Repères pour commencer :** [texte et données](text-data.qmd) et [espace des embeddings](embedding-space.qmd) suffisent pour aborder les premiers exercices ; les prérequis supplémentaires sont indiqués pour chaque exercice ci-dessous. En particulier, l'exercice sur les fenêtres d'entraînement mobilise les [exemples d'entraînement et le décalage entrée-cible](training-examples.qmd), l'exercice sur les fusions BPE la page de tokenisation et l'exercice sur les fuites entre partitions la préparation du corpus.
 
 **Périmètre actuel :** six exercices formatifs bilingues couvrent la chaîne texte → représentations, les fenêtres et le décalage entrée-cible, le calcul de fusions BPE, puis le diagnostic des fuites entre partitions et l'ajustement du tokenizer. Chaque exercice possède une ancre descriptive et stable, indépendante de son titre et de sa position dans la collection. Les prérequis indiqués sur chaque exercice guident l'ordre conseillé.
 
 <a id="ex-representation-pipeline"></a>
-<a id="ex-text-data-representation-pipeline"></a>
-### Reconstruire la chaîne des représentations
+
+### Reconstruire la chaîne des représentations {#ex-text-data-representation-pipeline}
 
 **Préparation :** une première lecture de [texte et données](text-data.qmd) et de l'[espace des embeddings](embedding-space.qmd) suffit.
 
@@ -71,8 +71,8 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 </details>
 
 <a id="ex-embedding-lookup"></a>
-<a id="ex-text-data-embedding-lookup"></a>
-### Calculer un lookup et suivre les formes des tenseurs
+
+### Calculer un lookup et suivre les formes des tenseurs {#ex-text-data-embedding-lookup}
 
 **Préparation :** l'[espace des embeddings](embedding-space.qmd) pour la matrice et le lookup ; [tenseurs](tensors.qmd) sert de référence facultative sur les conventions de notation. L'exercice progresse en trois étapes : calculer, compléter, généraliser.
 
@@ -240,8 +240,8 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir l'exercice sur les fusions BPE.
 
 <a id="ex-representation-context"></a>
-<a id="ex-text-data-representation-context"></a>
-### Distinguer identité, position et contexte
+
+### Distinguer identité, position et contexte {#ex-text-data-representation-context}
 
 **Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après l'exercice sur la chaîne des représentations et l'exercice sur le lookup. Pour le cadre mathématique de l'étape 3, l'[approfondissement sur les dépendances entre positions et couches](contextualized-representations-advanced.qmd) est une référence facultative. L'exercice progresse en trois étapes : diagnostiquer des affirmations, prédire sous modifications contrôlées, puis calculer un exemple numérique jouet.
 
@@ -355,8 +355,8 @@ print("distance:", np.linalg.norm(h_A - h_B))
 </details>
 
 <a id="ex-training-windows"></a>
-<a id="ex-text-data-training-windows"></a>
-### Construire des fenêtres et aligner les cibles
+
+### Construire des fenêtres et aligner les cibles {#ex-text-data-training-windows}
 
 **Préparation :** la section « fenêtres glissantes et stride » de [du corpus tokenisé aux exemples d'entraînement](training-examples.qmd), après l'exercice sur la chaîne des représentations et l'exercice sur le lookup. Cet exercice porte sur le contrat entrée-cible ; il ne demande pas d'implémenter un tokenizer ni un chargeur de données.
 
@@ -465,8 +465,8 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 **Pour aller plus loin :** les fuites entre partitions restent à traiter dans un exercice distinct. Le batching et les masques de perte sont des sujets séparés ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
 
 <a id="ex-bpe-merges"></a>
-<a id="ex-text-data-bpe-merges"></a>
-### Compter les fusions BPE et encoder un nouveau mot
+
+### Compter les fusions BPE et encoder un nouveau mot {#ex-text-data-bpe-merges}
 
 **Préparation :** la section « Exemple pas à pas : fusions BPE sur un petit corpus » de [Stratégies de tokenisation](tokenization-strategies.qmd). On reprend sa convention pédagogique au niveau du mot : caractères initiaux et marqueur de fin `</w>`. Ce n'est pas une spécification d'un tokenizer byte-level de production.
 
@@ -573,8 +573,8 @@ On applique d'abord `o + w → ow`, puis `l + ow → low`. La segmentation obten
 **Critère de réussite :** les fréquences initiales sont exactes, les séquences sont mises à jour avant le second comptage, l'ordre des fusions est respecté sur le mot inédit et apprentissage/encodage sont distingués.
 
 <a id="ex-data-leakage"></a>
-<a id="ex-text-data-data-leakage"></a>
-### Diagnostiquer les fuites entre partitions
+
+### Diagnostiquer les fuites entre partitions {#ex-text-data-data-leakage}
 
 **Préparation :** [Préparer un corpus pour le préentraînement](corpus-preparation.qmd), notamment les sections sur la déduplication, le choix des partitions et l'ajustement du tokenizer ; [fenêtres et stride](training-examples.qmd). Cet exercice distingue la fuite d'évaluation d'un protocole de continuation temporelle explicitement choisi.
 

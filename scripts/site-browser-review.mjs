@@ -37,60 +37,11 @@ const cases = [
   ...exerciseHubCases.map(testCase => ({
     ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
-  ...exerciseHubCases.flatMap(testCase => [
-    {
-      page: "exercises-text-data.html",
-      exerciseIds: [
-        "ex-text-data-representation-pipeline",
-        "ex-text-data-embedding-lookup",
-        "ex-text-data-representation-context",
-        "ex-text-data-training-windows",
-        "ex-text-data-bpe-merges",
-        "ex-text-data-data-leakage",
-      ],
-    },
-    {
-      page: "exercises-transformer.html",
-      exerciseIds: [
-        "ex-transformer-preln-block-trace",
-        "ex-transformer-parameter-count",
-        "ex-transformer-claim-diagnosis-interventions",
-      ],
-    },
-    {
-      page: "exercises-attention.html",
-      exerciseIds: [
-        "ex-attention-scores-to-output",
-        "ex-attention-manual-aggregation",
-        "ex-attention-weighted-mixture-vs-selection",
-        "ex-attention-project-qkv",
-        "ex-attention-calculate-qkv-isolate-values",
-        "ex-attention-predict-projection-change",
-        "ex-attention-connect-projections-learning",
-        "ex-attention-cross-attention-transfer",
-        "ex-attention-causal-prefix-invariance",
-        "ex-attention-multihead-manual-calculation",
-        "ex-attention-multihead-shape-trace",
-        "ex-attention-multihead-diagnosis",
-      ],
-    },
-    { page: "exercises-foundations.html", exerciseIds: [] },
-    {
-      page: "exercises-generation.html",
-      exerciseIds: [
-        "ex-generation-distribution-selection",
-        "ex-generation-autoregressive-loop",
-        "ex-generation-stopping-criteria",
-        "ex-generation-prefill-incremental-decode",
-        "ex-generation-kv-cache",
-        "ex-generation-temperature",
-        "ex-generation-top-k-top-p",
-        "ex-generation-prefix-caching-continuous-batching",
-      ],
-    },
-  ].map(collection => ({
-    ...testCase, ...collection, kind: "exercise-collection",
-  }))),
+  ...exerciseHubCases.flatMap(testCase =>
+    ["attention", "foundations", "generation", "text-data", "transformer"].map(collection => ({
+      ...testCase, page: `exercises-${collection}.html`, kind: "exercise-collection",
+    }))
+  ),
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
@@ -445,24 +396,26 @@ async function runCase(testCase, caseIndex) {
       }
     }
     if (kind === "exercise-collection") {
-      const presentIds = await page.evaluate(ids =>
-        ids.filter(id => document.getElementById(id)),
-        testCase.exerciseIds,
-      );
+      const sourcePath = new URL(`../site/${lang}/${pagePath.replace(/\.html$/, ".qmd")}`, import.meta.url);
+      const source = fs.readFileSync(sourcePath, "utf8");
+      const expectedIds = [...source.matchAll(/^### .+ \{#(ex-[a-z0-9-]+)\}[ \t]*$/gm)]
+        .map(([, id]) => id);
+      const presentIds = await page.locator('main section.level3[id^="ex-"] > h3')
+        .evaluateAll(headings => headings.map(heading => heading.parentElement.id));
       const details = page.locator("main details");
       const detailsCount = await details.count();
       const summariesCount = await details.locator("summary").count();
       const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
       item.exerciseCollection = {
-        expectedIds: testCase.exerciseIds,
+        expectedIds,
         presentIds,
         detailsCount,
         summariesCount,
         openDetailsAtLoad,
       };
-      const missing = testCase.exerciseIds.filter(id => !presentIds.includes(id));
-      if (missing.length) {
-        throw new Error(`missing stable exercise IDs in collection: ${missing.join(", ")}`);
+      if (!expectedIds.length || expectedIds.length !== presentIds.length ||
+          expectedIds.some((id, index) => id !== presentIds[index])) {
+        throw new Error(`exercise headings differ from source: expected [${expectedIds.join(", ")}], rendered [${presentIds.join(", ")}]`);
       }
       if (detailsCount === 0 || summariesCount !== detailsCount || openDetailsAtLoad !== 0) {
         throw new Error("exercise hints/solutions must use native collapsed details/summary disclosures in each collection");
@@ -1433,7 +1386,8 @@ async function runCase(testCase, caseIndex) {
           const noScript = await browser.newContext({ javaScriptEnabled: false, viewport });
           try {
             const staticPage = await noScript.newPage();
-            await staticPage.goto(page.url(), { waitUntil: "domcontentloaded" });
+            // With scripting disabled, the stylesheet controls which fallback link is visible.
+            await staticPage.goto(page.url(), { waitUntil: "load" });
             const staticExplorer = staticPage.locator("[data-next-token-explorer]");
             if (await staticExplorer.locator(".next-token-explorer__interactive").isVisible() ||
                 await staticExplorer.locator(".next-token-explorer__fallback a:visible").count() !== 1) {
