@@ -74,7 +74,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
   <figcaption>Prefill processes the known prompt; incremental decode extends it one selected token at a time. The KV cache is an optional efficiency optimization, not a requirement for correct generation. The example probabilities are illustrative.</figcaption>
 </figure>
 
-## The loop on an example
+## The loop on an example {#the-loop-on-an-example}
 
 Let us follow three turns of the loop. The probabilities are made up, as in the overview, and the decoding rule is the simplest one: take the most probable token.
 
@@ -93,9 +93,11 @@ Each row chains the same moves.
 
 Two consequences follow from this mechanism.
 
-**A choice commits what follows.** Had the rule kept “Aqueducts” at turn 1, the context at turn 2 would be different, and everything after it too. The model does not go back on a token that has been appended.
+**A choice shapes what follows.** If sampling picked “Aqueducts” on turn 1, the context on turn 2 would end in “Aqueducts”. The model would compute the next distribution from this new context. The remaining continuation could then change.
 
 **The model's parameters stay the same from one turn to the next: generation does not update them.** The context, however, grows with the chosen token. An optimized implementation may also reuse previous computations through a KV cache, explained below; this cache speeds up inference but is neither learning nor a change to the parameters.
+
+[Trace a generation loop to EOS](exercises-generation.qmd#ex-generation-autoregressive-loop).
 
 ## One step, in notation
 
@@ -181,13 +183,15 @@ Prefill resembles the *teacher forcing* used in training, since in both cases th
 
 The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
 
-## How is the next token chosen?
+## How is the next token chosen? {#how-is-the-next-token-chosen}
 
 The distribution at turn 1 does not point to a single output. The decoding rule decides.
 
 **Greedy selection** (*greedy decoding*). Take the most probable token (*argmax*): “They”, on every run. The result is reproducible if the computation is deterministic. This local choice does not optimize the whole sentence and can lead to repetitions.
 
 **Sampling.** Draw the token at random according to the distribution: “They” comes out six times in ten on average, “Aqueducts” twice in ten. Two runs can therefore produce two different texts. Fixing the seed of the random generator, with deterministic computation, makes the draw reproducible.
+
+[Compute a softmax and compare greedy selection with sampling](exercises-generation.qmd#ex-generation-distribution-selection).
 
 **Temperature.** Before the draw, the distribution can be sharpened or flattened by dividing the logits by a number $\tau > 0$.
 
@@ -242,7 +246,7 @@ A low temperature concentrates probability on the leading token; a high temperat
 
 ### Practice
 
-The questions for this lesson are collected on its [dedicated practice page](exercises/generation.qmd); computing a distribution and comparing greedy selection with sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
+[Check your understanding of the lesson](exercises/generation.qmd).
 
 </div>
 </details>

@@ -44,6 +44,8 @@ Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est 
 
 </details>
 
+[Revoir la sélection gloutonne et l'échantillonnage](generation.qmd#comment-le-prochain-token-est-il-choisi).
+
 <a id="ge-b-tracer-la-boucle-autoregressive"></a>
 ### Tracer la boucle autoregressive {#ex-generation-autoregressive-loop}
 
@@ -59,13 +61,18 @@ On commence avec $c_1=(A,B)$. Le décodage est glouton et les distributions sont
 2. Écrire le contexte après chaque sélection.
 3. Combien d'étapes élémentaires sont exécutées ?
 4. Qu'est-ce qui est répété et qu'est-ce qui change ?
+5. Si l'on échantillonnait $D$ au premier tour, quel serait le contexte du deuxième tour ? Le tableau donne-t-il sa distribution ?
 
 <details>
 <summary>Afficher le corrigé</summary>
 
 Les sélections sont $C$, puis $D$, puis EOS. Les contextes deviennent $(A,B,C)$, $(A,B,C,D)$, puis $(A,B,C,D,\mathrm{EOS})$ si EOS est représenté explicitement dans la séquence. Trois étapes élémentaires sont exécutées. Le mécanisme de prédiction-sélection est répété ; le contexte change à chaque réinjection. Les paramètres du modèle restent fixes.
 
+Si l'on tirait $D$ au premier tour, le deuxième contexte serait $(A,B,D)$. La ligne du deuxième tour est conditionnée par $(A,B,C)$. Il faudrait calculer une distribution pour $(A,B,D)$ avant de choisir le token suivant.
+
 </details>
+
+[Revoir la trace de trois tours dans la leçon](generation.qmd#la-boucle-sur-un-exemple).
 
 <a id="ge-c-criteres-d-arret"></a>
 ### Critères d'arrêt {#ex-generation-stopping-criteria}
