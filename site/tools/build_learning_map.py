@@ -149,6 +149,29 @@ class LessonContract(StrictModel):
     stage: str | None = None
 
 
+class BoundaryExplanation(StrictModel):
+    """Core lesson and concept IDs for one side of a conceptual boundary."""
+
+    concept_ids: list[str] = Field(min_length=1)
+    pages: LocalizedCopy
+
+
+class BoundaryExercise(StrictModel):
+    """A bilingual exercise and its shared explicit Quarto anchor."""
+
+    pages: LocalizedCopy
+    anchor: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    label: LocalizedCopy
+
+
+class LearningBoundary(StrictModel):
+    """Editorial evidence connecting two or more stages with an exercise."""
+
+    criterion: str = Field(min_length=1)
+    explanations: dict[str, BoundaryExplanation] = Field(min_length=2)
+    transfer: BoundaryExercise
+
+
 class GuidedRouteDocument(StrictModel):
     """Versioned source document for the reader-facing conceptual route."""
 
@@ -159,6 +182,7 @@ class GuidedRouteDocument(StrictModel):
     # stage model and its membership projection independent.
     transitions: list[GuidedRouteTransition] = Field(default_factory=list)
     lesson_contracts: dict[str, LessonContract] | None = None
+    boundaries: dict[str, LearningBoundary] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def stage_ids_are_unique(self) -> GuidedRouteDocument:
@@ -560,10 +584,45 @@ def resolve_lesson_contracts(
     return by_page
 
 
+def resolve_boundary_exercises(
+    document: GuidedRouteDocument,
+    stages: list[ResolvedGuidedRouteStage],
+    pages: list[dict[str, Any]],
+    language: str,
+) -> dict[str, list[ResolvedPage]]:
+    """Index exercise links by each stage whose core lesson supplies an explanation."""
+    core_ids_by_stage = {stage.id: {page.id for page in stage.pages} for stage in stages}
+    page_by_id = {page["id"]: page for page in pages}
+    by_stage: dict[str, list[ResolvedPage]] = {}
+    for boundary_id, boundary in document.boundaries.items():
+        exercise = boundary.transfer
+        exercise_id = getattr(exercise.pages, language)
+        target = page_by_id.get(exercise_id)
+        if target is None or target["language"] != language or target["destination"] != "practice":
+            raise ValueError(
+                f"boundary {boundary_id!r}: expected a published {language} practice page "
+                f"for {exercise_id!r}"
+            )
+        practice = ResolvedPage(
+            id=exercise_id,
+            title=getattr(exercise.label, language),
+            href=f"{target['href']}#{exercise.anchor}",
+        )
+        for stage_id, explanation in boundary.explanations.items():
+            lesson_id = getattr(explanation.pages, language)
+            if lesson_id not in core_ids_by_stage.get(stage_id, set()):
+                raise ValueError(
+                    f"boundary {boundary_id!r}: {lesson_id!r} must be a core lesson of {stage_id!r}"
+                )
+            by_stage.setdefault(stage_id, []).append(practice)
+    return by_stage
+
+
 def render_lesson_contracts(
     stages: list[ResolvedGuidedRouteStage],
     contracts: dict[str, ResolvedLessonContract],
     language: str,
+    boundary_exercises: dict[str, list[ResolvedPage]] | None = None,
 ) -> str:
     """Render the stage plan from the same lesson metadata used by the map."""
     fr = language == "fr"
@@ -572,6 +631,7 @@ def render_lesson_contracts(
         return f"[{escape_markdown_text(page.title)}]({page.href})"
 
     lines: list[str] = []
+    practice_by_stage = boundary_exercises or {}
     for stage in stages:
         lines.extend([f"## {escape_markdown_text(stage.title)} {{#{stage.id}}}", ""])
         if overview := stage.overview:
@@ -600,6 +660,8 @@ def render_lesson_contracts(
             )
         else:
             lines.extend([escape_markdown_text(stage.objective), ""])
+        for practice in practice_by_stage.get(stage.id, []):
+            lines.extend([link(practice), ""])
         for lesson in stage.pages:
             contract = contracts[lesson.id]
             lines.extend([f"### {escape_markdown_text(lesson.title)}", ""])
@@ -1588,7 +1650,14 @@ def prepare_build(language: str) -> dict[Path, str]:
     )
     if lesson_contracts:
         artifacts[SITE / "includes" / f"generated-lesson-contracts-{language}.qmd"] = (
-            render_lesson_contracts(guided_route, lesson_contracts, language)
+            render_lesson_contracts(
+                guided_route,
+                lesson_contracts,
+                language,
+                boundary_exercises=resolve_boundary_exercises(
+                    route_document, guided_route, pages, language
+                ),
+            )
         )
     artifacts.update(prepare_cross_cutting_coverage_fragments(language, pages, guided_route))
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
