@@ -1,0 +1,47 @@
+---
+title: "Révision — Attention par produit scalaire"
+description-meta: "Le calcul d’une ligne de scores, la division par la racine de la dimension de tête, le softmax et la somme pondérée."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-scaled-dot-product-attention"
+scope: "Le calcul d’une ligne de scores, la division par la racine de la dimension de tête, le softmax et la somme pondérée."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/scaled-dot-product-attention"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](scaled-dot-product-attention.qmd) · [Plan du parcours](review-path.qmd#computation)
+
+## À retenir {#revision-essentials}
+
+- Pour la requête de la position i, on calcule un produit scalaire avec la clé de chaque position j. On divise ces scores par la racine carrée de la dimension des clés.
+- Après le masque éventuel, le softmax s’applique sur les clés d’une requête. Les poids de la ligne somment à 1.
+- On multiplie les poids par les vecteurs valeurs correspondants et on somme. Ainsi, les poids (0,75, 0,25) combinent les valeurs 2 et 6 en 3 si ces valeurs sont scalaires.
+- À variances comparables des composantes, le produit scalaire tend à prendre de plus grandes amplitudes quand la dimension augmente. La mise à l’échelle limite la saturation du softmax.
+
+## Vérifier de mémoire {#revision-check}
+
+Deux requêtes distinctes doivent-elles obtenir la même combinaison si K et V sont communs ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Chaque requête obtient sa propre ligne de scores, donc potentiellement d’autres poids et une autre somme pondérée.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-scaled-dot-product-attention.qmd) · [English](../en/revision-scaled-dot-product-attention.qmd)
+:::

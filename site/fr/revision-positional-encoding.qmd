@@ -1,0 +1,46 @@
+---
+title: "Révision — Information positionnelle"
+description-meta: "L’ordre des occurrences, la distinction entre une position absolue en entrée et une information relative dans le calcul de l’attention."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-positional-encoding"
+scope: "L’ordre des occurrences, la distinction entre une position absolue en entrée et une information relative dans le calcul de l’attention."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/positional-encoding"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](positional-encoding.qmd) · [Plan du parcours](review-path.qmd#representations)
+
+## À retenir {#revision-essentials}
+
+- Deux occurrences d’un même token peuvent commencer avec le même plongement. Leur rang dans la séquence apporte une information distincte de leur identité.
+- Un encodage absolu additif peut combiner en entrée le plongement du token et un vecteur attaché à son rang.
+- Avec RoPE, on utilise la position pour faire tourner les vecteurs Q et K après projection. Leur produit scalaire fait alors intervenir le décalage relatif.
+
+## Vérifier de mémoire {#revision-check}
+
+Quand on réordonne deux tokens, leur ligne dans la table de plongements change-t-elle ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non, leurs IDs choisissent les mêmes lignes. Leurs positions dans la séquence changent, ce qui peut modifier le calcul des états contextualisés.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-positional-encoding.qmd) · [English](../en/revision-positional-encoding.qmd)
+:::

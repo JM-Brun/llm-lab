@@ -1,6 +1,6 @@
 ---
-title: "Entropie croisée : l'objectif de prédiction des tokens"
-subtitle: "Des logits à la perte, avec masques et réduction explicites"
+title: "Entropie croisée pour une prédiction de token"
+subtitle: "Une pénalité calculée entre distribution cible et distribution prédite"
 description-meta: "Relie une distribution cible à la distribution prédite par le modèle. Dans le cas d’une cible one-hot, l’entropie croisée devient la pénalité associée au token observé et prépare la définition de la loss."
 keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 lang: fr
@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/cross-entropy"
 summary: "Relie une distribution cible à la distribution prédite par le modèle. Dans le cas d’une cible one-hot, l’entropie croisée devient la pénalité associée au token observé et prépare la définition de la loss."
-scope: "Définir l'entropie croisée entre une distribution cible et la distribution prédite par le modèle à une position cible, y compris le cas one-hot qui se réduit à la négative log-probabilité du token ; la distinguer de l'entropie de la prédiction et des conventions de masquage et de réduction de la loss sur un batch."
-purpose: "Dériver l'entropie croisée pour une distribution cible, retrouver la négative log-probabilité dans le cas one-hot et expliquer l'effet de l'alignement des tokens et du masquage des cibles valides pendant l'entraînement autorégressif."
+scope: "Définit la pénalité locale d’une prédiction face à une distribution cible. Le cas one-hot relie cette pénalité à la NLL d’un token."
+purpose: "Calculer H(q,p) à une position et retrouver −log p(y) quand la cible est concentrée sur y."
 suggested_route:
   previous: "fr/vraisemblance"
   next: "fr/loss"
@@ -30,26 +30,22 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 {{< include ../includes/generated-guided-context-fr-cross-entropy.qmd >}}
 
 ::: {.chapter-lead}
-La page précédente a construit la vraisemblance d'une séquence en combinant les probabilités conditionnelles des tokens observés, puis sa négative log-vraisemblance (NLL). Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
+Pour un même contexte, le modèle propose une distribution $p$ et l’on dispose d’une cible $q$. Quelle pénalité attribuer à cette prédiction, à une seule position ? Quand $q$ désigne le token observé, la réponse est sa [log-vraisemblance négative](vraisemblance.qmd). La [perte du lot](loss.qmd) utilise ensuite ces pénalités locales.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Une cible :** pour une cible one-hot $y$, $\ell=-\log p_\theta(y\mid x_{<t})$ ; une faible probabilité attribuée au token observé coûte cher.
 - **Une distribution cible :** plus généralement, $H(q,p)=-\sum_i q_i\log p_i$. L'entropie croisée n'est pas l'entropie prédictive $H(p)$.
-- **Une séquence :** aligner chaque logit sur le bon token cible, décaler entrées et cibles de façon cohérente, puis exclure les positions invalides du numérateur et du dénominateur.
-- **Un batch :** somme, moyenne par token valide et moyenne par séquence définissent des échelles différentes ; préciser la convention avant de comparer.
 
-**Question rapide :** pouvez-vous retrouver la NLL d'un token et expliquer pourquoi le masque de perte ne remplace pas le masque causal ?
+**Question rapide.** Comment retrouver la NLL d’un token à partir de H(q,p) ?
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Étapes du calcul de l’entropie croisée">
-  <a class="step-item" href="vraisemblance.qmd">1. Cible observée</a>
+  <a class="step-item" href="vraisemblance.qmd">1. Distribution cible</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="probabilites.qmd">2. Probabilité prédite</a>
+  <a class="step-item" href="probabilites.qmd">2. Distribution prédite</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. NLL</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">4. Moyenne sur les tokens</span>
+  <span class="step-item active">3. Pénalité locale</span>
 </div>
 
 
@@ -94,6 +90,42 @@ Cette image illustre la perte d'un token avec une cible one-hot ; elle ne repré
 ::: {.callout-note title="Prolongement : cibles souples et divergence KL"}
 Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$ ; le cas one-hot ci-dessus en est le cas particulier. La relation complète avec la divergence KL — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, et donc l'équivalence entre minimiser l'entropie croisée et minimiser la divergence KL pour une cible fixe — est dérivée dans la page [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
 :::
+
+## Décomposition en entropie cible et divergence KL
+
+La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
+
+$$
+\begin{aligned}
+H(q,p)&=-\sum_x q(x)\ln p(x)\\
+&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
++\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
+\end{aligned}
+$$
+
+Donc :
+
+$$
+\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
+$$
+
+La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
+
+### Exemple numérique en nats
+
+Prenons $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
+
+- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
+- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
+- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0{,}144$ nat.
+
+On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits ; les implémentations usuelles de loss utilisent généralement le logarithme naturel et donc des nats.
+
+::: {.callout-note}
+**Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
+:::
+
+::::: {.callout-note collapse="true" title="Applications — du token au lot, perplexité et API"}
 
 ## Plusieurs positions : décalage causal et masques
 
@@ -240,40 +272,6 @@ $$
 
 Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
 
-## Décomposition en entropie cible et divergence KL
-
-La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
-
-$$
-\begin{aligned}
-H(q,p)&=-\sum_x q(x)\ln p(x)\\
-&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
-+\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
-\end{aligned}
-$$
-
-Donc :
-
-$$
-\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$$
-
-La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
-
-### Exemple numérique en nats
-
-Prenons $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
-
-- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
-- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
-- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0{,}144$ nat.
-
-On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits ; les implémentations usuelles de loss utilisent généralement le logarithme naturel et donc des nats.
-
-::: {.callout-note}
-**Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
-:::
-
 ## Lien avec le gradient
 
 La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathbb{1}[i=y]$. Son interprétation et son rôle dans la rétropropagation sont développés dans la page [Gradients](gradients.qmd).
@@ -281,6 +279,8 @@ La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathb
 ::: {.callout-note collapse="true" title="Détail d'API (approfondissement)"}
 - **« PyTorch CrossEntropyLoss attend des probabilités. »** Pour la classification catégorielle usuelle, l'API attend des logits non normalisés et combine une opération de type log-softmax avec la NLL. Vérifier les formes, ignore_index, les cibles et la réduction.
 :::
+
+:::::
 
 ## Idées reçues
 

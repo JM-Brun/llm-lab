@@ -10,11 +10,11 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
 summary: "Presents generation as an autoregressive loop: context, next-token prediction, selection, feedback, and stopping. Introduces prefill, incremental decode, and selection strategies, then distinguishes inference from scoring and training."
-scope: "Describes autoregressive inference and its main serving mechanisms: prefill/decode, KV caching, latency, multi-request scheduling, continuous batching, prefix caching, and chunked prefill. Transformer internals and parameter learning remain outside its scope."
-purpose: "Readers should be able to step through token-by-token generation, distinguish model computation from selection, explain prefill/decode, and connect latency metrics to serving mechanisms without confusing scheduling with prediction."
+scope: "Traces free-running generation from prompt processing to stopping. Latency and scheduling are covered as optional depth."
+purpose: "Trace selection of the first token from prefill, then the feedback of selected tokens until generation stops."
 suggested_route:
-  previous: "en/llm-overview"
-  next: "en/text-data"
+  previous: null
+  next: "en/in-context-learning"
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
@@ -30,7 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 {{< include ../includes/generated-guided-context-en-generation.qmd >}}
 
 ::: {.chapter-lead}
-The overview stopped at a table: after “What have the Romans ever done for us?”, the model gives 0.6 to “They” and 0.2 to “Aqueducts”. A table of probabilities is not yet an answer. How do we get from one to the other?
+Return to the first prediction: after “What have the Romans ever done for us?”, the model gives 0.6 to “They” and 0.2 to “Aqueducts”. A table of probabilities is not yet an answer. How do we get from one to the other?
 
 By repeating four moves: predict, select, feed back, then continue or stop. This loop is **autoregressive generation**. While it runs, the model's parameters do not change: producing a response is not learning.
 :::

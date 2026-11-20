@@ -1,0 +1,47 @@
+---
+title: "Review — Training loop"
+description-meta: "The steps of one iteration, teacher forcing and interpreting validation loss."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-training-loop", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-training-loop"
+scope: "The steps of one iteration, teacher forcing and interpreting validation loss."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/training-loop"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-training-loop", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](training-loop.qmd) · [Learning path plan](review-path.qmd#training)
+
+## What to remember {#revision-essentials}
+
+- On a batch, the forward pass predicts, the loss compares predictions with targets, the backward pass computes gradients and the optimizer updates parameters.
+- Teacher forcing uses observed tokens in training prefixes. During generation, the loop feeds back tokens it has selected.
+- Validation measures the model on data held out from parameter updates. Falling training loss with sustained deterioration in validation warrants investigation.
+- Validation can guide checkpoint selection or hyperparameter tuning. The final test set is reserved for evaluating the selected model.
+
+## Recall from memory {#revision-check}
+
+After computing the loss on a validation pass, should you call the optimizer?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The pass measures the current parameters without fitting them on validation data.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-training-loop.qmd) · [English](../en/revision-training-loop.qmd)
+:::

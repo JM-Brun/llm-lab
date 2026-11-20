@@ -56,7 +56,6 @@ def test_transition_projection_and_rendering_are_bilingual_and_separate_from_mem
 
     memberships = GENERATOR["build_guided_route_memberships"](stages)
     assert [(item.stage_id, item.role) for item in memberships[generation_id]] == [
-        ("orientation", "core"),
         ("inference", "core"),
     ]
     assert [(item.stage_id, item.role) for item in memberships[cross_entropy_id]] == [
@@ -80,7 +79,8 @@ def test_transition_context_is_added_only_to_declared_transition_pages(language:
     cross_entropy = by_name[f"generated-guided-context-{language}-cross-entropy.qmd"]
     text_data = by_name[f"generated-guided-context-{language}-text-data.qmd"]
 
-    assert "guided-page-context--multiple" in generation
+    assert '<nav class="guided-page-context"' in generation
+    assert "guided-page-context--multiple" in cross_entropy
     assert "guided-page-transitions" in generation
     assert "guided-page-transitions" in cross_entropy
     assert "guided-page-transitions" not in text_data
@@ -158,21 +158,19 @@ def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
 
 
 @pytest.mark.parametrize(
-    ("language", "generation_title", "context_title", "text_data", "in_context", "likelihood"),
+    ("language", "context_title", "scoring_title", "in_context", "likelihood"),
     [
         (
             "fr",
-            "Exécuter l'inférence et générer du texte",
             "Exploiter et concevoir le contexte",
-            "text-data.qmd",
+            "Attribuer un score aux tokens observés",
             "in-context-learning.qmd",
             "vraisemblance.qmd",
         ),
         (
             "en",
-            "Run inference and generate text",
             "Use and design context",
-            "text-data.qmd",
+            "Score observed tokens",
             "in-context-learning.qmd",
             "likelihood.qmd",
         ),
@@ -180,9 +178,8 @@ def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
 )
 def test_suggested_route_navigation_is_projected_per_stage_membership(
     language: str,
-    generation_title: str,
     context_title: str,
-    text_data: str,
+    scoring_title: str,
     in_context: str,
     likelihood: str,
 ) -> None:
@@ -191,11 +188,8 @@ def test_suggested_route_navigation_is_projected_per_stage_membership(
     contexts = GENERATOR["build_suggested_route_contexts"](stages)
 
     generation = contexts[f"{language}/generation"]
-    assert len(generation) == 2
-    orientation = next(item for item in generation if item["stage_id"] == "orientation")
-    inference = next(item for item in generation if item["stage_id"] == "inference")
-    assert orientation["previous"].id == f"{language}/llm-overview"
-    assert orientation["next"].id == f"{language}/text-data"
+    (inference,) = generation
+    assert inference["stage_id"] == "inference"
     assert inference["previous"].id == f"{language}/entropy"
     assert inference["next"].id == f"{language}/in-context-learning"
 
@@ -221,10 +215,10 @@ def test_suggested_route_navigation_is_projected_per_stage_membership(
     by_name = {path.name: content for path, content in fragments.items()}
     generation_html = by_name[f"generated-suggested-route-{language}-generation.qmd"]
     context_html = by_name[f"generated-suggested-route-{language}-context-engineering.qmd"]
-    assert f'href="{text_data}"' in generation_html
+    assert 'href="entropy.qmd"' in generation_html
     assert f'href="{in_context}"' in generation_html
-    assert escape(generation_title) in generation_html
-    assert escape(context_title) in context_html
+    assert escape(context_title) in generation_html
+    assert escape(scoring_title) in context_html
     assert f'href="{likelihood}"' in context_html
 
 

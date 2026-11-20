@@ -1,0 +1,47 @@
+---
+title: "Révision — Boucle d’entraînement"
+description-meta: "Le déroulement d’une itération, le teacher forcing et l’interprétation de la perte de validation."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-training-loop", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-training-loop"
+scope: "Le déroulement d’une itération, le teacher forcing et l’interprétation de la perte de validation."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/training-loop"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-training-loop", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](training-loop.qmd) · [Plan du parcours](review-path.qmd#training)
+
+## À retenir {#revision-essentials}
+
+- Sur un lot, la passe avant produit les prédictions, la loss les compare aux cibles, la passe arrière calcule les gradients, puis l’optimiseur met à jour les paramètres.
+- En teacher forcing, les préfixes d’entraînement contiennent les tokens observés. En génération, la boucle réinjecte les tokens qu’elle vient de choisir.
+- La validation mesure le modèle sur des données tenues à l’écart de ses mises à jour. Une baisse de la loss d’entraînement accompagnée d’une dégradation durable en validation mérite un diagnostic.
+- La validation peut servir à sélectionner un checkpoint ou à régler des hyperparamètres. Le test final reste réservé à l’évaluation du modèle sélectionné.
+
+## Vérifier de mémoire {#revision-check}
+
+Lors d’une passe de validation, faut-il appeler l’optimiseur après avoir calculé la loss ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. La mesure évalue les paramètres à cet instant, sans les ajuster sur les données de validation.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-training-loop.qmd) · [English](../en/revision-training-loop.qmd)
+:::

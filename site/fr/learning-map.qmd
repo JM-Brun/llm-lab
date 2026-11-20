@@ -55,6 +55,8 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 Ce parcours théorique répond d'abord à trois questions : qu'est-ce qu'un LLM, comment calcule-t-il une prédiction, et que fait-on de cette prédiction ? La première partie situe le système ; la deuxième couvre quatre étapes, du texte à la distribution du prochain token ; la troisième présente trois usages frères, générer, scorer une cible observée et apprendre en ajustant les paramètres, qui ne sont pas des prérequis successifs. L'évaluation reste transversale : elle mesure le modèle sur des données tenues à l'écart ([évaluation expérimentale](evaluation-experimentale.qmd)). Les neuf étapes détaillées restent la progression conseillée : les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
+[Plan du parcours et fiches de révision](review-path.qmd)
+
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
 ::: {.guided-route-companion}

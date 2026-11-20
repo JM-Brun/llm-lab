@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/context-engineering"
 summary: "Définit l'ingénierie du contexte et situe ses principales opérations dans un système LLM."
-scope: "Présente la conception et la gestion du contexte à l’inférence ; les architectures détaillées de RAG, de mémoire et d’agents restent dans leurs pages dédiées."
-purpose: "Le lecteur doit distinguer le contexte du modèle, l'ICL et le context engineering, puis identifier les décisions qui déterminent la qualité du contexte transmis."
+scope: "Passe du comportement du modèle à la conception du contexte par un système sous contraintes de budget et de fiabilité."
+purpose: "Choisir quelles informations transmettre pour une tâche et diagnostiquer un échec en examinant le contexte réellement fourni."
 suggested_route:
   previous: "fr/in-context-learning"
   next: null

@@ -1,0 +1,47 @@
+---
+title: "Révision — Masque causal"
+description-meta: "Les positions accessibles à une requête, le rôle de la diagonale et l’application du masque avant softmax."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-causal-masking", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-causal-masking"
+scope: "Les positions accessibles à une requête, le rôle de la diagonale et l’application du masque avant softmax."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/causal-masking"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-causal-masking", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](causal-masking.qmd) · [Plan du parcours](review-path.qmd#computation)
+
+## À retenir {#revision-essentials}
+
+- Pour une requête en position i, les clés des positions j ≤ i sont accessibles. La diagonale conserve la position courante.
+- Le masque bloque les scores des positions futures avant le softmax, typiquement en les remplaçant par moins l’infini. Leurs poids sont alors nuls.
+- Pendant l’entraînement en parallèle, la position i peut utiliser le token en i pour prédire celui en i + 1, qui reste inaccessible à son attention.
+- Cette restriction permet de calculer en parallèle les termes de la factorisation autorégressive. Chaque terme prédit le token suivant à partir du seul préfixe disponible.
+
+## Vérifier de mémoire {#revision-check}
+
+Pour A, B, C et D, quelles positions C peut-il lire et quel token est sa cible dans une séquence d’entraînement décalée ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+C peut lire A, B et C. La cible est D. La position de D reste masquée pour la requête en C.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-causal-masking.qmd) · [English](../en/revision-causal-masking.qmd)
+:::

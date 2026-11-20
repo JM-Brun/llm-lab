@@ -112,17 +112,15 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
         GENERATOR["SITE"] / "includes" / f"generated-suggested-route-{language}-llm-overview.qmd"
     )
     suggested_route = route_fragments[route_path]
-    orientation = next(stage for stage in stages if stage.id == "orientation")
+    text_input = next(stage for stage in stages if stage.id == "text-input")
     expected_next_label = (
-        f"Continuer {orientation.title} →"
-        if language == "fr"
-        else f"Continue {orientation.title} →"
+        f"Continuer {text_input.title} →" if language == "fr" else f"Continue {text_input.title} →"
     )
     assert suggested_route.count(expected_next_label) == 1
-    generation_page = next(page for page in pages if page["id"] == f"{language}/generation")
-    assert suggested_route.count(escape(generation_page["title"])) == 1
-    generation_href = generation_page["href"].removesuffix(".html") + ".qmd"
-    assert suggested_route.count(f'href="{generation_href}"') == 1
+    text_page = text_input.pages[0]
+    assert suggested_route.count(escape(text_page.title)) == 1
+    text_href = text_page.href.removesuffix(".html") + ".qmd"
+    assert suggested_route.count(f'href="{text_href}"') == 1
 
 
 @pytest.mark.parametrize(

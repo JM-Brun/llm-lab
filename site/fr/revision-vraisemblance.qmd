@@ -1,0 +1,47 @@
+---
+title: "Révision — Vraisemblance d’une séquence"
+description-meta: "Le score d’une continuation observée comme produit de probabilités conditionnelles et sa somme en espace logarithmique."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-vraisemblance", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-vraisemblance"
+scope: "Le score d’une continuation observée comme produit de probabilités conditionnelles et sa somme en espace logarithmique."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/vraisemblance"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-vraisemblance", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](vraisemblance.qmd) · [Plan du parcours](review-path.qmd#scoring)
+
+## À retenir {#revision-essentials}
+
+- Chaque token observé reçoit la probabilité assignée par le modèle conditionnellement au préfixe qui le précède.
+- Le produit donne la vraisemblance de la continuation pour le modèle et le préfixe choisis. Le log du produit vaut la somme des log-probabilités.
+- La log-vraisemblance négative (NLL) additionne les pénalités des tokens observés. Une comparaison entre longueurs demande de préciser si l’on compare une somme ou une moyenne.
+- Pour une séquence observée fixée, maximiser sa log-vraisemblance sur les paramètres équivaut à minimiser sa NLL, qui est l’opposé de la log-vraisemblance.
+
+## Vérifier de mémoire {#revision-check}
+
+Une continuation de deux tokens reçoit successivement les probabilités 0,5 et 0,2. Quel est son score de vraisemblance ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+0,5 × 0,2 = 0,1. Sa log-vraisemblance naturelle est d’environ −2,303 et sa NLL vaut environ 2,303 nats.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-vraisemblance.qmd) · [English](../en/revision-vraisemblance.qmd)
+:::

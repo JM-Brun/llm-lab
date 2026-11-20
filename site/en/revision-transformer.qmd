@@ -1,0 +1,46 @@
+---
+title: "Review — GPT Transformer computation"
+description-meta: "The path from embeddings through blocks and final states to logits, including attention, the MLP and residual connections."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-transformer", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-transformer"
+scope: "The path from embeddings through blocks and final states to logits, including attention, the MLP and residual connections."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/transformer"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-transformer", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](transformer.qmd) · [Learning path plan](review-path.qmd#computation)
+
+## What to remember {#revision-essentials}
+
+- The model builds input states from token IDs and incorporates position according to the architecture. The blocks refine one state per position.
+- Self-attention combines information across positions. The MLP transforms the state at each position independently. Residual connections and normalization accompany these transformations.
+- The output head projects final states into vocabulary logits. The decoding rule acts after this computation.
+
+## Recall from memory {#revision-check}
+
+Which part of a GPT block directly lets one position use another position’s content?
+
+<details>
+<summary>Show the answer</summary>
+
+Self-attention. The block’s MLP processes positions independently with shared parameters.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-transformer.qmd) · [English](../en/revision-transformer.qmd)
+:::

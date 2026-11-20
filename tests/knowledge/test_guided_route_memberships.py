@@ -30,7 +30,6 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
 
     generation = memberships[f"{language}/generation"]
     assert [(item.stage_id, item.role) for item in generation] == [
-        ("orientation", "core"),
         ("inference", "core"),
     ]
 

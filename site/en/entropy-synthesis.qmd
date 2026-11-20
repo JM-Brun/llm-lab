@@ -29,6 +29,10 @@ tags: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis",
 
 [← Back to the entropy lesson](entropy.qmd) · [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)
 
+[Learning path plan](review-path.qmd#prediction)
+
+<span id="revision-essentials"></span>
+
 ## The central idea
 
 An autoregressive LLM does not pick a word directly: each step produces a probability distribution over the next token, conditioned on the context. Until a token is observed there is uncertainty, and language is predictable to varying degrees. Entropy is the measure of that uncertainty; the logarithm is what makes surprisal measurable and additive.
@@ -80,6 +84,8 @@ about 79% of the maximum $\ln 4 \approx 1.386$ nats. Values are illustrative.
 - High entropy does not mean the output is false: several continuations can be plausible.
 - Normalized probabilities do not guarantee calibration.
 - Perplexity depends on the tokenizer and the evaluation protocol; any comparison must state these conventions.
+
+<span id="revision-check"></span>
 
 ## Self-check
 

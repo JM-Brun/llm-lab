@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
 summary: "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé."
-scope: "Explique les rôles et les projections apprises Q, K et V dans l'auto-attention, leur entrée commune et leurs dimensions ; laisse le calcul des scores et de l'agrégation à l'attention à produit scalaire, la contrainte temporelle au masque causal, l'implémentation au parcours de construction et le contexte historique à la page dédiée."
-purpose: "Le lecteur doit pouvoir distinguer les rôles conceptuels de Q, K et V, expliquer pourquoi Q/K déterminent les poids tandis que V fournit le contenu agrégé, et décrire qualitativement leurs dépendances sans effectuer de calcul matriciel."
+scope: "Distingue les trois projections apprises d’un état de bloc et leur rôle dans une tête d’auto-attention."
+purpose: "Prédire ce qu’un changement des valeurs peut modifier dans une tête d’attention lorsque requêtes, clés et masque restent fixes."
 suggested_route:
   previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"

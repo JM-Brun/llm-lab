@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations"
 summary: "Shows how Transformer layers turn initial vectors into context-dependent states, allowing the same token to have different representations in different contexts."
-scope: "Explains how Transformer layers turn initial embeddings into context-dependent vectors and why the same ID can therefore have different contextualized states depending on position and context; distinguishes these states from the static vectors in the embedding table."
-purpose: "Readers should be able to explain why two occurrences of the same token share an initial embedding but can have different contextualized representations, and connect this difference to processing by Transformer layers."
+scope: "Compares a token’s initial embedding with the hidden states produced for its occurrences. Sets up the study of the blocks that produce those states."
+purpose: "Use two occurrences of the same token to explain why lookup is identical and why the resulting states can depend on the prefixes."
 suggested_route:
   previous: "en/positional-encoding"
   next: "en/transformer"
@@ -86,6 +86,8 @@ The question “What have the Romans ever done for us?” and a reply such as �
 
 This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
+
+Comparing these objects prepares you to read the Transformer. In the computation itself, the blocks produce contextualized states from their inputs.
 
 ## Start with what stays the same
 

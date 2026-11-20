@@ -254,7 +254,7 @@ In the table below:
 | Module ID | Parent | Scope and boundary | Children | Immediate predecessor(s) | Immediate successor(s) | Core resources (FR / EN) |
 |---|---|---|---|---|---|---|
 | `llm-system` | — | Whole system: model, context, parameters, inference, learning and evaluation. Root of the curriculum hierarchy, not a duplicate technical lesson. | `orientation`, `shared-core`, `inference`, `scoring`, `training`, `evaluation` | — | — | `llm-overview` |
-| `orientation` | `llm-system` | Establish what an LLM does and preview the fixed-parameter generation loop as a black box. Does not teach internal computation. | — | — | `shared-core` | `llm-overview`, `generation` (preview only) |
+| `orientation` | `llm-system` | Establish what an LLM does and preview two fixed-parameter generation steps as a black box. | — | — | `shared-core` | `llm-overview` |
 | `shared-core` | `llm-system` | Shared context-to-distribution computation, independent of whether the next token is generated or observed. Ends at the conditional distribution. | `text-input`, `representations`, `transformer-computation`, `prediction` | `orientation` | `inference`, `scoring`, `training` | `text-data`, `embedding-space`, `positional-encoding`, `contextualized-representations`, `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking`, `logits`, `probabilites` / `probabilities` |
 | `text-input` | `shared-core` | Raw text, tokenization, vocabulary and token IDs; ends at the discrete model input. Does not include embeddings or corpus governance. | Text, token, token ID, tokenizer | Orientation | `representations` | Core: `text-data`; optional companion: `tokenization-strategies` |
 | `representations` | `shared-core` | Embedding lookup, positional information, initial hidden states and the distinction between initial and contextualized representations. | Token embedding, positional encoding, initial hidden state, contextualized representation | `text-input` | `transformer-computation` | `embedding-space`, `positional-encoding`, `contextualized-representations` |
@@ -335,7 +335,7 @@ The canonical resources above are existing bilingual pages, but the model does n
 - KV cache is a concept associated with generation and belongs in Deepen until implementation or learner evidence justifies a separate page.
 - The current experimental-evaluation page is a general applied protocol exercise, not a complete LLM evaluation chapter. Keep it in Practice; do not make it the canonical explanation of perplexity, held-out language-model evaluation, or benchmark design.
 - Likelihood and cross-entropy are shared by scoring and training. They have one canonical explanation each; multiple route contexts must link to the same page rather than duplicate the content.
-- The early generation preview remains an orientation resource. The detailed inference branch reuses the same canonical generation lesson at a deeper level; this is an intentional revisit, not two distinct concepts.
+- The overview demonstrates the first two turns at orientation. The inference branch uses the same example to teach the complete generation loop after the shared prediction calculation.
 
 ### 8. Migration boundary
 

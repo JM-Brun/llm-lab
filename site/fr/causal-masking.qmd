@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/causal-masking"
 summary: "Montre comment le masque causal interdit à chaque position d’utiliser les tokens futurs, ce qui rend possible la prédiction autorégressive."
-scope: "Explique la contrainte causale appliquée aux scores d’attention dans un modèle autorégressif : une position ne peut pas exploiter les positions futures ; distingue ce masque de la sélection du prochain token et des autres masques de padding ou de séquence."
-purpose: "Le lecteur doit pouvoir lire un masque causal, expliquer quelles interactions il interdit et relier cette contrainte à la factorisation autorégressive de la probabilité d’une séquence."
+scope: "Détermine les positions accessibles à chaque requête dans le calcul autorégressif et situe le masque avant la normalisation."
+purpose: "Lire une ligne du masque causal, en déduire le préfixe accessible et identifier le token suivant à prédire."
 suggested_route:
   previous: "fr/scaled-dot-product-attention"
   next: "fr/logits"

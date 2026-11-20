@@ -5,11 +5,11 @@ stages:
       fr: "Fonctionnement d’un LLM"
       en: "How an LLM works"
     objective:
-      fr: "Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes."
-      en: "Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms."
+      fr: "Situer le contexte et les paramètres du modèle. Suivre deux tours de génération dans le panorama avant d’étudier le calcul de la prédiction."
+      en: "Locate the model’s context and parameters. Follow two generation steps in the overview before studying how a prediction is computed."
     pages:
-      fr: [fr/llm-overview, fr/generation]
-      en: [en/llm-overview, en/generation]
+      fr: [fr/llm-overview]
+      en: [en/llm-overview]
     optional_pages:
       fr: [fr/transformer-architectures, fr/llm-limits, fr/llm-evolution, fr/next-concept-modeling]
       en: [en/transformer-architectures, en/llm-limits, en/llm-evolution, en/next-concept-modeling]
@@ -33,8 +33,8 @@ stages:
       fr: "Des identifiants aux représentations"
       en: "From IDs to representations"
     objective:
-      fr: "Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées."
-      en: "Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations."
+      fr: "Identifier les plongements et l’information de position. Comparer les états initiaux et contextualisés avant d’ouvrir les blocs qui transforment les premiers en seconds."
+      en: "Identify embeddings and positional information. Compare initial and contextualized states before opening the blocks that turn the former into the latter."
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
@@ -89,8 +89,8 @@ stages:
       fr: "Exploiter et concevoir le contexte"
       en: "Use and design context"
     objective:
-      fr: "Distinguer les informations encodées dans les paramètres (pré-entraînement et fine-tuning) des informations récupérées ou fournies à l'inférence (RAG et contexte), puis comprendre comment un système les sélectionne, structure, actualise et sécurise."
-      en: "Distinguish information encoded in parameters (pretraining and fine-tuning) from information retrieved or supplied at inference (RAG and context), then understand how a system selects, structures, updates, and secures it."
+      fr: "Prolonger l’inférence côté application. Expliquer l’effet d’exemples fournis dans le prompt, puis choisir les informations qu’un système transmet au modèle."
+      en: "Extend inference to the application level. Explain the effect of examples supplied in the prompt, then choose what information a system passes to the model."
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
@@ -148,3 +148,64 @@ transitions:
     purpose:
       fr: "Relier le score attribué à une cible observée à l'objectif d'apprentissage qui agrège ces pénalités pour ajuster les paramètres, sans faire du scoring un prérequis."
       en: "Connect the score assigned to an observed target with the learning objective that aggregates these penalties to update parameters, without making scoring a prerequisite."
+
+lesson_contracts:
+  llm-overview:
+    synthesis: revision-llm-overview
+  text-data:
+    synthesis: revision-text-data
+    requires: [llm-overview]
+  embedding-space:
+    synthesis: revision-embedding-space
+    requires: [text-data]
+  positional-encoding:
+    synthesis: revision-positional-encoding
+    requires: [embedding-space]
+  contextualized-representations:
+    synthesis: revision-contextualized-representations
+    requires: [embedding-space, positional-encoding]
+  transformer:
+    synthesis: revision-transformer
+    requires: [contextualized-representations]
+  queries-keys-values:
+    synthesis: revision-queries-keys-values
+    requires: [transformer]
+  scaled-dot-product-attention:
+    synthesis: revision-scaled-dot-product-attention
+    requires: [queries-keys-values]
+  causal-masking:
+    synthesis: revision-causal-masking
+    requires: [scaled-dot-product-attention]
+  logits:
+    synthesis: revision-logits
+    requires: [transformer]
+  probabilites:
+    synthesis: revision-probabilites
+    requires: [logits]
+  entropy:
+    synthesis: entropy-synthesis
+    requires: [probabilites]
+  inference-generation:
+    synthesis: revision-inference-generation
+    requires: [probabilites]
+  in-context-learning:
+    synthesis: revision-in-context-learning
+    requires: [inference-generation]
+  context-engineering:
+    synthesis: revision-context-engineering
+    requires: [in-context-learning]
+  vraisemblance:
+    synthesis: revision-vraisemblance
+    requires: [probabilites]
+  cross-entropy:
+    synthesis: revision-cross-entropy
+    requires: [vraisemblance, entropy]
+  loss:
+    synthesis: revision-loss
+    requires: [probabilites]
+  gradients:
+    synthesis: revision-gradients
+    requires: [loss]
+  training-loop:
+    synthesis: revision-training-loop
+    requires: [causal-masking, loss, gradients]

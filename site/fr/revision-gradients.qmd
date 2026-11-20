@@ -1,0 +1,47 @@
+---
+title: "Révision — Gradients et mise à jour des paramètres"
+description-meta: "La sensibilité locale de la loss, la rétropropagation et une mise à jour de descente de gradient."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-gradients", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-gradients"
+scope: "La sensibilité locale de la loss, la rétropropagation et une mise à jour de descente de gradient."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/gradients"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-gradients", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](gradients.qmd) · [Plan du parcours](review-path.qmd#training)
+
+## À retenir {#revision-essentials}
+
+- Chaque composante du gradient mesure la dérivée locale de la loss par rapport à un paramètre quand les autres restent fixes.
+- La rétropropagation applique la règle de la chaîne à travers les opérations de la passe avant. Elle calcule les dérivées que l’optimiseur utilisera.
+- En descente de gradient simple, on soustrait au paramètre le gradient multiplié par le taux d’apprentissage. Un pas trop grand peut dépasser la zone où l’approximation locale est fiable.
+- Dans un GPT, la dérivée remonte de la loss vers les logits, puis vers les paramètres qui ont contribué à ces logits. Un optimiseur peut combiner ce gradient avec des informations provenant d’itérations antérieures.
+
+## Vérifier de mémoire {#revision-check}
+
+Un paramètre vaut 1, son gradient vaut +2 et le taux d’apprentissage vaut 0,1. Quel est son prochain état avec une descente simple ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Il vaut 1 − 0,1 × 2 = 0,8. Le signe positif du gradient conduit à diminuer ce paramètre dans cette mise à jour.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-gradients.qmd) · [English](../en/revision-gradients.qmd)
+:::

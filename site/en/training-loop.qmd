@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/training-loop"
 summary: "Shows how repeated gradient steps turn a randomly initialized model into a trained one, what an optimizer adds to the gradient, and why validation loss is measured on held-out data."
-scope: "Describe one training step and its repetition, distinguish gradient, optimizer and learning rate, define train versus validation loss and overfitting, and place pretraining as the same loop at larger scale. Learning-rate schedules, gradient clipping, optimizer internals and distributed training are out of scope."
-purpose: "Explain what one training iteration does and which operations change parameters, interpret train and validation curves, and recognise overfitting without confusing validation with the final test."
+scope: "Assembles the computations into repeated training steps and distinguishes batch optimization from monitoring on held-out data."
+purpose: "Order the operations in one iteration and interpret a divergence between training and validation curves."
 suggested_route:
   previous: "en/gradients"
   next: null

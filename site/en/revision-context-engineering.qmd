@@ -1,0 +1,47 @@
+---
+title: "Review — Context engineering"
+description-meta: "Selecting, organizing and validating context under budget and reliability constraints."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-context-engineering", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-context-engineering"
+scope: "Selecting, organizing and validating context under budget and reliability constraints."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/context-engineering"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-context-engineering", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](context-engineering.qmd) · [Learning path plan](review-path.qmd#context-use)
+
+## What to remember {#revision-essentials}
+
+- A system builds the context for a call from instructions, the request, conversation history, and relevant data or tool results.
+- Token budgets force choices. The system can retrieve, structure, summarize or refresh information and must account for its provenance.
+- A retrieved document can contain a hostile instruction. Treat document content as data. Judge context quality by the results it produces and the errors it introduces.
+- Context is what the model receives. In-context learning describes adaptation observed from that input. Context engineering organizes what the system chooses to supply.
+
+## Recall from memory {#revision-check}
+
+An answer misses a fact supposedly available through RAG. What should you check before concluding the model is incapable?
+
+<details>
+<summary>Show the answer</summary>
+
+Check whether the right document was retrieved, whether the relevant passage was present and readable in the final context, and whether its provenance justifies using it.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-context-engineering.qmd) · [English](../en/revision-context-engineering.qmd)
+:::

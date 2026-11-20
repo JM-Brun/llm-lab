@@ -54,6 +54,8 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The nine detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
+[Learning path plan and review sheets](review-path.qmd)
+
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
 ::: {.guided-route-companion}

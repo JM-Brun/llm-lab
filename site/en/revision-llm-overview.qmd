@@ -1,0 +1,47 @@
+---
+title: "Review — How an LLM works"
+description-meta: "Next-token prediction, the generation loop, and what parameters and context each contribute."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-llm-overview"
+scope: "Next-token prediction, the generation loop, and what parameters and context each contribute."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/llm-overview"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](llm-overview.qmd) · [Learning path plan](review-path.qmd#orientation)
+
+## What to remember {#revision-essentials}
+
+- Text becomes a sequence of tokens. An autoregressive LLM predicts the next token from the tokens already in its context.
+- A forward pass turns that context into scores. The scores at the last position can then be normalized into a distribution over the vocabulary.
+- Generation selects a token and feeds it back into the context. Scoring reads an already-observed token’s probability. Training uses known targets to adjust the parameters.
+- Parameters encode learned patterns. The context provides the current instructions and examples. The same prediction task can support summarization or translation depending on that context.
+
+## Recall from memory {#revision-check}
+
+The rule selects “They,” then “built.” What context does the model receive on the second turn? How would you use the first distribution if “They” were an observed target to score?
+
+<details>
+<summary>Show the answer</summary>
+
+The second context is the original question followed by “They.” The parameters stay fixed. To score the token, read the probability of “They” from the first distribution. To generate, apply a decoding rule and feed back the token it selects.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-llm-overview.qmd) · [English](../en/revision-llm-overview.qmd)
+:::
