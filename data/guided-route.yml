@@ -509,6 +509,26 @@ boundaries:
         fr: "Suivre les identifiants jusqu’aux lignes de la table de plongements"
         en: "Trace token IDs to their embedding rows"
 
+  positional-input-and-contextualization:
+    criterion: >-
+      In a model with additive positional embeddings, two occurrences of the
+      same token can enter the first block with different vectors because their
+      positional terms differ. Causal self-attention then combines information
+      from accessible positions to contextualize those inputs.
+    explanations:
+      representations:
+        concept_ids: [token-embedding, positional-encoding]
+        pages: {fr: fr/positional-encoding, en: en/positional-encoding}
+      computation:
+        concept_ids: [self-attention]
+        pages: {fr: fr/transformer, en: en/transformer}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-token-to-block-input
+      label:
+        fr: "Séparer l’ajout positionnel de la contextualisation"
+        en: "Separate positional addition from contextualization"
+
   contextualization-and-causality:
     criterion: >-
       At a fixed token ID and position, the base embedding stays the same.
@@ -529,6 +549,27 @@ boundaries:
       label:
         fr: "Comparer un changement avant ou après le token étudié"
         en: "Compare a change before or after the token under study"
+
+  attention-positions-and-vocabulary:
+    criterion: >-
+      For a fixed query, attention softmax normalizes scores over key positions
+      and its weights combine the value vectors. Output softmax normalizes the
+      logits over the vocabulary. Even if the two axes have the same length,
+      adding attention weights at positions with the same token does not give
+      its probability as a next token.
+    explanations:
+      computation:
+        concept_ids: [attention-score, attention-weight]
+        pages: {fr: fr/scaled-dot-product-attention, en: en/scaled-dot-product-attention}
+      prediction:
+        concept_ids: [softmax, conditional-distribution]
+        pages: {fr: fr/probabilites, en: en/probabilities}
+    transfer:
+      pages: {fr: fr/logits-exercises, en: en/logits-exercises}
+      anchor: ex-attention-vocabulary-softmax
+      label:
+        fr: "Distinguer les poids d’attention des probabilités du prochain token"
+        en: "Distinguish attention weights from next-token probabilities"
 
   predictive-distribution-and-selection:
     criterion: >-

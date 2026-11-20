@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/logits"]
+related: ["fr/logits", "fr/scaled-dot-product-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -59,6 +59,26 @@ Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne d
 <summary>Afficher la réponse</summary>
 
 Non. Le second vecteur s'obtient en ajoutant la même constante (100) à chaque composante. Ce décalage s'annule dans la formule de softmax : les deux vecteurs produisent la même distribution. Le niveau absolu des logits n'a donc pas de signification isolée ; ce sont leurs écarts qui comptent.
+
+</details>
+
+## Deux softmax, deux axes {#ex-attention-vocabulary-softmax}
+
+Un GPT jouet a pour vocabulaire $(A,B,C)$ et reçoit le préfixe $(A,B,A)$. Pour la requête à la dernière position d’une tête d’attention causale, les scores déjà mis à l’échelle valent $(\ln 2,0,0)$ dans l’ordre des positions. Les trois clés sont accessibles. Après les blocs et la tête de sortie, les logits à cette même position valent $(0,\ln 2,0)$ dans l’ordre du vocabulaire.
+
+1. Calculez le softmax des scores d’attention. Que désignent ses composantes et à quoi servent-elles ?
+2. Calculez le softmax des logits du vocabulaire. Quelle probabilité obtient-on pour le prochain token $A$ ?
+3. Additionnez les poids des deux positions qui portent $A$. Que mesure ce total ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+| Calcul | Axe normalisé | Résultat |
+|---|---|---|
+| Softmax d’attention | Positions des clés $1,2,3$ | $(1/2,1/4,1/4)$, les coefficients qui pondèrent les trois vecteurs valeurs. |
+| Softmax de sortie | Tokens du vocabulaire $A,B,C$ | $(1/4,1/2,1/4)$, les probabilités des trois prochains tokens possibles. |
+
+Les deux positions occupées par $A$ reçoivent ensemble $3/4$ du poids de cette ligne d’attention. Ce total décrit le poids attribué à ces positions dans la somme pondérée, où chacune a son propre vecteur valeur. La distribution prédite par le softmax de sortie attribue $1/4$ à $A$.
 
 </details>
 
