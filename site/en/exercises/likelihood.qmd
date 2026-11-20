@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/likelihood"]
+related: ["en/likelihood", "en/generation"]
 tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercises", "level:applied", "language:en", "status:published"]
 -->
 
@@ -55,6 +55,29 @@ By the chain rule, $P(\text{They},\text{built}\mid q)=0.6\times0.5=0.3$. The log
 </details>
 
 **Related connection to the aggregated objective:** [Loss](../loss.qmd).
+
+### Generate or score from the same prefix {#ex-generation-versus-scoring}
+
+Keep the model fixed. Start from prefix $c$ and compare two operations over two tokens. Generation uses greedy decoding. The observed continuation to score is $(A,C)$. The table gives the model’s predicted probabilities.
+
+| Prefix | $A$ | $B$ | $C$ |
+|---|---:|---:|---:|
+| $c$ | 0.30 | 0.60 | 0.10 |
+| $cA$ | 0.05 | 0.05 | 0.90 |
+| $cB$ | 0.40 | 0.35 | 0.25 |
+
+1. Which tokens does greedy decoding generate? What prefix does it use for the second token?
+2. Which prefix is used to score the second observed token $C$? Compute the likelihood of $(A,C)$ conditional on $c$.
+3. Compute the likelihood of the generated continuation under the model too. Does the greedy continuation maximize two-token likelihood in this example?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. The decoder selects $B$ under $c$, then $A$ under $cB$. The generated continuation is $(B,A)$.
+2. Scoring follows the observed continuation. For the second token it uses $cA$. The likelihood is $p(A\mid c)\,p(C\mid cA)=0.30\times0.90=0.27$.
+3. The generated continuation has likelihood $p(B\mid c)\,p(A\mid cB)=0.60\times0.40=0.24$, below $0.27$. Greedy decoding maximizes each conditional probability along the path it follows. Selecting $B$ at the first step commits it to a different path.
+
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/vraisemblance.qmd) · [English](likelihood.qmd)

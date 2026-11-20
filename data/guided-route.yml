@@ -609,6 +609,28 @@ boundaries:
         fr: "Comparer deux distributions qui attribuent la même probabilité au token observé"
         en: "Compare two distributions that assign the same probability to the observed token"
 
+  generation-and-observed-continuation:
+    criterion: >-
+      With fixed parameters, generation and scoring start from the same
+      base next-token distribution at a shared prefix. Generation extends the prefix
+      with the selected token. Scoring extends it with the observed token to
+      evaluate the next target. The two prefixes can diverge as early as the
+      second prediction. Greedy decoding can yield a continuation with lower
+      model likelihood than the observed one over the same number of tokens.
+    explanations:
+      inference:
+        concept_ids: [autoregressive-generation, decoding-policy]
+        pages: {fr: fr/generation, en: en/generation}
+      scoring:
+        concept_ids: [teacher-forcing, sequence-likelihood]
+        pages: {fr: fr/vraisemblance, en: en/likelihood}
+    transfer:
+      pages: {fr: fr/vraisemblance-exercises, en: en/likelihood-exercises}
+      anchor: ex-generation-versus-scoring
+      label:
+        fr: "Suivre le préfixe généré et le préfixe observé"
+        en: "Trace the generated and observed prefixes"
+
   generation-and-context-across-calls:
     criterion: >-
       Within a generation, the chosen token is fed back into the current prefix

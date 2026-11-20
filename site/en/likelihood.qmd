@@ -127,7 +127,7 @@ The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/likelihood.qmd).
+[Compare the prefixes used for generation and scoring](exercises/likelihood.qmd#ex-generation-versus-scoring) or explore the [other practice questions](exercises/likelihood.qmd).
 
 
 ### Further reading
