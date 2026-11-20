@@ -145,7 +145,7 @@ Un même texte peut produire des séquences différentes selon le vocabulaire, l
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
+[Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
 
 
 ### Frontières entre les pages

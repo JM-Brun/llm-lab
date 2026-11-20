@@ -55,17 +55,22 @@ La traduction qui consomme davantage de tokens utilise une plus grande part du b
 
 </details>
 
-4. **Reconstituer la chaîne d'entrée.** On fournit au tokenizer le texte « chat suit le chat ». Il renvoie les tokens [« chat », « suit », « le », « chat »], puis le vocabulaire associe les IDs [17, 42, 8, 17]. La matrice d'embeddings $E$ a la forme $(V,d)$. Décrivez, dans l'ordre, les objets obtenus entre le texte et l'entrée vectorielle du Transformer. Quelle est la forme de la séquence d'IDs, quelle ligne de $E$ est lue pour le dernier token, et que peut-on affirmer des deux occurrences de « chat » ?
+## Du token à l’entrée du premier bloc {#ex-token-to-block-input}
+
+Un tokenizer jouet découpe « chat suit le chat » en quatre tokens et renvoie les IDs $(17,42,8,17)$. Dans ce modèle, la table de plongements $E$ a la forme $(V,2)$ et la ligne $E[17]$ vaut $(2,-1)$. Le modèle ajoute un vecteur de position à chaque plongement avant le premier bloc. Indexées à partir de zéro, les positions des deux occurrences de « chat » sont $0$ et $3$, avec $P[0]=(0,1)$ et $P[3]=(1,0)$.
+
+1. Reconstituez le chemin du texte aux plongements. Donnez la forme de la séquence d’IDs et du résultat de la recherche dans la table $E$ pour les quatre tokens. Quelle ligne est lue pour chaque « chat » ?
+2. Calculez les deux vecteurs reçus par le premier bloc pour « chat ». Quelle opération crée leur différence ?
+3. **Après la leçon sur le Transformer.** Quelle opération permet à l’état d’une occurrence de dépendre des autres tokens du préfixe ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Le texte est d'abord segmenté par le tokenizer en tokens ; le vocabulaire associe ensuite à chaque token son ID, ici la séquence $(17,42,8,17)$ de forme $(L)=(4)$. Chaque ID sert d'indice de ligne dans $E$ : le dernier token sélectionne la ligne 17. Le lookup produit donc une séquence de quatre vecteurs, de forme $(L,d)=(4,d)$. Les deux occurrences de « chat » ont le même ID et sélectionnent le même vecteur initial. Cela ne signifie ni que l'ID 17 mesure le sens du token, ni que les états contextualisés des deux occurrences resteront identiques après les couches du Transformer.
-
-**Critère de réussite :** restituer l'ordre texte → tokens → IDs → lookup, donner les formes $(4)$ puis $(4,d)$, et distinguer le vecteur initial de l'état contextualisé.
+1. Le tokenizer découpe le texte et associe à chaque token son ID. Les IDs forment un vecteur de longueur $4$. La recherche dans la table produit quatre vecteurs de dimension $2$, soit une forme $(4,2)$. Les deux occurrences lisent la ligne $17$ de $E$ et obtiennent le même plongement de token $(2,-1)$.
+2. Les entrées du premier bloc valent $E[17]+P[0]=(2,0)$ et $E[17]+P[3]=(3,-1)$. La différence vient du terme positionnel.
+3. L’auto-attention causale combine des informations des positions accessibles. Elle permet de contextualiser ces deux états à partir de leurs préfixes respectifs.
 
 </details>
-
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)

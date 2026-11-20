@@ -489,6 +489,26 @@ lesson_contracts:
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
+  token-id-and-positional-input:
+    criterion: >-
+      Within one tokenizer and with a fixed token embedding table, repeated IDs
+      select the same token vector. In a model with additive positional
+      embeddings, each occurrence gets the vector for its own position before the
+      first block. The resulting inputs can already differ before contextualization.
+    explanations:
+      text-input:
+        concept_ids: [token]
+        pages: {fr: fr/text-data, en: en/text-data}
+      representations:
+        concept_ids: [token-embedding, positional-encoding]
+        pages: {fr: fr/positional-encoding, en: en/positional-encoding}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-token-to-block-input
+      label:
+        fr: "Calculer l’entrée du premier bloc pour deux occurrences d’un token"
+        en: "Compute the first-block input for two occurrences of a token"
+
   contextualization-and-causality:
     criterion: >-
       At a fixed token ID and position, the base embedding stays the same.
