@@ -115,6 +115,8 @@ $$
 
 Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour $\tau>0$, l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
 
+Avec des logits finis, plus la température augmente, plus la distribution se rapproche de l'uniforme. Quand $\tau$ tend vers l'infini, chaque probabilité tend vers $1/V$. À basse température, un tirage sans filtre peut encore retenir un candidat de probabilité positive.
+
 La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Pour $\tau=1$, les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$ ; plus généralement, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
 
@@ -178,6 +180,8 @@ Choisir le token argmax à chaque position n'est pas équivalent à rechercher g
 </ol>
 <p id="probability-flow-description" class="meta-flow__relation">La température et les filtres sont facultatifs. La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
 
+Pendant l’entraînement, une [fonction de perte](cross-entropy.qmd) confronte les logits aux tokens cibles.
+
 ## Normalisation, calibration et vérité
 
 - **Normalisation :** propriété algébrique selon laquelle les probabilités somment à un.
@@ -218,6 +222,18 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 Avec deux logits $z=(0,\log 3)$, la softmax donne $p=(0.25,0.75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
 ![Chaîne de transformation des logits en token sélectionné, avec l'effet de la température sur un exemple numérique.](../images/probability-decoding-flow-fr.svg){fig-alt="Les logits passent éventuellement par une division par la température, puis par softmax. Des filtres top-k ou top-p facultatifs peuvent ensuite être appliqués avec renormalisation, avant une sélection par argmax ou échantillonnage. Avec z égal à (0, ln 3), les probabilités passent de 25/75 % à température 1 à 36,6/63,4 % à température 2 ; le classement reste inchangé." fig-cap="Les étapes ont des rôles distincts : transformer les scores, construire une distribution, restreindre les candidats, puis sélectionner un token." width=100%}
+
+### Comparer avec un autre jeu de quatre logits
+
+Avec $z=(3{,}0;1{,}5;1{,}0;0{,}2)$, on obtient les valeurs suivantes, arrondies en pourcentage.
+
+| Température | A | B | C | D |
+|---:|---:|---:|---:|---:|
+| 0,2 | 99,9401 | 0,0553 | 0,0045 | 0,0001 |
+| 1 | 70,4585 | 15,7214 | 9,5355 | 4,2846 |
+| 5 | 33,5306 | 24,8401 | 22,4763 | 19,1530 |
+
+À $\tau=5$, les quatre probabilités sont à moins de 10 points de pourcentage de la valeur uniforme de 25 %. Pour retrouver le tableau, réutilisez la fonction `stable_softmax` de l’atelier avec ces quatre logits et ces trois températures.
 
 ### Références
 
