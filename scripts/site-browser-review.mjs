@@ -294,17 +294,26 @@ async function runCase(testCase, caseIndex) {
       await summary.focus();
       await summary.press("Enter");
       const choice = lab.getByRole("combobox");
-      const baseline = await lab.locator("[data-attention-output]").innerText();
       const read = selector => lab.locator(selector).innerText();
+      const comparison = lab.locator("[data-attention-comparison]");
+      if (!await comparison.isVisible() || !await choice.evaluate(select =>
+        select.closest("[data-attention-controls]").nextElementSibling.matches("[data-attention-comparison]"))) {
+        throw new Error("The before-and-after comparison must be visible directly below the intervention control.");
+      }
       const baselineWeight = await read('[data-b="weight"]');
       const baselineScore = await read('[data-b="raw"]');
       const expected = lang === "fr"
-        ? { baseline: "(1,609 ; 0,782)", value: "(1,609 ; 1,565)", key: "(1 ; 2)", half: "0,5" }
-        : { baseline: "(1.609, 0.782)", value: "(1.609, 1.565)", key: "(1, 2)", half: "0.5" };
+        ? { baseline: "(1,609 ; 0,782)", weights: "(0,804 ; 0,196)", equalWeights: "(0,5 ; 0,5)", value: "(1,609 ; 1,565)", key: "(1 ; 2)", half: "0,5" }
+        : { baseline: "(1.609, 0.782)", weights: "(0.804, 0.196)", equalWeights: "(0.5, 0.5)", value: "(1.609, 1.565)", key: "(1, 2)", half: "0.5" };
 
+      if (await read("[data-attention-output]") !== expected.baseline ||
+          await read("[data-attention-after-weights]") !== expected.weights) {
+        throw new Error("The attention lab must begin at the baseline.");
+      }
       await choice.selectOption("value");
       if (await read('[data-b="weight"]') !== baselineWeight ||
           await read('[data-b="raw"]') !== baselineScore ||
+          await read("[data-attention-after-weights]") !== expected.weights ||
           await read("[data-attention-output]") !== expected.value) {
         throw new Error("Changing only V must preserve the scores and weights and change the weighted output.");
       }
@@ -312,12 +321,18 @@ async function runCase(testCase, caseIndex) {
       if (await read('[data-b="raw"]') !== "2" ||
           await read('[data-a="weight"]') !== expected.half ||
           await read('[data-b="weight"]') !== expected.half ||
+          await read("[data-attention-after-weights]") !== expected.equalWeights ||
           await read("[data-attention-output]") !== expected.key) {
         throw new Error("Equal keys must give equal weights over both accessible positions.");
       }
+      if (await read("[data-attention-before-weights]") !== expected.weights ||
+          await read("[data-attention-before-output]") !== expected.baseline) {
+        throw new Error("The Before column must stay fixed after an intervention.");
+      }
       await choice.selectOption("baseline");
-      if (baseline !== expected.baseline || await read("[data-attention-output]") !== baseline) {
-        throw new Error("The attention lab must start with and return to the same baseline.");
+      if (await read("[data-attention-output]") !== expected.baseline ||
+          await read("[data-attention-after-weights]") !== expected.weights) {
+        throw new Error("The After column must return to the baseline after reset.");
       }
     }
     if (kind === "homepage") {

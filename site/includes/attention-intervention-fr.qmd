@@ -12,6 +12,16 @@
         <option value="key">Changer seulement la clé de B en (1 ; 1)</option>
       </select>
     </div>
+    <div class="table-responsive" data-attention-comparison hidden>
+      <table class="table table-sm">
+        <caption class="caption-top">Effet de l’intervention</caption>
+        <thead><tr><th class="px-1 px-sm-2" scope="col">Mesure</th><th class="px-1 px-sm-2" scope="col">Avant</th><th class="px-1 px-sm-2" scope="col">Après</th></tr></thead>
+        <tbody>
+          <tr><th class="px-1 px-sm-2" scope="row">Poids A et B</th><td class="px-1 px-sm-2" data-attention-before-weights></td><td class="px-1 px-sm-2" data-attention-after-weights></td></tr>
+          <tr><th class="px-1 px-sm-2" scope="row">Sortie<span class="visually-hidden"> (somme des contributions)</span></th><td class="px-1 px-sm-2" data-attention-before-output></td><td class="px-1 px-sm-2"><span data-attention-output role="status" aria-atomic="true"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="table-responsive">
       <table class="table table-sm">
         <caption>Calcul pour une requête et deux positions accessibles</caption>
@@ -26,8 +36,8 @@
         </tbody>
       </table>
     </div>
-    <p role="status"><strong>Sortie (somme des contributions)</strong> <span data-attention-output>(1,609 ; 0,782)</span></p>
-    <p>Exemple de départ : poids ≈ (0,804 ; 0,196), sortie ≈ (1,609 ; 0,782).</p>
+    <p data-attention-static-summary><strong>Sortie (somme des contributions)</strong> (1,609 ; 0,782)</p>
+    <p data-attention-static-summary>Exemple de départ : poids ≈ (0,804 ; 0,196), sortie ≈ (1,609 ; 0,782).</p>
     <details>
       <summary>Afficher le raisonnement</summary>
       <p>Si seule v<sub>B</sub> double, les poids restent identiques et la deuxième composante de la sortie double. Si les clés deviennent identiques, les deux poids valent 0,5 et la sortie devient (1 ; 2).</p>

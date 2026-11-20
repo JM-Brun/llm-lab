@@ -4,15 +4,17 @@
   function initialize(root) {
     const controls = root.querySelector("[data-attention-controls]");
     const select = controls.querySelector("select");
-    const output = root.querySelector("[data-attention-output]");
+    const comparison = root.querySelector("[data-attention-comparison]");
+    const afterWeights = comparison.querySelector("[data-attention-after-weights]");
+    const afterOutput = comparison.querySelector("[data-attention-output]");
     const number = new Intl.NumberFormat(root.lang, { maximumFractionDigits: 3 });
     const separator = root.lang === "fr" ? " ; " : ", ";
     const vector = (values) => `(${values.map((value) => number.format(value)).join(separator)})`;
 
-    function update() {
+    function calculate(intervention) {
       const query = [1, 1];
-      const keys = [[1, 1], select.value === "key" ? [1, 1] : [0, 0]];
-      const values = [[2, 0], select.value === "value" ? [0, 8] : [0, 4]];
+      const keys = [[1, 1], intervention === "key" ? [1, 1] : [0, 0]];
+      const values = [[2, 0], intervention === "value" ? [0, 8] : [0, 4]];
       const rawScores = keys.map((key) =>
         query.reduce((sum, coordinate, index) => sum + coordinate * key[index], 0),
       );
@@ -24,6 +26,21 @@
       const contributions = values.map((value, index) =>
         value.map((coordinate) => weights[index] * coordinate),
       );
+
+      const [first, second] = contributions;
+      const output = first.map((coordinate, index) => coordinate + second[index]);
+      return { keys, values, rawScores, scaledScores, weights, contributions, output };
+    }
+
+    const baseline = calculate("baseline");
+    comparison.querySelector("[data-attention-before-weights]").textContent = vector(baseline.weights);
+    comparison.querySelector("[data-attention-before-output]").textContent = vector(baseline.output);
+
+    function update() {
+      const result = select.value === "baseline" ? baseline : calculate(select.value);
+      const { keys, values, rawScores, scaledScores, weights, contributions, output } = result;
+      afterWeights.textContent = vector(weights);
+      afterOutput.textContent = vector(output);
 
       for (const [index, position] of ["a", "b"].entries()) {
         const cells = {
@@ -38,13 +55,15 @@
           root.querySelector(`[data-${position}="${row}"]`).textContent = text;
         }
       }
-      const [first, second] = contributions;
-      output.textContent = vector(first.map((coordinate, index) => coordinate + second[index]));
     }
 
     update();
     select.addEventListener("change", update);
     controls.hidden = false;
+    comparison.hidden = false;
+    root.querySelectorAll("[data-attention-static-summary]").forEach((item) => {
+      item.hidden = true;
+    });
   }
 
   document.querySelectorAll("[data-attention-intervention]").forEach(initialize);
