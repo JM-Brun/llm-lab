@@ -37,6 +37,8 @@ Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : le
 
 </details>
 
+[Comparer l'effet d'un changement avant ou après une position](contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 ::: {.language-switch}
 **Langue :** [Français](causal-masking.qmd) · [English](../../en/exercises/causal-masking.qmd)
 :::

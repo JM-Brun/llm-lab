@@ -40,6 +40,23 @@ Vous avez compris cette étape si vous distinguez **identité du vecteur initial
 
 
 
+## Quel changement peut atteindre l'état courant ? {#ex-contextualization-causal-boundary}
+
+Dans un GPT causal aux paramètres fixes, considérez trois séquences d'identifiants : `[A, X, U]`, `[B, X, U]` et `[A, X, V]`. Observez la deuxième position, celle de `X`, dans les trois séquences. Les indices de position sont identiques et la passe avant est déterministe.
+
+1. Quelles séquences donnent le même vecteur d'embedding de base en `X` ?
+2. Dans quelle comparaison un bloc peut-il changer l'état de `X` ? Par quelle opération ?
+3. Dans quelle comparaison l'état de `X` doit-il rester identique à chaque couche ? Quelle règle l'impose ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Les trois. Le même ID sélectionne la même ligne de la table. La position de `X` est également fixée.
+2. Entre `[A, X, U]` et `[B, X, U]`, l'auto-attention peut transmettre à `X` l'effet du changement de `A` en `B`. La différence est possible et dépend des poids appris.
+3. Entre `[A, X, U]` et `[A, X, V]`, le [masque causal](../causal-masking.qmd) interdit à `X` d'utiliser la troisième position. Le préfixe accessible reste identique à chaque couche, donc l'état de `X` aussi, à la tolérance numérique près.
+
+</details>
+
 ## Enquête guidée — une feature SAE dans Neuronpedia
 
 [Ouvrir l'exemple Gemma Scope](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Documentation des tableaux de bord](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).

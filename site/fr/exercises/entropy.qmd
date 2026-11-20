@@ -67,11 +67,14 @@ Pour un même contexte, supposons qu'un modèle attribue les probabilités suiva
 
 ## Du surprisal des tokens au score d'une séquence
 
+::: {#ex-entropy-and-observed-score}
+
 Considérons maintenant trois tokens observés successifs. Leurs probabilités conditionnelles, évaluées à chaque position avec le préfixe observé disponible, valent $1/2$, $1/4$ et $1/8$.
 
 1. Calculez le surprisal de chaque token en bits.
 2. Calculez la probabilité de la séquence et son surprisal total.
 3. Calculez le surprisal moyen par token. Cette moyenne observée est-elle automatiquement égale à l'entropie du modèle ?
+4. Au troisième pas, la probabilité du token observé vaut $1/8$. Peut-on en déduire l'entropie prédictive à ce pas ? Comparez les distributions $(1/2, 1/4, 1/8, 1/8)$ et $(1/4, 1/4, 1/8, 3/8)$ si la troisième issue est la cible.
 
 <details>
 <summary>Afficher le corrigé</summary>
@@ -79,10 +82,15 @@ Considérons maintenant trois tokens observés successifs. Leurs probabilités c
 1. Les surprisals des tokens valent 1, 2 et 3 bits.
 2. Par la règle de chaîne, la probabilité de la séquence vaut $(1/2)(1/4)(1/8)=1/64$. Son surprisal total vaut $-\log_2(1/64)=6$ bits, soit la somme $1+2+3$.
 3. La moyenne observée vaut $6/3=2$ bits par token. Elle n'est pas automatiquement égale à l'entropie du modèle : l'entropie est une espérance sous une distribution prédictive donnée, tandis que cette moyenne est calculée sur une séquence observée. La NLL moyenne sur un jeu de données est liée à l'entropie croisée empirique, selon les cibles et la convention de comptage retenues.
+4. Les deux distributions donnent 3 bits de surprisal pour la troisième issue. Leurs entropies diffèrent, avec $1,75$ bit pour la première et environ $1,91$ bit pour la seconde. Le score de la cible laisse indéterminée la répartition des probabilités sur les autres issues.
 
 </details>
 
+:::
+
 **Ne pas confondre les quantités :** le surprisal d'un token est une valeur au niveau d'un événement ; l'entropie est une espérance sur les issues possibles ; la log-vraisemblance d'une séquence additionne les log-probabilités conditionnelles ; la NLL / entropie croisée moyenne ajoute une convention de cible et d'agrégation. Voir [Vraisemblance](../vraisemblance.qmd) pour la factorisation d'une séquence.
+
+[Appliquer la règle de chaîne à une continuation observée](vraisemblance.qmd#ex-overview-likelihood-transfer).
 
 ::: {.language-switch}
 **Langue :** [Français](entropy.qmd) · [English](../../en/exercises/entropy.qmd)
