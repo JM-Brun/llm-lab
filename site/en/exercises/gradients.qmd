@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/gradients"]
+related: ["en/gradients", "en/cross-entropy"]
 tags: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:en", "status:published"]
 -->
 
@@ -52,6 +52,27 @@ It may indicate a derivation or implementation bug, but also a poorly chosen $\e
 <summary>Show answer</summary>
 
 The gradient describes a local change. A step that is too large can leave the region where that approximation is useful, overshoot a minimum, or increase the objective; the learning rate must be controlled.
+
+</details>
+
+## How do updates compare at equal loss? {#ex-score-to-parameter-update}
+
+Keep the prefix and the observed token $A$ fixed. In this toy model, the logits are $z=u+b$, where $u$ is fixed and only the output bias $b$ is trainable. Two settings of $b$ give the following distributions over $(A,B,C)$.
+
+$$
+p=(1/2,\;1/4,\;1/4),\qquad q=(1/2,\;3/8,\;1/8).
+$$
+
+1. Calculate the log-likelihood of $A$ and the [loss for this target](../cross-entropy.qmd) in both cases. This is the only target included.
+2. With the one-hot target $y=(1,0,0)$, calculate the gradient of the loss with respect to the bias. The addition $z=u+b$ passes each logit derivative to the corresponding bias.
+3. Calculate the change in bias for a gradient-descent step with learning rate $\eta=1/5$. Does the score of $A$ determine how the step treats $B$ and $C$?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. In both cases, the log-likelihood is $\ln(1/2)=-\ln 2$ and the loss is $\ln 2$.
+2. The gradient is the predicted distribution minus $y$. This gives $(-1/2,\,1/4,\,1/4)$ for $p$ and $(-1/2,\,3/8,\,1/8)$ for $q$.
+3. The change is $-\eta\nabla_b L$. It is $(1/10,\,-1/20,\,-1/20)$ for $p$ and $(1/10,\,-3/40,\,-1/40)$ for $q$. The bias of $A$ increases by the same amount. For $p$, the biases of $B$ and $C$ decrease equally. For $q$, the bias of $B$ decreases three times as much as that of $C$. The target probability determines the scalar loss. Each bias update depends on the probability of its corresponding token.
 
 </details>
 
