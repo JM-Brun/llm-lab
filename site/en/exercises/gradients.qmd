@@ -66,6 +66,7 @@ $$
 1. Calculate the log-likelihood of $A$ and the [loss for this target](../cross-entropy.qmd) in both cases. This is the only target included.
 2. With the one-hot target $y=(1,0,0)$, calculate the gradient of the loss with respect to the bias. The addition $z=u+b$ passes each logit derivative to the corresponding bias.
 3. Calculate the change in bias for a gradient-descent step with learning rate $\eta=1/5$. Does the score of $A$ determine how the step treats $B$ and $C$?
+4. Make another prediction on the same prefix under two conditions. First stop after computing the gradient, before the optimizer step. Then apply the step and recompute $p(A)$ and $q(A)$. For the second calculation, you can use $\ln p$ and $\ln q$ as the initial logits up to a shared additive constant.
 
 <details>
 <summary>Show the worked answer</summary>
@@ -73,6 +74,7 @@ $$
 1. In both cases, the log-likelihood is $\ln(1/2)=-\ln 2$ and the loss is $\ln 2$.
 2. The gradient is the predicted distribution minus $y$. This gives $(-1/2,\,1/4,\,1/4)$ for $p$ and $(-1/2,\,3/8,\,1/8)$ for $q$.
 3. The change is $-\eta\nabla_b L$. It is $(1/10,\,-1/20,\,-1/20)$ for $p$ and $(1/10,\,-3/40,\,-1/40)$ for $q$. The bias of $A$ increases by the same amount. For $p$, the biases of $B$ and $C$ decrease equally. For $q$, the bias of $B$ decreases three times as much as that of $C$. The target probability determines the scalar loss. Each bias update depends on the probability of its corresponding token.
+4. Computing the gradient alone leaves the biases fixed, so both probabilities of $A$ stay at $1/2$. After the step, normalize again. For an initial distribution $r$, the new probability of $A$ is $r_A e^{\Delta b_A}/\sum_j r_j e^{\Delta b_j}$. It is about $0.537$ starting from $p$ and $0.540$ starting from $q$. The numerator is identical in both cases. In the denominator, each term combines a token’s initial probability and its bias change.
 
 </details>
 

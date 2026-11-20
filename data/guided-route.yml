@@ -25,6 +25,12 @@ stages:
     pages:
       fr: [fr/llm-overview]
       en: [en/llm-overview]
+    compact_title: {fr: "Prédiction et boucle (aperçu)", en: "Prediction and loop (preview)"}
+    conceptual_focus:
+      llm-overview:
+        visit: preview
+        objects: ["concept:next-token-prediction", "concept:autoregressive-generation"]
+        outcome: {fr: "Suivre deux tours de prédiction et de réinjection", en: "Trace two rounds of prediction and feedback"}
     optional_pages:
       fr: [fr/transformer-architectures, fr/llm-limits, fr/llm-evolution, fr/next-concept-modeling]
       en: [en/transformer-architectures, en/llm-limits, en/llm-evolution, en/next-concept-modeling]
@@ -50,6 +56,12 @@ stages:
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
+    compact_title: {fr: "Tokeniser", en: "Tokenize"}
+    conceptual_focus:
+      text-data:
+        mobilizes: ["node:raw-text-context"]
+        objects: ["concept:token", "node:token-ids"]
+        outcome: {fr: "Relier chaque token à son identifiant", en: "Relate each token to its ID"}
     optional_pages:
       fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation]
       en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation]
@@ -83,6 +95,20 @@ stages:
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
+    compact_title: {fr: "Représenter", en: "Represent"}
+    conceptual_focus:
+      embedding-space:
+        mobilizes: ["node:token-ids"]
+        objects: ["concept:token-embedding"]
+        outcome: {fr: "Retrouver le vecteur associé à un identifiant", en: "Retrieve the vector for a token ID"}
+      positional-encoding:
+        mobilizes: ["concept:token-embedding"]
+        objects: ["concept:positional-encoding"]
+        outcome: {fr: "Distinguer le contenu du token et sa position", en: "Distinguish token content from its position"}
+      contextualized-representations:
+        mobilizes: ["concept:token-embedding", "concept:positional-encoding"]
+        objects: ["concept:contextualized-representation"]
+        outcome: {fr: "Expliquer pourquoi deux occurrences du même token peuvent avoir des états différents", en: "Explain why two occurrences of one token can have different states"}
     optional_pages:
       fr: [fr/tensors, fr/rope, fr/sinusoidal-positional-encoding, fr/contextualized-representations-advanced, fr/embeddings-deep-dive]
       en: [en/tensors, en/rope, en/sinusoidal-positional-encoding, en/contextualized-representations-advanced, en/embeddings-deep-dive]
@@ -118,6 +144,24 @@ stages:
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
+    compact_title: {fr: "Contextualiser", en: "Contextualize"}
+    conceptual_focus:
+      transformer:
+        mobilizes: ["node:initial-hidden-states"]
+        objects: ["node:forward-computation"]
+        outcome: {fr: "Suivre la transformation des états par les blocs", en: "Trace how the blocks transform the states"}
+      queries-keys-values:
+        mobilizes: ["node:transformer-block-input"]
+        objects: ["concept:query", "concept:key", "concept:value"]
+        outcome: {fr: "Prévoir l’effet de V à requêtes, clés et masque fixés", en: "Predict the effect of V with queries, keys and mask fixed"}
+      scaled-dot-product-attention:
+        mobilizes: ["concept:query", "concept:key", "concept:value"]
+        objects: ["concept:scaled-dot-product-attention", "node:attention-weights"]
+        outcome: {fr: "Calculer les poids d’une requête et agréger les valeurs", en: "Compute one query’s weights and aggregate the values"}
+      causal-masking:
+        mobilizes: ["concept:attention-score"]
+        objects: ["concept:causal-mask", "node:masked-attention-scores"]
+        outcome: {fr: "Déterminer quelles positions participent au softmax", en: "Determine which positions participate in softmax"}
     optional_pages:
       fr: [fr/cross-attention, fr/attention-score-scaling, fr/queries-keys-values-advanced, fr/multimodal-architectures, fr/hybrid-llm-architectures]
       en: [en/cross-attention, en/attention-score-scaling, en/queries-keys-values-advanced, en/multimodal-architectures, en/hybrid-llm-architectures]
@@ -152,6 +196,20 @@ stages:
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
+    compact_title: {fr: "Projeter et normaliser", en: "Project and normalize"}
+    conceptual_focus:
+      logits:
+        mobilizes: ["node:final-hidden-states"]
+        objects: ["concept:logits"]
+        outcome: {fr: "Associer un score à chaque token du vocabulaire", en: "Assign a score to each vocabulary token"}
+      probabilites:
+        mobilizes: ["concept:logits"]
+        objects: ["concept:conditional-distribution"]
+        outcome: {fr: "Normaliser les scores sur le vocabulaire", en: "Normalize scores over the vocabulary"}
+      entropy:
+        mobilizes: ["concept:conditional-distribution"]
+        objects: ["concept:entropy"]
+        outcome: {fr: "Distinguer l’incertitude de la distribution et la surprise d’un token", en: "Distinguish distribution uncertainty from one token’s surprisal"}
     optional_pages:
       fr: []
       en: []
@@ -185,6 +243,17 @@ stages:
     pages:
       fr: [fr/generation]
       en: [en/generation]
+    compact_title: {fr: "Générer (reprise)", en: "Generate (revisit)"}
+    prediction_use:
+      context: {fr: "S’allonge à chaque token réinjecté", en: "Grows with each token fed back"}
+      parameters: fixed
+      action: {fr: "Sélectionner puis réinjecter un token", en: "Select and feed back a token"}
+    conceptual_focus:
+      inference-generation:
+        visit: revisit
+        mobilizes: ["concept:conditional-distribution"]
+        objects: ["concept:autoregressive-generation", "concept:prefill", "concept:decode-step"]
+        outcome: {fr: "Relier le premier token aux tours suivants", en: "Connect the first token to subsequent steps"}
     optional_pages:
       fr: [fr/decoding-strategies, fr/llm-computational-complexity]
       en: [en/decoding-strategies, en/llm-computational-complexity]
@@ -218,6 +287,20 @@ stages:
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
+    compact_title: {fr: "Concevoir le contexte", en: "Design the context"}
+    prediction_use:
+      context: {fr: "Assemblé pour chaque appel", en: "Assembled for each call"}
+      parameters: fixed
+      action: {fr: "Choisir les informations fournies", en: "Choose the information supplied"}
+    conceptual_focus:
+      in-context-learning:
+        mobilizes: ["node:token-context"]
+        objects: ["concept:in-context-learning"]
+        outcome: {fr: "Expliquer l’effet d’un exemple fourni à paramètres fixes", en: "Explain the effect of a supplied example with fixed parameters"}
+      context-engineering:
+        mobilizes: ["node:token-context"]
+        objects: ["concept:context-engineering"]
+        outcome: {fr: "Déterminer ce qui est effectivement transmis à chaque appel", en: "Determine what is actually supplied in each call"}
     optional_pages:
       fr: [fr/rag-memory-boundaries, fr/document-retrieval]
       en: [en/rag-memory-boundaries, en/document-retrieval]
@@ -251,6 +334,20 @@ stages:
     pages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
+    compact_title: {fr: "Scorer", en: "Score"}
+    prediction_use:
+      context: {fr: "Préfixe donné pour chaque cible", en: "Prefix given for each target"}
+      parameters: fixed
+      action: {fr: "Calculer le score d’une cible ou d’une suite observée", en: "Score an observed target or sequence"}
+    conceptual_focus:
+      vraisemblance:
+        mobilizes: ["concept:conditional-distribution", "concept:observed-target"]
+        objects: ["concept:sequence-likelihood", "concept:log-likelihood"]
+        outcome: {fr: "Combiner les probabilités conditionnelles d’une suite observée", en: "Combine the conditional probabilities of an observed sequence"}
+      cross-entropy:
+        mobilizes: ["concept:conditional-distribution", "concept:observed-target"]
+        objects: ["concept:cross-entropy", "node:token-nll"]
+        outcome: {fr: "Calculer la pénalité à une position et reconnaître le cas one-hot", en: "Compute a one-position penalty and identify the one-hot case"}
     optional_pages:
       fr: [fr/language-modeling-math, fr/mathematical-foundations]
       en: [en/language-modeling-math, en/mathematical-foundations]
@@ -282,6 +379,24 @@ stages:
     pages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
+    compact_title: {fr: "Entraîner", en: "Train"}
+    prediction_use:
+      context: {fr: "Préfixes des exemples observés", en: "Prefixes from observed examples"}
+      parameters: updated
+      action: {fr: "Agréger les pertes et ajuster les paramètres", en: "Aggregate losses and update parameters"}
+    conceptual_focus:
+      loss:
+        mobilizes: ["node:token-nll"]
+        objects: ["node:loss-reduction", "node:training-objective"]
+        outcome: {fr: "Former un scalaire à partir des pertes sur les positions valides", en: "Form a scalar from the losses at valid positions"}
+      gradients:
+        mobilizes: ["node:training-objective"]
+        objects: ["concept:gradient", "concept:parameter-update"]
+        outcome: {fr: "Passer du gradient à la variation des paramètres", en: "Use the gradient to compute the parameter change"}
+      training-loop:
+        mobilizes: ["concept:parameter-update"]
+        objects: ["concept:training-loop"]
+        outcome: {fr: "Repérer quand les paramètres sont ajustés et quand le modèle est évalué", en: "Identify when parameters are updated and when the model is evaluated"}
     optional_pages:
       fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training, fr/mathematical-foundations, fr/score-centering]
       en: [en/cross-entropy, en/scaling-laws, en/post-training, en/mathematical-foundations, en/score-centering]
@@ -343,7 +458,7 @@ lesson_contracts:
     synthesis: revision-probabilites
     requires: [logits]
   entropy:
-    synthesis: entropy-synthesis
+    synthesis: revision-entropy
     requires: [probabilites]
   inference-generation:
     synthesis: revision-inference-generation
@@ -359,7 +474,7 @@ lesson_contracts:
     requires: [probabilites]
   cross-entropy:
     synthesis: revision-cross-entropy
-    requires: [vraisemblance, entropy]
+    requires: [probabilites]
   loss:
     synthesis: revision-loss
     requires: [probabilites]
@@ -433,13 +548,36 @@ boundaries:
         fr: "Comparer deux distributions qui attribuent la même probabilité au token observé"
         en: "Compare two distributions that assign the same probability to the observed token"
 
+  generation-and-context-across-calls:
+    criterion: >-
+      Within a generation, the chosen token is fed back into the current prefix
+      if generation continues. On another call, the application defines the input.
+      Stored history and examples can affect the new prediction through context
+      only if they are supplied again, directly or through derived information.
+      Both calls can use the same fixed model parameters.
+    explanations:
+      inference:
+        concept_ids: [autoregressive-generation]
+        pages: {fr: fr/generation, en: en/generation}
+      context-use:
+        concept_ids: [context-engineering, in-context-learning]
+        pages: {fr: fr/context-engineering, en: en/context-engineering}
+    transfer:
+      pages: {fr: fr/context-engineering-exercises, en: en/context-engineering-exercises}
+      anchor: ex-context-between-calls
+      label:
+        fr: "Suivre ce qui passe d’un appel au suivant"
+        en: "Trace what carries over to the next call"
+
   observed-score-and-parameter-update:
     criterion: >-
       At one included position with a one-hot target, equal target probabilities give
       equal cross-entropy losses. The gradient with respect to the logits is the
       predicted distribution minus the target vector. If only the additive output
       bias is trainable, different distributions with the same loss can give different
-      bias updates under the same gradient-descent rule.
+      bias updates under the same gradient-descent rule. Computing a gradient
+      leaves the bias fixed. After an optimizer step, a new forward pass can assign
+      different target probabilities even when the target bias changed equally.
     explanations:
       scoring:
         concept_ids: [cross-entropy, negative-log-likelihood]

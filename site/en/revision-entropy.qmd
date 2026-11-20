@@ -1,0 +1,49 @@
+---
+title: "Review — Predictive entropy"
+description-meta: "Uncertainty in a distribution at fixed context, one token’s surprisal, and the distinction between them."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-entropy", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-entropy"
+scope: "Uncertainty in a distribution at fixed context, one token’s surprisal, and the distinction between them."
+purpose: "Compare the entropy of two distributions and compute the observed token’s surprisal."
+revision_role: synthesis
+revision_of: ["en/entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/entropy-synthesis"]
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-entropy", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](entropy.qmd) · [Learning path plan](review-path.qmd#prediction)
+
+## What to remember {#revision-essentials}
+
+- At fixed context, the model produces a distribution $p$ over the vocabulary. Its entropy $H(p)=-\sum_i p_i\log p_i$ is the average surprisal under that distribution.
+- On the same vocabulary, a uniform distribution has maximum entropy. A distribution concentrated on a single token has zero entropy.
+- For an observed token $y$, surprisal is $-\log p(y)$. The smaller the probability the model assigns to $y$, the greater its surprisal.
+- The natural logarithm gives nats. The base-2 logarithm gives bits.
+
+## Recall from memory {#revision-check}
+
+Given the same context, two models assign probabilities to two tokens. The first assigns 90% and 10%, the second 50% and 50%. Which distribution has higher entropy? What is the second token’s surprisal under the first model if it is observed?
+
+<details>
+<summary>Show the answer</summary>
+
+The uniform distribution has higher entropy, $\log 2\approx 0.693$ nats. The second token has probability $0.1$ under the first model, so its surprisal is $-\log 0.1\approx 2.303$ nats.
+
+</details>
+
+[Relate entropy to likelihood and loss](entropy-synthesis.qmd)
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-entropy.qmd) · [English](../en/revision-entropy.qmd)
+:::

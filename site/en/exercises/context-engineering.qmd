@@ -80,14 +80,25 @@ Compare a no-retrieval condition with a retrieval condition on a held-out questi
 System context is the selected information supplied: instructions, question, and two passages. The input sequence is their tokenized (and possibly structured) representation. At position $t$, accessible context is limited by the causal mask and available window; future positions are masked. The 200 messages and memory remain application data unless selected and supplied.
 </details>
 
-## Trace what happens to external information
+<a id="trace-what-happens-to-external-information"></a>
 
-7. **A search engine returns five passages, but the system keeps only two after filtering. Memory also contains a user preference that is not selected. Finally, a solved example is added to the prompt. What can condition the answer, and where does ICL occur?**
+## Trace context across two calls {#ex-context-between-calls}
+
+7. **For the first call, a search engine returns five passages. The application supplies the question, the two retained passages, and a worked example that demonstrates the expected format. A user preference stays in memory. Generation continues after the first token is selected.**
+
+   The application then stores the example and answer in its history. On a new call with the same model parameters, it supplies only the same question and the same passages. Nothing else from the first call is carried over, even in a summary.
+
+   - What information can condition the first prediction? Where does ICL come in?
+   - How does the first selected token affect the next prediction within that call?
+   - What does the model receive again from the first call? If the new answer uses the same format, what can you conclude from that observation?
 
 <details>
 <summary>Show the worked answer</summary>
 
-Only the two retained passages that are actually supplied can directly condition the computation, together with the question and other context elements. The three rejected passages and the unselected stored preference are not visible to the model. The supplied solved example may support ICL: the model adapts its response to a demonstration in context without updating its parameters. RAG and ICL are distinct dimensions that can coexist.
+- The question, two supplied passages, and worked example are in the first context. The example can influence the response through ICL. The other three passages and the preference stay in the application.
+- The first selected token is added to the prefix that conditions the next prediction within that generation.
+- The new call receives the question and the two passages. Model parameters are fixed across both calls. The format could stay the same, for example if the question is enough to elicit it. That outcome alone cannot establish that the example was supplied again or that the parameters were updated.
+
 </details>
 
 ::: {.language-switch}

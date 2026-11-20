@@ -83,7 +83,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Le masque agit sur les scores **avant** le softmax : c'est le seul point où il peut modifier les positions accessibles à la normalisation. Quelles positions interdire — la contrainte causale — et comment traiter une ligne entièrement masquée sont définis dans le [masque causal](causal-masking.qmd), prochaine étape du parcours.
+Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Dans ce calcul, le masque additif s’applique aux scores mis à l’échelle **avant** le softmax. La leçon suivante, sur le [masque causal](causal-masking.qmd), explique comment construire ce masque et déduire les positions accessibles.
 
 Dans le fil rouge « C'est une bonne situation, ça, scribe ? », suivez la dernière position du préfixe. Sa requête est comparée aux clés des positions accessibles, puis ses poids servent à combiner les valeurs de ces positions. Cette somme est la sortie de la tête pour cette position. Le [masque causal](causal-masking.qmd) fixe les positions accessibles.
 

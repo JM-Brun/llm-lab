@@ -22,6 +22,20 @@ The `boundaries` entries in the same registry connect a distinction taught acros
 
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
+### Conceptual view of the current route
+
+Each stage's `conceptual_focus` names the concepts a visit mobilizes, the objects it studies and one short bilingual learning outcome. It is keyed by the lesson's bilingual page-map topic. The stage's `pages` lists supply the study order. A `concept:<id>` reference resolves to [the concept registry](../data/concepts.yml). A `node:<id>` reference resolves to an existing object or operation in [the computational graph](../data/computational-graph.yml). The generator checks that studied objects list the lesson as a resource. Mobilized concepts describe what the lesson draws on.
+
+`compact_title` supplies the stage labels in the global skeleton. After the early glimpse of the loop, the four computation stages unpack the shared prediction. The context passes through tokenization, input representation, Transformer blocks and projection to next-token logits. Softmax gives the base distribution. The positional mechanism can act inside the blocks, as with RoPE. Entropy measures uncertainty in the resulting distribution. The panorama previews two steps of the generation loop. The generation lesson returns to the same mechanism to explain the first token and subsequent decode steps.
+
+The last line links four sibling uses of the shared predictor. Each stage's `prediction_use` gives the context, parameter behavior and action in the comparison. Generation feeds a chosen token back into the context. Context design changes what is supplied at inference. Scoring reads a target probability for a given prefix. Training adjusts parameters using losses on observed examples. The map and each core lesson display the same visit details, with an arrow from ideas used to objects studied and a short outcome. Each core lesson links to the primary revision sheet resolved from its `lesson_contracts` entry. The [learning plan](../site/en/review-path.qmd) gives the detailed scope, prerequisites and review objectives.
+
+
+Inside a head, Q and K produce scores, the causal mask restricts which positions enter normalization, and the resulting weights combine V. The learner studies the whole attention calculation before focusing on the causal constraint. The review sheets check distinct skills: predicting the effect of changing V, computing a head’s output, and comparing a causal mask with zeroing a weight after normalization. The [causal masking review](../site/en/revision-causal-masking.qmd#revision-check) tests this distinction.
+
+Within a generation, a selected token feeds back into the current prefix. The application decides which history and examples enter another call. The [two-call exercise](../site/en/exercises/context-engineering.qmd#ex-context-between-calls), linked from both stages, asks learners to trace the generated token, the supplied example, and the fixed parameters.
+
+The probability lesson supplies the distribution for both entropy and scoring. The scoring lessons work with two different units: likelihood combines probabilities across an observed sequence, while cross-entropy gives a penalty at one position. For a one-hot target, that penalty is the per-token NLL used by the loss lesson to build a scalar from valid positions. Both scoring lessons can start from the probability lesson. The entropy review covers only the predictive distribution and token surprisal; the broader entropy synthesis connects the downstream uses.
 
 ## Path A — Theory / Understand: the conceptual order
 
@@ -51,11 +65,9 @@ The conceptual relationship is not a rigid pipeline: pretraining creates reusabl
 
 ### Reader-facing sequence and operational branches
 
-The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
+The generated conceptual view shows the complete current study sequence on the learning-map pages. Technical data flow remains documented in the computational graph. For example, a reader studies contextualized representations before opening the Transformer blocks that produce them.
 
-`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities → context use (ICL and context engineering)`.
-
-The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
+The panorama introduces the autoregressive loop with fixed parameters before the learner studies each internal component. The generation lesson explains that loop after the probability lesson.
 
 The Theory route explains why training uses observed targets, a loss and parameter updates. Operational corpus preparation and training-example construction belong exclusively to the separate Build path; they are not numbered stages or prerequisites in this conceptual route.
 

@@ -158,7 +158,7 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gradients.qmd).
+Calculez [deux mises à jour à perte égale](exercises/gradients.qmd#ex-score-to-parameter-update) et comparez la prédiction suivante. Retrouvez aussi les [autres exercices de la leçon](exercises/gradients.qmd).
 
 
 ### Pour approfondir

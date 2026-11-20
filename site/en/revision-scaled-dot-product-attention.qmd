@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot
 
 ## Recall from memory {#revision-check}
 
-Must two different queries yield the same weighted output if they share K and V?
+For one query, the two raw scores are $\ln 9$ and $0$. The keys have dimension $d_k=4$ and the scalar values are $2$ and $6$, respectively. With no mask, compute the scaled scores, the weights and the output.
 
 <details>
 <summary>Show the answer</summary>
 
-No. Each query has its own score row, so it can get different weights and a different weighted sum.
+Dividing by $\sqrt{4}=2$ gives scaled scores $\ln 3$ and $0$. Softmax gives weights $\frac{3}{4}$ and $\frac{1}{4}$. The output is $\frac{3}{4}\times 2+\frac{1}{4}\times 6=3$.
 
 </details>
 

@@ -156,7 +156,7 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gradients.qmd).
+Calculate [two updates at equal loss](exercises/gradients.qmd#ex-score-to-parameter-update) and compare the next prediction. See also the [other practice questions](exercises/gradients.qmd).
 
 
 ### Further reading

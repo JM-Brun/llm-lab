@@ -238,7 +238,7 @@ concepts:
       fr: "Tâche consistant à estimer, à chaque position, une distribution conditionnelle sur le token suivant à partir du contexte disponible."
       en: "Task of estimating, at each position, a conditional distribution over the next token from the available context."
     domains: [architectures-mechanisms, probabilistic-foundations-training]
-    resources: [fr/logits, en/logits, fr/probabilites, en/probabilities]
+    resources: [fr/llm-overview, en/llm-overview, fr/logits, en/logits, fr/probabilites, en/probabilities]
   - id: observed-target
     importance: core
     labels: {fr: "Token cible observé", en: "Observed target token"}
@@ -294,7 +294,7 @@ concepts:
       fr: "Procédure qui sélectionne un token à partir de la distribution prédite, l'ajoute au contexte, puis répète le calcul avec les mêmes paramètres."
       en: "Procedure that selects a token from the predicted distribution, appends it to the context, and repeats computation with unchanged parameters."
     domains: [inference-efficiency]
-    resources: [fr/generation, en/generation]
+    resources: [fr/llm-overview, en/llm-overview, fr/generation, en/generation]
   - id: decoding-policy
     importance: supporting
     labels: {fr: "Politique de décodage", en: "Decoding policy"}
@@ -685,7 +685,7 @@ concepts:
       fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité."
       en: "Information associated with an observed event, equal to the negative logarithm of its probability."
     domains: [probabilistic-foundations-training]
-    resources: [fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
+    resources: [fr/entropy, en/entropy, fr/revision-entropy, en/revision-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
   - id: predictive-compression
     importance: supporting
     labels: {fr: "Compression prédictive", en: "Predictive compression"}
@@ -759,7 +759,7 @@ concepts:
       fr: "Information moyenne associée à une variable aléatoire, égale à l'espérance de son surprisal sous sa distribution."
       en: "Average information associated with a random variable, equal to the expected surprisal under its distribution."
     domains: [probabilistic-foundations-training]
-    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+    resources: [fr/entropy, en/entropy, fr/revision-entropy, en/revision-entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
   - id: kl-divergence
     importance: supporting
     labels: {fr: "Divergence KL", en: "KL divergence"}

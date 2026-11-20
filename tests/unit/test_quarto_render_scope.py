@@ -313,11 +313,11 @@ def test_generator_scope_for_history_dataset_is_narrow():
     assert result["generate_computational_graph"] is False
 
 
-def test_generator_scope_for_computational_graph_registry_is_narrow():
+def test_computational_graph_changes_refresh_the_conceptual_route():
     result = generator_scope(["data/computational-graph.yml"])
 
     assert result["generate_history"] is False
-    assert result["generate_learning_map"] is False
+    assert result["generate_learning_map"] is True
     assert result["generate_computational_graph"] is True
 
 

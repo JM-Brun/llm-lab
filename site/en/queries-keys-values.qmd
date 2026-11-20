@@ -42,10 +42,10 @@ The previous page, [The Transformer in a GPT: architecture and computation](tran
 :::
 ::: {.meta-flow__branches}
 ::: {.meta-flow__branch}
-<strong>Q · Query</strong><span>What this position seeks</span>
+<strong>Q · Query</strong><span>Vector compared with keys</span>
 :::
 ::: {.meta-flow__branch}
-<strong>K · Key</strong><span>What each position makes addressable</span>
+<strong>K · Key</strong><span>Vector compared with queries</span>
 :::
 ::: {.meta-flow__branch}
 <strong>V · Value</strong><span>The content that can be aggregated</span>
@@ -55,7 +55,7 @@ The previous page, [The Transformer in a GPT: architecture and computation](tran
 Q and K determine the weights; V provides the content to mix
 :::
 ::: {.meta-flow__result}
-<strong>QKᵀ → scores → softmax → attention weights</strong>
+<strong>QKᵀ → scores → <a href="scaled-dot-product-attention.qmd#five-computation-steps">weight computation</a></strong>
 :::
 ::: {.meta-flow__result}
 <strong>Weights × V → weighted sum → attention output</strong>

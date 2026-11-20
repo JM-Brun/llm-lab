@@ -41,9 +41,9 @@ def test_tracked_map_list_matches_canonical_sidebar(language: str) -> None:
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_tracked_map_territories_match_renderer(language: str) -> None:
-    """The interactive map shell stays locked to the renderer output (LM-16)."""
-    expected = RENDERERS["render_territory_map"](language, [], {})
+    """The interactive shell and concept anchors match the production build."""
     fragment = ROOT / "site" / "includes" / f"generated-map-territories-{language}.qmd"
+    expected = GENERATOR["prepare_build"](language)[fragment]
 
     assert fragment.is_file(), f"Missing tracked map territories: {fragment}"
     assert fragment.read_text(encoding="utf-8") == expected, (

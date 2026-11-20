@@ -133,7 +133,7 @@ Le context engineering réduit certains risques mais ne garantit ni la vérité 
 
 ## Pour s'exercer
 
-Mettre ces principes en pratique avec les [exercices d'ingénierie du contexte](exercises/context-engineering.qmd).
+[Suivre ce qui passe d’un appel au suivant](exercises/context-engineering.qmd#ex-context-between-calls) ou parcourir les [exercices d’ingénierie du contexte](exercises/context-engineering.qmd).
 
 ## Références
 

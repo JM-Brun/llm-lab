@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot
 
 ## Vérifier de mémoire {#revision-check}
 
-Deux requêtes distinctes doivent-elles obtenir la même combinaison si K et V sont communs ?
+Pour une requête, les deux scores bruts valent $\ln 9$ et $0$. Les clés sont de dimension $d_k=4$ et les valeurs scalaires valent $2$ et $6$, dans cet ordre. Sans masque, calculez les scores mis à l’échelle, les poids puis la sortie.
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Non. Chaque requête obtient sa propre ligne de scores, donc potentiellement d’autres poids et une autre somme pondérée.
+Après division par $\sqrt{4}=2$, les scores valent $\ln 3$ et $0$. Le softmax donne des poids $\frac{3}{4}$ et $\frac{1}{4}$. La sortie vaut donc $\frac{3}{4}\times 2+\frac{1}{4}\times 6=3$.
 
 </details>
 

@@ -1,0 +1,49 @@
+---
+title: "Révision — Entropie prédictive"
+description-meta: "L’incertitude d’une distribution à contexte fixé, le surprisal d’un token et la distinction entre les deux."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-entropy", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-entropy"
+scope: "L’incertitude d’une distribution à contexte fixé, le surprisal d’un token et la distinction entre les deux."
+purpose: "Comparer l’entropie de deux distributions et calculer le surprisal du token observé."
+revision_role: synthesis
+revision_of: ["fr/entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/synthese-entropie"]
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-entropy", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](entropy.qmd) · [Plan du parcours](review-path.qmd#prediction)
+
+## À retenir {#revision-essentials}
+
+- À contexte fixé, le modèle produit une distribution $p$ sur le vocabulaire. L’entropie $H(p)=-\sum_i p_i\log p_i$ est la moyenne du surprisal sous cette distribution.
+- Sur un même vocabulaire, une distribution uniforme atteint l’entropie maximale. Une distribution concentrée sur un seul token a une entropie nulle.
+- Pour un token observé $y$, la surprise informationnelle (*surprisal*) vaut $-\log p(y)$. Plus le modèle attribue une petite probabilité à $y$, plus ce surprisal est grand.
+- Le logarithme naturel donne des nats. Le logarithme en base 2 donne des bits.
+
+## Vérifier de mémoire {#revision-check}
+
+Pour un même contexte, deux modèles répartissent leurs probabilités sur deux tokens. Le premier attribue 90 % et 10 %, le second 50 % et 50 %. Quelle distribution a l’entropie la plus élevée ? Quel surprisal le premier modèle attribue-t-il au second token s’il est observé ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La distribution uniforme a l’entropie la plus élevée, soit $\log 2\approx 0{,}693$ nat. Le second token a une probabilité de $0{,}1$ sous le premier modèle. Son surprisal vaut donc $-\log 0{,}1\approx 2{,}303$ nats.
+
+</details>
+
+[Relier l’entropie à la vraisemblance et à la loss](synthese-entropie.qmd)
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-entropy.qmd) · [English](../en/revision-entropy.qmd)
+:::

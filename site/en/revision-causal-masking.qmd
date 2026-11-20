@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-causal-mas
 
 ## Recall from memory {#revision-check}
 
-For A, B, C and D, which positions can C read and which token is its target in shifted training?
+A training sequence contains A, B, C and D. The query at position C gives four equal scores before masking. Which token is its target? What weights does causal masking give? What weights would result from zeroing only D’s weight after softmax?
 
 <details>
 <summary>Show the answer</summary>
 
-C can read A, B and C. The target is D. The position of D remains masked for C’s query.
+The target is D. The causal mask allows A, B and C, each of which gets weight $\frac{1}{3}$, and blocks D, which gets $0$. Applying softmax to all four equal scores and then zeroing only D’s weight leaves three weights of $\frac{1}{4}$ that sum to $\frac{3}{4}$.
 
 </details>
 

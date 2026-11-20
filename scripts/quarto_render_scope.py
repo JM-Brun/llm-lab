@@ -76,6 +76,7 @@ def generator_scope(paths: list[str]) -> dict[str, bool]:
                     "data/domains.yml",
                     "data/resources.yml",
                     "data/guided-route.yml",
+                    "data/computational-graph.yml",
                     "site/tools/build_learning_map.py",
                     "site/tools/learning_map_renderers.py",
                     "site/tools/page_index.py",

@@ -32,12 +32,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-queries-ke
 
 ## Vérifier de mémoire {#revision-check}
 
-À Q et K fixes, que peut changer une modification de V dans une tête ?
+À Q, K et masque fixés, que peut changer une modification de V dans une tête ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Elle peut changer la sortie pondérée. Les poids de cette tête restent les mêmes, puisqu’ils sont calculés à partir de Q, K et du masque.
+Modifier V peut changer la somme pondérée. Les poids dépendent des scores calculés à partir de Q et K et des positions autorisées par le masque.
 
 </details>
 

@@ -1,4 +1,4 @@
-"""Check stable evidence links for two reviewed Understand boundaries."""
+"""Check stable evidence links for reviewed Understand boundaries."""
 
 from pathlib import Path
 

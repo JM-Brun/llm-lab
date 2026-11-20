@@ -19,6 +19,7 @@ import sys
 import unicodedata
 from collections import deque
 from collections.abc import Sequence
+from dataclasses import dataclass
 from html import escape
 from pathlib import Path
 from typing import Any, Literal
@@ -111,6 +112,30 @@ class OptionalLocalizedPageIds(StrictModel):
         return value
 
 
+class ConceptualFocus(StrictModel):
+    """Objects studied during one visit to a published lesson."""
+
+    objects: list[str] = Field(min_length=1)
+    outcome: LocalizedCopy
+    mobilizes: list[str] = Field(default_factory=list)
+    visit: Literal["study", "preview", "revisit"] = "study"
+
+    @field_validator("objects", "mobilizes")
+    @classmethod
+    def distinct_objects(cls, values: list[str]) -> list[str]:
+        if len(values) != len(set(values)):
+            raise ValueError("a visit must list distinct conceptual objects")
+        return values
+
+
+class PredictionUse(StrictModel):
+    """How a stage uses the shared prediction and treats its two inputs."""
+
+    context: LocalizedCopy
+    parameters: Literal["fixed", "updated"]
+    action: LocalizedCopy
+
+
 class StageOverview(StrictModel):
     """A plain-language question and answer with a formal reading of the same stage."""
 
@@ -129,6 +154,9 @@ class GuidedRouteStage(StrictModel):
     overview: StageOverview | None = None
     pages: LocalizedPageIds
     optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
+    conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
+    compact_title: LocalizedCopy | None = None
+    prediction_use: PredictionUse | None = None
 
     @model_validator(mode="after")
     def core_and_optional_pages_are_disjoint(self) -> GuidedRouteStage:
@@ -209,6 +237,9 @@ class ResolvedGuidedRouteStage(StrictModel):
     overview: StageOverview | None = None
     pages: list[ResolvedPage]
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
+    conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
+    compact_title: str | None = None
+    prediction_use: PredictionUse | None = None
 
 
 class ResolvedLessonContract(StrictModel):
@@ -508,6 +539,11 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
                 optional_pages=resolve_pages(
                     getattr(stage.optional_pages, language), stage.id, "optional"
                 ),
+                conceptual_focus=stage.conceptual_focus,
+                compact_title=getattr(stage.compact_title, language)
+                if stage.compact_title
+                else None,
+                prediction_use=stage.prediction_use,
             )
         )
     return resolved
@@ -1160,18 +1196,206 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
+def concept_fragment(concept_id: str) -> str:
+    """Use the map's existing concept selection state as a native link target."""
+    return f"mode=concepts&concept={concept_id}"
+
+
+@dataclass(frozen=True)
+class ConceptualVisit:
+    """The same short learning unit shown on the map and on its lesson."""
+
+    page: ResolvedPage
+    stage_id: str
+    objects: tuple[str, ...]
+    mobilizes: tuple[str, ...]
+    outcome: str
+    visit_label: str
+
+
+def resolve_conceptual_visits(
+    stages: list[ResolvedGuidedRouteStage],
+    pages: list[dict[str, Any]],
+    concepts: list[dict[str, Any]],
+    computational_nodes: list[dict[str, Any]],
+    language: str,
+) -> list[ConceptualVisit]:
+    """Resolve the objects studied and the ideas mobilized by each core visit."""
+    page_by_id = {page["id"]: page for page in pages}
+    objects = {
+        f"concept:{concept['id']}": (
+            concept["label"],
+            {resource["id"] for resource in concept["resources"]},
+            f"learning-map.html#{concept_fragment(concept['id'])}",
+        )
+        for concept in concepts
+    }
+    objects.update(
+        {
+            f"node:{node['id']}": (node["labels"][language], set(node.get("resources", [])), None)
+            for node in computational_nodes
+        }
+    )
+    fr = language == "fr"
+    visit_labels = {
+        "study": "",
+        "preview": " (aperçu)" if fr else " (preview)",
+        "revisit": " (reprise)" if fr else " (revisit)",
+    }
+
+    def resolve(reference: str, where: str, resource_id: str | None = None) -> str:
+        if reference not in objects:
+            raise ValueError(f"{where}: unknown conceptual object {reference!r}")
+        label, resources, href = objects[reference]
+        if resource_id is not None and resource_id not in resources:
+            raise ValueError(f"{where}: {reference!r} does not list {resource_id!r} as a resource")
+        label = escape_markdown_text(label)
+        return f"[{label}]({href})" if href else label
+
+    seen_objects: set[str] = set()
+    visits: list[ConceptualVisit] = []
+    for stage in stages:
+        core_topics = [page_by_id[page.id]["topic"] for page in stage.pages]
+        if (
+            len(core_topics) != len(set(core_topics))
+            or set(core_topics) != stage.conceptual_focus.keys()
+        ):
+            raise ValueError(
+                f"{stage.id} ({language}): conceptual_focus must match the core topics "
+                f"{core_topics!r}, found {sorted(stage.conceptual_focus)!r}"
+            )
+        for page, topic in zip(stage.pages, core_topics, strict=True):
+            focus = stage.conceptual_focus[topic]
+            if focus.visit == "revisit" and seen_objects.isdisjoint(focus.objects):
+                raise ValueError(f"{stage.id}: revisited topic {topic!r} needs an earlier object")
+            seen_objects.update(focus.objects)
+            where = f"{stage.id}/{topic}"
+            visits.append(
+                ConceptualVisit(
+                    page=page,
+                    stage_id=stage.id,
+                    objects=tuple(resolve(ref, where, page.id) for ref in focus.objects),
+                    mobilizes=tuple(resolve(ref, where) for ref in focus.mobilizes),
+                    outcome=escape_markdown_text(getattr(focus.outcome, language)),
+                    visit_label=visit_labels[focus.visit],
+                )
+            )
+    return visits
+
+
+def render_conceptual_visit(visit: ConceptualVisit, *, link_lesson: bool) -> str:
+    """Render mobilized concepts, studied objects and the learning outcome."""
+    studied = " + ".join(visit.objects) + visit.visit_label
+    mobilized = " + ".join(visit.mobilizes)
+    chain = f"{mobilized} → {studied}" if mobilized else studied
+    outcome = f"[{visit.outcome}]({visit.page.href})" if link_lesson else visit.outcome
+    return f"{chain} · {outcome}"
+
+
+def render_conceptual_route(
+    stages: list[ResolvedGuidedRouteStage],
+    visits: list[ConceptualVisit],
+    language: str,
+    lesson_contracts: dict[str, ResolvedLessonContract],
+) -> str:
+    """Render three global moves, with the full visit skeleton on demand."""
+    validate_route_projection(stages)
+    stage_order = [stage.id for stage in stages]
+    starts = [stage_order.index(stage_id) for _, stage_id, _, _ in ROUTE_PARTS]
+    fr = language == "fr"
+    lines: list[str] = []
+    uses: list[tuple[str, PredictionUse]] = []
+    for (part_id, _, french, english), first, end in zip(
+        ROUTE_PARTS, starts, [*starts[1:], len(stages)], strict=True
+    ):
+        stage_links: list[str] = []
+        for stage in stages[first:end]:
+            title = escape_markdown_text(stage.compact_title or stage.title)
+            link = f"[{title}](#guided-stage-{stage.id})"
+            stage_links.append(link)
+            if part_id == "usages":
+                if stage.prediction_use is None:
+                    raise ValueError(f"{stage.id}: expected a prediction_use")
+                uses.append((link, stage.prediction_use))
+        separator = " · " if part_id == "usages" else " → "
+        parts = separator.join(stage_links)
+        lines.append(f"- **{french if fr else english}** · {parts}")
+
+    summary = "Comparer les usages" if fr else "Compare uses"
+    header = (
+        "| Usage | Contexte $c$ | Paramètres $\\theta$ | Opération |"
+        if fr
+        else "| Use | Context $c$ | Parameters $\\theta$ | Operation |"
+    )
+    parameter_labels = (
+        {"fixed": "Fixés", "updated": "Mis à jour"}
+        if fr
+        else {
+            "fixed": "Fixed",
+            "updated": "Updated",
+        }
+    )
+    lines.extend(
+        ["", "<details>", f"<summary>{summary}</summary>", "", header, "|---|---|---|---|"]
+    )
+    for link, use in uses:
+        context = escape_markdown_text(getattr(use.context, language)).replace("|", r"\|")
+        action = escape_markdown_text(getattr(use.action, language)).replace("|", r"\|")
+        parameters = parameter_labels[use.parameters]
+        lines.append(f"| {link} | {context} | {parameters} | {action} |")
+    upstream_note = (
+        "Composer le contexte agit en amont. Les trois autres opérations utilisent "
+        "la distribution produite."
+        if fr
+        else "Context design shapes the input. The other three operations use the distribution."
+    )
+    lines.extend(["", upstream_note, "", "</details>"])
+
+    count = len({visit.page.id for visit in visits})
+    label = f"Squelette des {count} leçons" if fr else f"Skeleton of the {count} lessons"
+    lines.extend(["", "<details>", f"<summary>{label}</summary>", ""])
+    review_label = "Fiche de révision" if fr else "Review sheet"
+    for stage in stages:
+        lines.extend([f"**{escape_markdown_text(stage.title)}**", ""])
+        for visit in visits:
+            if visit.stage_id != stage.id:
+                continue
+            line = "- " + render_conceptual_visit(visit, link_lesson=True)
+            if contract := lesson_contracts.get(visit.page.id):
+                line += f" · [{review_label}]({contract.synthesis.href})"
+            lines.append(line)
+        lines.append("")
+    return "\n".join([*lines, "</details>", ""])
+
+
+def render_lesson_skeleton(visits: list[ConceptualVisit], language: str) -> str:
+    """Expose the map's local unit next to the lesson's route navigation."""
+    fr = language == "fr"
+    label = "Squelette de la leçon" if fr else "Lesson skeleton"
+    map_label = "Voir le parcours" if fr else "See the path"
+    lines = ["", "<details>", f"<summary>{label}</summary>", ""]
+    lines.extend("- " + render_conceptual_visit(visit, link_lesson=False) for visit in visits)
+    return "\n".join(
+        [*lines, "", f"[{map_label}](learning-map.html#conceptual-route)", "", "</details>", ""]
+    )
+
+
 def prepare_guided_page_context_fragments(
     language: str,
     stages: list[ResolvedGuidedRouteStage],
     transitions: list[ResolvedGuidedRouteTransition] | None = None,
     lesson_contracts: dict[str, ResolvedLessonContract] | None = None,
+    conceptual_visits: Sequence[ConceptualVisit] = (),
 ) -> dict[Path, str]:
-    """Render membership and explicit transition context for route pages."""
+    """Render membership, the lesson skeleton and transition context for route pages."""
     memberships = build_guided_route_memberships(stages)
     page_by_id = {
         page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
     transition_index = build_guided_route_transition_index(transitions or [])
+    visits_by_page: dict[str, list[ConceptualVisit]] = {}
+    for visit in conceptual_visits:
+        visits_by_page.setdefault(visit.page.id, []).append(visit)
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page_id, page_memberships in memberships.items():
@@ -1181,6 +1405,8 @@ def prepare_guided_page_context_fragments(
         transition_context = render_guided_page_transitions(
             transition_index.get(page_id, []), language
         )
+        visits = visits_by_page.get(page_id)
+        skeleton = render_lesson_skeleton(visits, language) if visits else ""
         review_link = ""
         if lesson_contracts and page_id in lesson_contracts:
             outcome_label = "Objectif de la leçon" if language == "fr" else "Lesson objective"
@@ -1190,7 +1416,7 @@ def prepare_guided_page_context_fragments(
             href = contract.synthesis.href
             membership += f"\n**{outcome_label}.** {outcome}\n\n"
             review_link = f"\n[{label}]({href})\n\n"
-        outputs[output] = membership + transition_context + review_link
+        outputs[output] = membership + skeleton + transition_context + review_link
     return outputs
 
 
@@ -1643,9 +1869,18 @@ def prepare_build(language: str) -> dict[Path, str]:
     )
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
+    visits: list[ConceptualVisit] = []
+    if any(stage.conceptual_focus for stage in guided_route):
+        computation = load_yaml(ROOT / "data" / "computational-graph.yml")
+        visits = resolve_conceptual_visits(
+            guided_route, pages, concept_graph["concepts"], computation["nodes"], language
+        )
+        artifacts[SITE / "includes" / f"generated-conceptual-route-{language}.qmd"] = (
+            render_conceptual_route(guided_route, visits, language, lesson_contracts)
+        )
     artifacts.update(
         prepare_guided_page_context_fragments(
-            language, guided_route, guided_transitions, lesson_contracts
+            language, guided_route, guided_transitions, lesson_contracts, visits
         )
     )
     if lesson_contracts:
@@ -1669,6 +1904,22 @@ def prepare_build(language: str) -> dict[Path, str]:
         **concept_graph,
     }
     artifacts.update(prepare_map_fragments(language, navigation, pages, payload))
+    focus_concept_ids = {
+        reference.removeprefix("concept:")
+        for stage in guided_route
+        for focus in stage.conceptual_focus.values()
+        for reference in (*focus.objects, *focus.mobilizes)
+        if reference.startswith("concept:")
+    }
+    if focus_concept_ids:
+        # Place the link targets above the interactive map so native fragment
+        # navigation scrolls to the graph along with setting its selection.
+        anchor_ids = (
+            escape(concept_fragment(item), quote=True) for item in sorted(focus_concept_ids)
+        )
+        anchors = "\n".join(f'<span id="{item}" aria-hidden="true"></span>' for item in anchor_ids)
+        territory = SITE / "includes" / f"generated-map-territories-{language}.qmd"
+        artifacts[territory] = f"```{{=html}}\n{anchors}\n```\n\n" + artifacts[territory]
     artifacts[output] = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     return artifacts
 

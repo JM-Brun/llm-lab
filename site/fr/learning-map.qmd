@@ -53,7 +53,17 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ## Parcours théorique — Understand
 
-Ce parcours théorique répond d'abord à trois questions : qu'est-ce qu'un LLM, comment calcule-t-il une prédiction, et que fait-on de cette prédiction ? La première partie situe le système ; la deuxième couvre quatre étapes, du texte à la distribution du prochain token ; la troisième présente trois usages frères, générer, scorer une cible observée et apprendre en ajustant les paramètres, qui ne sont pas des prérequis successifs. L'évaluation reste transversale : elle mesure le modèle sur des données tenues à l'écart ([évaluation expérimentale](evaluation-experimentale.qmd)). Les neuf étapes détaillées restent la progression conseillée : les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+### Squelette du parcours {#conceptual-route}
+
+Pour un GPT autorégressif, $f_\theta(c)$ transforme le contexte $c$ en logits avec les paramètres $\theta$. La normalisation donne la distribution de base du prochain token.
+
+$$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
+
+Dans chaque leçon, le détail suit la forme **notions mobilisées → objet étudié · acquis visé**.
+
+{{< include ../includes/generated-conceptual-route-fr.qmd >}}
+
+Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires. L’exercice d’[évaluation sur données tenues à l’écart](evaluation-experimentale.qmd) prolonge le parcours.
 
 [Plan du parcours et fiches de révision](review-path.qmd)
 
