@@ -1,0 +1,47 @@
+---
+title: "Révision — Entropie croisée"
+description-meta: "La différence entre prédiction et cible, la pénalité d’un token observé et l’alignement des cibles pendant l’entraînement."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-cross-entropy"
+scope: "La différence entre prédiction et cible, la pénalité d’un token observé et l’alignement des cibles pendant l’entraînement."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/cross-entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](cross-entropy.qmd) · [Plan du parcours](review-path.qmd#scoring)
+
+## À retenir {#revision-essentials}
+
+- Pour une cible q et une prédiction p, l’entropie croisée H(q,p) est la moyenne de −log p(x) pondérée par q(x).
+- Elle vaut H(q) + D_KL(q ∥ p). Pour q fixée, elle est minimale lorsque p coïncide avec q.
+- Si la cible est concentrée sur le token observé y, elle devient −log p(y). L’entropie prédictive H(p) répond à une autre question, celle de l’incertitude avant observation.
+- Dans un GPT, la sortie en position i est comparée à la cible i + 1. Le masque de la loss écarte les cibles invalides. Le masque causal limite les positions visibles pour calculer la prédiction.
+
+## Vérifier de mémoire {#revision-check}
+
+Si la cible est le token y, pourquoi répartir la masse restante entre les autres tokens ne change-t-il rien à sa pénalité lorsque p(y) est fixé ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La cible one-hot pondère uniquement le terme de y. La pénalité vaut −log p(y), quelle que soit la répartition du reste.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-cross-entropy.qmd) · [English](../en/revision-cross-entropy.qmd)
+:::

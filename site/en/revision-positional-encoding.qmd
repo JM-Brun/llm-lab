@@ -1,0 +1,46 @@
+---
+title: "Review — Positional information"
+description-meta: "Occurrence order and the distinction between an absolute input position and relative information in attention."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-positional-encoding"
+scope: "Occurrence order and the distinction between an absolute input position and relative information in attention."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/positional-encoding"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](positional-encoding.qmd) · [Learning path plan](review-path.qmd#representations)
+
+## What to remember {#revision-essentials}
+
+- Two occurrences of the same token can start with the same embedding. Their ranks in the sequence provide information distinct from token identity.
+- An additive absolute encoding can combine the token embedding with a vector for its position at the input.
+- RoPE uses position to rotate Q and K after projection. Their dot product then depends on the relative offset.
+
+## Recall from memory {#revision-check}
+
+If two tokens swap positions, do their rows in the embedding table change?
+
+<details>
+<summary>Show the answer</summary>
+
+No, their IDs select the same rows. Their sequence positions change, which can affect the resulting contextual states.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-positional-encoding.qmd) · [English](../en/revision-positional-encoding.qmd)
+:::

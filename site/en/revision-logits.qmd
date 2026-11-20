@@ -1,0 +1,47 @@
+---
+title: "Review — Output logits"
+description-meta: "Projection from a hidden state to one raw score per candidate token, distinguished from probabilities and attention scores."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-logits", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-logits"
+scope: "Projection from a hidden state to one raw score per candidate token, distinguished from probabilities and attention scores."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/logits"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-logits", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](logits.qmd) · [Learning path plan](review-path.qmd#prediction)
+
+## What to remember {#revision-essentials}
+
+- The output head maps the final state at one position to V logits, where V is the vocabulary size. Each score corresponds to a candidate token.
+- A logit is a real-valued score and can be negative. Softmax converts logit differences to normalized probabilities.
+- Output logits are indexed by vocabulary entries. Attention scores for a query are indexed by the positions it can access.
+- Softmax preserves the ranking of logits while producing a distribution. Knowing the ranking alone does not give the gap between the probabilities.
+
+## Recall from memory {#revision-check}
+
+With a vocabulary of 50,000 tokens and a hidden dimension of 768, how many logits are emitted per position?
+
+<details>
+<summary>Show the answer</summary>
+
+50,000. The head projects the 768 components to one score for each vocabulary token.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-logits.qmd) · [English](../en/revision-logits.qmd)
+:::

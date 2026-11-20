@@ -1,0 +1,47 @@
+---
+title: "Review — Autoregressive generation"
+description-meta: "Prefill, selection, decode iterations, stopping and two user-facing latency measurements."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-inference-generation", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-inference-generation"
+scope: "Prefill, selection, decode iterations, stopping and two user-facing latency measurements."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/generation"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-inference-generation", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](generation.qmd) · [Learning path plan](review-path.qmd#inference)
+
+## What to remember {#revision-essentials}
+
+- Prefill processes the prompt and returns logits at its last position, which are used to select the first generated token.
+- During decode, each selected token extends the context and influences the next distribution. A KV cache lets the model reuse keys and values from earlier positions.
+- Decoding may take the highest-scoring token or sample. An end token, stop sequence or length limit can terminate the loop.
+- In serving, time to first token (TTFT) includes waiting and prefill, among other costs. Time per output token (TPOT) describes the pace after the first token. Scheduling can affect these measurements.
+
+## Recall from memory {#revision-check}
+
+Does selecting the first generated token require a separate decode forward pass after prefill?
+
+<details>
+<summary>Show the answer</summary>
+
+Prefill already provides the logits used to select it. The selected token then becomes the input to the pass that prepares the next prediction.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-inference-generation.qmd) · [English](../en/revision-inference-generation.qmd)
+:::

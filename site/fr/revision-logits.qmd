@@ -1,0 +1,47 @@
+---
+title: "Révision — Logits de sortie"
+description-meta: "La projection d’un état caché en un score brut par token candidat et la distinction avec les probabilités et les scores d’attention."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-logits", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-logits"
+scope: "La projection d’un état caché en un score brut par token candidat et la distinction avec les probabilités et les scores d’attention."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/logits"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-logits", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](logits.qmd) · [Plan du parcours](review-path.qmd#prediction)
+
+## À retenir {#revision-essentials}
+
+- La tête de sortie transforme l’état final d’une position en V logits, où V est la taille du vocabulaire. Chaque score correspond à un token candidat.
+- Un logit est un score réel et peut être négatif. Le softmax transforme les écarts entre logits en probabilités normalisées.
+- Dans les logits de sortie, l’axe est celui du vocabulaire. Dans les scores d’attention d’une requête, l’axe est celui des positions auxquelles elle peut accéder.
+- Le softmax conserve le classement des logits tout en produisant une distribution. Connaître le classement seul ne suffit pas à connaître l’écart entre les probabilités.
+
+## Vérifier de mémoire {#revision-check}
+
+Pour un vocabulaire de 50 000 tokens et un état de dimension 768, combien de logits obtient-on par position ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+50 000. La tête projette les 768 composantes en un score pour chaque token du vocabulaire.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-logits.qmd) · [English](../en/revision-logits.qmd)
+:::

@@ -136,6 +136,14 @@ Use these dimensions consistently:
 - Only reference pages that exist in the current source tree. If a destination is planned but not yet published, record it as planned work in the curriculum/backlog rather than as a live relation.
 - Keep French and English metadata semantically equivalent. Wording can differ, but scope, purpose, relation structure, and tag dimensions should remain aligned.
 
+### Core lesson contracts and revision pages
+
+`lesson_contracts` in `data/guided-route.yml` covers each core Understand lesson by its bilingual `topic`. The stage and lesson order still come from `stages[].pages`. `requires` lists the topics that supply knowledge used in the lesson. Every required topic must be acquired earlier in the core sequence. For a lesson that appears in more than one core stage, `stage` identifies where its outcome is expected. The generation lesson is introduced in orientation and acquired in inference.
+
+The lesson's page-map `scope` and `purpose` supply the learning plan. `synthesis` selects a published synthesis by its bilingual topic. Each version must explicitly declare `revision_role: synthesis` and include its matching lesson in `revision_of`. The selected sheet's `scope` specifies its essential content. A sheet includes a concise explanation and a retrieval question with an answer. Preserve useful shared sheets and their typed links when a core lesson gains a more focused companion.
+
+`site/tools/build_learning_map.py` validates coverage and renders the plan and the link from each lesson to its sheet. The prerequisite check verifies the ordering of declared dependencies. Review the content, relevance of the dependencies, question and answer, and FR/EN equivalence when editing a contract. Specify planned lessons and their intended acquisitions in the curriculum until the lesson and sheet can enter the published route together.
+
 ### Dedicated lesson exercise pages
 
 Each published lesson with a question set may have a companion page under `site/<language>/exercises/<lesson-slug>.qmd`. Its stable page ID is `<language>/<lesson-slug>-exercises` and its `topic` tag is the lesson topic with the `-exercises` suffix. The companion uses `type:exercise-hub` and `destination:practice`, links back to its canonical lesson, and is listed under the corresponding language's “Exercises by lesson” navigation section. The lesson links to the companion and records the cross-reference in `related`. This convention keeps the URL hierarchy aligned with the practice destination while preserving the existing one-segment stable-ID contract and bilingual topic uniqueness. Per-lesson pages hold focused retrieval questions and their worked answers; topic collections remain responsible for integrated, cross-lesson practice. Avoid duplicating a complete exercise in both places.

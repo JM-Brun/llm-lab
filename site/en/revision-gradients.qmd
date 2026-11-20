@@ -1,0 +1,47 @@
+---
+title: "Review — Gradients and parameter updates"
+description-meta: "Local loss sensitivity, backpropagation and one gradient descent update."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-gradients", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-gradients"
+scope: "Local loss sensitivity, backpropagation and one gradient descent update."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/gradients"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-gradients", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](gradients.qmd) · [Learning path plan](review-path.qmd#training)
+
+## What to remember {#revision-essentials}
+
+- Each gradient component is the local derivative of the loss with respect to one parameter while holding the others fixed.
+- Backpropagation applies the chain rule through the forward-pass operations. It computes the derivatives that the optimizer will use.
+- Basic gradient descent subtracts the gradient times the learning rate from the parameter. Too large a step can leave the region where the local approximation is reliable.
+- In a GPT, derivatives flow from the loss to the logits and then to the parameters that contributed to those logits. An optimizer can combine this gradient with information from earlier steps.
+
+## Recall from memory {#revision-check}
+
+A parameter is 1, its gradient is +2, and the learning rate is 0.1. What value does basic gradient descent give next?
+
+<details>
+<summary>Show the answer</summary>
+
+It is 1 − 0.1 × 2 = 0.8. The positive gradient leads to a decrease in this parameter on this step.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-gradients.qmd) · [English](../en/revision-gradients.qmd)
+:::

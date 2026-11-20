@@ -1,0 +1,46 @@
+---
+title: "Révision — Embeddings et recherche dans la table"
+description-meta: "L’ID comme adresse, le plongement initial comme vecteur appris et son lien avec les états contextualisés."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-embedding-space", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-embedding-space"
+scope: "L’ID comme adresse, le plongement initial comme vecteur appris et son lien avec les états contextualisés."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/embedding-space"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-embedding-space", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](embedding-space.qmd) · [Plan du parcours](review-path.qmd#representations)
+
+## À retenir {#revision-essentials}
+
+- Pour un vocabulaire de taille V et une dimension d, la matrice de plongements a la forme V × d. L’ID i sélectionne la ligne i.
+- L’ID est un indice de ligne. Ce sont les d nombres appris stockés sur cette ligne qui forment les coordonnées du plongement.
+- À paramètres fixes, deux occurrences du même ID partagent le même vecteur de lookup. Les états produits ensuite peuvent différer selon la position et le contexte.
+
+## Vérifier de mémoire {#revision-check}
+
+Les tokens d’IDs 41 et 42 ont-ils nécessairement des vecteurs proches ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. La proximité des indices dans le vocabulaire ne contraint pas la géométrie des lignes apprises.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-embedding-space.qmd) · [English](../en/revision-embedding-space.qmd)
+:::

@@ -1,0 +1,47 @@
+---
+title: "Review — Scaled dot-product attention"
+description-meta: "One row of scores, scaling by the square root of key dimension, softmax and the weighted sum."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot-product-attention", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-scaled-dot-product-attention"
+scope: "One row of scores, scaling by the square root of key dimension, softmax and the weighted sum."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/scaled-dot-product-attention"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-scaled-dot-product-attention", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](scaled-dot-product-attention.qmd) · [Learning path plan](review-path.qmd#computation)
+
+## What to remember {#revision-essentials}
+
+- For the query at position i, take a dot product with the key at each position j. Divide these scores by the square root of the key dimension.
+- After applying any mask, apply softmax over the keys for that query. The weights in the row sum to 1.
+- Weight the corresponding value vectors and sum them. For scalar values 2 and 6, weights (0.75, 0.25) give an output of 3.
+- With comparable component variances, dot products tend to grow in magnitude as the dimension grows. Scaling helps avoid softmax saturation.
+
+## Recall from memory {#revision-check}
+
+Must two different queries yield the same weighted output if they share K and V?
+
+<details>
+<summary>Show the answer</summary>
+
+No. Each query has its own score row, so it can get different weights and a different weighted sum.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-scaled-dot-product-attention.qmd) · [English](../en/revision-scaled-dot-product-attention.qmd)
+:::

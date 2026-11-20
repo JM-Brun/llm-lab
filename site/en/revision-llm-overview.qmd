@@ -1,0 +1,47 @@
+---
+title: "Review — How an LLM works"
+description-meta: "Next-token prediction, the generation loop, and what parameters and context each contribute."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-llm-overview"
+scope: "Next-token prediction, the generation loop, and what parameters and context each contribute."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/llm-overview"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](llm-overview.qmd) · [Learning path plan](review-path.qmd#orientation)
+
+## What to remember {#revision-essentials}
+
+- Text becomes a sequence of tokens. An autoregressive LLM predicts the next token from the tokens already in its context.
+- A forward pass turns that context into scores. The scores at the last position can then be normalized into a distribution over the vocabulary.
+- Generation selects a token and feeds it back into the context. Training uses known targets to adjust the parameters. During generation, the parameters stay fixed.
+- Parameters encode learned patterns. The context provides the current instructions and examples. The same prediction task can support summarization or translation depending on that context.
+
+## Recall from memory {#revision-check}
+
+What changes when a token is appended during generation?
+
+<details>
+<summary>Show the answer</summary>
+
+The context grows by one token. The network parameters stay fixed. The next distribution depends on the updated context.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-llm-overview.qmd) · [English](../en/revision-llm-overview.qmd)
+:::

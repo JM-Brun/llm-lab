@@ -1,0 +1,47 @@
+---
+title: "Révision — Fonction de perte d’un GPT"
+description-meta: "La pénalité d’un token cible, l’agrégation sur les positions valides et le rôle du scalaire obtenu."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-loss", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-loss"
+scope: "La pénalité d’un token cible, l’agrégation sur les positions valides et le rôle du scalaire obtenu."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/loss"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-loss", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](loss.qmd) · [Plan du parcours](review-path.qmd#training)
+
+## À retenir {#revision-essentials}
+
+- À chaque position d’entraînement valide, la prédiction est comparée au token suivant observé. Avec une cible one-hot, la pénalité vaut −log de la probabilité de cette cible.
+- On agrège ces pénalités sur les positions valides du lot, généralement par une moyenne. Les positions ignorées sont exclues de la somme et du dénominateur.
+- La loss donne un objectif scalaire. La rétropropagation en calcule les gradients, puis l’optimiseur décide de la mise à jour.
+- Sur un lot fixe, passer de la moyenne à la somme multiplie le gradient par le nombre de positions valides. Pondérer différemment les tokens peut changer leurs contributions relatives au gradient.
+
+## Vérifier de mémoire {#revision-check}
+
+Trois positions ont des pénalités 1, 3 et 5, mais la troisième est ignorée. Quelle est la perte moyenne ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+(1 + 3) ÷ 2 = 2. La position ignorée ne doit pas compter dans le dénominateur.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-loss.qmd) · [English](../en/revision-loss.qmd)
+:::

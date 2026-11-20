@@ -1,0 +1,47 @@
+---
+title: "Révision — Fonctionnement d’un LLM"
+description-meta: "La prédiction du prochain token, la boucle de génération et la contribution respective des paramètres et du contexte."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-llm-overview"
+scope: "La prédiction du prochain token, la boucle de génération et la contribution respective des paramètres et du contexte."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/llm-overview"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overview", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](llm-overview.qmd) · [Plan du parcours](review-path.qmd#orientation)
+
+## À retenir {#revision-essentials}
+
+- Le texte devient une séquence de tokens. Un LLM autorégressif prédit le prochain token à partir des tokens déjà dans le contexte.
+- Une passe avant transforme ce contexte en scores, puis on peut normaliser les scores de la dernière position en une distribution sur le vocabulaire.
+- La génération choisit un token et le réinjecte dans le contexte. L’entraînement utilise des cibles connues pour ajuster les paramètres. Pendant la génération, les paramètres restent fixes.
+- Les paramètres encodent des régularités apprises. Le contexte apporte les instructions et exemples du moment. Une même tâche de prédiction peut ainsi servir à résumer ou traduire selon le contexte fourni.
+
+## Vérifier de mémoire {#revision-check}
+
+Quel objet change quand on ajoute un token au cours d’une génération ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le contexte s’allonge d’un token. Les paramètres du réseau restent fixes. La distribution calculée au tour suivant dépend du contexte ainsi modifié.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-llm-overview.qmd) · [English](../en/revision-llm-overview.qmd)
+:::

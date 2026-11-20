@@ -1,0 +1,47 @@
+---
+title: "Review — Cross-entropy"
+description-meta: "Prediction versus target, the observed-token penalty, and target alignment during training."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-cross-entropy"
+scope: "Prediction versus target, the observed-token penalty, and target alignment during training."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/cross-entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](cross-entropy.qmd) · [Learning path plan](review-path.qmd#scoring)
+
+## What to remember {#revision-essentials}
+
+- For target q and prediction p, cross-entropy H(q,p) is the average of −log p(x) weighted by q(x).
+- It equals H(q) + D_KL(q ∥ p). With q fixed, it is minimized when p matches q.
+- If the target is concentrated on observed token y, it becomes −log p(y). Predictive entropy H(p) addresses uncertainty before observing the outcome.
+- In a GPT, the output at position i is compared with target i + 1. The loss mask excludes invalid targets. The causal mask limits the positions visible when computing the prediction.
+
+## Recall from memory {#revision-check}
+
+With target token y, why can you redistribute the remaining mass without changing its penalty when p(y) stays fixed?
+
+<details>
+<summary>Show the answer</summary>
+
+A one-hot target gives weight only to y’s term. The penalty is −log p(y) regardless of how the rest is distributed.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-cross-entropy.qmd) · [English](../en/revision-cross-entropy.qmd)
+:::

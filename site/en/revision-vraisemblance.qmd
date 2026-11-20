@@ -1,0 +1,47 @@
+---
+title: "Review — Sequence likelihood"
+description-meta: "Scoring an observed continuation as a product of conditional probabilities and a sum in log space."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-vraisemblance", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-vraisemblance"
+scope: "Scoring an observed continuation as a product of conditional probabilities and a sum in log space."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/likelihood"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-vraisemblance", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](likelihood.qmd) · [Learning path plan](review-path.qmd#scoring)
+
+## What to remember {#revision-essentials}
+
+- Each observed token receives the probability the model assigns given its preceding prefix.
+- The product gives the likelihood of the continuation under the chosen model and prefix. The log of that product is the sum of the log probabilities.
+- Negative log-likelihood (NLL) sums the penalties for observed tokens. For different lengths, specify whether the comparison uses a sum or an average.
+- For a fixed observed sequence, maximizing its log-likelihood over parameters is equivalent to minimizing its NLL, which is the negative of the log-likelihood.
+
+## Recall from memory {#revision-check}
+
+A two-token continuation receives probabilities 0.5 and 0.2 in sequence. What is its likelihood?
+
+<details>
+<summary>Show the answer</summary>
+
+0.5 × 0.2 = 0.1. Its natural log-likelihood is about −2.303 and its NLL is about 2.303 nats.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-vraisemblance.qmd) · [English](../en/revision-vraisemblance.qmd)
+:::

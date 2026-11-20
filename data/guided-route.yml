@@ -148,3 +148,65 @@ transitions:
     purpose:
       fr: "Relier le score attribué à une cible observée à l'objectif d'apprentissage qui agrège ces pénalités pour ajuster les paramètres, sans faire du scoring un prérequis."
       en: "Connect the score assigned to an observed target with the learning objective that aggregates these penalties to update parameters, without making scoring a prerequisite."
+
+lesson_contracts:
+  llm-overview:
+    synthesis: revision-llm-overview
+  text-data:
+    synthesis: revision-text-data
+    requires: [llm-overview]
+  embedding-space:
+    synthesis: revision-embedding-space
+    requires: [text-data]
+  positional-encoding:
+    synthesis: revision-positional-encoding
+    requires: [embedding-space]
+  contextualized-representations:
+    synthesis: revision-contextualized-representations
+    requires: [embedding-space, positional-encoding]
+  transformer:
+    synthesis: revision-transformer
+    requires: [contextualized-representations]
+  queries-keys-values:
+    synthesis: revision-queries-keys-values
+    requires: [transformer]
+  scaled-dot-product-attention:
+    synthesis: revision-scaled-dot-product-attention
+    requires: [queries-keys-values]
+  causal-masking:
+    synthesis: revision-causal-masking
+    requires: [scaled-dot-product-attention]
+  logits:
+    synthesis: revision-logits
+    requires: [transformer]
+  probabilites:
+    synthesis: revision-probabilites
+    requires: [logits]
+  entropy:
+    synthesis: entropy-synthesis
+    requires: [probabilites]
+  inference-generation:
+    synthesis: revision-inference-generation
+    requires: [probabilites]
+    stage: inference
+  in-context-learning:
+    synthesis: revision-in-context-learning
+    requires: [inference-generation]
+  context-engineering:
+    synthesis: revision-context-engineering
+    requires: [in-context-learning]
+  vraisemblance:
+    synthesis: revision-vraisemblance
+    requires: [probabilites]
+  cross-entropy:
+    synthesis: revision-cross-entropy
+    requires: [vraisemblance, entropy]
+  loss:
+    synthesis: revision-loss
+    requires: [probabilites]
+  gradients:
+    synthesis: revision-gradients
+    requires: [loss]
+  training-loop:
+    synthesis: revision-training-loop
+    requires: [causal-masking, loss, gradients]

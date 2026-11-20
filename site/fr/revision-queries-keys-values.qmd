@@ -1,0 +1,46 @@
+---
+title: "Révision — Requêtes, clés et valeurs"
+description-meta: "Les trois projections d’un état caché et la chaîne Q–K → poids → combinaison des V."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-queries-keys-values", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-queries-keys-values"
+scope: "Les trois projections d’un état caché et la chaîne Q–K → poids → combinaison des V."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/queries-keys-values"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-queries-keys-values", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](queries-keys-values.qmd) · [Plan du parcours](review-path.qmd#computation)
+
+## À retenir {#revision-essentials}
+
+- Une tête d’auto-attention projette chaque état en requête Q, clé K et valeur V au moyen de matrices apprises.
+- Pour une position donnée, la requête est comparée aux clés des positions accessibles. Le score contribue au poids attribué à chaque position.
+- La sortie est obtenue en combinant les valeurs avec ces poids. Les clés interviennent dans la comparaison, les valeurs dans le contenu agrégé.
+
+## Vérifier de mémoire {#revision-check}
+
+À Q et K fixes, que peut changer une modification de V dans une tête ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Elle peut changer la sortie pondérée. Les poids de cette tête restent les mêmes, puisqu’ils sont calculés à partir de Q, K et du masque.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-queries-keys-values.qmd) · [English](../en/revision-queries-keys-values.qmd)
+:::

@@ -260,6 +260,46 @@ project:
     - en/exercises/llm-evolution.qmd
     - fr/evaluation-experimentale.qmd
     - en/experimental-evaluation.qmd
+    - fr/review-path.qmd
+    - en/review-path.qmd
+    - fr/revision-llm-overview.qmd
+    - en/revision-llm-overview.qmd
+    - fr/revision-text-data.qmd
+    - en/revision-text-data.qmd
+    - fr/revision-embedding-space.qmd
+    - en/revision-embedding-space.qmd
+    - fr/revision-positional-encoding.qmd
+    - en/revision-positional-encoding.qmd
+    - fr/revision-contextualized-representations.qmd
+    - en/revision-contextualized-representations.qmd
+    - fr/revision-transformer.qmd
+    - en/revision-transformer.qmd
+    - fr/revision-queries-keys-values.qmd
+    - en/revision-queries-keys-values.qmd
+    - fr/revision-scaled-dot-product-attention.qmd
+    - en/revision-scaled-dot-product-attention.qmd
+    - fr/revision-causal-masking.qmd
+    - en/revision-causal-masking.qmd
+    - fr/revision-logits.qmd
+    - en/revision-logits.qmd
+    - fr/revision-probabilites.qmd
+    - en/revision-probabilites.qmd
+    - fr/revision-inference-generation.qmd
+    - en/revision-inference-generation.qmd
+    - fr/revision-in-context-learning.qmd
+    - en/revision-in-context-learning.qmd
+    - fr/revision-context-engineering.qmd
+    - en/revision-context-engineering.qmd
+    - fr/revision-vraisemblance.qmd
+    - en/revision-vraisemblance.qmd
+    - fr/revision-cross-entropy.qmd
+    - en/revision-cross-entropy.qmd
+    - fr/revision-loss.qmd
+    - en/revision-loss.qmd
+    - fr/revision-gradients.qmd
+    - en/revision-gradients.qmd
+    - fr/revision-training-loop.qmd
+    - en/revision-training-loop.qmd
     - references.qmd
 
 website:

@@ -1,0 +1,29 @@
+---
+title: "Plan du parcours et fiches de révision"
+description-meta: "Présente pour chaque leçon centrale du parcours Understand ses acquis mobilisés, son périmètre, l’acquis visé et le contenu de sa fiche."
+keywords: ["type:entry-point", "destination:orient", "topic:review-path", "level:overview", "language:fr", "status:published"]
+lang: fr
+toc: true
+toc-depth: 2
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/review-path"
+scope: "Présente pour chaque leçon centrale du parcours Understand ses acquis mobilisés, son périmètre, l’acquis visé et le contenu de sa fiche."
+purpose: "Situer les acquis dans la progression et retrouver la fiche de chaque leçon pour réviser."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:review-path", "level:overview", "language:fr", "status:published"]
+-->
+
+Choisissez une étape pour retrouver les idées à maîtriser et les réviser avec une question corrigée. Les liens sous **Acquis mobilisés** renvoient aux leçons qui fournissent les connaissances utilisées à l’étape indiquée.
+
+[Parcours guidé et ressources facultatives](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
+
+{{< include ../includes/generated-lesson-contracts-fr.qmd >}}
