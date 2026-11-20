@@ -7,6 +7,21 @@ stages:
     objective:
       fr: "Situer le contexte et les paramètres du modèle. Suivre deux tours de génération dans le panorama avant d’étudier le calcul de la prédiction."
       en: "Locate the model’s context and parameters. Follow two generation steps in the overview before studying how a prediction is computed."
+    overview:
+      question:
+        fr: 'Que calcule un GPT à partir du texte qu’on lui donne ?'
+        en: 'What does a GPT compute from the text it receives?'
+      result:
+        fr: 'Il attribue des probabilités aux candidats pour la suite immédiate.'
+        en: 'It assigns probabilities to candidates for the next piece of text.'
+      signature: 'c \mapsto p_\theta(\cdot \mid c)'
+      criterion:
+        fr: >-
+          Pour un préfixe $c$ donné, la distribution porte sur le prochain token. Les paramètres $\theta$
+          restent fixes pendant les deux tours du Panorama.
+        en: >-
+          For a given prefix $c$, the distribution is over the next token. The parameters $\theta$ stay
+          fixed across the overview’s two steps.
     pages:
       fr: [fr/llm-overview]
       en: [en/llm-overview]
@@ -21,6 +36,17 @@ stages:
     objective:
       fr: "Distinguer le texte, les tokens et les identifiants qui constituent l'entrée discrète du modèle, sans devoir connaître les algorithmes de segmentation."
       en: "Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms."
+    overview:
+      question:
+        fr: 'Comment le texte devient-il une entrée du réseau ?'
+        en: 'How does text become input to the network?'
+      result:
+        fr: 'Un tokenizer découpe le texte en unités et retrouve le numéro de chacune dans son vocabulaire.'
+        en: 'A tokenizer splits the text into units and looks up each unit’s ID in its vocabulary.'
+      signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \{0,\ldots,V-1\}'
+      criterion:
+        fr: 'La longueur $T$ dépend du texte et du tokenizer. $V$ est la taille du vocabulaire.'
+        en: 'The length $T$ depends on the text and the tokenizer. $V$ is the vocabulary size.'
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
@@ -35,6 +61,25 @@ stages:
     objective:
       fr: "Identifier les plongements et l’information de position. Comparer les états initiaux et contextualisés avant d’ouvrir les blocs qui transforment les premiers en seconds."
       en: "Identify embeddings and positional information. Compare initial and contextualized states before opening the blocks that turn the former into the latter."
+    overview:
+      question:
+        fr: 'Que deviennent les numéros à l’entrée du réseau ?'
+        en: 'What happens to the IDs at the network input?'
+      result:
+        fr: >-
+          Chaque numéro sélectionne une liste de nombres. Dans le GPT du projet, on lui ajoute un signal
+          qui dépend de sa position.
+        en: >-
+          Each ID selects a list of numbers. In the project’s GPT, a signal based on its position is added
+          to that list.
+      signature: 'H^{(0)}_t = E_\theta[i_t] + P_\theta[t]'
+      criterion:
+        fr: >-
+          $E_\theta[i_t]$ est le même plongement de base pour toutes les occurrences du même ID, à table
+          fixée. $P_\theta[t]$ dépend de la position.
+        en: >-
+          With a fixed embedding table, $E_\theta[i_t]$ is the same base embedding for every occurrence of
+          the same ID. $P_\theta[t]$ depends on the position.
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
@@ -49,6 +94,27 @@ stages:
     objective:
       fr: "Relier les projections Q/K/V, les scores et poids d'attention, l'agrégation des valeurs, le masque causal et les autres opérations d'un bloc Transformer."
       en: "Connect Q/K/V projections, attention scores and weights, value aggregation, causal masking, and the other operations in a Transformer block."
+    overview:
+      question:
+        fr: 'Comment le préfixe influence-t-il la représentation à une position ?'
+        en: 'How does the prefix influence the representation at one position?'
+      result:
+        fr: >-
+          D’un bloc à l’autre, l’attention combine des informations des positions accessibles et chaque
+          position reçoit une représentation mise à jour.
+        en: >-
+          Across blocks, attention combines information from accessible positions and each position
+          receives an updated representation.
+      signature: 'H^{(0)} \mapsto H^{(L)}, \qquad H^{(0)}, H^{(L)} \in \mathbb{R}^{T \times d}'
+      criterion:
+        fr: >-
+          $L$ est le nombre de blocs et $d$ la largeur des états. Dans un GPT causal, une modification
+          après $t$ laisse l’état en $t$ inchangé à chaque couche, à positions et paramètres fixes et en
+          mode déterministe.
+        en: >-
+          $L$ is the number of blocks and $d$ is the width of the states. In a causal GPT, a change after
+          $t$ leaves the state at $t$ unchanged at each layer, with positions and parameters fixed and
+          deterministic execution.
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
@@ -63,6 +129,26 @@ stages:
     objective:
       fr: "Suivre la projection des états finaux vers les logits et la distribution conditionnelle du prochain token ; interpréter son entropie avant toute sélection ou observation d'une cible."
       en: "Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target."
+    overview:
+      question:
+        fr: 'Comment passe-t-on des représentations aux probabilités ?'
+        en: 'How do representations become probabilities?'
+      result:
+        fr: >-
+          L’état final donne un score brut par candidat. Le modèle transforme ces scores en probabilités
+          qui totalisent 100 %.
+        en: >-
+          The final state gives one raw score per candidate. The model converts those scores into
+          probabilities that total 100%.
+      signature: 'h_T \mapsto z = W_\theta h_T + b_\theta \mapsto p = \operatorname{softmax}(z)'
+      criterion:
+        fr: >-
+          $h_T$ désigne l’état de la dernière position en entrée de la tête de sortie. Le softmax
+          transforme les scores en une distribution sur le vocabulaire. L’entropie dépend de toutes les
+          probabilités.
+        en: >-
+          $h_T$ is the state of the last position at the output head’s input. Softmax maps scores to a
+          distribution over the vocabulary. Entropy depends on all the probabilities.
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
@@ -77,6 +163,25 @@ stages:
     objective:
       fr: "Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres."
       en: "Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters."
+    overview:
+      question:
+        fr: 'Comment une prédiction devient-elle une suite de texte ?'
+        en: 'How does a prediction become a continuation?'
+      result:
+        fr: >-
+          Une règle choisit un candidat. On l’ajoute au texte, puis on recommence jusqu’au critère
+          d’arrêt.
+        en: >-
+          A rule selects a candidate. It is appended to the text and the process repeats until the
+          stopping criterion is met.
+      signature: 'x_t \sim \pi(\cdot \mid p_\theta(\cdot\mid c_t)), \qquad c_{t+1} = c_t \Vert x_t'
+      criterion:
+        fr: >-
+          Le symbole $\Vert$ désigne la concaténation. Les paramètres $\theta$ restent fixes. La politique
+          de décodage $\pi$ règle le choix, qui peut être déterministe ou aléatoire.
+        en: >-
+          The symbol $\Vert$ denotes concatenation. The parameters $\theta$ stay fixed. The decoding
+          policy $\pi$ controls selection, which can be deterministic or stochastic.
     pages:
       fr: [fr/generation]
       en: [en/generation]
@@ -91,6 +196,25 @@ stages:
     objective:
       fr: "Prolonger l’inférence côté application. Expliquer l’effet d’exemples fournis dans le prompt, puis choisir les informations qu’un système transmet au modèle."
       en: "Extend inference to the application level. Explain the effect of examples supplied in the prompt, then choose what information a system passes to the model."
+    overview:
+      question:
+        fr: 'Que change-t-on lorsqu’on ajoute une consigne ou un document ?'
+        en: 'What changes when an instruction or document is added?'
+      result:
+        fr: >-
+          L’application sélectionne les éléments à transmettre. Le modèle recalcule sa prédiction à partir
+          du texte qu’il reçoit.
+        en: >-
+          The application selects what to send. The model computes its prediction from the text it
+          receives.
+      signature: 'c \mapsto c'', \qquad p_\theta(\cdot\mid c) \mapsto p_\theta(\cdot\mid c'')'
+      criterion:
+        fr: >-
+          On compare les deux entrées à paramètres $\theta$ fixés. L’effet des éléments ajoutés dépend de
+          ce qui atteint effectivement le contexte.
+        en: >-
+          The two inputs are compared at fixed parameters $\theta$. The effect of added material depends
+          on what actually reaches the context.
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
@@ -105,6 +229,25 @@ stages:
     objective:
       fr: "Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres."
       en: "Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters."
+    overview:
+      question:
+        fr: 'Quelle probabilité a été attribuée à une suite déjà connue ?'
+        en: 'What probability did the model assign to a known continuation?'
+      result:
+        fr: >-
+          On relève la probabilité de chaque token de la suite à partir du texte déjà observé, puis on les
+          combine.
+        en: >-
+          Each token’s probability is read using the text observed so far. Those probabilities are then
+          combined.
+      signature: '\log p_\theta(x_{1:n}\mid c) = \sum_{t=1}^{n} \log p_\theta(x_t \mid c \Vert x_{<t})'
+      criterion:
+        fr: >-
+          À paramètres fixes, chaque terme utilise le préfixe observé à ce pas. Chaque probabilité de
+          cible est une composante de sa distribution prédictive.
+        en: >-
+          At fixed parameters, each term uses the prefix observed at that step. Each target probability is
+          one component of its predictive distribution.
     pages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
@@ -119,6 +262,23 @@ stages:
     objective:
       fr: "Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres, puis à la boucle d'entraînement répétée et à la loss de validation ; comprendre conceptuellement le teacher forcing, sans faire de la préparation des exemples décalés une étape du parcours théorique."
       en: "Connect observed targets to the aggregated loss, gradients, and parameter updates, then to the repeated training loop and validation loss; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path."
+    overview:
+      question:
+        fr: 'Comment des exemples servent-ils à ajuster les paramètres ?'
+        en: 'How do examples inform parameter updates?'
+      result:
+        fr: >-
+          Les prédictions et les cibles donnent une perte. L’optimiseur utilise les gradients de cette
+          perte pour ajuster les paramètres.
+        en: 'Predictions and targets give a loss. The optimizer uses its gradients to update the parameters.'
+      signature: 'L(\theta) \mapsto \nabla_\theta L \mapsto \theta'''
+      criterion:
+        fr: >-
+          En teacher forcing, les préfixes et les cibles viennent des exemples observés. Les paramètres
+          sont mis à jour au pas de l’optimiseur.
+        en: >-
+          With teacher forcing, prefixes and targets come from the observed examples. The optimizer step
+          is where parameters are updated.
     pages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
