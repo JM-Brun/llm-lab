@@ -22,13 +22,14 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 [← Retour au catalogue des exercices](exercises.qmd)
 
-### Génération {#generation}
+## Génération {#generation}
 
 **Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
 
 **Huit exercices formatifs publiés :** GE-A à GE-H. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, le prefill/decode, le cache KV, les mécanismes de serving multi-requêtes, puis les effets de la température et des filtres top-k/top-p.
 
 <a id="ge-a-distribution-et-selection"></a>
+
 ### Distribution et sélection {#ex-generation-distribution-selection}
 
 Un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$.
@@ -47,7 +48,8 @@ Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est 
 [Revoir la sélection gloutonne et l'échantillonnage](generation.qmd#comment-le-prochain-token-est-il-choisi).
 
 <a id="ge-b-tracer-la-boucle-autoregressive"></a>
-### Tracer la boucle autoregressive {#ex-generation-autoregressive-loop}
+
+### Tracer la boucle autorégressive {#ex-generation-autoregressive-loop}
 
 On commence avec $c_1=(A,B)$. Le décodage est glouton et les distributions sont données :
 
@@ -75,6 +77,7 @@ Si l'on tirait $D$ au premier tour, le deuxième contexte serait $(A,B,D)$. La l
 [Revoir la trace de trois tours dans la leçon](generation.qmd#la-boucle-sur-un-exemple).
 
 <a id="ge-c-criteres-d-arret"></a>
+
 ### Critères d'arrêt {#ex-generation-stopping-criteria}
 
 Une génération utilise max_new_tokens = 4. EOS est sélectionné à la deuxième étape.
@@ -92,6 +95,7 @@ La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné �
 </details>
 
 <a id="ge-d-tracer-le-prefill-et-le-decode-incremental"></a>
+
 ### Tracer le prefill et le decode incrémental {#ex-generation-prefill-incremental-decode}
 
 Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal avec activation du cache KV.
@@ -110,6 +114,7 @@ Le prefill traite les trois positions du prompt en un passage séquentiel et rem
 </details>
 
 <a id="ge-e-que-permet-d-economiser-le-cache-kv"></a>
+
 ### Que permet d'économiser le cache KV ? {#ex-generation-kv-cache}
 
 On considère un prompt de trois tokens $(A,B,C)$ et la génération de trois tokens $D,E,F$. On ignore l'éviction liée à la fenêtre de contexte et on compte uniquement les positions de tokens nouvellement transmises au modèle :
@@ -129,6 +134,7 @@ Sans cache, le modèle traite des séquences de longueur $3$, puis $4$ (pour pr�
 
 
 <a id="ge-f-temperature-and-concentration"></a>
+
 ### Température et concentration de la distribution {#ex-generation-temperature}
 
 **Préparation facultative :** [Stratégies avancées de décodage](decoding-strategies.qmd), pour revoir la transformation des logits et la concentration de la distribution.
@@ -152,6 +158,7 @@ Le classement reste $C$, puis $B$, puis $A$ : diviser tous les logits par une te
 </details>
 
 <a id="ge-g-top-k-and-top-p"></a>
+
 ### Comparer top-k et top-p {#ex-generation-top-k-top-p}
 
 **Préparation facultative :** [Stratégies avancées de décodage](decoding-strategies.qmd), pour revoir la sélection par nombre fixe de candidats et par masse cumulée.
@@ -182,6 +189,7 @@ Ces exercices portent sur les réglages de distribution. La recherche de séquen
 
 
 <a id="ge-h-prefix-caching-and-continuous-batching"></a>
+
 ### Prefix caching et continuous batching {#ex-generation-prefix-caching-continuous-batching}
 
 Un serveur a déjà traité le préfixe tokenisé $S=(s_1,\ldots,s_{1200})$ d'une requête. Une seconde requête commence par exactement les mêmes 1 200 tokens, puis ajoute un suffixe de 300 tokens. Le cache de $S$ est encore disponible sur le worker choisi.
