@@ -46,7 +46,7 @@ L'identité centrale réunit les deux lectures : l'entropie est la surprise **at
 
 $$H(p) = \mathbb{E}_{X \sim p}\left[-\log p(X)\right]$$
 
-Le fil rouge du scribe l'illustre. Pour la distribution illustrative (« Être » 0,6 ; « Vous » 0,2 ; « Oui » 0,1 ; « Non » 0,1) :
+Le fil rouge du scribe l'illustre. Pour la [distribution illustrative du premier tour](probabilites.qmd#running-example-next-token) (« Vous » 0,6 · « Je » 0,2 · « Moi » 0,1 · « Oui » 0,1) :
 
 $$H(p) = -(0{,}6\ln 0{,}6 + 0{,}2\ln 0{,}2 + 2 \times 0{,}1\ln 0{,}1) \approx 1{,}089 \text{ nats},$$
 

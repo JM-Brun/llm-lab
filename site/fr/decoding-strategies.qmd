@@ -48,7 +48,7 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 **Question rapide :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 :::
 
-Pour le préfixe « C'est une bonne situation, ça, scribe ? », le modèle fournit des scores pour le prochain token ; le décodage détermine comment transformer ces scores et choisir ce token. Le token retenu est ensuite ajouté au contexte, puis le processus recommence.
+Au premier tour du scribe, la [distribution illustrative](probabilites.qmd#running-example-next-token) attribue 0,6 à « Vous » et 0,2 à « Je ». La sélection gloutonne retient « Vous ». L'échantillonnage sans filtre peut aussi tirer « Je ». Le [token retenu est ajouté au préfixe](generation.qmd), ce qui conditionne le tour suivant.
 
 ## 1. Où intervient le décodage ?
 

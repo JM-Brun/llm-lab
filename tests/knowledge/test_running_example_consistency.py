@@ -90,3 +90,30 @@ def test_french_pages_reuse_relevant_fragments_naturally(page_id: str) -> None:
 def test_english_understand_pages_keep_their_own_running_example(page_id: str) -> None:
     source = (ROOT / "site" / "en" / f"{page_id}.qmd").read_text(encoding="utf-8")
     assert ENGLISH_CONTINUATION in source, f"en/{page_id} diverges from its running example"
+
+
+@pytest.mark.parametrize(
+    ("language", "probability_page"), [("fr", "probabilites"), ("en", "probabilities")]
+)
+def test_first_step_softmax_matches_generation(language: str, probability_page: str) -> None:
+    site = ROOT / "site" / language
+    generation = (site / "generation.qmd").read_text(encoding="utf-8")
+    first_step = next(line for line in generation.splitlines() if line.startswith("| 1 |"))
+    candidates = first_step.split("|")[3].strip().split(" · ")
+
+    source = (site / f"{probability_page}.qmd").read_text(encoding="utf-8")
+    _, _, example = source.partition('<a id="running-example-next-token"></a>')
+    data = example.split("\n## ", maxsplit=1)[0]
+    rows = [
+        [cell.strip() for cell in line.split("|")[1:-1]]
+        for line in data.splitlines()
+        if line.startswith(("| «", "| “"))
+    ]
+
+    assert [f"{token} {probability}" for token, _, _, probability in rows] == candidates
+    normalizer = sum(int(exponential) for _, _, exponential, _ in rows)
+    assert normalizer == 10
+    for _, logit, exponential, probability in rows:
+        expected_logit = "$0$" if exponential == "1" else rf"$\ln {exponential}$"
+        assert logit == expected_logit
+        assert float(probability.replace(",", ".")) == pytest.approx(int(exponential) / normalizer)

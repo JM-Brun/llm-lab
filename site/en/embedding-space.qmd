@@ -54,7 +54,7 @@ The replies add examples such as aqueducts, sanitation, roads, and irrigation. T
 
 For a controlled, single-speaker continuation used to trace next-token mechanics, keep a separate illustrative example in mind: **“They built roads between distant towns.”** It is not one of the group's replies and does not turn the scene into a single-speaker generation trace.
 
-A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
+After [tokenizing the prefix](text-data.qmd), follow its final token. Its ID selects a row in the table below. Its position is its place in the sequence. Segmentation depends on the tokenizer, including at the end of the question.
 
 ## Lookup: select a row, not a coordinate {#lookup}
 

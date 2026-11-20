@@ -61,7 +61,7 @@ Causal masking enforces an information rule: **the output at position $i$ must n
 
 When training a model to predict the next token, all positions in a sequence can be computed in parallel. Without a mask, however, a position's representation could use tokens that would not yet be known during generation. The mask makes parallel training compatible with the autoregressive objective.
 
-When training on a prompt and its continuation, the position predicting a token cannot access target tokens that come after it in the sequence. During generation, those future tokens simply are not present yet.
+For “What have the Romans ever done for us?”, the final position of the prefix can attend to the whole question, including its own token. If the question and continuation are present together during training, the mask prevents this position from attending to “They” and the rest of the continuation. During generation, the continuation is appended after prediction.
 
 ## Definition
 

@@ -74,7 +74,18 @@ Probabilities are positive and sum to one. This normalization does not prove tha
 
 With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
 
-In our example, the distribution is conditioned on “What have the Romans ever done for us?” After a generated token is appended, the prefix changes, and the model computes a new distribution for the next step.
+<a id="running-example-next-token"></a>
+
+For the prefix “What have the Romans ever done for us?”, take a toy vocabulary of four tokens. The logits are chosen to reproduce the probabilities of the first step in the running example. The exponentials sum to 10, so softmax divides each by 10.
+
+| Candidate token | Logit | Exponential | Probability |
+|---|---:|---:|---:|
+| “They” | $\ln 6$ | 6 | 0.6 |
+| “Aqueducts” | $\ln 2$ | 2 | 0.2 |
+| “Nothing” | $0$ | 1 | 0.1 |
+| “Well” | $0$ | 1 | 0.1 |
+
+The illustrative continuation takes “They”. Once this token is appended to the prefix, the [next generation step](generation.qmd) uses a new distribution.
 
 ## Conditional probability in an autoregressive model
 
@@ -84,7 +95,7 @@ $$
 p_\theta(x_t\mid x_{<t}).
 $$
 
-The same token can therefore receive different probabilities depending on the prefix. In the Romans example, use the illustrative next-token distribution $p=(0.6,0.2,0.1,0.1)$ for “They”, “Aqueducts”, “Nothing”, and “Well”. If “They” is the observed first token of the continuation, its probability is $0.6$; this is a teaching example, not a measured model output. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
+The same token can therefore receive different probabilities depending on the prefix. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
 
 ## Temperature and decoding strategy
 

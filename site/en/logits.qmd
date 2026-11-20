@@ -61,7 +61,7 @@ By the end of this page, you will be able to:
 </div>
 
 
-In the running example, once “What have the Romans ever done for us?” has passed through the Transformer, the output head assigns a logit to every vocabulary token for the next position.
+After the Transformer processes “What have the Romans ever done for us?”, the output head reads the final state of the **last token in the prefix**. It assigns one score per vocabulary token to predict the following position. The [four-candidate calculation](probabilities.qmd#running-example-next-token) shows how these scores become the first-step distribution.
 
 ## Definition and dimensions
 

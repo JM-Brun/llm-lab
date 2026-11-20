@@ -85,7 +85,7 @@ $$
 
 Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Le masque agit sur les scores **avant** le softmax : c'est le seul point où il peut modifier les positions accessibles à la normalisation. Quelles positions interdire — la contrainte causale — et comment traiter une ligne entièrement masquée sont définis dans le [masque causal](causal-masking.qmd), prochaine étape du parcours.
 
-Dans le fil rouge, cette opération est répétée pour chaque position qui doit produire une représentation contextualisée. Elle combine des valeurs selon des poids calculés à partir des compatibilités entre Q et K ; elle ne choisit pas directement le prochain token.
+Dans le fil rouge « C'est une bonne situation, ça, scribe ? », suivez la dernière position du préfixe. Sa requête est comparée aux clés des positions accessibles, puis ses poids servent à combiner les valeurs de ces positions. Cette somme est la sortie de la tête pour cette position. Le [masque causal](causal-masking.qmd) fixe les positions accessibles.
 
 ## Passer du mécanisme au calcul
 
