@@ -32,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
-- expliquer pourquoi deux occurrences d’un même ID de token partagent un embedding initial mais développent des états cachés distincts ;
+- expliquer pourquoi deux occurrences d’un même ID de token partagent un embedding initial et peuvent produire des états cachés distincts ;
 - identifier à quel moment l'information positionnelle et les interactions séquentielles transforment l'état interne ;
 - réfuter la confusion attribuant au lookup d'embedding une compréhension sémantique ou une désambiguïsation du contexte.
 :::
@@ -86,7 +86,7 @@ Cet exemple illustre une relation entre deux positions du texte, en complément 
 
 | Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
 |---|---|---|
-| ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
+| ID du token | Vocabulaire et règles du tokenizer | Un token fixé garde son ID dans ce vocabulaire. Le découpage du texte, par exemple avec ou sans espace initial, peut changer le token obtenu. |
 | Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
 | État caché à la couche $\ell$ | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
 
@@ -104,7 +104,7 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 - **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
 :::
 
-[Comparez trois suites qui contiennent le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Prédisez quels états peuvent diverger avant d’étudier les opérations d’un bloc.
+Dans un GPT causal, le préfixe accessible à une position s’arrête au token courant. À position et poids fixés, [comparez trois suites contenant le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Repérez si le token modifié appartient au préfixe accessible avant de prédire l’effet du changement sur l’état.
 
 ## Où se situe cette étape dans le modèle ?
 

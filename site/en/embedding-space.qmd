@@ -30,7 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-en-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. This lesson explains that lookup, then carefully distinguishes the row address, the vector stored in that row, and the representations that the Transformer builds afterwards.
+After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. Reading a row from this table is called **lookup**.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
@@ -46,7 +46,7 @@ The text already present in the context is:
 
 > **Prefix / prompt:** “What have the Romans ever done for us?”
 
-After [tokenizing the prefix](text-data.qmd), follow its final token. Its ID selects a row in the table below. Its position is its place in the sequence. Segmentation depends on the tokenizer, including at the end of the question.
+[Tokenizing the prefix](text-data.qmd) assigns its final token an ID in the vocabulary. This ID tells the model which row to read from the table. Position tells it where the token occurs in the sequence. Segmentation depends on the tokenizer, including at the end of the question.
 
 <details>
 <summary>Background to the running example</summary>
@@ -61,9 +61,9 @@ For a controlled, single-speaker continuation used to trace next-token mechanics
 
 The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
-![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
+In the [lookup exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup), the toy tokenizer assigns the token `cat` ID 17 at positions 0 and 3. The model reads row $E_{17,:}$ twice. That row contains a vector. Positions 0 and 3 identify where each occurrence appears in the sequence.
 
-The distinction matters:
+![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
 | Object | What it denotes | Role |
 |---|---|---|
@@ -101,12 +101,12 @@ With a fixed matrix, two occurrences of the same ID select the same row and ther
 Position and context enter later, depending on the architecture. Transformer layers transform input vectors into **contextualized hidden states**: two occurrences with the same initial vector can therefore have different representations when their positions or accessible contexts differ.
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
-A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers then produce different contextualized states according to position and context.
+A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers can produce different contextualized states according to position and context.
 :::
 
-**Practice:** [embedding-space exercises](exercises/embedding-space.qmd).
+[Embedding-space exercises](exercises/embedding-space.qmd).
 
-For the next steps, see [positional encoding](positional-encoding.qmd), followed by [contextualized representations](contextualized-representations.qmd).
+Both occurrences retrieve the same vector. [Positional encoding](positional-encoding.qmd) explains how their location enters the calculation. Transformer blocks then integrate information from the accessible prefix to produce [contextualized representations](contextualized-representations.qmd).
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
 

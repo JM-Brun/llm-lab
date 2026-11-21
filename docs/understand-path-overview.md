@@ -63,6 +63,15 @@ Le [premier exercice de lookup](../site/fr/exercises/text-data.qmd#ex-text-to-em
 
 La trace GPT-2 a été exécutée en FR et EN. Le rendu a été parcouru au clavier de la carte jusqu’aux plongements, avec un aller-retour vers la trace et un accès direct à l’exercice de lookup. Les deux langues ont été testées dans Chromium à 390 et 1 280 px.
 
+
+### Du lookup au préfixe accessible
+
+La leçon sur les [plongements FR](../site/fr/embedding-space.qmd#lookup) et [EN](../site/en/embedding-space.qmd#lookup) reprend le cas de l’exercice où l’ID 17 apparaît aux positions 0 et 3. Lire deux fois la ligne 17 donne le même vecteur. La [leçon sur la position](../site/fr/positional-encoding.qmd) s’appuie sur ces deux occurrences pour faire calculer les entrées distinctes du premier bloc dans le cas additif. La [leçon sur la contextualisation](../site/fr/contextualized-representations.qmd) fixe ensuite le rang et demande de distinguer un changement dans le préfixe accessible d’un changement après le token courant.
+
+Les versions FR et EN expliquent qu’un même token garde son ID dans un vocabulaire donné, tandis que le découpage du texte peut produire des tokens différents. La position agit selon l’architecture. Le masque causal fixe les positions visibles par chaque requête.
+
+La comparaison à `56e1cdf` retrouve les titres et ancres, les figures et leurs textes alternatifs, les équations affichées, les destinations existantes et les ressources complémentaires des six pages. Les exercices et leurs corrigés restent identiques. Les trajets vers les trois exercices et l’ouverture des corrigés au clavier ont été vérifiés dans Chromium en FR et EN à 390 et 1 280 px.
+
 ### Travail restant
 
 | Ordre | Travail restant | Résultat à consigner |
