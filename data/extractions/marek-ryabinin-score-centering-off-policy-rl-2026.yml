@@ -8,7 +8,7 @@ scan:
     coverage: "Canonical arXiv v1 PDF (16 pages) inspected end-to-end, including the main derivation, all appendices A.1–A.4 and B.1–B.3, and both experimental tables; the official repository README and implementation were cross-checked separately. Figure reuse/provenance was not audited."
     notes:
       - "No formal theorem, lemma, proposition, corollary, assumption block or proof is stated. The central result is an algebraic per-prefix decomposition (Eqs. 3–5); its regularity requirements follow from normalized differentiable finite-vocabulary categorical probabilities and well-defined expectations."
-      - "The Cameron R. Wolfe Substack article is a separate source record. Its body remains unavailable; no claims below are attributed to Wolfe."
+      - "The Cameron R. Wolfe Substack article is reviewed under its own source ID, cameron-wolfe-score-centering-substack. No claims below are attributed to Wolfe."
   figures_media:
     status: not-inspected
     coverage: null
@@ -33,7 +33,6 @@ scan:
     coverage: "Canonical paper and official repository links retained."
     notes: ["No text or figures reproduced; reuse licence was not independently verified."]
   unresolved_questions:
-    - "Which claims in the Cameron Wolfe article add interpretation or pedagogical value beyond the paper and official repository?"
     - "Do current framework integrations preserve the paper's estimator and masking semantics?"
 items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:training-inference-mismatch

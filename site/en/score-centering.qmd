@@ -27,7 +27,7 @@ tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:a
 :::
 
 ::: {.callout-note}
-**Source scope.** This lesson synthesizes Marek and Ryabinin's paper and its official implementation. Cameron R. Wolfe's [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) is catalogued separately, but its article body could not be retrieved during this review. No explanation below is attributed to Wolfe until that source is inspected.
+**Source scope.** This lesson synthesizes Marek and Ryabinin's paper and its official implementation. The references include a separate walkthrough by Cameron R. Wolfe.
 :::
 
 ## 1. The mismatch: who sampled, and who learns?
@@ -158,7 +158,7 @@ It is not a new stage in the core next-token predictive spine and does not repla
 - Marek & Ryabinin, [*Score Centering Stabilizes Off-policy Reinforcement Learning*](https://arxiv.org/abs/2609.20807).
 - [Full-text rendering inspected for this review](https://www.alphaxiv.org/abs/2609.20807).
 - [Official implementation and README](https://github.com/martin-marek/score-centering), including the [loss implementation](https://github.com/martin-marek/score-centering/blob/main/losses.py).
-- Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) — separate commentary source; body retrieval pending.
+- Cameron R. Wolfe, [*Score Centering: Understanding and Fixing Instability in RL*](https://cameronrwolfe.substack.com/p/score-centering) — supplementary walkthrough from the constant-reward control to the drift decomposition and an illustrative PyTorch loss.
 - Related follow-up, [*On the Origin and Evolution of Training-Inference Mismatch in LLM Reinforcement Learning*](https://arxiv.org/abs/2610.40945), to review separately.
 
 </div>

@@ -1,7 +1,8 @@
 # Score centering: source review and integration decision
 
-**Review date:** 2026-11-09  
-**Status:** primary-paper full-text mirror reviewed; canonical PDF/appendix and official tests not fully verified; Cameron Wolfe article remains only partially retrieved.
+**Last updated:** 2026-11-21
+
+**Status:** canonical primary paper and appendices reviewed, bounded upstream CPU checks recorded, and Wolfe's article reviewed as secondary reading. The original retrieval history is below.
 
 ## 1. Provenance and retrieval
 
@@ -129,7 +130,7 @@ No learner-facing bilingual page or canonical graph concepts are added in this p
 - Added both pages to the Deepen maps and Quarto render/sidebar configuration.
 - Left the core guided route and canonical computational graph unchanged; the topic is an advanced optimization method, not a new forward-pass stage.
 
-## 10. Remaining work
+## 10. Original follow-up list — 2026-11-09
 
 1. Retrieve the actual Cameron Wolfe Substack body through a functioning canonical or author-provided route; compare its added pedagogical value with the paper. Keep its record partially scanned until then.
 2. Obtain the canonical arXiv PDF and audit all derivation assumptions, appendices, complete experiment tables and figure captions against the alphaXiv rendering.
@@ -158,3 +159,16 @@ This section supersedes the outdated retrieval and test-status statements in the
 - The separate Cameron R. Wolfe Substack body remains unavailable; none of its claims are attributed to the primary paper.
 
 The source-level `scan_history` now contains a distinct 2026-11-19 event for this later inspection. The original extraction-level `scan` dated 2026-11-09 remains unchanged as historical provenance. The bilingual page warning blocks have been corrected to reflect the verified evidence and its compatibility limitations.
+
+## 12. Secondary article review — 2026-11-21
+
+The indexed text rendering of Wolfe's [canonical Substack article](https://cameronrwolfe.substack.com/p/score-centering) exposed its prose through the conclusion, bibliography and footnotes, including the inline PyTorch sketch. Direct HTTP retrieval returned 403. The original visual assets, their reuse rights and reader comments were outside the audit. The [source-specific extraction](../../data/extractions/cameron-wolfe-score-centering-substack.yml) preserves this boundary.
+
+| Contribution | Comparison and decision |
+|---|---|
+| Start with a nonzero constant reward, then restore variable rewards | The constant reward makes reward–score covariance vanish at a fixed prefix. Wolfe's progression gives readers a negative control before the general decomposition. The paper establishes the diagnostic in §3 and the decomposition in §4. Link as optional reading. |
+| Contrast the PPO-style ratio, sampler correction and full-trajectory reweighting | Appendix A.2 explains why exact conditional importance weights cancel the centering term. A conditional ratio leaves the distribution of prefixes and subsequent rollout tokens untouched. Keep this scope explicit when reading the newsletter's shorthand about recovering the on-policy gradient. |
+| Work from the top-k estimator to a detached PyTorch loss | The text explains why the zero-mean trainer score eliminates an explicit tail sum for the modelled sampler. The inline example illustrates the mechanics and depends on external sampler, trainer and mask objects. It was not run. Use the paper and its reference implementation for executable evidence. |
+| Discuss quantization, staleness and instability | These are interpretations of the same experiments in §5 and Appendix B. The newsletter supplies no independent replication. Retain the primary paper's metric, configuration and unequal-seed qualifications. |
+
+Retain a bilingual supplementary reading link. The paper and its reference implementation remain the evidence for the derivation, code behavior and reported experiments. No figures or code from the newsletter are incorporated.
