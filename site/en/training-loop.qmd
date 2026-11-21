@@ -184,6 +184,8 @@ A toy GPT processes a tokenized prefix $c=(U,V)$. At its final position, it assi
 
 </details>
 
+[Review the Training stage in the learning plan](review-path.qmd#training).
+
 {{< include ../includes/generated-suggested-route-en-training-loop.qmd >}}
 
 After this path, you can study [post-training](post-training.qmd) or apply an [evaluation protocol](experimental-evaluation.qmd).

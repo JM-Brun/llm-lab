@@ -27,3 +27,5 @@ Choose a stage to find the ideas to master and review them with a question and a
 [Guided route and optional resources](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
 {{< include ../includes/generated-lesson-contracts-en.qmd >}}
+
+[Connect the stages in the end-of-path exercise](training-loop.qmd#end-to-end-transfer).
