@@ -86,3 +86,14 @@ Le registre garde la progression, les leçons et leurs dépendances. Les formule
 | [Gradients](../../site/fr/gradients.qmd) | L’ouverture opposait Newton et la descente avant que le lecteur sache comment le gradient des logits atteint les paramètres. | La comparaison complète est repliée après le passage du gradient à l’optimiseur. Le cas d’un pas hypothétique appliqué aux logits explique leur dérivée locale. La règle de chaîne et le pas de l’optimiseur décrivent ensuite la modification réelle des paramètres. |
 
 Les [formes A/B et le cas de transfert aval](learning-path-learner-evaluation.md#prediction-use-pilot) permettent au facilitateur de vérifier la continuité entre les leçons. Ils couvrent le choix du préfixe, le produit des probabilités cibles, les informations effectivement transmises et la différence entre mesurer une loss et mettre à jour les paramètres.
+
+## Préservation du contenu dans le Transformer et le masque causal
+
+| Élément repris | Destination | Contenu conservé |
+|---|---|---|
+| Autoévaluation du Transformer | Après les représentations finales et les logits, avant la navigation. [FR](../../site/fr/transformer.qmd#vérifier-sa-compréhension) · [EN](../../site/en/transformer.qmd#check-your-understanding) | Les cinq questions, leurs réponses repliées et le lien vers les exercices sont repris mot pour mot. Les ressources et la comparaison avec le Transformer de 2017 restent accessibles après la lecture principale. |
+| Schéma du masque à quatre positions | Entre la formule du score masqué et l’explication du poids nul. [FR](../../site/fr/causal-masking.qmd#définition) · [EN](../../site/en/causal-masking.qmd#definition) | Le schéma, le texte alternatif, les expressions du masque booléen et additif et le cas d’une ligne entièrement masquée gardent leur contenu. |
+| Diagonale, cible décalée et exemple causal | Après la définition, avant la comparaison des masques. [FR](../../site/fr/causal-masking.qmd#définition) · [EN](../../site/en/causal-masking.qmd#definition) | Le paragraphe sur l’entrée à la position $i$ et la cible $x_{i+1}$ est déplacé avec le renvoi à l’exercice sur l’état et la cible. La factorisation, la référence de 2017 et l’exercice d’invariance gardent leur place. |
+| Conventions PyTorch et version vérifiée | Dans les ressources repliables, à côté du code de référence. [FR](../../site/fr/causal-masking.qmd#exercices) · [EN](../../site/en/causal-masking.qmd#practice) | Les deux polarités de masque, les liens vers les API et la note de version restent ensemble. Le rappel visible sur le sens de `True` indique où trouver le détail. |
+
+Le [plan de suivi](../understand-path-overview.md#understand-route-follow-up) donne l’ordre des vérifications restantes. Le [pilote à une position causale](../learner-validation-pilot.md#causal-position-and-observed-target) permet d’observer séparément une erreur sur la visibilité, le choix de la cible et le calcul de la pénalité.
