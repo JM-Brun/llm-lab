@@ -33,7 +33,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 ::: {.chapter-lead}
 “What have the Romans ever done for us?” The question sets off a long series of answers. Put the same question to a conversational assistant: it carries on too. How does a program produce a continuation from a question?
 
-It does not write its answer in one block. For each possible continuation, it estimates the probability that it comes after the text already written, keeps one, and starts again. A program that assigns probabilities to the continuations of a text in this way is a **language model**. Trained at scale, it is a **large language model** (LLM).
+The response is built one token at a time. From the text so far, the **language model** computes probabilities for the next token. A decoding rule selects a token, which is appended to the text before the next calculation. A language model trained at scale is a **large language model** (LLM).
 :::
 
 ::: {.callout-note title="Running example: a question and its continuation"}
@@ -68,8 +68,6 @@ The question “What have the Romans ever done for us?” is the **prefix**: the
 | “Nothing” | 0.1 |
 | “Well” | 0.1 |
 
-[Practise the calculation on an observed continuation](exercises/likelihood.qmd#ex-overview-likelihood-transfer).
-
 These values are illustrative. Real tokens can be word fragments; the same numbers are reused across pages so the calculations can be checked by hand.
 
 This is a **conditional distribution**: probabilities are computed given the prefix and sum to 1. If the decoding rule selects “They”, the token is appended to the context; the model then computes a new distribution conditioned on the extended prefix.
@@ -82,11 +80,22 @@ Three terms are enough:
 - **Context:** supplied tokens and tokens already generated.
 - **Parameters:** learned numbers that stay fixed during ordinary inference.
 
-A sequence likelihood is the product of its successive conditional token probabilities ([mathematical formulation](language-modeling-math.qmd)). A probable continuation is not necessarily true: good prediction does not prove human-like understanding ([limits](llm-limits.qmd)).
+A probable continuation is not necessarily true: good prediction does not prove human-like understanding ([limits](llm-limits.qmd)).
 
 ## From text to a distribution {#text-to-distribution}
 
 {{< include ../includes/next-token-explorer.html >}}
+
+<details>
+<summary>If the rule selects “Aqueducts” first, what changes on the second turn?</summary>
+
+The new prefix ends in “Aqueducts.” The model recomputes the distribution from that prefix with the same parameters. The second-turn probabilities above were computed for the prefix ending in “They.”
+
+</details>
+
+**Continue the route.** [See how text becomes a sequence of tokens and IDs](text-data.qmd). Return to the sections below to connect the computation to model architectures, RAG, and the tools an assistant can use.
+
+### A preview of computation inside a GPT
 
 ![Six-stage reference diagram: input text, tokenization, numeric representations, computation in Transformer blocks, next-token distribution, and selection in the generation loop.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="An autoregressive GPT processes the prefix: text, tokens and IDs, embeddings and positional information, repeated Transformer blocks, logits converted into probabilities, then selection of a token appended to the prefix. Computation repeats with the extended context. Probabilities are illustrative."}
 
@@ -107,7 +116,10 @@ A computed distribution can be used to produce a continuation, score a known seq
 - **Score:** calculate the probability of an observed sequence, its **likelihood** ([likelihood](likelihood.qmd)).
 - **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* uses the actual tokens ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
 
-For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; [entropy](entropy.qmd) is expected surprisal. Scoring is not evaluation: evaluation compares results on held-out examples. Only learning changes parameters.
+For a token with probability 0.6, surprisal is $-\ln(0.6)\approx 0.51$ nats. [Entropy](entropy.qmd) is expected surprisal. Scoring measures the likelihood of a target or sequence. Evaluation compares results on held-out examples. Only learning changes parameters.
+
+A sequence likelihood is the product of its successive conditional token probabilities ([mathematical formulation](language-modeling-math.qmd)). [Practise the calculation on an observed continuation](exercises/likelihood.qmd#ex-overview-likelihood-transfer).
+
 ## LLM, Transformer, GPT: three notions {#llm-transformer-gpt}
 
 **LLM** describes a language model trained at scale, not a particular architecture. No universal parameter threshold defines the category on its own: data and training compute matter too ([scaling laws](scaling-laws.qmd)).

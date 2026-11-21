@@ -89,6 +89,8 @@ Dans le fil rouge « C'est une bonne situation, ça, scribe ? », suivez la dern
 
 ## Passer du mécanisme au calcul
 
+Suivez la dernière position du préfixe. Son état d'entrée fournit la requête de cette ligne ; les positions de la séquence fournissent les clés et les valeurs. Le softmax de l'attention pondère ces **positions**. Le softmax appliqué plus tard aux logits de sortie normalise les scores des **tokens du vocabulaire**. Dans l'atelier, essayez le cas où la cible suivante figure dans la séquence d'entraînement et où le [masque causal](causal-masking.qmd) bloque son accès.
+
 [Calculer les scores, les poids et la sortie pour une requête](exercises-attention.qmd#ex-attention-scores-to-output).
 
 {{< include ../includes/attention-intervention-fr.qmd >}}

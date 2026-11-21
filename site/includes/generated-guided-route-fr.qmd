@@ -6,7 +6,7 @@
   <a class="guided-rail__stage" href="#guided-stage-representations" data-stage-id="representations" data-stage-index="3"><span class="guided-rail__number">03</span><span class="guided-rail__title">Des identifiants aux représentations</span></a>
   <a class="guided-rail__stage" href="#guided-stage-computation" data-stage-id="computation" data-stage-index="4"><span class="guided-rail__number">04</span><span class="guided-rail__title">Comprendre le calcul du Transformer</span></a>
   <a class="guided-rail__stage" href="#guided-stage-prediction" data-stage-id="prediction" data-stage-index="5"><span class="guided-rail__number">05</span><span class="guided-rail__title">Des états à la distribution prédictive</span></a>
-  <span class="guided-rail__part" data-part="usages">Comprendre les usages de la prédiction</span>
+  <span class="guided-rail__part" data-part="usages">Contexte, usages de la prédiction et apprentissage</span>
   <a class="guided-rail__stage" href="#guided-stage-inference" data-stage-id="inference" data-stage-index="6"><span class="guided-rail__number">06</span><span class="guided-rail__title">Exécuter l&#x27;inférence et générer du texte</span></a>
   <a class="guided-rail__stage" href="#guided-stage-context-use" data-stage-id="context-use" data-stage-index="7"><span class="guided-rail__number">07</span><span class="guided-rail__title">Exploiter et concevoir le contexte</span></a>
   <a class="guided-rail__stage" href="#guided-stage-scoring" data-stage-id="scoring" data-stage-index="8"><span class="guided-rail__number">08</span><span class="guided-rail__title">Attribuer un score aux tokens observés</span></a>
@@ -122,7 +122,7 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 
 ::::
 
-## Comprendre les usages de la prédiction {.guided-route-part #guided-part-usages}
+## Contexte, usages de la prédiction et apprentissage {.guided-route-part #guided-part-usages}
 
 :::: {.guided-route-grid}
 
