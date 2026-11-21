@@ -79,6 +79,8 @@ Keep the model fixed. Start from prefix $c$ and compare two operations over two 
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-likelihood-exercises-ex-generation-versus-scoring.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/vraisemblance.qmd) · [English](likelihood.qmd)
 :::
