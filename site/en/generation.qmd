@@ -153,6 +153,35 @@ Three words thus name three scales: the **forward pass** is the network's comput
 
 Computing the distribution itself occupies the intermediate stages of the path: [the Transformer](transformer.qmd) produces the states, [the logits](logits.qmd) are their projection, and [softmax](probabilities.qmd) normalizes them.
 
+## How is the next token chosen? {#how-is-the-next-token-chosen}
+
+The distribution at turn 1 does not point to a single output. The decoding rule decides.
+
+**Greedy selection** (*greedy decoding*). Take the most probable token (*argmax*): “They”, on every run. The result is reproducible if the computation is deterministic. This local choice does not optimize the whole sentence and can lead to repetitions.
+
+**Sampling.** Draw the token at random according to the distribution: “They” comes out six times in ten on average, “Aqueducts” twice in ten. Two runs can therefore produce two different texts. Fixing the seed of the random generator, with deterministic computation, makes the draw reproducible.
+
+[Compute a softmax and compare greedy selection with sampling](exercises-generation.qmd#ex-generation-distribution-selection).
+
+**Temperature.** Before the draw, the distribution can be sharpened or flattened by dividing the logits by a number $\tau > 0$.
+
+| Continuation | $\tau = 0.5$ | $\tau = 1$ | $\tau = 2$ |
+|---|---|---|---|
+| “They” | 0.86 | 0.60 | 0.42 |
+| “Aqueducts” | 0.10 | 0.20 | 0.24 |
+| “Nothing” | 0.02 | 0.10 | 0.17 |
+| “Well” | 0.02 | 0.10 | 0.17 |
+
+A low temperature concentrates probability on the leading token; a high temperature leaves more room for the others. The order of the candidates does not change. As $\tau$ approaches zero, sampling joins greedy selection, except for ties and numerical effects. Temperature acts on the distribution used for the draw, not on the model's parameters, and makes an answer neither truer nor better. Its computation is detailed in [Output probabilities](probabilities.qmd).
+
+**Top-k** and **top-p** filters discard the least probable candidates before the draw; beam search and contrastive decoding follow other logics. The basic loop can be understood without them; their trade-offs are compared in [decoding strategies](decoding-strategies.qmd), and an [introduction by Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) gives a first overview.
+
+::: {.callout-warning title="Common misconceptions"}
+- **“The model always picks the best token.”** The model does not pick: it supplies a distribution. Under sampling, “Aqueducts” can come out although “They” is more probable.
+- **“A high probability guarantees a correct token.”** The distribution reflects learned regularities, not the state of the world. A model can give 0.6 to a false continuation.
+- **“Repetitions are a bug.”** They can come from the decoding rule, greedy selection in particular, with no programming error.
+:::
+
 ## From the prompt to subsequent tokens: prefill and decode
 
 An inference system does not treat the prompt the way it treats the tokens it generates.
@@ -162,6 +191,10 @@ An inference system does not treat the prompt the way it treats the tokens it ge
 - **KV cache.** For each position, attention computes vectors called keys and values ([queries, keys, and values](queries-keys-values.qmd)). Those of the prefix no longer change once computed; an optimized implementation keeps them instead of recomputing everything at each turn. This saves time and is not a condition for correctness: without a cache, the result is the same, up to numerical effects.
 
 *Decode* therefore names an execution phase, the one that follows prefill; *decoding* names the selection rule. The two words look alike and do not mean the same thing.
+
+Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
+
+The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
 
 ::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true"}
 
@@ -197,39 +230,6 @@ An advanced optimization, **speculative decoding**, has a draft model propose se
 
 [Brij Pandey's inference-path diagram](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) is a useful overview of these phases and diagnostics. It is cited as an external resource; its figure is not reproduced here.
 
-:::
-
-Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
-
-The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
-
-## How is the next token chosen? {#how-is-the-next-token-chosen}
-
-The distribution at turn 1 does not point to a single output. The decoding rule decides.
-
-**Greedy selection** (*greedy decoding*). Take the most probable token (*argmax*): “They”, on every run. The result is reproducible if the computation is deterministic. This local choice does not optimize the whole sentence and can lead to repetitions.
-
-**Sampling.** Draw the token at random according to the distribution: “They” comes out six times in ten on average, “Aqueducts” twice in ten. Two runs can therefore produce two different texts. Fixing the seed of the random generator, with deterministic computation, makes the draw reproducible.
-
-[Compute a softmax and compare greedy selection with sampling](exercises-generation.qmd#ex-generation-distribution-selection).
-
-**Temperature.** Before the draw, the distribution can be sharpened or flattened by dividing the logits by a number $\tau > 0$.
-
-| Continuation | $\tau = 0.5$ | $\tau = 1$ | $\tau = 2$ |
-|---|---|---|---|
-| “They” | 0.86 | 0.60 | 0.42 |
-| “Aqueducts” | 0.10 | 0.20 | 0.24 |
-| “Nothing” | 0.02 | 0.10 | 0.17 |
-| “Well” | 0.02 | 0.10 | 0.17 |
-
-A low temperature concentrates probability on the leading token; a high temperature leaves more room for the others. The order of the candidates does not change. As $\tau$ approaches zero, sampling joins greedy selection, except for ties and numerical effects. Temperature acts on the distribution used for the draw, not on the model's parameters, and makes an answer neither truer nor better. Its computation is detailed in [Output probabilities](probabilities.qmd).
-
-**Top-k** and **top-p** filters discard the least probable candidates before the draw; beam search and contrastive decoding follow other logics. The basic loop can be understood without them; their trade-offs are compared in [decoding strategies](decoding-strategies.qmd), and an [introduction by Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) gives a first overview.
-
-::: {.callout-warning title="Common misconceptions"}
-- **“The model always picks the best token.”** The model does not pick: it supplies a distribution. Under sampling, “Aqueducts” can come out although “They” is more probable.
-- **“A high probability guarantees a correct token.”** The distribution reflects learned regularities, not the state of the world. A model can give 0.6 to a false continuation.
-- **“Repetitions are a bug.”** They can come from the decoding rule, greedy selection in particular, with no programming error.
 :::
 
 ## What generation does not do

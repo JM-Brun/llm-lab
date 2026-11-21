@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel précise l'alignement logits-cibles, les positions valides et l'agrégation ; le cours traite teacher forcing, masquage, réduction et perplexité. Trois questions corrigées vérifient dénominateur, généralisation et comparabilité."
+      note: "Le rappel précise l'alignement logits-cibles, les positions valides et l'agrégation ; le cours traite teacher forcing, masquage, réduction et perplexité. Les exercices vérifient le dénominateur, la généralisation, la comparabilité et l’effet de l’agrégation sur le classement des checkpoints."
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
 -->
 
@@ -148,7 +148,7 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/loss.qmd).
+La [page d’exercices](exercises/loss.qmd) propose un cas corrigé pour [comparer deux checkpoints par leur loss de validation par token valide](exercises/loss.qmd#ex-validation-loss-by-token).
 
 
 ### Pour approfondir

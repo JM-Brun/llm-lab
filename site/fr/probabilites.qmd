@@ -222,7 +222,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ### Autre exemple à deux candidats
 
-Avec deux logits $z=(0,\log 3)$, la softmax donne $p=(0.25,0.75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
+Avec deux logits $z=(0;\log 3)$, la softmax donne $p=(0{,}25;0{,}75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
 ![Chaîne de transformation des logits en token sélectionné, avec l'effet de la température sur un exemple numérique.](../images/probability-decoding-flow-fr.svg){fig-alt="Les logits passent éventuellement par une division par la température, puis par softmax. Des filtres top-k ou top-p facultatifs peuvent ensuite être appliqués avec renormalisation, avant une sélection par argmax ou échantillonnage. Avec z égal à (0, ln 3), les probabilités passent de 25/75 % à température 1 à 36,6/63,4 % à température 2 ; le classement reste inchangé." fig-cap="Les étapes ont des rôles distincts : transformer les scores, construire une distribution, restreindre les candidats, puis sélectionner un token." width=100%}
 

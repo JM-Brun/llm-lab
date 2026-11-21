@@ -34,7 +34,7 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 :::
 
 
-La page précédente a montré comment le masque causal limite les positions accessibles dans l'attention. Une fois les blocs du Transformer calculés, la tête de sortie projette la représentation finale vers ce vecteur de scores.
+La page précédente a montré comment le masque causal limite les positions accessibles dans l'attention. Dans le GPT du projet, les états issus du dernier bloc passent par une normalisation finale. La tête de sortie projette ensuite chaque état normalisé vers ce vecteur de scores.
 
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
