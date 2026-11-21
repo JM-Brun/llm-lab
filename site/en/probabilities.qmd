@@ -79,6 +79,27 @@ $$
 
 The same token can therefore receive different probabilities depending on the prefix. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
 
+## Normalization, calibration, and truth
+
+- **Normalization:** the algebraic property that probabilities sum to one.
+- **Calibration:** the empirical property that, over a relevant population, events assigned a given probability occur at a compatible frequency.
+- **Factual truth:** a property of the output relative to the world and available evidence; it does not follow from either of the preceding properties.
+
+A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
+
+::: {.callout-warning title="Misconceptions"}
+- **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
+- **“The largest logit measures the confidence gap.”** The maximum determines the argmax, but uncertainty depends on all logits and their scale.
+- **“Logits are directly comparable across models.”** Not necessarily: architectures, temperatures, and training can produce different scales.
+:::
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “Two models outputting the exact same top logit score share the same prediction confidence”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have the same maximum logit ($z_1 = 10$). After softmax, model A assigns over 99% probability to the first token, compared with about 36.7% for model B. The distribution depends on all score differences, not the absolute maximum. A high probability does not establish calibration or the truth of a prediction.</p>
+</div>
+</details>
+
 ## Temperature and decoding strategy
 
 For temperature $\tau>0$, the distribution becomes:
@@ -120,6 +141,52 @@ With finite logits, the distribution approaches uniformity as temperature rises.
 Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
 
+## From the distribution to a selected token
+
+<ol class="probability-flow" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
+  <li><a href="logits.qmd">Logits</a></li>
+  <li>Temperature ÷ τ</li>
+  <li>Softmax</li>
+  <li>Top-k/top-p filters</li>
+  <li>Argmax or sampling</li>
+  <li><a href="generation.qmd">Append token</a></li>
+</ol>
+<p id="probability-flow-description" class="meta-flow__relation">Temperature scaling and filtering are optional. Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
+
+Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
+
+During training, a [loss function](cross-entropy.qmd) compares the logits with target tokens.
+
+This distribution is the starting point for three uses. [Generation](generation.qmd) selects a token. [Scoring](likelihood.qmd) reads an observed token’s probability. [Training](loss.qmd) aggregates target penalties into a batch objective.
+
+At the same position, a softmax is applied within attention and another after the output projection. In [Two softmax operations, two axes](exercises/logits.qmd#ex-attention-vocabulary-softmax), compute what each one normalizes and test whether an attention weight can recover the next-token probability.
+
+{{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
+::::
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
+
+
+### Further reading
+
+- [Entropy](entropy.qmd) — spread of the predictive distribution before the next token is observed.
+- [Cross-entropy](cross-entropy.qmd) — computing the penalty at one position.
+- [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
+
+To reduce numerical overflow, implementations usually subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$. A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) and covered by `tests/unit/test_attention.py`.
+
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
 <span>NUMERICAL WORKBENCH · TEMPERATURE-SCALED SOFTMAX</span>
@@ -150,75 +217,6 @@ assert np.argmax(p_cold) == np.argmax(p_standard) == np.argmax(p_hot)
 Temperature modulates distribution entropy without altering token ranking ($z_i > z_j \implies p_i > p_j$).
 :::
 :::
-
-::: {.callout-warning title="Misconceptions"}
-- **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
-- **“The largest logit measures the confidence gap.”** The maximum determines the argmax, but uncertainty depends on all logits and their scale.
-- **“Logits are directly comparable across models.”** Not necessarily: architectures, temperatures, and training can produce different scales.
-:::
-
-<details class="spot-the-fallacy">
-<summary>Common Fallacy: “Two models outputting the exact same top logit score share the same prediction confidence”</summary>
-<div class="fallacy-content">
-<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have the same maximum logit ($z_1 = 10$). After softmax, model A assigns over 99% probability to the first token, compared with about 36.7% for model B. The distribution depends on all score differences, not the absolute maximum. A high probability does not establish calibration or the truth of a prediction.</p>
-</div>
-</details>
-
-To reduce numerical overflow, implementations usually subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$. A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) and covered by `tests/unit/test_attention.py`.
-
-Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
-
-## From the distribution to a selected token
-
-<ol class="probability-flow" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
-  <li><a href="logits.qmd">Logits</a></li>
-  <li>Temperature ÷ τ</li>
-  <li>Softmax</li>
-  <li>Top-k/top-p filters</li>
-  <li>Argmax or sampling</li>
-  <li><a href="generation.qmd">Append token</a></li>
-</ol>
-<p id="probability-flow-description" class="meta-flow__relation">Temperature scaling and filtering are optional. Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
-
-During training, a [loss function](cross-entropy.qmd) compares the logits with target tokens.
-
-## Normalization, calibration, and truth
-
-- **Normalization:** the algebraic property that probabilities sum to one.
-- **Calibration:** the empirical property that, over a relevant population, events assigned a given probability occur at a compatible frequency.
-- **Factual truth:** a property of the output relative to the world and available evidence; it does not follow from either of the preceding properties.
-
-A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
-
-
-
-This distribution is the starting point for three uses. [Generation](generation.qmd) selects a token. [Scoring](likelihood.qmd) reads an observed token’s probability. [Training](loss.qmd) aggregates target penalties into a batch objective.
-
-At the same position, a softmax is applied within attention and another after the output projection. In [Two softmax operations, two axes](exercises/logits.qmd#ex-attention-vocabulary-softmax), compute what each one normalizes and test whether an attention weight can recover the next-token probability.
-
-{{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
-::::
-
-<details class="learning-resources">
-<summary>
-  <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
-</summary>
-<div class="learning-resources__content" markdown="1">
-
-### Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
-
-
-### Further reading
-
-- [Entropy](entropy.qmd) — spread of the predictive distribution before the next token is observed.
-- [Cross-entropy](cross-entropy.qmd) — computing the penalty at one position.
-- [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
 
 ### Another example with two candidates
 
