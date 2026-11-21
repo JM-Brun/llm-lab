@@ -38,7 +38,7 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
 
 :::
 
-## From logits to a categorical distribution
+## From logits to a categorical distribution {#from-logits-to-a-categorical-distribution}
 
 At a given position, the model produces a logit $z_i$ for each vocabulary token $i$. Logits are unnormalized scores: they may be positive or negative and do not sum to one.
 

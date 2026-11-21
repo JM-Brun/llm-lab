@@ -41,6 +41,8 @@ For the distributed target, the result is −0.5 ln(0.75) − 0.5 ln(0.25) ≈ 0
 
 </details>
 
+[Compare two losses when the distribution is fixed and the target changes](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 To apply this penalty to a batch, see [the loss review sheet](revision-loss.qmd).
 
 ::: {.language-switch}

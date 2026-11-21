@@ -42,6 +42,8 @@ Pour un vocabulaire de 50 000 tokens et un état de dimension 768, combien de lo
 
 </details>
 
+[Calculer les poids d’attention et les probabilités du prochain token à une même position](exercises/logits.qmd#ex-attention-vocabulary-softmax).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-logits.qmd) · [English](../en/revision-logits.qmd)
 :::

@@ -38,7 +38,7 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 
 :::
 
-## Des logits à une distribution catégorielle
+## Des logits à une distribution catégorielle {#des-logits-à-une-distribution-catégorielle}
 
 À une position donnée, le modèle produit un logit $z_i$ pour chaque token $i$ du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
 

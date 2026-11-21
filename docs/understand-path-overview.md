@@ -24,6 +24,8 @@ Ce lot complète les retours depuis les corrigés sur les états finaux et sur l
 | 4 | Piloter le transfert sur les étapes aval. Les [formes A/B et le cas inédit de validation](audits/learning-path-learner-evaluation.md#prediction-use-pilot) sont prêts. | Relever les réponses et le raisonnement, en particulier l’origine du préfixe, la pondération par cible valide et le rôle des paramètres pendant la validation. Examiner aussi si les formes A/B suscitent des difficultés comparables. |
 | 5 | Corriger les problèmes constatés. | Rejouer la tâche qui a fait apparaître le problème. Une difficulté récurrente due à un prérequis enseigné trop tard justifie de revoir l’ordre. Pour une confusion circonscrite ou un mauvais repérage, revoir la fiche, l’explication ou le lien concerné. |
 
+Le [comparatif des approches d’apprentissage](source-reviews/learning-path-comparison-2026-11-05.md#which-learning-approach-serves-which-outcome) a relevé un prérequis local. Le rappel de softmax apparaît à son premier usage dans le calcul de l’attention. Trois fiches bilingues donnent accès aux exercices existants sur l’état contextualisé, les deux axes de normalisation et la perte d’une cible. Le [pilote à une position causale](learner-validation-pilot.md#causal-position-and-observed-target) indique quoi observer pour décider d’une correction locale ou d’une adaptation de l’ordre.
+
 L’ordre actuel sert de référence pour ces vérifications. Les sections ci-dessous conservent l’audit éditorial initial.
 
 ## 1. Ce que le parcours doit faire comprendre
