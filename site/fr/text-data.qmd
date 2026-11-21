@@ -37,10 +37,12 @@ La **tokenisation** découpe le texte en unités appelées *tokens* et associe c
 
 Dans la page précédente, la génération a été présentée comme une boucle qui s'appuie sur les tokens déjà présents dans le contexte. Cette page remonte d'une étape : elle explique comment le prompt devient une séquence de tokens, puis d'IDs entiers que le modèle peut convertir en vecteurs d'entrée.
 
-::: {.callout-note title="Texte à encoder"}
+::: {.callout-note title="Texte à encoder" #tokenizer-output}
 Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** La continuation commence par : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »**
 
 Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
+
+Avec le tokenizer de GPT-2, `hello world` donne les tokens `"hello"` et `" world"` (espace inclus), puis les IDs `[31373, 995]`. La [trace reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie ces sorties et utilise des vecteurs synthétiques pour illustrer le lookup.
 :::
 
 
@@ -93,6 +95,8 @@ Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités 
 
 Le dernier bloc regroupe volontairement le traitement positionnel et le Transformer. Les architectures n'introduisent pas toutes la position de la même manière : des vecteurs positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE fait tourner les vecteurs requête et clé dans l'attention. La position n'est donc pas un vecteur supplémentaire universellement ajouté au moment du lookup ; voir [encodage positionnel et RoPE](positional-encoding.qmd).
 
+[Suivez les IDs jusqu’aux lignes lues dans la table de plongements](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
 ## 2. Ce que la tokenisation change — et ce qu'elle ne dit pas
 
 La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.
@@ -109,7 +113,7 @@ La limite de contexte d'un modèle se mesure en **tokens**, pas en mots ni en ca
 Cela révèle une distinction importante : **l'efficacité de représentation n'est pas la qualité linguistique du modèle**. Un ratio de tokens plus faible est une propriété mesurable du tokenizer sur un corpus donné, pas une preuve que le modèle comprend ou génère mieux cette langue. Les écarts doivent être mesurés par langue et par type de texte, puis reliés à des résultats en aval avant toute conclusion. Voir [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 :::
 
-Pour comprendre le mécanisme minimal, passez directement à [Des identifiants aux vecteurs](embedding-space.qmd). Pour aller plus loin sur les choix de segmentation, consultez les [stratégies de tokenisation](tokenization-strategies.qmd).
+Le modèle reçoit la séquence d’IDs. Dans la leçon suivante, [chaque ID sélectionne une ligne de la table de plongements](embedding-space.qmd). Les [stratégies de tokenisation](tokenization-strategies.qmd) détaillent les choix de segmentation qui produisent cette séquence.
 
 {{< include ../includes/generated-suggested-route-fr-text-data.qmd >}}
 
@@ -129,8 +133,6 @@ Pour comprendre le mécanisme minimal, passez directement à [Des identifiants a
 ### Exercices
 
 [Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
-
-Pour voir une sortie reproductible avec des IDs réels, la collection d'exercices propose une trace technique séparée sur `hello world` et le tokenizer GPT-2 ; les vecteurs d'embedding y restent synthétiques. [Consulter la trace facultative](exercises-text-data.qmd#tokenizer-embedding-trace).
 
 ### Deux usages, deux parcours
 

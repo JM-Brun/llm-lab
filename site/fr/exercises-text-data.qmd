@@ -239,6 +239,8 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 
 À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir l'exercice sur les fusions BPE.
 
+[Reprendre la leçon à l’exemple de tokenisation](text-data.qmd#tokenizer-output).
+
 <a id="ex-representation-context"></a>
 
 ### Distinguer identité, position et contexte {#ex-text-data-representation-context}
