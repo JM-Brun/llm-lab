@@ -41,6 +41,8 @@ Les logits qui permettent de l’obtenir sont déjà produits par le prefill. Le
 
 </details>
 
+[Suivre le deuxième tour quand on génère ou quand on score une suite observée](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
+
 ::: {.callout-note collapse="true" title="Latence en production"}
 En service, le délai jusqu’au premier token (TTFT) inclut notamment l’attente et le prefill. Le temps par token de sortie (TPOT) renseigne sur la cadence après le premier token. L’ordonnancement peut affecter ces mesures.
 :::

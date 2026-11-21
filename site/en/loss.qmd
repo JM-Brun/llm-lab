@@ -77,7 +77,9 @@ $$
 
 For the illustrative continuation “They built roads”, the three local penalties are $-\log(0.6)\approx0.511$, $-\log(0.5)\approx0.693$, and $-\log(0.8)\approx0.223$ nats. Their sum is the sequence NLL, approximately $1.427$ nats; their mean is approximately $0.476$ nats per token. State whether a reported value is a sum or a mean: they answer different scale questions.
 
+::: {.callout-note collapse="true" title="Other reductions and weighting"}
 A sum and a per-sequence mean are also possible. A weighted mean defines another convention: for example, with nonnegative weights $w_{b,t}$ on valid positions, one may compute $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, provided the denominator is nonzero. The denominator is then the sum of weights, not the number of valid positions. Some APIs use this rule for class weights; other weighting conventions, especially per-sequence weighting, may use a different denominator. These choices change the objective, gradient scale, or relative weight of sequences, so they must be documented.
+:::
 
 ## Masking and shifted targets
 
@@ -109,10 +111,6 @@ The formula with $\exp$ assumes mean NLL is computed with the natural logarithm 
 - **“Mean loss is always comparable across experiments.”** Check tokenizer, data, masks, sequence length, reduction, and the exact objective.
 :::
 
-::: {.callout-note collapse="true" title="API implementation detail (optional)"}
-**Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
-:::
-
 ::: {.callout-note collapse="true" title="Pipeline diagnostics (advanced)"}
 Before interpreting a curve, document the objective, input/target shift, ignore mask, reduction, train/validation split, and any regularization terms. Overfitting a tiny batch is a useful pipeline sanity check, but not evidence of generalization.
 :::
@@ -138,6 +136,8 @@ The [practice page](exercises/loss.qmd) includes a worked example that [compares
 
 
 ### Further reading
+
+**Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): documents the loss for unnormalized logits, ignored targets, optional class weights, and reduction modes. These conventions must be recorded when comparing reported losses.
 

@@ -42,6 +42,8 @@ It is 1 − 0.1 × 2 = 0.8. The positive gradient leads to a decrease in this pa
 
 </details>
 
+[Compare two updates and their next predictions at equal initial loss](exercises/gradients.qmd#ex-score-to-parameter-update).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-gradients.qmd) · [English](../en/revision-gradients.qmd)
 :::

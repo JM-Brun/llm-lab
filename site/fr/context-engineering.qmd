@@ -45,6 +45,22 @@ Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte
 
 Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
 
+## Trois niveaux de contexte à ne pas confondre
+
+| Niveau | Ce qui est disponible |
+|---|---|
+| **Contexte du système** | Pour un appel donné, l’application sélectionne les instructions, messages, exemples, documents récupérés, résultats d’outils et éléments de mémoire à fournir. Un historique conservé ou un contenu mémorisé n’entre dans cet appel que si le système le sélectionne et le transmet. |
+| **Séquence d’entrée et fenêtre de contexte** | Le modèle traite la séquence transmise, qui peut comprendre des éléments multimodaux structurés. La longueur du contexte actif compte les tokens effectivement présents. La fenêtre de contexte fixe le budget maximal en tokens, selon les conventions de comptage de l’entrée et de la sortie propres au modèle et à l’API. En génération autorégressive, les tokens produits s’ajoutent à la séquence. |
+| **Contexte accessible à une position** | L’architecture, le masque et la fenêtre disponible déterminent les positions qu’une requête peut consulter. Dans un décodeur causal, l’attention à la position $t$ exclut les positions futures, même si leurs tokens figurent dans la séquence d’entrée. |
+
+Les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés vectoriels que le Transformer calcule à partir des tokens accessibles à chaque position. Ces états constituent un résultat du calcul sur la séquence, distinct des informations transmises ou stockées par le système.
+
+## Pourquoi la fenêtre de contexte ne suffit pas
+
+La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
+
+Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
+
 ## Définition et opérations principales
 
 Le context engineering ne désigne pas une fonctionnalité particulière d'un modèle ni une norme dont le périmètre serait universellement fixé. C'est une pratique d'ingénierie des systèmes LLM, pas une couche du Transformer ni une nouvelle architecture de réseau. Elle comprend notamment :
@@ -59,22 +75,6 @@ Le context engineering ne désigne pas une fonctionnalité particulière d'un mo
 8. **Évaluer** l'effet du contexte sur la qualité, la robustesse, la latence et le coût.
 
 Ces opérations forment une boucle de conception et d'observation, pas une recette unique. Leur importance dépend de la tâche et de l'architecture.
-
-## Pourquoi la fenêtre de contexte ne suffit pas
-
-La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
-
-Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
-
-## Trois niveaux de contexte à ne pas confondre
-
-| Niveau | Ce qui est fourni ou accessible | Repère |
-|---|---|---|
-| **Contexte du système** | Instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. | L'historique peut être stocké sans être transmis. Pour devenir contexte du modèle, le contenu de la mémoire persistante doit être sélectionné et fourni. |
-| **Séquence d'entrée et fenêtre de contexte** | Le modèle traite une séquence de tokens ou d'éléments multimodaux structurés. En génération autorégressive, les tokens produits s'ajoutent à cette séquence. | La longueur du contexte actif compte les tokens effectivement présents. La fenêtre fixe le budget maximal par appel, avec des conventions de comptage entrée/sortie qui dépendent du modèle et de l'API. |
-| **Contexte accessible à une position** | Les positions consultables dépendent de l'architecture, du masque et de la fenêtre disponible. Dans un décodeur causal, la position $t$ ne peut pas consulter les positions futures. | Une position peut avoir accès à une partie seulement des tokens transmis. |
-
-Le contexte actif désigne les informations d'entrée. Une [représentation contextualisée](contextualized-representations.qmd) est un état caché vectoriel que les couches du Transformer calculent à partir des informations accessibles. C'est le résultat du calcul, distinct du contexte actif et de l'historique stocké.
 
 ## Distinguer les notions voisines
 

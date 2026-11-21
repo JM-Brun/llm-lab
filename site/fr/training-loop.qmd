@@ -87,20 +87,6 @@ Ces trois notions sont souvent confondues.
 - L'**optimiseur** est une règle qui transforme les gradients (et parfois sa mémoire des gradients précédents) en mise à jour. La SGD simple utilise $\theta_{k+1}=\theta_k-\eta\,\nabla_\theta\mathcal{L}(\theta_k)$, comme indiqué dans [Gradients](gradients.qmd).
 - Le **taux d'apprentissage** $\eta$ fixe la taille du pas. Trop petit, l'entraînement est lent ; trop grand, la loss peut osciller ou diverger, car le gradient ne décrit que le comportement *local*.
 
-L'entraînement des modèles de langage emploie couramment des optimiseurs *adaptatifs* comme Adam et sa variante à décroissance des poids découplée, AdamW. Intuitivement, ils conservent des moyennes glissantes des gradients récents et de leurs carrés (leur second moment non centré), de sorte que chaque paramètre reçoit un pas adapté à son historique récent et non un pas global unique. Le gradient est le même ; seule la règle de mise à jour diffère. Le second moment des gradients conservé par Adam estime leur amplitude : ce n'est **pas** la matrice hessienne qui représente la courbure dans la méthode de Newton. Adam et AdamW sont donc des optimiseurs adaptatifs du premier ordre, et non des méthodes de Newton du second ordre. Leurs formules exactes, les plannings de taux d'apprentissage (échauffement, décroissance) et l'écrêtage des gradients sont des choix d'implémentation qui modifient la dynamique d'entraînement sans changer l'objectif ; ils sortent du périmètre de cette leçon, et les sources de la rubrique *Pour approfondir* les définissent.
-
-<figure id="fig-optimizer-comparison">
-  <picture>
-    <source media="(max-width: 600px)" srcset="../images/optimizer-comparison-fr-mobile.svg">
-    <img src="../images/optimizer-comparison-fr.svg" alt="Comparaison de trois règles de mise à jour : la SGD utilise le gradient courant du premier ordre ; Newton utilise le gradient et la courbure de la Hessienne ; Adam et AdamW utilisent les premiers et seconds moments des gradients. Le second moment d'Adam n'est pas la Hessienne." style="width:100%;height:auto">
-  </picture>
-  <figcaption>SGD, Newton et Adam peuvent optimiser le même objectif tout en utilisant des informations différentes pour choisir une mise à jour. Le second moment d'Adam suit les carrés des gradients ; il ne calcule pas la courbure.</figcaption>
-</figure>
-
-::: {.callout-note collapse="true" title="Pourquoi ne pas appliquer Newton exactement à chaque paramètre d'un LLM ? (approfondissement)"}
-Un pas de Newton complet résout $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ puis met à jour $\theta_{k+1}=\theta_k-d_k$. Pour un modèle de millions ou de milliards de paramètres, stocker et factoriser une hessienne dense est généralement prohibitif. La hessienne peut aussi être singulière ou indéfinie : une direction de Newton non amortie n'est donc pas automatiquement une direction de décroissance. Les méthodes du second ordre pratiques ajoutent des garde-fous, comme l'amortissement, les régions de confiance ou des approximations structurées. Les méthodes quasi-Newton (par exemple L-BFGS) et les préconditionneurs structurés cherchent à exploiter la courbure à moindre coût, mais ne sont pas le même algorithme qu'Adam. C'est l'une des raisons pour lesquelles l'entraînement à grande échelle des modèles de langage privilégie couramment des méthodes adaptatives du premier ordre.
-:::
-
 ::: {.callout-warning title="Idées reçues"}
 - **« L'optimiseur calcule le gradient. »** C'est la rétropropagation qui le calcule ; l'optimiseur ne fait que l'utiliser.
 - **« Un taux d'apprentissage plus petit est toujours plus sûr. »** Il est plus stable à chaque pas, mais peut être trop lent pour atteindre une loss utile avec le calcul disponible ; la meilleure valeur dépend du modèle, de la taille du batch et de l'optimiseur.
@@ -115,8 +101,6 @@ Si l'on ne mesurait que la loss minimisée par l'optimiseur, un modèle qui mém
 - **Loss de validation :** la même loss sur une partition distincte, calculée avec des paramètres fixes, sans aucune mise à jour. Elle estime le comportement sur du texte inédit issu de la même distribution.
 - **Loss de test :** une autre partition, laissée intacte jusqu'à l'évaluation finale. La validation guide des choix comme l’arrêt de l’entraînement ou le taux d’apprentissage. À force de sélectionner les configurations qui obtiennent les pertes les plus faibles sur cette partition, on risque de retenir une configuration qui y réussit en partie par hasard. La loss de validation de cette configuration peut alors sous-estimer sa loss sur de nouvelles données. Le test réservé fournit une mesure indépendante de cette sélection. Voir la [préparation du corpus](corpus-preparation.qmd) pour construire les partitions sans fuite et l'[évaluation expérimentale](evaluation-experimentale.qmd) pour le protocole plus général.
 
-Pour comparer deux checkpoints, entraînez-vous à [agréger la loss de validation sur des lots qui n’ont pas le même nombre de tokens valides](exercises/loss.qmd#ex-validation-loss-by-token).
-
 Le **surapprentissage** désigne une loss de validation qui cesse de s'améliorer, ou remonte, alors que la loss d'entraînement continue de baisser : le modèle continue d'ajuster des détails de l'échantillon d'entraînement qui ne se retrouvent pas dans de nouveaux textes. L'écart entre les deux losses est l'*écart de généralisation*. L'ampleur du surapprentissage dépend de la capacité du modèle par rapport à la quantité et à la diversité des données, du nombre de répétitions des données et de la régularisation.
 
 L'exemple ci-dessous rend ce phénomène visible avec le plus petit modèle de langage possible : une table de logits indexée par le token précédent, entraînée sur 60 tokens seulement, tirés d'un processus aléatoire connu, et validée sur 400 tokens supplémentaires.
@@ -125,51 +109,9 @@ Avec NumPy 2 et cette graine, l'exécution affiche une loss d'entraînement qui 
 
 Cet exemple est volontairement minuscule : une table de consultation, des mises à jour sur batch complet, une SGD simple et 60 tokens d'entraînement. Il montre la boucle et le diagnostic, pas le comportement d'un Transformer, et la même allure de courbe n'est pas garantie dans d'autres configurations. Réussir les assertions montre que cette configuration reproduit le phénomène ; ce n'est pas une preuve générale sur le surapprentissage.
 
-### Implémentation
+Pour comparer deux checkpoints, entraînez-vous à [agréger la loss de validation sur des lots qui n’ont pas le même nombre de tokens valides](exercises/loss.qmd#ex-validation-loss-by-token).
 
-::: {.callout-note collapse="true" title="Afficher le micro-code"}
-
-<span class="epistemic-badge badge-code">Micro-code exécutable</span> Le code utilise les fonctions maintenues de `llm_lab.foundations.losses` pour la loss et son gradient par rapport aux logits, et n'ajoute que la boucle. Exécutez-le depuis la racine du dépôt après `uv sync`.
-
-```python
-import numpy as np
-from llm_lab.foundations.losses import cross_entropy_from_logits, cross_entropy_gradient
-
-rng = np.random.default_rng(0)
-V = 12                                                  # taille du vocabulaire
-true_P = rng.dirichlet(np.full(V, 0.3), size=V)         # loi inconnue du token suivant, (V, V)
-
-def sample(n):                                          # flux de tokens -> (entrées, cibles décalées)
-    t = [0]
-    for _ in range(n):
-        t.append(rng.choice(V, p=true_P[t[-1]]))
-    return np.array(t[:-1]), np.array(t[1:])
-
-x_tr, y_tr = sample(60)                                 # petite partition d'entraînement
-x_va, y_va = sample(400)                                # partition de validation réservée
-
-W = np.zeros((V, V))                                    # paramètres : une ligne de logits par token précédent
-lr, history = 1.0, []
-for step in range(301):
-    if step % 50 == 0:                                  # mesure seulement : aucune mise à jour
-        history.append((step,
-                        cross_entropy_from_logits(W[x_tr], y_tr),
-                        cross_entropy_from_logits(W[x_va], y_va)))
-    g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V) : dLoss / dlogits
-    g_W = np.zeros_like(W)
-    np.add.at(g_W, x_tr, g_logits)                      # règle de chaîne à travers la lecture de ligne
-    W -= lr * g_W                                       # mise à jour SGD
-
-train = [h[1] for h in history]
-val = [h[2] for h in history]
-assert np.isclose(train[0], np.log(V)) and np.isclose(val[0], np.log(V))   # départ uniforme
-assert all(a >= b for a, b in zip(train, train[1:]))    # la loss d'entraînement continue de baisser
-assert int(np.argmin(val)) < len(val) - 1               # la loss de validation remonte
-for s, tr, va in history:
-    print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
-```
-
-:::
+[Reproduire l’expérience de validation](#implémentation).
 
 ## Le pré-entraînement est la même boucle à grande échelle
 
@@ -247,6 +189,70 @@ Un GPT jouet traite le préfixe déjà tokenisé $c=(U,V)$. À sa dernière posi
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
 
 Après ce parcours, vous pouvez étudier le [post-entraînement](post-training.qmd) ou appliquer un [protocole d’évaluation](evaluation-experimentale.qmd).
+
+## Approfondissements
+
+### Implémentation
+
+::: {.callout-note collapse="true" title="Afficher le micro-code"}
+
+<span class="epistemic-badge badge-code">Micro-code exécutable</span> Le code utilise les fonctions maintenues de `llm_lab.foundations.losses` pour la loss et son gradient par rapport aux logits, et n'ajoute que la boucle. Exécutez-le depuis la racine du dépôt après `uv sync`.
+
+```python
+import numpy as np
+from llm_lab.foundations.losses import cross_entropy_from_logits, cross_entropy_gradient
+
+rng = np.random.default_rng(0)
+V = 12                                                  # taille du vocabulaire
+true_P = rng.dirichlet(np.full(V, 0.3), size=V)         # loi inconnue du token suivant, (V, V)
+
+def sample(n):                                          # flux de tokens -> (entrées, cibles décalées)
+    t = [0]
+    for _ in range(n):
+        t.append(rng.choice(V, p=true_P[t[-1]]))
+    return np.array(t[:-1]), np.array(t[1:])
+
+x_tr, y_tr = sample(60)                                 # petite partition d'entraînement
+x_va, y_va = sample(400)                                # partition de validation réservée
+
+W = np.zeros((V, V))                                    # paramètres : une ligne de logits par token précédent
+lr, history = 1.0, []
+for step in range(301):
+    if step % 50 == 0:                                  # mesure seulement : aucune mise à jour
+        history.append((step,
+                        cross_entropy_from_logits(W[x_tr], y_tr),
+                        cross_entropy_from_logits(W[x_va], y_va)))
+    g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V) : dLoss / dlogits
+    g_W = np.zeros_like(W)
+    np.add.at(g_W, x_tr, g_logits)                      # règle de chaîne à travers la lecture de ligne
+    W -= lr * g_W                                       # mise à jour SGD
+
+train = [h[1] for h in history]
+val = [h[2] for h in history]
+assert np.isclose(train[0], np.log(V)) and np.isclose(val[0], np.log(V))   # départ uniforme
+assert all(a >= b for a, b in zip(train, train[1:]))    # la loss d'entraînement continue de baisser
+assert int(np.argmin(val)) < len(val) - 1               # la loss de validation remonte
+for s, tr, va in history:
+    print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
+```
+
+:::
+
+### Comparer les optimiseurs
+
+L'entraînement des modèles de langage emploie couramment des optimiseurs *adaptatifs* comme Adam et sa variante à décroissance des poids découplée, AdamW. Intuitivement, ils conservent des moyennes glissantes des gradients récents et de leurs carrés (leur second moment non centré), de sorte que chaque paramètre reçoit un pas adapté à son historique récent et non un pas global unique. Le gradient est le même ; seule la règle de mise à jour diffère. Le second moment des gradients conservé par Adam estime leur amplitude : ce n'est **pas** la matrice hessienne qui représente la courbure dans la méthode de Newton. Adam et AdamW sont donc des optimiseurs adaptatifs du premier ordre, et non des méthodes de Newton du second ordre. Leurs formules exactes, les plannings de taux d'apprentissage (échauffement, décroissance) et l'écrêtage des gradients sont des choix d'implémentation qui modifient la dynamique d'entraînement sans changer l'objectif ; ils sortent du périmètre de cette leçon, et les sources de la rubrique *Pour approfondir* les définissent.
+
+<figure id="fig-optimizer-comparison">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/optimizer-comparison-fr-mobile.svg">
+    <img src="../images/optimizer-comparison-fr.svg" alt="Comparaison de trois règles de mise à jour : la SGD utilise le gradient courant du premier ordre ; Newton utilise le gradient et la courbure de la Hessienne ; Adam et AdamW utilisent les premiers et seconds moments des gradients. Le second moment d'Adam n'est pas la Hessienne." style="width:100%;height:auto">
+  </picture>
+  <figcaption>SGD, Newton et Adam peuvent optimiser le même objectif tout en utilisant des informations différentes pour choisir une mise à jour. Le second moment d'Adam suit les carrés des gradients ; il ne calcule pas la courbure.</figcaption>
+</figure>
+
+::: {.callout-note collapse="true" title="Pourquoi ne pas appliquer Newton exactement à chaque paramètre d'un LLM ? (approfondissement)"}
+Un pas de Newton complet résout $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ puis met à jour $\theta_{k+1}=\theta_k-d_k$. Pour un modèle de millions ou de milliards de paramètres, stocker et factoriser une hessienne dense est généralement prohibitif. La hessienne peut aussi être singulière ou indéfinie : une direction de Newton non amortie n'est donc pas automatiquement une direction de décroissance. Les méthodes du second ordre pratiques ajoutent des garde-fous, comme l'amortissement, les régions de confiance ou des approximations structurées. Les méthodes quasi-Newton (par exemple L-BFGS) et les préconditionneurs structurés cherchent à exploiter la courbure à moindre coût, mais ne sont pas le même algorithme qu'Adam. C'est l'une des raisons pour lesquelles l'entraînement à grande échelle des modèles de langage privilégie couramment des méthodes adaptatives du premier ordre.
+:::
 
 ::: {.language-switch}
 [Français](training-loop.qmd) · [English](../en/training-loop.qmd)

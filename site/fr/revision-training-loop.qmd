@@ -42,6 +42,8 @@ Non. La mesure évalue les paramètres à cet instant, sans les ajuster sur les 
 
 </details>
 
+[Comparer deux checkpoints quand les lots de validation n’ont pas le même nombre de cibles valides](exercises/loss.qmd#ex-validation-loss-by-token).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-training-loop.qmd) · [English](../en/revision-training-loop.qmd)
 :::

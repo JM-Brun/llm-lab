@@ -47,9 +47,9 @@ Likelihood measures the probability of observed data for fixed parameters. In au
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="probabilities.qmd">2. Probability</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. Log-probability</span>
+  <span class="step-item">3. Product of probabilities or sum of their logs</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">4. Sequence likelihood</span>
+  <span class="step-item active">4. Likelihood or log-likelihood</span>
 </div>
 
 
@@ -67,9 +67,13 @@ $$
 
 ### Scoring an observed sequence: the prefix is known
 
-At each position, the model receives the observed prefix $x_{<t}$ and assigns a probability to the target token $x_t$. This conditioning on reference tokens is also used as *teacher forcing* during training (see [training examples](training-examples.qmd)). Here, it is used only to **score** the sequence: no generated token is selected, no model prediction is fed back, and the parameters $\theta$ remain fixed. For a sequence that fits within the context window, the model can compute logits for all positions in one *forward pass*: observed prefixes are supplied together, while the causal mask prevents each position from reading later tokens. Beyond that window, scoring requires a windowing or stride strategy and an explicit convention for the prefixes actually available and the targets counted.
+At each position, the model receives the observed prefix $x_{<t}$ and assigns a probability to the target token $x_t$. This conditioning on reference tokens is also used as *teacher forcing* during training (see [training examples](training-examples.qmd)). Here, it is used only to **score** the sequence: no generated token is selected, no model prediction is fed back, and the parameters $\theta$ remain fixed.
 
 This differs from generation, which feeds the model-selected token back before the next step. It also differs from training: scoring computes no gradients and makes no parameter updates.
+
+[Compare the prefixes used for generation and scoring](exercises/likelihood.qmd#ex-generation-versus-scoring).
+
+For a sequence that fits within the context window, the model can compute logits for all positions in one *forward pass*: observed prefixes are supplied together, while the causal mask prevents each position from reading later tokens. Beyond that window, scoring requires a windowing or stride strategy and an explicit convention for the prefixes actually available and the targets counted.
 
 For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
 
@@ -80,16 +84,6 @@ $$
 
 The logarithm turns products into sums, which are more stable and convenient to compute.
 
-## From likelihood to loss
-
-Negative log-likelihood $\operatorname{NLL}$ is:
-
-$$
-\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-$$
-
-For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
-
 ## Example: scoring the continuation
 
 Continue the illustrative sequence “They built roads”. Suppose the conditional probabilities assigned to its three successive observed tokens are $0.6$, $0.5$, and $0.8$. Each value is evaluated after extending the observed prefix with the preceding reference tokens; they are not independent probabilities.
@@ -98,7 +92,17 @@ $$
 P(\text{continuation})=0.6\times0.5\times0.8=0.24.
 $$
 
+## From likelihood to loss
+
+Negative log-likelihood $\operatorname{NLL}$ is:
+
+$$
+\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
+$$
+
 The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-\log(0.24)\approx1.427$ nats. Dividing by three gives an average of approximately $0.476$ nats per token. These are illustrative values chosen to keep the arithmetic visible, not outputs from a trained model.
+
+For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
 ## Perplexity
 
@@ -148,7 +152,7 @@ The next page decomposes this NLL at one target position and generalizes the one
 
 ### Practice
 
-[Compare the prefixes used for generation and scoring](exercises/likelihood.qmd#ex-generation-versus-scoring) or explore the [other practice questions](exercises/likelihood.qmd).
+[More likelihood exercises](exercises/likelihood.qmd).
 
 
 ### Further reading

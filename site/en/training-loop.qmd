@@ -85,20 +85,6 @@ These three are often conflated.
 - The **optimizer** is a rule that maps gradients (and sometimes its own memory of earlier gradients) to an update. Plain SGD uses $\theta_{k+1}=\theta_k-\eta\,\nabla_\theta\mathcal{L}(\theta_k)$, as shown in [Gradients](gradients.qmd).
 - The **learning rate** $\eta$ sets the size of the step. Too small, and training is slow; too large, and the loss can oscillate or diverge, because the gradient is only a *local* description.
 
-Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and squared gradients (their uncentred second moment), so that each parameter receives a step scaled to its own recent history, not one global step size. The gradient is the same; the update rule differs. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
-
-<figure id="fig-optimizer-comparison">
-  <picture>
-    <source media="(max-width: 600px)" srcset="../images/optimizer-comparison-en-mobile.svg">
-    <img src="../images/optimizer-comparison-en.svg" alt="Comparison of three parameter-update rules: SGD uses the current first-order gradient; Newton uses the gradient and Hessian curvature; Adam and AdamW use running first and second moments of gradients. Adam's second moment is not the Hessian." style="width:100%;height:auto">
-  </picture>
-  <figcaption>SGD, Newton and Adam can optimize the same objective while using different information to choose an update. Adam's second moment tracks squared gradients; it does not calculate curvature.</figcaption>
-</figure>
-
-::: {.callout-note collapse="true" title="Why not use exact Newton updates for every LLM parameter? (advanced)"}
-A full Newton step solves $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ and updates $\theta_{k+1}=\theta_k-d_k$. For a model with millions or billions of parameters, storing and factorizing the dense Hessian is generally prohibitive. The Hessian can also be singular or indefinite, so an undamped Newton direction is not automatically a descent direction; practical second-order methods need safeguards such as damping, trust regions, or structured approximations. Quasi-Newton methods (for example L-BFGS) and structured preconditioners explore ways to capture curvature more cheaply, but they are not the same algorithm as Adam. This is why large-scale language-model training commonly favours first-order adaptive methods.
-:::
-
 ::: {.callout-warning title="Misconceptions"}
 - **“The optimizer computes the gradient.”** Backpropagation computes it; the optimizer only consumes it.
 - **“A smaller learning rate is always safer.”** It is more stable per step but can be too slow to reach a useful loss within the available compute; the best value depends on model, batch size and optimizer.
@@ -113,8 +99,6 @@ If the only measurement were the loss that the optimizer minimizes, a model that
 - **Validation loss:** the same loss on a separate split, computed with fixed parameters, without any update. It estimates behaviour on unseen text from the same distribution.
 - **Test loss:** a further split, kept untouched until a final assessment. Validation guides choices such as when to stop training or which learning rate to use. Repeatedly selecting configurations with the lowest loss on that split can favor a configuration that scores well there partly by chance. Its validation loss can then underestimate its loss on new data. The reserved test split provides a measurement independent of that selection. See [corpus preparation](corpus-preparation.qmd) for how splits are made without leakage and [Experimental evaluation](experimental-evaluation.qmd) for the broader protocol.
 
-To compare two checkpoints, try [aggregating validation loss over batches with different numbers of valid tokens](exercises/loss.qmd#ex-validation-loss-by-token).
-
 **Overfitting** is a validation loss that stops improving, or rises, while the training loss keeps falling: the model keeps fitting details of the training sample that do not recur in new text. The gap between the two losses is the *generalization gap*. The amount of overfitting depends on model capacity relative to the amount and diversity of training data, on how many times the data is repeated, and on regularization.
 
 The example below makes this visible with the smallest possible language model: a table of logits indexed by the previous token, trained on only 60 tokens drawn from a known random process and validated on 400 more.
@@ -123,51 +107,9 @@ With NumPy 2 and this seed, the run prints a training loss that falls from 2.485
 
 This example is deliberately tiny: a lookup table, full-batch updates, plain SGD and 60 training tokens. It demonstrates the loop and the diagnosis, not the behaviour of a Transformer, and the same curve shape is not guaranteed in other setups. Passing the assertions shows that this configuration reproduces the pattern; it is not a general proof about overfitting.
 
-### Implementation
+To compare two checkpoints, try [aggregating validation loss over batches with different numbers of valid tokens](exercises/loss.qmd#ex-validation-loss-by-token).
 
-::: {.callout-note collapse="true" title="Show the runnable code"}
-
-<span class="epistemic-badge badge-code">Run locally</span> The code uses the maintained `llm_lab.foundations.losses` functions for the loss and its gradient with respect to logits, and adds only the loop. Run it from the repository root after `uv sync`.
-
-```python
-import numpy as np
-from llm_lab.foundations.losses import cross_entropy_from_logits, cross_entropy_gradient
-
-rng = np.random.default_rng(0)
-V = 12                                                  # vocabulary size
-true_P = rng.dirichlet(np.full(V, 0.3), size=V)         # unknown next-token law, (V, V)
-
-def sample(n):                                          # token stream -> (inputs, shifted targets)
-    t = [0]
-    for _ in range(n):
-        t.append(rng.choice(V, p=true_P[t[-1]]))
-    return np.array(t[:-1]), np.array(t[1:])
-
-x_tr, y_tr = sample(60)                                 # small training split
-x_va, y_va = sample(400)                                # held-out validation split
-
-W = np.zeros((V, V))                                    # parameters: logits row per previous token
-lr, history = 1.0, []
-for step in range(301):
-    if step % 50 == 0:                                  # measurement only: no parameter update
-        history.append((step,
-                        cross_entropy_from_logits(W[x_tr], y_tr),
-                        cross_entropy_from_logits(W[x_va], y_va)))
-    g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V): dLoss / dlogits
-    g_W = np.zeros_like(W)
-    np.add.at(g_W, x_tr, g_logits)                      # chain rule through the row lookup
-    W -= lr * g_W                                       # SGD update
-
-train = [h[1] for h in history]
-val = [h[2] for h in history]
-assert np.isclose(train[0], np.log(V)) and np.isclose(val[0], np.log(V))   # uniform start
-assert all(a >= b for a, b in zip(train, train[1:]))    # training loss keeps falling
-assert int(np.argmin(val)) < len(val) - 1               # validation loss turns upward
-for s, tr, va in history:
-    print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
-```
-
-:::
+[Reproduce the validation experiment](#implementation).
 
 ## Pretraining is the same loop at scale
 
@@ -245,6 +187,70 @@ A toy GPT processes a tokenized prefix $c=(U,V)$. At its final position, it assi
 {{< include ../includes/generated-suggested-route-en-training-loop.qmd >}}
 
 After this path, you can study [post-training](post-training.qmd) or apply an [evaluation protocol](experimental-evaluation.qmd).
+
+## Further exploration
+
+### Implementation
+
+::: {.callout-note collapse="true" title="Show the runnable code"}
+
+<span class="epistemic-badge badge-code">Run locally</span> The code uses the maintained `llm_lab.foundations.losses` functions for the loss and its gradient with respect to logits, and adds only the loop. Run it from the repository root after `uv sync`.
+
+```python
+import numpy as np
+from llm_lab.foundations.losses import cross_entropy_from_logits, cross_entropy_gradient
+
+rng = np.random.default_rng(0)
+V = 12                                                  # vocabulary size
+true_P = rng.dirichlet(np.full(V, 0.3), size=V)         # unknown next-token law, (V, V)
+
+def sample(n):                                          # token stream -> (inputs, shifted targets)
+    t = [0]
+    for _ in range(n):
+        t.append(rng.choice(V, p=true_P[t[-1]]))
+    return np.array(t[:-1]), np.array(t[1:])
+
+x_tr, y_tr = sample(60)                                 # small training split
+x_va, y_va = sample(400)                                # held-out validation split
+
+W = np.zeros((V, V))                                    # parameters: logits row per previous token
+lr, history = 1.0, []
+for step in range(301):
+    if step % 50 == 0:                                  # measurement only: no parameter update
+        history.append((step,
+                        cross_entropy_from_logits(W[x_tr], y_tr),
+                        cross_entropy_from_logits(W[x_va], y_va)))
+    g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V): dLoss / dlogits
+    g_W = np.zeros_like(W)
+    np.add.at(g_W, x_tr, g_logits)                      # chain rule through the row lookup
+    W -= lr * g_W                                       # SGD update
+
+train = [h[1] for h in history]
+val = [h[2] for h in history]
+assert np.isclose(train[0], np.log(V)) and np.isclose(val[0], np.log(V))   # uniform start
+assert all(a >= b for a, b in zip(train, train[1:]))    # training loss keeps falling
+assert int(np.argmin(val)) < len(val) - 1               # validation loss turns upward
+for s, tr, va in history:
+    print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
+```
+
+:::
+
+### Compare optimizers
+
+Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and squared gradients (their uncentred second moment), so that each parameter receives a step scaled to its own recent history, not one global step size. The gradient is the same; the update rule differs. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
+
+<figure id="fig-optimizer-comparison">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/optimizer-comparison-en-mobile.svg">
+    <img src="../images/optimizer-comparison-en.svg" alt="Comparison of three parameter-update rules: SGD uses the current first-order gradient; Newton uses the gradient and Hessian curvature; Adam and AdamW use running first and second moments of gradients. Adam's second moment is not the Hessian." style="width:100%;height:auto">
+  </picture>
+  <figcaption>SGD, Newton and Adam can optimize the same objective while using different information to choose an update. Adam's second moment tracks squared gradients; it does not calculate curvature.</figcaption>
+</figure>
+
+::: {.callout-note collapse="true" title="Why not use exact Newton updates for every LLM parameter? (advanced)"}
+A full Newton step solves $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ and updates $\theta_{k+1}=\theta_k-d_k$. For a model with millions or billions of parameters, storing and factorizing the dense Hessian is generally prohibitive. The Hessian can also be singular or indefinite, so an undamped Newton direction is not automatically a descent direction; practical second-order methods need safeguards such as damping, trust regions, or structured approximations. Quasi-Newton methods (for example L-BFGS) and structured preconditioners explore ways to capture curvature more cheaply, but they are not the same algorithm as Adam. This is why large-scale language-model training commonly favours first-order adaptive methods.
+:::
 
 :::: {.language-switch}
 [Français](../fr/training-loop.qmd) · [English](training-loop.qmd)

@@ -42,6 +42,8 @@ Il vaut 1 − 0,1 × 2 = 0,8. Le signe positif du gradient conduit à diminuer c
 
 </details>
 
+[Comparer deux mises à jour et les prédictions suivantes à perte initiale égale](exercises/gradients.qmd#ex-score-to-parameter-update).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-gradients.qmd) · [English](../en/revision-gradients.qmd)
 :::
