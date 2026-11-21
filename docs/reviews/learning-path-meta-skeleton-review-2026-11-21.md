@@ -68,13 +68,13 @@ Les preuves restent graduées (schéma, dérivation, test, expérience), conform
 
 Dans `docs/learning-path.md` : la section route guidée parle de *four sibling uses*, la section topologie canonique de *three sibling operational uses*, et ni l'arbre hiérarchique ni le tableau des modules ne contiennent de module `context-use`. La projection lecteur (étape `context-use` de la route guidée, § 7 de l'ordre conceptuel) décrit donc un module que le contrat canonique n'enregistre pas. Proposition : ajouter le module (sibling de `inference`, phase « input ») et réconcilier le décompte. Impact documentaire seulement.
 
-### C3 — L'index IA décrit une route à « eight canonical stages » [#1479](https://github.com/JM-Brun/llm-lab/issues/1479)
-
-La ligne « Theory / Understand route » de l'inventaire système de `docs/information-architecture.md` (contrat IA, 2026-11-04) déclare « eight canonical stages », alors que le registre en compte neuf et que la carte affiche « trois questions, neuf étapes ». L'étape `context-use` est arrivée après la rédaction du contrat sans mise à jour de l'index. Proposition : mettre à jour la ligne de l'inventaire et vérifier l'absence d'autres occurrences de « eight stages ». Cette divergence appuie le constat C1 : `context-use` s'est ajouté à la projection sans être enregistré dans le contrat canonique ni dans l'index.
-
 ### C2 — Deux décomptes de mouvements dans la couche d'orientation [#1478](https://github.com/JM-Brun/llm-lab/issues/1478)
 
 La note « Le parcours en bref » des cartes affiche cinq mouvements ; la [synthèse d'orientation](../understand-path-overview.md) en propose six (contexte séparé). La version à six mouvements est datée du 13 novembre et la page publiée montre toujours cinq. Décision à prendre, puis application FR/EN.
+
+### C3 — L'index IA décrit une route à « eight canonical stages » [#1479](https://github.com/JM-Brun/llm-lab/issues/1479)
+
+La ligne « Theory / Understand route » de l'inventaire système de `docs/information-architecture.md` (contrat IA, 2026-11-04) déclare « eight canonical stages », alors que le registre en compte neuf et que la carte affiche « trois questions, neuf étapes ». L'étape `context-use` est arrivée après la rédaction du contrat sans mise à jour de l'index. Proposition : mettre à jour la ligne de l'inventaire et vérifier l'absence d'autres occurrences de « eight stages ». Cette divergence appuie le constat C1 : `context-use` s'est ajouté à la projection sans être enregistré dans le contrat canonique ni dans l'index.
 
 ### O1 — Observation, sans action proposée
 
