@@ -525,7 +525,21 @@ async function runCase(testCase, caseIndex) {
         }
       }
     }
-    for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
+    const guidedOnlyNavigation = {
+      "cross-entropy.html": [lang === "fr" ? "vraisemblance.html" : "likelihood.html", "loss.html"],
+      "loss.html": ["cross-entropy.html", "gradients.html"],
+      "training-loop.html": ["gradients.html", "build-path.html"],
+    }[pagePath];
+    if (guidedOnlyNavigation) {
+      const targets = await page.locator("main .route-nav-card:visible").evaluateAll(links =>
+        links.map(link => new URL(link.href).pathname.split("/").pop())
+      );
+      if (item.pageNavigation.navigationPresent || JSON.stringify(targets) !== JSON.stringify(guidedOnlyNavigation)) {
+        throw new Error(`${pagePath} should use the guided cards without competing sidebar pagination`);
+      }
+    }
+    for (const direction of ["previous", "next"]) {
+      const navigation = item.pageNavigation[direction];
       const visible = Boolean(navigation.href);
       if (visible) {
         const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente" : "Page suivante") : (direction === "previous" ? "Previous page" : "Next page");
@@ -1367,11 +1381,15 @@ async function runCase(testCase, caseIndex) {
       try {
         const controls = explorer.locator(".next-token-explorer__interactive");
         const prefix = explorer.locator("#next-token-context");
-        const context = explorer.getByRole("group");
+        const context = explorer.getByRole("group", { name: lang === "fr" ? /^Préfixe actuel/ : /^Current prefix/ });
         const candidate = explorer.locator(".next-token-explorer__candidate");
         const status = explorer.locator(".next-token-explorer__status");
         const reset = explorer.locator(".next-token-explorer__reset");
         await controls.waitFor({ state: "visible", timeout: 5000 });
+        if (!(await page.locator("main h2#llm-transformer-gpt, main #llm-transformer-gpt > h2").count()) ||
+            !(await page.locator("#one-computation-three-uses p .math.inline").count())) {
+          throw new Error("the surprisal calculation and the following section must render as math and a heading");
+        }
 
         const fallbackHref = new URL(
           await explorer.locator(`.next-token-explorer__fallback [lang="${lang}"] a`).getAttribute("href"),
@@ -1405,15 +1423,16 @@ async function runCase(testCase, caseIndex) {
         );
         const normalizePrefix = value => value.replaceAll("’", "'").replace(/\s+/g, " ");
         const firstCandidateIsFocused = () => candidate.first().evaluate(node => node === document.activeElement);
+        const readDistribution = () => candidate.evaluateAll(buttons =>
+          buttons.map(button => [button.querySelector("span").textContent, button.querySelector("strong").textContent])
+        );
 
         await candidate.first().focus();
         for (const [index, turn] of turns.entries()) {
           if (await controls.evaluate(node => node.scrollWidth > node.clientWidth + 1)) {
             throw new Error("the next-token controls overflow their container");
           }
-          const visibleDistribution = await candidate.evaluateAll(buttons =>
-            buttons.map(button => [button.querySelector("span").textContent, button.querySelector("strong").textContent])
-          );
+          const visibleDistribution = await readDistribution();
           if (turn.distribution.length < 2 || JSON.stringify(visibleDistribution) !== JSON.stringify(turn.distribution)) {
             throw new Error("the displayed distribution differs from the generation lesson");
           }
@@ -1448,12 +1467,36 @@ async function runCase(testCase, caseIndex) {
 
         await candidate.nth(1).click();
         const alternative = turns[0].distribution[1][0];
+        const staticAlternative = await explorer.locator(`[lang="${lang}"] [data-alternative-distribution]`).textContent();
+        const alternativeDistribution = [...staticAlternative.matchAll(/[«“]([^»”]+)[»”]\s+(\d[,.]\d)/g)]
+          .map(([, token, probability]) => [token.trim(), probability]);
+        const turnHeading = await explorer.locator("#next-token-distribution").textContent();
+        if (!(await currentPrefix()).endsWith(alternative) ||
+            !turnHeading.endsWith("2") ||
+            alternativeDistribution.length < 2 ||
+            JSON.stringify(await readDistribution()) !== JSON.stringify(alternativeDistribution)) {
+          throw new Error("the second worked branch must show its own localized distribution");
+        }
+        const sum = alternativeDistribution.reduce((total, [, probability]) =>
+          total + Number(probability.replace(",", ".")), 0);
+        if (Math.abs(sum - 1) > 1e-9) throw new Error("the alternative distribution must sum to one");
+        await page.keyboard.press("Tab");
+        if (!(await firstCandidateIsFocused())) throw new Error("the alternative turn is not reachable by keyboard");
+        await page.keyboard.press("Enter");
+        const alternativeEnd = lang === "fr" ? "après deux ajouts" : "after two additions";
+        if (!(await currentPrefix()).endsWith(alternativeDistribution[0][0]) || await candidate.count() ||
+            !(await status.textContent()).includes(alternativeEnd)) {
+          throw new Error("the alternative worked branch must end after its second token");
+        }
+        await reset.click();
+        await candidate.nth(2).click();
+        const unworked = turns[0].distribution[2][0];
         const unknown = lang === "fr" ? "ce nouveau préfixe" : "this new prefix";
-        if (!(await currentPrefix()).endsWith(alternative) || await candidate.count() ||
+        if (!(await currentPrefix()).endsWith(unworked) || await candidate.count() ||
             !(await status.textContent()).includes(unknown)) {
           throw new Error("a branch outside the worked trace retained stale probabilities");
         }
-        item.nextTokenExplorer = { matchesLesson: true, keyboard: true, restart: true, unknownBranch: true };
+        item.nextTokenExplorer = { matchesLesson: true, keyboard: true, restart: true, alternativeBranch: true, unknownBranch: true };
 
         if (label === "mobile") {
           const noScript = await browser.newContext({ javaScriptEnabled: false, viewport });
@@ -1463,7 +1506,8 @@ async function runCase(testCase, caseIndex) {
             await staticPage.goto(page.url(), { waitUntil: "load" });
             const staticExplorer = staticPage.locator("[data-next-token-explorer]");
             if (await staticExplorer.locator(".next-token-explorer__interactive").isVisible() ||
-                await staticExplorer.locator(".next-token-explorer__fallback a:visible").count() !== 1) {
+                await staticExplorer.locator(".next-token-explorer__fallback a:visible").count() !== 1 ||
+                await staticExplorer.locator("[data-alternative-distribution]:visible").count() !== 1) {
               throw new Error("the localized fallback should replace inactive controls without JavaScript");
             }
             await staticExplorer.locator(".next-token-explorer__fallback a:visible").click();

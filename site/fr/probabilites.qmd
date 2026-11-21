@@ -194,6 +194,8 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 
 Cette distribution est le point de départ de trois usages. [Générer](generation.qmd) choisit un token. [Scorer](vraisemblance.qmd) lit la probabilité d’un token observé. [Apprendre](loss.qmd) agrège les pénalités calculées sur les cibles pour construire l’objectif du lot.
 
+À une même position, une softmax intervient dans l’attention et une autre après la projection de sortie. [Deux softmax, deux axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) vous fait calculer ce que chacune normalise et tester si un poids d’attention permet de retrouver la probabilité du prochain token.
+
 {{< include ../includes/generated-suggested-route-fr-probabilites.qmd >}}
 
 ::: {.language-switch}

@@ -8,10 +8,12 @@
         [["savez", 0.5], ["êtes", 0.3], ["voyez", 0.2]],
         [[",", 0.8, ""], ["que", 0.1], [":", 0.1, "\u202f"]]
       ],
+      alternative: [["pense", 0.4], ["crois", 0.4], ["dirais", 0.2]],
       distribution: turn => `Distribution du prochain token · tour ${turn}`,
       add: (token, probability) => `Ajouter « ${token} » (probabilité ${probability})`,
       unknown: "La distribution suivante dépend de ce nouveau préfixe. Ses valeurs ne figurent pas dans la trace.",
-      end: "La trace s’arrête ici, après trois ajouts."
+      end: "La trace s’arrête ici, après trois ajouts.",
+      alternativeEnd: "Cette branche s’arrête après deux ajouts. Revenez au préfixe initial pour comparer les distributions du tour 2."
     },
     en: {
       turns: [
@@ -19,10 +21,12 @@
         [["built", 0.5], ["gave", 0.3], ["made", 0.2]],
         [["roads", 0.8], ["bridges", 0.1], ["walls", 0.1]]
       ],
+      alternative: [["brought", 0.4], ["supplied", 0.4], ["provided", 0.2]],
       distribution: turn => `Next-token distribution · turn ${turn}`,
       add: (token, probability) => `Append “${token}” (probability ${probability})`,
       unknown: "The next distribution depends on this new prefix. Its values are outside the worked trace.",
-      end: "The worked trace ends here, after three additions."
+      end: "The worked trace ends here, after three additions.",
+      alternativeEnd: "This branch ends after two additions. Return to the initial prefix to compare the turn 2 distributions."
     }
   };
 
@@ -42,9 +46,9 @@
     const list = choices.querySelector("ul");
     const reset = root.querySelector(".next-token-explorer__reset");
 
-    function showTurn(turn) {
+    function showTurn(turn, distribution = text.turns[turn], isAlternative = false) {
       heading.textContent = text.distribution(turn + 1);
-      const items = text.turns[turn].map(([token, probability, separator = " "], index) => {
+      const items = distribution.map(([token, probability, separator = " "], index) => {
         const item = document.createElement("li");
         const button = document.createElement("button");
         button.type = "button";
@@ -68,12 +72,14 @@
           const followsTrace = index === 0;
           const atLastTurn = turn + 1 === text.turns.length;
 
-          if (followsTrace && !atLastTurn) {
+          if (turn === 0 && index === 1) {
+            showTurn(turn + 1, text.alternative, true);
+          } else if (!isAlternative && followsTrace && !atLastTurn) {
             showTurn(turn + 1);
           } else {
             list.replaceChildren();
             choices.hidden = true;
-            status.textContent = followsTrace ? text.end : text.unknown;
+            status.textContent = isAlternative ? text.alternativeEnd : followsTrace ? text.end : text.unknown;
             status.hidden = false;
           }
 

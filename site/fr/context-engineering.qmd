@@ -141,6 +141,8 @@ Le context engineering réduit certains risques mais ne garantit ni la vérité 
 - Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
 - OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
 
+Pour passer au scoring, partez d’un même préfixe : la génération choisit `B` et la continuation observée commence par `A`. [Suivez les deux préfixes au deuxième tour](exercises/vraisemblance.qmd#ex-generation-versus-scoring) et déterminez quelle distribution utiliser pour chaque opération.
+
 {{< include ../includes/generated-suggested-route-fr-context-engineering.qmd >}}
 
 ::: {.language-switch}

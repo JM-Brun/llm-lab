@@ -107,7 +107,8 @@ A computed distribution can be used to produce a continuation, score a known seq
 - **Score:** calculate the probability of an observed sequence, its **likelihood** ([likelihood](likelihood.qmd)).
 - **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* uses the actual tokens ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
 
-For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; [entropy](entropy.qmd) is expected surprisal. Scoring is not evaluation: evaluation compares results on held-out examples. Only learning changes parameters.
+For a token with probability 0.6, surprisal is $-\ln(0.6)\approx0.511$ nats; [entropy](entropy.qmd) is expected surprisal. Scoring is not evaluation: evaluation compares results on held-out examples. Only learning changes parameters.
+
 ## LLM, Transformer, GPT: three notions {#llm-transformer-gpt}
 
 **LLM** describes a language model trained at scale, not a particular architecture. No universal parameter threshold defines the category on its own: data and training compute matter too ([scaling laws](scaling-laws.qmd)).

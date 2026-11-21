@@ -141,6 +141,8 @@ Establish a baseline, add one source or example at a time, test questions with k
 - Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
 - OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
 
+To move on to scoring, start with the same prefix: generation selects `B`, and the observed continuation starts with `A`. [Trace both prefixes on the second step](exercises/likelihood.qmd#ex-generation-versus-scoring) and determine which distribution each operation uses.
+
 {{< include ../includes/generated-suggested-route-en-context-engineering.qmd >}}
 
 ::: {.language-switch}

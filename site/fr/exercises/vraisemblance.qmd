@@ -81,6 +81,8 @@ Le modèle reste fixe. On part du préfixe $c$ et on compare deux opérations su
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-vraisemblance-exercises-ex-generation-versus-scoring.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](vraisemblance.qmd) · [English](../../en/exercises/likelihood.qmd)
 :::

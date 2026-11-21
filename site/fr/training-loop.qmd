@@ -4,6 +4,7 @@ subtitle: "Mises à jour répétées, optimiseurs et mesure séparée de la loss
 description-meta: "Montre comment des pas de gradient répétés transforment un modèle initialisé au hasard en modèle entraîné, ce qu'un optimiseur ajoute au gradient et pourquoi la loss de validation est mesurée sur des données réservées."
 keywords: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 lang: fr
+page-navigation: false
 ---
 
 <!--
@@ -80,7 +81,7 @@ Un modèle fraîchement initialisé attribue des probabilités à peu près unif
 
 ### Rejouer un pas sur le premier token
 
-Pour rendre le cycle concret, reprenons la cible « Vous » et la distribution illustrative $p=(0{,}6;0{,}2;0{,}1;0{,}1)$. La loss locale vaut $-\ln(0{,}6)\approx0{,}511$ nat et son gradient par rapport aux logits vaut $(-0{,}4;0{,}2;0{,}1;0{,}1)$. La règle de chaîne transforme ce signal en gradients des poids (voir [l'exemple de la dernière projection](gradients.qmd)) ; l'optimiseur applique ensuite une mise à jour. Au pas suivant, le modèle doit recalculer ses logits avec les nouveaux paramètres : les probabilités $0{,}6/0{,}2/0{,}1/0{,}1$ ne sont donc pas supposées rester identiques. Cet exemple relie les étapes du mécanisme ; il ne simule pas un entraînement complet ni ne garantit que la loss baisse après n'importe quel pas.
+Pour rendre le cycle concret, reprenons la cible « Vous » et la distribution illustrative $p=(0{,}6;0{,}2;0{,}1;0{,}1)$. La loss locale vaut $-\ln(0{,}6)\approx0{,}511$ nat et son gradient par rapport aux logits vaut $(-0{,}4;0{,}2;0{,}1;0{,}1)$. La règle de chaîne transforme ce signal en gradients des poids (voir [le calcul complet sur la tête de sortie](gradients.qmd#running-example-sgd)) ; l'optimiseur applique ensuite une mise à jour. Au pas suivant, le modèle doit recalculer ses logits avec les nouveaux paramètres : les probabilités $0{,}6/0{,}2/0{,}1/0{,}1$ ne sont donc pas supposées rester identiques. Cet exemple relie les étapes du mécanisme ; il ne simule pas un entraînement complet ni ne garantit que la loss baisse après n'importe quel pas.
 
 ## Optimiseur, gradient et taux d'apprentissage
 
@@ -219,6 +220,8 @@ Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règ
 
 
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
+
+Après ce parcours, vous pouvez étudier le [post-entraînement](post-training.qmd) ou appliquer un [protocole d’évaluation](evaluation-experimentale.qmd).
 
 ::: {.language-switch}
 [Français](training-loop.qmd) · [English](../en/training-loop.qmd)
