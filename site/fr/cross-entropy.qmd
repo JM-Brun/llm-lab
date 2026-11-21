@@ -4,6 +4,7 @@ subtitle: "Une pénalité calculée entre distribution cible et distribution pr�
 description-meta: "Relie une distribution cible à la distribution prédite par le modèle. Dans le cas d’une cible one-hot, l’entropie croisée devient la pénalité associée au token observé et prépare la définition de la loss."
 keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 lang: fr
+page-navigation: false
 ---
 
 <!--
@@ -292,6 +293,8 @@ La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathb
 
 
 {{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
+
+Pour revisiter le lien avec la théorie de l’information, consultez la [synthèse sur l’entropie](synthese-entropie.qmd), la [fiche de révision](revision-information-theory.qmd) et l’[expérience sur la compression prédictive](experience-information-theory.qmd).
 
 ::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)

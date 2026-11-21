@@ -50,3 +50,21 @@ Compare baseline and matched post-reading responses **dimension by dimension** (
 A single participant can reveal confusing wording, navigation friction or a plausible misconception. It cannot establish general learning, causal learning gains or population-level effectiveness. Do not treat one volunteer's success as evidence of general learning, or a failed answer as proof that a particular page caused it.
 
 The related exercise and browser-review work is tracked in [#220](https://github.com/JM-Brun/llm-lab/issues/220), [#310](https://github.com/JM-Brun/llm-lab/issues/310), [#320](https://github.com/JM-Brun/llm-lab/issues/320), and the pilot execution in [#447](https://github.com/JM-Brun/llm-lab/issues/447).
+
+## Optional follow-up after generation, scoring and training
+
+Use this prompt after the participant has read those lessons. Start at cross-entropy and ask the participant to continue to the loss and training lessons using the published navigation. At the end, ask where the guided route ends and how they would find the optional material about post-training. Record the links they choose and any hesitation before giving the transfer task.
+
+Use a fresh toy vocabulary `(L, M, N)` with greedy decoding and an observed continuation `(N, L)`. Give the participant this table:
+
+| Prefix / Préfixe | L | M | N |
+|---|---:|---:|---:|
+| `c` | 0.45 | 0.20 | 0.35 |
+| `cL` | 0.10 | 0.25 | 0.65 |
+| `cN` | 0.70 | 0.20 | 0.10 |
+
+**EN:** Which row supplies the second prediction when you generate two tokens? Which row and which probability do you use when scoring the second observed token? If you train on this observed sequence, at which operation do the parameters change?
+
+**FR :** Quelle ligne fournit la deuxième prédiction quand vous générez deux tokens ? Quelle ligne et quelle probabilité utilisez-vous pour scorer le deuxième token observé ? Si vous entraînez le modèle sur cette séquence, à quelle opération les paramètres changent-ils ?
+
+**Facilitator key.** Generation selects `L`, then uses `cL` to select `N`. Scoring follows the observed `N` and reads the probability of `L` under `cN` (0.70). During training the optimizer changes the parameters after the forward pass, loss and gradient computation. Ask the participant to justify each prefix. Record this as a separate transfer observation with the navigation notes.

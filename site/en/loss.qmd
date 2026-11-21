@@ -4,6 +4,7 @@ subtitle: "Reduction, target masking, and interpreting a curve"
 description-meta: "Connects penalties computed on target tokens to an aggregated training objective. The loss provides the scalar signal differentiated to compute gradients and update parameters."
 keywords: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 lang: en
+page-navigation: false
 ---
 
 <!--

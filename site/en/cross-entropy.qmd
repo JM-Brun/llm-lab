@@ -4,6 +4,7 @@ subtitle: "A penalty computed from the target and predicted distributions"
 description-meta: "Connects a target distribution to the model's predicted distribution. With a one-hot target, cross-entropy becomes the penalty for the observed token and provides the local term used to build the loss."
 keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 lang: en
+page-navigation: false
 ---
 
 <!--
@@ -290,6 +291,8 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
+
+To revisit the connection with information theory, see the [entropy synthesis](entropy-synthesis.qmd), the [review sheet](revision-information-theory.qmd), and the [predictive compression experiment](experience-information-theory.qmd).
 
 :::: {.language-switch}
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
