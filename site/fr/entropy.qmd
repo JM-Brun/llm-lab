@@ -30,9 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:
 {{< include ../includes/generated-guided-context-fr-entropy.qmd >}}
 
 ::: {.chapter-lead}
-La page précédente, [Probabilités de sortie](probabilites.qmd), a montré comment les logits deviennent une distribution conditionnelle sur le prochain token. Cette page en caractérise la dispersion avant que le token soit observé.
-
-Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution prédite pour le prochain token, dans un contexte donné. Elle caractérise cette distribution : elle ne dit pas si la réponse est vraie, ni si le modèle est fiable.
+Au premier tour du scribe, « Vous » reçoit 60 %. Comment résumer la répartition des probabilités entre tous les candidats ? L’**entropie** mesure la dispersion de la [distribution issue des logits](probabilites.qmd) pour ce préfixe, avant de choisir ou d’observer un token. La vérité de la réponse et la fiabilité du modèle demandent une évaluation distincte.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
@@ -134,6 +132,8 @@ Un modèle peut être très sûr de lui et se tromper : si $p=(0{,}99;0{,}01)$, 
 
 La somme des NLL token par token donne la NLL de la séquence, selon la factorisation autorégressive présentée dans la page canonique [Vraisemblance](vraisemblance.qmd).
 
+[Suivre un cas où le token choisi diffère de la cible observée](cross-entropy.qmd#chosen-token-vs-target).
+
 ## Entropie, température et génération
 
 La température $\tau>0$ transforme les logits $z$ en une distribution :
@@ -179,6 +179,8 @@ Une température plus faible tend à concentrer la distribution ; une températu
 </details>
 :::
 
+Reprenez la [boucle de génération du scribe](generation.qmd#la-boucle-sur-un-exemple). Quand le décodage glouton choisit « Vous », ce token rejoint le préfixe et le modèle calcule une nouvelle distribution pour le deuxième tour.
+
 {{< include ../includes/generated-suggested-route-fr-entropy.qmd >}}
 
 ::: {.language-switch}
@@ -198,8 +200,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 
 ### Pour poursuivre
-
-[Suivre un cas où le token choisi diffère de la cible observée](cross-entropy.qmd#chosen-token-vs-target).
 
 - [Probabilités et softmax](probabilites.qmd) — comment les logits deviennent une distribution conditionnelle.
 - [Vraisemblance](vraisemblance.qmd) — probabilité d'un token observé et d'une séquence.

@@ -30,9 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:
 {{< include ../includes/generated-guided-context-en-entropy.qmd >}}
 
 ::: {.chapter-lead}
-The previous page, [Output probabilities](probabilities.qmd), showed how logits become a conditional distribution over the next token. This page characterizes how spread out that distribution is before the token is observed.
-
-In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.
+On the first turn of the Roman example, “They” gets 60%. How can we summarize the spread of probabilities across all candidates? **Entropy** measures how spread out the [distribution obtained from the logits](probabilities.qmd) is for that prefix, before a token is selected or observed. Factual correctness and model reliability require separate evaluation.
 :::
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
@@ -134,6 +132,8 @@ A model can be very confident and still be wrong: if $p=(0.99;0.01)$, its entrop
 
 Summing token-level NLLs gives the sequence NLL, using the autoregressive factorization derived on the canonical [Likelihood](likelihood.qmd) page.
 
+[Follow a case where the selected token differs from the observed target](cross-entropy.qmd#chosen-token-vs-target).
+
 ## Entropy, temperature, and generation
 
 Temperature $\tau>0$ transforms logits $z$ into a distribution:
@@ -179,6 +179,8 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 </details>
 :::
 
+Return to the [generation loop for the Roman example](generation.qmd#the-loop-on-an-example). When greedy decoding selects “They”, that token joins the prefix and the model computes a new distribution for the second turn.
+
 {{< include ../includes/generated-suggested-route-en-entropy.qmd >}}
 
 :::: {.language-switch}
@@ -198,8 +200,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 ### Further reading
-
-[Follow a case where the selected token differs from the observed target](cross-entropy.qmd#chosen-token-vs-target).
 
 - [Probabilities and softmax](probabilities.qmd) — how logits become a conditional distribution.
 - [Likelihood](likelihood.qmd) — probability of an observed token and sequence.

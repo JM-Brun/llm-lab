@@ -48,7 +48,7 @@ Les probabilités présentées ci-dessous sont fictives et ne prétendent pas re
 - **Le token choisi devient du contexte.** Il est ajouté au texte, et le modèle recalcule une distribution pour la position suivante.
 - **Rien n'est appris en route.** Les paramètres sont les mêmes au premier et au dernier token.
 
-**Première lecture :** la section [« La boucle sur un exemple »](#la-boucle-sur-un-exemple) suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
+**Depuis le panorama**, suivez [les trois tours de l’exemple](#la-boucle-sur-un-exemple) avant d’étudier le calcul. Après les [probabilités de sortie](probabilites.qmd), reprenez la même trace pour revoir le calcul en notation et distinguer le *prefill* du prompt, le *decode* itératif et la règle de sélection.
 :::
 
 ## La boucle sur un exemple {#la-boucle-sur-un-exemple}

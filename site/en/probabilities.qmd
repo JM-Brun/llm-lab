@@ -142,6 +142,8 @@ With finite logits, the distribution approaches uniformity as temperature rises.
 
 Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
+At temperature 1, “They” leads with 60%. The other three candidates still share 40%. [Entropy](entropy.qmd) summarizes how spread out the whole distribution is before a token is selected or observed.
+
 ## From the distribution to a selected token
 
 <ol class="probability-flow" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
@@ -182,7 +184,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ### Further reading
 
-- [Entropy](entropy.qmd) — spread of the predictive distribution before the next token is observed.
 - [Cross-entropy](cross-entropy.qmd) — computing the penalty at one position.
 - [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
 
