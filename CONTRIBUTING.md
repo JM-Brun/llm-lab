@@ -21,6 +21,8 @@ For work that adds knowledge, connects existing topics, or proposes a new reader
 
 ## Maintenance and validation workflow
 
+For issue creation and triage, use the [issue-governance contract](docs/issue-governance.md) and the [live backlog filters](docs/backlog-dashboard.md#live-issue-filters). The read-only audit command is listed in the contract.
+
 For a change that affects page metadata, concepts, resources, curriculum, templates, or generated maps:
 
 1. Update the canonical source only; update its owning documentation only when its contract or maintenance procedure changes.

@@ -1,23 +1,26 @@
 # LLM Lab — backlog dashboard
 
-**Snapshot:** 2026-11-09  
 **Source of truth:** GitHub issues and pull requests. This page is a navigation layer, not a second task tracker.
 
-## Start here
-
-- **Current handoff and ordered remaining work:** [next-work-handoff-2026-11-09.md](next-work-handoff-2026-11-09.md)
-- **Latest strategic review and proposals awaiting an owner decision:** [adversarial project review 2026-11-09](reviews/adversarial-project-review-2026-11-09.md) (summarised in handoff § 4; no label changed)
+## Live issue filters
 
 - [All open issues](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen)
-- [P0 — active slice](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP0)
-- [P1 — next priorities](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP1)
-- [P2 — planned](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP2)
-- [P3 — deferred](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
-- [Issues needing attention / unclassified](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
+- [P0 — critical blockers](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP0)
+- [P1 — structural priorities](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP1)
+- [P2 — bounded work](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP2)
+- [P3 — optional and deferred work](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
+- [Issues missing a priority](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
 
-Live snapshot 2026-11-09: **62 open issues**; priority labels P0=0, P1=6, P2=49, P3=7; **0 unclassified**. [#760](https://github.com/JM-Brun/llm-lab/pull/760) and the dashboard/handoff refresh [#778](https://github.com/JM-Brun/llm-lab/pull/778) are merged; the only open PR is [#787](https://github.com/JM-Brun/llm-lab/pull/787). The dated handoff linked above is the current ordered plan; older sections and snapshots are historical unless refreshed.
+The [issue-governance contract](issue-governance.md) defines the classification rules and the read-only audit. Use the filters for the live backlog and the dated records below for historical decisions.
 
-## Historical handoff — PR reconciliation (2026-11-04; superseded by the current handoff above)
+## Handoff from 2026-11-09
+
+- [Ordered work at the time of the handoff](next-work-handoff-2026-11-09.md)
+- [Strategic review and proposals from that handoff](reviews/adversarial-project-review-2026-11-09.md), summarised in handoff § 4. The review changed no labels.
+
+Snapshot from 2026-11-09: **62 open issues**, with P0=0, P1=6, P2=49, P3=7 and no issues missing a priority. At that date [#760](https://github.com/JM-Brun/llm-lab/pull/760) and the dashboard/handoff refresh [#778](https://github.com/JM-Brun/llm-lab/pull/778) had merged. The only open PR was [#787](https://github.com/JM-Brun/llm-lab/pull/787).
+
+## Historical handoff — PR reconciliation from 2026-11-04
 
 This is a **dated maintenance snapshot**, not an alternative issue tracker. Recheck [open PRs](https://github.com/JM-Brun/llm-lab/pulls?q=is%3Apr+is%3Aopen), current branch heads, `mergeable_state`, and the **latest-head** checks at the start of the next session: GitHub may be recomputing mergeability, and a green workflow on an older SHA is insufficient.
 
@@ -47,11 +50,11 @@ For the later #422 merge and outstanding validation gates, see the
 
 ## Operating rule
 
-**One active learning slice at a time.** P0 is a temporary execution designation, not a measure of importance or a permanent severity rating. P1 contains the next work and cross-cutting risks; P2 is planned work; P3 is intentionally deferred or optional.
+**One active learning slice at a time.** Select it by checking priorities, readiness and blockers in GitHub. P0 is reserved for exceptional critical blockers as defined in the [issue-governance contract](issue-governance.md#2-priority-semantics).
 
 Do not infer that an entire issue is blocked when only one component is waiting on a prerequisite. The dependency notes below identify the specific blocked workstream.
 
-## Now — active
+## Active slice at the 2026-11-09 snapshot
 
 **No active slice is selected.** [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) was merged on 2026-11-09, which completes step 1 of the [handoff's ordered sequence](next-work-handoff-2026-11-09.md#3-ordered-execution-sequence). The next step is to choose one P1 evidence slice; the candidates below are unchanged.
 
@@ -59,7 +62,7 @@ There is deliberately no P0 issue. Choose one P1 slice at a time before starting
 
 ## Next — at most three follow-up work items
 
-These are ordered candidates, not simultaneous active tasks.
+These are the candidates recorded in the 2026-11-09 handoff, in priority order.
 
 1. **P1 evidence:** independent subject-matter review of the existing TR-A/B/C answer keys in [#220](https://github.com/JM-Brun/llm-lab/issues/220); no new exercise framework.
 2. **P1 governance:** reconcile asset provenance and project-level licensing under [#156](https://github.com/JM-Brun/llm-lab/issues/156) and [#163](https://github.com/JM-Brun/llm-lab/issues/163), preserving all existing media pending an explicit decision.
@@ -92,9 +95,9 @@ These are ordered candidates, not simultaneous active tasks.
 - [#108](https://github.com/JM-Brun/llm-lab/issues/108) closed (PR #343): bilingual LLM panorama published; rendered review transferred to #337.
 - [PR #383](https://github.com/JM-Brun/llm-lab/pull/383) (interactive learning map), [PR #387](https://github.com/JM-Brun/llm-lab/pull/387) (RoPE separation) and [PR #389](https://github.com/JM-Brun/llm-lab/pull/389) (learning-path gate reconciliation) merged on 2026-11-04.
 
-## Label conventions
+## Label examples from the 2026-11-09 snapshot
 
-Each open issue should carry one label from each mandatory family:
+These examples record the vocabulary used at the time of the snapshot. The live repository label catalogue supplies the current values.
 
 - **Priority:** `P0`, `P1`, `P2`, `P3`.
 - **Type:** `type:epic`, `type:feature`, `type:audit`, `type:bug`, `type:research`, `type:documentation`, `type:maintenance`.
