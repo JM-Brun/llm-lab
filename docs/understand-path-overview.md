@@ -22,13 +22,25 @@ Le lot [#1474](https://github.com/JM-Brun/llm-lab/pull/1474) réorganise l’ent
 
 Les derniers déplacements dans le Transformer et le masque causal sont tracés dans l’[audit de préservation](audits/understand-lesson-contracts-2026-11-20.md#préservation-du-contenu-dans-le-transformer-et-le-masque-causal). Les priorités suivantes portent d’abord sur les décisions que les contrôles du site ne permettent pas de trancher, comme la capacité à suivre une position causale sans aide. Les deux pilotes sont préparés et restent à mener.
 
+Le [contrôle des quatre cas formels](audits/understand-lesson-contracts-2026-11-20.md#vérification-des-quatre-cas-formels-du-plan) documente les hypothèses, les opérations et les exercices vérifiés en FR et EN. Le lecteur qui compare deux checkpoints dispose d’un retour depuis le corrigé vers l’étape Entraînement. [Exercice](../site/fr/exercises/loss.qmd#ex-validation-loss-by-token).
+
+### Trajets vérifiés dans le site rendu
+
+Chromium 153, en FR et EN, à 390 et 1 280 px. Les liens ont été activés au clavier, sauf le départ de la carte guidée vers la leçon à 1 280 px, testé à la souris. Les volets testés ont été ouverts puis refermés au clavier.
+
+- Panorama → comparaison des usages → Scoring. L’écriture formelle s’ouvre dans l’étape atteinte.
+- Carte guidée → leçon sur les positions → fiche → exercice des deux occurrences → étape Représentations.
+- Plan, étape Calcul → exercice des deux softmax → étape Prédiction.
+- Plan, étape Entraînement → fiche de la boucle d’entraînement → exercice des checkpoints → étape Entraînement. Le nouveau lien figure après le corrigé.
+
+### Travail restant
+
 | Ordre | Travail restant | Résultat à consigner |
 | --- | --- | --- |
 | 1 | Mener le pilote indépendant du texte à l’attention. [Protocole](learner-validation-pilot.md) · [#447](https://github.com/JM-Brun/llm-lab/issues/447) | Comparer les réponses avant et après la lecture, puis évaluer séparément le transfert sur un cas inédit. Consigner les observations anonymisées et les notions ou pages que la personne a dû revoir. |
 | 2 | Piloter le transfert sur les étapes aval. Les [formes A/B et le cas inédit de validation](audits/learning-path-learner-evaluation.md#prediction-use-pilot) sont prêts. | Relever les réponses et le raisonnement, en particulier l’origine du préfixe, la pondération par cible valide et le rôle des paramètres pendant la validation. Examiner aussi si les formes A/B suscitent des difficultés comparables. |
-| 3 | Compléter la vérification FR/EN des trajets panorama → comparaison → étape et carte → leçon → fiche. Rejouer le retour du plan par un exercice d’attention et un exercice de validation, en plus du cas additif des positions. Tester au clavier sur écran large et étroit, et à la souris ou au toucher selon la carte. [#337](https://github.com/JM-Brun/llm-lab/issues/337) · [#417](https://github.com/JM-Brun/llm-lab/issues/417) | Indiquer le navigateur, la langue, la largeur et le mode d’entrée. Vérifier l’arrivée sur la bonne section, la visibilité du focus et l’ouverture puis le repli des formules et corrigés. Donner une reproduction de chaque défaut. |
-| 4 | Relire les signatures du plan dans quatre cas. Vérifier que $E+P$ s’applique au GPT additif et que RoPE agit sur Q/K. Contrôler ensuite les axes des deux softmax et distinguer le gradient du pas de l’optimiseur. [Registre du parcours](../data/guided-route.yml) | Pour chaque signature, retrouver dans la leçon les hypothèses du calcul, l’objet qu’il transforme et l’exercice qui permet de vérifier la distinction. Corriger la formulation là où les deux lectures divergent. |
-| 5 | Corriger les problèmes constatés. | Rejouer la tâche qui a fait apparaître le problème. Une difficulté récurrente due à un prérequis enseigné trop tard justifie de revoir l’ordre. Pour une confusion circonscrite ou un mauvais repérage, revoir la fiche, l’explication ou le lien concerné. |
+| 3 | Compléter le contrôle d’accessibilité des trajets ci-dessus. Rejouer en FR et EN la navigation par Tab depuis le début de chaque page et la sélection dans la carte interactive au clavier et sur un appareil tactile. [#337](https://github.com/JM-Brun/llm-lab/issues/337) · [#417](https://github.com/JM-Brun/llm-lab/issues/417) | Consigner le navigateur, l’appareil, la langue et la largeur. Vérifier l’ordre et la visibilité du focus, ainsi que son placement après un saut de section. Donner une reproduction de chaque défaut. |
+| 4 | Corriger les problèmes constatés. | Rejouer la tâche qui a fait apparaître le problème. Une difficulté récurrente due à un prérequis enseigné trop tard justifie de revoir l’ordre. Pour une confusion circonscrite ou un mauvais repérage, revoir la fiche, l’explication ou le lien concerné. |
 
 Le [comparatif des approches d’apprentissage](source-reviews/learning-path-comparison-2026-11-05.md#which-learning-approach-serves-which-outcome) a relevé un prérequis local. Le rappel de softmax apparaît à son premier usage dans le calcul de l’attention. Trois fiches bilingues donnent accès aux exercices existants sur l’état contextualisé, les deux axes de normalisation et la perte d’une cible. Le [pilote à une position causale](learner-validation-pilot.md#causal-position-and-observed-target) indique quoi observer pour décider d’une correction locale ou d’une adaptation de l’ordre.
 
