@@ -277,3 +277,26 @@ def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
         "state_counts": state_counts,
         "rows": rows,
     }
+
+
+def bilingual_association_findings(coverage: dict[str, Any]) -> list[dict[str, Any]]:
+    """Flag unlinked published counterparts only where the declared pairing is unique."""
+    findings = []
+    for row in coverage["rows"]:
+        for page in row["dimensions"]["bilingual_parity"]["evidence"]:
+            if page.get("association") != "missing_counterpart":
+                continue
+            findings.append(
+                {
+                    "rule_id": "missing-bilingual-concept-association",
+                    "severity": "review",
+                    "source_path": "data/concepts.yml",
+                    "entity_ids": {"concept": row["concept_id"], "page": page["id"]},
+                    "evidence": page,
+                    "suggested_review_action": (
+                        "Check whether the published counterpart teaches the same concept "
+                        "before changing its explicit resource links."
+                    ),
+                }
+            )
+    return findings
