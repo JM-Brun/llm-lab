@@ -81,15 +81,15 @@ $$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
 $$
 
+![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
+
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte. Chaque ligne de requête doit conserver au moins une clé autorisée : si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement. Dans la primitive de référence `scaled_dot_product_attention`, une ligne entièrement masquée reçoit par convention des poids nuls et une sortie nulle ; ces poids ne forment pas une distribution de probabilité. Cette convention d'implémentation n'est pas universelle. Le masque causal triangulaire présenté ici évite ce cas en autorisant toujours la diagonale.
 
-::: {.callout-note collapse="true" title="Convention des API de code (approfondissement)"}
-En code, **la polarité d'un masque booléen dépend de l'API**. Dans [l'attention à produit scalaire mise à l'échelle de PyTorch 2.15](https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` dans le masque booléen `attn_mask` signifie qu'un couple requête-clé participe à l'attention. Dans [PyTorch 2.15 MultiheadAttention](https://docs.pytorch.org/docs/2.15/generated/torch.nn.modules.activation.MultiheadAttention.html), `True` dans `attn_mask` signifie que le couple n'est pas autorisé à participer ; `True` dans `key_padding_mask` signifie que la clé correspondante est ignorée. La polarité des masques booléens de MultiheadAttention est donc opposée à celle de `attn_mask` dans SDPA. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
-:::
+**À retenir :** `allowed` et `blocked` codent deux représentations booléennes complémentaires de la même relation causale. L'interprétation de `True` dépend de l'API, comme détaillé dans les ressources complémentaires.
 
-**À retenir :** `allowed` et `blocked` codent deux représentations booléennes complémentaires de la même relation causale. L'interprétation de `True` dépend de l'API, comme détaillé ci-dessus.
+Dans la convention d'entraînement courante, la sortie calculée à la position $i$ est comparée à la cible $x_{i+1}$ : les entrées et les cibles sont donc décalées d'un token. Le masque autorise la diagonale $j=i$ parce que l'entrée à cette position contient $x_i$, et non la cible future $x_{i+1}$. Le traitement des bornes dépend notamment des conventions choisies pour les tokens de début et de fin de séquence.
 
-**Note de version :** les conventions d'API ci-dessus ont été vérifiées dans la documentation PyTorch 2.15, publiée le 28 octobre 2026 ([annonce de version](https://pytorch.org/blog/pytorch-2-15-release-blog/)). Les détails d'API peuvent évoluer ; consultez la documentation correspondant à la version installée avant de transférer des masques.
+[Reprenez l’exemple d’un ID identique en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Une modification passée peut atteindre l’état courant. Une modification future peut changer la cible observée à cette position.
 
 ## Masque causal et autres masques : des rôles distincts
 
@@ -102,8 +102,6 @@ Ces masques répondent donc à des questions différentes et ne doivent pas êtr
 
 [Suivre dans un même exemple les positions visibles et les cibles comptées dans la perte](exercises/loss.qmd#ex-visible-token-masked-target).
 
-![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
-
 ## Provenance et utilité
 
 Le masque causal est un moyen de réaliser une factorisation autorégressive de la distribution de séquence :
@@ -111,8 +109,6 @@ Le masque causal est un moyen de réaliser une factorisation autorégressive de 
 $$
 P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
 $$
-
-Dans la convention d'entraînement courante, la sortie calculée à la position $i$ est comparée à la cible $x_{i+1}$ : les entrées et les cibles sont donc décalées d'un token. Le masque autorise la diagonale $j=i$ parce que l'entrée à cette position contient $x_i$, et non la cible future $x_{i+1}$. Le traitement des bornes dépend notamment des conventions choisies pour les tokens de début et de fin de séquence.
 
 Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre à prédire le prochain token tout en calculant en parallèle les positions d'un batch d'entraînement. Le papier [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) décrit le masquage de l'attention du décodeur.
 
@@ -145,25 +141,31 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 
 
 
-[Reprenez l’exemple d’un ID identique en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Une modification passée peut atteindre l’état courant. Une modification future peut changer la cible observée à cette position.
-
 {{< include ../includes/generated-suggested-route-fr-causal-masking.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
 
+
+::: {.callout-note collapse="true" title="Convention des API de code (approfondissement)"}
+En code, **la polarité d'un masque booléen dépend de l'API**. Dans [l'attention à produit scalaire mise à l'échelle de PyTorch 2.15](https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` dans le masque booléen `attn_mask` signifie qu'un couple requête-clé participe à l'attention. Dans [PyTorch 2.15 MultiheadAttention](https://docs.pytorch.org/docs/2.15/generated/torch.nn.modules.activation.MultiheadAttention.html), `True` dans `attn_mask` signifie que le couple n'est pas autorisé à participer ; `True` dans `key_padding_mask` signifie que la clé correspondante est ignorée. La polarité des masques booléens de MultiheadAttention est donc opposée à celle de `attn_mask` dans SDPA. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
+
+**Note de version :** les conventions d'API ci-dessus ont été vérifiées dans la documentation PyTorch 2.15, publiée le 28 octobre 2026 ([annonce de version](https://pytorch.org/blog/pytorch-2-15-release-blog/)). Les détails d'API peuvent évoluer ; consultez la documentation correspondant à la version installée avant de transférer des masques.
+:::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
 Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
@@ -173,5 +175,8 @@ Une implémentation de référence testée est disponible dans `src/llm_lab/foun
 - [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
 
-</div>
+:::
+
 </details>
+
+::::
