@@ -82,6 +82,10 @@ Interactive model explorers such as poloclub's Transformer Explainer (https://po
 
 **Gaps vs the field, to keep honestly visible rather than disguised:** no end-to-end corpus-to-training-to-evaluation pipeline yet (Karpathy, Raschka, HF); adaptation/fine-tuning chapters not yet written (HF); serving/efficiency and hardware depth deferred (llmdeepdive); no trained-model experience in the core (all peers anchor on real checkpoints at some point). These gaps are already recorded in project status; this map should not be used to claim parity with any of the projects above.
 
+### How the comparisons inform Understand
+
+The [nine-stage audit](source-reviews/learning-path-comparison-2026-11-05.md#november-21-update-the-nine-stage-understand-route) compares the current conceptual order and its eight adjacent transitions with six resources, including the French-language *Construire un LLM de zéro*. Its [learning-approach comparison](source-reviews/learning-path-comparison-2026-11-05.md#which-learning-approach-serves-which-outcome) uses focused examples from 3Blue1Brown and Polo Club, and distinguishes a useful teaching pattern from evidence of learner benefit. The [route decisions](source-reviews/learning-path-comparison-2026-11-05.md#what-would-justify-a-route-change) identify when the Lab should repair one prerequisite or consider moving a whole lesson.
+
 ## Maintenance
 
 Re-dating rule: update a row when a project materially changes (scope, language, licence, access model) and record the recheck date; do not add every new tutorial that repeats existing explanations. Entries relying on third-party roundups should be replaced by direct page checks before being used for decisions.

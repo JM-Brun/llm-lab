@@ -41,6 +41,8 @@ Yes. If they have the same ID, their lookup is identical. Different prefixes can
 
 </details>
 
+[Predict which token changes can affect the current state and the loss](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
 :::

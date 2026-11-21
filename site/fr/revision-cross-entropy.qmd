@@ -41,6 +41,8 @@ Pour la cible répartie, on obtient −0,5 ln(0,75) − 0,5 ln(0,25) ≈ 0,837 n
 
 </details>
 
+[Comparer deux pertes quand la distribution est la même et que la cible change](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 Pour appliquer cette pénalité à un lot, voir [la fiche sur la perte](revision-loss.qmd).
 
 ::: {.language-switch}
