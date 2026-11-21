@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
@@ -158,3 +159,26 @@ def test_rewrites_rendered_html_pages_before_overlay(tmp_path: Path) -> None:
     assert changed_pages == 1
     assert 'href="deepen.html#transformer-resources"' in page.read_text(encoding="utf-8")
     assert 'href="deepen.qmd"' in non_html.read_text(encoding="utf-8")
+
+
+def test_incremental_search_keeps_untouched_pages_and_replaces_changed_sections(tmp_path: Path):
+    previous = tmp_path / "previous"
+    update = tmp_path / "update"
+    previous.mkdir()
+    (update / "fr").mkdir(parents=True)
+    for page in ("index.html", "fr/changed.html", "fr/unindexed.html"):
+        (update / page).touch()
+
+    retained = [{"href": "en/unchanged.html#section"}, {"href": "references.html#sources"}]
+    stale = [
+        {"href": "index.html#old"},
+        {"href": "fr/changed.html#removed"},
+        {"href": "fr/unindexed.html"},
+    ]
+    fresh = [{"href": "index.html#new"}, {"href": "fr/changed.html#replacement"}]
+    (previous / "search.json").write_text(json.dumps(retained + stale), encoding="utf-8")
+    (update / "search.json").write_text(json.dumps(fresh), encoding="utf-8")
+
+    batch["merge_search_index"](previous, update)
+
+    assert json.loads((update / "search.json").read_text(encoding="utf-8")) == retained + fresh

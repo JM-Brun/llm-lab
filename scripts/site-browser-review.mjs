@@ -209,6 +209,55 @@ async function waitForMath(page) {
   });
 }
 
+async function checkLocalizedSearch(context, mapUrl, lang) {
+  const page = await context.newPage();
+  try {
+    await page.goto(mapUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
+    const query = lang === "fr" ? "token" : "attention";
+    const trigger = page.locator("#quarto-search button.aa-DetachedSearchButton");
+    const input = page.locator("input.aa-Input");
+    const results = page.locator(".aa-Panel a[href]");
+    await trigger.press("Enter");
+    await input.fill(query);
+    await results.first().waitFor({ state: "visible" });
+
+    const hrefs = await results.evaluateAll(links => links.map(link => link.href));
+    const localePath = new URL(`${BASE}/${lang}/`).pathname;
+    const rootPages = [new URL(`${BASE}/index.html`).pathname, new URL(`${BASE}/references.html`).pathname];
+    for (const href of hrefs) {
+      const result = new URL(href);
+      if (result.origin !== new URL(mapUrl).origin ||
+          !(result.pathname.startsWith(localePath) || (lang === "fr" && rootPages.includes(result.pathname)))) {
+        throw new Error(`Site search ${lang}/${query} returned an out-of-language result: ${href}`);
+      }
+    }
+
+    await input.press("Escape");
+    await input.waitFor({ state: "hidden" });
+    await trigger.press("Enter");
+    await input.fill(query);
+    await results.first().waitFor({ state: "visible" });
+    const destinations = await results.evaluateAll(links => links.map(link => link.href));
+    const mapPath = new URL(mapUrl).pathname;
+    const index = destinations.findIndex(href => new URL(href).pathname !== mapPath);
+    if (index < 0) throw new Error(`Site search ${lang}/${query} has no result outside the map`);
+    const destination = new URL(destinations[index]);
+    const [response] = await Promise.all([
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      results.nth(index).click(),
+    ]);
+    const arrived = new URL(page.url());
+    const resultLanguage = (await page.locator("html").getAttribute("lang"))?.split("-")[0];
+    if (!response?.ok() || arrived.pathname !== destination.pathname ||
+        arrived.hash !== destination.hash || resultLanguage !== lang) {
+      throw new Error(`Site search ${lang}/${query} did not open ${destination.href}`);
+    }
+    return { query, resultCount: hrefs.length, destination: arrived.pathname + arrived.hash };
+  } finally {
+    await page.close();
+  }
+}
+
 async function runCase(testCase, caseIndex) {
   const startedAt = performance.now();
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
@@ -798,6 +847,7 @@ async function runCase(testCase, caseIndex) {
     } // end runInteractiveAudit keyboard checks
 
     if (kind === "learning-map") {
+      item.localizedSiteSearch = await checkLocalizedSearch(context, url, lang);
       const mode = page.locator("[data-map-mode]");
       if (await mode.count() !== 1) throw new Error("learning-map mode selector is missing");
       if (await page.locator('label[for="learning-map-mode"]').count() !== 1) {
