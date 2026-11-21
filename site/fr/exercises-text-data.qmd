@@ -221,6 +221,12 @@ assert token_ids == [31373, 995]
 assert token_strings == ["hello", " world"]
 assert encoding.decode(token_ids) == text
 
+# Dernier token du préfixe de la leçon, espace compris.
+prefix = "C'est une bonne situation, ça, scribe ?"
+prefix_ids = encoding.encode(prefix)
+assert prefix_ids[-1] == 5633
+assert encoding.decode_single_token_bytes(prefix_ids[-1]) == b" ?"
+
 # Table synthétique : GPT-2 réel utilise d'autres dimensions et poids appris.
 vocab_size, d = 50_257, 2
 E = np.zeros((vocab_size, d), dtype=np.float32)
