@@ -63,6 +63,16 @@ $$
 
 Pour une cible one-hot, les composantes de ce gradient somment à zéro : $\sum_i(p_i-\mathbb{1}[i=y])=1-1=0$. C'est cohérent avec l'invariance de la softmax à l'ajout d'une même constante à tous les logits.
 
+### Exemple numérique : le gradient pour une cible {#exemple-numérique-de-la-loss-aux-poids-de-sortie}
+
+Reprenons la distribution du premier tour, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Vous » comme cible, représentée par le vecteur $y=(1;0;0;0)$. Le gradient par rapport aux logits est :
+
+$$
+g_z=p-y=(-0{,}4;\,0{,}2;\,0{,}1;\,0{,}1).
+$$
+
+::: {.callout-note collapse="true" title="Gradient de la moyenne sur les positions valides"}
+
 Cette formule donne la dérivée de la perte **pour une seule position**. Pour la moyenne non pondérée sur l'ensemble $\mathcal{M}$ des positions cibles valides définie dans [Loss](loss.qmd), le gradient par logit devient :
 
 $$
@@ -75,7 +85,8 @@ $$
 
 Le facteur $1/|\mathcal{M}|$ vient de la moyenne ; les positions ignorées ont une dérivée nulle par rapport à leurs logits dans cet objectif. Une somme, une pondération ou une autre réduction change le facteur correspondant. La formule locale résulte de la combinaison softmax + cross-entropie ; elle ne signifie pas que les paramètres du réseau sont directement les logits, qui dépendent des paramètres via de nombreuses opérations différentiables.
 
-::: {.callout-note collapse="true" title="Une dérivée nulle ne coupe pas nécessairement tout le graphe (approfondissement)"}
+**Une dérivée nulle ne coupe pas nécessairement tout le graphe (approfondissement)**
+
 Une dérivée nulle par rapport aux logits d'une position ignorée signifie que ces logits ne sont pas directement supervisés par ce terme de perte. Si la représentation de cette position intervient néanmoins dans le calcul d'un logit valide — par exemple comme clé ou valeur autorisée dans l'attention — la perte valide peut encore propager un gradient à travers cette dépendance. Il faut donc examiner le graphe de calcul et les masques d'attention, pas seulement le masque de perte.
 :::
 
@@ -89,17 +100,9 @@ $$
 \nabla_z\mathcal{L}.
 $$
 
-Ici, $z$ représente l'ensemble des logits concernés par l'objectif (par exemple, tous les logits des positions valides du batch), et non un seul score scalaire. On peut voir ces logits comme un vecteur obtenu en aplatissant le tenseur ; la formule ci-dessus utilise alors le jacobien correspondant. La rétropropagation effectue ce produit jacobien-vecteur sans construire explicitement le jacobien complet.
+Ici, $z$ représente l'ensemble des logits concernés par l'objectif (par exemple, tous les logits des positions valides du batch), et non un seul score scalaire. On peut voir ces logits comme un vecteur obtenu en aplatissant le tenseur ; la formule ci-dessus utilise alors le jacobien correspondant. La rétropropagation applique le jacobien transposé au gradient par rapport aux logits sans construire le jacobien complet.
 
 Dans un réseau profond, la rétropropagation applique efficacement cette règle de chaîne à travers le graphe de calcul. Les dimensions doivent être cohérentes : les dérivées sont des vecteurs ou tenseurs de même forme que les variables différentiées.
-
-### Exemple numérique : de la loss aux poids de sortie
-
-Reprenons la distribution du premier tour, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Vous » comme cible, représentée par le vecteur $y=(1;0;0;0)$. Le gradient par rapport aux logits est :
-
-$$
-g_z=p-y=(-0{,}4;\,0{,}2;\,0{,}1;\,0{,}1).
-$$
 
 ## Du gradient à la mise à jour
 
@@ -119,10 +122,14 @@ z'=W'h=z-\eta\lVert h\rVert^2 g_z
 =(\ln 6+0{,}08;\ \ln 2-0{,}04;\ -0{,}02;\ -0{,}02).
 $$
 
-Le score de « Vous » augmente de $0{,}08$. Une nouvelle softmax donne $p'(\text{Vous})\approx0{,}626$, contre $0{,}600$ avant la mise à jour. Ce calcul montre l’effet sur **la cible utilisée pour ce pas**. Pour estimer le comportement sur de nouveaux exemples, la [boucle d’entraînement](training-loop.qmd) mesure une loss sur des données réservées.
+Le score de « Vous » augmente de $0{,}08$. Une nouvelle softmax donne $p'(\text{Vous})\approx0{,}626$, contre $0{,}600$ avant la mise à jour. Ce calcul montre l’effet sur **la cible utilisée pour ce pas**.
 
 </details>
 :::
+
+Calculez [deux mises à jour à perte égale](exercises/gradients.qmd#ex-score-to-parameter-update) et comparez la prédiction suivante.
+
+La [mesure de validation](training-loop.qmd#loss-dentraînement-et-loss-de-validation) utilise des données réservées pour estimer le comportement sur de nouveaux exemples.
 
 ::: {.callout-note collapse="true" title="Autre exemple facultatif : calculer chacune des variations de poids"}
 Considérons une dernière projection affine jouet $z=Wh+b$, avec un état d'entrée $h=(1;2)^\top$ et une matrice $W$ de quatre lignes (une par token) et deux colonnes. Par la règle de chaîne :
@@ -179,7 +186,7 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 
 ### Exercices
 
-Calculez [deux mises à jour à perte égale](exercises/gradients.qmd#ex-score-to-parameter-update) et comparez la prédiction suivante. Retrouvez aussi les [autres exercices de la leçon](exercises/gradients.qmd).
+[Autres exercices sur les gradients](exercises/gradients.qmd).
 
 
 ### Pour approfondir

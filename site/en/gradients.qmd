@@ -63,6 +63,16 @@ $$
 
 For a one-hot target, the components of this gradient sum to zero: $\sum_i(p_i-\mathbb{1}[i=y])=1-1=0$. This is consistent with softmax invariance to adding the same constant to every logit.
 
+### Numerical example: the gradient for one target {#numerical-example-from-loss-to-output-weights}
+
+For the first step of the Romans example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“They”), so:
+
+$$
+g_z=\nabla_z\ell=p-\mathrm{onehot}(y)=(-0.4,0.2,0.1,0.1).
+$$
+
+::: {.callout-note collapse="true" title="Gradient of the mean over valid positions"}
+
 This formula gives the derivative of the loss **at one position**. For the unweighted mean over the valid target-position set $\mathcal{M}$ defined in [Loss](loss.qmd), the gradient with respect to each logit is:
 
 $$
@@ -75,7 +85,8 @@ $$
 
 The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero derivative with respect to their logits in this objective. A sum, weighting, or another reduction changes the corresponding factor. The local formula follows from combining softmax and cross-entropy; it does not mean the network parameters are the logits directly, since logits depend on parameters through many differentiable operations.
 
-::: {.callout-note collapse="true" title="A zero derivative does not necessarily cut off the whole graph (advanced)"}
+**A zero derivative does not necessarily cut off the whole graph (advanced)**
+
 A zero derivative with respect to an ignored position's logits means those logits are not directly supervised by this loss term. If that position's representation still participates in computing a valid logit — for example, as an allowed key or value in attention — the valid-position loss can still propagate gradients through that dependency. Inspect the computation graph and attention masks, not only the loss mask.
 :::
 
@@ -89,17 +100,9 @@ $$
 \nabla_z\mathcal{L}.
 $$
 
-Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula above then uses the corresponding Jacobian. Backpropagation computes this Jacobian–vector product without explicitly constructing the full Jacobian.
+Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula above then uses the corresponding Jacobian. Backpropagation applies the transposed Jacobian to the logit gradient without constructing the full Jacobian.
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
-
-### Numerical example: from loss to output weights
-
-For the first step of the Romans example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“They”), so:
-
-$$
-g_z=\nabla_z\ell=p-\mathrm{onehot}(y)=(-0.4,0.2,0.1,0.1).
-$$
 
 ## From gradient to parameter update
 
@@ -119,10 +122,14 @@ z'=W'h=z-\eta\lVert h\rVert^2 g_z
 =(\ln 6+0.08,\ \ln 2-0.04,\ -0.02,\ -0.02).
 $$
 
-The score for “They” rises by $0.08$. A fresh softmax gives $p'(\text{They})\approx0.626$, up from $0.600$ before the update. This calculation shows the effect on **the target used in this step**. To estimate behavior on new examples, the [training loop](training-loop.qmd) measures loss on held-out data.
+The score for “They” rises by $0.08$. A fresh softmax gives $p'(\text{They})\approx0.626$, up from $0.600$ before the update. This calculation shows the effect on **the target used in this step**.
 
 </details>
 :::
+
+Calculate [two updates at equal loss](exercises/gradients.qmd#ex-score-to-parameter-update) and compare the next prediction.
+
+The [validation measurement](training-loop.qmd#training-loss-versus-validation-loss) uses held-out data to estimate behavior on new examples.
 
 ::: {.callout-note collapse="true" title="Optional second example: compute each weight change"}
 To see how this reaches a parameter, consider a toy final affine projection $z=Wh+b$ with input state $h=(1,2)^\top$ and a matrix $W$ with four rows (one per token) and two columns. By the chain rule:
@@ -179,7 +186,7 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ### Practice
 
-Calculate [two updates at equal loss](exercises/gradients.qmd#ex-score-to-parameter-update) and compare the next prediction. See also the [other practice questions](exercises/gradients.qmd).
+[More gradient exercises](exercises/gradients.qmd).
 
 
 ### Further reading
