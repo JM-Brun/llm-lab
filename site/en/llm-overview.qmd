@@ -93,8 +93,6 @@ The new prefix ends in “Aqueducts.” The model recomputes the distribution fr
 
 </details>
 
-**Continue the route.** [See how text becomes a sequence of tokens and IDs](text-data.qmd). Return to the sections below to connect the computation to model architectures, RAG, and the tools an assistant can use.
-
 ### A preview of computation inside a GPT
 
 ![Six-stage reference diagram: input text, tokenization, numeric representations, computation in Transformer blocks, next-token distribution, and selection in the generation loop.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="An autoregressive GPT processes the prefix: text, tokens and IDs, embeddings and positional information, repeated Transformer blocks, logits converted into probabilities, then selection of a token appended to the prefix. Computation repeats with the extended context. Probabilities are illustrative."}
@@ -150,6 +148,12 @@ Describing a model means answering three questions:
 
 **Pretraining** learns regularities from large corpora. For a GPT, the text tokens are the targets; this is generally *self-supervised* learning. The resulting model before adaptation is often called a *base model*. A **foundation model** is a broader notion: a model trained at scale on broad data and adaptable to many tasks, sometimes beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Post-training may then adapt behavior or parameters, but it is not mandatory ([post-training](post-training.qmd)).
 
+## Why can prediction support varied tasks? {#transformers-changed}
+
+Pretraining does not explicitly teach every task the model may later perform. Across large corpora, it learns language regularities, relationships, and representations that can be reused when a task is expressed in the input, examples are supplied, or parameters are adapted. This is **transfer learning**: a general objective can support tasks that were not explicit training objectives. Transfer nevertheless depends on the data, task, and evaluation; it is neither universal nor automatic ([LLM evolution](llm-evolution.qmd), [emergence](emergence.qmd), [limitations](llm-limits.qmd)).
+
+An information-theoretic perspective sometimes connects this prediction to **predictive compression**: the model adjusts probabilities to anticipate continuations. But a probability distribution does not, by itself, decompress a sequence; exact coding requires a compatible encoder and decoder. This perspective is not a complete theory of intelligence ([entropy and compression](entropy.qmd#are-llms-compression-algorithms), [revision sheet](compression-revision.qmd)). For historical milestones and Transformer trade-offs, see [the history of Transformers](transformer-history.qmd).
+
 ## Where does information reside? {#information-residence}
 
 An answer can draw on information stored in different places. Distinguish **where it is stored**, **how it becomes accessible**, and **how it is used**.
@@ -165,29 +169,15 @@ An answer can draw on information stored in different places. Distinguish **wher
 
 **RAG** retrieves external information and can add it to context; retrieval alone is not enough. A document can be stored, indexed, or retrieved without being supplied. [Context engineering](context-engineering.qmd) designs and structures the input; [RAG and memory](rag-memory-boundaries.qmd) follows the information lifecycle; [document retrieval](document-retrieval.qmd) details search and ranking methods. **ICL** describes what the model does with examples present in context ([ICL](in-context-learning.qmd)).
 
-## Why can prediction support varied tasks? {#transformers-changed}
+## From a model to a conversational system {#model-to-conversational-system}
 
-Pretraining does not explicitly teach every task the model may later perform. Across large corpora, it learns language regularities, relationships, and representations that can be reused when a task is expressed in the input, examples are supplied, or parameters are adapted. This is **transfer learning**: a general objective can support tasks that were not explicit training objectives. Transfer nevertheless depends on the data, task, and evaluation; it is neither universal nor automatic ([LLM evolution](llm-evolution.qmd), [emergence](emergence.qmd), [limitations](llm-limits.qmd)).
-
-An information-theoretic perspective sometimes connects this prediction to **predictive compression**: the model adjusts probabilities to anticipate continuations. But a probability distribution does not, by itself, decompress a sequence; exact coding requires a compatible encoder and decoder. This perspective is not a complete theory of intelligence ([entropy and compression](entropy.qmd#are-llms-compression-algorithms), [revision sheet](compression-revision.qmd)). For historical milestones and Transformer trade-offs, see [the history of Transformers](transformer-history.qmd).
+A conversational assistant is a **system built around a model**. The application formats messages, manages context, and coordinates tools. System, user, and assistant are message roles, not Transformer layers. A model-generated tool request has not run: the application validates it, calls the tool, and returns the result. Persistent memory also belongs to the application ([LLM evolution](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
 
 ## Choosing an approach {#choosing-an-approach}
 
 Depending on the task, one can use a general model as is, supply context and external documents, adapt parameters, or have the application call tools. These approaches can be combined. The choice depends on measured quality, robustness, information freshness, cost, latency, privacy, provenance, and maintenance. A few successful prompts are not an evaluation ([post-training](post-training.qmd), [RAG and memory](rag-memory-boundaries.qmd)).
 
 [Compare the roles of context and model parameters in the review plan](review-path.qmd#compare-prediction-uses).
-
-## From a model to a conversational system {#model-to-conversational-system}
-
-A conversational assistant is a **system built around a model**. The application formats messages, manages context, and coordinates tools. System, user, and assistant are message roles, not Transformer layers. A model-generated tool request has not run: the application validates it, calls the tool, and returns the result. Persistent memory also belongs to the application ([LLM evolution](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
-
-::: {.callout-tip title="Go further"}
-- **History and architecture:** [history of Transformers](transformer-history.qmd) and [architecture comparison](transformer-architectures.qmd).
-- **Computation and learning:** [generation](generation.qmd), [mathematical foundations](mathematical-foundations.qmd), and [post-training](post-training.qmd).
-- **Context and external information:** [context engineering](context-engineering.qmd), [RAG and memory](rag-memory-boundaries.qmd), and [document retrieval](document-retrieval.qmd).
-- **Compression and information:** [entropy](entropy.qmd) and the [compression and LLM revision sheet](compression-revision.qmd).
-- **Watch an end-to-end overview:** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, English video, about 3 h 31); an orientation resource, not a replacement for the detailed lessons.
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -200,8 +190,8 @@ Related exercises: [overview practice page](exercises/llm-overview.qmd).
 <details><summary>Answer</summary>No: it is conditional probability, not proof of truth.</details>
 
 <!-- self-check-covers: text-to-distribution -->
-2. **What happens after a token is selected?**
-<details><summary>Answer</summary>It is appended to context, then the model recomputes.</details>
+2. **What happens after a token is selected? Can new tokens be generated in parallel in this loop?**
+<details><summary>Answer</summary>The token is appended to context, then the model recomputes. Each turn depends on the tokens selected in earlier turns, so new tokens are produced successively.</details>
 
 <!-- self-check-covers: one-computation-three-uses -->
 3. **Are generation, scoring, and learning identical?**
@@ -215,21 +205,29 @@ Related exercises: [overview practice page](exercises/llm-overview.qmd).
 5. **Does fine-tuning change the architecture?**
 <details><summary>Answer</summary>No: it adapts parameters.</details>
 
+<!-- self-check-covers: transformers-changed -->
+6. **A pretrained GPT classifies texts after receiving a few examples in the prompt. What can it reuse, and how would you evaluate classification on new texts?**
+<details><summary>Answer</summary>It can reuse regularities and representations acquired during pretraining. The examples specify the task while parameters stay fixed. Evaluate classification on texts outside the supplied examples.</details>
+
 <!-- self-check-covers: information-residence -->
-6. **Does RAG retrieval put a document in the parameters?**
+7. **Does RAG retrieval put a document in the parameters?**
 <details><summary>Answer</summary>No: it remains external and must be supplied.</details>
 
-<!-- self-check-covers: transformers-changed -->
-7. **Is autoregressive generation parallel?**
-<details><summary>Answer</summary>No: new tokens are produced successively.</details>
+<!-- self-check-covers: model-to-conversational-system -->
+8. **Has a tool run when the model requests it?**
+<details><summary>Answer</summary>No: the application must execute it and return the result.</details>
 
 <!-- self-check-covers: choosing-an-approach -->
-8. **Must changing documentation require retraining?**
+9. **Must changing documentation require retraining?**
 <details><summary>Answer</summary>Not necessarily: RAG can retrieve the updated source.</details>
+:::
 
-<!-- self-check-covers: model-to-conversational-system -->
-9. **Has a tool run when the model requests it?**
-<details><summary>Answer</summary>No: the application must execute it and return the result.</details>
+::: {.callout-tip title="Go further"}
+- **History and architecture:** [history of Transformers](transformer-history.qmd) and [architecture comparison](transformer-architectures.qmd).
+- **Computation and learning:** [generation](generation.qmd), [mathematical foundations](mathematical-foundations.qmd), and [post-training](post-training.qmd).
+- **Context and external information:** [context engineering](context-engineering.qmd), [RAG and memory](rag-memory-boundaries.qmd), and [document retrieval](document-retrieval.qmd).
+- **Compression and information:** [entropy](entropy.qmd) and the [compression and LLM revision sheet](compression-revision.qmd).
+- **Watch an end-to-end overview:** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, English video, about 3 h 31); an orientation resource, not a replacement for the detailed lessons.
 :::
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}

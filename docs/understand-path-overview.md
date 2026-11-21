@@ -37,6 +37,19 @@ Chromium 153, en FR et EN, à 390 et 1 280 px. Les liens ont été activés au c
 - Plan, étape Calcul → exercice des deux softmax → étape Prédiction.
 - Plan, étape Entraînement → fiche de la boucle d’entraînement → exercice des checkpoints → étape Entraînement. Le nouveau lien figure après le corrigé.
 
+
+### Entrer dans le parcours et comprendre le transfert
+
+| Contenu | Destination FR/EN |
+| --- | --- |
+| Pré-entraînement, transfert, compression prédictive et ses limites | Le [panorama FR](../site/fr/llm-overview.qmd#transformers-changed) et le [panorama EN](../site/en/llm-overview.qmd#transformers-changed) présentent les mêmes explications dans le prolongement du pré-entraînement. Le tableau sur l’emplacement des informations suit, puis le passage du modèle à l’assistant précède les critères de choix. |
+| Dépendance entre deux tours de génération | Le corrigé de la question sur le calcul prédictif réunit la réinjection du token et le caractère séquentiel de la boucle. La question sur le transfert demande maintenant de distinguer l’acquis du pré-entraînement, le rôle des exemples en contexte et l’évaluation sur de nouveaux textes. |
+| Écriture de la prédiction, commandes de la carte et ressources | La formule est accessible depuis le [squelette FR](../site/fr/learning-map.qmd#conceptual-route) et le [squelette EN](../site/en/learning-map.qmd#conceptual-route). Le volet d’aide se trouve à côté de la carte. Les deux volets utilisent des commandes natives. Les ressources du panorama suivent l’auto-évaluation et le lien vers la tokenisation figure dans l’explication et dans la navigation de fin de leçon. |
+
+Le contrôle de conservation compare les sources à `14d8c7e`. Les neuf sections du panorama et leurs ancres, les figures et leurs textes alternatifs, les tableaux, la formule et toutes les destinations des liens existants figurent toujours dans les deux langues. Le registre des neuf étapes et les fils narratifs FR/EN sont inchangés.
+
+Sur le HTML rendu, Chromium 141 a vérifié les deux accès directs de la carte, le passage du panorama à la leçon sur les tokens et l’ouverture des volets et du corrigé au clavier, en FR et EN à 390 et 1 280 px. Les deux volets de la carte et le rail des neuf étapes restent accessibles dans un test sans JavaScript. La suite Python et le contrôle des liens internes ont réussi.
+
 ### Travail restant
 
 | Ordre | Travail restant | Résultat à consigner |
@@ -45,6 +58,8 @@ Chromium 153, en FR et EN, à 390 et 1 280 px. Les liens ont été activés au c
 | 2 | Mener le [pilote aval](audits/learning-path-learner-evaluation.md#prediction-use-pilot) sur la génération, le scoring et l’entraînement. Utiliser les formes A/B et le cas inédit de validation. | Consigner les choix de préfixe et de cible, la pondération par cible valide et les paramètres qui changent. Comparer aussi la difficulté des deux formes. L’exercice public sert à la répétition et les variantes du protocole au transfert. |
 | 3 | Compléter les vérifications d’accessibilité sur appareil tactile réel et avec lecteur d’écran, dans les deux langues. Rejouer la navigation par Tab depuis le début des pages, la sélection dans la carte interactive et les retours vers le plan depuis les exercices d’attention et de validation. [#337](https://github.com/JM-Brun/llm-lab/issues/337) · [#417](https://github.com/JM-Brun/llm-lab/issues/417) | Noter navigateur, dispositif, langue et largeur. Contrôler le focus, l’annonce de l’état des volets, la lecture des formules et l’arrivée sur l’ancre. Donner un trajet de reproduction pour chaque défaut. |
 | 4 | Traiter les difficultés observées. Rejouer le trajet ou le calcul après chaque correction. | Corriger le lien, l’intitulé ou le rappel quand il suffit à reprendre le calcul. Envisager de déplacer une leçon si un manque de prérequis persiste. Consigner la destination FR/EN des exemples, preuves, code et références. |
+
+Pour le [pilote du panorama](https://github.com/JM-Brun/llm-lab/issues/1208), mesurer le temps de première lecture et demander au lecteur de distinguer ce que le modèle réutilise de ce que les exemples lui fournissent. Utiliser un cas différent de la question corrigée du panorama et relever si le lecteur propose une évaluation sur de nouvelles entrées sans aide.
 
 La [revue des signatures formelles](audits/understand-lesson-contracts-2026-11-20.md#vérification-des-quatre-cas-formels-du-plan) fixe le résultat attendu pour le cas additif et RoPE, les deux axes de softmax et la distinction entre gradient et pas d’optimiseur. Elle sert de référence pour lire les réponses des pilotes.
 

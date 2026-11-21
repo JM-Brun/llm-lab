@@ -23,7 +23,11 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-Cette page présente le **parcours théorique Understand** en neuf étapes, puis une carte progressive pour explorer les ressources. Le **parcours Build est indépendant** : il possède son propre ordre d'implémentation et son propre point d'entrée. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics. Les repères de lecture ci-dessous se replient ; la carte reflète la recherche, le filtre et la sélection dans l'URL, et le bouton « Copier le lien » la partage telle quelle.
+[Neuf étapes de Comprendre](#parcours-théorique-understand) · [Carte des ressources](#explorer-les-ressources)
+
+::: {.guided-route-section}
+
+## Parcours théorique — Understand
 
 ::: {.callout-note title="Le parcours en bref"}
 Vous pouvez retenir le parcours en **cinq mouvements** avant d'entrer dans les neuf étapes détaillées :
@@ -37,31 +41,20 @@ Vous pouvez retenir le parcours en **cinq mouvements** avant d'entrer dans les n
 Les neuf étapes ci-dessous détaillent cette vue sans imposer la lecture de chaque page comme un prérequis strict.
 :::
 
-
-::: {.callout-note collapse="true" title="Comment lire cette carte"}
-
-- **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
-- **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
-- **Pages** — un clic sur une page affiche ses détails (objectif, sections, liens) ; « Ouvrir la page » y conduit directement.
-- **Notions** — la vue « Notions canoniques » regroupe les concepts du registre bilingue versionné dans `data/concepts.yml` par domaine de découverte, avec leurs définitions, relations typées et pages ressources. La recherche et le filtre par type de relation réduisent la liste, une notion sélectionnée met en évidence ses voisines, et les notions liées restent cliquables depuis le panneau de détails.
-
-Les intitulés de sections affichés dans les détails d'une page sont des repères éditoriaux, pas des concepts canoniques. La carte ne doit pas être interprétée comme un ordre de lecture unique : le parcours guidé ci-dessous joue ce rôle.
-
-:::
-
-::: {.guided-route-section}
-
-## Parcours théorique — Understand
-
 ### Squelette du parcours {#conceptual-route}
+
+Dans chaque leçon, le détail suit la forme **notions mobilisées → objet étudié · acquis visé**.
+
+{{< include ../includes/generated-conceptual-route-fr.qmd >}}
+
+<details>
+<summary>Écriture de la prédiction</summary>
 
 Pour un GPT autorégressif, $f_\theta(c)$ transforme le contexte $c$ en logits avec les paramètres $\theta$. La normalisation donne la distribution de base du prochain token.
 
 $$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
 
-Dans chaque leçon, le détail suit la forme **notions mobilisées → objet étudié · acquis visé**.
-
-{{< include ../includes/generated-conceptual-route-fr.qmd >}}
+</details>
 
 Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires.
 
@@ -81,7 +74,19 @@ Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives
 
 ## Explorer les ressources
 
-Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus (le fonctionnement des territoires, rubriques, pages et notions est décrit en tête de page). Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; « Copier le lien » copie l'URL de la vue courante ; la touche Échap remonte d'un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
+<details>
+<summary>Comment lire cette carte</summary>
+
+- **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
+- **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
+- **Pages** — un clic sur une page affiche ses détails (objectif, sections, liens) ; « Ouvrir la page » y conduit directement.
+- **Notions** — la vue « Notions canoniques » regroupe les concepts du registre bilingue versionné dans `data/concepts.yml` par domaine de découverte, avec leurs définitions, relations typées et pages ressources. La recherche et le filtre par type de relation réduisent la liste, une notion sélectionnée met en évidence ses voisines, et les notions liées restent cliquables depuis le panneau de détails.
+
+Les intitulés de sections affichés dans les détails d'une page sont des repères éditoriaux, pas des concepts canoniques. Le parcours guidé indique l’ordre de lecture.
+
+La recherche, le filtre et la sélection sont conservés dans l’URL. « Copier le lien » partage cette vue. « Réinitialiser la vue » efface ces trois réglages. La carte et la liste statique sont générées à partir de la barre latérale Quarto et des métadonnées des pages.
+
+</details>
 
 {{< include ../includes/generated-map-territories-fr.qmd >}}
 

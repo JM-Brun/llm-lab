@@ -89,8 +89,6 @@ Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distributio
 
 </details>
 
-**Suite du parcours.** [Voir comment le texte devient une suite de tokens et d'identifiants](text-data.qmd). Revenez aux sections suivantes pour relier le calcul aux architectures de modèles, au RAG et aux outils d'un assistant.
-
 ### Aperçu du calcul à l'intérieur d'un GPT
 
 ![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits convertis en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
@@ -146,6 +144,12 @@ Pour décrire un modèle, séparons trois questions :
 
 Le **pré-entraînement** apprend des régularités à partir de grands corpus. Pour un GPT, les tokens du texte servent de cibles : cet apprentissage est généralement *auto-supervisé*. Le modèle obtenu avant adaptation est souvent appelé *base model*. Un **modèle de fondation** (*foundation model*) est une notion plus large : un modèle entraîné à grande échelle sur des données générales et adaptable à de nombreuses tâches, parfois au-delà du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Le post-entraînement peut ensuite adapter le comportement ou les paramètres, mais il n'est pas obligatoire ([post-entraînement](post-training.qmd)).
 
+## Pourquoi la prédiction peut-elle soutenir des tâches variées ? {#transformers-changed}
+
+Le pré-entraînement ne lui enseigne pas explicitement chaque tâche qu'il pourra ensuite réaliser. En parcourant de grands corpus, le modèle apprend des régularités de langue, des relations entre éléments et des représentations qui peuvent être réutilisées lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis ou lorsque les paramètres sont adaptés. C'est le **transfert d'apprentissage** : un objectif général peut soutenir des tâches qui n'étaient pas des objectifs explicites d'entraînement. Ce transfert dépend toutefois des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique ([évolution des LLM](llm-evolution.qmd), [émergence](emergence.qmd), [limites](llm-limits.qmd)).
+
+Une lecture informationnelle rapproche parfois cette prédiction de la **compression prédictive** : le modèle ajuste des probabilités pour mieux anticiper les suites. Mais une distribution ne décompresse pas, à elle seule, une séquence : un codage exact exige un codeur et un décodeur compatibles. Cette perspective n'est pas une théorie complète de l'intelligence ([entropie et compression](entropy.qmd#les-llm-sont-ils-des-algorithmes-de-compression), [fiche de révision](compression-revision.qmd)). Pour les jalons historiques et les compromis du Transformer, voir [son histoire](transformer-history.qmd).
+
 ## Où se trouve l'information ? {#information-residence}
 
 Une réponse peut mobiliser des informations qui ne sont pas conservées au même endroit. Il faut distinguer leur **stockage**, leur **accès** et leur **exploitation**.
@@ -161,29 +165,15 @@ Une réponse peut mobiliser des informations qui ne sont pas conservées au mêm
 
 Le **RAG** recherche des informations externes et peut les ajouter au contexte ; la recherche seule ne suffit pas. Un document peut être stocké, indexé ou récupéré sans être transmis. L'[ingénierie du contexte](context-engineering.qmd) organise la sélection et la structuration de l'entrée ; [RAG et mémoire](rag-memory-boundaries.qmd) suit le cycle de l'information ; [récupération documentaire](document-retrieval.qmd) détaille les méthodes de recherche et de classement. L'**ICL** décrit ce que le modèle fait avec des exemples présents dans le contexte ([ICL](in-context-learning.qmd)).
 
-## Pourquoi la prédiction peut-elle soutenir des tâches variées ? {#transformers-changed}
+## Du modèle au système conversationnel {#model-to-conversational-system}
 
-Le pré-entraînement ne lui enseigne pas explicitement chaque tâche qu'il pourra ensuite réaliser. En parcourant de grands corpus, le modèle apprend des régularités de langue, des relations entre éléments et des représentations qui peuvent être réutilisées lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis ou lorsque les paramètres sont adaptés. C'est le **transfert d'apprentissage** : un objectif général peut soutenir des tâches qui n'étaient pas des objectifs explicites d'entraînement. Ce transfert dépend toutefois des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique ([évolution des LLM](llm-evolution.qmd), [émergence](emergence.qmd), [limites](llm-limits.qmd)).
-
-Une lecture informationnelle rapproche parfois cette prédiction de la **compression prédictive** : le modèle ajuste des probabilités pour mieux anticiper les suites. Mais une distribution ne décompresse pas, à elle seule, une séquence : un codage exact exige un codeur et un décodeur compatibles. Cette perspective n'est pas une théorie complète de l'intelligence ([entropie et compression](entropy.qmd#les-llm-sont-ils-des-algorithmes-de-compression), [fiche de révision](compression-revision.qmd)). Pour les jalons historiques et les compromis du Transformer, voir [son histoire](transformer-history.qmd).
+Un assistant est un **système construit autour d'un modèle**. L'application formate les messages, gère le contexte et coordonne les outils. Les rôles system, user et assistant décrivent les messages, pas les couches du Transformer. Une demande d'outil produite par le modèle n'est pas exécutée : l'application valide, appelle l'outil puis transmet le résultat. La mémoire persistante relève aussi de l'application ([évolution des LLM](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
 
 ## Choisir une approche {#choosing-an-approach}
 
 Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir du contexte et des documents externes, adapter ses paramètres ou lui faire mobiliser des outils. Ces approches peuvent se combiner. Le choix dépend de critères mesurés : qualité, robustesse, fraîcheur des informations, coût, latence, confidentialité, provenance et maintenance. Quelques prompts réussis ne constituent pas une évaluation ([post-entraînement](post-training.qmd), [RAG et mémoire](rag-memory-boundaries.qmd)).
 
 [Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
-
-## Du modèle au système conversationnel {#model-to-conversational-system}
-
-Un assistant est un **système construit autour d'un modèle**. L'application formate les messages, gère le contexte et coordonne les outils. Les rôles system, user et assistant décrivent les messages, pas les couches du Transformer. Une demande d'outil produite par le modèle n'est pas exécutée : l'application valide, appelle l'outil puis transmet le résultat. La mémoire persistante relève aussi de l'application ([évolution des LLM](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
-
-::: {.callout-tip title="Pour approfondir"}
-- **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).
-- **Calcul et apprentissage :** [génération](generation.qmd), [fondements mathématiques](mathematical-foundations.qmd) et [post-entraînement](post-training.qmd).
-- **Contexte et information externe :** [ingénierie du contexte](context-engineering.qmd), [RAG et mémoire](rag-memory-boundaries.qmd) et [récupération documentaire](document-retrieval.qmd).
-- **Compression et information :** [entropie](entropy.qmd) et [fiche de révision sur compression et LLM](compression-revision.qmd).
-- **Voir une vue d'ensemble de bout en bout :** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, vidéo en anglais, environ 3 h 31) ; une ressource d'orientation, pas un substitut aux leçons détaillées.
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -196,8 +186,8 @@ Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd)
 <details><summary>Réponse</summary>Non : c'est une probabilité conditionnelle, pas une preuve de vérité.</details>
 
 <!-- self-check-covers: text-to-distribution -->
-2. **Que fait-on après avoir choisi un token ?**
-<details><summary>Réponse</summary>On l'ajoute au contexte et on recalcule.</details>
+2. **Que fait-on après avoir choisi un token ? Dans cette boucle, peut-on produire les nouveaux tokens en parallèle ?**
+<details><summary>Réponse</summary>On ajoute le token au contexte et on recalcule. Chaque tour dépend des tokens choisis aux tours précédents, donc les nouveaux tokens sont produits successivement.</details>
 
 <!-- self-check-covers: one-computation-three-uses -->
 3. **Générer, scorer et apprendre sont-ils identiques ?**
@@ -211,21 +201,29 @@ Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd)
 5. **Le fine-tuning change-t-il l'architecture ?**
 <details><summary>Réponse</summary>Non : il adapte les paramètres.</details>
 
+<!-- self-check-covers: transformers-changed -->
+6. **Un GPT pré-entraîné classe des textes après avoir reçu quelques exemples dans le prompt. Que peut-il réutiliser, et comment évaluer le classement sur de nouveaux textes ?**
+<details><summary>Réponse</summary>Il peut réutiliser des régularités et des représentations acquises pendant le pré-entraînement. Les exemples précisent la tâche à paramètres fixes. Pour évaluer le classement, il faut des textes qui ne figurent pas parmi les exemples fournis.</details>
+
 <!-- self-check-covers: information-residence -->
-6. **Un document récupéré par RAG est-il dans les paramètres ?**
+7. **Un document récupéré par RAG est-il dans les paramètres ?**
 <details><summary>Réponse</summary>Non : il reste externe et doit être transmis.</details>
 
-<!-- self-check-covers: transformers-changed -->
-7. **La génération autorégressive est-elle parallèle ?**
-<details><summary>Réponse</summary>Non : les nouveaux tokens sont produits successivement.</details>
+<!-- self-check-covers: model-to-conversational-system -->
+8. **Une demande d'outil est-elle déjà exécutée ?**
+<details><summary>Réponse</summary>Non : l'application doit l'exécuter et renvoyer le résultat.</details>
 
 <!-- self-check-covers: choosing-an-approach -->
-8. **Une documentation change souvent : faut-il réentraîner ?**
+9. **Une documentation change souvent : faut-il réentraîner ?**
 <details><summary>Réponse</summary>Pas nécessairement : un RAG peut récupérer la source actualisée.</details>
+:::
 
-<!-- self-check-covers: model-to-conversational-system -->
-9. **Une demande d'outil est-elle déjà exécutée ?**
-<details><summary>Réponse</summary>Non : l'application doit l'exécuter et renvoyer le résultat.</details>
+::: {.callout-tip title="Pour approfondir"}
+- **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).
+- **Calcul et apprentissage :** [génération](generation.qmd), [fondements mathématiques](mathematical-foundations.qmd) et [post-entraînement](post-training.qmd).
+- **Contexte et information externe :** [ingénierie du contexte](context-engineering.qmd), [RAG et mémoire](rag-memory-boundaries.qmd) et [récupération documentaire](document-retrieval.qmd).
+- **Compression et information :** [entropie](entropy.qmd) et [fiche de révision sur compression et LLM](compression-revision.qmd).
+- **Voir une vue d'ensemble de bout en bout :** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, vidéo en anglais, environ 3 h 31) ; une ressource d'orientation, pas un substitut aux leçons détaillées.
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
