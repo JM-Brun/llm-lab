@@ -33,7 +33,7 @@ P0 is not a synonym for "important". An empty P0 queue is valid. Priority expres
 
 - `area:*` identifies the principal project domain affected.
 - `type:*` identifies the nature of the work (for example, audit, documentation, feature, maintenance or test, using only existing repository labels).
-- Do not assume `internal` or `meta` are canonical labels. Searches of the current issue set found no issues using either label; their existence in the repository label catalogue and any intended semantics still require a separate taxonomy check. Do not introduce either label without an explicit decision.
+- The repository label catalogue on 2026-11-21 contained no `internal`, `meta`, or generic `priority` label. Use the existing `area:*` and `type:*` values to describe governance or maintenance work and assign `P0`–`P3` independently.
 - Assignees express explicit ownership, not priority. Do not assign people without a clear basis.
 - Milestones express a real delivery grouping, not a substitute for a due date.
 - Dependencies must be represented by issue relationships or explicit links, not merely by ordering in a handoff.
@@ -65,6 +65,8 @@ python scripts/issue_metadata_audit.py --input tests/fixtures/issue-metadata-val
 
 The report checks all pages of open issues (excluding pull requests), exactly-one priority/area/type labels, title/label priority contradictions and ambiguous multiple priorities. It prints a Markdown summary and exits non-zero for classification errors. It never writes to GitHub.
 
+A [set of live GitHub filters](backlog-dashboard.md#live-issue-filters) covers all open issues, each priority, and issues missing a priority. Use the audit report to find missing area/type labels, duplicates or title conflicts, which the priority filters cannot detect.
+
 A scheduled GitHub Actions workflow runs the audit with a read-only token and publishes the report as a job summary. Treat that report as a timestamped observation, not as a stored backlog or durable KPI. The GitHub issue list remains authoritative.
 
 ## 6. Review cadence and ownership
@@ -91,5 +93,6 @@ A scheduled GitHub Actions workflow runs the audit with a read-only token and pu
 - [x] A read-only, paginated audit checks the complete open-issue collection.
 - [x] Offline fixtures exercise valid and invalid metadata.
 - [x] A scheduled/manual workflow reports findings without mutating GitHub.
-- [ ] Semantic review of every priority assignment remains a human task.
-- [ ] Saved GitHub searches and dependency relationships still require explicit verification.
+- [x] The repository dashboard links the live priority and missing-priority filters.
+
+Priority rationale and blockers are reviewed during triage and recorded in the owning issue. The report and the dashboard remain usable as the issue set changes.
