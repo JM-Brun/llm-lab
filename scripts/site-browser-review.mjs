@@ -243,12 +243,16 @@ async function checkLocalizedSearch(context, mapUrl, lang) {
     if (index < 0) throw new Error(`Site search ${lang}/${query} has no result outside the map`);
     const destination = new URL(destinations[index]);
     const [response] = await Promise.all([
-      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      // Quarto rewrites ?q= with history.replaceState during navigation.
+      page.waitForResponse(response => response.request().isNavigationRequest() &&
+        new URL(response.url()).pathname === destination.pathname),
+      page.waitForURL(url => url.pathname === destination.pathname && url.hash === destination.hash,
+        { waitUntil: "domcontentloaded" }),
       results.nth(index).click(),
     ]);
     const arrived = new URL(page.url());
     const resultLanguage = (await page.locator("html").getAttribute("lang"))?.split("-")[0];
-    if (!response?.ok() || arrived.pathname !== destination.pathname ||
+    if (!response.ok() || arrived.pathname !== destination.pathname ||
         arrived.hash !== destination.hash || resultLanguage !== lang) {
       throw new Error(`Site search ${lang}/${query} did not open ${destination.href}`);
     }
