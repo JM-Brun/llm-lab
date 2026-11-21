@@ -33,6 +33,21 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 La page précédente, [Le Transformer dans un GPT : architecture et calcul](transformer.qmd), a montré que l'auto-attention est une sous-couche du bloc répété. Partons maintenant d'une difficulté simple : comment une position peut-elle exploiter le contexte fourni par les autres tokens ?
 :::
 
+## Le problème : utiliser le contexte
+
+Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **il** peut renvoyer au chat ou au chien. Un modèle ne peut donc pas toujours interpréter un token à partir de sa seule représentation locale : il doit pouvoir exploiter l'information portée par d'autres positions de la séquence.
+
+C'est le rôle de l'auto-attention. Pour chaque position, le mécanisme construit deux choses : **où regarder** dans le contexte et **quelle information en rapporter**. Q, K et V fournissent les représentations nécessaires à ces deux opérations.
+
+Pour le token courant dans « C'est une bonne situation, ça, scribe ? », Q est comparée aux K des positions accessibles ; les poids obtenus servent ensuite à agréger leurs V. Cette lecture décrit le calcul, pas une recherche consciente ni une interprétation humaine de la phrase.
+
+Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). Il motive le besoin de contexte ; il ne prouve pas qu'une tête isolée résout la coréférence ni ne décrit les poids d'un modèle entraîné.
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-status">Architecture : Transformer</span>
+</div>
+
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison"}
 ::: {.meta-flow__source}
 <strong>Entrée commune</strong><span>Représentations d'entrée de chaque position</span>
@@ -62,22 +77,6 @@ Q et K déterminent les poids ; V fournit le contenu à mélanger
 :::
 ::::
 
-
-## Le problème : utiliser le contexte
-
-Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **il** peut renvoyer au chat ou au chien. Un modèle ne peut donc pas toujours interpréter un token à partir de sa seule représentation locale : il doit pouvoir exploiter l'information portée par d'autres positions de la séquence.
-
-C'est le rôle de l'auto-attention. Pour chaque position, le mécanisme construit deux choses : **où regarder** dans le contexte et **quelle information en rapporter**. Q, K et V fournissent les représentations nécessaires à ces deux opérations.
-
-Pour le token courant dans « C'est une bonne situation, ça, scribe ? », Q est comparée aux K des positions accessibles ; les poids obtenus servent ensuite à agréger leurs V. Cette lecture décrit le calcul, pas une recherche consciente ni une interprétation humaine de la phrase.
-
-Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). Il motive le besoin de contexte ; il ne prouve pas qu'une tête isolée résout la coréférence ni ne décrit les poids d'un modèle entraîné.
-
-<div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-status">Architecture : Transformer</span>
-</div>
-
 ## Trois rôles complémentaires
 
 On peut distinguer les trois projections en suivant le trajet de l'information :
@@ -99,8 +98,6 @@ L'analogie aide à séparer **le calcul de compatibilité** (**Q/K**) du **trans
 
 Cette intuition complémentaire est développée dans l'article [Understanding Transformers (Part 4)](https://joseparreogarcia.substack.com/p/understanding-transformers-part-4). Elle prépare la lecture des équations ci-dessous ; elle ne les remplace pas.
 :::
-
-Pour suivre cette distinction dans les opérations, passez ensuite à [l'attention à produit scalaire](scaled-dot-product-attention.qmd), puis à la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) pour retrouver les deux chemins dans le code.
 
 <picture>
   <source media="(max-width: 600px)" srcset="../images/queries-keys-values-mobile.svg">
@@ -143,11 +140,20 @@ Chaque ligne correspond à une position. Les mêmes matrices de projection sont 
 
 [Calculer les projections Q, K et V et isoler l’effet d’un changement de $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-## Approfondissement mathématique et architectural
+::: {.self-check}
+## Vérifier sa compréhension
 
-Les équations par position, la géométrie des compatibilités, les chemins de gradient et les variantes multi-têtes sont utiles une fois le modèle mental acquis. Ils sont regroupés dans l'[approfondissement avancé sur Q/K/V](queries-keys-values-advanced.qmd), plutôt que dispersés dans plusieurs encadrés repliés sur cette page.
+[Exercices dédiés sur Q/K/V et l'attention](exercises/queries-keys-values.qmd).
 
-Pour comparer les architectures qui modifient le nombre de têtes K/V, compressent le cache ou limitent les positions consultées, consultez la section [Variantes d'attention](transformer-block-walkthrough.qmd#attention-variants) de la visite guidée du bloc Transformer. Elle distingue explicitement cette comparaison du code MHA réellement implémenté.
+Quelles projections déterminent les poids d'attention, et laquelle fournit le contenu agrégé ? Que se passe-t-il si V change alors que Q et K restent fixes ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Q et K déterminent les scores et donc les poids d'attention. V fournit les vecteurs agrégés. Si seul V change, les poids restent identiques, mais le résultat agrégé peut changer.
+
+</details>
+:::
 
 ## À retenir et pour aller plus loin {#revision-summary}
 
@@ -170,12 +176,14 @@ La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
@@ -183,23 +191,16 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 La [suite des exercices d’attention](exercises-attention.qmd#ex-attention-predict-projection-change) porte sur l’effet d’une modification des projections, leur apprentissage et le transfert vers l’attention croisée et GQA/MQA.
 
+### Approfondissement mathématique et architectural
 
+Les équations par position, la géométrie des compatibilités, les chemins de gradient et les variantes multi-têtes sont utiles une fois le modèle mental acquis. Ils sont regroupés dans l'[approfondissement avancé sur Q/K/V](queries-keys-values-advanced.qmd), plutôt que dispersés dans plusieurs encadrés repliés sur cette page.
 
-::: {.self-check}
-## Vérifier sa compréhension
+Pour comparer les architectures qui modifient le nombre de têtes K/V, compressent le cache ou limitent les positions consultées, consultez la section [Variantes d'attention](transformer-block-walkthrough.qmd#attention-variants) de la visite guidée du bloc Transformer. Elle distingue explicitement cette comparaison du code MHA réellement implémenté.
 
-[Exercices dédiés sur Q/K/V et l'attention](exercises/queries-keys-values.qmd).
+Pour suivre cette distinction dans les opérations, passez ensuite à [l'attention à produit scalaire](scaled-dot-product-attention.qmd), puis à la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) pour retrouver les deux chemins dans le code.
 
-Quelles projections déterminent les poids d'attention, et laquelle fournit le contenu agrégé ? Que se passe-t-il si V change alors que Q et K restent fixes ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Q et K déterminent les scores et donc les poids d'attention. V fournit les vecteurs agrégés. Si seul V change, les poids restent identiques, mais le résultat agrégé peut changer.
-
-</details>
 :::
 
-
-</div>
 </details>
+
+::::
