@@ -1,6 +1,7 @@
 project:
   type: website
   output-dir: _site
+  post-render: tools/localize_quarto_search.py
   resources:
     - 404.html
     - fr/index.html

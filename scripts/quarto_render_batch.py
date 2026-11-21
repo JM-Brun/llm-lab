@@ -126,6 +126,30 @@ def rewrite_rendered_html_links(output_dir: Path) -> int:
     return changed_pages
 
 
+def merge_search_index(previous_output: Path, incremental_output: Path) -> None:
+    """Replace search entries by rendered page, dropping obsolete section anchors."""
+    previous_index = previous_output / "search.json"
+    if not previous_index.exists():
+        return
+
+    updated_index = incremental_output / "search.json"
+    previous_documents = json.loads(previous_index.read_text(encoding="utf-8"))
+    updated_documents = json.loads(updated_index.read_text(encoding="utf-8"))
+    rendered_pages = {
+        path.relative_to(incremental_output).as_posix()
+        for path in incremental_output.rglob("*.html")
+    }
+    unchanged_documents = [
+        document
+        for document in previous_documents
+        if urlsplit(document["href"]).path not in rendered_pages
+    ]
+    updated_index.write_text(
+        json.dumps(unchanged_documents + updated_documents, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     """Render the selected pages separately, then safely overlay their outputs."""
     targets = [
@@ -190,6 +214,7 @@ def main() -> None:
         sys.stdout.write(
             f"Rewrote local Quarto source links in {rewritten_pages} rendered HTML page(s)\n"
         )
+        merge_search_index(output_dir, temp_output)
 
         # Overlay generated files only. Never delete from the existing site:
         # untouched pages may still depend on shared Quarto assets.
