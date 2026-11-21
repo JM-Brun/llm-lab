@@ -136,31 +136,34 @@ Un bon protocole sépare la réussite sur les exemples vus de la généralisatio
 
 L'ICL décrit le comportement du modèle face aux informations du prompt. L'**ingénierie du contexte** (*context engineering*) désigne le travail du système qui sélectionne et organise ces informations avant l'appel. Elle peut donc créer de meilleures conditions pour l'ICL, mais elle ne se confond pas avec ce phénomène. Voir la leçon [Ingénierie du contexte](context-engineering.qmd).
 
-## Références
-
-- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
-- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
-- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
-- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
-
-
-
 {{< include ../includes/generated-suggested-route-fr-in-context-learning.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/in-context-learning.qmd).
 
-</div>
+### Références
+
+- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
+- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
+- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
+- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
+
+:::
+
 </details>
+
+::::

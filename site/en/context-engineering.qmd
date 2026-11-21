@@ -76,28 +76,7 @@ Context engineering is not a particular model feature, nor a standard with a uni
 
 These operations form a design-and-observation loop, not a single recipe. Their importance depends on the task and architecture.
 
-## Distinguishing neighboring concepts
-
-| Concept | What it refers to |
-|---|---|
-| **Prompt engineering** | Formulating and organizing a prompt's instructions and examples. |
-| **In-context learning (ICL)** | A phenomenon in which a model adapts its behavior from information and demonstrations in context, without updating its parameters. |
-| **Context engineering** | The broader work of selecting, retrieving, structuring, updating, and securing all the context supplied to the model. |
-| **RAG** | An architecture that retrieves external information and injects it into context; it is one technique context engineering can use. |
-| **Memory** | A mechanism for retaining and reusing information across interactions; it can supply context but is not itself the context window. |
-| **Tool use** | A system capability to request an external action; tool descriptions and results may enter context. Context engineering determines how they are presented and controlled. |
-| **Agent engineering** | The design of an agent's decision, action, observation, and control loop; it uses context engineering but is not reducible to it. |
-| **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
-
 ICL describes a model capability or behavior; context engineering describes the system-design work that prepares its input. Good context can support ICL, but the two concepts are not synonyms.
-
-## RAG and memory: supplying context without confusing the mechanisms
-
-**Document retrieval** selects documents or passages from an external collection. **RAG** adds a pipeline that filters results, assembles evidence, and supplies it to the model. Retriever families, visual search, and ranking evaluation are covered in [Document retrieval](document-retrieval.qmd); the full lifecycle, its failure modes, and provenance concerns are covered in [RAG, memory, and context transmission](rag-memory-boundaries.qmd).
-
-**Persistent memory** retains information across calls or conversations. It can supply context, but a stored or retrieved fact is not automatically transmitted: the system must still select it and include it in the input, or make it available through an invoked tool. This boundary between found information and supplied information is essential.
-
-**ICL**, finally, describes what the model does with information and demonstrations actually present in its context, without updating its parameters. RAG, memory, and ICL can work together, but answer different questions: retrieving, retaining, supplying, and using information.
 
 ## Limitations and failure modes
 
@@ -126,12 +105,6 @@ Establish a baseline, add one source or example at a time, test questions with k
 
 [Trace what carries over to the next call](exercises/context-engineering.qmd#ex-context-between-calls) or explore the [context engineering exercises](exercises/context-engineering.qmd).
 
-## References
-
-- Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
-- Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
-- OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
-
 To move on to scoring, start with the same prefix: generation selects `B`, and the observed continuation starts with `A`. [Trace both prefixes on the second step](exercises/likelihood.qmd#ex-generation-versus-scoring) and determine which distribution each operation uses.
 
 {{< include ../includes/generated-suggested-route-en-context-engineering.qmd >}}
@@ -139,3 +112,42 @@ To move on to scoring, start with the same prefix: generation selects `B`, and t
 ::: {.language-switch}
 **Language:** [Français](../fr/context-engineering.qmd) · [English](context-engineering.qmd)
 :::
+
+:::: {.supplementary-resources}
+
+<details class="learning-resources">
+<summary><span class="learning-resources__title">Supplementary resources</span></summary>
+::: {.learning-resources__content}
+
+### Distinguishing neighboring concepts
+
+| Concept | What it refers to |
+|---|---|
+| **Prompt engineering** | Formulating and organizing a prompt's instructions and examples. |
+| **In-context learning (ICL)** | A phenomenon in which a model adapts its behavior from information and demonstrations in context, without updating its parameters. |
+| **Context engineering** | The broader work of selecting, retrieving, structuring, updating, and securing all the context supplied to the model. |
+| **RAG** | An architecture that retrieves external information and injects it into context; it is one technique context engineering can use. |
+| **Memory** | A mechanism for retaining and reusing information across interactions; it can supply context but is not itself the context window. |
+| **Tool use** | A system capability to request an external action; tool descriptions and results may enter context. Context engineering determines how they are presented and controlled. |
+| **Agent engineering** | The design of an agent's decision, action, observation, and control loop; it uses context engineering but is not reducible to it. |
+| **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
+
+### RAG and memory: supplying context without confusing the mechanisms
+
+**Document retrieval** selects documents or passages from an external collection. **RAG** adds a pipeline that filters results, assembles evidence, and supplies it to the model. Retriever families, visual search, and ranking evaluation are covered in [Document retrieval](document-retrieval.qmd); the full lifecycle, its failure modes, and provenance concerns are covered in [RAG, memory, and context transmission](rag-memory-boundaries.qmd).
+
+**Persistent memory** retains information across calls or conversations. It can supply context, but a stored or retrieved fact is not automatically transmitted: the system must still select it and include it in the input, or make it available through an invoked tool. This boundary between found information and supplied information is essential.
+
+**ICL**, finally, describes what the model does with information and demonstrations actually present in its context, without updating its parameters. RAG, memory, and ICL can work together, but answer different questions: retrieving, retaining, supplying, and using information.
+
+### References
+
+- Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
+- Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
+- OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
+
+:::
+
+</details>
+
+::::
