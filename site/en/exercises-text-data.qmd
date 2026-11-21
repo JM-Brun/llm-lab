@@ -198,8 +198,7 @@ Lookup preserves the batch and sequence-position axes and adds the feature axis.
 
 </details>
 
-<a id="tokenizer-embedding-trace"></a>
-#### Optional practical trace — from text to vectors
+#### Optional practical trace — from text to vectors {#tokenizer-embedding-trace}
 
 This trace complements the lookup exercise with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
 
@@ -220,6 +219,16 @@ assert utf8_bytes == b"hello world"
 assert token_ids == [31373, 995]
 assert token_strings == ["hello", " world"]
 assert encoding.decode(token_ids) == text
+
+# Last token in the English and French lesson prefixes.
+prefix_cases = (
+    ("What have the Romans ever done for us?", 30, b"?"),
+    ("C'est une bonne situation, ça, scribe ?", 5633, b" ?"),
+)
+for prefix, expected_id, expected_bytes in prefix_cases:
+    prefix_ids = encoding.encode(prefix)
+    assert prefix_ids[-1] == expected_id
+    assert encoding.decode_single_token_bytes(prefix_ids[-1]) == expected_bytes
 
 # Synthetic table: real GPT-2 uses different dimensions and learned weights.
 vocab_size, d = 50_257, 2

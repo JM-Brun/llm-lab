@@ -30,31 +30,33 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 {{< include ../includes/generated-guided-context-fr-text-data.qmd >}}
 
 ::: {.chapter-lead}
-La génération commence avec un prompt écrit en langage courant. Pourtant, le réseau neuronal ne traite pas directement les lettres ni les mots tels qu'ils apparaissent à l'écran : il reçoit une séquence d'identifiants numériques. Comment passe-t-on de l'un à l'autre ?
+Dans le panorama, le modèle prédit le prochain token à partir du préfixe « C'est une bonne situation, ça, scribe ? ». Sous quelle forme reçoit-il cette question ?
 
-La **tokenisation** découpe le texte en unités appelées *tokens* et associe chacune à un identifiant. Cette étape est distincte du réseau neuronal, mais elle détermine son vocabulaire, la longueur des séquences et une partie du coût de calcul.
+Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
 :::
 
-Dans la page précédente, la génération a été présentée comme une boucle qui s'appuie sur les tokens déjà présents dans le contexte. Cette page remonte d'une étape : elle explique comment le prompt devient une séquence de tokens, puis d'IDs entiers que le modèle peut convertir en vecteurs d'entrée.
+## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
 
-::: {.callout-note title="Texte à encoder" #tokenizer-output}
-Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** La continuation commence par : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »**
+::: {#tokenizer-output}
+Avec le tokenizer de GPT-2, le dernier token de « C'est une bonne situation, ça, scribe ? » contient **l'espace et le point d'interrogation** (`" ?"`). Son ID est `5633`.
 
-Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
+Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
 
-Avec le tokenizer de GPT-2, `hello world` donne les tokens `"hello"` et `" world"` (espace inclus), puis les IDs `[31373, 995]`. La [trace reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie ces sorties et utilise des vecteurs synthétiques pour illustrer le lookup.
+| Token | ID GPT-2 |
+|---|---:|
+| `"hello"` | `31373` |
+| `" world"` | `995` |
+
+L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, les espaces et la ponctuation comptent dans le découpage. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les IDs et illustre la lecture de la table avec des vecteurs synthétiques.
 :::
 
+Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
 
-::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
-Pensez à un **catalogue avec des numéros de référence**. Le tokenizer découpe le texte en unités (les tokens) et attribue à chacune un ID. L'ID sert à retrouver une ligne dans la table d'embeddings : ce n'est ni un score, ni une mesure de sens. Le Transformer transforme ensuite ces vecteurs en tenant compte du contexte.
-
-**Le fil conducteur :** texte Unicode → tokens → IDs → vecteurs d'embedding → représentations contextualisées. Chaque flèche est une transformation distincte ; ne confondez notamment pas **taille du vocabulaire** ($V$) et **dimension des embeddings** ($d$).
-
-**Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
+::: {.callout-tip title="Token, ID et plongement" #revision-summary}
+Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
 :::
 
-<div class="pipeline-stepper" role="group" aria-label="Étapes de transformation du texte en entrée du modèle">
+<div class="pipeline-stepper" role="group" aria-label="Du texte aux représentations du modèle">
   <span class="step-item">1. Texte source</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Tokens</span>
@@ -65,12 +67,39 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="positional-encoding.qmd">5. Position</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd">6. Contexte</a>
+  <a class="step-item" href="contextualized-representations.qmd">6. États contextualisés</a>
 </div>
 
-## 1. Le parcours, du texte au modèle
+## Pourquoi le découpage compte {#ce-que-la-tokenisation-change-et-ce-quelle-ne-dit-pas}
 
-Le point de vue utile à ce stade est celui du **pipeline** : quelles transformations un texte traverse-t-il avant d'être traité par le réseau ?
+- **Capacité.** Une fenêtre de 8 000 tokens admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
+- **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
+- **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+
+[Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
+Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenizer de GPT-2 et sa table associée, l'ID `5633` indique quelle ligne lire. [Que contient cette ligne et comment le modèle s'en sert-il ?](embedding-space.qmd)
+
+{{< include ../includes/generated-suggested-route-fr-text-data.qmd >}}
+
+::: {.language-switch}
+**Langue** · [Français](text-data.qmd) · [English](../en/text-data.qmd)
+:::
+
+:::: {.supplementary-resources}
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Retrouver le fil rouge, la chaîne complète et les exercices.</span>
+</summary>
+::: {.learning-resources__content}
+
+### Encoder le préfixe et la continuation
+
+La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s'appuie au premier pas de génération.
+
+### Du texte Unicode aux représentations contextualisées
 
 ```{mermaid}
 flowchart TB
@@ -85,79 +114,24 @@ flowchart TB
     classDef default color:#14532D;
 ```
 
-- **Texte source** : une chaîne pouvant contenir ponctuation, espaces, nombres, code ou plusieurs langues.
-- **Prétraitement** : certaines chaînes sont normalisées ou pré-découpées ; ces opérations dépendent du tokeniseur.
-- **Tokeniseur** : applique des règles et un vocabulaire défini — souvent appris pour les tokenizers modernes à sous-mots — pour convertir le texte en unités appelées *tokens*.
-- **IDs** : chaque token est associé à un entier servant d'indice dans le vocabulaire. Cet entier est une étiquette, pas une mesure de sens.
-- **Embeddings** : les IDs sélectionnent des vecteurs appris. Le Transformer les transforme ensuite en représentations dépendant du contexte.
+Le [texte source en Unicode](unicode-text.qmd) peut contenir des espaces, de la ponctuation, des nombres, du code ou plusieurs langues. Selon le tokenizer, le texte peut être normalisé ou pré-découpé. Les tokenizers diffèrent par leurs unités de base, leurs règles, leur vocabulaire et leurs tokens spéciaux. Les tokenizers modernes à sous-mots apprennent souvent leur vocabulaire. La couverture des entrées dépend de ces choix. Un découpage en tokens donne des unités de calcul, dont les frontières peuvent traverser un mot. Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent ces choix et les algorithmes BPE, WordPiece et unigramme.
 
-Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités de base, leur normalisation, leur pré-tokenisation, leur vocabulaire et leurs tokens spéciaux.
+Le schéma regroupe le traitement positionnel et le Transformer. Certaines architectures ajoutent des vecteurs de position absolue appris aux plongements des tokens. Avec [RoPE](positional-encoding.qmd), l'attention fait tourner les vecteurs requête et clé. Ces mécanismes interviennent à des endroits différents dans la chaîne qui produit les [représentations contextualisées](contextualized-representations.qmd).
 
-Le dernier bloc regroupe volontairement le traitement positionnel et le Transformer. Les architectures n'introduisent pas toutes la position de la même manière : des vecteurs positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE fait tourner les vecteurs requête et clé dans l'attention. La position n'est donc pas un vecteur supplémentaire universellement ajouté au moment du lookup ; voir [encodage positionnel et RoPE](positional-encoding.qmd).
-
-[Suivez les IDs jusqu’aux lignes lues dans la table de plongements](exercises/text-data.qmd#ex-text-to-embedding-lookup).
-
-## 2. Ce que la tokenisation change — et ce qu'elle ne dit pas
-
-La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.
-
-::: {.callout-note title="Tokens et fenêtres de contexte"}
-La limite de contexte d'un modèle se mesure en **tokens**, pas en mots ni en caractères. Le budget d'entrée peut aussi inclure l'historique, les instructions, les contenus récupérés, les descriptions d'outils et l'espace réservé à la réponse ; le décompte exact dépend du modèle et de l'API. Pour distinguer la capacité maximale de la longueur réellement transmise et comprendre comment l'application sélectionne ces éléments, voir [l'ingénierie du contexte](context-engineering.qmd). L'[approfondissement sur la complexité de l'inférence](llm-computational-complexity.qmd) traite des coûts liés au contexte, tandis que la page sur l'[évolution des LLM](llm-evolution.qmd#tool-using-systems) explique comment les applications gèrent les interactions longues.
-:::
-
-::: {.callout-note title="Pourquoi le nombre de tokens a des conséquences concrètes"}
-- **Contexte :** à budget fixé en tokens, un texte qui en consomme davantage laisse moins de place à l'historique, aux documents récupérés ou à la réponse. Une limite de 8 000 tokens ne correspond donc pas à une quantité fixe de mots ou de caractères.
-- **Traitement :** une séquence plus longue fournit davantage de positions à traiter. Elle peut augmenter le temps et le coût de l'inférence ; l'effet exact dépend de l'architecture, du matériel et du service utilisé.
-- **Multilingue :** un même contenu traduit peut occuper des nombres de tokens différents. Le budget de contexte et, dans certains protocoles, le budget d'entraînement ne représentent alors pas la même quantité de texte pour chaque langue.
-
-Cela révèle une distinction importante : **l'efficacité de représentation n'est pas la qualité linguistique du modèle**. Un ratio de tokens plus faible est une propriété mesurable du tokenizer sur un corpus donné, pas une preuve que le modèle comprend ou génère mieux cette langue. Les écarts doivent être mesurés par langue et par type de texte, puis reliés à des résultats en aval avant toute conclusion. Voir [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
-:::
-
-Le modèle reçoit la séquence d’IDs. Dans la leçon suivante, [chaque ID sélectionne une ligne de la table de plongements](embedding-space.qmd). Les [stratégies de tokenisation](tokenization-strategies.qmd) détaillent les choix de segmentation qui produisent cette séquence.
-
-{{< include ../includes/generated-suggested-route-fr-text-data.qmd >}}
-
-::: {.language-switch}
-**Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
-:::
-
-:::: {.supplementary-resources}
-
-<details class="learning-resources">
-<summary>
-  <span class="learning-resources__title">Ressources complémentaires</span>
-  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
-</summary>
-::: {.learning-resources__content}
-
-### Exercices
+### Exercices {#exercices}
 
 [Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
 
-### Deux usages, deux parcours
+### Deux usages, deux parcours {#deux-usages-deux-parcours}
 
-Le même tokenizer sert à encoder un prompt à l'inférence et à convertir les documents d'un corpus en IDs pour l'apprentissage. Mais les étapes en amont diffèrent :
+Le tokenizer associé au modèle code le prompt à l'inférence et le corpus utilisé pour l'entraîner. À l'inférence, le tokenizer est déjà fixé. En pré-entraînement, la [préparation du corpus](corpus-preparation.qmd) traite le choix des sources, la provenance, le filtrage, la déduplication, le partitionnement et l'ajustement du tokenizer avant de le fixer. La normalisation et la pré-tokenisation, lorsqu'elles sont utilisées, opèrent sur le texte dans le tokenizer. Les [exemples d'entraînement](training-examples.qmd) montrent comment transformer le flux d'IDs en fenêtres d'entrée, en cibles décalées et en masques, et comment regrouper plusieurs séquences dans une fenêtre (*packing*).
 
-- **Inférence :** texte du prompt → tokenizer déjà défini → IDs → lookup des embeddings. C'est le parcours décrit sur cette page.
-- **Pré-entraînement :** préparation et partitionnement du corpus, ajustement puis fixation du tokenizer ([préparation du corpus](corpus-preparation.qmd)), puis construction de fenêtres, de cibles et de masques à partir du flux d'IDs ([exemples d'entraînement](training-examples.qmd)).
+### Choisir un approfondissement {#frontières-entre-les-pages}
 
-La seconde branche n'est pas un prérequis pour comprendre comment un modèle encode un prompt.
-
-::: {.callout-note}
-**Ne pas confondre préparation du corpus et pipeline du tokenizer.** La sélection, le filtrage, la déduplication et le partitionnement concernent les documents ; la normalisation et la pré-tokenisation sont des composants du tokenizer appliqués au texte. Les décisions de préparation du corpus et d'ajustement du tokenizer sont détaillées dans [Préparer un corpus pour le préentraînement](corpus-preparation.qmd).
-:::
-
-### Frontières entre les pages
-
-- **Cette page** : chaîne texte → tokens → IDs → vecteurs initiaux ; rôle de chaque objet et compatibilité du tokenizer avec le modèle.
-- **[Stratégies de tokenisation](tokenization-strategies.qmd)** : granularités, pré-tokenisation, BPE, WordPiece, unigramme et exemples à tester.
-- **[Unicode, UTF-8 et normalisation](unicode-text.qmd)** : représentation des chaînes, octets et normalisation.
-- **[Espace des embeddings](embedding-space.qmd)** : lookup des IDs et géométrie des vecteurs.
-- **[Exemples d'entraînement](training-examples.qmd)** : fenêtres, cibles décalées, packing et masques.
-
-La préparation du corpus (provenance, filtrage, déduplication, partitions et ajustement du tokenizer) a désormais sa page de référence : [Préparer un corpus pour le préentraînement](corpus-preparation.qmd). Cette page conserve uniquement la distinction nécessaire pour situer l'encodage d'un prompt.
-
-Un même texte peut produire des séquences différentes selon le vocabulaire, la pré-tokenisation et les règles du tokenizer. Pour comprendre et comparer ces mécanismes, consultez la page canonique sur les [stratégies de tokenisation](tokenization-strategies.qmd), qui rassemble les granularités, les composants, les algorithmes et les exemples comparatifs. Les métriques empiriques et les compromis avancés sont traités dans [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+- [Unicode, UTF-8 et normalisation](unicode-text.qmd) pour suivre le passage de la chaîne aux octets.
+- [Stratégies de tokenisation](tokenization-strategies.qmd) pour comparer les découpages.
+- [Espace des embeddings](embedding-space.qmd) pour lire la table et étudier la géométrie des vecteurs.
+- [Évolution des LLM](llm-evolution.qmd#tool-using-systems) pour comprendre comment les applications gèrent les interactions longues.
 
 :::
 

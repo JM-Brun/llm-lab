@@ -198,8 +198,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 </details>
 
-<a id="tokenizer-embedding-trace"></a>
-#### Trace pratique facultative — du texte aux vecteurs
+#### Trace pratique facultative — du texte aux vecteurs {#tokenizer-embedding-trace}
 
 Cette trace complète l'exercice sur le lookup avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
 
@@ -220,6 +219,16 @@ assert utf8_bytes == b"hello world"
 assert token_ids == [31373, 995]
 assert token_strings == ["hello", " world"]
 assert encoding.decode(token_ids) == text
+
+# Dernier token des préfixes des leçons anglaise et française.
+prefix_cases = (
+    ("What have the Romans ever done for us?", 30, b"?"),
+    ("C'est une bonne situation, ça, scribe ?", 5633, b" ?"),
+)
+for prefix, expected_id, expected_bytes in prefix_cases:
+    prefix_ids = encoding.encode(prefix)
+    assert prefix_ids[-1] == expected_id
+    assert encoding.decode_single_token_bytes(prefix_ids[-1]) == expected_bytes
 
 # Table synthétique : GPT-2 réel utilise d'autres dimensions et poids appris.
 vocab_size, d = 50_257, 2
