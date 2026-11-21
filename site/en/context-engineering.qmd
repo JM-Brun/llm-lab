@@ -45,6 +45,22 @@ An assistant must answer a question about a software repository. A useful contex
 
 Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
 
+## Three levels of context that should not be confused
+
+| Level | What is available |
+|---|---|
+| **System context** | For a given call, the application selects which instructions, messages, examples, retrieved documents, tool results, and memory items to supply. Stored history or memory enters this call only if the system selects and supplies it. |
+| **Input sequence and context window** | The model processes the supplied sequence, which may include structured multimodal elements. Active-context length counts the tokens actually present. The context window sets the maximum token budget, with input and output counting conventions that depend on the model and API. In autoregressive generation, generated tokens are appended to the sequence. |
+| **Context accessible at a position** | The architecture, mask, and available window determine which positions a query can attend to. In a causal decoder, attention at position $t$ excludes future positions even if their tokens occur in the input sequence. |
+
+[Contextualized representations](contextualized-representations.qmd) are the hidden vector states the Transformer computes from the tokens accessible at each position. These states are outputs of computation on the sequence, distinct from information the system supplies or stores.
+
+## Why the context window is not enough
+
+The **context window** describes a capacity limit measured in tokens. It does not guarantee that all useful information is present, or that the model will use it correctly.
+
+A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
+
 ## Definition and main operations
 
 Context engineering is not a particular model feature, nor a standard with a universally fixed scope. It is an engineering practice for LLM systems, not a Transformer layer or a new network architecture. It includes:
@@ -59,22 +75,6 @@ Context engineering is not a particular model feature, nor a standard with a uni
 8. **Evaluating** effects on quality, robustness, latency, and cost.
 
 These operations form a design-and-observation loop, not a single recipe. Their importance depends on the task and architecture.
-
-## Why the context window is not enough
-
-The **context window** describes a capacity limit measured in tokens. It does not guarantee that all useful information is present, or that the model will use it correctly.
-
-A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
-
-## Three levels of context that should not be confused
-
-| Level | What is supplied or accessible | How to tell it apart |
-|---|---|---|
-| **System context** | Instructions, messages, examples, retrieved documents, tool results, and memory items the application chooses to supply for a call. | The application can store history without transmitting it. Persistent memory becomes model context when its content is selected and supplied. |
-| **Input sequence and context window** | The model processes a sequence of tokens or structured multimodal elements. Autoregressive generation appends the generated tokens to this sequence. | Active-context length counts the tokens actually present. The window defines the maximum budget per call, with input/output counting conventions that depend on the model and API. |
-| **Context accessible at a position** | Accessible positions depend on architecture, masking, and the available window. In a causal decoder, position $t$ cannot consult future positions. | A position may have access to only part of the supplied tokens. |
-
-Active context denotes input information. A [contextualized representation](contextualized-representations.qmd) is a hidden vector state that the Transformer layers compute from accessible information. It is the result of computation, distinct from the active context and stored history.
 
 ## Distinguishing neighboring concepts
 

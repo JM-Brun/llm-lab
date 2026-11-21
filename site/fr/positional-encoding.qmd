@@ -41,6 +41,23 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 **Question rapide :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
 :::
 
+## Pourquoi ajouter une information de position ?
+
+La page précédente a montré que le lookup fournit un vecteur de contenu, mais pas l'emplacement du token dans la séquence. Or, dans une phrase, le rôle d'un token dépend souvent de sa place : permuter « le chat poursuit le chien » peut changer qui poursuit qui. Le modèle doit donc disposer d'un signal d'ordre.
+
+Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
+
+Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi… », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
+
+## Deux familles et plusieurs mécanismes
+
+- **Encodages absolus :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
+- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. Deux exemples importants sont :
+  - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
+  - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
+
+La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
+
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
 ::: {.meta-flow__source}
 <strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span>
@@ -61,14 +78,21 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 :::
 ::::
 
+::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
-## Pourquoi ajouter une information de position ?
+![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
 
-La page précédente a montré que le lookup fournit un vecteur de contenu, mais pas l'emplacement du token dans la séquence. Or, dans une phrase, le rôle d'un token dépend souvent de sa place : permuter « le chat poursuit le chien » peut changer qui poursuit qui. Le modèle doit donc disposer d'un signal d'ordre.
+:::
 
-Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
+::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
+La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
+:::
 
-Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi… », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
+Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
+
+## Idées reçues
+
+- **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
 
 ::: {.callout-note collapse="true" title="Pourquoi l’auto-attention seule ne suffit-elle pas ?"}
 Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
@@ -83,23 +107,6 @@ Le calcul est **équivariant par permutation** : il réordonne ses sorties avec 
 
 Cette propriété suppose l’absence de signal positionnel et de contrainte dépendant de l’ordre. Un masque causal fixe introduit justement une contrainte structurelle d’ordre ; il ne faut pas confondre ce rôle avec celui d’un encodage positionnel explicite.
 :::
-
-![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
-
-## Deux familles et plusieurs mécanismes
-
-- **Encodages absolus :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
-- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. Deux exemples importants sont :
-  - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
-  - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
-
-La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
-
-::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
-La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
-:::
-
-Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif — géométrie des encodages sinusoïdaux"}
 Dans l’encodage sinusoïdal original, chaque paire de coordonnées utilise une fréquence propre. En posant $\omega_i=10000^{-2i/d}$, la paire associée à l’indice $i$ s’écrit :
@@ -128,15 +135,9 @@ Le décalage $k$ correspond donc à une rotation fixe **pour une paire et une fr
 Dans cette construction, $P$ est ajouté aux embeddings à l’entrée, $X_0=E[\text{token IDs}]+P$. Ce n’est pas RoPE : RoPE applique des rotations aux projections $Q$ et $K$ après leur calcul, avant les scores d’attention. La propriété géométrique ci-dessus rend les décalages accessibles à une transformation linéaire ; elle ne garantit pas qu’une tête apprendra effectivement une règle telle que « regarder trois tokens en arrière ».
 :::
 
-## Idées reçues
-
-- **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
-
 ## Où se situe cette étape dans le parcours ?
 
 Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Les [représentations contextualisées](contextualized-representations.qmd), prochaine étape du parcours, décrivent comment les blocs Transformer transforment ces états initiaux en états dépendants du contexte. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il ordonne les positions visibles sans encoder leurs positions explicites.
-
-
 
 {{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
 

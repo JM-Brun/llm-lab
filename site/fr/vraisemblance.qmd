@@ -47,9 +47,9 @@ Pour des paramètres fixés, la vraisemblance indique la probabilité que le mod
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="probabilites.qmd">2. Probabilité</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. Log-probabilité</span>
+  <span class="step-item">3. Produit des probabilités ou somme de leurs logarithmes</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">4. Vraisemblance de la séquence</span>
+  <span class="step-item active">4. Vraisemblance ou log-vraisemblance</span>
 </div>
 
 
@@ -67,9 +67,13 @@ $$
 
 ### Scorer une séquence observée : le préfixe est connu
 
-À chaque position, le modèle reçoit le préfixe observé $x_{<t}$ et attribue une probabilité au token cible $x_t$. Ce conditionnement sur les tokens de référence est aussi utilisé comme *teacher forcing* pendant l'entraînement (voir [les exemples d'entraînement](training-examples.qmd)). Ici, il sert uniquement à **scorer** la séquence : on ne sélectionne pas de token généré, on ne réinjecte pas une prédiction du modèle et les paramètres $\theta$ restent fixes. Pour une séquence qui tient dans la fenêtre de contexte, le modèle peut calculer les logits de toutes les positions dans un même *forward pass* : les préfixes observés sont fournis simultanément, tandis que le masque causal empêche chaque position de lire les tokens ultérieurs. Au-delà de cette fenêtre, le scoring exige une stratégie de fenêtrage ou de stride et une convention explicite pour les préfixes réellement disponibles et les cibles comptabilisées.
+À chaque position, le modèle reçoit le préfixe observé $x_{<t}$ et attribue une probabilité au token cible $x_t$. Ce conditionnement sur les tokens de référence est aussi utilisé comme *teacher forcing* pendant l'entraînement (voir [les exemples d'entraînement](training-examples.qmd)). Ici, il sert uniquement à **scorer** la séquence : on ne sélectionne pas de token généré, on ne réinjecte pas une prédiction du modèle et les paramètres $\theta$ restent fixes.
 
 Cette opération se distingue donc de la génération : celle-ci réinjecte le token choisi par le modèle avant le pas suivant. Elle se distingue aussi de l'entraînement : le scoring ne calcule pas de gradient et ne met pas à jour les paramètres.
+
+[Comparez le préfixe utilisé pour générer et pour scorer](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
+
+Pour une séquence qui tient dans la fenêtre de contexte, le modèle peut calculer les logits de toutes les positions dans un même *forward pass* : les préfixes observés sont fournis simultanément, tandis que le masque causal empêche chaque position de lire les tokens ultérieurs. Au-delà de cette fenêtre, le scoring exige une stratégie de fenêtrage ou de stride et une convention explicite pour les préfixes réellement disponibles et les cibles comptabilisées.
 
 Pour plusieurs séquences indépendantes de l'ensemble de données, la vraisemblance totale est le produit des probabilités de chaque séquence. Les produits de nombreux nombres inférieurs ou égaux à un deviennent rapidement minuscules ; on travaille donc avec la log-vraisemblance :
 
@@ -78,32 +82,32 @@ $$
 \sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
 $$
 
-La log transforme le produit en somme, plus stable et plus pratique pour les calculs.
-
-## De la vraisemblance à la perte
-
-La négative log-vraisemblance $\operatorname{NLL}$ est :
-
-$$
-\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-$$
-
-Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
-
-Pour une NLL moyenne calculée avec le logarithme naturel, la **perplexité** vaut $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{moyenne}})$. Elle correspond à l'exponentielle de la perte moyenne, ou à la moyenne géométrique des inverses des probabilités attribuées aux tokens observés. Elle résume le score probabiliste moyen sur les unités définies par le tokenizer ; elle ne mesure ni la qualité générale des réponses ni leur vérité. Deux perplexités ne sont directement comparables que si le corpus, le tokenizer, les positions évaluées et la convention de réduction sont compatibles. La page [Loss](loss.qmd) revient sur son usage comme métrique dérivée de l'objectif d'entraînement.
-
-La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
+Le logarithme transforme le produit en somme, plus stable et plus pratique pour les calculs.
 
 ## Exemple : trois unités observées
 
-Reprenons les trois premiers choix de la génération : après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Vous » ; après ce token, il attribue $0{,}5$ à « savez » ; après « Vous savez », il attribue $0{,}8$ à la virgule. Ces probabilités sont conditionnelles à des préfixes successifs différents. Pour ce calcul simplifié, les unités affichées sont traitées comme des tokens ; il ne s'agit pas d'une segmentation mesurée avec un tokenizer particulier :
+Reprenons les probabilités du fil rouge pour scorer la continuation observée « Vous savez , ». Après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Vous ». Une fois « Vous » ajouté au préfixe observé, il attribue $0{,}5$ à « savez », puis $0{,}8$ à la virgule après « Vous savez ». Ces probabilités sont conditionnelles à des préfixes successifs différents. Le calcul traite chacun des trois éléments affichés comme un token et suppose cette segmentation à des fins d'illustration.
 
 $$
 P_\theta(\text{« Vous savez , »}\mid c)
 =0{,}6\times0{,}5\times0{,}8=0{,}24.
 $$
 
-La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la négative log-vraisemblance (NLL) vaut $-\log(0{,}24)\approx1{,}427$ nats pour ces trois tokens. La somme des pertes locales est cette NLL ; leur moyenne vaut environ $1{,}427/3=0{,}476$ nat par token. Les valeurs sont illustratives et reprennent exactement les probabilités du tableau de génération : elles ne proviennent pas d'un modèle entraîné.
+## De la vraisemblance à la perte
+
+La log-vraisemblance négative $\operatorname{NLL}$ est :
+
+$$
+\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
+$$
+
+La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la log-vraisemblance négative vaut $-\log(0{,}24)\approx1{,}427$ nats pour ces trois tokens. La somme des pertes locales est cette NLL ; leur moyenne vaut environ $1{,}427/3=0{,}476$ nat par token. Les valeurs sont illustratives et reprennent exactement les probabilités du tableau de génération : elles ne proviennent pas d'un modèle entraîné.
+
+Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
+
+Pour une NLL moyenne calculée avec le logarithme naturel, la **perplexité** vaut $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{moyenne}})$. Elle correspond à l'exponentielle de la perte moyenne, ou à la moyenne géométrique des inverses des probabilités attribuées aux tokens observés. Elle résume le score probabiliste moyen sur les unités définies par le tokenizer ; elle ne mesure ni la qualité générale des réponses ni leur vérité. Deux perplexités ne sont directement comparables que si le corpus, le tokenizer, les positions évaluées et la convention de réduction sont compatibles. La page [Loss](loss.qmd) revient sur son usage comme métrique dérivée de l'objectif d'entraînement.
+
+La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Une vraisemblance élevée prouve que le modèle est vrai. »** Non : elle indique l'adéquation probabiliste aux observations choisies, relativement à un modèle, un tokenizer et une distribution de données.
@@ -128,7 +132,7 @@ La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la négative log-vrai
 
 ### Exercices
 
-[Comparez le préfixe utilisé pour générer et pour scorer](exercises/vraisemblance.qmd#ex-generation-versus-scoring) ou parcourez les [autres exercices](exercises/vraisemblance.qmd).
+[Autres exercices sur la vraisemblance](exercises/vraisemblance.qmd).
 
 
 ### Pour approfondir

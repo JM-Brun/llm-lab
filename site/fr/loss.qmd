@@ -56,10 +56,6 @@ Les conventions de réduction déterminent comment les pertes par token sont agr
 
 Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
 
-::: {.callout-note collapse="true" title="Détail d'implémentation des API (facultatif)"}
-**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
-:::
-
 Sur la continuation de référence, le modèle calcule une perte pour chaque position cible valide. La loss du batch agrège ces pertes selon la réduction choisie et le masque : les positions de padding ou explicitement ignorées ne doivent pas contribuer à la moyenne.
 
 ## De la perte locale à la loss du batch
@@ -79,16 +75,16 @@ $$
 \sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
 $$
 
-La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
-
 ### Calcul sur trois unités observées
 
 Pour la continuation « Vous savez , », les probabilités conditionnelles illustratives sont successivement $0{,}6$, $0{,}5$ et $0{,}8$. Pour ce calcul simplifié, les unités affichées sont traitées comme des tokens ; il ne s'agit pas d'une segmentation mesurée avec un tokenizer particulier. Les pertes locales sont donc :
 
 $$
-\ell_1=-\ln(0{,}6)\approx0{,}511,\quad
-\ell_2=-\ln(0{,}5)\approx0{,}693,\quad
+\begin{gathered}
+\ell_1=-\ln(0{,}6)\approx0{,}511,\\
+\ell_2=-\ln(0{,}5)\approx0{,}693,\\
 \ell_3=-\ln(0{,}8)\approx0{,}223.
+\end{gathered}
 $$
 
 Sans position ignorée, la moyenne par token vaut :
@@ -98,6 +94,10 @@ $$
 $$
 
 La somme, environ $1{,}427$ nats, est la NLL de la séquence calculée dans [Vraisemblance](vraisemblance.qmd). La moyenne par token est cette somme divisée par trois ; ne pas confondre les deux conventions. Ces nombres illustrent le calcul sur une continuation de référence et ne prétendent pas mesurer un modèle réel.
+
+::: {.callout-note collapse="true" title="Autres réductions et pondération"}
+La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
+:::
 
 ## Masquage et cibles décalées
 
@@ -154,6 +154,8 @@ La [page d’exercices](exercises/loss.qmd) propose un cas corrigé pour [compar
 
 
 ### Pour approfondir
+
+**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) : documente la perte appliquée aux logits non normalisés, les cibles ignorées, les poids de classes et les modes de réduction. Ces conventions doivent être consignées pour comparer des pertes rapportées.
 
