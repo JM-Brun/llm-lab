@@ -120,9 +120,9 @@ I(X;Y)=H(X)-H(X\mid Y)
 =\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
 $$
 
-It measures how much observing $Y$ reduces uncertainty about $X$. Attention weights, by contrast, are softmax-normalized compatibility coefficients over accessible positions; they are used to aggregate the value vectors $V$. A row of attention weights is therefore neither a joint distribution over $(X,Y)$ nor an automatic estimator of $I(X;Y)$.
+It measures how much observing $Y$ reduces uncertainty about $X$. Attention weights, by contrast, are softmax-normalized compatibility coefficients over accessible positions; they depend on the input, queries, keys, and mask, and are used to aggregate the value vectors $V$. They do not directly measure, in bits, how much information one token provides about another. A row of attention weights is therefore neither a joint distribution over $(X,Y)$ nor an automatic estimator of $I(X;Y)$.
 
-The analogy can motivate a useful question — which positions contribute to a contextualized representation? — but it is not a mathematical equivalence. A high attention weight does not quantify “how much information” a token provides, nor does it establish statistical dependence or causal importance.
+The analogy can motivate a useful question — which positions contribute to a contextualized representation? — but it is not a mathematical equivalence. A high attention weight does not quantify “how much information” a token provides, nor does it establish statistical dependence or causal importance. An attention map alone does not establish a causal or semantic explanation.
 
 ## Connections to other concepts
 
@@ -132,32 +132,6 @@ The analogy can motivate a useful question — which positions contribute to a c
 - Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
 - The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
 
-
-
-## FlashAttention in pictures (optional deepening)
-
-These diagrams are **original pedagogical reconstructions** based on the FlashAttention paper and follow-up work; they do not reproduce figures from the newsletter.
-
-### 1. Move tiles instead of materializing the full matrix
-
-<figure>
-  <img src="../images/flashattention/io-aware-tiling.svg" alt="Q, K and V tiles are loaded from high-bandwidth memory into on-chip SRAM; tiled computation updates compact state and writes the result without materializing the full matrix in HBM." />
-  <figcaption>The central gain is fewer HBM↔SRAM transfers and fewer intermediates materialized in global memory. The score matrix remains conceptually dense; it simply is not stored in full in HBM.</figcaption>
-</figure>
-
-### 2. Merge online-softmax statistics
-
-<figure>
-  <img src="../images/flashattention/online-softmax.svg" alt="A running state (maximum, exponential sum, weighted sum) is merged with a new tile's statistics after rescaling to the new maximum." />
-  <figcaption>Rescaling by the new maximum makes it possible to merge partial statistics stably. At the end, the weighted sum is divided by the normalizer.</figcaption>
-</figure>
-
-### 3. Do not confuse IO optimization with sparsity
-
-<figure>
-  <img src="../images/flashattention/dense-vs-sparse.svg" alt="On the left, all query-key positions are allowed in a dense matrix; on the right, only a band and selected blocks are allowed in a sparse example." />
-  <figcaption>FlashAttention preserves the connectivity of exact dense attention (up to floating-point effects). A sparse method changes the connectivity pattern and therefore the mathematical computation.</figcaption>
-</figure>
 
 
 {{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
@@ -192,17 +166,33 @@ This page belongs to the conceptual **Theory / Understand** path: it explains th
 
 The mathematical definition of attention does not prescribe how a GPU executes it. [FlashAttention](https://arxiv.org/abs/2205.14135) preserves exact dense attention while processing blocks and reducing transfers between GPU memory and fast on-chip memory. It should not be confused with sparse attention, which changes the allowed positions. For the mechanism, trade-offs and measurement caveats, see [the FlashAttention source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/flashattention-io-aware-2026-11.md), followed by the [PyTorch SDPA documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) and the [reproducible benchmark protocol](https://github.com/JM-Brun/llm-lab/blob/main/docs/experiments/flashattention-benchmark-protocol.md). This hardware optimization is an optional deepening, not an extra stage in the conceptual route.
 
+#### FlashAttention in pictures (optional deepening)
+
+These diagrams are **original pedagogical reconstructions** based on the FlashAttention paper and follow-up work; they do not reproduce figures from the newsletter.
+
+##### 1. Move tiles instead of materializing the full matrix
+
+<figure>
+  <img src="../images/flashattention/io-aware-tiling.svg" alt="Q, K and V tiles are loaded from high-bandwidth memory into on-chip SRAM; tiled computation updates compact state and writes the result without materializing the full matrix in HBM." />
+  <figcaption>The central gain is fewer HBM↔SRAM transfers and fewer intermediates materialized in global memory. The score matrix remains conceptually dense; it simply is not stored in full in HBM.</figcaption>
+</figure>
+
+##### 2. Merge online-softmax statistics
+
+<figure>
+  <img src="../images/flashattention/online-softmax.svg" alt="A running state (maximum, exponential sum, weighted sum) is merged with a new tile's statistics after rescaling to the new maximum." />
+  <figcaption>Rescaling by the new maximum makes it possible to merge partial statistics stably. At the end, the weighted sum is divided by the normalizer.</figcaption>
+</figure>
+
+##### 3. Do not confuse IO optimization with sparsity
+
+<figure>
+  <img src="../images/flashattention/dense-vs-sparse.svg" alt="On the left, all query-key positions are allowed in a dense matrix; on the right, only a band and selected blocks are allowed in a sparse example." />
+  <figcaption>FlashAttention preserves the connectivity of exact dense attention (up to floating-point effects). A sparse method changes the connectivity pattern and therefore the mathematical computation.</figcaption>
+</figure>
 
 :::
 
 </details>
 
 ::::
-
-The analogy between attention and statistical dependency can motivate a question, but **an attention weight is not mutual information**. An attention map alone also does not establish a causal or semantic explanation.
-Attention weights do not compute this quantity. They are input-dependent normalized coefficients obtained from queries, keys and the mask; they weight the aggregation of value vectors. They therefore do not directly measure, in bits, how much information one token provides about another.
-\[
-I(X;Y)=H(X)-H(X\mid Y).
-\]
-Mutual information between two random variables is defined from their joint distribution:
-## Attention and mutual information are different quantities
