@@ -101,6 +101,8 @@ Les deux positions occupées par $A$ reçoivent ensemble $3/4$ du poids de cette
 
 </details>
 
+Pour suivre le rôle du masque et du décalage des cibles, [reprenez la deuxième position dans le cas des trois suites](contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 {{< include ../../includes/generated-exercise-review-fr-logits-exercises-ex-attention-vocabulary-softmax.qmd >}}
 
 ::: {.language-switch}

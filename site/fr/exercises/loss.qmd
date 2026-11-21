@@ -106,6 +106,8 @@ Additionnez séparément les NLL et les nombres de cibles valides, puis divisez.
 
 </details>
 
+[Revenir à l’étape Entraînement dans le plan de révision](../review-path.qmd#training).
+
 ::: {.language-switch}
 **Langue :** [Français](loss.qmd) · [English](../../en/exercises/loss.qmd)
 :::

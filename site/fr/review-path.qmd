@@ -27,3 +27,5 @@ Choisissez une étape pour retrouver les idées à maîtriser et les réviser av
 [Parcours guidé et ressources facultatives](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
 {{< include ../includes/generated-lesson-contracts-fr.qmd >}}
+
+[Relier les étapes dans l’exercice de fin de parcours](training-loop.qmd#end-to-end-transfer).

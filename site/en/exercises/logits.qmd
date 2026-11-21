@@ -101,6 +101,8 @@ Together the two positions containing $A$ receive $3/4$ of the weight in this at
 
 </details>
 
+To trace the role of masking and shifted targets, [return to the second position in the three-sequence exercise](contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 {{< include ../../includes/generated-exercise-review-en-logits-exercises-ex-attention-vocabulary-softmax.qmd >}}
 
 ::: {.language-switch}
