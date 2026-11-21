@@ -132,7 +132,8 @@ code { font-size: .91em; }
   .quarto-title h1.title { font-size: 2rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  /* A positive duration makes Mermaid measure nodes while positions are changing. */
+  *, *::before, *::after { transition-duration: 0s !important; scroll-behavior: auto !important; }
 }
 
 /* Native disclosure controls keep answer keys collapsed until requested. */
@@ -2062,6 +2063,14 @@ mjx-container[jax="CHTML"] {
   mjx-container[jax="CHTML"][display="true"] {
     font-size: 92% !important;
   }
+}
+
+/* MathJax positions its inline help absolutely. Keep it next to the equation
+   so opening the explorer cannot position the icon relative to the page. */
+mjx-container.mjx-explorer-active:not([display="true"]) > mjx-help {
+  position: static;
+  margin-inline-start: .2em;
+  vertical-align: .35em;
 }
 
 /* Pandoc wraps display math in an inline span; give that wrapper proper block
