@@ -60,12 +60,17 @@ Les preuves restent graduées (schéma, dérivation, test, expérience), conform
 | 20 contrats de leçons avec fiche `revision-*` publiée | conforme (20 fiches présentes dans le sitemap) |
 | 11 frontières avec exercice de transfert FR/EN | conforme |
 | Signatures composables (tableau 1.2) | conforme |
+| Cohérence des décomptes entre documents gouvernants | deux écarts : décompte des usages (C1) et décompte des étapes dans l'index IA (C3) |
 
 ## 3. Constats
 
 ### C1 — La topologie canonique des modules omet le module `context-use` [#1477](https://github.com/JM-Brun/llm-lab/issues/1477)
 
 Dans `docs/learning-path.md` : la section route guidée parle de *four sibling uses*, la section topologie canonique de *three sibling operational uses*, et ni l'arbre hiérarchique ni le tableau des modules ne contiennent de module `context-use`. La projection lecteur (étape `context-use` de la route guidée, § 7 de l'ordre conceptuel) décrit donc un module que le contrat canonique n'enregistre pas. Proposition : ajouter le module (sibling de `inference`, phase « input ») et réconcilier le décompte. Impact documentaire seulement.
+
+### C3 — L'index IA décrit une route à « eight canonical stages » [#1479](https://github.com/JM-Brun/llm-lab/issues/1479)
+
+La ligne « Theory / Understand route » de l'inventaire système de `docs/information-architecture.md` (contrat IA, 2026-11-04) déclare « eight canonical stages », alors que le registre en compte neuf et que la carte affiche « trois questions, neuf étapes ». L'étape `context-use` est arrivée après la rédaction du contrat sans mise à jour de l'index. Proposition : mettre à jour la ligne de l'inventaire et vérifier l'absence d'autres occurrences de « eight stages ». Cette divergence appuie le constat C1 : `context-use` s'est ajouté à la projection sans être enregistré dans le contrat canonique ni dans l'index.
 
 ### C2 — Deux décomptes de mouvements dans la couche d'orientation [#1478](https://github.com/JM-Brun/llm-lab/issues/1478)
 
@@ -85,4 +90,5 @@ Le parcours Build, `data/concepts.yml`, le graphe computationnel et les pages Qu
 |---|---|---|
 | C1 | [#1477](https://github.com/JM-Brun/llm-lab/issues/1477) | ajout du module `context-use` + réconciliation du décompte dans `docs/learning-path.md` |
 | C2 | [#1478](https://github.com/JM-Brun/llm-lab/issues/1478) | trancher 5 ou 6 mouvements, puis mettre au niveau les deux couches FR/EN |
+| C3 | [#1479](https://github.com/JM-Brun/llm-lab/issues/1479) | mettre à jour « eight canonical stages » en « nine » dans `docs/information-architecture.md` |
 | O1 | aucun | consigné, aucune action |
