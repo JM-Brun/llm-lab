@@ -121,6 +121,8 @@ La documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/st
 
 
 
+Pour relier l’axe des positions à l’axe du vocabulaire, [comparez deux cibles observées sous un même préfixe](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Identifiez la ligne de logits commune, puis la colonne utilisée dans chaque cas.
+
 {{< include ../includes/generated-suggested-route-fr-logits.qmd >}}
 
 ::: {.language-switch}

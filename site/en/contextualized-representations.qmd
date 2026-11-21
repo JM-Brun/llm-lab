@@ -151,6 +151,8 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 
 
 
+[Compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Predict which states can diverge before examining what a block computes.
+
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 
 ::: {.language-switch}

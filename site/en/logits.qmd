@@ -121,6 +121,8 @@ The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generate
 
 
 
+To connect the position axis to the vocabulary axis, [compare two observed targets under the same prefix](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Identify the shared logit row, then the column used in each case.
+
 {{< include ../includes/generated-suggested-route-en-logits.qmd >}}
 
 :::: {.language-switch}

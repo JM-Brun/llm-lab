@@ -37,6 +37,14 @@ Le calcul commun reste lisible lorsque chaque leçon transmet un objet identifia
 | [Gradients](../../site/fr/gradients.qmd) | Propage une sensibilité vers les paramètres et l’utilise pour un pas simple. | La chaîne perte–logits–paramètres sépare dérivée et règle de mise à jour. |
 | [Boucle d’entraînement](../../site/fr/training-loop.qmd) | Organise les opérations d’une itération répétée et distingue optimisation et suivi de validation. | Les courbes et la validation sur données réservées concluent le parcours. |
 
+## Suivi du parcours au niveau d’une position
+
+Le cas `[A, X, U]` / `[B, X, U]` / `[A, X, V]` est conservé sur la [page d’exercices sur les états contextualisés](../../site/fr/exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Il sert désormais de liaison entre les états, le masque causal et les logits. Dans le GPT causal, changer la troisième position peut changer la cible observée à la deuxième position. Le préfixe accessible à cette position, son état caché et sa ligne de logits restent les mêmes dans ce cas. Le corrigé poursuit le calcul jusqu’à la pénalité locale en lisant deux colonnes de la même distribution.
+
+La [leçon Q/K/V](../../site/fr/queries-keys-values.qmd#pourquoi-trois-projections-à-partir-de-la-même-entrée) distingue l’entrée du bloc, conservée sur le chemin résiduel, de l’entrée normalisée des projections dans le GPT pré-LN de référence. La [leçon Transformer](../../site/fr/transformer.qmd) présente l’ajout des plongements de position comme le choix de ce GPT et indique où RoPE intervient.
+
+Le prochain point à observer chez un lecteur est sa capacité à identifier la ligne de logits et la cible sans reformuler la question à sa place. Ce point complète le [pilote auprès d’un apprenant](../learner-validation-pilot.md).
+
 ## Critère pour les prochaines révisions
 
 L’objectif visible de chaque leçon et la vue du plan proviennent du même champ `purpose`. Pour modifier le fond, partir d’un écart mesurable entre cet objectif, l’exemple travaillé et le rappel dans la fiche. Pour changer l’ordre, contrôler quel acquis est effectivement utilisé, indépendamment de la page proposée ensuite. Les contrôles de génération vérifient les références et l’ordre des dépendances déclarées. La pertinence de ces dépendances et le transfert à un exemple inédit restent à observer auprès de lecteurs.

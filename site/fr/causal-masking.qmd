@@ -143,6 +143,8 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 
 
 
+[Reprenez l’exemple d’un ID identique en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Une modification passée peut atteindre l’état courant. Une modification future peut changer la cible observée à cette position.
+
 {{< include ../includes/generated-suggested-route-fr-causal-masking.qmd >}}
 
 ::: {.language-switch}
