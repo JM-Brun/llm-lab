@@ -283,7 +283,7 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 
 1. Quelle opération mélange l'information entre positions, et laquelle transforme chaque position indépendamment ?
 2. Pourquoi une connexion résiduelle ne remplace-t-elle pas la transformation de la sous-couche ?
-3. Quel problème la normalisation prévient-elle dans une pile de blocs profonde ?
+3. Quel rôle la normalisation joue-t-elle dans une pile de blocs profonde ?
 4. Dans le MLP d'un bloc, quelles dimensions traverse une représentation, dans quel ordre ?
 5. Pendant la génération, quels logits servent à choisir le prochain token ?
 
@@ -292,9 +292,9 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 
 1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position avec des poids partagés.
 2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
-3. Sans normalisation, les additions successives des connexions résiduelles font croître les magnitudes des représentations : activations et gradients deviennent instables et l'entraînement d'une pile profonde échoue. La normalisation recentre et réduit les composantes du vecteur de chaque position, ce qui stabilise l'entraînement.
+3. La LayerNorm recentre et remet à l’échelle les composantes de chaque état. Elle aide à contrôler l’échelle des activations au fil des additions résiduelles et peut améliorer la propagation des gradients. L’effet sur la stabilité de l’entraînement dépend de son emplacement, de l’architecture et de l’initialisation.
 4. `d_model` vers `d_ff` (la dimension intermédiaire, souvent environ 4 × `d_model`), puis retour vers `d_model` ; l'activation non linéaire s'applique sur la représentation intermédiaire.
-5. Ceux de la dernière position uniquement : le masque causal garantit qu'ils ne dépendent que des tokens déjà connus. Pendant l'entraînement, en revanche, les logits de toutes les positions sont utilisés, chaque position étant supervisée pour prédire son token suivant.
+5. Pour un préfixe sans padding, le décodage utilise les logits de sa dernière position. Le masque causal limite leur calcul aux tokens déjà connus. Pendant l’entraînement, le modèle peut calculer les logits de toutes les positions en parallèle. La loss utilise ceux dont le token suivant est une cible valide.
 
 </details>
 :::

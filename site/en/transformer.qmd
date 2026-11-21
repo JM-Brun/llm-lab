@@ -184,7 +184,7 @@ Each attention sublayer is in fact **multi-head**: several attentions run in par
 
 A Transformer can compute representations for many positions of a training sequence in parallel: the input tokens are available, and the causal mask prevents each position from seeing the future. This removes the position-by-position recurrent dependency found in RNNs.
 
-- **Training:** `t₁ t₂ t₃ t₄` → a single pass; all positions are computed in parallel, and the causal mask stops each one from seeing the next.
+- **Training:** `t₁ t₂ t₃ t₄` → one pass computes all positions in parallel. The causal mask prevents each position from seeing any later token.
 - **Generation:** `t₁` → `t₂` → `t₃` → … one position per step; each token depends on the tokens already generated.
 
 **It does not make GPT generation fully parallel**: when producing a response, the next token depends on tokens already generated, so decoding steps remain autoregressive. The key-value cache (*KV cache*) avoids recomputing some past keys and values, but it does not remove this sequential dependency. See [the generation loop](generation.qmd) for the distinction between *prefill* and *decode*.
@@ -282,7 +282,7 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 
 1. Which operation mixes information across positions, and which transforms each position independently?
 2. Why does a residual connection not replace the sublayer's transformation?
-3. What problem does normalization prevent in a deep stack of blocks?
+3. What role does normalization play in a deep stack of blocks?
 4. Which dimensions does a representation traverse in a block's MLP, and in what order?
 5. During generation, which logits are used to choose the next token?
 
@@ -291,9 +291,9 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 
 1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
-3. Without normalization, the successive additions of the residual connections make the magnitudes of the representations grow: activations and gradients become unstable, and training a deep stack fails. Normalization re-centers and rescales the components of each position's vector, which stabilizes training.
+3. LayerNorm centers and rescales the components of each state. It helps control activation scale across residual additions and can improve gradient flow. Its effect on training stability depends on its placement, the architecture, and initialization.
 4. `d_model` to `d_ff` (the intermediate dimension, often about 4 × `d_model`), then back to `d_model`; the nonlinear activation applies to the intermediate representation.
-5. Only those of the last position: the causal mask guarantees they depend only on tokens already known. During training, by contrast, the logits of every position are used, each position being supervised to predict its next token.
+5. For an unpadded prefix, decoding uses the logits at its last position. The causal mask limits their computation to tokens already known. During training, the model can compute logits at all positions in parallel. The loss uses those whose next token is a valid target.
 
 </details>
 :::
