@@ -51,31 +51,6 @@ Les probabilités présentées ci-dessous sont fictives et ne prétendent pas re
 **Première lecture :** la section [« La boucle sur un exemple »](#la-boucle-sur-un-exemple) suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
 :::
 
-<div class="pipeline-stepper" role="group" aria-label="Boucle de génération autorégressive">
-  <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Prefill : traitement du prompt</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="probabilites.qmd">Distribution du prochain token</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Sélection et ajout au contexte</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">Decode incrémental</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Nouvelle distribution</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Arrêt : EOS ou limite</span>
-  <span class="meta-flow__loop" aria-label="La sélection et le decode se répètent tant que le critère d’arrêt n’est pas atteint">↺ Sélectionner, ajouter au contexte et recommencer le decode</span>
-</div>
-
-<figure id="fig-generation-prefill-decode">
-  <picture>
-    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-fr-mobile.svg">
-    <img src="../images/generation-prefill-decode-fr.svg" alt="Chronologie de génération : le prompt connu est traité ensemble pendant le prefill sous masque causal ; la dernière position fournit la première distribution. Le decode incrémental sélectionne et ajoute ensuite un token à la fois, recalcule la distribution suivante et recommence jusqu’à EOS, une limite de longueur ou une règle applicative. Le cache KV facultatif réutilise les clés et valeurs précédentes ; les paramètres restent fixes." style="width:100%;height:auto">
-  </picture>
-  <figcaption>Le prefill traite le prompt connu ; le decode incrémental l’allonge avec un token sélectionné à chaque étape. Le cache KV est une optimisation facultative, pas une condition de validité de la génération. Les probabilités de l’exemple sont illustratives.</figcaption>
-</figure>
-
 ## La boucle sur un exemple {#la-boucle-sur-un-exemple}
 
 Suivons trois tours de boucle. Les probabilités sont fictives, comme dans le panorama, et la règle de décodage est la plus simple : prendre le token le plus probable.
@@ -199,6 +174,31 @@ Un système d'inférence ne traite pas le prompt comme il traite les tokens qu'i
 Le prefill ressemble au *teacher forcing* de l'entraînement, puisque dans les deux cas le modèle lit un texte qu'il n'a pas produit. La différence tient à la suite : en génération, le contexte s'allonge avec les tokens choisis par la règle de décodage ; en teacher forcing, il s'allonge avec les tokens du texte de référence, quoi que le modèle ait prédit ([exemples d'entraînement](training-examples.qmd)).
 
 Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la passe avant à partir du contexte courant.
+
+<div class="pipeline-stepper" role="group" aria-label="Boucle de génération autorégressive">
+  <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Prefill : traitement du prompt</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="probabilites.qmd">Distribution du prochain token</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Sélection et ajout au contexte</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active">Decode incrémental</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Nouvelle distribution</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Arrêt : EOS ou limite</span>
+  <span class="meta-flow__loop" aria-label="La sélection et le decode se répètent tant que le critère d’arrêt n’est pas atteint">↺ Sélectionner, ajouter au contexte et recommencer le decode</span>
+</div>
+
+<figure id="fig-generation-prefill-decode">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-fr-mobile.svg">
+    <img src="../images/generation-prefill-decode-fr.svg" alt="Chronologie de génération : le prompt connu est traité ensemble pendant le prefill sous masque causal ; la dernière position fournit la première distribution. Le decode incrémental sélectionne et ajoute ensuite un token à la fois, recalcule la distribution suivante et recommence jusqu’à EOS, une limite de longueur ou une règle applicative. Le cache KV facultatif réutilise les clés et valeurs précédentes ; les paramètres restent fixes." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le prefill traite le prompt connu ; le decode incrémental l’allonge avec un token sélectionné à chaque étape. Le cache KV est une optimisation facultative, pas une condition de validité de la génération. Les probabilités de l’exemple sont illustratives.</figcaption>
+</figure>
 
 ::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true"}
 

@@ -83,8 +83,9 @@ Huang et al. (COLM 2024) report, across 31 base models and 12 benchmarks, a Pear
 ## References
 
 - Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361).
-- Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556).
+- Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556), also published in the [NeurIPS proceedings](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html).
 - Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701).
+- Zhao et al. (2023), [*A Survey of Large Language Models*, v1](https://arxiv.org/abs/2303.18223v1). Historical overview of how the term LLM was used and of four areas: pretraining, adaptation, use, and capability evaluation.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/scaling-laws.qmd) · [English](scaling-laws.qmd)

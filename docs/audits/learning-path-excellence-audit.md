@@ -149,6 +149,8 @@ Ces ressources sont complémentaires. Elles servent de références pour compare
 
 **Synthèse recherchée pour LLM Lab :** combiner la force visuelle de 3Blue1Brown, le suivi des représentations de Jay Alammar, la perspective système de Stanford CS336 et la progression accessible de DeepLearning.AI. La valeur propre de LLM Lab doit venir de leur articulation, de la précision des distinctions et d'expériences contrôlées qui permettent au lecteur de vérifier ses intuitions.
 
+Le [comparatif actualisé](../source-reviews/learning-path-comparison-2026-11-05.md#which-learning-approach-serves-which-outcome) applique ces repères aux neuf étapes et aux vingt leçons actuelles. Il distingue le suivi d’un même objet, l’exemple guidé, le rappel de mémoire et le transfert. Le [pilote causal](../learner-validation-pilot.md#causal-position-and-observed-target) permet de départager une difficulté de navigation, de prérequis ou de calcul.
+
 ## 7. Grille d'examen applicable à chaque page
 
 Quatre dimensions éditoriales à intégrer naturellement — sans en faire obligatoirement quatre sections fixes :

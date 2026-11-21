@@ -301,7 +301,7 @@ Dans le schéma original, suivez deux flux :
 
 ### Parcours de lecture guidée
 
-Revenez au schéma après avoir étudié les pages liées. À chaque passage, répondez à une question plus précise :
+Revenez au schéma après les [projections Q, K, V](queries-keys-values.qmd) et le [masque causal](causal-masking.qmd). À chaque passage, répondez à une question plus précise :
 
 1. **Repérer :** où l'information entre-t-elle, quelles piles sont répétées, où se séparent les flux encodeur et décodeur, et où apparaissent les scores de sortie ?
 2. **Expliquer :** d'où viennent Q, K et V pour chaque attention ? Quelles positions le masque autorise-t-il ? Pourquoi l'attention encodeur-décodeur n'est-elle pas une troisième forme d'auto-attention ?

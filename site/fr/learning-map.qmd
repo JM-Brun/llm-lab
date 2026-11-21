@@ -63,11 +63,13 @@ Dans chaque leçon, le détail suit la forme **notions mobilisées → objet ét
 
 {{< include ../includes/generated-conceptual-route-fr.qmd >}}
 
-Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires. L’exercice d’[évaluation sur données tenues à l’écart](evaluation-experimentale.qmd) prolonge le parcours.
+Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires.
 
 [Plan du parcours et fiches de révision](review-path.qmd)
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
+
+[Résoudre l’exercice de fin de parcours](training-loop.qmd#end-to-end-transfer), puis [concevoir une évaluation sur des données tenues à l’écart](evaluation-experimentale.qmd).
 
 ::: {.guided-route-companion}
 

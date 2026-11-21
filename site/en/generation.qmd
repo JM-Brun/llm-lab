@@ -49,31 +49,6 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 **First reading:** the section [“The loop on an example”](#the-loop-on-an-example) is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
 :::
 
-<div class="pipeline-stepper" role="group" aria-label="Autoregressive generation loop">
-  <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Prefill: process the prompt</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="probabilities.qmd">Next-token distribution</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Select and append token</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">Incremental decode</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Next distribution</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Stop: EOS or limit</span>
-  <span class="meta-flow__loop" aria-label="Selection and decoding repeat until a stopping criterion is reached">↺ Select, append to context, and decode again</span>
-</div>
-
-<figure id="fig-generation-prefill-decode">
-  <picture>
-    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-en-mobile.svg">
-    <img src="../images/generation-prefill-decode-en.svg" alt="Generation timeline: the known prompt is processed together in prefill under a causal mask; the last prompt position supplies the first distribution. Incremental decode then selects and appends one token at a time, recomputes the next distribution, and repeats until EOS, a length limit or an application rule. The optional KV cache reuses prior keys and values; parameters stay fixed." style="width:100%;height:auto">
-  </picture>
-  <figcaption>Prefill processes the known prompt; incremental decode extends it one selected token at a time. The KV cache is an optional efficiency optimization, not a requirement for correct generation. The example probabilities are illustrative.</figcaption>
-</figure>
-
 ## The loop on an example {#the-loop-on-an-example}
 
 Let us follow three turns of the loop. The probabilities are made up, as in the overview, and the decoding rule is the simplest one: take the most probable token.
@@ -195,6 +170,31 @@ An inference system does not treat the prompt the way it treats the tokens it ge
 Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
 
 The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
+
+<div class="pipeline-stepper" role="group" aria-label="Autoregressive generation loop">
+  <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Prefill: process the prompt</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="probabilities.qmd">Next-token distribution</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Select and append token</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active">Incremental decode</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Next distribution</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Stop: EOS or limit</span>
+  <span class="meta-flow__loop" aria-label="Selection and decoding repeat until a stopping criterion is reached">↺ Select, append to context, and decode again</span>
+</div>
+
+<figure id="fig-generation-prefill-decode">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-en-mobile.svg">
+    <img src="../images/generation-prefill-decode-en.svg" alt="Generation timeline: the known prompt is processed together in prefill under a causal mask; the last prompt position supplies the first distribution. Incremental decode then selects and appends one token at a time, recomputes the next distribution, and repeats until EOS, a length limit or an application rule. The optional KV cache reuses prior keys and values; parameters stay fixed." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Prefill processes the known prompt; incremental decode extends it one selected token at a time. The KV cache is an optional efficiency optimization, not a requirement for correct generation. The example probabilities are illustrative.</figcaption>
+</figure>
 
 ::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true"}
 

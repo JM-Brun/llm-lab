@@ -38,7 +38,7 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
 
 :::
 
-## From logits to a categorical distribution
+## From logits to a categorical distribution {#from-logits-to-a-categorical-distribution}
 
 At a given position, the model produces a logit $z_i$ for each vocabulary token $i$. Logits are unnormalized scores: they may be positive or negative and do not sum to one.
 
@@ -78,6 +78,8 @@ p_\theta(x_t\mid x_{<t}).
 $$
 
 The same token can therefore receive different probabilities depending on the prefix. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
+
+At the same position, a softmax is applied within attention and another after the output projection. In [Two softmax operations, two axes](exercises/logits.qmd#ex-attention-vocabulary-softmax), compute what each one normalizes and test whether an attention weight can recover the next-token probability.
 
 ## Normalization, calibration, and truth
 
@@ -140,7 +142,6 @@ With finite logits, the distribution approaches uniformity as temperature rises.
 
 Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
-
 ## From the distribution to a selected token
 
 <ol class="probability-flow" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
@@ -159,20 +160,20 @@ During training, a [loss function](cross-entropy.qmd) compares the logits with t
 
 This distribution is the starting point for three uses. [Generation](generation.qmd) selects a token. [Scoring](likelihood.qmd) reads an observed token’s probability. [Training](loss.qmd) aggregates target penalties into a batch objective.
 
-At the same position, a softmax is applied within attention and another after the output projection. In [Two softmax operations, two axes](exercises/logits.qmd#ex-attention-vocabulary-softmax), compute what each one normalizes and test whether an attention weight can recover the next-token probability.
-
 {{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
 
 :::: {.language-switch}
 [Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
 ::::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Practice
 
@@ -184,6 +185,12 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - [Entropy](entropy.qmd) — spread of the predictive distribution before the next token is observed.
 - [Cross-entropy](cross-entropy.qmd) — computing the penalty at one position.
 - [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
+
+### Another example with two candidates
+
+With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
+
+![Pipeline from logits to a selected token, including the effect of temperature on a numerical example.](../images/probability-decoding-flow-en.svg){fig-alt="Logits optionally pass through temperature scaling, then softmax. Optional top-k or top-p filters may then be applied with renormalization, before selection by argmax or sampling. For z equal to (0, ln 3), probabilities change from 25/75 percent at temperature 1 to 36.6/63.4 percent at temperature 2; the ranking stays unchanged." fig-cap="The stages have distinct roles: transform scores, build a distribution, restrict candidates, then select a token." width=100%}
 
 To reduce numerical overflow, implementations usually subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$. A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) and covered by `tests/unit/test_attention.py`.
 
@@ -218,12 +225,6 @@ Temperature modulates distribution entropy without altering token ranking ($z_i 
 :::
 :::
 
-### Another example with two candidates
-
-With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
-
-![Pipeline from logits to a selected token, including the effect of temperature on a numerical example.](../images/probability-decoding-flow-en.svg){fig-alt="Logits optionally pass through temperature scaling, then softmax. Optional top-k or top-p filters may then be applied with renormalization, before selection by argmax or sampling. For z equal to (0, ln 3), probabilities change from 25/75 percent at temperature 1 to 36.6/63.4 percent at temperature 2; the ranking stays unchanged." fig-cap="The stages have distinct roles: transform scores, build a distribution, restrict candidates, then select a token." width=100%}
-
 ### Compare a different set of four logits
 
 With $z=(3.0,1.5,1.0,0.2)$, the rounded percentages are as follows.
@@ -241,5 +242,8 @@ At $\tau=5$, all four probabilities are within 10 percentage points of the unifo
 - [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) and [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
 - [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
 
-</div>
+:::
+
 </details>
+
+::::

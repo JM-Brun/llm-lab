@@ -55,7 +55,66 @@ Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis
 **Question rapide :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
 
+## Ce qui reste identique
 
+Considérons deux emplois du mot `situation` :
+
+- Dans la question : « une bonne situation, ça, scribe ? » — un poste, une profession ;
+- Dans la réponse : « de bonne ou de mauvaise situation » — les circonstances, les conditions.
+
+Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID au mot dans les deux occurrences. Elles récupèrent alors le même **vecteur de plongement initial** :
+
+$e_{\text{situation}} = E[\text{ID}_{\text{situation}}]$
+
+Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
+
+Une précision : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
+
+## Ce qui change avec la position et le contexte
+
+Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
+
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux emplois de situation, l'un au sens de poste et l'autre au sens de circonstances, sont alignés à une même position simplifiée. Sous l'hypothèse d'un ID commun, le lookup initial est identique ; les contextes diffèrent et les états cachés peuvent différer." fig-cap="Même ID et position simplifiée identique : le lookup initial est le même. Les contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
+
+Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
+
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Pour que deux occurrences du mot "situation" soient comprises, le tokenizer doit leur attribuer des IDs distincts »</summary>
+<div class="fallacy-content">
+<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « situation » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas d'interprétation contextuelle à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts confondrait segmentation des tokens et contextualisation.</p>
+</div>
+</details>
+
+### Une autre dépendance : la référence pronominale
+
+Dans « moi je ne crois pas… », `moi` et `je` désignent le même locuteur. Les deux formes n'ont pas le même ID lexical, mais leur interprétation dépend de la situation d'énonciation et du contexte du dialogue.
+
+Cet exemple illustre une relation entre deux positions du texte, en complément de l’ambiguïté lexicale décrite plus haut. Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement un référent, ni que l'attention seule réalise toute la résolution de coréférence. Pour approfondir les rôles de Q, K et V, voir le [tutoriel de Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers).
+
+## Distinguer les étapes et les représentations
+
+| Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
+|---|---|---|
+| ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
+| Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
+| État caché à la couche $\ell$ | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
+
+Deux confusions fréquentes viennent du mélange de ces étapes :
+
+- **« Le lookup comprend la phrase. »** Non. Il sélectionne une ligne apprise ; le contexte est intégré par les opérations ultérieures du réseau.
+- **« Le même token doit toujours avoir le même état caché. »** Non. Le lookup initial peut être identique alors que la position et le contexte modifient les représentations suivantes.
+
+Cela ne garantit pas non plus que le modèle représente les sens interprétés par un humain sous forme de groupes géométriques nettement séparés. La contextualisation est un mécanisme de calcul, pas la garantie d'une géométrie sémantique particulière.
+
+## Où se situe cette étape dans le modèle ?
+
+Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcul, les blocs produisent les états contextualisés à partir de leurs entrées.
+
+1. Le tokenizer transforme le texte en IDs de tokens.
+2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
+3. L'architecture introduit l'information positionnelle selon ses choix.
+4. Les couches du Transformer produisent des états cachés dépendants du contexte.
+5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Des embeddings aux représentations contextualisées selon le traitement positionnel"}
 ::: {.meta-flow__source}
@@ -80,83 +139,21 @@ Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis
 :::
 ::::
 
-
-
+::: {.callout-note collapse="true" title="Du texte aux états cachés en un schéma"}
 
 ![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
-
 Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
-
-Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcul, les blocs produisent les états contextualisés à partir de leurs entrées.
-
-## Ce qui reste identique
-
-Considérons deux emplois du mot `situation` :
-
-- Dans la question : « une bonne situation, ça, scribe ? » — un poste, une profession ;
-- Dans la réponse : « de bonne ou de mauvaise situation » — les circonstances, les conditions.
-
-Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID au mot dans les deux occurrences. Elles récupèrent alors le même **vecteur de plongement initial** :
-
-$e_{\text{situation}} = E[\text{ID}_{\text{situation}}]$
-
-Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
-
-Une précision : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
-
-## Ce qui change avec la position et le contexte
-
-Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
-
-### Une autre dépendance : la référence pronominale
-
-Dans « moi je ne crois pas… », `moi` et `je` désignent le même locuteur. Les deux formes n'ont pas le même ID lexical, mais leur interprétation dépend de la situation d'énonciation et du contexte du dialogue.
-
-Cet exemple illustre une relation entre deux positions du texte, en complément de l’ambiguïté lexicale décrite plus haut. Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement un référent, ni que l'attention seule réalise toute la résolution de coréférence. Pour approfondir les rôles de Q, K et V, voir le [tutoriel de Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers).
-
-Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
-
-<details class="spot-the-fallacy">
-<summary>Piège fréquent : « Pour que deux occurrences du mot "situation" soient comprises, le tokenizer doit leur attribuer des IDs distincts »</summary>
-<div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « situation » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas d'interprétation contextuelle à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts confondrait segmentation des tokens et contextualisation.</p>
-</div>
-</details>
-
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux emplois de situation, l'un au sens de poste et l'autre au sens de circonstances, sont alignés à une même position simplifiée. Sous l'hypothèse d'un ID commun, le lookup initial est identique ; les contextes diffèrent et les états cachés peuvent différer." fig-cap="Même ID et position simplifiée identique : le lookup initial est le même. Les contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
-
-Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
-
-## Distinguer les étapes et les représentations
-
-| Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
-|---|---|---|
-| ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
-| Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
-| État caché à la couche $\ell$ | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
-
-Deux confusions fréquentes viennent du mélange de ces étapes :
-
-- **« Le lookup comprend la phrase. »** Non. Il sélectionne une ligne apprise ; le contexte est intégré par les opérations ultérieures du réseau.
-- **« Le même token doit toujours avoir le même état caché. »** Non. Le lookup initial peut être identique alors que la position et le contexte modifient les représentations suivantes.
-
-Cela ne garantit pas non plus que le modèle représente les sens interprétés par un humain sous forme de groupes géométriques nettement séparés. La contextualisation est un mécanisme de calcul, pas la garantie d'une géométrie sémantique particulière.
-
-## Où se situe cette étape dans le modèle ?
-
-1. Le tokenizer transforme le texte en IDs de tokens.
-2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
-3. L'architecture introduit l'information positionnelle selon ses choix.
-4. Les couches du Transformer produisent des états cachés dépendants du contexte.
-5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
+:::
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
 
 
 [Comparez trois suites qui contiennent le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Prédisez quels états peuvent diverger avant d’étudier les opérations d’un bloc.
+
+Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 

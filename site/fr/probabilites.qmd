@@ -38,7 +38,7 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 
 :::
 
-## Des logits à une distribution catégorielle
+## Des logits à une distribution catégorielle {#des-logits-à-une-distribution-catégorielle}
 
 À une position donnée, le modèle produit un logit $z_i$ pour chaque token $i$ du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
 
@@ -78,6 +78,8 @@ p_\theta(x_t\mid x_{<t}).
 $$
 
 Un même token peut donc recevoir des probabilités différentes selon le préfixe. La probabilité d'une séquence entière combine ces probabilités conditionnelles position par position ; le produit et son logarithme sont traités dans la page sur la [vraisemblance](vraisemblance.qmd). Le tokenizer compte également : les probabilités portent sur les unités tokenisées, pas directement sur les mots ou les propositions sémantiques.
+
+À une même position, une softmax intervient dans l’attention et une autre après la projection de sortie. [Deux softmax, deux axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) vous fait calculer ce que chacune normalise et tester si un poids d’attention permet de retrouver la probabilité du prochain token.
 
 ## Normalisation, calibration et vérité
 
@@ -140,7 +142,6 @@ Avec des logits finis, plus la température augmente, plus la distribution se ra
 
 La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Pour $\tau=1$, les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$ ; plus généralement, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
-
 ## De la distribution au token choisi
 
 <ol class="probability-flow" aria-label="Des logits au token sélectionné" aria-describedby="probability-flow-description">
@@ -159,20 +160,20 @@ Pendant l’entraînement, une [fonction de perte](cross-entropy.qmd) confronte 
 
 Cette distribution est le point de départ de trois usages. [Générer](generation.qmd) choisit un token. [Scorer](vraisemblance.qmd) lit la probabilité d’un token observé. [Apprendre](loss.qmd) agrège les pénalités calculées sur les cibles pour construire l’objectif du lot.
 
-À une même position, une softmax intervient dans l’attention et une autre après la projection de sortie. [Deux softmax, deux axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) vous fait calculer ce que chacune normalise et tester si un poids d’attention permet de retrouver la probabilité du prochain token.
-
 {{< include ../includes/generated-suggested-route-fr-probabilites.qmd >}}
 
 ::: {.language-switch}
 [Français](probabilites.qmd) · [English](../en/probabilities.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
@@ -184,6 +185,12 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - [Entropie](entropy.qmd) — dispersion de la distribution prédictive avant l'observation du prochain token.
 - [Entropie croisée](cross-entropy.qmd) — calcul de la pénalité à une position.
 - [Exercices de fondations mathématiques](exercises-foundations.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
+
+### Autre exemple à deux candidats
+
+Avec deux logits $z=(0;\log 3)$, la softmax donne $p=(0{,}25;0{,}75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
+
+![Chaîne de transformation des logits en token sélectionné, avec l'effet de la température sur un exemple numérique.](../images/probability-decoding-flow-fr.svg){fig-alt="Les logits passent éventuellement par une division par la température, puis par softmax. Des filtres top-k ou top-p facultatifs peuvent ensuite être appliqués avec renormalisation, avant une sélection par argmax ou échantillonnage. Avec z égal à (0, ln 3), les probabilités passent de 25/75 % à température 1 à 36,6/63,4 % à température 2 ; le classement reste inchangé." fig-cap="Les étapes ont des rôles distincts : transformer les scores, construire une distribution, restreindre les candidats, puis sélectionner un token." width=100%}
 
 Pour limiter les débordements numériques, on soustrait généralement le maximum avant l'exponentiation : $e^{z_i-m}/\sum_j e^{z_j-m}$, avec $m=\max_j z_j$. Une implémentation testée de la softmax avec température est disponible dans `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) et couverte par `tests/unit/test_attention.py`.
 
@@ -218,12 +225,6 @@ La température module la sélectivité du décodage sans jamais modifier l'ordr
 :::
 :::
 
-### Autre exemple à deux candidats
-
-Avec deux logits $z=(0;\log 3)$, la softmax donne $p=(0{,}25;0{,}75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
-
-![Chaîne de transformation des logits en token sélectionné, avec l'effet de la température sur un exemple numérique.](../images/probability-decoding-flow-fr.svg){fig-alt="Les logits passent éventuellement par une division par la température, puis par softmax. Des filtres top-k ou top-p facultatifs peuvent ensuite être appliqués avec renormalisation, avant une sélection par argmax ou échantillonnage. Avec z égal à (0, ln 3), les probabilités passent de 25/75 % à température 1 à 36,6/63,4 % à température 2 ; le classement reste inchangé." fig-cap="Les étapes ont des rôles distincts : transformer les scores, construire une distribution, restreindre les candidats, puis sélectionner un token." width=100%}
-
 ### Comparer avec un autre jeu de quatre logits
 
 Avec $z=(3{,}0;1{,}5;1{,}0;0{,}2)$, on obtient les valeurs suivantes, arrondies en pourcentage.
@@ -241,5 +242,8 @@ Avec $z=(3{,}0;1{,}5;1{,}0;0{,}2)$, on obtient les valeurs suivantes, arrondies 
 - [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) et [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
 - [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
 
-</div>
+:::
+
 </details>
+
+::::

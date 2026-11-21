@@ -47,22 +47,19 @@ Injecter tout le dépôt et tout l'historique sans sélection est rarement utile
 
 ## Trois niveaux de contexte à ne pas confondre
 
-| Niveau | Ce qu'il désigne |
+| Niveau | Ce qui est disponible |
 |---|---|
-| **Contexte du système** | Instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. |
-| **Séquence d'entrée et fenêtre de contexte** | Séquence de tokens (ou éléments multimodaux structurés) traitée par le modèle. La fenêtre est une limite de capacité ; en génération autorégressive, les tokens produits s'ajoutent à la séquence. |
-| **Contexte accessible à une position** | Pour un décodeur causal, positions consultables selon le masque causal et la fenêtre disponible : à la position $t$, les positions futures sont masquées. |
+| **Contexte du système** | Pour un appel donné, l’application sélectionne les instructions, messages, exemples, documents récupérés, résultats d’outils et éléments de mémoire à fournir. Un historique conservé ou un contenu mémorisé n’entre dans cet appel que si le système le sélectionne et le transmet. |
+| **Séquence d’entrée et fenêtre de contexte** | Le modèle traite la séquence transmise, qui peut comprendre des éléments multimodaux structurés. La longueur du contexte actif compte les tokens effectivement présents. La fenêtre de contexte fixe le budget maximal en tokens, selon les conventions de comptage de l’entrée et de la sortie propres au modèle et à l’API. En génération autorégressive, les tokens produits s’ajoutent à la séquence. |
+| **Contexte accessible à une position** | L’architecture, le masque et la fenêtre disponible déterminent les positions qu’une requête peut consulter. Dans un décodeur causal, l’attention à la position $t$ exclut les positions futures, même si leurs tokens figurent dans la séquence d’entrée. |
 
-Un historique conservé par l'application n'est pas nécessairement transmis. Une mémoire persistante ne devient contexte du modèle que si le système en sélectionne le contenu. Une représentation contextualisée est le **résultat d'un calcul** conditionné par les informations accessibles, pas un autre nom pour le contexte.
+Les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés vectoriels que le Transformer calcule à partir des tokens accessibles à chaque position. Ces états constituent un résultat du calcul sur la séquence, distinct des informations transmises ou stockées par le système.
 
-| Notion | Ce qu'elle désigne | Confusion à éviter |
-|---|---|---|
-| **Fenêtre de contexte** | Budget maximal de tokens utilisable pour un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | La longueur réellement transmise |
-| **Longueur du contexte actif** | Nombre de tokens effectivement présents dans le contexte de cet appel | La capacité maximale |
-| **Contexte accessible par l'attention** | Positions qu'une position donnée peut consulter selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
-| **Représentation contextualisée** | État caché/vectoriel calculé par les couches du Transformer à partir des tokens accessibles | Que ce soit le contexte actif ou un historique stocké |
+## Pourquoi la fenêtre de contexte ne suffit pas
 
-Le contexte actif désigne les informations d'entrée ; les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés calculés par le Transformer à partir de ces informations.
+La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
+
+Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
 
 ## Définition et opérations principales
 
@@ -79,11 +76,7 @@ Le context engineering ne désigne pas une fonctionnalité particulière d'un mo
 
 Ces opérations forment une boucle de conception et d'observation, pas une recette unique. Leur importance dépend de la tâche et de l'architecture.
 
-## Pourquoi la fenêtre de contexte ne suffit pas
-
-La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
-
-Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
+L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
 
 ## Limites et points de vigilance
 
@@ -120,9 +113,11 @@ Pour passer au scoring, partez d’un même préfixe : la génération choisit `
 **Langue :** [Français](context-engineering.qmd) · [English](../en/context-engineering.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary><span class="learning-resources__title">Ressources complémentaires</span></summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Distinguer les notions voisines
 
@@ -136,8 +131,6 @@ Pour passer au scoring, partez d’un même préfixe : la génération choisit `
 | **Tool use (utilisation d'outils)** | Capacité du système à demander une action externe ; les descriptions d'outils et leurs résultats peuvent entrer dans le contexte. Le context engineering décide comment les présenter et les contrôler. |
 | **Ingénierie agentique** | Conception de la boucle de décision, d'action, d'observation et de contrôle d'un agent ; elle mobilise le context engineering sans s'y réduire. |
 | **Fine-tuning** | Adaptation qui modifie les paramètres du modèle par optimisation, au lieu de seulement modifier les informations fournies à l'inférence. |
-
-L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
 
 ### RAG et mémoire : alimenter le contexte sans le confondre
 
@@ -153,5 +146,8 @@ L'**ICL**, enfin, désigne ce que le modèle fait avec les informations et démo
 - Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
 - OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
 
-</div>
+:::
+
 </details>
+
+::::

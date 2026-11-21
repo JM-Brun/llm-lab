@@ -58,12 +58,6 @@ Le périmètre du terme varie selon les travaux : certains réservent *in-contex
 
 Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
 
-::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
-Cela décrit le calcul observable, mais ne constitue pas à lui seul une explication complète de l'ICL. Plusieurs hypothèses sont étudiées : reconnaissance de motifs, inférence sur la règle qui a généré les exemples, apprentissage implicite d'algorithmes pendant le préentraînement, et circuits d'attention qui facilitent la copie ou l'association entre exemples.
-
-Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
-:::
-
 ## Pourquoi ce n'est pas du fine-tuning
 
 | Opération | Où se trouve l'information d'adaptation ? | Les paramètres changent-ils ? |
@@ -110,6 +104,12 @@ Mais ses résultats dépendent fortement :
 
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
 
+::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
+Le calcul conditionné par les exemples décrit le comportement observable. Les recherches sur les mécanismes de cette adaptation examinent la reconnaissance de motifs, l'inférence sur la règle qui a généré les exemples, l'apprentissage implicite d'algorithmes pendant le préentraînement et les circuits d'attention qui facilitent la copie ou l'association entre exemples.
+
+Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+:::
+
 ::: {.callout-note collapse="true" title="Approfondissement : étudier l'ICL expérimentalement"}
 
 Pour distinguer apprentissage de la règle et simple imitation :
@@ -142,12 +142,14 @@ L'ICL décrit le comportement du modèle face aux informations du prompt. L'**in
 **Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
@@ -160,5 +162,8 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
 - Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
 
-</div>
+:::
+
 </details>
+
+::::

@@ -33,6 +33,21 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [The Transformer in a GPT: architecture and computation](transformer.qmd), showed that self-attention is a sublayer within the repeated block. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
+## The problem: using context
+
+In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
+
+That is what self-attention provides. For each position, the mechanism builds two things: **where to look** in the context and **what information to bring back**. Q, K, and V provide the representations needed for these two operations.
+
+For the current token in “What have the Romans ever done for us?”, Q is compared with the K vectors at accessible positions; the resulting weights are then used to aggregate their V vectors. This describes the computation, not conscious search or human-like interpretation of the sentence.
+
+This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). It motivates the need for context; it does not prove that one isolated head resolves coreference or describe the attention weights of a trained model.
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Verified concept</span>
+  <span class="epistemic-badge badge-status">Architecture: Transformer</span>
+</div>
+
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Map of parallel Q, K and V projections and their recombination"}
 ::: {.meta-flow__source}
 <strong>Shared input</strong><span>Input representations at each position</span>
@@ -62,22 +77,6 @@ Q and K determine the weights; V provides the content to mix
 :::
 ::::
 
-
-## The problem: using context
-
-In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
-
-That is what self-attention provides. For each position, the mechanism builds two things: **where to look** in the context and **what information to bring back**. Q, K, and V provide the representations needed for these two operations.
-
-For the current token in “What have the Romans ever done for us?”, Q is compared with the K vectors at accessible positions; the resulting weights are then used to aggregate their V vectors. This describes the computation, not conscious search or human-like interpretation of the sentence.
-
-This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). It motivates the need for context; it does not prove that one isolated head resolves coreference or describe the attention weights of a trained model.
-
-<div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Verified concept</span>
-  <span class="epistemic-badge badge-status">Architecture: Transformer</span>
-</div>
-
 ## Three complementary roles
 
 The three projections are easiest to distinguish by following the flow of information:
@@ -99,8 +98,6 @@ The analogy helps separate **compatibility scoring** (**Q/K**) from **content tr
 
 This complementary intuition is developed in [Understanding Transformers (Part 4)](https://joseparreogarcia.substack.com/p/understanding-transformers-part-4). It prepares the reader for the equations below; it does not replace them.
 :::
-
-To follow this distinction through the actual operations, continue to [scaled dot-product attention](scaled-dot-product-attention.qmd), then to the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd) to trace both paths in code.
 
 <picture>
   <source media="(max-width: 600px)" srcset="../images/queries-keys-values-en-mobile.svg">
@@ -143,11 +140,20 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 [Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-## Mathematical and architectural deep dive
+::: {.self-check}
+## Check your understanding
 
-Per-position equations, compatibility geometry, gradient paths, and multi-head variants become useful once the mental model is established. They are collected in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd), rather than scattered across several collapsed callouts on this page.
+[Dedicated exercises on Q/K/V and attention](exercises/queries-keys-values.qmd).
 
-To compare architectures that change the number of K/V heads, compress the cache, or restrict attended positions, see [Attention variants](transformer-block-walkthrough.qmd#attention-variants) in the guided Transformer-block walkthrough. It explicitly distinguishes this comparison from the MHA code actually implemented.
+Which projections determine attention weights, and which one supplies the aggregated content? What happens if V changes while Q and K remain fixed?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Q and K determine the scores and therefore the attention weights. V supplies the aggregated vectors. If only V changes, the weights remain the same, but the aggregated result can change.
+
+</details>
+:::
 
 ## Takeaway and next steps {#revision-summary}
 
@@ -170,12 +176,14 @@ The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Practice
 
@@ -183,23 +191,16 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 The [next attention exercises](exercises-attention.qmd#ex-attention-predict-projection-change) cover the effects of projection changes, how projections are learned, and transfer to cross-attention and GQA/MQA.
 
+### Mathematical and architectural deep dive
 
+Per-position equations, compatibility geometry, gradient paths, and multi-head variants become useful once the mental model is established. They are collected in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd), rather than scattered across several collapsed callouts on this page.
 
-::: {.self-check}
-## Check your understanding
+To compare architectures that change the number of K/V heads, compress the cache, or restrict attended positions, see [Attention variants](transformer-block-walkthrough.qmd#attention-variants) in the guided Transformer-block walkthrough. It explicitly distinguishes this comparison from the MHA code actually implemented.
 
-[Dedicated exercises on Q/K/V and attention](exercises/queries-keys-values.qmd).
+To follow this distinction through the actual operations, continue to [scaled dot-product attention](scaled-dot-product-attention.qmd), then to the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd) to trace both paths in code.
 
-Which projections determine attention weights, and which one supplies the aggregated content? What happens if V changes while Q and K remain fixed?
-
-<details>
-<summary>Show the reasoning</summary>
-
-Q and K determine the scores and therefore the attention weights. V supplies the aggregated vectors. If only V changes, the weights remain the same, but the aggregated result can change.
-
-</details>
 :::
 
-
-</div>
 </details>
+
+::::

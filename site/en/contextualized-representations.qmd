@@ -55,6 +55,63 @@ The question “What have the Romans ever done for us?” and a reply such as �
 **Quick question:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
 
+## Start with what stays the same
+
+In the question “What have the Romans ever done for us?” and in a reply such as “The Romans built roads”, the visible word `Romans` may be represented by the same token ID. Under that explicit assumption, both occurrences retrieve the same initial embedding:
+
+$e_{\text{Romans}} = E[\text{ID}_{\text{Romans}}]$
+
+The embedding lookup is a table access. It does not inspect the surrounding words or produce a sentence-specific vector. The contextualized states can nevertheless differ because each occurrence is processed with a different surrounding sequence.
+
+One qualification: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
+
+## What changes with position and context
+
+The initial lookup is not the whole network input: the architecture must also handle position, and Transformer blocks then build states that depend on accessible context. Positional mechanisms vary across models; a position vector is therefore not always added directly to the embedding.
+
+In the running example, “What have the Romans ever done for us?” is already in the context. As “They built roads between distant towns.” is generated, each new token is processed against the context available at that step, which grows throughout the loop.
+
+![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
+
+This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> A tokenizer segments text using its vocabulary and segmentation rules; it does not perform sentence-level semantic disambiguation. In this example, we explicitly assume that both occurrences of “bank” receive the same ID. The model's layers can then build different hidden states from their accessible contexts. Requiring separate IDs for each sense confuses token segmentation with contextual disambiguation.</p>
+</div>
+</details>
+
+### Another dependency: pronoun reference
+
+Now consider: *“The animal was tired because it had been running.”* Here, the pronoun `it` refers to `the animal`. This is not a case of one word having two possible senses; it illustrates a dependency between different positions in a sequence. To build a context-dependent representation for `it`, the model can use information from other tokens in its context.
+
+This example is used as a pedagogical motivation in [Nishanthan K's tutorial on Q, K, and V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). It does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution. It complements the lexical-ambiguity example (*bank*) by illustrating a relation between tokens (*it* / *the animal*).
+
+## Keep the stages and representations separate
+
+| Object | What determines it? | Is it context-dependent? |
+|---|---|---|
+| Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
+| Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
+| Hidden state at layer $\ell$ | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
+
+Two common confusions follow from collapsing these stages:
+
+- **“The embedding lookup understands the sentence.”** No. The lookup selects a learned row; context is incorporated by subsequent network operations.
+- **“The same token must have the same hidden state everywhere.”** No. The initial lookup can be shared while position and context change later representations.
+
+This also does not guarantee that the model will represent human-interpreted senses as cleanly separated clusters. Contextualization is a computational mechanism, not a guarantee of a particular semantic geometry.
+
+## Where this fits in the model
+
+Comparing these objects prepares you to read the Transformer. In the computation itself, the blocks produce contextualized states from their inputs.
+
+1. The tokenizer maps text to token IDs.
+2. The embedding table maps each ID to an initial vector.
+3. The architecture introduces positional information according to its design.
+4. Transformer layers produce context-dependent hidden states.
+5. Later layers and the output head use those states to predict the next token.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="From embeddings to contextualized representations, depending on positional handling"}
 ::: {.meta-flow__source}
@@ -79,79 +136,21 @@ The question “What have the Romans ever done for us?” and a reply such as �
 :::
 ::::
 
-
-
+::: {.callout-note collapse="true" title="From text to hidden states in one diagram"}
 
 ![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
 
 This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
-
-Comparing these objects prepares you to read the Transformer. In the computation itself, the blocks produce contextualized states from their inputs.
-
-## Start with what stays the same
-
-In the question “What have the Romans ever done for us?” and in a reply such as “The Romans built roads”, the visible word `Romans` may be represented by the same token ID. Under that explicit assumption, both occurrences retrieve the same initial embedding:
-
-$e_{\text{Romans}} = E[\text{ID}_{\text{Romans}}]$
-
-The embedding lookup is a table access. It does not inspect the surrounding words or produce a sentence-specific vector. The contextualized states can nevertheless differ because each occurrence is processed with a different surrounding sequence.
-
-One qualification: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
-
-## What changes with position and context
-
-The initial lookup is not the whole network input: the architecture must also handle position, and Transformer blocks then build states that depend on accessible context. Positional mechanisms vary across models; a position vector is therefore not always added directly to the embedding.
-
-### Another dependency: pronoun reference
-
-Now consider: *“The animal was tired because it had been running.”* Here, the pronoun `it` refers to `the animal`. This is not a case of one word having two possible senses; it illustrates a dependency between different positions in a sequence. To build a context-dependent representation for `it`, the model can use information from other tokens in its context.
-
-This example is used as a pedagogical motivation in [Nishanthan K's tutorial on Q, K, and V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). It does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution. It complements the lexical-ambiguity example (*bank*) by illustrating a relation between tokens (*it* / *the animal*).
-
-In the running example, “What have the Romans ever done for us?” is already in the context. As “They built roads between distant towns.” is generated, each new token is processed against the context available at that step, which grows throughout the loop.
-
-For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
-
-<details class="spot-the-fallacy">
-<summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
-<div class="fallacy-content">
-<p><strong>Counterexample:</strong> A tokenizer segments text using its vocabulary and segmentation rules; it does not perform sentence-level semantic disambiguation. In this example, we explicitly assume that both occurrences of “bank” receive the same ID. The model's layers can then build different hidden states from their accessible contexts. Requiring separate IDs for each sense confuses token segmentation with contextual disambiguation.</p>
-</div>
-</details>
-
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
-
-This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
-
-## Keep the stages and representations separate
-
-| Object | What determines it? | Is it context-dependent? |
-|---|---|---|
-| Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
-| Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
-| Hidden state at layer $\ell$ | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
-
-Two common confusions follow from collapsing these stages:
-
-- **“The embedding lookup understands the sentence.”** No. The lookup selects a learned row; context is incorporated by subsequent network operations.
-- **“The same token must have the same hidden state everywhere.”** No. The initial lookup can be shared while position and context change later representations.
-
-This also does not guarantee that the model will represent human-interpreted senses as cleanly separated clusters. Contextualization is a computational mechanism, not a guarantee of a particular semantic geometry.
-
-## Where this fits in the model
-
-1. The tokenizer maps text to token IDs.
-2. The embedding table maps each ID to an initial vector.
-3. The architecture introduces positional information according to its design.
-4. Transformer layers produce context-dependent hidden states.
-5. Later layers and the output head use those states to predict the next token.
+:::
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
 
 
 [Compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Predict which states can diverge before examining what a block computes.
+
+For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 

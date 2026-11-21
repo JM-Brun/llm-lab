@@ -41,6 +41,8 @@ Prefill already provides the logits used to select it. The selected token then b
 
 </details>
 
+[Trace the second step when generating or scoring an observed continuation](exercises/likelihood.qmd#ex-generation-versus-scoring).
+
 ::: {.callout-note collapse="true" title="Serving latency"}
 In serving, time to first token (TTFT) includes waiting and prefill, among other costs. Time per output token (TPOT) describes the pace after the first token. Scheduling can affect these measurements.
 :::
