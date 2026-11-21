@@ -142,6 +142,8 @@ Avec des logits finis, plus la température augmente, plus la distribution se ra
 
 La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Pour $\tau=1$, les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$ ; plus généralement, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
+À température 1, « Vous » est en tête avec 60 % et les trois autres candidats se partagent les 40 % restants. L’[entropie](entropy.qmd) résume la dispersion de l’ensemble des probabilités avant qu’un token soit choisi ou observé.
+
 ## De la distribution au token choisi
 
 <ol class="probability-flow" aria-label="Des logits au token sélectionné" aria-describedby="probability-flow-description">
@@ -182,7 +184,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ### Pour poursuivre
 
-- [Entropie](entropy.qmd) — dispersion de la distribution prédictive avant l'observation du prochain token.
 - [Entropie croisée](cross-entropy.qmd) — calcul de la pénalité à une position.
 - [Exercices de fondations mathématiques](exercises-foundations.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
 

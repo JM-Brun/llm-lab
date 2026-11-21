@@ -60,6 +60,12 @@ Sur les étapes aval, cinq fiches bilingues relient leur question de rappel aux 
 
 Pour suivre la conservation lors d’un déplacement, prendre la dernière version de `main` comme référence et relever la destination des exemples, hypothèses, figures, équations, corrigés et références propres à chaque leçon. Comparer aussi les ancres et les liens affichés en FR et EN, en ouvrant les volets qui accueillent du contenu déplacé. Une correction d’interface se vérifie en rejouant le trajet correspondant. Les résultats des pilotes apprenants restent à recueillir.
 
+### De la distribution à la génération, puis au scoring
+
+Le fil rouge reprend le trajet guidé [Probabilités](../site/fr/probabilites.qmd#running-example-next-token) → [Entropie](../site/fr/entropy.qmd) → [Génération](../site/fr/generation.qmd#la-boucle-sur-un-exemple) → [Apprentissage en contexte](../site/fr/in-context-learning.qmd) → [Ingénierie du contexte](../site/fr/context-engineering.qmd) → [Vraisemblance](../site/fr/vraisemblance.qmd). Le trajet [EN](../site/en/entropy.qmd) suit le même ordre. Le lien vers l’entropie rejoint le calcul de température. Le [cas du token choisi et de la cible observée](../site/fr/cross-entropy.qmd#chosen-token-vs-target) rejoint l’explication de la surprise. La carte exploratoire conserve le trajet direct Entropie → Vraisemblance pour étudier la surprise et le scoring. Les liens correspondants restent accessibles dans le corps et les ressources de la leçon.
+
+La génération reprend la distribution à quatre candidats, puis change le préfixe pour le deuxième tour. L’[exercice sur les deux préfixes](../site/fr/exercises/vraisemblance.qmd#ex-generation-versus-scoring) garde son tableau, ses questions et son corrigé. La leçon d’ingénierie du contexte pose la question avant de renvoyer à l’exercice, qui contient les valeurs et le résultat. Les formules, figures, ancres de section, exemples et références des leçons restent en place. Pour le pilote aval, relever quel préfixe le lecteur choisit pour chacun des deux calculs avant d’ouvrir le corrigé.
+
 L’ordre actuel sert de référence pour ces vérifications. Les sections ci-dessous conservent l’audit éditorial initial.
 
 ## 1. Ce que le parcours doit faire comprendre

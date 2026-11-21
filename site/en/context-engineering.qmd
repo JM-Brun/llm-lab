@@ -105,7 +105,7 @@ Establish a baseline, add one source or example at a time, test questions with k
 
 [Trace what carries over to the next call](exercises/context-engineering.qmd#ex-context-between-calls) or explore the [context engineering exercises](exercises/context-engineering.qmd).
 
-To move on to scoring, start with the same prefix: generation selects `B`, and the observed continuation starts with `A`. [Trace both prefixes on the second step](exercises/likelihood.qmd#ex-generation-versus-scoring) and determine which distribution each operation uses.
+Start from the same prefix. If the first generated token differs from the first observed token, which prefix gives the second distribution in each case? [Compare generation and scoring over two steps](exercises/likelihood.qmd#ex-generation-versus-scoring).
 
 {{< include ../includes/generated-suggested-route-en-context-engineering.qmd >}}
 

@@ -105,7 +105,7 @@ Le context engineering réduit certains risques mais ne garantit ni la vérité 
 
 [Suivre ce qui passe d’un appel au suivant](exercises/context-engineering.qmd#ex-context-between-calls) ou parcourir les [exercices d’ingénierie du contexte](exercises/context-engineering.qmd).
 
-Pour passer au scoring, partez d’un même préfixe : la génération choisit `B` et la continuation observée commence par `A`. [Suivez les deux préfixes au deuxième tour](exercises/vraisemblance.qmd#ex-generation-versus-scoring) et déterminez quelle distribution utiliser pour chaque opération.
+Partez du même préfixe. Si le premier token généré diffère du premier token observé, quel préfixe fournit la deuxième distribution dans chaque cas ? [Comparez génération et scoring sur deux tours](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
 
 {{< include ../includes/generated-suggested-route-fr-context-engineering.qmd >}}
 

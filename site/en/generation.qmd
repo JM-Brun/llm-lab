@@ -46,7 +46,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 - **The chosen token becomes context.** It is appended to the text, and the model recomputes a distribution for the next position.
 - **Nothing is learned along the way.** The parameters are the same at the first token and at the last.
 
-**First reading:** the section [“The loop on an example”](#the-loop-on-an-example) is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
+**Coming from the overview?** Follow [the three turns in the example](#the-loop-on-an-example) before studying the computation. After [output probabilities](probabilities.qmd), use the same trace to read the calculation in notation and distinguish prompt *prefill*, iterative *decode*, and the selection rule.
 :::
 
 ## The loop on an example {#the-loop-on-an-example}
