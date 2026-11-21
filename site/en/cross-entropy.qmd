@@ -78,6 +78,16 @@ $$
 
 Only the target probability appears explicitly in this one-hot expression. The other probabilities still matter indirectly because softmax normalizes all logits and therefore affects the target probability and its gradient. This is the loss at one target position, not yet a sequence or batch reduction.
 
+### When the selected token differs from the target {#chosen-token-vs-target}
+
+Keep the same prefix and probabilities. Greedy decoding selects “They” ($0.6$). Now imagine a **different observed continuation** that starts with “Aqueducts” ($0.2$).
+
+- **Before observing the target**, [predictive entropy](entropy.qmd) is still $1.089$ nats. The first-turn distribution is the same.
+- **To score “Aqueducts”**, the loss at this position is $-\ln(0.2)\approx 1.609$ nats. It is computed from the observed target.
+- **To train the model**, this loss can contribute to the [batch objective](loss.qmd). Backpropagation computes gradients and the [optimizer](training-loop.qmd) applies the update.
+
+After the first token, generation continues with “They” in its prefix. Scoring continues with “Aqueducts” in its prefix. [Compare the two prefixes in a two-token trace](exercises/likelihood.qmd#ex-generation-versus-scoring).
+
 ## Visual intuition: the loss measures the surprise of the observed token
 
 ![For the same target token, predicted probability 0.9 gives loss 0.105 nats, while probability 0.1 gives loss 2.303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." width=100%}
@@ -86,45 +96,9 @@ Both cases concern **the same target token**: only the probability assigned to i
 
 This figure illustrates the loss for one token with a one-hot target. It does not show the full vocabulary distribution, the averaging over valid positions, or the entire training objective.
 
-::: {.callout-note title="Extension: soft targets and KL divergence"}
-For a general target distribution $q$, cross-entropy is $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$; the one-hot case above is its special case. The full relationship with KL divergence — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, and hence the equivalence between minimizing cross-entropy and minimizing KL divergence for a fixed target — is derived in [The mathematics of language modeling](language-modeling-math.qmd).
-:::
+## Connection to the gradient
 
-## Decomposition into target entropy and KL divergence
-
-Cross-entropy connects the prediction objective directly to information theory. For a target distribution $q$ and a predicted distribution $p$ over the same vocabulary:
-
-$$
-\begin{aligned}
-H(q,p)&=-\sum_x q(x)\ln p(x)\\
-&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
-+\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
-\end{aligned}
-$$
-
-Therefore:
-
-$$
-\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$$
-
-KL divergence is non-negative (under the usual support conditions), and it is zero when $p=q$. If the target distribution $q$ and context are fixed, $H(q)$ does not depend on the model parameters. Minimizing cross-entropy with respect to $p$ is therefore equivalent to minimizing $D_{KL}(q\|p)$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
-
-### Numerical example in nats
-
-Take $q=(0.5,0.5)$ and $p=(0.75,0.25)$:
-
-- $H(q)=-(0.5\ln0.5+0.5\ln0.5)\approx0.693$ nats;
-- $H(q,p)=-(0.5\ln0.75+0.5\ln0.25)\approx0.837$ nats;
-- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0.144$ nats.
-
-Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities would be measured in bits; common training-loss implementations use natural logarithms and therefore report nats.
-
-::: {.callout-note}
-**One-hot target as a special case.** If $q$ puts all its mass on the observed token $y$, then $H(q)=0$ and $D_{KL}(q\|p)=-\ln p(y)$. Cross-entropy is therefore exactly the token NLL. This is the usual observed-token supervision case; the “matching two distributions” interpretation is most visible when the target is itself a non-degenerate distribution, for example in distillation.
-:::
-
-::::: {.callout-note collapse="true" title="Applications — from token to batch, perplexity and APIs"}
+The derivative of one-hot cross-entropy with respect to the logits is $p_i-\mathbb{1}[i=y]$. Its interpretation and role in backpropagation are developed in the [Gradients](gradients.qmd) lesson.
 
 ## Multiple positions: causal shift and masks
 
@@ -137,6 +111,8 @@ For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before 
 - **Reduction:** a sum, mean over valid tokens, and mean over sequences do not have the same scale.
 - **Weighting:** class weights, label smoothing, or auxiliary losses change the objective from the unweighted one-hot case.
 - **Comparison:** state the tokenizer, included positions, and averaging convention before comparing two values.
+
+::::: {.callout-note collapse="true" title="Implementations — NumPy, PyTorch, and numerical stability"}
 
 ::: {.callout-note collapse="true" title="NumPy implementation and tests (advanced)"}
 The [NumPy reference implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) cover a deliberately small case: logits with shape $(B,C)$, one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
@@ -261,6 +237,12 @@ assert torch.isinf(naive_loss)
 
 The infinite result is a floating-point failure of the naïve computation, not an infinite mathematical loss: for these logits, the exact loss is 2000 nats. In practice, pass logits directly to `CrossEntropyLoss` or use `log_softmax` followed by the target gather; do not compute `log(softmax(logits))` yourself.
 
+::: {.callout-note collapse="true" title="API detail (advanced)"}
+- **“PyTorch CrossEntropyLoss expects probabilities.”** For ordinary categorical classification, the API expects unnormalized logits and combines a log-softmax-like operation with NLL. Check shapes, ignore_index, targets, and reduction.
+:::
+
+:::::
+
 ## Connection to perplexity
 
 If $\bar{\ell}$ is mean cross-entropy in nats over valid tokens, perplexity is:
@@ -271,16 +253,6 @@ $$
 
 For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends on the logarithm base and evaluation convention. It measures probabilistic performance on the evaluated tokens; it is not a direct measure of factual truth or overall assistant quality.
 
-## Connection to the gradient
-
-The derivative of one-hot cross-entropy with respect to the logits is $p_i-\mathbb{1}[i=y]$. Its interpretation and role in backpropagation are developed in the [Gradients](gradients.qmd) lesson.
-
-::: {.callout-note collapse="true" title="API detail (advanced)"}
-- **“PyTorch CrossEntropyLoss expects probabilities.”** For ordinary categorical classification, the API expects unnormalized logits and combines a log-softmax-like operation with NLL. Check shapes, ignore_index, targets, and reduction.
-:::
-
-:::::
-
 ## Misconceptions
 
 - **“Cross-entropy is between 0 and 1.”** False: it can grow without bound when the model assigns probability close to zero to the target.
@@ -289,6 +261,69 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
 
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/cross-entropy.qmd).
+
+1. Why is the loss zero when the target probability is 1?
+2. Why should masked positions be excluded from the denominator of the mean?
+3. Does perplexity directly measure the truth or usefulness of an answer?
+4. In next-token training, why must logits at position $t$ align with the target at position $t+1$?
+
+<details>
+<summary>Show the answers</summary>
+
+1. The loss is $-\log p_y$, which is zero when $p_y=1$.
+2. Otherwise, the mean is no longer taken only over valid tokens and its scale is distorted.
+3. No. Perplexity measures probability assigned to tokens in a particular dataset; it does not directly measure truth, usefulness, or safety.
+4. The representation at position $t$ sees only the prefix through $t$ and predicts the next token. Without the shift, logits would be compared with the token already at position $t$ instead of the next-token target.
+
+</details>
+:::
+
+## Decomposition into target entropy and KL divergence
+
+:::: {.callout-note collapse="true" title="Derivation, soft targets, and numerical example"}
+
+::: {.callout-note title="Extension: soft targets and KL divergence"}
+For a general target distribution $q$, cross-entropy is $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$; the one-hot case above is its special case. The full relationship with KL divergence — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, and hence the equivalence between minimizing cross-entropy and minimizing KL divergence for a fixed target — is derived in [The mathematics of language modeling](language-modeling-math.qmd).
+:::
+
+Cross-entropy connects the prediction objective directly to information theory. For a target distribution $q$ and a predicted distribution $p$ over the same vocabulary:
+
+$$
+\begin{aligned}
+H(q,p)&=-\sum_x q(x)\ln p(x)\\
+&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
++\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
+\end{aligned}
+$$
+
+Therefore:
+
+$$
+\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
+$$
+
+KL divergence is non-negative (under the usual support conditions), and it is zero when $p=q$. If the target distribution $q$ and context are fixed, $H(q)$ does not depend on the model parameters. Minimizing cross-entropy with respect to $p$ is therefore equivalent to minimizing $D_{KL}(q\|p)$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
+
+### Numerical example in nats
+
+Take $q=(0.5,0.5)$ and $p=(0.75,0.25)$:
+
+- $H(q)=-(0.5\ln0.5+0.5\ln0.5)\approx0.693$ nats;
+- $H(q,p)=-(0.5\ln0.75+0.5\ln0.25)\approx0.837$ nats;
+- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0.144$ nats.
+
+Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities would be measured in bits; common training-loss implementations use natural logarithms and therefore report nats.
+
+::: {.callout-note}
+**One-hot target as a special case.** If $q$ puts all its mass on the observed token $y$, then $H(q)=0$ and $D_{KL}(q\|p)=-\ln p(y)$. Cross-entropy is therefore exactly the token NLL. This is the usual observed-token supervision case; the “matching two distributions” interpretation is most visible when the target is itself a non-degenerate distribution, for example in distillation.
+:::
+
+::::
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
 
@@ -322,28 +357,6 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — visual intuition complementary to the derivation above.
 
-
-
-::: {.self-check}
-## Check your understanding
-
-[Dedicated exercises](exercises/cross-entropy.qmd).
-
-1. Why is the loss zero when the target probability is 1?
-2. Why should masked positions be excluded from the denominator of the mean?
-3. Does perplexity directly measure the truth or usefulness of an answer?
-4. In next-token training, why must logits at position $t$ align with the target at position $t+1$?
-
-<details>
-<summary>Show the answers</summary>
-
-1. The loss is $-\log p_y$, which is zero when $p_y=1$.
-2. Otherwise, the mean is no longer taken only over valid tokens and its scale is distorted.
-3. No. Perplexity measures probability assigned to tokens in a particular dataset; it does not directly measure truth, usefulness, or safety.
-4. The representation at position $t$ sees only the prefix through $t$ and predicts the next token. Without the shift, logits would be compared with the token already at position $t$ instead of the next-token target.
-
-</details>
-:::
 
 
 </div>

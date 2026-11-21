@@ -296,7 +296,7 @@ In the original diagram, follow two streams:
 
 ### Guided reading route
 
-Return to the diagram after studying the linked lessons. At each pass, answer a more precise question:
+Return to the diagram after studying [Q, K, and V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd). At each pass, answer a more precise question:
 
 1. **Locate:** where does information enter, which stacks are repeated, where do encoder and decoder streams separate, and where are output scores produced?
 2. **Explain:** where do Q, K and V come from for each attention operation? Which positions are allowed by the mask? Why is encoder–decoder attention not a third form of self-attention?

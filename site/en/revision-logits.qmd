@@ -42,6 +42,8 @@ With a vocabulary of 50,000 tokens and a hidden dimension of 768, how many logit
 
 </details>
 
+[Compute attention weights and next-token probabilities at the same position](exercises/logits.qmd#ex-attention-vocabulary-softmax).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-logits.qmd) · [English](../en/revision-logits.qmd)
 :::

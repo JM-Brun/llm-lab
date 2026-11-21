@@ -33,17 +33,17 @@ tags: ["type:concept-lesson", "destination:understand", "topic:context-engineeri
 **Context engineering** is the discipline of designing and managing the information a system makes available to a model at inference time. Its goal is to provide task-relevant elements in a usable form: instructions, history, examples, retrieved documents, tool results, and task state.
 :::
 
-## A design example
-
-An assistant must answer a question about a software repository. A useful context might combine response instructions and security rules, the user's question, relevant decisions from the conversation, file excerpts retrieved for this question, and tool results explicitly associated with their provenance.
-
-Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
-
 ## From a prompt to a system context
 
 A prompt is often understood as text written by the user. In a real application, the model input may be a structured assembly of instructions defining the role and constraints, the current message, relevant conversation history, demonstration examples, retrieved documents, tool results, and selected task state or memory.
 
 The **context actually supplied** is the selection and organization of these elements for a particular model call. Not everything stored by the application is necessarily sent to the model. Depending on model and API capabilities, context may also contain multimodal payloads (such as images or audio) and structured tool descriptions, not only text.
+
+## A design example
+
+An assistant must answer a question about a software repository. A useful context might combine response instructions and security rules, the user's question, relevant decisions from the conversation, file excerpts retrieved for this question, and tool results explicitly associated with their provenance.
+
+Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
 
 ## Three levels of context that should not be confused
 

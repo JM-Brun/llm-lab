@@ -33,17 +33,17 @@ tags: ["type:concept-lesson", "destination:understand", "topic:context-engineeri
 L'**ingénierie du contexte** (*context engineering*) est la discipline qui consiste à concevoir et à gérer les informations qu'un système met à la disposition d'un modèle au moment de l'inférence. Elle vise à fournir, au bon moment et sous une forme exploitable, les éléments utiles à la tâche : instructions, historique, exemples, documents récupérés, résultats d'outils et état du travail.
 :::
 
-## Un exemple de conception
-
-Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte utile peut réunir les consignes de réponse et règles de sécurité, la question, les décisions pertinentes de la conversation, les extraits de fichiers retrouvés pour cette question et les résultats d'outils associés à leur provenance.
-
-Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
-
 ## Du prompt au contexte du système
 
 Le prompt est souvent compris comme un texte rédigé par l'utilisateur. Dans une application réelle, l'entrée du modèle peut être un assemblage structuré de plusieurs messages et sources : instructions définissant le rôle et les contraintes, message courant, historique pertinent, exemples de démonstration, documents récupérés, résultats d'outils et état de tâche ou mémoire sélectionnée.
 
 Le **contexte effectivement transmis** est la sélection et l'organisation de ces éléments pour un appel donné. Tout ce qui existe dans l'application n'est pas nécessairement transmis au modèle. Selon les capacités du modèle et de l'API, le contexte peut aussi contenir des contenus multimodaux (par exemple des images ou de l'audio) et des descriptions structurées d'outils, pas seulement du texte.
+
+## Un exemple de conception
+
+Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte utile peut réunir les consignes de réponse et règles de sécurité, la question, les décisions pertinentes de la conversation, les extraits de fichiers retrouvés pour cette question et les résultats d'outils associés à leur provenance.
+
+Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
 
 ## Trois niveaux de contexte à ne pas confondre
 

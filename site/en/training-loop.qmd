@@ -40,10 +40,6 @@ A **training step** takes a batch of observed prefixes and targets, runs the for
 A second measurement runs alongside: the same loss computed on **validation** data that never produces an update. Training loss tells you how well the model fits what it is fitted to; validation loss estimates how well that fit carries over.
 :::
 
-::: {.callout-note title="What if you do not have a local GPU?"}
-The training loop does not inherently depend on the machine that runs it. Once the program has been smoke-tested locally, you can run it on a managed GPU with Hugging Face Jobs: Python training code stays separate from the launcher, which selects the image, GPU, timeout and persistent storage. See the [bilingual remote-training recipe](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) for the workflow, commands and limitations. This is optional and does not replace an independent validation loss.
-:::
-
 <div class="pipeline-stepper" role="group" aria-label="Operations in one training step">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>
@@ -219,6 +215,29 @@ The gradient is $L'(\theta)=2(\theta-5)$, so $L'(2)=-6$. SGD applies $\theta_{ne
 </details>
 
 
+### End-of-path transfer exercise {#end-to-end-transfer}
+
+A toy GPT processes a tokenized prefix $c=(U,V)$. At its final position, it assigns probabilities $(0.5,0.3,0.1,0.1)$ to four candidates $A,B,C,D$. The observed continuation starts with $B$. The values in the table are illustrative. At each checkpoint, the two losses are measured in nats per valid token, each on the same data from its own split.
+
+| Update | Training loss | Validation loss |
+|---:|---:|---:|
+| 0 | 1.60 | 1.63 |
+| 20 | 1.12 | 1.28 |
+| 40 | 0.82 | 1.34 |
+
+1. Trace what transforms IDs $U,V$ into logits. If the application adds an instruction before $U$, what changes before the forward pass?
+2. What prefix does the second greedy generation step use? What prefix do you use to score the second reference token? Compute the penalty for the first observed token.
+3. When do weights change if you use this penalty for training? Which checkpoint minimizes validation loss, and what remains to be measured?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. The IDs select [embedding vectors](embedding-space.qmd). The network uses [position information](positional-encoding.qmd) and transforms representations inside its [Transformer blocks](transformer.qmd). The output head projects the final state of the last position to [logits over the vocabulary](logits.qmd). Adding an instruction changes the [tokenized context](context-engineering.qmd) supplied to the model. The parameters are the same when computation starts.
+2. [Greedy generation](generation.qmd) extends $c$ with $A$. [Scoring](likelihood.qmd) the next position uses $c$ extended with the observed token $B$. The first-token penalty is $-\ln(0.3)\approx 1.204$ nats.
+3. After [loss aggregation](loss.qmd) and [backpropagation](gradients.qmd), the optimizer applies the update. Validation uses fixed parameters. Checkpoint 20 has the lowest validation loss among the three shown. Decreasing training loss and increasing validation loss are evidence of overfitting. Estimate final performance on a reserved test set with a metric that fits what you intend to measure. See the [experimental evaluation case](experimental-evaluation.qmd).
+
+</details>
+
 {{< include ../includes/generated-suggested-route-en-training-loop.qmd >}}
 
 After this path, you can study [post-training](post-training.qmd) or apply an [evaluation protocol](experimental-evaluation.qmd).
@@ -235,6 +254,10 @@ After this path, you can study [post-training](post-training.qmd) or apply an [e
 <div class="learning-resources__content" markdown="1">
 
 ### Additional implementation resources
+
+::: {.callout-note title="What if you do not have a local GPU?"}
+The training loop does not inherently depend on the machine that runs it. Once the program has been smoke-tested locally, you can run it on a managed GPU with Hugging Face Jobs: Python training code stays separate from the launcher, which selects the image, GPU, timeout and persistent storage. See the [bilingual remote-training recipe](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) for the workflow, commands and limitations. This is optional and does not replace an independent validation loss.
+:::
 
 - [Hugging Face — A full training loop](https://huggingface.co/learn/llm-course/en/chapter3/4): a PyTorch example that makes visible the steps handled by a high-level API.
 - [Hugging Face — Fine-tuning with Trainer](https://huggingface.co/learn/llm-course/en/chapter3/3): configuring evaluation, metrics, mixed precision, and gradient accumulation.

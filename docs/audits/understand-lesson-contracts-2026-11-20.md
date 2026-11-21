@@ -45,6 +45,12 @@ La [leçon Q/K/V](../../site/fr/queries-keys-values.qmd#pourquoi-trois-projectio
 
 Le prochain point à observer chez un lecteur est sa capacité à identifier la ligne de logits et la cible sans reformuler la question à sa place. Ce point complète le [pilote auprès d’un apprenant](../learner-validation-pilot.md).
 
+## Relecture de la transition entre le calcul et l’entraînement
+
+Le [masque causal](../../site/fr/causal-masking.qmd) décrit la visibilité des positions. La leçon sur la [perte](../../site/fr/loss.qmd) sélectionne ensuite les cibles décalées à inclure dans l’objectif. L’exercice [CA-A](../../site/fr/exercises-attention.qmd#ca-a-prefix-invariance) vérifie la géométrie du masque et l’invariance du préfixe. Le [nouvel exercice de liaison](../../site/fr/exercises/loss.qmd#ex-visible-token-masked-target) vérifie la conséquence commune sur une séquence de trois entrées : un token ignoré comme cible reste visible dans l’entrée, et remplacer un token futur peut laisser la distribution d’une ligne inchangée tout en changeant la probabilité lue pour scorer la cible.
+
+Le même exercice est accessible depuis chacune des deux leçons et depuis les deux étapes du plan de révision. Le corrigé ramène aux étapes concernées. Les coordonnées, les cibles et le dénominateur sont explicites dans les deux langues. Les exemples existants sur l’attention, l’agrégation de la perte et la validation gardent leurs rôles respectifs.
+
 ## Critère pour les prochaines révisions
 
 L’objectif visible de chaque leçon et la vue du plan proviennent du même champ `purpose`. Pour modifier le fond, partir d’un écart mesurable entre cet objectif, l’exemple travaillé et le rappel dans la fiche. Pour changer l’ordre, contrôler quel acquis est effectivement utilisé, indépendamment de la page proposée ensuite. Les contrôles de génération vérifient les références et l’ordre des dépendances déclarées. La pertinence de ces dépendances et le transfert à un exemple inédit restent à observer auprès de lecteurs.

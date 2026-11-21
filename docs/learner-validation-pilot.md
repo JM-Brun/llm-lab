@@ -19,6 +19,24 @@ Invite a volunteer who knows basic Python but has not studied these lessons. Let
 
 If time permits, use the optional geometry probe: “Let q=(1,0), k₁=(0.1,0), and k₂=(10,10). Which key has the larger dot product with q? Which has the larger cosine similarity?” (FR: « Soient q=(1,0), k₁=(0.1,0) et k₂=(10,10). Quelle clé donne le plus grand produit scalaire avec q ? Laquelle donne la plus grande similarité cosinus ? ») This is a diagnostic for the distinction between dot product and cosine, not a required introductory learning objective.
 
+## Causal position and observed target
+
+Use this optional follow-up after the learner has reached Prediction and Scoring. Start on an existing review sheet and ask where they would practise the transition from states to an observed-token loss. Record the route they choose and whether they open a worked solution. To probe near transfer, close the site and use the variant below. Record any modeling hint or hint about arithmetic before interpreting the answer.
+
+**EN:** A deterministic causal GPT with fixed parameters processes `[F, G, M, N]`, `[F, G, M, R]`, and `[F, G, S, N]`. For each comparison with the first sequence, at the position of `G`, which states or predictions must agree? What is the observed next-token target? If the model assigns 0.4 to `M` and 0.1 to `S` at that position in the first sequence, does the local loss change? Explain the difference between choosing a row and choosing a column.
+
+**FR :** Un GPT causal déterministe, à paramètres fixes, traite `[F, G, M, N]`, `[F, G, M, R]` et `[F, G, S, N]`. Pour chaque comparaison à la première séquence, à la position de `G`, quels états ou prédictions doivent coïncider ? Quel est le prochain token observé qui sert de cible ? Si le modèle attribue 0,4 à `M` et 0,1 à `S` à cette position dans la première séquence, la perte locale change-t-elle ? Expliquez la différence entre choisir une ligne et choisir une colonne.
+
+The accessible prefix is `[F, G]` in all three sequences. The position, hidden states, and output distribution for `G` agree. The fourth-position change leaves the target `M` and its one-hot loss `−ln(0.4)` the same. The third-position change selects column `S` from the same distribution and increases the local loss to `−ln(0.1)`. The learner should also be able to identify that the earlier attention softmax uses allowed key positions, while the final softmax uses vocabulary columns.
+
+| Observation to record | Follow-up |
+|---|---|
+| The learner cannot reach the exercise from the sheet, then solves the variant after receiving the direct link. | Check the name, placement and language of the link. |
+| The learner reaches the material but uses future tokens in the attention row or normalizes output over positions. | Inspect the first use of softmax and the causal-mask explanation. Try the existing two-axes exercise or a short prerequisite reminder before considering a change of lesson order. |
+| The learner preserves the prediction row but chooses the wrong target, or chooses the right target and miscalculates the logarithm. | Record target alignment and arithmetic separately. Inspect the scoring sheet for the former, and the worked correction for the latter. |
+
+Treat these as qualitative diagnostics. The task reports near transfer for one changed condition. It does not establish delayed retention, generalization to other architectures or a learning advantage over another course.
+
 ## Facilitator key
 
 - **Token/embedding:** the same ID selects the same row of the *same* token-embedding table. Position embeddings and later contextual computations can differ; identical initial lookup does not imply identical final contextual states.

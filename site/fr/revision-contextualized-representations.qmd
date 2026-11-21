@@ -41,6 +41,8 @@ Oui, si elles reçoivent le même ID, leur lookup est identique. Dans des préfi
 
 </details>
 
+[Prévoir quel changement de token peut modifier l’état courant et la perte](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
 :::

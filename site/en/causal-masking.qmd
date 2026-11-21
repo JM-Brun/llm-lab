@@ -100,6 +100,8 @@ In code, **boolean-mask polarity is API-specific**. In [PyTorch 2.15 scaled dot-
 
 These masks answer different questions and must not be substituted for one another.
 
+[Trace visible positions and targets counted in the loss in one worked example](exercises/loss.qmd#ex-visible-token-masked-target).
+
 ![Four-position causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
 
 ## Provenance and purpose

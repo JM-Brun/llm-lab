@@ -260,6 +260,7 @@ stages:
       en: [en/generation]
     compact_title: {fr: "Générer (reprise)", en: "Generate (revisit)"}
     prediction_use:
+      phase: output
       context: {fr: "S’allonge à chaque token réinjecté", en: "Grows with each token fed back"}
       parameters: fixed
       action: {fr: "Sélectionner puis réinjecter un token", en: "Select and feed back a token"}
@@ -308,6 +309,7 @@ stages:
       en: [en/in-context-learning, en/context-engineering]
     compact_title: {fr: "Concevoir le contexte", en: "Design the context"}
     prediction_use:
+      phase: input
       context: {fr: "Assemblé pour chaque appel", en: "Assembled for each call"}
       parameters: fixed
       action: {fr: "Choisir les informations fournies", en: "Choose the information supplied"}
@@ -361,6 +363,7 @@ stages:
       en: [en/likelihood, en/cross-entropy]
     compact_title: {fr: "Scorer", en: "Score"}
     prediction_use:
+      phase: output
       context: {fr: "Préfixe donné pour chaque cible", en: "Prefix given for each target"}
       parameters: fixed
       action: {fr: "Calculer le score d’une cible ou d’une suite observée", en: "Score an observed target or sequence"}
@@ -414,6 +417,7 @@ stages:
       en: [en/loss, en/gradients, en/training-loop]
     compact_title: {fr: "Entraîner", en: "Train"}
     prediction_use:
+      phase: training
       context: {fr: "Préfixes des exemples observés", en: "Prefixes from observed examples"}
       parameters: updated
       action: {fr: "Agréger les pertes et ajuster les paramètres", en: "Aggregate losses and update parameters"}
@@ -706,6 +710,27 @@ boundaries:
       label:
         fr: "Suivre ce qui passe d’un appel au suivant"
         en: "Trace what carries over to the next call"
+
+  attention-visibility-and-loss-mask:
+    criterion: >-
+      Causal attention determines which input positions can contribute to each
+      prediction. A separate loss mask selects which shifted targets contribute
+      to the objective. Excluding a token as a target leaves it available at
+      its input position. Also, a changed future token can change the target
+      being scored without changing the predicted distribution for that row.
+    explanations:
+      computation:
+        concept_ids: [causal-mask]
+        pages: {fr: fr/causal-masking, en: en/causal-masking}
+      training:
+        concept_ids: [loss-mask]
+        pages: {fr: fr/loss, en: en/loss}
+    transfer:
+      pages: {fr: fr/loss-exercises, en: en/loss-exercises}
+      anchor: ex-visible-token-masked-target
+      label:
+        fr: "Suivre un token visible en entrée et ignoré comme cible"
+        en: "Trace a token visible as input and ignored as a target"
 
   observed-score-and-parameter-update:
     criterion: >-
