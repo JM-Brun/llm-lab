@@ -32,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
-- explain why two occurrences of the same token ID share an initial embedding yet produce distinct contextualized hidden states;
+- explain why two occurrences of the same token ID share an initial embedding and can produce distinct contextualized hidden states;
 - identify exactly when positional information and sequential interactions transform internal activations;
 - refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
 :::
@@ -83,7 +83,7 @@ This example is used as a pedagogical motivation in [Nishanthan K's tutorial on 
 
 | Object | What determines it? | Is it context-dependent? |
 |---|---|---|
-| Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
+| Token ID | Tokenizer vocabulary and rules | A fixed token keeps its ID in that vocabulary. Segmentation can produce a different token, for example with or without a leading space. |
 | Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
 | Hidden state at layer $\ell$ | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
 
@@ -101,7 +101,7 @@ This also does not guarantee that the model will represent human-interpreted sen
 - **Result:** hidden states can differ, without guaranteeing a clean geometric representation of human “senses.”
 :::
 
-[Compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Predict which states can diverge before examining what a block computes.
+In a causal GPT, the prefix accessible at a position ends at the current token. With position and weights fixed, [compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Check whether the changed token is in the accessible prefix before predicting its effect on the state.
 
 ## Where this fits in the model
 

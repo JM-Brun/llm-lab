@@ -35,7 +35,7 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 
 ## Why add positional information?
 
-The previous page showed that lookup provides a content vector, but not the token's location in the sequence. Yet a token's role often depends on its place: swapping the order in “the cat chases the dog” can change who is chasing whom. The model therefore needs an ordering signal.
+The two occurrences of `cat` at positions 0 and 3 retrieve the same vector from the [embedding table](embedding-space.qmd). The model needs an ordering signal to account for where each token occurs. Changing the order in “the cat chases the dog” can change who is chasing whom.
 
 When used, the causal mask indicates which positions may be attended to (`j ≤ i`). Positional mechanisms can additionally represent an absolute position or a relative offset. These signals are complementary, not interchangeable.
 
@@ -69,7 +69,7 @@ The first distinction is between **absolute** and **relative** positional inform
 :::
 ::::
 
-For the additive case, [compute the first block’s inputs for two occurrences of the same token](exercises/text-data.qmd#ex-token-to-block-input).
+In the additive exercise, the toy table gives both occurrences of `cat` the same embedding $(2,-1)$. The vector added at each occurrence depends on its position. [Compute the two first-block inputs](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
@@ -95,7 +95,7 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 
 ## Where does this step sit in the route?
 
-The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it orders the visible positions without encoding their positions explicitly.
+The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access.
 
 {{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
 
