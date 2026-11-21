@@ -28,6 +28,14 @@ Le [comparatif des approches d’apprentissage](source-reviews/learning-path-com
 
 Sur les étapes aval, cinq fiches bilingues relient leur question de rappel aux exercices sur le préfixe, les cibles valides, la mise à jour ou le classement des checkpoints. Le [comparatif des scripts d’entraînement](source-reviews/learning-path-comparison-2026-11-05.md#from-scoring-to-training-and-validation) documente notamment les conditions sous lesquelles une moyenne par lot et une moyenne par cible répondent à la même question.
 
+### Reprise après les réorganisations
+
+Le [relevé de conservation](audits/understand-lesson-contracts-2026-11-20.md#conservation-après-les-réorganisations-de-première-lecture) donne les destinations des exemples, formules, réserves et références du lot intégré jusqu’à `6e17382`. Depuis le plan FR/EN, le lecteur peut ouvrir l’exercice transversal en fin de parcours, puis revenir à l’étape Entraînement. Le plan et la carte pointent vers l’exercice et le corrigé de la leçon.
+
+1. **Vérifier les trajets dans un navigateur.** Rejouer plan → exercice final → retour, puis un lien vers une section déplacée dans un panneau replié. Consigner la version, la langue, la largeur, le focus après activation et l’accès au corrigé. Vérifier séparément le clavier, le tactile réel et la lecture d’écran selon le périmètre de [#337](https://github.com/JM-Brun/llm-lab/issues/337) et [#417](https://github.com/JM-Brun/llm-lab/issues/417). Le contrôle HTML confirme les destinations et les ancres. Pour le pilote texte → attention, le suivi de la page Q/K/V et des preuves de rendu est dans [#483](https://github.com/JM-Brun/llm-lab/issues/483).
+2. **Observer le raisonnement auprès d’un lecteur.** Utiliser d’abord le [pilote texte → attention](learner-validation-pilot.md) et le suivi [#447](https://github.com/JM-Brun/llm-lab/issues/447), puis les [cas aval](audits/learning-path-learner-evaluation.md#prediction-use-pilot) pour distinguer une difficulté à trouver l’information, à choisir le préfixe ou à calculer la moyenne sur les cibles. Relever les détours et les aides fournies. L’exercice public peut servir à la répétition, et les variantes du protocole au transfert.
+3. **Choisir le prochain changement à partir de l’observation.** Corriger d’abord un lien, un intitulé ou un rappel local quand il suffit à reprendre le calcul. Envisager un déplacement de leçon si le même manque de prérequis reste observable après cette correction. Pour tout déplacement, consigner la destination des exemples, preuves, code et références dans le relevé de conservation.
+
 L’ordre actuel sert de référence pour ces vérifications. Les sections ci-dessous conservent l’audit éditorial initial.
 
 ## 1. Ce que le parcours doit faire comprendre

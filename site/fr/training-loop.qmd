@@ -186,6 +186,8 @@ Un GPT jouet traite le préfixe déjà tokenisé $c=(U,V)$. À sa dernière posi
 
 </details>
 
+[Revoir l’étape Entraînement dans le plan de révision](review-path.qmd#training).
+
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
 
 Après ce parcours, vous pouvez étudier le [post-entraînement](post-training.qmd) ou appliquer un [protocole d’évaluation](evaluation-experimentale.qmd).
