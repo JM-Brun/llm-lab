@@ -32,7 +32,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 ### Exercise — Read the original Transformer and compare it with GPT (TF-D) {#ex-transformer-original-diagram}
 
-**Preparation:** the [Read the original architecture diagram](transformer.qmd) section and the [architecture comparison](transformer-architectures.qmd). This exercise checks that you can read the 2017 encoder–decoder diagram without confusing it with decoder-only GPT.
+**Preparation:** the [Read the original architecture diagram](transformer.qmd#historical-transformer-diagram) section and the [architecture comparison](transformer-architectures.qmd). This exercise checks that you can read the 2017 encoder–decoder diagram without confusing it with decoder-only GPT.
 
 1. In the original diagram, identify the three attention sublayers: encoder self-attention, decoder masked self-attention, and encoder–decoder attention.
 2. For encoder–decoder attention, state where Q, K and V come from.

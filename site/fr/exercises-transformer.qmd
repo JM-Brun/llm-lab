@@ -32,7 +32,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 ### Exercice — Lire le Transformer original et le comparer à GPT (TF-D) {#ex-transformer-original-diagram}
 
-**Préparation :** la section [Lire aussi le schéma fondateur](transformer.qmd) et la [comparaison des architectures](transformer-architectures.qmd). Cet exercice vérifie que vous savez lire le schéma encodeur-décodeur de 2017 sans le confondre avec le GPT décodeur seul.
+**Préparation :** la section [Lire aussi le schéma fondateur](transformer.qmd#historical-transformer-diagram) et la [comparaison des architectures](transformer-architectures.qmd). Cet exercice vérifie que vous savez lire le schéma encodeur-décodeur de 2017 sans le confondre avec le GPT décodeur seul.
 
 1. Dans le schéma original, identifiez les trois sous-couches d'attention : auto-attention de l'encodeur, auto-attention masquée du décodeur et attention encodeur-décodeur.
 2. Pour l'attention encodeur-décodeur, indiquez la provenance de Q, K et V.
