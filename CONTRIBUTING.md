@@ -19,6 +19,8 @@ For work that adds knowledge, connects existing topics, or proposes a new reader
 5. **Visual treatment:** use the [design system](docs/design-system.md); do not create page-specific styling when a shared component is appropriate.
 6. **Experiments and evidence:** use the [experiment protocol](docs/experiment-protocol.md), and keep configurations, reports, and source artifacts in their designated locations.
 
+For a page-by-page review of the guided Understand path, use the [lesson audit and improvement workflow](docs/workflows/understand-lesson-audit.md).
+
 ## Maintenance and validation workflow
 
 For issue creation and triage, use the [issue-governance contract](docs/issue-governance.md) and the [live backlog filters](docs/backlog-dashboard.md#live-issue-filters). The read-only audit command is listed in the contract.
