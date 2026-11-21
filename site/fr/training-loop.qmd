@@ -121,7 +121,13 @@ Le **surapprentissage** désigne une loss de validation qui cesse de s'améliore
 
 L'exemple ci-dessous rend ce phénomène visible avec le plus petit modèle de langage possible : une table de logits indexée par le token précédent, entraînée sur 60 tokens seulement, tirés d'un processus aléatoire connu, et validée sur 400 tokens supplémentaires.
 
+Avec NumPy 2 et cette graine, l'exécution affiche une loss d'entraînement qui passe de 2,485 ($=\ln 12$) à environ 1,15, tandis que la loss de validation atteint un minimum près du pas 100 (environ 2,01) puis remonte à environ 2,16. La loss d'entraînement seule suggérerait de poursuivre ; la loss de validation montre que l'entraînement a cessé d'aider près du pas 100. Les valeurs exactes dépendent de la graine et de la version de la bibliothèque ; les assertions vérifient l'allure qualitative, pas les valeurs.
+
+Cet exemple est volontairement minuscule : une table de consultation, des mises à jour sur batch complet, une SGD simple et 60 tokens d'entraînement. Il montre la boucle et le diagnostic, pas le comportement d'un Transformer, et la même allure de courbe n'est pas garantie dans d'autres configurations. Réussir les assertions montre que cette configuration reproduit le phénomène ; ce n'est pas une preuve générale sur le surapprentissage.
+
 ### Implémentation
+
+::: {.callout-note collapse="true" title="Afficher le micro-code"}
 
 <span class="epistemic-badge badge-code">Micro-code exécutable</span> Le code utilise les fonctions maintenues de `llm_lab.foundations.losses` pour la loss et son gradient par rapport aux logits, et n'ajoute que la boucle. Exécutez-le depuis la racine du dépôt après `uv sync`.
 
@@ -163,9 +169,7 @@ for s, tr, va in history:
     print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
 ```
 
-Avec NumPy 2 et cette graine, l'exécution affiche une loss d'entraînement qui passe de 2,485 ($=\ln 12$) à environ 1,15, tandis que la loss de validation atteint un minimum près du pas 100 (environ 2,01) puis remonte à environ 2,16. La loss d'entraînement seule suggérerait de poursuivre ; la loss de validation montre que l'entraînement a cessé d'aider près du pas 100. Les valeurs exactes dépendent de la graine et de la version de la bibliothèque ; les assertions vérifient l'allure qualitative, pas les valeurs.
-
-Cet exemple est volontairement minuscule : une table de consultation, des mises à jour sur batch complet, une SGD simple et 60 tokens d'entraînement. Il montre la boucle et le diagnostic, pas le comportement d'un Transformer, et la même allure de courbe n'est pas garantie dans d'autres configurations. Réussir les assertions montre que cette configuration reproduit le phénomène ; ce n'est pas une preuve générale sur le surapprentissage.
+:::
 
 ## Le pré-entraînement est la même boucle à grande échelle
 

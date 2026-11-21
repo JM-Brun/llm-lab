@@ -56,10 +56,6 @@ Les conventions de réduction déterminent comment les pertes par token sont agr
 
 Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
 
-::: {.callout-note collapse="true" title="Détail d'implémentation des API (facultatif)"}
-**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
-:::
-
 Sur la continuation de référence, le modèle calcule une perte pour chaque position cible valide. La loss du batch agrège ces pertes selon la réduction choisie et le masque : les positions de padding ou explicitement ignorées ne doivent pas contribuer à la moyenne.
 
 ## De la perte locale à la loss du batch
@@ -79,8 +75,6 @@ $$
 \sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
 $$
 
-La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
-
 ### Calcul sur trois unités observées
 
 Pour la continuation « Vous savez , », les probabilités conditionnelles illustratives sont successivement $0{,}6$, $0{,}5$ et $0{,}8$. Pour ce calcul simplifié, les unités affichées sont traitées comme des tokens ; il ne s'agit pas d'une segmentation mesurée avec un tokenizer particulier. Les pertes locales sont donc :
@@ -99,19 +93,21 @@ $$
 
 La somme, environ $1{,}427$ nats, est la NLL de la séquence calculée dans [Vraisemblance](vraisemblance.qmd). La moyenne par token est cette somme divisée par trois ; ne pas confondre les deux conventions. Ces nombres illustrent le calcul sur une continuation de référence et ne prétendent pas mesurer un modèle réel.
 
+La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
+
 ## Masquage et cibles décalées
 
 Dans un modèle de langage causal, la convention d'indexation doit être explicite. Avec l'indexation par la cible utilisée ici, les logits associés au préfixe $x_{<t}$ prédisent $x_t$. Avec une indexation par la position d'entrée, les logits à la position $t$ prédisent généralement $x_{t+1}$. La loss doit aligner les logits et les labels selon une seule convention, sans comparer les logits à la mauvaise cible. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides. Le masque de perte détermine uniquement quelles cibles contribuent à l'objectif ; il ne détermine pas quels tokens peuvent influencer les représentations utilisées pour prédire ces cibles. Cette visibilité relève du masque d'attention (masque causal, de padding ou de frontière documentaire, selon le cas). Exclure une cible de la loss ne suffit donc pas, à lui seul, à empêcher son information d'entrer dans le contexte. Voir aussi [les exemples d'entraînement](training-examples.qmd) et [le masquage causal](causal-masking.qmd).
 
 ### Préfixe observé et teacher forcing
 
-[Exercice corrigé sur le décalage, la visibilité et le dénominateur de la perte](exercises/loss.qmd#ex-visible-token-masked-target).
-
 Avec l'indexation par la cible adoptée ici, pendant un passage avant avec *teacher forcing*, le contexte fourni à la position $t$ est le préfixe de référence $x_{<t}$ et la cible évaluée est le token $x_t$. Le modèle ne reçoit donc pas sa propre prédiction précédente comme entrée à chaque position : les tokens de référence servent de contexte, tandis que les prédictions sont comparées aux cibles correspondantes. Le masque causal interdit à chaque position de consulter les tokens de référence futurs. Cette convention de conditionnement est distincte du calcul de la loss et de la mise à jour des paramètres : le *teacher forcing* définit le contexte, la loss mesure l'écart aux cibles, puis les gradients et l'optimiseur déterminent si et comment les paramètres changent.
 
 Le *teacher forcing* ne doit pas être confondu avec le *prefill*. Le prefill traite le prompt connu au début d'une inférence ; le teacher forcing désigne l'utilisation du préfixe de référence comme contexte lors du scoring ou de l'apprentissage. Voir [la génération](generation.qmd) pour le prefill et [la vraisemblance](vraisemblance.qmd) pour le scoring à paramètres fixes.
 
 Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
+
+[Exercice corrigé sur le décalage, la visibilité et le dénominateur de la perte](exercises/loss.qmd#ex-visible-token-masked-target).
 
 ## Loss d'entraînement et métriques
 
@@ -127,6 +123,10 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 - **« Une loss plus basse prouve que les réponses sont meilleures. »** Elle indique une meilleure valeur de l'objectif mesuré, pas nécessairement une amélioration de toutes les capacités ou de l'utilité réelle.
 - **« Une courbe d'entraînement qui baisse suffit. »** Elle ne détecte pas à elle seule les fuites de données, le surapprentissage ou une évaluation mal alignée.
 - **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
+:::
+
+::: {.callout-note collapse="true" title="Détail d'implémentation des API (facultatif)"}
+**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
 :::
 
 ::: {.callout-note collapse="true" title="Diagnostic de pipeline (approfondissement)"}

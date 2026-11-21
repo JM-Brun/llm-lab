@@ -90,10 +90,6 @@ $$
 
 For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
-For mean NLL computed with the natural logarithm, **perplexity** is $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})$. It is the exponential of mean loss, or the geometric mean of the inverse probabilities assigned to observed tokens. It summarizes probabilistic fit over the units defined by the tokenizer; it does not measure overall answer quality or truth. Two perplexity values are directly comparable only when the corpus, tokenizer, evaluated positions, and reduction convention are compatible. The [Loss](loss.qmd) lesson revisits its use as a metric derived from the training objective.
-
-The next page decomposes this NLL at one target position and generalizes the one-hot case to a target distribution: [cross-entropy](cross-entropy.qmd).
-
 ## Example: scoring the continuation
 
 Continue the illustrative sequence “They built roads”. Suppose the conditional probabilities assigned to its three successive observed tokens are $0.6$, $0.5$, and $0.8$. Each value is evaluated after extending the observed prefix with the preceding reference tokens; they are not independent probabilities.
@@ -104,6 +100,10 @@ $$
 
 The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-\log(0.24)\approx1.427$ nats. Dividing by three gives an average of approximately $0.476$ nats per token. These are illustrative values chosen to keep the arithmetic visible, not outputs from a trained model.
 
+## Perplexity
+
+For mean NLL computed with the natural logarithm, **perplexity** is $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})$. It is the exponential of mean loss, or the geometric mean of the inverse probabilities assigned to observed tokens. It summarizes probabilistic fit over the units defined by the tokenizer; it does not measure overall answer quality or truth. Two perplexity values are directly comparable only when the corpus, tokenizer, evaluated positions, and reduction convention are compatible. The [Loss](loss.qmd) lesson revisits its use as a metric derived from the training objective.
+
 ::: {.callout-warning title="Misconceptions"}
 - **“High likelihood proves the model is true.”** No: it indicates probabilistic fit to selected observations relative to a model, tokenizer, and data distribution.
 - **“Token probabilities are independent.”** They are conditional on the prefix; the product follows from the chain rule, not independence.
@@ -111,6 +111,27 @@ The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-
 :::
 
 
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/likelihood.qmd).
+
+1. Why use log-likelihood rather than the direct product of probabilities?
+2. Does the chain rule assume that tokens are independent?
+3. Why document the tokenizer and NLL reduction when comparing models?
+
+<details>
+<summary>Show the answers</summary>
+
+1. The logarithm turns a product into a sum, which is more numerically stable and easier to optimize.
+2. No. The chain rule factorizes a joint probability into successive conditional probabilities without an independence assumption.
+3. The tokenizer defines the evaluated units, while the reduction (sum or mean) determines the score's scale.
+
+</details>
+:::
+
+The next page decomposes this NLL at one target position and generalizes the one-hot case to a target distribution: [cross-entropy](cross-entropy.qmd).
 
 {{< include ../includes/generated-suggested-route-en-likelihood.qmd >}}
 
@@ -134,26 +155,6 @@ The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-
 
 - [Goodfellow, Bengio, and Courville — *Deep Learning*, §5.5: Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html): a general mathematical treatment of likelihood, log-likelihood, and maximum-likelihood estimation. The autoregressive factorization above applies that general framework to token sequences.
 
-
-
-::: {.self-check}
-## Check your understanding
-
-[Dedicated exercises](exercises/likelihood.qmd).
-
-1. Why use log-likelihood rather than the direct product of probabilities?
-2. Does the chain rule assume that tokens are independent?
-3. Why document the tokenizer and NLL reduction when comparing models?
-
-<details>
-<summary>Show the answers</summary>
-
-1. The logarithm turns a product into a sum, which is more numerically stable and easier to optimize.
-2. No. The chain rule factorizes a joint probability into successive conditional probabilities without an independence assumption.
-3. The tokenizer defines the evaluated units, while the reduction (sum or mean) determines the score's scale.
-
-</details>
-:::
 
 
 </div>

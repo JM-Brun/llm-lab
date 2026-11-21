@@ -119,7 +119,13 @@ To compare two checkpoints, try [aggregating validation loss over batches with d
 
 The example below makes this visible with the smallest possible language model: a table of logits indexed by the previous token, trained on only 60 tokens drawn from a known random process and validated on 400 more.
 
+With NumPy 2 and this seed, the run prints a training loss that falls from 2.485 ($=\ln 12$) to about 1.15, while the validation loss reaches a minimum near step 100 (about 2.01) and then rises to about 2.16. The training loss alone would suggest that training should continue; the validation loss shows that it stopped helping near step 100. The exact numbers depend on the seed and library version; the assertions check the qualitative pattern, not the values.
+
+This example is deliberately tiny: a lookup table, full-batch updates, plain SGD and 60 training tokens. It demonstrates the loop and the diagnosis, not the behaviour of a Transformer, and the same curve shape is not guaranteed in other setups. Passing the assertions shows that this configuration reproduces the pattern; it is not a general proof about overfitting.
+
 ### Implementation
+
+::: {.callout-note collapse="true" title="Show the runnable code"}
 
 <span class="epistemic-badge badge-code">Run locally</span> The code uses the maintained `llm_lab.foundations.losses` functions for the loss and its gradient with respect to logits, and adds only the loop. Run it from the repository root after `uv sync`.
 
@@ -161,9 +167,7 @@ for s, tr, va in history:
     print(f"step {s:3d}  train {tr:.3f}  val {va:.3f}")
 ```
 
-With NumPy 2 and this seed, the run prints a training loss that falls from 2.485 ($=\ln 12$) to about 1.15, while the validation loss reaches a minimum near step 100 (about 2.01) and then rises to about 2.16. The training loss alone would suggest that training should continue; the validation loss shows that it stopped helping near step 100. The exact numbers depend on the seed and library version; the assertions check the qualitative pattern, not the values.
-
-This example is deliberately tiny: a lookup table, full-batch updates, plain SGD and 60 training tokens. It demonstrates the loop and the diagnosis, not the behaviour of a Transformer, and the same curve shape is not guaranteed in other setups. Passing the assertions shows that this configuration reproduces the pattern; it is not a general proof about overfitting.
+:::
 
 ## Pretraining is the same loop at scale
 
