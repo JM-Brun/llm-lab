@@ -42,6 +42,8 @@ Une continuation de deux tokens reçoit successivement les probabilités 0,5 et 
 
 </details>
 
+[Choisir le préfixe qui donne la probabilité du second token observé](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-vraisemblance.qmd) · [English](../en/revision-vraisemblance.qmd)
 :::

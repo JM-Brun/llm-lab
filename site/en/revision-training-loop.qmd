@@ -42,6 +42,8 @@ No. The pass measures the current parameters without fitting them on validation 
 
 </details>
 
+[Compare two checkpoints when validation batches contain different numbers of valid targets](exercises/loss.qmd#ex-validation-loss-by-token).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-training-loop.qmd) · [English](../en/revision-training-loop.qmd)
 :::
