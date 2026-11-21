@@ -33,7 +33,11 @@ def test_historical_scan_blocks_pair_with_source_history_without_lossy_assumptio
         source_id: record for source_id, record in extractions.items() if "scan" in record
     }
 
-    assert len(scan_records) == 37
+    # Preserve the audited cohort while checking every current record below.
+    historical_count = sum(
+        str(record["scan"]["accessed_at"]) <= "2026-11-19" for record in scan_records.values()
+    )
+    assert historical_count == 37
     expected_scan_keys = {
         "accessed_at",
         "author_text",

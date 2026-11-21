@@ -103,7 +103,8 @@ Une distribution calculée peut servir à produire une suite, à scorer une suit
 - **Scorer :** calculer la probabilité d'une séquence observée, sa **vraisemblance** ([vraisemblance](vraisemblance.qmd)).
 - **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* utilise les tokens réels ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
 
-Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; l'[entropie](entropy.qmd) est la surprise moyenne attendue. Scorer n'est pas évaluer : l'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
+Pour une probabilité de 0,6, la surprise vaut $-\ln(0{,}6)\approx0{,}511$ nat ; l'[entropie](entropy.qmd) est la surprise moyenne attendue. Scorer n'est pas évaluer : l'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
+
 ## LLM, Transformer, GPT : trois notions {#llm-transformer-gpt}
 
 **LLM** désigne un modèle de langage entraîné à grande échelle, pas une architecture particulière. Aucun seuil universel de paramètres ne suffit à définir la catégorie : les données et le calcul d'entraînement comptent aussi ([lois d'échelle](scaling-laws.qmd)).

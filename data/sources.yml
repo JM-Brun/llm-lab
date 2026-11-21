@@ -2783,7 +2783,7 @@ sources:
         - docs/source-reviews/language-model-training-inference-cameron-wolfe-2026-11.md
 
   - id: cameron-wolfe-score-centering-substack
-    title: "Score Centering"
+    title: "Score Centering: Understanding and Fixing Instability in RL"
     creators: ["Cameron R. Wolfe"]
     source_type: blog
     identifiers: {}
@@ -2804,13 +2804,13 @@ sources:
         - topic:off-policy-reinforcement-learning
         - topic:training-inference-mismatch
         - method:policy-gradient
-      concept_ids: []
+      concept_ids: [score-centering, off-policy-reinforcement-learning, training-inference-mismatch]
     metadata:
-      technical_level: unspecified
-      contribution_types: [other]
-      audiences: [learner]
+      technical_level: advanced
+      contribution_types: [pedagogy, mathematical-derivation, implementation]
+      audiences: [learner, practitioner]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
         status: partially-scanned
@@ -2829,9 +2829,17 @@ sources:
           - "Retrieved the canonical Substack post and confirmed its displayed publication date (2026-11-09)"
         limitations:
           - "The post's technical claims, cited primary paper, figures, comments and reuse rights were not re-audited in this metadata pass."
+      - accessed_at: "2026-11-21"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed rendering of the canonical Substack article, from introduction to conclusion, including the bibliography, footnotes and the inline PyTorch example."
+          - "Cross-checked the constant-reward diagnostic, per-prefix decomposition and importance-sampling qualification against the canonical Marek and Ryabinin v1 manuscript."
+        limitations:
+          - "Direct HTTP retrieval returned 403. The indexed canonical rendering exposed the article body, but original equation/figure assets and reuse rights were not verified."
+          - "The inline example was read, not run; comments and the broader outbound reference set were not audited."
     related:
-      pages: []
-      concepts: []
+      pages: [fr/score-centering, en/score-centering]
+      concepts: [score-centering, off-policy-reinforcement-learning, training-inference-mismatch]
       audit_records:
         - docs/source-reviews/score-centering-2026-11.md
 

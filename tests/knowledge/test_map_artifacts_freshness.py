@@ -40,14 +40,14 @@ def test_tracked_map_list_matches_canonical_sidebar(language: str) -> None:
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
-def test_tracked_map_territories_match_renderer(language: str) -> None:
-    """The interactive shell and concept anchors match the production build."""
-    fragment = ROOT / "site" / "includes" / f"generated-map-territories-{language}.qmd"
-    expected = GENERATOR["prepare_build"](language)[fragment]
-
-    assert fragment.is_file(), f"Missing tracked map territories: {fragment}"
-    assert fragment.read_text(encoding="utf-8") == expected, (
-        f"Stale map territories: {fragment}. Regenerate with "
-        "uv run --no-project --with-requirements docs/requirements-history-validation.txt "
-        "--python 3.12 python site/tools/build_learning_map.py"
-    )
+def test_tracked_interactive_map_matches_renderer(language: str) -> None:
+    """The interactive shell and its inline data match the production build."""
+    artifacts = GENERATOR["prepare_build"](language)
+    for name in ("territories", "data"):
+        fragment = ROOT / "site" / "includes" / f"generated-map-{name}-{language}.qmd"
+        assert fragment.is_file(), f"Missing tracked map artifact: {fragment}"
+        assert fragment.read_text(encoding="utf-8") == artifacts[fragment], (
+            f"Stale map artifact: {fragment}. Regenerate with "
+            "uv run --no-project --with-requirements docs/requirements-history-validation.txt "
+            "--python 3.12 python site/tools/build_learning_map.py"
+        )

@@ -4,7 +4,7 @@
   data-prefix-en="What have the Romans ever done for us?">
   <h3><span lang="fr">Explorer la boucle du prochain token</span><span lang="en">Explore the next-token loop</span></h3>
   <div class="next-token-explorer__interactive" hidden>
-    <p><span lang="fr">Choisissez le token à ajouter au préfixe. Les probabilités sont fictives.</span><span lang="en">Choose a token to append to the prefix. The probabilities are illustrative.</span></p>
+    <p><span lang="fr">Les probabilités sont fictives. Avant de choisir « Vous » ou « Je », prédisez ce qui changera au tour suivant : le préfixe, la distribution ou les paramètres ? Revenez au début pour essayer l’autre choix.</span><span lang="en">The probabilities are illustrative. Before choosing “They” or “Aqueducts”, predict what will change on the next turn: the prefix, the distribution, or the parameters? Return to the start to try the other choice.</span></p>
     <div class="next-token-explorer__context" role="group" aria-labelledby="next-token-context" aria-describedby="next-token-status" tabindex="-1">
       <p id="next-token-context"><strong><span lang="fr">Préfixe actuel</span><span lang="en">Current prefix</span></strong><br>
         <span class="next-token-explorer__prefix"></span><mark class="next-token-explorer__added"></mark>
@@ -17,7 +17,14 @@
     </div>
     <button class="next-token-explorer__reset" type="button" hidden><span lang="fr">Revenir au préfixe initial</span><span lang="en">Return to the initial prefix</span></button>
   </div>
-  <p class="next-token-explorer__fallback"><span lang="fr">Consultez <a href="../fr/generation.html#la-boucle-sur-un-exemple">la trace des trois tours</a>.</span><span lang="en">Read <a href="../en/generation.html#the-loop-on-an-example">the three-turn trace</a>.</span></p>
+  <div class="next-token-explorer__fallback">
+    <p lang="fr">Au deuxième tour, comparez la suite après « Vous » dans <a href="../fr/generation.html#la-boucle-sur-un-exemple">la trace des trois tours</a> et la suite après « Je » : <span data-alternative-distribution>« pense » 0,4 · « crois » 0,4 · « dirais » 0,2</span>.</p>
+    <p lang="en">On turn 2, compare the continuation after “They” in <a href="../en/generation.html#the-loop-on-an-example">the three-turn trace</a> with the continuation after “Aqueducts”: <span data-alternative-distribution>“brought” 0.4 · “supplied” 0.4 · “provided” 0.2</span>.</p>
+  </div>
+  <details>
+    <summary><span lang="fr">Vérifier la prédiction</span><span lang="en">Check the prediction</span></summary>
+    <p><span lang="fr">Les paramètres restent fixes dans les deux branches. Le token ajouté change le préfixe sur lequel le modèle calcule la distribution suivante.</span><span lang="en">The parameters stay fixed in both branches. The appended token changes the prefix used to compute the next distribution.</span></p>
+  </details>
 </section>
 <script src="../scripts/next-token-explorer.js" defer></script>
 ```
