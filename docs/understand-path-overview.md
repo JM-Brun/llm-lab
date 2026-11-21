@@ -88,6 +88,12 @@ Le fil rouge reprend le trajet guidé [Probabilités](../site/fr/probabilites.qm
 
 La génération reprend la distribution à quatre candidats, puis change le préfixe pour le deuxième tour. L’[exercice sur les deux préfixes](../site/fr/exercises/vraisemblance.qmd#ex-generation-versus-scoring) garde son tableau, ses questions et son corrigé. La leçon d’ingénierie du contexte pose la question avant de renvoyer à l’exercice, qui contient les valeurs et le résultat. Les formules, figures, ancres de section, exemples et références des leçons restent en place. Pour le pilote aval, relever quel préfixe le lecteur choisit pour chacun des deux calculs avant d’ouvrir le corrigé.
 
+### De la perte locale à la mise à jour
+
+Le calcul de la [loss FR](../site/fr/loss.qmd#de-la-perte-locale-à-la-loss-du-batch) et [EN](../site/en/loss.qmd#from-local-penalty-to-batch-loss) ouvre l’exemple du gradient à la première cible. L’exemple isole la pénalité locale de 0,511 nat. La loss de 0,476 nat par token repose sur les trois cibles de la continuation illustrative. La formule du gradient de la moyenne et le cas des positions ignorées restent dans le volet de la leçon sur les gradients.
+
+Le [pas d’entraînement FR](../site/fr/training-loop.qmd#rejouer-un-pas-sur-le-premier-token) et [EN](../site/en/training-loop.qmd#replay-one-step-on-the-first-token) est accessible depuis la leçon sur les gradients après le calcul de mise à jour. Il précède les explications sur les lots, les époques et l’initialisation. Le calcul SGD de la tête de sortie, les deux exercices de transfert et les réserves sur la validation sont conservés. Pendant le [pilote aval](audits/learning-path-learner-evaluation.md#prediction-use-pilot), relever à quel moment le lecteur fait changer les paramètres et s’il précise la quantité qu’il dérive.
+
 L’ordre actuel sert de référence pour ces vérifications. Les sections ci-dessous conservent l’audit éditorial initial.
 
 ## 1. Ce que le parcours doit faire comprendre

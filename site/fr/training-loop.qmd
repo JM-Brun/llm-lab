@@ -71,13 +71,17 @@ Pour un batch de préfixes observés avec leurs cibles du token suivant (voir le
 
 Les étapes 1 à 3 ne font que lire les paramètres. L'étape 4 est le seul endroit où ils changent. C'est le contraste avec la [génération](generation.qmd) et le [scoring](vraisemblance.qmd), qui exécutent le même calcul avant avec des paramètres fixes.
 
-Un batch fournit une estimation bruitée de la loss sur tout le jeu d'entraînement ; son gradient est donc une estimation bruitée du gradient complet. D'où le nom de descente de gradient *stochastique* : des batchs successifs tirent les paramètres dans des directions légèrement différentes, et c'est la tendance moyenne qui fait baisser la loss. Les conventions de comptage varient : un *pas* est une mise à jour des paramètres, une *époque* est un passage sur les données d'entraînement ; les deux dépendent de la taille du batch et du jeu de données.
-
-Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement vise à faire baisser cette loss ; avec des batchs stochastiques, les mesures peuvent fluctuer d'un pas à l'autre.
-
 ### Rejouer un pas sur le premier token
 
 Pour rendre le cycle concret, reprenons la cible « Vous » et la distribution illustrative $p=(0{,}6;0{,}2;0{,}1;0{,}1)$. La loss locale vaut $-\ln(0{,}6)\approx0{,}511$ nat et son gradient par rapport aux logits vaut $(-0{,}4;0{,}2;0{,}1;0{,}1)$. La règle de chaîne transforme ce signal en gradients des poids (voir [le calcul complet sur la tête de sortie](gradients.qmd#running-example-sgd)) ; l'optimiseur applique ensuite une mise à jour. Au pas suivant, le modèle doit recalculer ses logits avec les nouveaux paramètres : les probabilités $0{,}6/0{,}2/0{,}1/0{,}1$ ne sont donc pas supposées rester identiques. Cet exemple relie les étapes du mécanisme ; il ne simule pas un entraînement complet ni ne garantit que la loss baisse après n'importe quel pas.
+
+### Passer d’une cible à un lot
+
+Le calcul précédent suit une seule cible. Avec la réduction utilisée ici, on dérive la [moyenne des pertes sur les positions valides](loss.qmd#de-la-perte-locale-à-la-loss-du-batch).
+
+Un batch fournit une estimation bruitée de la loss sur tout le jeu d'entraînement ; son gradient est donc une estimation bruitée du gradient complet. D'où le nom de descente de gradient *stochastique* : des batchs successifs tirent les paramètres dans des directions légèrement différentes, et c'est la tendance moyenne qui fait baisser la loss. Les conventions de comptage varient : un *pas* est une mise à jour des paramètres, une *époque* est un passage sur les données d'entraînement ; les deux dépendent de la taille du batch et du jeu de données.
+
+Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement vise à faire baisser cette loss ; avec des batchs stochastiques, les mesures peuvent fluctuer d'un pas à l'autre.
 
 ## Optimiseur, gradient et taux d'apprentissage
 

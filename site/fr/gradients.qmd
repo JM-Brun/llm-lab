@@ -65,6 +65,8 @@ Pour une cible one-hot, les composantes de ce gradient somment à zéro : $\sum_
 
 ### Exemple numérique : le gradient pour une cible {#exemple-numérique-de-la-loss-aux-poids-de-sortie}
 
+La [loss du batch](loss.qmd) agrège les pertes des cibles valides. Isolons ici la première cible pour calculer comment sa perte varie avec les logits.
+
 Reprenons la distribution du premier tour, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Vous » comme cible, représentée par le vecteur $y=(1;0;0;0)$. Le gradient par rapport aux logits est :
 
 $$
@@ -128,6 +130,8 @@ Le score de « Vous » augmente de $0{,}08$. Une nouvelle softmax donne $p'(\tex
 :::
 
 Calculez [deux mises à jour à perte égale](exercises/gradients.qmd#ex-score-to-parameter-update) et comparez la prédiction suivante.
+
+Dans la [boucle d’entraînement](training-loop.qmd#rejouer-un-pas-sur-le-premier-token), cette nouvelle prédiction provient de la passe avant qui suit la mise à jour.
 
 La [mesure de validation](training-loop.qmd#loss-dentraînement-et-loss-de-validation) utilise des données réservées pour estimer le comportement sur de nouveaux exemples.
 
