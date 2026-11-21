@@ -32,10 +32,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learni
 L'**apprentissage en contexte** (*in-context learning*, ICL) désigne la capacité d'un modèle à adapter sa réponse à des exemples, des consignes ou des régularités présentés directement dans le prompt. Cette adaptation se produit pendant l'inférence : les paramètres du modèle restent fixes. Le modèle exploite le contexte fourni ; il ne réalise pas pour autant une nouvelle étape de fine-tuning.
 :::
 
-## Relation avec l'ingénierie du contexte
-
-L'ICL décrit le comportement du modèle face aux informations du prompt. L'**ingénierie du contexte** (*context engineering*) désigne le travail du système qui sélectionne et organise ces informations avant l'appel. Elle peut donc créer de meilleures conditions pour l'ICL, mais elle ne se confond pas avec ce phénomène. Voir la leçon [Ingénierie du contexte](context-engineering.qmd).
-
 ## Zero-shot, one-shot et few-shot
 
 Ces termes décrivent la quantité d'exemples de démonstration fournis dans le prompt :
@@ -57,6 +53,10 @@ Sentiment :
 Le premier exemple fournit une démonstration locale. Le modèle peut l'utiliser pour produire une étiquette cohérente pour le second texte, même si aucune mise à jour de poids n'a lieu.
 
 Le périmètre du terme varie selon les travaux : certains réservent *in-context learning* aux démonstrations fournies dans le prompt (notamment le few-shot), tandis que d'autres emploient le terme plus largement pour l'adaptation conditionnée par les instructions. Dans ce parcours, la définition opérationnelle est large ; les réglages zero-shot, one-shot et few-shot restent distingués.
+
+## Que fait le modèle avec les exemples ?
+
+Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
 
 ## Pourquoi ce n'est pas du fine-tuning
 
@@ -90,16 +90,6 @@ flowchart TD
 
 **À retenir :** ICL et RAG changent les informations disponibles pour un appel ; le fine-tuning change les paramètres utilisés par les appels suivants. Le préentraînement constitue une autre phase d'optimisation, généralement à plus grande échelle, à partir d'un corpus.
 
-## Que fait le modèle avec les exemples ?
-
-Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
-
-::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
-Cela décrit le calcul observable, mais ne constitue pas à lui seul une explication complète de l'ICL. Plusieurs hypothèses sont étudiées : reconnaissance de motifs, inférence sur la règle qui a généré les exemples, apprentissage implicite d'algorithmes pendant le préentraînement, et circuits d'attention qui facilitent la copie ou l'association entre exemples.
-
-Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
-:::
-
 ## Ce que l'ICL permet — et ses limites
 
 L'ICL peut permettre de changer rapidement de format, de fournir une convention locale, de montrer quelques exemples d'une tâche ou de guider une extraction structurée sans entraîner un nouvel adaptateur.
@@ -113,6 +103,12 @@ Mais ses résultats dépendent fortement :
 - de la capacité du modèle à généraliser au-delà des motifs superficiels.
 
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
+
+::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
+Le calcul conditionné par les exemples décrit le comportement observable. Les recherches sur les mécanismes de cette adaptation examinent la reconnaissance de motifs, l'inférence sur la règle qui a généré les exemples, l'apprentissage implicite d'algorithmes pendant le préentraînement et les circuits d'attention qui facilitent la copie ou l'association entre exemples.
+
+Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+:::
 
 ::: {.callout-note collapse="true" title="Approfondissement : étudier l'ICL expérimentalement"}
 
@@ -135,6 +131,10 @@ Un bon protocole sépare la réussite sur les exemples vus de la généralisatio
 - Les exemples peuvent spécifier une tâche, un format ou une régularité locale.
 - Les mécanismes précis sont encore étudiés ; les induction heads n'en sont qu'une pièce possible.
 - Réussir sur quelques exemples ne démontre pas une généralisation robuste.
+
+## Relation avec l'ingénierie du contexte
+
+L'ICL décrit le comportement du modèle face aux informations du prompt. L'**ingénierie du contexte** (*context engineering*) désigne le travail du système qui sélectionne et organise ces informations avant l'appel. Elle peut donc créer de meilleures conditions pour l'ICL, mais elle ne se confond pas avec ce phénomène. Voir la leçon [Ingénierie du contexte](context-engineering.qmd).
 
 ## Références
 
