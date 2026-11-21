@@ -42,7 +42,7 @@ Avec le tokenizer de GPT-2, le dernier token de « C'est une bonne situation, ç
 
 Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
 
-| Token | ID dans le vocabulaire de GPT-2 |
+| Token | ID GPT-2 |
 |---|---:|
 | `"hello"` | `31373` |
 | `" world"` | `995` |

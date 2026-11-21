@@ -42,7 +42,7 @@ With the GPT-2 tokenizer, the last token of “What have the Romans ever done fo
 
 The shorter text `hello world` lets you follow the entire sequence. The quotes mark the contents of each token.
 
-| Token | ID in the GPT-2 vocabulary |
+| Token | GPT-2 ID |
 |---|---:|
 | `"hello"` | `31373` |
 | `" world"` | `995` |
