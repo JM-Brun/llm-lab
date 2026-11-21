@@ -39,7 +39,7 @@ The response is built one token at a time. From the text so far, the **language 
 ::: {.callout-note title="Running example: a question and its continuation"}
 **The prefix** is the question: “What have the Romans ever done for us?” It is the text supplied to the model. **The continuation** is what comes next. In the film, several characters answer in turn with aqueducts, sanitation, roads, and irrigation.
 
-The scene is a hook, not a literal single-speaker generation. For calculations, the path uses an original continuation written for LLM Lab: “They built roads between distant towns.” The characters are fiction, the assistant is an application, and the LLM is the model that application queries: only the last one is studied here.
+The scene is a hook, not a literal single-speaker generation. For calculations, the path uses an original continuation written for LLM Lab: “They built roads between distant towns.” The characters are fictional. The LLM is the model that the [conversational assistant](#model-to-conversational-system) queries. This overview starts by following the model’s computation.
 :::
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
@@ -206,8 +206,8 @@ Related exercises: [overview practice page](exercises/llm-overview.qmd).
 <details><summary>Answer</summary>No: it adapts parameters.</details>
 
 <!-- self-check-covers: transformers-changed -->
-6. **A pretrained GPT classifies texts after receiving a few examples in the prompt. What can it reuse, and how would you evaluate classification on new texts?**
-<details><summary>Answer</summary>It can reuse regularities and representations acquired during pretraining. The examples specify the task while parameters stay fixed. Evaluate classification on texts outside the supplied examples.</details>
+6. **A pretrained GPT must classify reviews as positive or negative. It receives an instruction and three labeled examples. What can it reuse from pretraining, and how would you evaluate its predictions?**
+<details><summary>Answer</summary>It can reuse regularities and representations acquired during pretraining. The examples specify the task while parameters stay fixed. To evaluate classification, compare the predictions with the labels of reviews held out of the prompt.</details>
 
 <!-- self-check-covers: information-residence -->
 7. **Does RAG retrieval put a document in the parameters?**

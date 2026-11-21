@@ -35,7 +35,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 La réponse se construit un token après l'autre. À partir du texte déjà écrit, le **modèle de langage** calcule des probabilités pour le prochain token. Une règle de décodage sélectionne un token, qui rejoint le texte avant le calcul suivant. Un modèle de langage entraîné à grande échelle est un **grand modèle de langage** (*large language model*, LLM).
 
-Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. L'assistant est une application ; le LLM est le modèle qu'elle interroge : seul ce dernier est étudié ici.
+Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. Le LLM est le modèle qu’interroge [l’assistant conversationnel](#model-to-conversational-system). Le panorama commence par suivre le calcul du modèle.
 :::
 
 ::: {.callout-tip title="L'idée à retenir" #revision-summary}
@@ -202,8 +202,8 @@ Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd)
 <details><summary>Réponse</summary>Non : il adapte les paramètres.</details>
 
 <!-- self-check-covers: transformers-changed -->
-6. **Un GPT pré-entraîné classe des textes après avoir reçu quelques exemples dans le prompt. Que peut-il réutiliser, et comment évaluer le classement sur de nouveaux textes ?**
-<details><summary>Réponse</summary>Il peut réutiliser des régularités et des représentations acquises pendant le pré-entraînement. Les exemples précisent la tâche à paramètres fixes. Pour évaluer le classement, il faut des textes qui ne figurent pas parmi les exemples fournis.</details>
+6. **Un GPT pré-entraîné doit classer des avis comme positifs ou négatifs. Il reçoit une consigne et trois exemples étiquetés. Que peut-il réutiliser du pré-entraînement, et comment évaluer ses prédictions ?**
+<details><summary>Réponse</summary>Il peut réutiliser des régularités et des représentations acquises pendant le pré-entraînement. Les exemples précisent la tâche à paramètres fixes. Pour évaluer la classification, comparez les prédictions aux étiquettes d’avis tenus à l’écart du prompt.</details>
 
 <!-- self-check-covers: information-residence -->
 7. **Un document récupéré par RAG est-il dans les paramètres ?**

@@ -23,7 +23,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 -->
 
-[Nine stages of Understand](#theory-path-understand) · [Resource map](#explore-the-resources)
+[Nine stages of Understand](#guided-stages) · [Resource map](#explore-the-resources)
 
 ::: {.guided-route-section}
 
@@ -57,7 +57,9 @@ $$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
 
 </details>
 
-The nine stages detail the study order and optional resources. Pages within a stage complement one another.
+### The nine stages {#guided-stages}
+
+These stages follow the canonical curriculum. They show the study order and optional resources. Pages within a stage complement one another.
 
 [Learning path plan and review sheets](review-path.qmd)
 
@@ -79,7 +81,7 @@ The nine stages detail the study order and optional resources. Pages within a st
 <summary>How to read this map</summary>
 
 - **Territories** — the main parts of the site: Understand, Build, Practice, Deepen, Reference.
-- **Sections** — clicking a territory reveals its subsections; the breadcrumb or the Escape key takes you back up one level.
+- **Sections** — clicking a territory reveals its subsections; the breadcrumb or the Escape key takes you back up one level at a time.
 - **Pages** — clicking a page shows its details (purpose, sections, links); "Open the page" navigates there directly.
 - **Concepts** — the "Canonical concepts" view groups the concepts from the bilingual registry versioned in `data/concepts.yml` by discovery domain, with their definitions, typed relationships, and resource pages. The search and the relation-type filter narrow the list, a selected concept highlights its neighbours, and related concepts remain clickable from the details panel.
 
