@@ -1302,7 +1302,24 @@ async function runCase(testCase, caseIndex) {
         throw new Error("callout aria-expanded does not match the controlled panel state before interaction");
       }
 
+      // The entropy lessons place their optional callout inside a native disclosure.
+      // Reveal it through the same keyboard path a reader uses before trying to focus it.
+      const openedDisclosures = [];
+      for (const disclosure of await callout.locator("xpath=ancestor::details").all()) {
+        if (await disclosure.evaluate(element => !element.open)) {
+          const summary = disclosure.locator(":scope > summary");
+          await summary.press("Enter");
+          if (!await disclosure.evaluate(element => element.open)) {
+            throw new Error("the disclosure containing the callout did not open from the keyboard");
+          }
+          openedDisclosures.push(summary);
+        }
+      }
+
       await callout.focus();
+      if (!await callout.evaluate(element => element === document.activeElement)) {
+        throw new Error("the callout trigger did not receive keyboard focus");
+      }
       await page.keyboard.press("Enter");
       await page.waitForFunction(
         ({ targetId, expected, selector }) => {
@@ -1326,6 +1343,7 @@ async function runCase(testCase, caseIndex) {
         { targetId: controlsId, expected: initialTargetExpanded, selector: calloutSelector },
         { timeout: 5000 }
       );
+      for (const summary of openedDisclosures.reverse()) await summary.press("Enter");
       item.callouts.keyboardEnterAndSpace = true;
     }
     } // end runInteractiveAudit callout checks
