@@ -42,6 +42,8 @@ Three positions have penalties of 1, 3 and 5, but the third is ignored. What is 
 
 </details>
 
+[Trace a token visible as input and ignored as a target, then recalculate the mean](exercises/loss.qmd#ex-visible-token-masked-target).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-loss.qmd) · [English](../en/revision-loss.qmd)
 :::

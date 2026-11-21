@@ -42,6 +42,8 @@ A two-token continuation receives probabilities 0.5 and 0.2 in sequence. What is
 
 </details>
 
+[Choose the prefix that gives the probability of the second observed token](exercises/likelihood.qmd#ex-generation-versus-scoring).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-vraisemblance.qmd) · [English](../en/revision-vraisemblance.qmd)
 :::
