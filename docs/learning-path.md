@@ -240,11 +240,11 @@ Do not open parallel issues for milestones already owned above. Create a new iss
 
 ## Canonical module topology: shared core and operational branches
 
-**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The nine-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
+**Status: canonical curriculum model, 2026-11-06, updated 2026-11-21.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The nine-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order. Context design, inference, observed-target scoring and training are sibling modules with distinct pedagogical dependencies.
 
 ### 1. The hierarchy
 
-The course is organised as one system with a shared computational core and three sibling operational uses of its prediction mechanism. Evaluation is cross-cutting.
+The course is organised as one system with a shared computational core and four sibling modules around it. Context design determines what enters the shared predictor. Inference, scoring and training use its distribution. Evaluation is cross-cutting.
 
 ```text
 LLM system
@@ -255,13 +255,14 @@ LLM system
 │   ├── Transformer computation
 │   └── Prediction
 ├── Inference / generation
+├── Context use / context design
 ├── Observed-target scoring
 ├── Training
 │   └── Training-data branch
 └── Evaluation (cross-cutting)
 ```
 
-The four core submodules are not independent models: they build the common mapping from token context to a next-token conditional distribution. Inference, scoring and training are not successive computational steps after one another. They are sibling uses of that shared predictor, with different target/context policies and different state transitions.
+The four core submodules together map a token context to a next-token conditional distribution. The context-use module studies application choices before each call at fixed parameters. Inference, scoring and training use the same prediction mechanism with different target and context policies and different state transitions. Training aggregates the costs of observed targets into its loss.
 
 ### 2. Module contracts and relations
 
@@ -273,14 +274,15 @@ In the table below:
 
 | Module ID | Parent | Scope and boundary | Children | Immediate predecessor(s) | Immediate successor(s) | Core resources (FR / EN) |
 |---|---|---|---|---|---|---|
-| `llm-system` | — | Whole system: model, context, parameters, inference, learning and evaluation. Root of the curriculum hierarchy, not a duplicate technical lesson. | `orientation`, `shared-core`, `inference`, `scoring`, `training`, `evaluation` | — | — | `llm-overview` |
+| `llm-system` | — | Whole system: model, context, parameters, inference, learning and evaluation. Root of the curriculum hierarchy, not a duplicate technical lesson. | `orientation`, `shared-core`, `inference`, `context-use`, `scoring`, `training`, `evaluation` | — | — | `llm-overview` |
 | `orientation` | `llm-system` | Establish what an LLM does and preview two fixed-parameter generation steps as a black box. | — | — | `shared-core` | `llm-overview` |
 | `shared-core` | `llm-system` | Shared context-to-distribution computation, independent of whether the next token is generated or observed. Ends at the conditional distribution. | `text-input`, `representations`, `transformer-computation`, `prediction` | `orientation` | `inference`, `scoring`, `training` | `text-data`, `embedding-space`, `positional-encoding`, `contextualized-representations`, `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking`, `logits`, `probabilites` / `probabilities` |
-| `text-input` | `shared-core` | Raw text, tokenization, vocabulary and token IDs; ends at the discrete model input. Does not include embeddings or corpus governance. | Text, token, token ID, tokenizer | Orientation | `representations` | Core: `text-data`; optional companion: `tokenization-strategies` |
+| `text-input` | `shared-core` | Raw text, tokenization, vocabulary and token IDs; ends at the discrete model input. Does not include embeddings or corpus governance. | Text, token, token ID, tokenizer | Orientation | `representations`, `context-use` | Core: `text-data`; optional companion: `tokenization-strategies` |
 | `representations` | `shared-core` | Embedding lookup, positional information, initial hidden states and the distinction between initial and contextualized representations. | Token embedding, positional encoding, initial hidden state, contextualized representation | `text-input` | `transformer-computation` | `embedding-space`, `positional-encoding`, `contextualized-representations` |
 | `transformer-computation` | `shared-core` | Repeated decoder-block computation: Q/K/V projections, attention scores/weights, causal constraint, value aggregation, output projection, residual path, normalization and MLP. Ends at final contextualized states. | Self-attention, Q/K/V, scaled attention, causal mask, MLP/FFN, residual stream, normalization, multi-head attention | `representations` | `prediction` | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` |
 | `prediction` | `shared-core` | Final hidden-state projection to vocabulary logits and conversion to a conditional next-token distribution. Ends before selecting a token or comparing with an observed target. | Output projection, logits, softmax, conditional distribution, next-token prediction | `transformer-computation` | `inference`, `scoring` | `logits`, `probabilites` / `probabilities` |
 | `inference` | `llm-system` | Fixed-parameter execution: process prompt/context, select a token from the distribution, append it, and repeat until stopping. Does not compute a training objective or update parameters. | Prefill, decode step, decoding policy, token feedback, stopping, optional KV cache | `prediction` | No mandatory successor; generated output may be inspected or evaluated | `generation` |
+| `context-use` | `llm-system` | Input phase at fixed parameters: the application assembles instructions, examples, history or documents for each call. The model conditions its prediction on the tokens actually supplied. | In-context learning, context engineering | `text-input` | No mandatory successor | Core: `in-context-learning`, `context-engineering`; optional: `rag-memory-boundaries`, `document-retrieval` |
 | `scoring` | `llm-system` | Use the shared distribution and an observed target to compute target probabilities, sequence likelihood/log-likelihood and token-level negative log-likelihood/cross-entropy. Does not select a token or update parameters. | Observed target, target probability, sequence likelihood, log-likelihood, negative log-likelihood, cross-entropy | `prediction` | `training`, `evaluation` | `vraisemblance` / `likelihood`, `cross-entropy` |
 | `training` | `llm-system` | Teacher-forced next-token learning: align inputs and targets, compute token costs, aggregate a differentiable objective, backpropagate gradients and update parameters. Does not redefine the shared predictor. | `training-data`, training examples, shifted targets, teacher forcing, token loss, batch objective, gradient, optimizer, parameter update | `shared-core`, `scoring`, and the training-data branch for a from-scratch run | `evaluation`, optional adaptation/fine-tuning | `training-examples`, `cross-entropy`, `loss`, `gradients` |
 | `training-data` | `training` (operational sub-branch) | Corpus provenance/curation, tokenizer fitting/freezing, context windows, shifted targets, batching and masks. These are required for the from-scratch training implementation, not for inference or the conceptual scoring definition. | Corpus preparation (G1b), training examples (G2) | `text-input` plus corpus/source decisions | `training` | `corpus-preparation`, `training-examples` |
@@ -304,6 +306,8 @@ Do not create a generic predecessor/successor relation in the concept graph: con
 The shared predictor is described by:
 
 `context → embeddings/positions → Transformer blocks → final hidden states → logits → conditional distribution`
+
+**Context use** acts upstream of this computation. Choosing different supplied tokens can change the predicted distribution at fixed parameters. Within generation, the chosen token is appended to the current prefix. Across calls, the application chooses which history and examples to supply.
 
 The distribution then supports three distinct branches:
 
@@ -330,6 +334,7 @@ A topic belongs to the **core route** when omitting it prevents the learner from
 3. Explain the fixed-parameter autoregressive inference loop.
 4. Compute an observed-target scoring quantity and connect token cross-entropy to the training objective.
 5. Explain teacher forcing, shifted targets, gradients and at least one parameter update.
+6. Explain how changing the information supplied for a call can affect the prediction with fixed parameters.
 
 A topic belongs to **Deepen** when it refines, optimizes, generalizes or critically analyses a mechanism that the learner can already explain at the minimum level. It remains discoverable and linked to its parent topic; it does not become a hidden gate.
 
@@ -340,6 +345,7 @@ A topic belongs to **Deepen** when it refines, optimizes, generalizes or critica
 | Transformer computation | Q/K/V roles, scaled attention, causal mask, value aggregation, MLP and residual/block composition | Multi-head algebra, cross-attention, alternative normalization/attention, kernel and complexity analysis |
 | Prediction | Output projection, logits, softmax and conditional distribution | Entropy/calibration theory, numerical-stability derivations, distribution geometry |
 | Inference | Fixed parameters, autoregressive feedback, basic greedy/sampling distinction, stopping, conceptual prefill/decode | Top-k/top-p details, beam/speculative decoding, KV-cache internals, paged attention, serving and throughput/latency |
+| Context use | In-context learning and per-call context assembly with fixed parameters | Document retrieval, RAG and persistent memory boundaries |
 | Scoring | Observed target, conditional probability, sequence likelihood/log-likelihood, token NLL/cross-entropy | Perplexity comparability, advanced probabilistic interpretations and uncertainty |
 | Training | Shifted targets, teacher forcing, cross-entropy/loss, gradients and one parameter update | AdamW internals, schedulers, clipping, mixed precision, distributed training, regularisation variants |
 | Evaluation | Held-out split distinction and the fact that evaluation does not update parameters | Metric selection, calibration, uncertainty, leakage, benchmark design, statistical tests and detailed error analysis |

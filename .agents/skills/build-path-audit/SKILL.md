@@ -47,7 +47,7 @@ Follow links from these documents to the specific milestone specifications and s
 
 ## Non-negotiable architecture
 
-- Build and Theory / Understand are separate pathways. Build follows implementation dependencies; it does not require completing the eight-stage Understand route first. Link to theory at the point where it helps explain a code decision.
+- Build and Theory / Understand are separate pathways. Build follows implementation dependencies; it does not require completing the Understand route first. Link to theory at the point where it helps explain a code decision.
 - Do not turn the Build path into a copy of the Understand route. The same concept may appear at a different time and depth because implementation has different prerequisites.
 - The current Build route is status-aware. A planned milestone, placeholder, prose walkthrough, code resource, passing test and reproducible end-to-end implementation are different evidence states.
 - Do not claim a full trained LLM exists if the repository only demonstrates inference with a randomly initialized model. A random model demonstrates mechanics, not language quality.
