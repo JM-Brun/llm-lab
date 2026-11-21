@@ -97,6 +97,8 @@ where $V$ is the vocabulary size. Each component $z_i$ is associated with token 
 
 For a batch of sequences, the output head may produce a tensor of shape $(B,T,V)$: $B$ sequences, $T$ positions, and $V$ scores per position. During autoregressive generation, the scores at the current position are typically used to choose the next token.
 
+To connect the position axis to the vocabulary axis, [compare two observed targets under the same prefix](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Identify the shared logit row, then the column used in each case.
+
 ## What logits tell us
 
 - **Local ranking:** within one vector, the largest logit identifies the maximum-score candidate (the argmax).
@@ -113,32 +115,33 @@ By contrast, multiplying every logit by a positive factor can change the distrib
 
 Converting scores into a probability distribution is a separate operation. It is covered in [Output probabilities](probabilities.qmd), the canonical page for softmax, temperature, and distribution interpretation.
 
-## In an LLM
-
-The final hidden representation is projected to a vector of dimension $V$, usually through a linear output layer. During training, logits can be passed directly to a loss function such as [cross-entropy](cross-entropy.qmd): an explicit softmax calculation is not required beforehand when the loss function incorporates it in a numerically stable way.
-
-The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
-
-
-
-To connect the position axis to the vocabulary axis, [compare two observed targets under the same prefix](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Identify the shared logit row, then the column used in each case.
-
 {{< include ../includes/generated-suggested-route-en-logits.qmd >}}
 
 :::: {.language-switch}
 [Français](../fr/logits.qmd) · [English](logits.qmd)
 ::::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Practice
 
 [Compare the two softmax axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) or explore the [other practice questions](exercises/logits.qmd).
 
-</div>
+### In an LLM
+
+The final hidden representation is projected to a vector of dimension $V$, usually through a linear output layer. During training, logits can be passed directly to a loss function such as [cross-entropy](cross-entropy.qmd): an explicit softmax calculation is not required beforehand when the loss function incorporates it in a numerically stable way.
+
+The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
+
+:::
+
 </details>
+
+::::

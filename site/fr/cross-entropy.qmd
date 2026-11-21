@@ -114,7 +114,93 @@ Pour un batch, les logits ont souvent la forme $(B,T,V)$ et les labels $(B,T)$. 
 - **Pondération :** poids de classes, label smoothing ou pertes auxiliaires modifient l'objectif par rapport au cas one-hot non pondéré.
 - **Comparaison :** préciser le tokenizer, les positions incluses et la convention de moyenne avant de comparer deux valeurs.
 
-::::: {.callout-note collapse="true" title="Implémentations — NumPy, PyTorch et stabilité numérique"}
+## Lien avec la perplexité
+
+Si $\bar{\ell}$ est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
+
+$$
+\operatorname{PPL}=\exp(\bar{\ell}).
+$$
+
+Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+
+## Idées reçues
+
+- **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
+
+- **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
+- **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
+
+
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/cross-entropy.qmd).
+
+1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
+2. Pourquoi faut-il exclure les positions masquées du dénominateur de la moyenne ?
+3. La perplexité mesure-t-elle directement la vérité ou l'utilité d'une réponse ?
+4. En entraînement next-token, pourquoi les logits à la position $t$ doivent-ils être alignés avec la cible à la position $t+1$ ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. La perte vaut $-\log p_y$ : elle est nulle lorsque $p_y=1$.
+2. Sinon, la moyenne ne porte plus uniquement sur les tokens valides et son échelle est faussée.
+3. Non. Elle mesure l'attribution de probabilités aux tokens d'un jeu de données donné ; elle ne mesure pas directement la vérité, l'utilité ou la sécurité.
+4. La représentation à la position $t$ ne voit que le préfixe jusqu'à $t$ et prédit le token suivant. Sans décalage, on comparerait les logits au token déjà présent à la position $t$ au lieu de la cible suivante.
+
+</details>
+:::
+
+{{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
+
+## Décomposition en entropie cible et divergence KL
+
+:::: {.callout-note collapse="true" title="Dérivation, cibles souples et exemple numérique"}
+
+::: {.callout-note title="Prolongement : cibles souples et divergence KL"}
+Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$ ; le cas one-hot ci-dessus en est le cas particulier. La relation complète avec la divergence KL — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, et donc l'équivalence entre minimiser l'entropie croisée et minimiser la divergence KL pour une cible fixe — est dérivée dans la page [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
+:::
+
+La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
+
+$$
+\begin{aligned}
+H(q,p)&=-\sum_x q(x)\ln p(x)\\
+&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
++\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
+\end{aligned}
+$$
+
+Donc :
+
+$$
+\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
+$$
+
+La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
+
+### Exemple numérique en nats
+
+Prenons $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
+
+- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
+- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
+- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0{,}144$ nat.
+
+On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits ; les implémentations usuelles de loss utilisent généralement le logarithme naturel et donc des nats.
+
+::: {.callout-note}
+**Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
+:::
+
+::::
+
+## Implémentations — NumPy, PyTorch et stabilité numérique
+
+::::: {.callout-note collapse="true" title="Afficher les exemples de code"}
 
 ::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
 L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) couvrent volontairement un cas restreint : des logits de forme $(B,C)$, une cible entière par ligne et la **moyenne non pondérée sur les lignes**. La perte utilise le logarithme naturel et s'exprime donc en nats. La fonction de gradient renvoie la dérivée de cette même perte moyenne par rapport aux logits, et non par rapport aux paramètres d'un modèle.
@@ -210,7 +296,7 @@ assert not torch.allclose(
 )
 ```
 
-C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V) : la dimension des classes/du vocabulaire devient alors sans ambiguïté la dimension 1 attendue par `CrossEntropyLoss`.
+C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V)` : la dimension des classes/du vocabulaire devient alors sans ambiguïté la dimension 1 attendue par `CrossEntropyLoss`.
 
 ### Cas numérique extrême : log-softmax stable
 
@@ -244,90 +330,6 @@ Le résultat infini est un échec du calcul naïf en virgule flottante, pas une 
 :::
 
 :::::
-
-## Lien avec la perplexité
-
-Si $\bar{\ell}$ est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
-
-$$
-\operatorname{PPL}=\exp(\bar{\ell}).
-$$
-
-Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
-
-## Idées reçues
-
-- **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
-
-- **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
-- **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
-
-
-
-::: {.self-check}
-## Vérifier sa compréhension
-
-[Exercices dédiés](exercises/cross-entropy.qmd).
-
-1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
-2. Pourquoi faut-il exclure les positions masquées du dénominateur de la moyenne ?
-3. La perplexité mesure-t-elle directement la vérité ou l'utilité d'une réponse ?
-4. En entraînement next-token, pourquoi les logits à la position $t$ doivent-ils être alignés avec la cible à la position $t+1$ ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. La perte vaut $-\log p_y$ : elle est nulle lorsque $p_y=1$.
-2. Sinon, la moyenne ne porte plus uniquement sur les tokens valides et son échelle est faussée.
-3. Non. Elle mesure l'attribution de probabilités aux tokens d'un jeu de données donné ; elle ne mesure pas directement la vérité, l'utilité ou la sécurité.
-4. La représentation à la position $t$ ne voit que le préfixe jusqu'à $t$ et prédit le token suivant. Sans décalage, on comparerait les logits au token déjà présent à la position $t$ au lieu de la cible suivante.
-
-</details>
-:::
-
-## Décomposition en entropie cible et divergence KL
-
-:::: {.callout-note collapse="true" title="Dérivation, cibles souples et exemple numérique"}
-
-::: {.callout-note title="Prolongement : cibles souples et divergence KL"}
-Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$ ; le cas one-hot ci-dessus en est le cas particulier. La relation complète avec la divergence KL — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, et donc l'équivalence entre minimiser l'entropie croisée et minimiser la divergence KL pour une cible fixe — est dérivée dans la page [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
-:::
-
-La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
-
-$$
-\begin{aligned}
-H(q,p)&=-\sum_x q(x)\ln p(x)\\
-&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
-+\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
-\end{aligned}
-$$
-
-Donc :
-
-$$
-\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$$
-
-La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
-
-### Exemple numérique en nats
-
-Prenons $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
-
-- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
-- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
-- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0{,}144$ nat.
-
-On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits ; les implémentations usuelles de loss utilisent généralement le logarithme naturel et donc des nats.
-
-::: {.callout-note}
-**Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
-:::
-
-::::
-
-{{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
 
 Pour revisiter le lien avec la théorie de l’information, consultez la [synthèse sur l’entropie](synthese-entropie.qmd), la [fiche de révision](revision-information-theory.qmd) et l’[expérience sur la compression prédictive](experience-information-theory.qmd).
 
