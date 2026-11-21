@@ -486,6 +486,8 @@ async function runCase(testCase, caseIndex) {
           practiceContainerPresent: Boolean(document.querySelector(".learning-practice")),
           practiceAnchorCount: document.querySelectorAll(".learning-practice a").length,
           heroLinks: readLinks(".hero-actions a"),
+          nextLinks: readLinks(".page-navigation .nav-page-next a"),
+          nextAccessibleName: document.querySelector(".page-navigation .nav-page-next a")?.getAttribute("aria-label"),
           entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
         };
       });
@@ -504,6 +506,18 @@ async function runCase(testCase, caseIndex) {
         `homepage transversal Practice links are missing or misrouted (container present: ${item.homepageOrientation.practiceContainerPresent}; anchors: ${item.homepageOrientation.practiceAnchorCount}; observed: ${JSON.stringify(item.homepageOrientation.practiceLinks)})`,
       );
       if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
+      const { nextLinks, nextAccessibleName } = item.homepageOrientation;
+      if (!endsWith(nextLinks, ["learning-map.html"]) || !nextLinks[0].label ||
+          !nextAccessibleName?.includes(nextLinks[0].label)) {
+        throw new Error("The homepage next link must visibly name the local learning map and expose the same destination to assistive technology.");
+      }
+    }
+    if (pagePath === "training-examples.html") {
+      const comparison = page.locator("#stride-window-example");
+      const windows = await comparison.locator(":scope > ul > li").count();
+      if (windows !== 2 || !await comparison.evaluate(element => element.scrollWidth <= element.clientWidth + 1)) {
+        throw new Error("The two stride examples must reflow within the reading column.");
+      }
     }
     if (kind === "spine-overview") {
       item.svgDiagnostics = await page.evaluate(() => [...document.querySelectorAll("svg")].map((svg, index) => {
