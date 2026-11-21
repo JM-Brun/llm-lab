@@ -54,6 +54,8 @@ Every computed value must carry repository commit, calculation timestamp, filter
 | PIL-PAGE-004 | Published pages grouped by editorial type tag | page record | Page-map v1 | available |
 | PIL-PAGE-005 | Published pages grouped by explicit topic tag; untagged pages remain visible | page record | Page-map v1 | available |
 | PIL-PAGE-006 | Page records grouped by destination, topic and language; distribution only, not parity verdict | page record | Page-map v1 | available |
+| PIL-PAGE-007 | Distinct explicit topic values on published page records, including shared pages | declared topic | Page-map v1 | available |
+| PIL-PAGE-008 | Topics with exactly one published FR page and one published EN page. Shared pages do not affect pairing. | bilingual topic | Page-map v1 and `group_bilingual_topics` | available |
 
 Exclusions: planned and retired pages, rendered _site copies and generated artifacts. Topic/language imbalance does not prove a missing translation.
 

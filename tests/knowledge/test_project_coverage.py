@@ -94,6 +94,11 @@ def test_bilingual_coverage_uses_topic_pairs_instead_of_language_counts(
     assert [
         page["id"] for page in cell["evidence"] if page["association"] == "missing_counterpart"
     ] == missing_counterparts
+    assert [
+        finding["entity_ids"]["page"]
+        for finding in COVERAGE["bilingual_association_findings"](matrix)
+        if finding["entity_ids"]["concept"] == "query"
+    ] == missing_counterparts
     if state == "present":
         assert {page["topic"] for page in cell["evidence"]} == {"text"}
         assert {page["id"] for page in cell["evidence"]} == {"fr/texte", "en/text"}
@@ -113,6 +118,7 @@ def test_ambiguous_topic_requires_review_even_with_both_languages_linked(tmp_pat
         "en/attention-alternate": "candidate",
         "fr/attention": "linked",
     }
+    assert COVERAGE["bilingual_association_findings"](matrix) == []
 
 
 def test_sufficient_integrated_revision_support_projects_as_present(tmp_path: Path) -> None:
