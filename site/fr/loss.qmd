@@ -105,6 +105,8 @@ Dans un modèle de langage causal, la convention d'indexation doit être explici
 
 ### Préfixe observé et teacher forcing
 
+[Exercice corrigé sur le décalage, la visibilité et le dénominateur de la perte](exercises/loss.qmd#ex-visible-token-masked-target).
+
 Avec l'indexation par la cible adoptée ici, pendant un passage avant avec *teacher forcing*, le contexte fourni à la position $t$ est le préfixe de référence $x_{<t}$ et la cible évaluée est le token $x_t$. Le modèle ne reçoit donc pas sa propre prédiction précédente comme entrée à chaque position : les tokens de référence servent de contexte, tandis que les prédictions sont comparées aux cibles correspondantes. Le masque causal interdit à chaque position de consulter les tokens de référence futurs. Cette convention de conditionnement est distincte du calcul de la loss et de la mise à jour des paramètres : le *teacher forcing* définit le contexte, la loss mesure l'écart aux cibles, puis les gradients et l'optimiseur déterminent si et comment les paramètres changent.
 
 Le *teacher forcing* ne doit pas être confondu avec le *prefill*. Le prefill traite le prompt connu au début d'une inférence ; le teacher forcing désigne l'utilisation du préfixe de référence comme contexte lors du scoring ou de l'apprentissage. Voir [la génération](generation.qmd) pour le prefill et [la vraisemblance](vraisemblance.qmd) pour le scoring à paramètres fixes.

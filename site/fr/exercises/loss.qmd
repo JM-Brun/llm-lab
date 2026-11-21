@@ -59,6 +59,31 @@ Il faut notamment une même convention de logarithme et de réduction, un tokeni
 
 **Lien complémentaire vers la probabilité des séquences observées :** [Vraisemblance](../vraisemblance.qmd).
 
+## Un token visible en entrée et ignoré comme cible {#ex-visible-token-masked-target}
+
+Un GPT causal reçoit les entrées $(A,B,C)$ avec des paramètres fixes. La séquence de référence est $(A,B,C,D)$, donc les cibles décalées sont $(B,C,D)$. On veut entraîner le modèle sur la réponse $(C,D)$ en lui fournissant le préfixe $(A,B)$. Les probabilités illustratives sont celles de la cible de chaque ligne.
+
+| Position | Entrée | Cible | Probabilité | Incluse ? |
+|---:|---|---|---:|---|
+| 1 | $A$ | $B$ | $1/8$ | Non |
+| 2 | $B$ | $C$ | $1/2$ | Oui |
+| 3 | $C$ | $D$ | $1/4$ | Oui |
+
+1. La requête de la ligne 2 peut-elle utiliser la clé de $B$ alors que $B$ a été ignoré comme cible à la ligne 1 ? Peut-elle utiliser celle de $C$ ?
+2. Calculez la moyenne sur les cibles incluses. Que vaudrait la moyenne si l’on réintégrait la cible $B$ en gardant les mêmes entrées et le même masque causal ?
+3. On remplace $C$ par $C'$ dans la séquence de référence et dans l’entrée, sans changer le masque de perte. Pourquoi la distribution prédite à la ligne 2 reste-t-elle identique alors que sa contribution à la perte peut changer ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. À la ligne 2, les positions d’entrée 1 et 2 sont accessibles. $B$ est donc visible, y compris à sa propre position. La position 3 est future pour cette requête, donc la clé de $C$ est bloquée. La cible $B$ de la ligne 1 et l’entrée $B$ de la ligne 2 jouent deux rôles distincts.
+2. Les deux cibles incluses donnent une somme $\ln 2+\ln 4=3\ln 2$ et une moyenne de $\tfrac32\ln 2\approx 1{,}040$ nat par token. Réintégrer la cible $B$ ajoute $\ln 8$ à la somme et porte le dénominateur à trois. La moyenne devient $2\ln 2\approx 1{,}386$ nat par token. Les distributions restent les mêmes puisque seule la sélection des termes de la perte a changé.
+3. À paramètres fixes, la ligne 2 reste conditionnée par le même préfixe $(A,B)$. La modification de l’entrée à la position future 3 est bloquée à cette ligne par le masque causal. Le score lit désormais la probabilité de $C'$ dans la même distribution. Cette probabilité peut différer de celle de $C$.
+
+</details>
+
+{{< include ../../includes/generated-exercise-review-fr-loss-exercises-ex-visible-token-masked-target.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](loss.qmd) · [English](../../en/exercises/loss.qmd)
 :::

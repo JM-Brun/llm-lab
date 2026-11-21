@@ -37,6 +37,12 @@ Le calcul commun reste lisible lorsque chaque leçon transmet un objet identifia
 | [Gradients](../../site/fr/gradients.qmd) | Propage une sensibilité vers les paramètres et l’utilise pour un pas simple. | La chaîne perte–logits–paramètres sépare dérivée et règle de mise à jour. |
 | [Boucle d’entraînement](../../site/fr/training-loop.qmd) | Organise les opérations d’une itération répétée et distingue optimisation et suivi de validation. | Les courbes et la validation sur données réservées concluent le parcours. |
 
+## Relecture de la transition entre le calcul et l’entraînement
+
+Le [masque causal](../../site/fr/causal-masking.qmd) décrit la visibilité des positions. La leçon sur la [perte](../../site/fr/loss.qmd) sélectionne ensuite les cibles décalées à inclure dans l’objectif. L’exercice [CA-A](../../site/fr/exercises-attention.qmd#ca-a-prefix-invariance) vérifie la géométrie du masque et l’invariance du préfixe. Le [nouvel exercice de liaison](../../site/fr/exercises/loss.qmd#ex-visible-token-masked-target) vérifie la conséquence commune sur une séquence de trois entrées : un token ignoré comme cible reste visible dans l’entrée, et remplacer un token futur peut laisser la distribution d’une ligne inchangée tout en changeant la probabilité lue pour scorer la cible.
+
+Le même exercice est accessible depuis chacune des deux leçons et depuis les deux étapes du plan de révision. Le corrigé ramène aux étapes concernées. Les coordonnées, les cibles et le dénominateur sont explicites dans les deux langues. Les exemples existants sur l’attention, l’agrégation de la perte et la validation gardent leurs rôles respectifs.
+
 ## Critère pour les prochaines révisions
 
 L’objectif visible de chaque leçon et la vue du plan proviennent du même champ `purpose`. Pour modifier le fond, partir d’un écart mesurable entre cet objectif, l’exemple travaillé et le rappel dans la fiche. Pour changer l’ordre, contrôler quel acquis est effectivement utilisé, indépendamment de la page proposée ensuite. Les contrôles de génération vérifient les références et l’ordre des dépendances déclarées. La pertinence de ces dépendances et le transfert à un exemple inédit restent à observer auprès de lecteurs.

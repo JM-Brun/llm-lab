@@ -129,8 +129,9 @@ class ConceptualFocus(StrictModel):
 
 
 class PredictionUse(StrictModel):
-    """How a stage uses the shared prediction and treats its two inputs."""
+    """Where an operation sits relative to prediction and what it changes."""
 
+    phase: Literal["input", "output", "training"]
     context: LocalizedCopy
     parameters: Literal["fixed", "updated"]
     action: LocalizedCopy
@@ -1094,8 +1095,8 @@ ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
     (
         "usages",
         "inference",
-        "Comprendre les usages de la prédiction",
-        "Understand the uses of a prediction",
+        "Contexte, usages de la prédiction et apprentissage",
+        "Context, prediction uses, and training",
     ),
 )
 ROUTE_PART_BY_FIRST_STAGE: dict[str, tuple[str, str, str]] = {
@@ -1335,14 +1336,19 @@ def render_prediction_use_comparison(
     """Compare the treatment of context, parameters and predictions at each use."""
     fr = language == "fr"
     header = (
-        "| Usage | Contexte $c$ | Paramètres $\\theta$ | Opération |"
+        "| Étape | Contexte $c$ | Paramètres $\\theta$ | Opération |"
         if fr
-        else "| Use | Context $c$ | Parameters $\\theta$ | Operation |"
+        else "| Stage | Context $c$ | Parameters $\\theta$ | Operation |"
     )
     parameter_labels = (
         {"fixed": "Fixés", "updated": "Mis à jour"}
         if fr
         else {"fixed": "Fixed", "updated": "Updated"}
+    )
+    phase_labels = (
+        {"input": "Entrée", "output": "Sortie", "training": "Entraînement"}
+        if fr
+        else {"input": "Input", "output": "Output", "training": "Training"}
     )
     lines = [header, "|---|---|---|---|"]
     for stage in stages:
@@ -1352,12 +1358,16 @@ def render_prediction_use_comparison(
             context = escape_markdown_text(getattr(use.context, language)).replace("|", r"\|")
             action = escape_markdown_text(getattr(use.action, language)).replace("|", r"\|")
             parameters = parameter_labels[use.parameters]
-            lines.append(f"| {link} | {context} | {parameters} | {action} |")
+            phase = phase_labels[use.phase]
+            lines.append(f"| {link} | {context} | {parameters} | **{phase}** · {action} |")
     upstream_note = (
         "Composer le contexte agit en amont. Les trois autres opérations utilisent "
-        "la distribution produite."
+        "la distribution produite. L'entraînement agrège les pénalités calculées sur les cibles "
+        "observées, propage le gradient et applique une mise à jour."
         if fr
-        else "Context design shapes the input. The other three operations use the distribution."
+        else "Context design shapes the input. The other three operations use the distribution. "
+        "Training aggregates penalties on observed targets, backpropagates the gradient, "
+        "and applies an update."
     )
     return "\n".join([*lines, "", upstream_note, ""])
 

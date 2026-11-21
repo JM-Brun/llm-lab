@@ -59,6 +59,31 @@ At minimum, use compatible logarithm and reduction conventions, tokenizer, ignor
 
 **Related connection to observed-sequence probability:** [Likelihood](../likelihood.qmd).
 
+## A token visible as input and ignored as a target {#ex-visible-token-masked-target}
+
+A causal GPT receives the inputs $(A,B,C)$ with fixed parameters. The reference sequence is $(A,B,C,D)$, so the shifted targets are $(B,C,D)$. We want to train the model on the answer $(C,D)$ using the prefix $(A,B)$. The illustrative probabilities are for the target of each row.
+
+| Position | Input | Target | Probability | Included? |
+|---:|---|---|---:|---|
+| 1 | $A$ | $B$ | $1/8$ | No |
+| 2 | $B$ | $C$ | $1/2$ | Yes |
+| 3 | $C$ | $D$ | $1/4$ | Yes |
+
+1. Can the query in row 2 use the key for $B$ even though $B$ was ignored as a target in row 1? Can it use the key for $C$?
+2. Compute the mean over the included targets. What would the mean be if you included target $B$ with the same inputs and the same causal mask?
+3. Replace $C$ with $C'$ in the reference sequence and input while keeping the loss mask fixed. Why does the prediction distribution at row 2 stay the same while its contribution to the loss may change?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. At row 2, input positions 1 and 2 are accessible. This makes $B$ visible, including at its own position. Position 3 is in the query's future, so the key for $C$ is blocked. Target $B$ in row 1 and input $B$ in row 2 play different roles.
+2. The two included targets give a sum of $\ln 2+\ln 4=3\ln 2$ and a mean of $\tfrac32\ln 2\approx 1.040$ nats per token. Including target $B$ adds $\ln 8$ to the sum and raises the denominator to three. The mean becomes $2\ln 2\approx 1.386$ nats per token. The distributions stay the same because only the selection of loss terms has changed.
+3. With fixed parameters, row 2 still conditions on the same prefix $(A,B)$. The causal mask blocks the change to the input at future position 3 for this row. Scoring now reads the probability of $C'$ from the same distribution. That probability may differ from the probability of $C$.
+
+</details>
+
+{{< include ../../includes/generated-exercise-review-en-loss-exercises-ex-visible-token-masked-target.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/loss.qmd) · [English](loss.qmd)
 :::

@@ -78,6 +78,16 @@ $$
 
 Only the target probability appears explicitly in this one-hot expression. The other probabilities still matter indirectly because softmax normalizes all logits and therefore affects the target probability and its gradient. This is the loss at one target position, not yet a sequence or batch reduction.
 
+### When the selected token differs from the target {#chosen-token-vs-target}
+
+Keep the same prefix and probabilities. Greedy decoding selects “They” ($0.6$). Now imagine a **different observed continuation** that starts with “Aqueducts” ($0.2$).
+
+- **Before observing the target**, [predictive entropy](entropy.qmd) is still $1.089$ nats. The first-turn distribution is the same.
+- **To score “Aqueducts”**, the loss at this position is $-\ln(0.2)\approx 1.609$ nats. It is computed from the observed target.
+- **To train the model**, this loss can contribute to the [batch objective](loss.qmd). Backpropagation computes gradients and the [optimizer](training-loop.qmd) applies the update.
+
+After the first token, generation continues with “They” in its prefix. Scoring continues with “Aqueducts” in its prefix. [Compare the two prefixes in a two-token trace](exercises/likelihood.qmd#ex-generation-versus-scoring).
+
 ## Visual intuition: the loss measures the surprise of the observed token
 
 ![For the same target token, predicted probability 0.9 gives loss 0.105 nats, while probability 0.1 gives loss 2.303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." width=100%}
@@ -86,11 +96,13 @@ Both cases concern **the same target token**: only the probability assigned to i
 
 This figure illustrates the loss for one token with a one-hot target. It does not show the full vocabulary distribution, the averaging over valid positions, or the entire training objective.
 
+## Decomposition into target entropy and KL divergence
+
+:::: {.callout-note collapse="true" title="Derivation, soft targets, and numerical example"}
+
 ::: {.callout-note title="Extension: soft targets and KL divergence"}
 For a general target distribution $q$, cross-entropy is $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$; the one-hot case above is its special case. The full relationship with KL divergence — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, and hence the equivalence between minimizing cross-entropy and minimizing KL divergence for a fixed target — is derived in [The mathematics of language modeling](language-modeling-math.qmd).
 :::
-
-## Decomposition into target entropy and KL divergence
 
 Cross-entropy connects the prediction objective directly to information theory. For a target distribution $q$ and a predicted distribution $p$ over the same vocabulary:
 
@@ -123,6 +135,8 @@ Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities woul
 ::: {.callout-note}
 **One-hot target as a special case.** If $q$ puts all its mass on the observed token $y$, then $H(q)=0$ and $D_{KL}(q\|p)=-\ln p(y)$. Cross-entropy is therefore exactly the token NLL. This is the usual observed-token supervision case; the “matching two distributions” interpretation is most visible when the target is itself a non-degenerate distribution, for example in distillation.
 :::
+
+::::
 
 ::::: {.callout-note collapse="true" title="Applications — from token to batch, perplexity and APIs"}
 

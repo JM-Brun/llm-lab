@@ -80,6 +80,16 @@ $$
 
 Les trois autres probabilités ne disparaissent pas de la distribution : elles contribuent indirectement à la normalisation de la softmax et donc au gradient par rapport aux logits. Cette valeur est la perte d'une position, pas encore la loss moyenne d'une séquence ou d'un batch.
 
+### Quand le token choisi et la cible diffèrent {#chosen-token-vs-target}
+
+Reprenez le même préfixe et les mêmes probabilités. Le décodage glouton choisit « Vous » ($0{,}6$). Imaginez maintenant une **autre continuation observée** qui commence par « Je » ($0{,}2$).
+
+- **Avant de connaître la cible**, l’[entropie prédictive](entropy.qmd) vaut toujours $1{,}089$ nat. La distribution de ce premier tour est identique.
+- **Pour scorer « Je »**, la perte à cette position vaut $-\ln(0{,}2)\approx 1{,}609$ nat. Elle se calcule à partir de la cible observée.
+- **Pour entraîner le modèle**, cette perte peut contribuer à l’[objectif du lot](loss.qmd). La rétropropagation calcule les gradients et l’[optimiseur](training-loop.qmd) applique la mise à jour.
+
+Après le premier token, la génération poursuit avec « Vous » dans son préfixe. Le scoring poursuit avec « Je » dans le sien. [Comparer les deux préfixes sur une trace de deux tokens](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
+
 ## Intuition visuelle : la perte mesure la surprise du token observé
 
 ![Pour un même token cible, une probabilité prédite de 0,9 produit une perte de 0,105 nat, tandis qu'une probabilité de 0,1 produit une perte de 2,303 nats.](../images/cross-entropy-target-probability-fr.svg){fig-alt="Deux cas pour le même token observé : p(y)=0,9 donne −ln p(y)≈0,105 nat ; p(y)=0,1 donne −ln p(y)≈2,303 nats. Une probabilité cible plus faible entraîne une perte beaucoup plus grande." width=100%}
@@ -88,11 +98,13 @@ Les deux cas concernent **le même token cible** : seul le poids de probabilité
 
 Cette image illustre la perte d'un token avec une cible one-hot ; elle ne représente ni la distribution complète du vocabulaire, ni la moyenne sur les positions valides, ni l'ensemble de l'objectif d'entraînement.
 
+## Décomposition en entropie cible et divergence KL
+
+:::: {.callout-note collapse="true" title="Dérivation, cibles souples et exemple numérique"}
+
 ::: {.callout-note title="Prolongement : cibles souples et divergence KL"}
 Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$ ; le cas one-hot ci-dessus en est le cas particulier. La relation complète avec la divergence KL — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, et donc l'équivalence entre minimiser l'entropie croisée et minimiser la divergence KL pour une cible fixe — est dérivée dans la page [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
 :::
-
-## Décomposition en entropie cible et divergence KL
 
 La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
 
@@ -125,6 +137,8 @@ On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, 
 ::: {.callout-note}
 **Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
 :::
+
+::::
 
 ::::: {.callout-note collapse="true" title="Applications — du token au lot, perplexité et API"}
 

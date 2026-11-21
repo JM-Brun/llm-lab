@@ -34,20 +34,29 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
         and "](#guided-stage-context-use) ·" in overview
         and "](#guided-stage-scoring) ·" in overview
     )
-    rows = re.findall(r"^\| \[[^\n]+\]\(#guided-stage-([a-z-]+)\) \| .+? \| (.+?) \|", uses, re.M)
+    rows = re.findall(
+        r"^\| \[[^\n]+\]\(#guided-stage-([a-z-]+)\) \| .+? \| (.+?) \| \*\*(.+?)\*\*",
+        uses,
+        re.M,
+    )
     fixed, updated = ("Fixés", "Mis à jour") if language == "fr" else ("Fixed", "Updated")
+    entry, output, training = (
+        ("Entrée", "Sortie", "Entraînement")
+        if language == "fr"
+        else ("Input", "Output", "Training")
+    )
     assert rows == [
-        ("inference", fixed),
-        ("context-use", fixed),
-        ("scoring", fixed),
-        ("training", updated),
+        ("inference", fixed, output),
+        ("context-use", fixed, entry),
+        ("scoring", fixed, output),
+        ("training", updated, training),
     ]
     anchor = "compare-prediction-uses"
     plan = artifacts[SITE / "includes" / f"generated-lesson-contracts-{language}.qmd"]
     comparison = plan.split(f"{{#{anchor} .unlisted}}", 1)[1].split("\n## ", 1)[0].strip()
     map_table = uses.split("</summary>", 1)[1].split("</details>", 1)[0].strip()
     assert comparison == map_table.replace("](#guided-stage-", "](#")
-    for stage_id, _ in rows:
+    for stage_id, _, _ in rows:
         assert f"{{#{stage_id}}}" in plan
 
     overview_page = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")

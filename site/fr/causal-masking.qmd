@@ -100,6 +100,8 @@ En code, **la polarité d'un masque booléen dépend de l'API**. Dans [l'attenti
 
 Ces masques répondent donc à des questions différentes et ne doivent pas être substitués les uns aux autres.
 
+[Suivre dans un même exemple les positions visibles et les cibles comptées dans la perte](exercises/loss.qmd#ex-visible-token-masked-target).
+
 ![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
 ## Provenance et utilité
