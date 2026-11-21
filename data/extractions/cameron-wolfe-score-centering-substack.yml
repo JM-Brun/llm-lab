@@ -1,0 +1,126 @@
+schema_version: 1
+source_id: cameron-wolfe-score-centering-substack
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Canonical-page indexed prose, section sequence, bibliography, footnotes and inline code."]
+    inferred_elements: ["Learning outcomes and prerequisites are editorial inferences. Original figure assets were not verified."]
+  source_graph:
+    nodes:
+      - {id: src-policy-mismatch, kind: condition, description: "Sampler and trainer policies differ.", locator: "What is Training-Inference Mismatch (TIM)?"}
+      - {id: src-mean-score-drift, kind: mechanism, description: "The mean trainer score under the sampler can contribute a reward-independent direction at each prefix.", locator: "Motivation for Score Centering"}
+      - {id: src-prefix-centering, kind: method, description: "Subtract the expected score at the fixed prefix under the relevant sampling mass.", locator: "Score Centering"}
+    edges:
+      - {from: src-policy-mismatch, type: can-induce, to: src-mean-score-drift}
+      - {from: src-prefix-centering, type: removes-in-expectation, to: src-mean-score-drift}
+    interpretation: "These relations describe the article's conditional estimator under exact centering. They are source-local and add no canonical graph edges."
+  learning_outcomes:
+    - {status: inferred, outcome: "Use a constant-reward control to distinguish drift from reward-dependent signal.", basis: "Exploring Instability (and TIM) in RL; Motivation for Score Centering."}
+    - {status: inferred, outcome: "Explain when exact conditional importance weights and score centering overlap.", basis: "Score Centering discussion of combined corrections."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional expectations, log-probability gradients and REINFORCE.", basis: "RL Objective Formulation and the policy-gradient derivation."}
+  teaching_route:
+    - {order: 1, section: "Training-Inference Mismatch and RL Stability", function: motivate-and-isolate, moves: ["Distinguish sampler from trainer", "Test a constant-reward control"]}
+    - {order: 2, section: "Motivation for Score Centering; Score Centering", function: derive-and-qualify, moves: ["Separate mean-score drift from covariance at a prefix", "Show the effect of weighting and approximating the sampler tail"]}
+    - {order: 3, section: "Concrete implementation; Empirical analysis", function: connect-to-practice, moves: ["Locate detached coefficients in the loss", "Compare reported quantization and staleness regimes"]}
+  pedagogical_strengths: ["The constant-reward control gives a concrete reason to inspect the mean score before introducing the correction."]
+  pedagogical_limits: ["The example depends on surrounding infrastructure; it was read only. The experiments are discussed second-hand."]
+  comparison:
+    dossier: docs/source-reviews/score-centering-2026-11.md
+    canonical_graph: data/concepts.yml
+    canonical_routes: [data/guided-route.yml, "FR/EN Score Centering advanced lessons"]
+    decision: "Link as supplementary reading from the existing lessons. Keep the manuscript and official implementation as technical evidence."
+    structures_kept_separate: [source-semantic-graph, canonical-concept-graph, canonical-learning-routes]
+scan:
+  accessed_at: "2026-11-21"
+  retrieval_method: indexed-rendering-of-canonical-substack-page
+  author_text:
+    status: complete
+    coverage: "Article prose from introduction to conclusion, including bibliography and footnotes."
+    notes: ["Direct HTTP retrieval returned 403. Equation figures were cross-checked through the surrounding prose and primary manuscript where relevant to the selected items."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["The indexed rendering exposed captions, but the original assets and reuse rights were not checked."]
+  code_data:
+    status: partial
+    coverage: "Inline PyTorch example in the Concrete implementation block."
+    notes: ["Reviewed as an illustrative excerpt with external sampler, model and mask inputs. It was not executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary reference [1], Marek and Ryabinin v1, checked for the selected claims."
+    notes: ["Other outbound references were not exhaustively audited."]
+  metadata:
+    status: partial
+    coverage: "Title, author and displayed date on the canonical page."
+    notes: ["No independent revision identifier was established."]
+  rights: {status: not-inspected, coverage: null, notes: ["The article is referenced by link. No prose, code or visual is reproduced."]}
+  unresolved_questions: []
+items:
+  - id: cameron-wolfe-score-centering-substack:constant-reward-diagnostic
+    kind: method
+    summary: "Wolfe uses a constant-reward control to isolate mismatch-induced drift before reintroducing reward–score covariance. At a fixed prefix, a constant reward makes that covariance zero, leaving any uncorrected mean-score term exposed."
+    locator: {type: section, value: "Exploring Instability (and TIM) in RL; Motivation for Score Centering", label: "Constant-reward control and decomposition"}
+    evidence:
+      kind: secondary-explanation-of-primary-method
+      confidence: well-supported
+      scope: "The diagnostic design and the fixed-prefix expectation identity."
+      assumptions: ["The reward used in this control is constant and nonzero; the sampler is held fixed when differentiating the trainer policy."]
+      limitations: ["This control isolates drift in the expected estimator. It does not measure task learning or prove that training will become unstable under another mismatch regime."]
+    technical_assessment:
+      status: correct
+      rationale: "The primary paper establishes the constant-reward diagnostic and separates the drift and covariance terms in sections 3–4, including Eqs. (3)–(5)."
+      corroborating_sources: ["https://arxiv.org/html/2609.20807v1"]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [method:score-centering, topic:training-inference-mismatch]
+      concept_ids: [score-centering, training-inference-mismatch]
+    candidate_destinations: {pages: [fr/score-centering, en/score-centering], concepts: [score-centering, training-inference-mismatch], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "The article offers a reusable reading order from a negative control to the general estimator. The existing advanced lesson owns the derivation."
+  - id: cameron-wolfe-score-centering-substack:importance-ratio-boundary
+    kind: limitation
+    summary: "The article separates the PPO-style update ratio from the trainer-to-sampler importance ratio and distinguishes a per-token ratio from a trajectory ratio. At a fixed prefix, exact conditional reweighting makes the score correction vanish."
+    locator: {type: section, value: "Limitations of Importance Sampling; Score Centering; footnotes 3 and 6–8", label: "Ratio scope and residual drift"}
+    evidence:
+      kind: secondary-explanation-of-primary-method
+      confidence: well-supported
+      scope: "Conditional score centering with exact or modified importance weights."
+      assumptions: ["Exact conditional importance weighting requires sampler support wherever trainer mass contributes; the published additive coefficient uses compatible nonnegative weights."]
+      limitations: ["A token ratio at a given prefix does not repair the sampled prefix distribution or the distribution of later tokens in a completion. Clipping or masking changes what is reweighted."]
+    technical_assessment:
+      status: qualified
+      rationale: "Appendix A.2 establishes the conditional identity. Recovery of the entire on-policy trajectory expectation requires stronger support and reweighting conditions."
+      corroborating_sources: ["https://arxiv.org/html/2609.20807v1"]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [method:score-centering, method:importance-sampling]
+      concept_ids: [score-centering, importance-sampling, off-policy-reinforcement-learning]
+    candidate_destinations: {pages: [fr/score-centering, en/score-centering], concepts: [score-centering, importance-sampling], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "The ratio comparison is supplementary reading. The lesson retains the primary manuscript as authority for its claims."
+  - id: cameron-wolfe-score-centering-substack:pytorch-implementation-sketch
+    kind: implementation-pattern
+    summary: "The illustrative PyTorch excerpt detaches correction coefficients, retains the sampled token's log-probability separately from the top-k head, and masks contributions outside generated tokens."
+    locator: {type: section, value: "Concrete implementation (within Score Centering); footnote 10", label: "Illustrative PyTorch loss excerpt"}
+    evidence:
+      kind: inspected-inline-code
+      confidence: context-dependent
+      scope: "The visible example and its mathematical correspondence to the primary estimator."
+      assumptions: ["The sampler, trainer, reward model and completion mask are supplied by the surrounding application."]
+      limitations: ["The excerpt was not executed. An exact correction for a modelled top-k tail is only approximate for the real sampler. Runtime parity and code reuse rights are unverified."]
+    technical_assessment:
+      status: qualified
+      rationale: "The separation of differentiable trainer log-probabilities and detached coefficients matches the contract discussed in Appendices A.1–A.3."
+      corroborating_sources: ["https://arxiv.org/html/2609.20807v1", "https://github.com/martin-marek/score-centering"]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [method:score-centering, method:importance-sampling]
+      concept_ids: [score-centering, importance-sampling]
+    candidate_destinations: {pages: [fr/score-centering, en/score-centering], concepts: [score-centering], route_ids: []}
+    disposition: link
+    disposition_rationale: "Optional implementation reading. Use the official implementation and its tests for executable evidence."
