@@ -80,9 +80,11 @@ $$
 Pour la continuation « Vous savez , », les probabilités conditionnelles illustratives sont successivement $0{,}6$, $0{,}5$ et $0{,}8$. Pour ce calcul simplifié, les unités affichées sont traitées comme des tokens ; il ne s'agit pas d'une segmentation mesurée avec un tokenizer particulier. Les pertes locales sont donc :
 
 $$
-\ell_1=-\ln(0{,}6)\approx0{,}511,\quad
-\ell_2=-\ln(0{,}5)\approx0{,}693,\quad
+\begin{gathered}
+\ell_1=-\ln(0{,}6)\approx0{,}511,\\
+\ell_2=-\ln(0{,}5)\approx0{,}693,\\
 \ell_3=-\ln(0{,}8)\approx0{,}223.
+\end{gathered}
 $$
 
 Sans position ignorée, la moyenne par token vaut :
