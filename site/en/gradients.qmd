@@ -33,10 +33,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "leve
 The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
 :::
 
-::: {.callout-note title="Gradient descent is not Newton's method"}
-Both methods use derivatives, but they use different information. **Gradient descent** uses the first derivative (the gradient) to choose a direction; **Newton's method** also uses curvature, represented by the Hessian in several dimensions, to scale and orient its step. Neural-network training commonly uses stochastic or minibatch gradients with optimizers such as Adam or AdamW—not a simplified Newton update. The methods are related, but one is not simply the other with a term removed.
-:::
-
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 The loss tells us **what should improve**; the gradient tells us **how the loss changes when parameters change**. Backpropagation applies the chain rule to carry this information from the output back to the parameters.
 
@@ -55,7 +51,7 @@ Correct gradient computation remains distinct from model generalization.
   <span class="step-item">4. Parameter update</span>
 </div>
 
-For each target token in the continuation, the cross-entropy gradient adjusts the logits: it pushes the expected token's score upward relative to the other scores. The actual parameter update then follows the chain rule through the model's layers.
+For each target token in the continuation, first compute how the local loss varies with each of its logits. A descent step applied directly to those logits would raise the target token’s score relative to the other scores. In the network, the chain rule gives derivatives with respect to the parameters that determine the logits. The optimizer then uses those derivatives to update the parameters.
 
 ## Gradient with respect to logits
 
@@ -120,6 +116,10 @@ In a deep network, backpropagation applies this chain rule efficiently through t
 ## From gradient to parameter update
 
 The gradient describes local loss sensitivity; it does not specify the update rule on its own. The optimizer turns it into a parameter update, and the learning rate sets its scale. The SGD rule and optimizer choices are covered in the [training loop](training-loop.qmd).
+
+::: {.callout-note collapse="true" title="Gradient descent is not Newton's method"}
+Both methods use derivatives, but they use different information. **Gradient descent** uses the first derivative (the gradient) to choose a direction; **Newton's method** also uses curvature, represented by the Hessian in several dimensions, to scale and orient its step. Neural-network training commonly uses stochastic or minibatch gradients with optimizers such as Adam or AdamW—not a simplified Newton update. The methods are related, but one is not simply the other with a term removed.
+:::
 
 ::: {.callout-note collapse="true" title="Numerical gradient checking (advanced)"}
 For parameter coordinate $\theta_i$:

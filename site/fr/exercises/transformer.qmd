@@ -30,7 +30,7 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 
 1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
 2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
-3. Quel problème la normalisation prévient-elle dans une pile de blocs profonde ?
+3. Quel rôle la normalisation joue-t-elle dans une pile de blocs profonde ?
 4. Dans le MLP d'un bloc, quelles dimensions traverse une représentation, dans quel ordre ?
 5. Pendant la génération, quels logits servent à choisir le prochain token ?
 
@@ -41,7 +41,7 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
 3. La normalisation aide à contrôler l'échelle des activations et la propagation des gradients. Son effet dépend de son emplacement : Xiong et al. (2020) montrent notamment que le Post-LN original peut présenter des gradients élevés près de la sortie à l'initialisation, alors que le Pre-LN étudié donne des gradients mieux comportés. Il ne faut donc pas conclure que toute architecture profonde échoue sans une disposition unique de normalisation.
 4. `d_model` vers `d_ff` (la dimension intermédiaire du MLP, souvent environ 4 × `d_model`), activation non linéaire sur la représentation intermédiaire, puis retour vers `d_model`.
-5. Ceux de la dernière position uniquement : le masque causal garantit qu'ils ne dépendent que des tokens déjà connus. Pendant l'entraînement, en revanche, les logits de toutes les positions sont utilisés, chaque position étant supervisée pour prédire son token suivant.
+5. Pour un préfixe sans padding, le décodage utilise les logits de sa dernière position. Le masque causal limite leur calcul aux tokens déjà connus. Pendant l’entraînement, le modèle peut calculer les logits de toutes les positions en parallèle. La loss utilise ceux dont le token suivant est une cible valide.
 
 </details>
 

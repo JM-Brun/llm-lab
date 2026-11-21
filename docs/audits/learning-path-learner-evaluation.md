@@ -249,3 +249,80 @@ After the pilot:
 - Valeur nouvelle pour lecteur expérimenté / New value for experienced reader:
 - Changements suggérés / Suggested changes:
 - Limites et biais / Limitations and bias:
+
+<a id="prediction-use-pilot"></a>
+
+## Annexe — Pilote des usages de la prédiction / Prediction-use pilot
+
+Complément court à la tâche D. Les deux formes évaluent le choix du préfixe et l’usage de la prédiction. Le cas inédit vérifie ensuite la lecture d’une loss de validation. Les données ci-dessous sont fictives. Le protocole attend une première session indépendante.
+
+Short extension to Task D. The two forms probe which prefix is used and what happens to the prediction. A separate, unseen case then checks interpretation of validation loss. All data below are synthetic. The protocol is ready for a first independent session.
+
+### Déroulé / Session sequence
+
+1. Poser les quatre questions avec une forme avant lecture. Relever les préfixes écrits, les résultats, le raisonnement et la confiance (1–5). Garder le corrigé pour la fin.
+2. Demander de retrouver dans le [plan FR](../../site/fr/review-path.qmd#compare-prediction-uses) ou [EN](../../site/en/review-path.qmd#compare-prediction-uses) les passages qui expliquent la génération, le contexte, le scoring et l’entraînement. Noter les pages réellement consultées et les hésitations.
+3. Reposer les mêmes questions avec l’autre forme, plan fermé. Alterner l’ordre A→B et B→A entre sessions lorsque c’est possible. La symétrie des consignes rend la comparaison lisible. La difficulté relative des formes reste à observer.
+4. Proposer le cas inédit, puis revenir sur les explications et les obstacles de navigation. Compter environ 20 à 25 minutes pour les quatre temps, à ajuster après la première session.
+
+1. Ask the four questions using one form before reading. Record the written prefixes, results, reasoning, and confidence (1–5). Keep the answer key until the end.
+2. Ask the participant to find the parts that explain generation, context, scoring, and training in the [FR](../../site/fr/review-path.qmd#compare-prediction-uses) or [EN](../../site/en/review-path.qmd#compare-prediction-uses) plan. Record which pages they actually use and where they hesitate.
+3. Ask the same questions with the other form, with the plan closed. Alternate A→B and B→A across sessions where possible. The symmetric prompts make comparison straightforward. Relative form difficulty still needs to be observed.
+4. Offer the unseen case, then discuss the explanations and navigation obstacles. Allow about 20–25 minutes for the four parts and revise the estimate after the first session.
+
+### Support commun A/B / Common A/B handout
+
+Un scribe doit produire deux tokens. Le vocabulaire jouet contient deux tokens, `X` et `Y`. Le contexte initial est `c`. Pour un nouvel appel, l’application peut ajouter un exemple à `c`, donnant `c'`. Le tableau donne les probabilités de sortie du même checkpoint pour ces préfixes. La continuation de référence est donnée avec chaque forme.
+
+A scribe must produce two tokens. The toy vocabulary contains two tokens, `X` and `Y`. The initial context is `c`. For another call, the application can add a demonstration to `c`, yielding `c'`. The table gives the same checkpoint’s output probabilities for these prefixes. Each form supplies its own reference continuation.
+
+| Préfixe / Prefix | Forme A / Form A (`p_X,p_Y`) | Forme B / Form B (`p_X,p_Y`) |
+|---|---:|---:|
+| `c` | (0.70, 0.30) | (0.40, 0.60) |
+| `c+[X]` | (0.80, 0.20) | (0.35, 0.65) |
+| `c+[Y]` | (0.60, 0.40) | (0.25, 0.75) |
+| `c'` | (0.20, 0.80) | (0.65, 0.35) |
+
+Continuation de référence / Reference continuation
+
+- A · `[Y, X]`
+- B · `[X, Y]`
+
+Paramètre scalaire pour la question 4 / Scalar parameter for question 4
+
+| Forme / Form | Valeur courante / Current value θ | Gradient `g` | Taux / Rate η |
+|---|---:|---:|---:|
+| A | 1 | −2 | 0.1 |
+| B | 2 | 2 | 0.1 |
+
+| Question | Français | English |
+|---|---|---|
+| 1 · Générer / Generate | On retient le token le plus probable à chaque tour. Quels deux tokens sortent et quel préfixe est utilisé au deuxième tour ? | Select the most probable token each round. Which two tokens are emitted, and which prefix is used in round two? |
+| 2 · Scorer / Score | Quelle probabilité le checkpoint attribue-t-il à la continuation de référence sous `c` ? Donnez les deux lignes et le calcul. | What probability does the checkpoint assign to the reference continuation given `c`? Give the two rows and the calculation. |
+| 3 · Préparer l’entrée / Prepare the input | Comparez le premier token glouton avec `c` et `c'`. Quel résultat attendre si l’exemple est stocké mais que le modèle reçoit exactement `c`, dans les mêmes conditions ? | Compare the first greedy token under `c` and `c'`. What should happen if the demonstration is stored but the model receives exactly `c` under the same conditions? |
+| 4 · Entraîner / Train | Le gradient du tableau a été calculé sur un lot d’entraînement. Donnez θ après le calcul du gradient, après un pas θ ← θ − ηg, puis après une passe de validation. | The table’s gradient was computed on a training batch. Give θ after computing the gradient, after a θ ← θ − ηg step, and after a validation pass. |
+
+### Cas inédit après la lecture / Unseen post-reading case
+
+Deux checkpoints `P` et `Q` sont évalués sur les mêmes cibles de validation. Tokenizer et positions valides sont identiques. Le tableau donne les sommes de NLL en nats. Quel checkpoint obtient la plus faible NLL **par cible valide** ? Un collègue moyenne les deux moyennes de lot à poids égal. Expliquez la divergence éventuelle et dites ce que changerait un autre regroupement des mêmes cibles et des mêmes prédictions.
+
+Two checkpoints `P` and `Q` are evaluated on the same validation targets. The tokenizer and valid positions are identical. The table gives NLL sums in nats. Which checkpoint gets the lowest NLL **per valid target**? A colleague gives the two batch means equal weight. Explain any disagreement and say what would happen if the same targets and predictions were grouped differently.
+
+| Lot / Batch | Cibles valides / Valid targets | NLL `P` | NLL `Q` |
+|---|---:|---:|---:|
+| 1 | 3 | 9 | 3 |
+| 2 | 9 | 6 | 15 |
+
+### Corrigé facilitateur / Facilitator key
+
+| Dimension | Réponse attendue / Expected answer |
+|---|---|
+| 1 · Préfixe généré / Generated prefix | A produit `[X, X]` en prolongeant `c` par `X`. B produit `[Y, Y]` en le prolongeant par `Y`. / A produces `[X, X]` by extending `c` with `X`. B produces `[Y, Y]` by extending it with `Y`. |
+| 2 · Préfixe observé / Observed prefix | A lit `Y` sous `c`, puis `X` sous `c+[Y]`. La probabilité vaut 0.30 × 0.60 = 0.18. B lit `X` sous `c`, puis `Y` sous `c+[X]`, soit 0.40 × 0.65 = 0.26. / A reads `Y` under `c`, then `X` under `c+[Y]` for 0.18. B reads `X` under `c`, then `Y` under `c+[X]` for 0.26. |
+| 3 · Entrée effective / Effective input | Transmettre `c'` fait passer le choix de `X` à `Y` en A et de `Y` à `X` en B. Un exemple seulement stocké laisse le choix initial si l’entrée effective et les conditions sont les mêmes. Le checkpoint est fixe. / Sending `c'` changes the choice from `X` to `Y` in A and from `Y` to `X` in B. A stored-only demonstration leaves the original choice in place when the effective input and conditions match. The checkpoint stays fixed. |
+| 4 · Mesure et pas / Measurement and step | A donne 1 → 1.2 → 1.2, B donne 2 → 1.8 → 1.8. Le calcul du gradient laisse la valeur initiale. Seul le pas d’optimisation la modifie. / A gives 1 → 1.2 → 1.2, B gives 2 → 1.8 → 1.8. Computing the gradient leaves the initial value in place. The optimizer step changes it. |
+| Transfert · Dénominateur / Transfer · Denominator | Par cible, `P=15/12=1.25` et `Q=18/12=1.5`. À poids égal par lot, `P=11/6` et `Q=4/3`, donc le classement s’inverse. Regrouper les mêmes couples prédiction–cible laisse la moyenne par cible inchangée. / Per target, `P=1.25` and `Q=1.5`. With equal batch weights, `P=11/6` and `Q=4/3`, reversing the ranking. Regrouping the same prediction–target pairs preserves the per-target mean. |
+
+Relever pour chaque réponse le mécanisme invoqué et le résultat. Appliquer 0 si le mécanisme manque ou contredit la réponse, 1 si une partie seulement est correcte, 2 si le calcul et le mécanisme sont corrects. Consigner à part une erreur arithmétique lorsque le préfixe et l’opération sont corrects. Comparer chaque dimension A/B avec le même barème. Consigner le transfert à part et distinguer un mauvais calcul, une confusion de vocabulaire et l’impossibilité de trouver la leçon. Les premiers écarts servent à améliorer les consignes et les pages.
+
+Record the reasoning and result for each response. Use 0 when the reasoning is absent or contradicts the answer, 1 when only part is correct, and 2 when both the calculation and the mechanism are correct. Record an arithmetic slip separately when the prefix and operation are right. Use the same rubric in each form and compare per dimension. Record the novel transfer case separately and distinguish calculation errors, terminology confusion, and difficulty finding the lesson. Use the first observations to improve the prompts and pages.

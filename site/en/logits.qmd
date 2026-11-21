@@ -34,7 +34,7 @@ A **logit** is an unnormalized real-valued score associated with a class or voca
 :::
 
 
-The previous page showed how causal masking limits the positions accessible to attention. Once the Transformer blocks have been computed, the output head projects the final representation into this score vector.
+The previous page showed how causal masking limits the positions accessible to attention. In the project’s GPT, the states from the final block pass through a final normalization. The output head then projects each normalized state into this score vector.
 
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}

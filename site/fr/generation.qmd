@@ -157,6 +157,35 @@ Trois mots désignent ainsi trois échelles : la **passe avant** est le calcul d
 
 Le calcul de la distribution lui-même occupe les étapes intermédiaires du parcours : [le Transformer](transformer.qmd) produit les états, [les logits](logits.qmd) en sont la projection, [la softmax](probabilites.qmd) les normalise.
 
+## Comment le prochain token est-il choisi ? {#comment-le-prochain-token-est-il-choisi}
+
+La distribution du tour 1 ne désigne pas une sortie unique. C'est la règle de décodage qui tranche.
+
+**Sélection gloutonne** (*greedy decoding*). On prend le token le plus probable (*argmax*) : « Vous », à chaque exécution. Le résultat est reproductible si le calcul est déterministe. Ce choix local n'optimise pas la phrase entière et peut conduire à des répétitions.
+
+**Échantillonnage** (*sampling*). On tire le token au hasard selon la distribution : « Vous » sort en moyenne six fois sur dix, « Je » deux fois sur dix. Deux exécutions peuvent donc produire deux textes différents. Fixer la graine du générateur aléatoire, avec un calcul déterministe, rend le tirage reproductible.
+
+[Calculer une softmax et comparer sélection gloutonne et échantillonnage](exercises-generation.qmd#ex-generation-distribution-selection).
+
+**Température.** Avant le tirage, on peut resserrer ou étaler la distribution en divisant les logits par un nombre $\tau > 0$.
+
+| Suite | $\tau = 0{,}5$ | $\tau = 1$ | $\tau = 2$ |
+|---|---|---|---|
+| « Vous » | 0,86 | 0,60 | 0,42 |
+| « Je » | 0,10 | 0,20 | 0,24 |
+| « Moi » | 0,02 | 0,10 | 0,17 |
+| « Oui » | 0,02 | 0,10 | 0,17 |
+
+Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul est détaillé dans [Probabilités de sortie](probabilites.qmd).
+
+Les filtres **top-k** et **top-p** écartent les candidats les moins probables avant le tirage ; la recherche par faisceau (*beam search*) et le décodage contrastif suivent d'autres logiques. La boucle de base se comprend sans eux ; leurs compromis sont comparés dans les [stratégies de décodage](decoding-strategies.qmd), et une [introduction de Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) en donne un premier aperçu.
+
+::: {.callout-warning title="Idées reçues"}
+- **« Le modèle choisit toujours le meilleur token. »** Le modèle ne choisit pas : il fournit une distribution. Avec l'échantillonnage, « Je » peut sortir alors que « Vous » est plus probable.
+- **« Une probabilité élevée garantit un token correct. »** La distribution reflète des régularités apprises, pas l'état du monde. Un modèle peut donner 0,6 à une suite fausse.
+- **« Les répétitions sont un bug. »** Elles peuvent venir de la règle de décodage, la sélection gloutonne en particulier, sans erreur de programme.
+:::
+
 ## Du prompt aux tokens suivants : prefill et decode
 
 Un système d'inférence ne traite pas le prompt comme il traite les tokens qu'il génère.
@@ -166,6 +195,10 @@ Un système d'inférence ne traite pas le prompt comme il traite les tokens qu'i
 - **Cache KV.** L'attention calcule, pour chaque position, des vecteurs appelés clés et valeurs ([requêtes, clés et valeurs](queries-keys-values.qmd)). Ceux du préfixe ne changent plus une fois calculés ; une implémentation optimisée les conserve au lieu de tout recalculer à chaque tour. C'est un gain de temps, pas une condition de correction : sans cache, le résultat est le même, aux effets numériques près.
 
 *Decode* nomme donc une phase d'exécution, celle qui suit le prefill ; *décodage* nomme la règle de sélection. Les deux mots se ressemblent et ne désignent pas la même chose.
+
+Le prefill ressemble au *teacher forcing* de l'entraînement, puisque dans les deux cas le modèle lit un texte qu'il n'a pas produit. La différence tient à la suite : en génération, le contexte s'allonge avec les tokens choisis par la règle de décodage ; en teacher forcing, il s'allonge avec les tokens du texte de référence, quoi que le modèle ait prédit ([exemples d'entraînement](training-examples.qmd)).
+
+Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la passe avant à partir du contexte courant.
 
 ::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true"}
 
@@ -200,39 +233,6 @@ Une optimisation avancée, le **speculative decoding**, fait proposer plusieurs 
 
 Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) fournit une vue d'ensemble utile de ces phases et de ces diagnostics. Il est cité comme ressource externe ; sa figure n'est pas reproduite ici.
 
-:::
-
-Le prefill ressemble au *teacher forcing* de l'entraînement, puisque dans les deux cas le modèle lit un texte qu'il n'a pas produit. La différence tient à la suite : en génération, le contexte s'allonge avec les tokens choisis par la règle de décodage ; en teacher forcing, il s'allonge avec les tokens du texte de référence, quoi que le modèle ait prédit ([exemples d'entraînement](training-examples.qmd)).
-
-Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la passe avant à partir du contexte courant.
-
-## Comment le prochain token est-il choisi ? {#comment-le-prochain-token-est-il-choisi}
-
-La distribution du tour 1 ne désigne pas une sortie unique. C'est la règle de décodage qui tranche.
-
-**Sélection gloutonne** (*greedy decoding*). On prend le token le plus probable (*argmax*) : « Vous », à chaque exécution. Le résultat est reproductible si le calcul est déterministe. Ce choix local n'optimise pas la phrase entière et peut conduire à des répétitions.
-
-**Échantillonnage** (*sampling*). On tire le token au hasard selon la distribution : « Vous » sort en moyenne six fois sur dix, « Je » deux fois sur dix. Deux exécutions peuvent donc produire deux textes différents. Fixer la graine du générateur aléatoire, avec un calcul déterministe, rend le tirage reproductible.
-
-[Calculer une softmax et comparer sélection gloutonne et échantillonnage](exercises-generation.qmd#ex-generation-distribution-selection).
-
-**Température.** Avant le tirage, on peut resserrer ou étaler la distribution en divisant les logits par un nombre $\tau > 0$.
-
-| Suite | $\tau = 0{,}5$ | $\tau = 1$ | $\tau = 2$ |
-|---|---|---|---|
-| « Vous » | 0,86 | 0,60 | 0,42 |
-| « Je » | 0,10 | 0,20 | 0,24 |
-| « Moi » | 0,02 | 0,10 | 0,17 |
-| « Oui » | 0,02 | 0,10 | 0,17 |
-
-Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul est détaillé dans [Probabilités de sortie](probabilites.qmd).
-
-Les filtres **top-k** et **top-p** écartent les candidats les moins probables avant le tirage ; la recherche par faisceau (*beam search*) et le décodage contrastif suivent d'autres logiques. La boucle de base se comprend sans eux ; leurs compromis sont comparés dans les [stratégies de décodage](decoding-strategies.qmd), et une [introduction de Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) en donne un premier aperçu.
-
-::: {.callout-warning title="Idées reçues"}
-- **« Le modèle choisit toujours le meilleur token. »** Le modèle ne choisit pas : il fournit une distribution. Avec l'échantillonnage, « Je » peut sortir alors que « Vous » est plus probable.
-- **« Une probabilité élevée garantit un token correct. »** La distribution reflète des régularités apprises, pas l'état du monde. Un modèle peut donner 0,6 à une suite fausse.
-- **« Les répétitions sont un bug. »** Elles peuvent venir de la règle de décodage, la sélection gloutonne en particulier, sans erreur de programme.
 :::
 
 ## Ce que la génération ne fait pas
