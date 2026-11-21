@@ -5,6 +5,8 @@
 
 This is an execution register, not a second curriculum or a replacement for the owner issues. The GitHub issues linked below remain the source of truth for detailed acceptance criteria. Reconcile this snapshot against live issue state before starting a later phase.
 
+For the current Understand route, see the [November follow-up](understand-path-overview.md#understand-route-follow-up).
+
 ## 1. Current status
 
 - `llm-lab`: 47 open issues; the curriculum-docs reconciliation PR [#319](https://github.com/JM-Brun/llm-lab/pull/319) was squash-merged on 2026-11-03 (commit `15832af`), and the advanced-reading reclassification PR [#321](https://github.com/JM-Brun/llm-lab/pull/321) was squash-merged on 2026-11-03 (commit `4218234`).

@@ -79,6 +79,8 @@ A toy causal GPT receives the unpadded prefix $(A,B)$. The final states entering
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-logits-exercises-ex-final-state-to-next-token.qmd >}}
+
 ## Two softmax operations, two axes {#ex-attention-vocabulary-softmax}
 
 A toy GPT has vocabulary $(A,B,C)$ and receives prefix $(A,B,A)$. For the query at the last position in a causal attention head, the already-scaled scores are $(\ln 2,0,0)$ in position order. All three keys are accessible. After the blocks and the output head, the logits at the same position are $(0,\ln 2,0)$ in vocabulary order.

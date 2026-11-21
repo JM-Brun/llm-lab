@@ -116,6 +116,8 @@ If the only measurement were the loss that the optimizer minimizes, a model that
 - **Validation loss:** the same loss on a separate split, computed with fixed parameters, without any update. It estimates behaviour on unseen text from the same distribution.
 - **Test loss:** a further split, kept untouched until a final assessment. Validation results guide choices (when to stop, which learning rate); each such choice makes the validation score slightly optimistic, which is why the test split must stay reserved. See [corpus preparation](corpus-preparation.qmd) for how splits are made without leakage, and [Experimental evaluation](experimental-evaluation.qmd) for the broader protocol.
 
+To compare two checkpoints, try [aggregating validation loss over batches with different numbers of valid tokens](exercises/loss.qmd#ex-validation-loss-by-token).
+
 **Overfitting** is a validation loss that stops improving, or rises, while the training loss keeps falling: the model keeps fitting details of the training sample that do not recur in new text. The gap between the two losses is the *generalization gap*. The amount of overfitting depends on model capacity relative to the amount and diversity of training data, on how many times the data is repeated, and on regularization.
 
 The example below makes this visible with the smallest possible language model: a table of logits indexed by the previous token, trained on only 60 tokens drawn from a known random process and validated on 400 more.

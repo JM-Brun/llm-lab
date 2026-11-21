@@ -59,6 +59,28 @@ At minimum, use compatible logarithm and reduction conventions, tokenizer, ignor
 
 **Related connection to observed-sequence probability:** [Likelihood](../likelihood.qmd).
 
+## Compare checkpoints by validation loss {#ex-validation-loss-by-token}
+
+Two checkpoints score the same held-out tokens, with the same tokenizer and mask. The table gives the sum of negative log probabilities (NLL, in nats) over the valid targets in each batch.
+
+| Batch | Valid targets | Total NLL, X | Total NLL, Y |
+| --- | ---: | ---: | ---: |
+| 1 | 2 | 6 | 2 |
+| 2 | 8 | 4 | 12 |
+
+1. Compute each checkpoint’s mean NLL per valid token across both batches.
+2. Average the two batch means with equal weight. How does the ranking change, and which calculation answers question 1?
+
+<details>
+<summary>Show worked answer</summary>
+
+- **Mean per valid token.** X scores $(6+4)/10 = 1.0$ and Y scores $(2+12)/10 = 1.4$. X has lower validation loss per token.
+- **Mean of batch means.** X scores $(3+0.5)/2 = 1.75$ and Y scores $(1+1.5)/2 = 1.25$. This calculation ranks Y first because it gives the two-token batch the same weight as the eight-token batch.
+
+Sum the NLLs and valid-target counts separately, then divide. This gives every valid target the same weight, regardless of how the fixed predictions and targets are grouped into batches.
+
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/loss.qmd) · [English](loss.qmd)
 :::

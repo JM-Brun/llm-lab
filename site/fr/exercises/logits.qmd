@@ -79,6 +79,8 @@ Un GPT causal jouet reçoit le préfixe $(A,B)$, sans padding. Les états finaux
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-logits-exercises-ex-final-state-to-next-token.qmd >}}
+
 ## Deux softmax, deux axes {#ex-attention-vocabulary-softmax}
 
 Un GPT jouet a pour vocabulaire $(A,B,C)$ et reçoit le préfixe $(A,B,A)$. Pour la requête à la dernière position d’une tête d’attention causale, les scores déjà mis à l’échelle valent $(\ln 2,0,0)$ dans l’ordre des positions. Les trois clés sont accessibles. Après les blocs et la tête de sortie, les logits à cette même position valent $(0,\ln 2,0)$ dans l’ordre du vocabulaire.
