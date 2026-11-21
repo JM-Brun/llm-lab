@@ -69,6 +69,8 @@ The first distinction is between **absolute** and **relative** positional inform
 :::
 ::::
 
+For the additive case, [compute the first block’s inputs for two occurrences of the same token](exercises/text-data.qmd#ex-token-to-block-input).
+
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
 ![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}

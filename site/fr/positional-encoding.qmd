@@ -70,6 +70,8 @@ La distinction principale est celle entre information **absolue** et information
 :::
 ::::
 
+Pour le cas additif, [calculez les entrées du premier bloc pour deux occurrences du même token](exercises/text-data.qmd#ex-token-to-block-input).
+
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
 ![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
