@@ -39,6 +39,12 @@ Le prompt est souvent compris comme un texte rédigé par l'utilisateur. Dans un
 
 Le **contexte effectivement transmis** est la sélection et l'organisation de ces éléments pour un appel donné. Tout ce qui existe dans l'application n'est pas nécessairement transmis au modèle. Selon les capacités du modèle et de l'API, le contexte peut aussi contenir des contenus multimodaux (par exemple des images ou de l'audio) et des descriptions structurées d'outils, pas seulement du texte.
 
+## Un exemple de conception
+
+Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte utile peut réunir les consignes de réponse et règles de sécurité, la question, les décisions pertinentes de la conversation, les extraits de fichiers retrouvés pour cette question et les résultats d'outils associés à leur provenance.
+
+Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
+
 ## Définition et opérations principales
 
 Le context engineering ne désigne pas une fonctionnalité particulière d'un modèle ni une norme dont le périmètre serait universellement fixé. C'est une pratique d'ingénierie des systèmes LLM, pas une couche du Transformer ni une nouvelle architecture de réseau. Elle comprend notamment :
@@ -62,22 +68,13 @@ Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il
 
 ## Trois niveaux de contexte à ne pas confondre
 
-| Niveau | Ce qu'il désigne |
-|---|---|
-| **Contexte du système** | Instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. |
-| **Séquence d'entrée et fenêtre de contexte** | Séquence de tokens (ou éléments multimodaux structurés) traitée par le modèle. La fenêtre est une limite de capacité ; en génération autorégressive, les tokens produits s'ajoutent à la séquence. |
-| **Contexte accessible à une position** | Pour un décodeur causal, positions consultables selon le masque causal et la fenêtre disponible : à la position $t$, les positions futures sont masquées. |
-
-Un historique conservé par l'application n'est pas nécessairement transmis. Une mémoire persistante ne devient contexte du modèle que si le système en sélectionne le contenu. Une représentation contextualisée est le **résultat d'un calcul** conditionné par les informations accessibles, pas un autre nom pour le contexte.
-
-| Notion | Ce qu'elle désigne | Confusion à éviter |
+| Niveau | Ce qui est fourni ou accessible | Repère |
 |---|---|---|
-| **Fenêtre de contexte** | Budget maximal de tokens utilisable pour un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | La longueur réellement transmise |
-| **Longueur du contexte actif** | Nombre de tokens effectivement présents dans le contexte de cet appel | La capacité maximale |
-| **Contexte accessible par l'attention** | Positions qu'une position donnée peut consulter selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
-| **Représentation contextualisée** | État caché/vectoriel calculé par les couches du Transformer à partir des tokens accessibles | Que ce soit le contexte actif ou un historique stocké |
+| **Contexte du système** | Instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. | L'historique peut être stocké sans être transmis. Pour devenir contexte du modèle, le contenu de la mémoire persistante doit être sélectionné et fourni. |
+| **Séquence d'entrée et fenêtre de contexte** | Le modèle traite une séquence de tokens ou d'éléments multimodaux structurés. En génération autorégressive, les tokens produits s'ajoutent à cette séquence. | La longueur du contexte actif compte les tokens effectivement présents. La fenêtre fixe le budget maximal par appel, avec des conventions de comptage entrée/sortie qui dépendent du modèle et de l'API. |
+| **Contexte accessible à une position** | Les positions consultables dépendent de l'architecture, du masque et de la fenêtre disponible. Dans un décodeur causal, la position $t$ ne peut pas consulter les positions futures. | Une position peut avoir accès à une partie seulement des tokens transmis. |
 
-Le contexte actif désigne les informations d'entrée ; les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés calculés par le Transformer à partir de ces informations.
+Le contexte actif désigne les informations d'entrée. Une [représentation contextualisée](contextualized-representations.qmd) est un état caché vectoriel que les couches du Transformer calculent à partir des informations accessibles. C'est le résultat du calcul, distinct du contexte actif et de l'historique stocké.
 
 ## Distinguer les notions voisines
 
@@ -101,12 +98,6 @@ La **récupération documentaire** sélectionne des documents ou passages dans u
 Une **mémoire persistante** conserve des informations entre plusieurs appels ou conversations. Elle peut alimenter le contexte, mais un fait stocké ou retrouvé n'est pas automatiquement transmis : le système doit encore le sélectionner et l'inclure dans l'entrée, ou le rendre accessible par un outil appelé. Cette frontière entre information trouvée et information transmise est essentielle.
 
 L'**ICL**, enfin, désigne ce que le modèle fait avec les informations et démonstrations effectivement présentes dans son contexte, sans mise à jour des paramètres. RAG, mémoire et ICL peuvent se combiner, mais répondent à des questions différentes : retrouver, conserver, transmettre et exploiter.
-
-## Un exemple de conception
-
-Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte utile peut réunir les consignes de réponse et règles de sécurité, la question, les décisions pertinentes de la conversation, les extraits de fichiers retrouvés pour cette question et les résultats d'outils associés à leur provenance.
-
-Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
 
 ## Limites et points de vigilance
 
