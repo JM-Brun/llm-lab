@@ -71,21 +71,50 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$, where $T$ is the sequence length.
 
-1. **Scores:** $S=QK^\top$, with shape $T\times T$.
-2. **Scaling:** $S/\sqrt{d_k}$.
-3. **Optional mask:** add $M$ to exclude inaccessible query-key pairs before normalization.
-4. **Normalization:** $A=\operatorname{softmax}(S/\sqrt{d_k}+M)$, row-wise. For a given query, [softmax](probabilities.qmd#from-logits-to-a-categorical-distribution) divides the exponential of each accessible key’s score by the sum of the exponentials over those keys.
-5. **Aggregation:** $O=AV$, with shape $T\times d_v$.
-
-Thus,
-
 $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
+The raw scores $S=QK^\top$, the scaled scores $S'=S/\sqrt{d_k}$, the masked scores $S''=S'+M$ and the weights $A=\operatorname{softmax}(S'')$ all have shape $T\times T$, as does the optional mask $M$. For each query, [softmax](probabilities.qmd#from-logits-to-a-categorical-distribution) divides the exponential of each accessible key’s score by the sum of the exponentials over those keys. Finally, $O=AV$ has shape $T\times d_v$.
+
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). In this computation, the additive mask is applied to scaled scores **before** softmax. The next lesson, on [causal masking](causal-masking.qmd), explains how to construct the mask and identify accessible positions.
 
 In the running example “What have the Romans ever done for us?”, follow the final position of the prefix. Its query is compared with the keys at accessible positions, and its weights combine their values. The sum is the head's output for that position. The [causal mask](causal-masking.qmd) determines which positions are accessible.
+
+<details class="attention-computation-step">
+<summary>1 — Compare queries with keys</summary>
+
+The product $S=QK^\top$ takes two matrices $Q$ and $K$ of shape $T\times d_k$ and yields a matrix $S$ of shape $T\times T$. Each row contains one query's scores against all $T$ keys.
+
+</details>
+
+<details class="attention-computation-step">
+<summary>2 — Scale the scores</summary>
+
+Divide each score by $\sqrt{d_k}$. The input $S$ and the output $S'=S/\sqrt{d_k}$ both have shape $T\times T$.
+
+</details>
+
+<details class="attention-computation-step">
+<summary>3 — Exclude inaccessible keys if a mask applies</summary>
+
+Add the scaled scores $S'$ and mask $M$, both of shape $T\times T$. In the output $S''=S'+M$ of the same shape, inaccessible pairs have score $-\infty$ before normalization.
+
+</details>
+
+<details class="attention-computation-step">
+<summary>4 — Turn one query's scores into weights</summary>
+
+Apply $A=\operatorname{softmax}(S'')$ row by row. The input $S''$ and output $A$ have shape $T\times T$. Each non-empty row is a probability distribution over the positions accessible to its query.
+
+</details>
+
+<details class="attention-computation-step">
+<summary>5 — Combine the values with these weights</summary>
+
+The product $O=AV$ takes weights $A$ of shape $T\times T$ and values $V$ of shape $T\times d_v$. The output $O$ has shape $T\times d_v$, with one weighted sum per query.
+
+</details>
 
 ## From the mechanism to the calculation
 
