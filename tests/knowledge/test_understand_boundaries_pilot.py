@@ -54,16 +54,14 @@ def test_boundary_evidence_resolves_to_core_and_published_practice(language: str
         label = "Reprendre la révision" if language == "fr" else "Return to the review plan"
         assert artifacts[exercise_fragment] == f"**{label}** · {return_links}\n"
 
-        # Remove this exception after #1453 lands and its exercise includes the fragment.
-        if transfer.anchor != "ex-final-state-to-next-token":
-            exercise = site_pages[exercise_id]
-            include_path = relpath(exercise_fragment, exercise.path.parent)
-            shortcode = "{{< include " + include_path + " >}}"
-            assert exercise.source.count(shortcode) == 1, exercise_id
-            exercise_body = exercise.source.split(f"{{#{transfer.anchor}}}", 1)[1]
-            exercise_body = exercise_body.split("\n##", 1)[0]
-            solution, closed, after_solution = exercise_body.partition("</details>")
-            assert closed and shortcode in after_solution and shortcode not in solution, exercise_id
+        exercise = site_pages[exercise_id]
+        include_path = relpath(exercise_fragment, exercise.path.parent)
+        shortcode = "{{< include " + include_path + " >}}"
+        assert exercise.source.count(shortcode) == 1, exercise_id
+        exercise_body = exercise.source.split(f"{{#{transfer.anchor}}}", 1)[1]
+        exercise_body = exercise_body.split("\n##", 1)[0]
+        solution, closed, after_solution = exercise_body.partition("</details>")
+        assert closed and shortcode in after_solution and shortcode not in solution, exercise_id
 
         for stage_id, explanation in boundary.explanations.items():
             lesson_id = getattr(explanation.pages, language)
