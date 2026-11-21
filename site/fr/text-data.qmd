@@ -56,6 +56,20 @@ Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer d
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
 :::
 
+<div class="pipeline-stepper" role="group" aria-label="Du texte aux représentations du modèle">
+  <span class="step-item">1. Texte source</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">2. Tokens</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active">3. IDs</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="embedding-space.qmd">4. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">5. Position</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="contextualized-representations.qmd">6. États contextualisés</a>
+</div>
+
 ## Pourquoi le découpage compte {#ce-que-la-tokenisation-change-et-ce-quelle-ne-dit-pas}
 
 - **Capacité.** Une fenêtre de 8 000 tokens admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
