@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import runpy
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +26,10 @@ def _write_page(
     language: str,
     *,
     next_page: str | None = None,
+    child_page: str | None = None,
+    related_page: str | None = None,
     topic: str | None = None,
+    domain: str | None = None,
     destination: str = "understand",
     page_type: str = "concept-lesson",
     revision_role: str | None = None,
@@ -45,10 +51,12 @@ def _write_page(
     metadata = {
         "id": page_id,
         "suggested_route": {"previous": None, "next": next_page},
-        "hierarchy": {"parents": [], "children": []},
-        "related": [],
+        "hierarchy": {"parents": [], "children": [child_page] if child_page else []},
+        "related": [related_page] if related_page else [],
         "tags": tags,
     }
+    if domain is not None:
+        metadata["domain"] = domain
     if revision_role is not None:
         metadata["revision_role"] = revision_role
     if revision_of is not None:
@@ -154,6 +162,8 @@ def _index(tmp_path: Path) -> ProjectIndex:
 def test_counts_distinguish_page_records_concepts_and_route_memberships(tmp_path: Path) -> None:
     stats = _index(tmp_path).stats()
     assert stats["published_page_records"] == 3
+    assert stats["declared_topics"] == 2
+    assert stats["bilingual_topics"] == 1
     assert stats["concepts"] == 2
     assert stats["route_memberships"] == 3
     assert stats["pages_by_tag"]["language"] == {"en": 2, "fr": 1}
@@ -172,10 +182,21 @@ def test_concept_page_associations_are_explicit_and_bidirectional(tmp_path: Path
 
 
 def test_page_relations_keep_family_and_direction(tmp_path: Path) -> None:
-    index = _index(tmp_path)
+    _index(tmp_path)
+    _write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        next_page="en/query",
+        child_page="en/query",
+        related_page="en/query",
+    )
+    index = ProjectIndex.build(tmp_path)
     incoming = index.incoming_pages("en/query")
     assert [(edge.source, edge.family, edge.relation) for edge in incoming] == [
-        ("en/attention", "suggested_route", "next")
+        ("en/attention", "hierarchy", "children"),
+        ("en/attention", "related", "related"),
+        ("en/attention", "suggested_route", "next"),
     ]
     assert index.outgoing_pages("en/attention", family="suggested_route")[0].target == "en/query"
 
@@ -188,6 +209,72 @@ def test_route_core_and_optional_membership_are_distinct(tmp_path: Path) -> None
     assert [page.page_id for page in index.route_stage("orientation", "en", "optional")] == [
         "en/query"
     ]
+
+
+def test_report_distinguishes_shared_pages_topics_and_repeated_memberships(tmp_path: Path) -> None:
+    _index(tmp_path)
+    _write_page(tmp_path / "site", "shared/attention", "shared", topic="attention")
+    route_path = tmp_path / "data" / "guided-route.yml"
+    route = yaml.safe_load(route_path.read_text(encoding="utf-8"))
+    route["stages"].append({"id": "revisit", "pages": {"en": ["en/attention"]}})
+    route_path.write_text(yaml.safe_dump(route), encoding="utf-8")
+
+    command = [
+        sys.executable,
+        str(ROOT / "site/tools/report_project_index.py"),
+        "--root",
+        str(tmp_path),
+        "--language",
+        "en",
+    ]
+    report_json = subprocess.check_output([*command, "--format", "json"], text=True)
+    assert report_json == subprocess.check_output([*command, "--format", "json"], text=True)
+    report = json.loads(report_json)
+    assert report["source"] == {"commit": None, "inputs_modified": None}
+    assert report["page_selection"] == {
+        "filters": {"language": "en"},
+        "unit": "published page ID",
+        "count": 2,
+        "ids": ["en/attention", "en/query"],
+    }
+    assert report["project_counts"]["published_page_records"] == 4
+    assert report["project_counts"]["bilingual_topics"] == 1
+    assert report["project_counts"]["route_memberships"] == 4
+    assert report["project_counts"]["unique_route_pages"] == 3
+    assert "build" in report["unregistered_coverage_dimensions"]
+    (finding,) = report["review_findings"]
+    assert finding["entity_ids"] == {"concept": "query", "page": "en/attention"}
+    assert finding["evidence"]["path"] == "site/en/attention.qmd"
+    assert finding["severity"] == "review"
+    markdown = subprocess.check_output(command, text=True)
+    assert "| `unique_route_pages` |" in markdown
+    assert "`query` → `site/en/attention.qmd`" in markdown
+
+
+def test_explicit_facets_and_counts_survive_reversed_discovery(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _index(tmp_path)
+    domain = "architectures-mechanisms"
+    _write_page(tmp_path / "site", "fr/attention", "fr", domain=domain)
+    index = ProjectIndex.build(tmp_path)
+    assert [page.page_id for page in index.select_pages(domain=domain, language="fr")] == [
+        "fr/attention"
+    ]
+    assert index.select_pages(domain=domain, language="en") == ()
+    assert [item["id"] for item in index.select_concepts(domain=domain, importance="core")] == [
+        "attention"
+    ]
+    assert index.select_concepts(domain="unknown", importance="core") == ()
+    assert index.concepts_for_page("en/query") == ()  # A matching concept ID is not a link.
+    discover = Path.rglob
+    monkeypatch.setattr(
+        Path, "rglob", lambda self, pattern: iter(reversed(list(discover(self, pattern))))
+    )
+    rebuilt = ProjectIndex.build(tmp_path)
+    assert rebuilt.stats() == index.stats()
+    assert rebuilt.page_edges == index.page_edges
+    assert rebuilt.route_memberships == index.route_memberships
 
 
 def test_unknown_ids_fail_clearly(tmp_path: Path) -> None:

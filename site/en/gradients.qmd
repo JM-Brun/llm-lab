@@ -65,6 +65,8 @@ For a one-hot target, the components of this gradient sum to zero: $\sum_i(p_i-\
 
 ### Numerical example: the gradient for one target {#numerical-example-from-loss-to-output-weights}
 
+The [batch loss](loss.qmd) aggregates losses over valid targets. Here, isolate the first target to compute how its loss changes with the logits.
+
 For the first step of the Romans example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“They”), so:
 
 $$
@@ -128,6 +130,8 @@ The score for “They” rises by $0.08$. A fresh softmax gives $p'(\text{They})
 :::
 
 Calculate [two updates at equal loss](exercises/gradients.qmd#ex-score-to-parameter-update) and compare the next prediction.
+
+In the [training loop](training-loop.qmd#replay-one-step-on-the-first-token), that new prediction comes from the forward pass after the update.
 
 The [validation measurement](training-loop.qmd#training-loss-versus-validation-loss) uses held-out data to estimate behavior on new examples.
 

@@ -32,7 +32,7 @@ This document is the operational backlog for turning the proposed Project Intell
 - Inverse resource/revision query methods were merged in PRs #1399, #1411 and #1415 and tested against the real repository.
 - Source/extraction, computational graph, historical, experiment and Build-milestone adapters remain future work.
 - No semantic links are inferred from tags, titles, body text or lexical similarity.
-- The metric registry and coverage-state contract are documented in [project-metric-registry.md](project-metric-registry.md). The concept matrix has synthetic and real-repository tests. Diagnostics and interfaces remain pending.
+- The metric registry and coverage-state contract are documented in [project-metric-registry.md](project-metric-registry.md). The concept matrix and the first structural diagnostic have synthetic tests. The read-only report exposes inventory counts and evidence from the matrix.
 
 ## 2. Remaining work — ordered backlog
 
@@ -88,14 +88,11 @@ Tests must exercise the real repository, not only synthetic fixtures. Cover all 
 
 **Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not_applicable, not_registered, needs_review and not_assessed; unsupported dimensions remain visibly unregistered.
 
-### Step 6 — Diagnostics, then interfaces
+### Step 6 — First diagnostic and interface
 
-Implement deterministic, read-only diagnostics from the validated query and coverage layers first. Every finding must carry a rule ID, severity, source path, stable entity IDs, evidence and suggested review action. Do not infer semantic relationships from lexical similarity.
+The first rule reports a missing concept association when the explicit topic resolves to exactly one published page per language and only one is linked. A finding carries the rule ID, severity, source path, stable concept and page IDs, evidence and a review action. Unresolved pairings remain coverage-review states.
 
-Only after diagnostics are stable, add:
-- CLI commands;
-- machine-readable JSON and review-friendly Markdown/CSV projections;
-- a dashboard or site interface consuming the same query results.
+The [CLI](../site/tools/README.md) reports JSON or Markdown from `ProjectIndex` and the same coverage matrix. Page filters act only on the selected page rows. The JSON includes exact units, exclusions, the source commit and whether site/data paths differ from that commit.
 
 The CLI, JSON and dashboard must not implement separate counting or relationship semantics.
 
@@ -132,8 +129,8 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Implement deterministic diagnostics in step 6 over the ProjectIndex projection. The structural FR/EN rule can supply specific concept IDs and published counterpart paths for review.
-2. Use the validated diagnostics and metric definitions when implementing CLI and dashboard interfaces.
+1. Review findings against the published counterpart pages before changing any explicit concept links.
+2. Implement later adapters only when their canonical evidence contracts are reviewed. A dashboard or CSV projection can consume the same results when needed.
 
 ## 6. Definition of done for the PIL
 

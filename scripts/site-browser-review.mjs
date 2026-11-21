@@ -262,10 +262,66 @@ async function checkLocalizedSearch(context, mapUrl, lang) {
   }
 }
 
+async function reviewAttentionDisclosures(page, context, mobile) {
+  const steps = page.locator("details.attention-computation-step");
+  const equation = steps.first().locator("xpath=..").locator(":scope > p .math.display");
+  if (await steps.count() !== 5 || !await equation.isVisible()) {
+    throw new Error("Attention must show its complete equation beside five optional steps.");
+  }
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const cdp = await context.newCDPSession(page);
+  try {
+    const { root } = await cdp.send("DOM.getDocument");
+    const { nodeIds } = await cdp.send("DOM.querySelectorAll", {
+      nodeId: root.nodeId,
+      selector: "details.attention-computation-step > summary",
+    });
+    for (const [index, step] of (await steps.all()).entries()) {
+      const summary = step.locator(":scope > summary");
+      const math = step.locator(".math").first();
+      const expectExpanded = async expanded => {
+        const { nodes: [node] } = await cdp.send("Accessibility.getPartialAXTree", {
+          nodeId: nodeIds[index], fetchRelatives: false,
+        });
+        if (node.role?.value !== "DisclosureTriangle" || !node.name?.value ||
+            node.properties?.find(property => property.name === "expanded")?.value?.value !== expanded ||
+            await math.isVisible() !== expanded) {
+          throw new Error(`Attention step ${index + 1} does not expose its name, state and equation.`);
+        }
+      };
+      await expectExpanded(false);
+      if (mobile) {
+        await summary.tap();
+      } else {
+        if (index === 0) await summary.focus();
+        else await page.keyboard.press("Tab");
+        if (!await summary.evaluate(element => element === document.activeElement &&
+            element.matches(":focus-visible") && getComputedStyle(element).outlineStyle !== "none")) {
+          throw new Error(`Attention step ${index + 1} has no visible keyboard focus.`);
+        }
+        await page.keyboard.press("Enter");
+      }
+      await expectExpanded(true);
+      if (!await step.evaluate(element => getComputedStyle(element).animationName === "none")) {
+        throw new Error(`Attention step ${index + 1} animates with reduced motion requested.`);
+      }
+      if (mobile) await summary.tap();
+      else await page.keyboard.press("Space");
+      await expectExpanded(false);
+    }
+  } finally {
+    await cdp.detach();
+  }
+  return { steps: 5, activation: mobile ? "touch emulation" : "keyboard", reducedMotion: true };
+}
+
 async function runCase(testCase, caseIndex) {
   const startedAt = performance.now();
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
-  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, colorScheme: theme });
+  const mobileAttention = label === "mobile" && pagePath === "scaled-dot-product-attention.html";
+  const context = await browser.newContext({
+    viewport, deviceScaleFactor: 1, colorScheme: theme, hasTouch: mobileAttention,
+  });
   const page = await context.newPage();
   page.setDefaultTimeout(5000);
   const consoleErrors = [];
@@ -342,6 +398,7 @@ async function runCase(testCase, caseIndex) {
     }
 
     if (pagePath === "scaled-dot-product-attention.html") {
+      item.attentionDisclosures = await reviewAttentionDisclosures(page, context, mobileAttention);
       const lab = page.locator("[data-attention-intervention]");
       const summary = lab.locator(":scope > summary");
       await summary.focus();
@@ -429,6 +486,8 @@ async function runCase(testCase, caseIndex) {
           practiceContainerPresent: Boolean(document.querySelector(".learning-practice")),
           practiceAnchorCount: document.querySelectorAll(".learning-practice a").length,
           heroLinks: readLinks(".hero-actions a"),
+          nextLinks: readLinks(".page-navigation .nav-page-next a"),
+          nextAccessibleName: document.querySelector(".page-navigation .nav-page-next a")?.getAttribute("aria-label"),
           entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
         };
       });
@@ -447,6 +506,18 @@ async function runCase(testCase, caseIndex) {
         `homepage transversal Practice links are missing or misrouted (container present: ${item.homepageOrientation.practiceContainerPresent}; anchors: ${item.homepageOrientation.practiceAnchorCount}; observed: ${JSON.stringify(item.homepageOrientation.practiceLinks)})`,
       );
       if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
+      const { nextLinks, nextAccessibleName } = item.homepageOrientation;
+      if (!endsWith(nextLinks, ["learning-map.html"]) || !nextLinks[0].label ||
+          !nextAccessibleName?.includes(nextLinks[0].label)) {
+        throw new Error("The homepage next link must visibly name the local learning map and expose the same destination to assistive technology.");
+      }
+    }
+    if (pagePath === "training-examples.html") {
+      const comparison = page.locator("#stride-window-example");
+      const windows = await comparison.locator(":scope > ul > li").count();
+      if (windows !== 2 || !await comparison.evaluate(element => element.scrollWidth <= element.clientWidth + 1)) {
+        throw new Error("The two stride examples must reflow within the reading column.");
+      }
     }
     if (kind === "spine-overview") {
       item.svgDiagnostics = await page.evaluate(() => [...document.querySelectorAll("svg")].map((svg, index) => {

@@ -93,13 +93,12 @@ Stride is the number of positions by which the window start moves between exampl
 | 4 | 2 | Input windows overlap and reuse context |
 | 4 | 5 | Some positions may be skipped |
 
-```{mermaid}
-flowchart LR
-    A["Stream: 0 1 2 3 4 5 6 7"] --> B["Stride 4: [0 1 2 3]"]
-    B --> C["Then [4 5 6 7]"]
-    A --> D["Stride 2: [0 1 2 3]"]
-    D --> E["Then [2 3 4 5]"]
-```
+::: {#stride-window-example}
+For the stream `[0, 1, 2, 3, 4, 5, 6, 7]`, compare the first two input windows.
+
+- **Stride 4** · `[0, 1, 2, 3]` then `[4, 5, 6, 7]`.
+- **Stride 2** · `[0, 1, 2, 3]` then `[2, 3, 4, 5]`.
+:::
 
 The table describes **input windows only**. For next-token training, each window also needs a one-token-shifted target; the last input token therefore needs a successor in the source stream. The corpus tail must be handled explicitly (for example, by dropping an incomplete example or using a deliberate end-of-sequence convention).
 

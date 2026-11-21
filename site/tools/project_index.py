@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from page_index import PublishedPage, load_published_pages
+from page_index import PublishedPage, group_bilingual_topics, load_published_pages
 from strict_yaml import load_yaml
 
 
@@ -404,6 +404,8 @@ class ProjectIndex:
     pages_by_concept: dict[str, frozenset[str]]
     concepts_by_page: dict[str, frozenset[str]]
     pages_by_domain: dict[str, frozenset[str]]
+    concepts_by_domain: dict[str, frozenset[str]]
+    concepts_by_importance: dict[str, frozenset[str]]
     pages_incoming: dict[str, tuple[PageEdge, ...]]
     pages_outgoing: dict[str, tuple[PageEdge, ...]]
     route_pages: dict[tuple[str, str, str], tuple[str, ...]]
@@ -444,7 +446,14 @@ class ProjectIndex:
 
         page_to_concepts: dict[str, set[str]] = defaultdict(set)
         concept_to_pages: dict[str, set[str]] = defaultdict(set)
+        concepts_by_domain: dict[str, set[str]] = defaultdict(set)
+        concepts_by_importance: dict[str, set[str]] = defaultdict(set)
         for concept_id, concept in concepts.items():
+            for domain in concept.get("domains", []):
+                concepts_by_domain[domain].add(concept_id)
+            importance = concept.get("importance")
+            if isinstance(importance, str):
+                concepts_by_importance[importance].add(concept_id)
             # In schema v2, concepts[].resources contains page IDs. It is not
             # data/resources.yml and must not be counted as a non-page resource.
             for page_id in concept.get("resources", []):
@@ -522,6 +531,10 @@ class ProjectIndex:
             pages_by_concept={key: frozenset(value) for key, value in concept_to_pages.items()},
             concepts_by_page={key: frozenset(value) for key, value in page_to_concepts.items()},
             pages_by_domain={key: frozenset(value) for key, value in page_domain_index.items()},
+            concepts_by_domain={key: frozenset(value) for key, value in concepts_by_domain.items()},
+            concepts_by_importance={
+                key: frozenset(value) for key, value in concepts_by_importance.items()
+            },
             pages_incoming={
                 key: tuple(
                     sorted(value, key=lambda edge: (edge.source, edge.family, edge.relation))
@@ -551,13 +564,27 @@ class ProjectIndex:
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
-        """Select pages by exact tag dimensions (type, destination, topic, etc.)."""
+        """Select by exact tags or the explicit page-map domain field."""
         candidates: set[str] | None = None
         for dimension, value in filters.items():
-            matches = set(self.pages_by_tag.get((dimension, value), frozenset()))
+            if dimension == "domain":
+                matches = set(self.pages_by_domain.get(value, frozenset()))
+            else:
+                matches = set(self.pages_by_tag.get((dimension, value), frozenset()))
             candidates = matches if candidates is None else candidates & matches
         ids = candidates if candidates is not None else set(self.pages_by_id)
         return tuple(self.pages_by_id[key] for key in sorted(ids))
+
+    def select_concepts(
+        self, *, domain: str | None = None, importance: str | None = None
+    ) -> tuple[dict[str, Any], ...]:
+        """Select canonical concept records by explicit domain and importance."""
+        ids = set(self.concepts_by_id)
+        if domain is not None:
+            ids.intersection_update(self.concepts_by_domain.get(domain, ()))
+        if importance is not None:
+            ids.intersection_update(self.concepts_by_importance.get(importance, ()))
+        return tuple(self.concepts_by_id[key] for key in sorted(ids))
 
     def pages_for_concept(self, concept_id: str) -> tuple[PublishedPage, ...]:
         """Return pages explicitly listed by a canonical concept record."""
@@ -689,12 +716,21 @@ class ProjectIndex:
         by_tag: dict[str, dict[str, int]] = defaultdict(dict)
         for (dimension, value), ids in sorted(self.pages_by_tag.items()):
             by_tag[dimension][value] = len(ids)
+        localized_topics = group_bilingual_topics(
+            {key: page.tags for key, page in self.pages_by_id.items()}
+        )
         return {
             "published_page_records": len(self.pages_by_id),
+            "declared_topics": len(by_tag.get("topic", {})),
+            "bilingual_topics": sum(
+                set(group) == {"fr", "en"} and all(len(ids) == 1 for ids in group.values())
+                for group in localized_topics.values()
+            ),
             "concepts": len(self.concepts_by_id),
             "domains": len(self.domains_by_id),
             "page_edges": len(self.page_edges),
             "route_memberships": len(self.route_memberships),
+            "unique_route_pages": len({entry.page_id for entry in self.route_memberships}),
             "revision_edges": len(self.revision_edges),
             "revision_support_by_status": dict(
                 sorted(
@@ -705,19 +741,11 @@ class ProjectIndex:
             ),
             "pages_by_tag": dict(by_tag),
             "concepts_by_importance": {
-                importance: sum(
-                    1
-                    for concept in self.concepts_by_id.values()
-                    if concept.get("importance") == importance
-                )
+                importance: len(self.concepts_by_importance.get(importance, ()))
                 for importance in ("core", "supporting", "specialized")
             },
             "concepts_by_domain": {
-                domain_id: sum(
-                    1
-                    for concept in self.concepts_by_id.values()
-                    if domain_id in concept.get("domains", [])
-                )
+                domain_id: len(self.concepts_by_domain.get(domain_id, ()))
                 for domain_id in sorted(self.domains_by_id)
             },
         }

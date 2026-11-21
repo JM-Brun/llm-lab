@@ -63,6 +63,15 @@ Le [premier exercice de lookup](../site/fr/exercises/text-data.qmd#ex-text-to-em
 
 La trace GPT-2 a été exécutée en FR et EN. Le rendu a été parcouru au clavier de la carte jusqu’aux plongements, avec un aller-retour vers la trace et un accès direct à l’exercice de lookup. Les deux langues ont été testées dans Chromium à 390 et 1 280 px.
 
+
+### Du lookup au préfixe accessible
+
+La leçon sur les [plongements FR](../site/fr/embedding-space.qmd#lookup) et [EN](../site/en/embedding-space.qmd#lookup) reprend le cas de l’exercice où l’ID 17 apparaît aux positions 0 et 3. Lire deux fois la ligne 17 donne le même vecteur. La [leçon sur la position](../site/fr/positional-encoding.qmd) s’appuie sur ces deux occurrences pour faire calculer les entrées distinctes du premier bloc dans le cas additif. La [leçon sur la contextualisation](../site/fr/contextualized-representations.qmd) fixe ensuite le rang et demande de distinguer un changement dans le préfixe accessible d’un changement après le token courant.
+
+Les versions FR et EN expliquent qu’un même token garde son ID dans un vocabulaire donné, tandis que le découpage du texte peut produire des tokens différents. La position agit selon l’architecture. Le masque causal fixe les positions visibles par chaque requête.
+
+La comparaison à `56e1cdf` retrouve les titres et ancres, les figures et leurs textes alternatifs, les équations affichées, les destinations existantes et les ressources complémentaires des six pages. Les exercices et leurs corrigés restent identiques. Les trajets vers les trois exercices et l’ouverture des corrigés au clavier ont été vérifiés dans Chromium en FR et EN à 390 et 1 280 px.
+
 ### Travail restant
 
 | Ordre | Travail restant | Résultat à consigner |
@@ -87,6 +96,12 @@ Pour suivre la conservation lors d’un déplacement, prendre la dernière versi
 Le fil rouge reprend le trajet guidé [Probabilités](../site/fr/probabilites.qmd#running-example-next-token) → [Entropie](../site/fr/entropy.qmd) → [Génération](../site/fr/generation.qmd#la-boucle-sur-un-exemple) → [Apprentissage en contexte](../site/fr/in-context-learning.qmd) → [Ingénierie du contexte](../site/fr/context-engineering.qmd) → [Vraisemblance](../site/fr/vraisemblance.qmd). Le trajet [EN](../site/en/entropy.qmd) suit le même ordre. Le lien vers l’entropie rejoint le calcul de température. Le [cas du token choisi et de la cible observée](../site/fr/cross-entropy.qmd#chosen-token-vs-target) rejoint l’explication de la surprise. La carte exploratoire conserve le trajet direct Entropie → Vraisemblance pour étudier la surprise et le scoring. Les liens correspondants restent accessibles dans le corps et les ressources de la leçon.
 
 La génération reprend la distribution à quatre candidats, puis change le préfixe pour le deuxième tour. L’[exercice sur les deux préfixes](../site/fr/exercises/vraisemblance.qmd#ex-generation-versus-scoring) garde son tableau, ses questions et son corrigé. La leçon d’ingénierie du contexte pose la question avant de renvoyer à l’exercice, qui contient les valeurs et le résultat. Les formules, figures, ancres de section, exemples et références des leçons restent en place. Pour le pilote aval, relever quel préfixe le lecteur choisit pour chacun des deux calculs avant d’ouvrir le corrigé.
+
+### De la perte locale à la mise à jour
+
+Le calcul de la [loss FR](../site/fr/loss.qmd#de-la-perte-locale-à-la-loss-du-batch) et [EN](../site/en/loss.qmd#from-local-penalty-to-batch-loss) ouvre l’exemple du gradient à la première cible. L’exemple isole la pénalité locale de 0,511 nat. La loss de 0,476 nat par token repose sur les trois cibles de la continuation illustrative. La formule du gradient de la moyenne et le cas des positions ignorées restent dans le volet de la leçon sur les gradients.
+
+Le [pas d’entraînement FR](../site/fr/training-loop.qmd#rejouer-un-pas-sur-le-premier-token) et [EN](../site/en/training-loop.qmd#replay-one-step-on-the-first-token) est accessible depuis la leçon sur les gradients après le calcul de mise à jour. Il précède les explications sur les lots, les époques et l’initialisation. Le calcul SGD de la tête de sortie, les deux exercices de transfert et les réserves sur la validation sont conservés. Pendant le [pilote aval](audits/learning-path-learner-evaluation.md#prediction-use-pilot), relever à quel moment le lecteur fait changer les paramètres et s’il précise la quantité qu’il dérive.
 
 L’ordre actuel sert de référence pour ces vérifications. Les sections ci-dessous conservent l’audit éditorial initial.
 

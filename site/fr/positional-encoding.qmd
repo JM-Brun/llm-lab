@@ -35,7 +35,7 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 
 ## Pourquoi ajouter une information de position ?
 
-La page précédente a montré que le lookup fournit un vecteur de contenu, mais pas l'emplacement du token dans la séquence. Or, dans une phrase, le rôle d'un token dépend souvent de sa place : permuter « le chat poursuit le chien » peut changer qui poursuit qui. Le modèle doit donc disposer d'un signal d'ordre.
+Les deux occurrences de `chat` aux positions 0 et 3 lisent le même vecteur dans la [table de plongements](embedding-space.qmd). Pour tenir compte de leur rang, le modèle a besoin d’un signal d’ordre. Permuter « le chat poursuit le chien » peut changer qui poursuit qui.
 
 Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
 
@@ -70,7 +70,7 @@ La distinction principale est celle entre information **absolue** et information
 :::
 ::::
 
-Pour le cas additif, [calculez les entrées du premier bloc pour deux occurrences du même token](exercises/text-data.qmd#ex-token-to-block-input).
+Dans le cas additif de l’exercice, la table jouet donne le même plongement $(2,-1)$ aux deux occurrences de `chat`. Le vecteur ajouté dépend de leur position. [Calculez les deux entrées du premier bloc](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
@@ -96,7 +96,7 @@ Pour comprendre la dépendance au décalage relatif et les conventions de rotati
 
 ## Où se situe cette étape dans le parcours ?
 
-Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Les [représentations contextualisées](contextualized-representations.qmd), prochaine étape du parcours, décrivent comment les blocs Transformer transforment ces états initiaux en états dépendants du contexte. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il ordonne les positions visibles sans encoder leurs positions explicites.
+Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Les [représentations contextualisées](contextualized-representations.qmd), prochaine étape du parcours, décrivent comment les blocs Transformer transforment ces états initiaux en états dépendants du contexte. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il détermine les positions visibles par chaque requête.
 
 {{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
 
