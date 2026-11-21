@@ -33,7 +33,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 ::: {.chapter-lead}
 « C'est une bonne situation, ça, scribe ? » Une question courte peut appeler une réponse beaucoup plus longue. Posez-la à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
-Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, il estime ce qui pourrait venir ensuite, choisit un élément, puis recommence. Un programme qui prolonge ainsi un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
+La réponse se construit un token après l'autre. À partir du texte déjà écrit, le **modèle de langage** calcule des probabilités pour le prochain token. Une règle de décodage sélectionne un token, qui rejoint le texte avant le calcul suivant. Un modèle de langage entraîné à grande échelle est un **grand modèle de langage** (*large language model*, LLM).
 
 Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. L'assistant est une application ; le LLM est le modèle qu'elle interroge : seul ce dernier est étudié ici.
 :::
@@ -64,8 +64,6 @@ Le texte « C'est une bonne situation, ça, scribe ? » est le **préfixe** : la
 | « Moi » | 0,1 |
 | « Oui » | 0,1 |
 
-[Refaire le calcul sur une continuation observée](exercises/vraisemblance.qmd#ex-overview-likelihood-transfer).
-
 Ces valeurs sont fictives. Dans un vrai tokenizer, un token peut être un fragment de mot ; le même exemple numérique est repris dans plusieurs pages pour permettre des calculs à la main.
 
 C'est une **distribution conditionnelle** : les probabilités sont calculées en tenant compte du préfixe et leur somme vaut 1. Si la règle de décodage choisit « Vous », ce token est ajouté au contexte ; le modèle recalcule alors une nouvelle distribution, désormais conditionnée par le préfixe enrichi.
@@ -78,11 +76,22 @@ Trois termes suffisent :
 - **Contexte :** tokens fournis et tokens déjà produits.
 - **Paramètres :** nombres appris, fixes pendant l'inférence ordinaire.
 
-La vraisemblance d'une séquence est le produit des probabilités conditionnelles de ses tokens ([formalisation mathématique](language-modeling-math.qmd)). Une suite probable n'est pas nécessairement vraie : bien prédire ne prouve pas une compréhension humaine ([limites](llm-limits.qmd)).
+Une suite probable n'est pas nécessairement vraie : bien prédire ne prouve pas une compréhension humaine ([limites](llm-limits.qmd)).
 
 ## Du texte à la distribution {#text-to-distribution}
 
 {{< include ../includes/next-token-explorer.html >}}
+
+<details>
+<summary>Si la règle retient « Je » au premier tour, qu'est-ce qui change au deuxième ?</summary>
+
+Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distribution à partir de ce préfixe, avec les mêmes paramètres. Les probabilités du tableau du deuxième tour correspondent au préfixe qui se termine par « Vous ».
+
+</details>
+
+**Suite du parcours.** [Voir comment le texte devient une suite de tokens et d'identifiants](text-data.qmd). Revenez aux sections suivantes pour relier le calcul aux architectures de modèles, au RAG et aux outils d'un assistant.
+
+### Aperçu du calcul à l'intérieur d'un GPT
 
 ![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits convertis en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
 
@@ -103,7 +112,10 @@ Une distribution calculée peut servir à produire une suite, à scorer une suit
 - **Scorer :** calculer la probabilité d'une séquence observée, sa **vraisemblance** ([vraisemblance](vraisemblance.qmd)).
 - **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* utilise les tokens réels ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
 
-Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; l'[entropie](entropy.qmd) est la surprise moyenne attendue. Scorer n'est pas évaluer : l'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
+Pour une probabilité de 0,6, la surprise vaut $-\ln(0{,}6)\approx 0{,}51$ nat. L'[entropie](entropy.qmd) est la surprise moyenne attendue. Le scoring mesure la vraisemblance d'une cible ou d'une suite. L'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
+
+La vraisemblance d'une séquence est le produit des probabilités conditionnelles de ses tokens ([formalisation mathématique](language-modeling-math.qmd)). [Refaire le calcul sur une continuation observée](exercises/vraisemblance.qmd#ex-overview-likelihood-transfer).
+
 ## LLM, Transformer, GPT : trois notions {#llm-transformer-gpt}
 
 **LLM** désigne un modèle de langage entraîné à grande échelle, pas une architecture particulière. Aucun seuil universel de paramètres ne suffit à définir la catégorie : les données et le calcul d'entraînement comptent aussi ([lois d'échelle](scaling-laws.qmd)).

@@ -62,11 +62,13 @@ The details of each lesson follow the form **ideas used → object studied · in
 
 {{< include ../includes/generated-conceptual-route-en.qmd >}}
 
-The nine stages detail the study order and optional resources. Pages within a stage complement one another. The [exercise on held-out evaluation](experimental-evaluation.qmd) extends the route.
+The nine stages detail the study order and optional resources. Pages within a stage complement one another.
 
 [Learning path plan and review sheets](review-path.qmd)
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
+
+[Try the end-of-path exercise](training-loop.qmd#end-to-end-transfer), then [design an evaluation on held-out data](experimental-evaluation.qmd).
 
 ::: {.guided-route-companion}
 

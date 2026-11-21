@@ -218,6 +218,29 @@ Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règ
 </details>
 
 
+### Exercice de fin de parcours {#end-to-end-transfer}
+
+Un GPT jouet traite le préfixe déjà tokenisé $c=(U,V)$. À sa dernière position, il attribue les probabilités $(0{,}5;\,0{,}3;\,0{,}1;\,0{,}1)$ aux quatre candidats $A,B,C,D$. La continuation observée commence par $B$. Les valeurs du tableau sont fictives. À chaque point de contrôle, les deux pertes sont calculées en nats par token valide, sur les mêmes données de leur partition.
+
+| Mise à jour | Loss d'entraînement | Loss de validation |
+|---:|---:|---:|
+| 0 | 1,60 | 1,63 |
+| 20 | 1,12 | 1,28 |
+| 40 | 0,82 | 1,34 |
+
+1. Retracez ce qui transforme les identifiants $U,V$ en logits. Si l'application ajoute une consigne avant $U$, qu'est-ce qui change avant la passe avant ?
+2. Quel est le préfixe du deuxième tour de génération gloutonne ? Pour scorer le deuxième token de référence, quel préfixe faut-il utiliser ? Calculez la pénalité du premier token observé.
+3. À quel moment les poids changent-ils lorsqu'on utilise cette pénalité pour entraîner le modèle ? Quel point de contrôle choisir pour minimiser la loss de validation, et que reste-t-il à mesurer ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Les identifiants sélectionnent des [vecteurs de plongement](embedding-space.qmd). Le réseau exploite la [position](positional-encoding.qmd) et transforme les représentations dans les [blocs Transformer](transformer.qmd). La tête de sortie projette l'état final de la dernière position en [logits sur le vocabulaire](logits.qmd). Ajouter une consigne change le [contexte tokenisé](context-engineering.qmd) transmis au modèle. Les paramètres sont identiques au début du calcul.
+2. La [génération gloutonne](generation.qmd) prolonge $c$ par $A$. Le [scoring](vraisemblance.qmd) de la position suivante utilise $c$ prolongé par le token observé $B$. La pénalité du premier token vaut $-\ln(0{,}3)\approx 1{,}204$ nat.
+3. Après la [loss agrégée](loss.qmd) et la [rétropropagation](gradients.qmd), l'optimiseur applique la mise à jour. La validation s'effectue à paramètres fixes. Parmi les trois points observés, le point 20 minimise la loss de validation. La baisse de la loss d'entraînement alors que la loss de validation remonte est un indice de surapprentissage. Estimez la performance finale sur un ensemble de test réservé et avec une métrique adaptée à ce que vous voulez mesurer. Voir le [cas d'évaluation expérimentale](evaluation-experimentale.qmd).
+
+</details>
+
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
 
 ::: {.language-switch}
