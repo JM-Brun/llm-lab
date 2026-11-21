@@ -106,6 +106,8 @@ Sum the NLLs and valid-target counts separately, then divide. This gives every v
 
 </details>
 
+[Return to the Training stage in the review plan](../review-path.qmd#training).
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/loss.qmd) · [English](loss.qmd)
 :::

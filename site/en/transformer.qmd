@@ -217,31 +217,6 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 <span id="what-this-demonstration-does-and-does-not-establish"></span>
 <span id="observe-a-transformer-in-action"></span>
 
-<details class="learning-resources">
-<summary>
-  <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
-</summary>
-<div class="learning-resources__content">
-
-<h3>Explore in practice</h3>
-<p>The <a href="transformer-explainer.qmd">GPT-2 exploration workshop</a> lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization.</p>
-
-<h3 id="further-reading">Further reading</h3>
-<p>For visualizations, the foundational paper, and implementation resources, see the <a href="deepen.qmd#transformer-resources">Transformer resources in Deepen</a>. For a complementary first overview, see <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>.</p>
-
-<h3>Practice</h3>
-<p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
-
-</div>
-</details>
-
-{{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
-
-::: {.language-switch}
-**Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
-:::
-
 ::: {.self-check}
 ## Check your understanding
 
@@ -264,6 +239,31 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 
 </details>
 :::
+
+{{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
+:::
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content">
+
+<h3>Explore in practice</h3>
+<p>The <a href="transformer-explainer.qmd">GPT-2 exploration workshop</a> lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization.</p>
+
+<h3 id="further-reading">Further reading</h3>
+<p>For visualizations, the foundational paper, and implementation resources, see the <a href="deepen.qmd#transformer-resources">Transformer resources in Deepen</a>. For a complementary first overview, see <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>.</p>
+
+<h3>Practice</h3>
+<p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
+
+</div>
+</details>
 
 <span id="historical-transformer-diagram"></span>
 
