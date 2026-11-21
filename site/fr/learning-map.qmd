@@ -23,7 +23,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-[Neuf étapes de Comprendre](#parcours-théorique-understand) · [Carte des ressources](#explorer-les-ressources)
+[Neuf étapes de Comprendre](#guided-stages) · [Carte des ressources](#explorer-les-ressources)
 
 ::: {.guided-route-section}
 
@@ -57,7 +57,9 @@ $$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
 
 </details>
 
-Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires.
+### Les neuf étapes {#guided-stages}
+
+Ces étapes suivent le curriculum canonique. Elles détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires.
 
 [Plan du parcours et fiches de révision](review-path.qmd)
 
@@ -79,7 +81,7 @@ Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives
 <summary>Comment lire cette carte</summary>
 
 - **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
-- **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
+- **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d’Ariane ou la touche Échap permet de remonter d’un niveau à la fois.
 - **Pages** — un clic sur une page affiche ses détails (objectif, sections, liens) ; « Ouvrir la page » y conduit directement.
 - **Notions** — la vue « Notions canoniques » regroupe les concepts du registre bilingue versionné dans `data/concepts.yml` par domaine de découverte, avec leurs définitions, relations typées et pages ressources. La recherche et le filtre par type de relation réduisent la liste, une notion sélectionnée met en évidence ses voisines, et les notions liées restent cliquables depuis le panneau de détails.
 
