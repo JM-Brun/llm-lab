@@ -35,18 +35,16 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 **Tokenization** splits text into units called *tokens* and assigns each one an ID. This step is separate from the neural network, but it determines the model's vocabulary, sequence length, and part of its compute cost.
 :::
 
+The previous page introduced generation as a loop that operates on the tokens already present in the context. This page steps one stage upstream: it explains how a prompt becomes a sequence of tokens, then integer IDs that the model can turn into input vectors.
+
 ::: {.callout-note title="Running example: the text to encode"}
 The prompt is **“What have the Romans ever done for us?”** The replies add examples such as aqueducts, sanitation, roads, and irrigation.
 
 Encode the prompt and the reply text separately with the tokenizer being studied. The scene is a useful context-and-response analogy, but its replies are spoken by different members of the group; it is not a single-speaker autoregressive trace. Token boundaries depend on the tokenizer; token IDs are not universal.
 
 For a controlled, single-speaker continuation when tracing the mechanics of next-token generation, use the illustrative sentence **“They built roads between distant towns.”** It is a separate technical example, not a claim that the group replies form one speaker's output.
-
-For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 :::
 
-
-The previous page introduced generation as a loop that operates on the tokens already present in the context. This page steps one stage upstream: it explains how a prompt becomes a sequence of tokens, then integer IDs that the model can turn into input vectors.
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
@@ -54,8 +52,6 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 **The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
 
 **First pass:** follow the diagram and keep the distinct roles of token, ID, and embedding in mind. You can leave Unicode details, BPE/WordPiece algorithms, and corpus preparation for later.
-
-To understand the essential mechanism, go directly to [From token IDs to vectors](embedding-space.qmd). To explore segmentation choices, see [tokenization strategies](tokenization-strategies.qmd).
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Steps from text to model input">
@@ -89,8 +85,6 @@ flowchart TB
     classDef default color:#14532D;
 ```
 
-The final box deliberately groups positional handling with Transformer processing. Architectures do not all inject position in the same way: learned absolute position vectors may be added to token embeddings, whereas RoPE rotates query and key vectors inside attention. Position is therefore not a universal extra vector added at the lookup step; see [positional encoding and RoPE](positional-encoding.qmd).
-
 - **Source text:** a string that may contain punctuation, whitespace, numbers, code, or multiple languages.
 - **Preprocessing:** some inputs are normalized or pre-split; these operations depend on the tokenizer.
 - **Tokenizer:** applies rules and a defined vocabulary—often learned for modern subword tokenizers—to convert text into units called *tokens*.
@@ -99,26 +93,15 @@ The final box deliberately groups positional handling with Transformer processin
 
 This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
-::: {.callout-note}
-**Do not conflate corpus preparation with the tokenizer pipeline.** Source selection, filtering, deduplication, and splitting apply to documents; normalization and pre-tokenization are tokenizer components applied to text. Corpus-preparation and tokenizer-fitting decisions are covered in [Preparing a corpus for pretraining](corpus-preparation.qmd).
-:::
-
-## Two uses, two paths
-
-The same tokenizer is used to encode an inference prompt and to convert corpus documents into IDs for learning. The upstream steps, however, differ:
-
-- **Inference:** prompt text → already-defined tokenizer → IDs → embedding lookup. This is the path described on this page.
-- **Pretraining:** corpus preparation and splitting, tokenizer fitting and freezing ([corpus preparation](corpus-preparation.qmd)), then construction of windows, targets, and masks from the ID stream ([training examples](training-examples.qmd)).
-
-The second branch is not a prerequisite for understanding how a model encodes a prompt.
-
-::: {.callout-note title="Tokens and context windows"}
-A model's context limit is measured in **tokens**, not words or characters. The input budget may also include message history, instructions, retrieved content, tool descriptions, and space reserved for the answer; exact accounting depends on the model and API. To distinguish maximum capacity from the length actually supplied and understand how the application selects those elements, see [context engineering](context-engineering.qmd). The [deep dive on inference complexity](llm-computational-complexity.qmd) discusses context and resource costs, while [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications manage longer interactions.
-:::
+The final box deliberately groups positional handling with Transformer processing. Architectures do not all inject position in the same way: learned absolute position vectors may be added to token embeddings, whereas RoPE rotates query and key vectors inside attention. Position is therefore not a universal extra vector added at the lookup step; see [positional encoding and RoPE](positional-encoding.qmd).
 
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
+
+::: {.callout-note title="Tokens and context windows"}
+A model's context limit is measured in **tokens**, not words or characters. The input budget may also include message history, instructions, retrieved content, tool descriptions, and space reserved for the answer; exact accounting depends on the model and API. To distinguish maximum capacity from the length actually supplied and understand how the application selects those elements, see [context engineering](context-engineering.qmd). The [deep dive on inference complexity](llm-computational-complexity.qmd) discusses context and resource costs, while [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications manage longer interactions.
+:::
 
 ::: {.callout-note title="Why token count has practical consequences"}
 - **Context:** with a fixed token budget, text that uses more tokens leaves less room for history, retrieved documents, or the answer. An 8,000-token limit therefore does not correspond to a fixed number of words or characters.
@@ -128,9 +111,7 @@ Segmentation determines the sequence of IDs supplied to the model. It affects in
 This exposes an important distinction: **representation efficiency is not language quality**. A lower token ratio is a measurable tokenizer property on a particular corpus, not evidence that a model understands or generates that language better. Measure differences by language and text type, then relate them to downstream results before drawing conclusions. See [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 :::
 
-The same text can produce different sequences depending on the vocabulary, pre-tokenization, and tokenizer rules. The canonical [tokenization strategies](tokenization-strategies.qmd) page explains granularity, components, algorithms, and comparative examples. Advanced empirical metrics and trade-offs belong to [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
-
-
+To understand the essential mechanism, go directly to [From token IDs to vectors](embedding-space.qmd). To explore segmentation choices, see [tokenization strategies](tokenization-strategies.qmd).
 
 {{< include ../includes/generated-suggested-route-en-text-data.qmd >}}
 
@@ -138,17 +119,33 @@ The same text can produce different sequences depending on the vocabulary, pre-t
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
 ::::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Practice
 
 [Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
 
+For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
+
+### Two uses, two paths
+
+The same tokenizer is used to encode an inference prompt and to convert corpus documents into IDs for learning. The upstream steps, however, differ:
+
+- **Inference:** prompt text → already-defined tokenizer → IDs → embedding lookup. This is the path described on this page.
+- **Pretraining:** corpus preparation and splitting, tokenizer fitting and freezing ([corpus preparation](corpus-preparation.qmd)), then construction of windows, targets, and masks from the ID stream ([training examples](training-examples.qmd)).
+
+The second branch is not a prerequisite for understanding how a model encodes a prompt.
+
+::: {.callout-note}
+**Do not conflate corpus preparation with the tokenizer pipeline.** Source selection, filtering, deduplication, and splitting apply to documents; normalization and pre-tokenization are tokenizer components applied to text. Corpus-preparation and tokenizer-fitting decisions are covered in [Preparing a corpus for pretraining](corpus-preparation.qmd).
+:::
 
 ### Boundaries between pages
 
@@ -160,5 +157,10 @@ The same text can produce different sequences depending on the vocabulary, pre-t
 
 Corpus preparation (provenance, filtering, deduplication, splits, and tokenizer fitting) now has a canonical home: [Preparing a corpus for pretraining](corpus-preparation.qmd). This page retains only the distinction needed to situate prompt encoding.
 
-</div>
+The same text can produce different sequences depending on the vocabulary, pre-tokenization, and tokenizer rules. The canonical [tokenization strategies](tokenization-strategies.qmd) page explains granularity, components, algorithms, and comparative examples. Advanced empirical metrics and trade-offs belong to [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
+
+:::
+
 </details>
+
+::::
