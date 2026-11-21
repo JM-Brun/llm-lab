@@ -256,6 +256,12 @@ main.content table {
   border-color: var(--llm-line);
   font-size: .95rem;
 }
+/* A focusable responsive region owns the scroll so its arrow keys move the table. */
+main.content .table-responsive[tabindex="0"] > table {
+  display: table;
+  max-width: none;
+  overflow: visible;
+}
 main.content table thead {
   background: #DCFCE7;
   color: var(--llm-ink);
