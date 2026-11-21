@@ -37,6 +37,11 @@ Chromium 153, en FR et EN, à 390 et 1 280 px. Les liens ont été activés au c
 - Plan, étape Calcul → exercice des deux softmax → étape Prédiction.
 - Plan, étape Entraînement → fiche de la boucle d’entraînement → exercice des checkpoints → étape Entraînement. Le nouveau lien figure après le corrigé.
 
+### Navigation au clavier et retour depuis la carte
+
+Sur le rendu local du 21 novembre 2026, Chromium 141 a été utilisé en FR et EN à 390 et 1 440 px de large. Le test démarre au premier Tab, emprunte le lien d’évitement et continue par Tab, Entrée, Espace et Échap. Les trajets du plan vers l’exercice final, la comparaison des checkpoints et les deux softmax atteignent leurs ancres de retour. Les réponses et l’écriture formelle s’ouvrent et se replient au clavier. Après le retour de l’exercice final, le Tab suivant reste dans l’étape Entraînement. Le même départ au premier Tab permet de passer du panorama à la comparaison des usages, puis au volet formel de Scoring. Depuis la carte guidée, le trajet passe par la leçon sur les positions, l’exercice sur l’entrée du premier bloc et le retour à Représentations.
+
+Dans la carte, Échap rend le focus au territoire ou au concept dont le contrôle vient d’être recréé. À 390 px, le trajet tactile émulé sélectionne une leçon dans un territoire, ouvre la leçon, puis restaure la sélection et le panneau au retour du navigateur. La sélection est aussi retrouvée après rechargement de l’URL. L’audit automatique vérifie le contraste dans la vue des notions et dans la vue d’un territoire avec une page sélectionnée. Les compteurs et les titres du panneau de détails ont été assombris après le signalement d’un contraste insuffisant.
 
 ### Entrer dans le parcours et comprendre le transfert
 
@@ -50,13 +55,21 @@ Le contrôle de conservation compare les sources à `14d8c7e`. Les neuf sections
 
 Sur le HTML rendu, Chromium 141 a vérifié les deux accès directs de la carte, le passage du panorama à la leçon sur les tokens et l’ouverture des volets et du corrigé au clavier, en FR et EN à 390 et 1 280 px. Les deux volets de la carte et le rail des neuf étapes restent accessibles dans un test sans JavaScript. La suite Python et le contrôle des liens internes ont réussi.
 
+### Du panorama aux premiers plongements
+
+Dans la [leçon FR](../site/fr/text-data.qmd#tokenizer-output) et la [leçon EN](../site/en/text-data.qmd#tokenizer-output), les deux IDs de l’exemple court sont visibles dès la première lecture. Le résultat vient de la trace GPT-2 existante sur `hello world`. Le texte repère l’espace initial du deuxième token et précise le caractère synthétique des plongements de la trace. La trace revient au même point dans la leçon.
+
+Le [premier exercice de lookup](../site/fr/exercises/text-data.qmd#ex-text-to-embedding-lookup) suit la chaîne texte → IDs → lignes de la table. L’exercice sur la position et l’entrée du premier bloc reste dans les ressources complémentaires. Les deux exemples narratifs, le script reproductible, les conséquences de la segmentation et les détails sur la préparation du corpus restent à leur emplacement. La carte conserve les six mouvements d’orientation de [#1482](https://github.com/JM-Brun/llm-lab/pull/1482), dont la conception et l’exploitation du contexte.
+
+La trace GPT-2 a été exécutée en FR et EN. Le rendu a été parcouru au clavier de la carte jusqu’aux plongements, avec un aller-retour vers la trace et un accès direct à l’exercice de lookup. Les deux langues ont été testées dans Chromium à 390 et 1 280 px.
+
 ### Travail restant
 
 | Ordre | Travail restant | Résultat à consigner |
 | --- | --- | --- |
 | 1 | Mener le [pilote texte → attention](learner-validation-pilot.md) avec un lecteur indépendant. Partir d’une occurrence, relever la ligne lue et le point d’insertion de la position, puis proposer le [cas causal](learner-validation-pilot.md#causal-position-and-observed-target). [#447](https://github.com/JM-Brun/llm-lab/issues/447) · [#483](https://github.com/JM-Brun/llm-lab/issues/483) | Comparer les réponses avant et après lecture, puis évaluer le transfert sur un cas inédit. Distinguer une difficulté à trouver le contenu d’une erreur sur la visibilité, la cible ou la pénalité. Consigner la langue, l’appareil, les pages revisitées et les aides fournies. |
 | 2 | Mener le [pilote aval](audits/learning-path-learner-evaluation.md#prediction-use-pilot) sur la génération, le scoring et l’entraînement. Utiliser les formes A/B et le cas inédit de validation. | Consigner les choix de préfixe et de cible, la pondération par cible valide et les paramètres qui changent. Comparer aussi la difficulté des deux formes. L’exercice public sert à la répétition et les variantes du protocole au transfert. |
-| 3 | Compléter les vérifications d’accessibilité sur appareil tactile réel et avec lecteur d’écran, dans les deux langues. Rejouer la navigation par Tab depuis le début des pages, la sélection dans la carte interactive et les retours vers le plan depuis les exercices d’attention et de validation. [#337](https://github.com/JM-Brun/llm-lab/issues/337) · [#417](https://github.com/JM-Brun/llm-lab/issues/417) | Noter navigateur, dispositif, langue et largeur. Contrôler le focus, l’annonce de l’état des volets, la lecture des formules et l’arrivée sur l’ancre. Donner un trajet de reproduction pour chaque défaut. |
+| 3 | Tester la carte sur appareil tactile réel et avec lecteur d’écran, dans les deux langues. Rejouer la sélection, le retour et les volets sur les trajets ci-dessus. [#337](https://github.com/JM-Brun/llm-lab/issues/337) · [#417](https://github.com/JM-Brun/llm-lab/issues/417) | Noter navigateur, dispositif, langue et largeur. Contrôler le focus, l’annonce de l’état des volets, la lecture des formules et l’arrivée sur l’ancre. Donner un trajet de reproduction pour chaque défaut. |
 | 4 | Traiter les difficultés observées. Rejouer le trajet ou le calcul après chaque correction. | Corriger le lien, l’intitulé ou le rappel quand il suffit à reprendre le calcul. Envisager de déplacer une leçon si un manque de prérequis persiste. Consigner la destination FR/EN des exemples, preuves, code et références. |
 
 Pour le [pilote du panorama](https://github.com/JM-Brun/llm-lab/issues/1208), mesurer le temps de première lecture et demander au lecteur de distinguer ce que le modèle réutilise de ce que les exemples lui fournissent. Utiliser un cas différent de la question corrigée du panorama et relever si le lecteur propose une évaluation sur de nouvelles entrées sans aide.

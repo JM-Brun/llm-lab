@@ -12,7 +12,7 @@ This document is the durable hand-off for future work sessions. It records what 
 | Work package | Status | Evidence / remaining boundary |
 |---|---|---|
 | Canonical computational model and typed branches | Integrated | `docs/canonical-computational-spine.md`; PRs #577, #578, #589, #599 and follow-ups |
-| Eight-stage guided route and bilingual projections | Integrated | `data/guided-route.yml`, generated FR/EN fragments; PRs #578, #586, #594, #616 |
+| Guided route and bilingual projections | Integrated | Eight stages in PRs #578, #586, #594 and #616. The current nine-stage route in `data/guided-route.yml` also covers context design. |
 | Teacher forcing, prefill and incremental decode | Integrated in lessons | PR #601; conceptual teaching is present, but the reference code still has no optimized KV-cache decode |
 | Concept domains and importance | Integrated | `data/concepts.yml`, `data/domains.yml`; PR #593 |
 | Persistent spine and branch views | Integrated | PR #589; bilingual semantic text alternatives generated from the computational registry |
@@ -39,7 +39,7 @@ z_t=f_\theta(x_{<t}), \qquad
 p_\theta(\cdot\mid x_{<t})=\operatorname{softmax}(z_t).
 ]
 
-Three sibling operational branches use this shared result:
+The context-use module covers how the application assembles input for each call. Changing that input changes the conditioning context at fixed parameters. Three operational branches use the resulting distribution:
 
 - **Inference:** decode/select a token, append the generated token to the context, and continue with unchanged parameters.
 - **Scoring:** condition on the observed prefix (teacher forcing), compare the distribution with the next observed target, and obtain its target probability and likelihood-related quantities; do not select a token and do not update parameters.

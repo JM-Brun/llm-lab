@@ -30,13 +30,14 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 ## Parcours théorique — Understand
 
 ::: {.callout-note title="Le parcours en bref"}
-Vous pouvez retenir le parcours en **cinq mouvements** avant d'entrer dans les neuf étapes détaillées :
+Vous pouvez retenir le parcours en **six mouvements** avant d'entrer dans les neuf étapes détaillées :
 
 1. **Situer** — comprendre ce qu'est un LLM et ce qu'il prédit.
 2. **Observer** — suivre une génération complète comme une boîte noire, du contexte au prochain token.
 3. **Expliquer le calcul** — relier texte et tokens, représentations, Transformer et distribution prédictive.
-4. **Comprendre les usages** — distinguer génération, scoring d'une cible observée et apprentissage des paramètres. Ce sont trois usages du calcul prédictif, pas trois étapes successives d'une génération.
-5. **Explorer** — choisir ensuite de construire, pratiquer, approfondir ou consulter les références.
+4. **Concevoir et exploiter le contexte** — voir comment des [exemples fournis](in-context-learning.qmd) influencent la prédiction et comment l’application [choisit le contexte](context-engineering.qmd) transmis à chaque appel, à paramètres fixes.
+5. **Comprendre les usages** — distinguer génération, scoring d'une cible observée et apprentissage des paramètres. Ce sont trois usages du calcul prédictif, pas trois étapes successives d'une génération.
+6. **Explorer** — choisir ensuite de construire, pratiquer, approfondir ou consulter les références.
 
 Les neuf étapes ci-dessous détaillent cette vue sans imposer la lecture de chaque page comme un prérequis strict.
 :::

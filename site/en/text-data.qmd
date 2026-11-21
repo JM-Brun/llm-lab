@@ -37,12 +37,14 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 
 The previous page introduced generation as a loop that operates on the tokens already present in the context. This page steps one stage upstream: it explains how a prompt becomes a sequence of tokens, then integer IDs that the model can turn into input vectors.
 
-::: {.callout-note title="Running example: the text to encode"}
+::: {.callout-note title="Running example: the text to encode" #tokenizer-output}
 The prompt is **“What have the Romans ever done for us?”** The replies add examples such as aqueducts, sanitation, roads, and irrigation.
 
 Encode the prompt and the reply text separately with the tokenizer being studied. The scene is a useful context-and-response analogy, but its replies are spoken by different members of the group; it is not a single-speaker autoregressive trace. Token boundaries depend on the tokenizer; token IDs are not universal.
 
 For a controlled, single-speaker continuation when tracing the mechanics of next-token generation, use the illustrative sentence **“They built roads between distant towns.”** It is a separate technical example, not a claim that the group replies form one speaker's output.
+
+With the GPT-2 tokenizer, `hello world` becomes the tokens `"hello"` and `" world"` (including the space), then the IDs `[31373, 995]`. The [reproducible trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks these outputs and uses synthetic vectors to illustrate lookup.
 :::
 
 
@@ -95,6 +97,8 @@ This is a conceptual diagram. Real tokenizers differ in base units, normalizatio
 
 The final box deliberately groups positional handling with Transformer processing. Architectures do not all inject position in the same way: learned absolute position vectors may be added to token embeddings, whereas RoPE rotates query and key vectors inside attention. Position is therefore not a universal extra vector added at the lookup step; see [positional encoding and RoPE](positional-encoding.qmd).
 
+[Follow the IDs to the rows read from the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
@@ -111,7 +115,7 @@ A model's context limit is measured in **tokens**, not words or characters. The 
 This exposes an important distinction: **representation efficiency is not language quality**. A lower token ratio is a measurable tokenizer property on a particular corpus, not evidence that a model understands or generates that language better. Measure differences by language and text type, then relate them to downstream results before drawing conclusions. See [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 :::
 
-To understand the essential mechanism, go directly to [From token IDs to vectors](embedding-space.qmd). To explore segmentation choices, see [tokenization strategies](tokenization-strategies.qmd).
+The model receives the sequence of IDs. In the next lesson, [each ID selects a row from the embedding table](embedding-space.qmd). The [tokenization strategies](tokenization-strategies.qmd) page explains the segmentation choices that produce this sequence.
 
 {{< include ../includes/generated-suggested-route-en-text-data.qmd >}}
 
@@ -131,8 +135,6 @@ To understand the essential mechanism, go directly to [From token IDs to vectors
 ### Practice
 
 [Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
-
-For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 
 ### Two uses, two paths
 
