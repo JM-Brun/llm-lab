@@ -121,12 +121,14 @@ Converting scores into a probability distribution is a separate operation. It is
 [Français](../fr/logits.qmd) · [English](logits.qmd)
 ::::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Practice
 
@@ -138,5 +140,8 @@ The final hidden representation is projected to a vector of dimension $V$, usual
 
 The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
 
-</div>
+:::
+
 </details>
+
+::::
