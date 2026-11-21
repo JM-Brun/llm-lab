@@ -87,6 +87,23 @@ Le registre garde la progression, les leçons et leurs dépendances. Les formule
 
 Les [formes A/B et le cas de transfert aval](learning-path-learner-evaluation.md#prediction-use-pilot) permettent au facilitateur de vérifier la continuité entre les leçons. Ils couvrent le choix du préfixe, le produit des probabilités cibles, les informations effectivement transmises et la différence entre mesurer une loss et mettre à jour les paramètres.
 
+## Réorganisation et travail restant — 21 novembre 2026
+
+Le suivi éditorial considère la chaîne depuis le texte jusqu’au premier bloc, puis de la ligne de logits aux trois usages de la prédiction. La comparaison FR/EN s’appuie sur la [méthode de conservation du contenu](../reader-experience-and-editorial-method.md#preserve-information-during-refactors).
+
+| Leçons | Modification | Où retrouver le contenu déplacé |
+|---|---|---|
+| [Texte et tokens](../../site/fr/text-data.qmd) et [plongements](../../site/fr/embedding-space.qmd) | Les effets de la segmentation suivent le schéma. La lecture du lookup mène directement aux états contextualisés. | La [trace GPT-2](../../site/fr/exercises-text-data.qmd#tokenizer-embedding-trace) est signalée avec les exercices. La [préparation du corpus](../../site/fr/text-data.qmd#deux-usages-deux-parcours) et [l’apprentissage de la table](../../site/fr/embedding-space.qmd#doù-viennent-les-valeurs-de-la-table) restent accessibles dans les volets. |
+| [Position](../../site/fr/positional-encoding.qmd) | Le schéma situe l’ajout absolu et les rotations de RoPE. Le rappel suit la distinction avec le masque causal. | Les preuves d’équivariance et de rotation sinusoïdale, les références et le corrigé sont regroupés dans les ressources complémentaires. L’encadré sur l’extrapolation reste dans la lecture principale. |
+| [États contextualisés](../../site/fr/contextualized-representations.qmd) | L’exemple du même ID et le tableau précèdent le rappel. Le lien vers le cas des trois suites arrive avant le schéma des blocs, lorsque le lecteur peut formuler sa prédiction. | Le [cas causal à trois suites](../../site/fr/exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary), le dessin, la référence sur la coréférence et le corrigé conservent leur contenu. La question rapide rejoint le corrigé dans le volet. |
+
+### À faire lors des prochaines passes
+
+1. **Observer le passage de la position aux états contextualisés.** Exécuter le [pilote existant](../learner-validation-pilot.md) avec un lecteur indépendant. Relever séparément l’ID, la ligne lue, le point d’insertion de la position et les états qui peuvent diverger avec un autre préfixe. Relever aussi les éléments que le lecteur cherche dans les volets et les indices fournis par le facilitateur. Le protocole actuel décrit les mesures. Les observations restent à recueillir.
+2. **Relire la chaîne Q/K/V → attention → masque → logits avec le même cas.** Partir de [la ligne d’attention](../../site/fr/scaled-dot-product-attention.qmd), puis du [cas de frontière causale](../../site/fr/exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary) et de [la projection de sortie](../../site/fr/logits.qmd#running-example-output-projection). Vérifier dans chaque langue que le lecteur peut choisir la ligne et l’axe de normalisation à chaque étape. En cas de confusion, déplacer le rappel, le schéma ou le lien existant à l’étape où il manque. Consigner la destination du bloc et vérifier son ancre après rendu.
+3. **Observer le transfert entre génération, scoring et entraînement.** Utiliser le [cas aval du pilote](../learner-validation-pilot.md#optional-follow-up-after-generation-scoring-and-training). Demander de choisir les deux préfixes du deuxième tour, puis de nommer l’opération qui modifie les paramètres. Noter à part les erreurs de préfixe, de cible et de calcul. Un résultat de ce pilote sert à localiser une difficulté de lecture, dans la langue et sur l’appareil testés.
+4. **Comparer le rendu et les accès après chaque déplacement attesté.** Rechercher depuis la leçon et la fiche les figures, hypothèses, exercices, corrigés et références concernés. Contrôler les anciens fragments et l’ouverture des volets au clavier en FR et EN. Un point est prêt pour revue quand le chemin vers chaque contenu déplacé et le résultat de la vérification sont consignés dans la PR.
+
 ## Préservation du contenu dans le Transformer et le masque causal
 
 | Élément repris | Destination | Contenu conservé |
@@ -97,3 +114,15 @@ Les [formes A/B et le cas de transfert aval](learning-path-learner-evaluation.md
 | Conventions PyTorch et version vérifiée | Dans les ressources repliables, à côté du code de référence. [FR](../../site/fr/causal-masking.qmd#exercices) · [EN](../../site/en/causal-masking.qmd#practice) | Les deux polarités de masque, les liens vers les API et la note de version restent ensemble. Le rappel visible sur le sens de `True` indique où trouver le détail. |
 
 Le [plan de suivi](../understand-path-overview.md#understand-route-follow-up) donne l’ordre des vérifications restantes. Le [pilote à une position causale](../learner-validation-pilot.md#causal-position-and-observed-target) permet d’observer séparément une erreur sur la visibilité, le choix de la cible et le calcul de la pénalité.
+
+## Suivre une position de l’attention aux logits
+
+Les deux exercices contrôlent des distinctions complémentaires. Le premier fixe la dernière position du préfixe `(A,B,A)` et rend les deux axes comparables, même lorsqu’ils ont la même taille. Le second fixe la position de `X` au milieu de trois suites et fait varier le préfixe accessible ou la cible.
+
+| Point à vérifier | Ce que les exercices permettent de constater | Accès dans le parcours |
+|---|---|---|
+| Une requête donne une ligne de scores | Les produits entre la requête et les clés donnent une ligne qui indexe les positions des clés. Le masque agit avant normalisation et les poids servent à combiner les valeurs. | [Calcul en cinq étapes](../../site/fr/scaled-dot-product-attention.qmd#calcul-en-cinq-étapes) · [EN](../../site/en/scaled-dot-product-attention.qmd#five-computation-steps) |
+| La même position donne une autre ligne après les blocs | Dans le premier exercice, les deux occurrences de `A` cumulent $3/4$ du poids d’attention. La tête de sortie donne $1/4$ au token `A` après normalisation sur le vocabulaire. Les données du problème fournissent les deux vecteurs de scores. Le calcul de la sortie du réseau complet est hors du périmètre de l’exercice. | [Deux softmax, deux axes](../../site/fr/exercises/logits.qmd#ex-attention-vocabulary-softmax) · [EN](../../site/en/exercises/logits.qmd#ex-attention-vocabulary-softmax) |
+| Une ligne de logits peut servir à scorer deux cibles | Dans `[A,X,U]` et `[A,X,V]`, le préfixe accessible à la deuxième position reste `[A,X]`. À paramètres et passe avant fixes, cette position donne la même ligne. Le décalage désigne une colonne différente, d’où les pertes $\ln 2$ et $\ln 4$. La comparaison avec `[B,X,U]` montre où un changement du passé peut atteindre l’état. | [Cas à trois suites](../../site/fr/exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary) · [EN](../../site/en/exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary) |
+
+La leçon sur l’attention mène directement au premier exercice à l’endroit où les deux axes sont nommés. Après le corrigé, un renvoi mène au cas des trois suites. Le [pilote indépendant](../learner-validation-pilot.md#causal-position-and-observed-target) doit encore établir si un lecteur suit ce chemin et choisit la ligne et la colonne sans aide.

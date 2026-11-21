@@ -89,7 +89,7 @@ In the running example “What have the Romans ever done for us?”, follow the 
 
 ## From the mechanism to the calculation
 
-Follow the final position of the prefix. Its input state supplies the query for this row; the sequence positions supply the keys and values. Attention softmax weights these **positions**. Later, the softmax applied to the output logits normalizes scores over **vocabulary tokens**. In the workshop, try the case where the training sequence includes the next target and the [causal mask](causal-masking.qmd) blocks access to it.
+Follow the final position of the prefix. Its input state supplies the query for this row; the sequence positions supply the keys and values. Attention softmax weights these **positions**. Later, the [softmax applied to the output logits](exercises/logits.qmd#ex-attention-vocabulary-softmax) normalizes scores over **vocabulary tokens**. In the workshop, try the case where the training sequence includes the next target and the [causal mask](causal-masking.qmd) blocks access to it.
 
 [Compute the scores, weights, and output for one query](exercises-attention.qmd#ex-attention-scores-to-output).
 

@@ -46,15 +46,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis dans « de bonne ou de mauvaise situation ». Le premier emploi désigne un poste ; le second, les circonstances. En supposant un ID commun et une position simplifiée identique, le lookup initial est le même. **Le Transformer construit ensuite des états cachés contextualisés à partir du contexte.**
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
-- **Même ID, même lookup :** avec une matrice fixe, les deux occurrences sélectionnent la même ligne.
-- **Position :** l'architecture introduit l'ordre selon son mécanisme (embedding absolu, RoPE, etc.).
-- **Contexte :** chaque bloc transforme l'état d'une position à partir des tokens auxquels elle peut accéder.
-- **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
-
-**Question rapide :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
-:::
-
 ## Ce qui reste identique
 
 Considérons deux emplois du mot `situation` :
@@ -106,6 +97,15 @@ Deux confusions fréquentes viennent du mélange de ces étapes :
 
 Cela ne garantit pas non plus que le modèle représente les sens interprétés par un humain sous forme de groupes géométriques nettement séparés. La contextualisation est un mécanisme de calcul, pas la garantie d'une géométrie sémantique particulière.
 
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
+- **Même ID, même lookup :** avec une matrice fixe, les deux occurrences sélectionnent la même ligne.
+- **Position :** l'architecture introduit l'ordre selon son mécanisme (embedding absolu, RoPE, etc.).
+- **Contexte :** chaque bloc transforme l'état d'une position à partir des tokens auxquels elle peut accéder.
+- **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
+:::
+
+[Comparez trois suites qui contiennent le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Prédisez quels états peuvent diverger avant d’étudier les opérations d’un bloc.
+
 ## Où se situe cette étape dans le modèle ?
 
 Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcul, les blocs produisent les états contextualisés à partir de leurs entrées.
@@ -149,10 +149,6 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
-
-
-[Comparez trois suites qui contiennent le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Prédisez quels états peuvent diverger avant d’étudier les opérations d’un bloc.
-
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
@@ -161,21 +157,23 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+::: {.learning-resources__content}
 
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-
-
 ::: {.self-check}
-## Vérifier sa compréhension
+### Vérifier sa compréhension
+
+**Question rapide :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 
 [Exercices dédiés](exercises/contextualized-representations.qmd).
 
@@ -193,6 +191,8 @@ Avec une matrice d'embeddings fixe, le même ID sélectionne la même ligne. Les
 </details>
 :::
 
+:::
 
-</div>
 </details>
+
+::::

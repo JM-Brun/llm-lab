@@ -33,10 +33,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. This lesson explains that lookup, then carefully distinguishes the row address, the vector stored in that row, and the representations that the Transformer builds afterwards.
 :::
 
-::: {.callout-tip title="The one-minute mental model" #revision-summary}
-A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers then produce different contextualized states according to position and context.
-:::
-
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
 - explain how a token ID selects a row in the embedding matrix;
@@ -50,11 +46,16 @@ The text already present in the context is:
 
 > **Prefix / prompt:** “What have the Romans ever done for us?”
 
+After [tokenizing the prefix](text-data.qmd), follow its final token. Its ID selects a row in the table below. Its position is its place in the sequence. Segmentation depends on the tokenizer, including at the end of the question.
+
+<details>
+<summary>Background to the running example</summary>
+
 The replies add examples such as aqueducts, sanitation, roads, and irrigation. They are not yet present when the model processes the prefix. In the scene, different members of the group supply these replies, so this is a context-and-response analogy rather than a single-speaker generation trace. No universal segmentation or token ID is assumed here.
 
 For a controlled, single-speaker continuation used to trace next-token mechanics, keep a separate illustrative example in mind: **“They built roads between distant towns.”** It is not one of the group's replies and does not turn the scene into a single-speaker generation trace.
 
-After [tokenizing the prefix](text-data.qmd), follow its final token. Its ID selects a row in the table below. Its position is its place in the sequence. Segmentation depends on the tokenizer, including at the end of the question.
+</details>
 
 ## Lookup: select a row, not a coordinate {#lookup}
 
@@ -93,28 +94,45 @@ $$
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
-## Where do the table values come from?
-
-The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters. Gradients from training examples also flow through the lookup operation, so the rows selected by those examples' IDs can be updated during training.
-
-The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
-
 ## From the initial vector to a contextualized representation
 
 With a fixed matrix, two occurrences of the same ID select the same row and therefore retrieve the same initial vector. The lookup does not read neighbouring words or disambiguate the meaning of a sentence.
 
 Position and context enter later, depending on the architecture. Transformer layers transform input vectors into **contextualized hidden states**: two occurrences with the same initial vector can therefore have different representations when their positions or accessible contexts differ.
 
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
+A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers then produce different contextualized states according to position and context.
+:::
+
+**Practice:** [embedding-space exercises](exercises/embedding-space.qmd).
+
 For the next steps, see [positional encoding](positional-encoding.qmd), followed by [contextualized representations](contextualized-representations.qmd).
-
-## Continue according to your goal
-
-- **Practice:** [embedding-space exercises](exercises/embedding-space.qmd).
-- **Build:** [guided tour of the GPT model](gpt-model-walkthrough.qmd) — embedding tables, dimensions, and the forward pass.
-- **Deepen:** [mathematical tools and representation geometry](deepen.qmd#mathematical-tools-and-geometry), including the history of static word vectors, cosine similarity, and the limits of geometric interpretations.
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)
 :::
+
+:::: {.supplementary-resources}
+
+<details class="learning-resources">
+<summary><span class="learning-resources__title">Supplementary resources</span></summary>
+::: {.learning-resources__content}
+
+### Continue according to your goal
+
+- **Build:** [guided tour of the GPT model](gpt-model-walkthrough.qmd) — embedding tables, dimensions, and the forward pass.
+- **Deepen:** [mathematical tools and representation geometry](deepen.qmd#mathematical-tools-and-geometry), including the history of static word vectors, cosine similarity, and the limits of geometric interpretations.
+
+### Where do the table values come from?
+
+The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters. Gradients from training examples also flow through the lookup operation, so the rows selected by those examples' IDs can be updated during training.
+
+The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
+
+:::
+
+</details>
+
+::::
