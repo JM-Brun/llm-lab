@@ -156,6 +156,8 @@ Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) as
 
 
 
+[Comparez trois suites qui contiennent le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Prédisez quels états peuvent diverger avant d’étudier les opérations d’un bloc.
+
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 
 ::: {.language-switch}

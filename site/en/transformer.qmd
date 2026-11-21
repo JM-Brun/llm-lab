@@ -36,7 +36,7 @@ This page first shows what that architecture looks like, then follows a forward 
 :::
 
 ::: {.callout-tip title="The Transformer in one minute" #revision-summary}
-A decoder-only GPT is a Transformer network made of repeated blocks. Within each block, self-attention mixes information across permitted positions, the MLP transforms each position, and residual connections plus normalization stabilize computation. The stack produces final representations and then logits; choosing the next token belongs to decoding.
+A decoder-only GPT is a Transformer network made of repeated blocks. Within each block, self-attention mixes information across permitted positions, the MLP transforms each position, residual connections provide a direct path, and normalization helps control activation scale. The stack produces final representations and then logits; choosing the next token belongs to decoding.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Steps in Transformer computation">
@@ -74,16 +74,18 @@ This second diagram answers a different question: it places the network in the c
 
 At the first block's input, each token ID has already been mapped to a vector, and the model has information about token order. The pages on [embeddings](embedding-space.qmd) and [positional information](positional-encoding.qmd) explain these initial representations; the page on [contextualized representations](contextualized-representations.qmd) shows what Transformer layers do with them. Here, we follow that computation at the block level.
 
-In one line:
+In the reference GPT, the first block receives:
 
 `token IDs → embedding table → + positional information → first block input`
+
+With RoPE, the position signal enters later through the [queries and keys](queries-keys-values.qmd) within attention.
 
 In our example, "What have the Romans ever done for us?" passes through this stack of blocks before the model produces the logits for the next token. The continuation is not already written in the prompt: it is built one step at a time by the generation loop.
 
 ## 2. Transformer blocks
 
 ::: {.callout-tip title="The block in one sentence"}
-A block applies two successive corrections to the stream of representations: attention first mixes information across positions, then the MLP transforms each position. Each correction is computed on a normalized copy of the stream and then **added** to it: the stream passes through the block without ever being replaced.
+A block applies two successive corrections to the stream of representations: attention first mixes information across positions, then the MLP transforms each position. Each correction is computed on a normalized copy of the stream and then **added** to the state carried by the residual path.
 :::
 
 The stack shown above consists of blocks of the same general type, repeated in depth. Each block chains together two main **sublayers**, framed by residual connections and normalizations:
@@ -125,7 +127,7 @@ In short, each block component has a distinct role:
 - **self-attention** mixes information across the allowed positions;
 - the **MLP** transforms each position separately, with shared weights;
 - the **residual connection** keeps a direct path for information and gradients;
-- **normalization** stabilizes magnitudes so the deep stack can train.
+- **normalization** helps control activation scale and can make a deep stack easier to train.
 
 For a precise implementation (pre-LN order, projections, and residual paths), see the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
 
@@ -205,7 +207,7 @@ The output of the final block is the network's **final state**. The final normal
 
 Downstream, outside the network: `logits → softmax → probabilities → chosen token`.
 
-For our example prefix with GPT-2's dimensions: each position leaves the final block as a vector of 768 numbers, which becomes 50,257 scores. During generation, only the **logits of the last position** are used to choose the next token; the causal mask guarantees that they depend only on the tokens already known. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
+For our example prefix with GPT-2's dimensions: each position leaves the final block as a vector of 768 numbers, which becomes 50,257 scores. To extend an unpadded prefix, generation uses the **logits at its last position**; the causal mask guarantees that they depend only on the tokens already known. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="a-guided-four-part-exploration"></span>

@@ -47,6 +47,7 @@ Dans un GPT causal aux paramètres fixes, considérez trois séquences d'identif
 1. Quelles séquences donnent le même vecteur d'embedding de base en `X` ?
 2. Dans quelle comparaison un bloc peut-il changer l'état de `X` ? Par quelle opération ?
 3. Dans quelle comparaison l'état de `X` doit-il rester identique à chaque couche ? Quelle règle l'impose ?
+4. Pour `[A, X, U]`, la distribution obtenue à la position de `X` après projection et softmax attribue $1/2$ à `U` et $1/4$ à `V`. En passant à `[A, X, V]`, quelle distribution lit-on à la position de `X` ? Pour chaque séquence, quel token sert de cible à cette position et quelle est sa perte locale avec une cible one-hot ?
 
 <details>
 <summary>Afficher le corrigé</summary>
@@ -54,6 +55,7 @@ Dans un GPT causal aux paramètres fixes, considérez trois séquences d'identif
 1. Les trois. Le même ID sélectionne la même ligne de la table. La position de `X` est également fixée.
 2. Entre `[A, X, U]` et `[B, X, U]`, l'auto-attention peut transmettre à `X` l'effet du changement de `A` en `B`. La différence est possible et dépend des poids appris.
 3. Entre `[A, X, U]` et `[A, X, V]`, le [masque causal](../causal-masking.qmd) interdit à `X` d'utiliser la troisième position. Le préfixe accessible reste identique à chaque couche, donc l'état de `X` aussi, à la tolérance numérique près.
+4. L’état final en `X` est le même pour ces deux séquences. Après normalisation finale et projection, on obtient donc la même ligne de logits et la même distribution sur le vocabulaire. Le décalage des cibles change **la colonne qu’on lit** : pour `[A, X, U]`, la cible est `U`, et la perte vaut $-\ln(1/2)=\ln 2$. Pour `[A, X, V]`, la cible est `V`, et la perte vaut $-\ln(1/4)=\ln 4$. La [distribution](../probabilites.qmd) dépend du préfixe accessible `[A, X]`, tandis que la [perte locale](../cross-entropy.qmd) dépend aussi de la cible observée.
 
 </details>
 
