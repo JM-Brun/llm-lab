@@ -40,10 +40,6 @@ A **training step** takes a batch of observed prefixes and targets, runs the for
 A second measurement runs alongside: the same loss computed on **validation** data that never produces an update. Training loss tells you how well the model fits what it is fitted to; validation loss estimates how well that fit carries over.
 :::
 
-::: {.callout-note title="What if you do not have a local GPU?"}
-The training loop does not inherently depend on the machine that runs it. Once the program has been smoke-tested locally, you can run it on a managed GPU with Hugging Face Jobs: Python training code stays separate from the launcher, which selects the image, GPU, timeout and persistent storage. See the [bilingual remote-training recipe](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) for the workflow, commands and limitations. This is optional and does not replace an independent validation loss.
-:::
-
 <div class="pipeline-stepper" role="group" aria-label="Operations in one training step">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>
@@ -115,7 +111,9 @@ If the only measurement were the loss that the optimizer minimizes, a model that
 
 - **Training loss:** computed on batches used for updates. It measures fit to those examples.
 - **Validation loss:** the same loss on a separate split, computed with fixed parameters, without any update. It estimates behaviour on unseen text from the same distribution.
-- **Test loss:** a further split, kept untouched until a final assessment. Validation results guide choices (when to stop, which learning rate); each such choice makes the validation score slightly optimistic, which is why the test split must stay reserved. See [corpus preparation](corpus-preparation.qmd) for how splits are made without leakage, and [Experimental evaluation](experimental-evaluation.qmd) for the broader protocol.
+- **Test loss:** a further split, kept untouched until a final assessment. Validation guides choices such as when to stop training or which learning rate to use. Repeatedly selecting configurations with the lowest loss on that split can favor a configuration that scores well there partly by chance. Its validation loss can then underestimate its loss on new data. The reserved test split provides a measurement independent of that selection. See [corpus preparation](corpus-preparation.qmd) for how splits are made without leakage and [Experimental evaluation](experimental-evaluation.qmd) for the broader protocol.
+
+To compare two checkpoints, try [aggregating validation loss over batches with different numbers of valid tokens](exercises/loss.qmd#ex-validation-loss-by-token).
 
 **Overfitting** is a validation loss that stops improving, or rises, while the training loss keeps falling: the model keeps fitting details of the training sample that do not recur in new text. The gap between the two losses is the *generalization gap*. The amount of overfitting depends on model capacity relative to the amount and diversity of training data, on how many times the data is repeated, and on regularization.
 
@@ -256,6 +254,10 @@ After this path, you can study [post-training](post-training.qmd) or apply an [e
 <div class="learning-resources__content" markdown="1">
 
 ### Additional implementation resources
+
+::: {.callout-note title="What if you do not have a local GPU?"}
+The training loop does not inherently depend on the machine that runs it. Once the program has been smoke-tested locally, you can run it on a managed GPU with Hugging Face Jobs: Python training code stays separate from the launcher, which selects the image, GPU, timeout and persistent storage. See the [bilingual remote-training recipe](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) for the workflow, commands and limitations. This is optional and does not replace an independent validation loss.
+:::
 
 - [Hugging Face — A full training loop](https://huggingface.co/learn/llm-course/en/chapter3/4): a PyTorch example that makes visible the steps handled by a high-level API.
 - [Hugging Face — Fine-tuning with Trainer](https://huggingface.co/learn/llm-course/en/chapter3/3): configuring evaluation, metrics, mixed precision, and gradient accumulation.

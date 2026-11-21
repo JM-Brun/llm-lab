@@ -154,6 +154,31 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 
 
 
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/entropy.qmd).
+
+1. Does low entropy guarantee that the most likely token is correct?
+2. How does entropy differ from the surprise of the observed token?
+3. Why should the tokenizer be documented when comparing perplexities?
+4. Why can the same model have different entropy values in different contexts?
+5. What does a higher temperature change, and what does it not establish?
+6. Does low entropy guarantee that predictions are well calibrated?
+
+<details>
+<summary>Show the answers</summary>
+
+1. No. Entropy describes the spread of the distribution, not factual correctness.
+2. Entropy is the expected surprisal under $p$; observed surprisal is $-\ln p(x_t)$ for the target that actually occurred.
+3. Tokenizers segment text differently, changing the units and number of positions being evaluated.
+4. Entropy is defined over $p(\cdot\mid context)$: a different context can produce a different distribution and therefore a different spread.
+5. Temperature rescales logits before softmax and tends to flatten the distribution as it increases. It does not update model parameters or prove truth or calibration.
+6. No. Calibration compares stated confidence with observed frequencies across a set of predictions; a concentrated distribution can still be wrong often.
+
+</details>
+:::
+
 {{< include ../includes/generated-suggested-route-en-entropy.qmd >}}
 
 :::: {.language-switch}
@@ -250,32 +275,6 @@ To make these ideas concrete, run the [reproducible predictive-compression exper
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropy and coding.
 - [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — complementary visual intuition.
 
-
-
-::: {.self-check}
-## Check your understanding
-
-[Dedicated exercises](exercises/entropy.qmd).
-
-1. Does low entropy guarantee that the most likely token is correct?
-2. How does entropy differ from the surprise of the observed token?
-3. Why should the tokenizer be documented when comparing perplexities?
-4. Why can the same model have different entropy values in different contexts?
-5. What does a higher temperature change, and what does it not establish?
-6. Does low entropy guarantee that predictions are well calibrated?
-
-<details>
-<summary>Show the answers</summary>
-
-1. No. Entropy describes the spread of the distribution, not factual correctness.
-2. Entropy is the expected surprisal under $p$; observed surprisal is $-\ln p(x_t)$ for the target that actually occurred.
-3. Tokenizers segment text differently, changing the units and number of positions being evaluated.
-4. Entropy is defined over $p(\cdot\mid context)$: a different context can produce a different distribution and therefore a different spread.
-5. Temperature rescales logits before softmax and tends to flatten the distribution as it increases. It does not update model parameters or prove truth or calibration.
-6. No. Calibration compares stated confidence with observed frequencies across a set of predictions; a concentrated distribution can still be wrong often.
-
-</details>
-:::
 
 
 [**Revision sheet — Compression and LLMs**](compression-revision.qmd): review the connection between conditional probabilities, code length, model compression, and runtime memory in one place.

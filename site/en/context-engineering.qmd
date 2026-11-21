@@ -39,6 +39,12 @@ A prompt is often understood as text written by the user. In a real application,
 
 The **context actually supplied** is the selection and organization of these elements for a particular model call. Not everything stored by the application is necessarily sent to the model. Depending on model and API capabilities, context may also contain multimodal payloads (such as images or audio) and structured tool descriptions, not only text.
 
+## A design example
+
+An assistant must answer a question about a software repository. A useful context might combine response instructions and security rules, the user's question, relevant decisions from the conversation, file excerpts retrieved for this question, and tool results explicitly associated with their provenance.
+
+Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
+
 ## Definition and main operations
 
 Context engineering is not a particular model feature, nor a standard with a universally fixed scope. It is an engineering practice for LLM systems, not a Transformer layer or a new network architecture. It includes:
@@ -62,22 +68,13 @@ A longer context can help when it adds relevant evidence. It can also hurt when 
 
 ## Three levels of context that should not be confused
 
-| Level | What it refers to |
-|---|---|
-| **System context** | Instructions, messages, examples, retrieved documents, tool results, and memory items the application chooses to supply for a call. |
-| **Input sequence and context window** | Token sequence (or structured multimodal elements) processed by the model. The window is a capacity limit; during autoregressive generation, generated tokens are appended to the sequence. |
-| **Context accessible at a position** | For a causal decoder, positions accessible under the causal mask and available window: at position $t$, future positions are masked. |
-
-Application-stored history is not necessarily transmitted. Persistent memory becomes model context only when the system selects and supplies it. A contextualized representation is the **result of a computation** conditioned on accessible information, not another name for the context.
-
-| Notion | What it denotes | Confusion to avoid |
+| Level | What is supplied or accessible | How to tell it apart |
 |---|---|---|
-| **Context window** | Maximum token budget usable for a call; input/output counting conventions depend on the model and API | The length actually supplied |
-| **Active-context length** | Number of tokens actually present in this call's context | Maximum capacity |
-| **Attention-accessible context** | Positions a given position may consult according to the architecture and mask | That every supplied token is accessible to every position |
-| **Contextualized representation** | A hidden/vector state computed by Transformer layers from accessible tokens | That it is the active context or stored history |
+| **System context** | Instructions, messages, examples, retrieved documents, tool results, and memory items the application chooses to supply for a call. | The application can store history without transmitting it. Persistent memory becomes model context when its content is selected and supplied. |
+| **Input sequence and context window** | The model processes a sequence of tokens or structured multimodal elements. Autoregressive generation appends the generated tokens to this sequence. | Active-context length counts the tokens actually present. The window defines the maximum budget per call, with input/output counting conventions that depend on the model and API. |
+| **Context accessible at a position** | Accessible positions depend on architecture, masking, and the available window. In a causal decoder, position $t$ cannot consult future positions. | A position may have access to only part of the supplied tokens. |
 
-Active context denotes input information; [contextualized representations](contextualized-representations.qmd) are the hidden states the Transformer computes from that information.
+Active context denotes input information. A [contextualized representation](contextualized-representations.qmd) is a hidden vector state that the Transformer layers compute from accessible information. It is the result of computation, distinct from the active context and stored history.
 
 ## Distinguishing neighboring concepts
 
@@ -101,12 +98,6 @@ ICL describes a model capability or behavior; context engineering describes the 
 **Persistent memory** retains information across calls or conversations. It can supply context, but a stored or retrieved fact is not automatically transmitted: the system must still select it and include it in the input, or make it available through an invoked tool. This boundary between found information and supplied information is essential.
 
 **ICL**, finally, describes what the model does with information and demonstrations actually present in its context, without updating its parameters. RAG, memory, and ICL can work together, but answer different questions: retrieving, retaining, supplying, and using information.
-
-## A design example
-
-An assistant must answer a question about a software repository. A useful context might combine response instructions and security rules, the user's question, relevant decisions from the conversation, file excerpts retrieved for this question, and tool results explicitly associated with their provenance.
-
-Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
 
 ## Limitations and failure modes
 

@@ -36,7 +36,7 @@ This page first shows what that architecture looks like, then follows a forward 
 :::
 
 ::: {.callout-tip title="The Transformer in one minute" #revision-summary}
-A decoder-only GPT is a Transformer network made of repeated blocks. Within each block, self-attention mixes information across permitted positions, the MLP transforms each position, and residual connections plus normalization stabilize computation. The stack produces final representations and then logits; choosing the next token belongs to decoding.
+A decoder-only GPT is a Transformer network made of repeated blocks. Within each block, self-attention mixes information across permitted positions, the MLP transforms each position, residual connections provide a direct path, and normalization helps control activation scale. The stack produces final representations and then logits; choosing the next token belongs to decoding.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Steps in Transformer computation">
@@ -60,7 +60,9 @@ The diagram below offers two levels of view: the complete GPT, to locate the dat
 
 In a decoder-only GPT, blocks are **stacked**: the output of one becomes the input to the next. Each block transforms the sequence of representations; it does not choose the next token itself. After the final block, a final normalization and a vocabulary projection produce the logits.
 
-The GPT diagram represents the **decoder-only** family used by autoregressive GPT models. Transformers are not limited to this architecture: the [Transformer architecture comparison](transformer-architectures.qmd) shows what changes in encoder-only and encoder-decoder models.
+After following the forward pass, you can [compare this GPT with the 2017 diagram](#historical-transformer-diagram).
+
+This diagram represents the **decoder-only** family used by autoregressive GPT models. Transformers are not limited to this architecture: the [Transformer architecture comparison](transformer-architectures.qmd) shows what changes in encoder-only and encoder-decoder models.
 
 ### Placing the network in the generation process
 
@@ -72,16 +74,18 @@ This second diagram answers a different question: it places the network in the c
 
 At the first block's input, each token ID has already been mapped to a vector, and the model has information about token order. The pages on [embeddings](embedding-space.qmd) and [positional information](positional-encoding.qmd) explain these initial representations; the page on [contextualized representations](contextualized-representations.qmd) shows what Transformer layers do with them. Here, we follow that computation at the block level.
 
-In one line:
+In the reference GPT, the first block receives:
 
 `token IDs → embedding table → + positional information → first block input`
+
+With RoPE, the position signal enters later through the [queries and keys](queries-keys-values.qmd) within attention.
 
 In our example, "What have the Romans ever done for us?" passes through this stack of blocks before the model produces the logits for the next token. The continuation is not already written in the prompt: it is built one step at a time by the generation loop.
 
 ## 2. Transformer blocks
 
 ::: {.callout-tip title="The block in one sentence"}
-A block applies two successive corrections to the stream of representations: attention first mixes information across positions, then the MLP transforms each position. Each correction is computed on a normalized copy of the stream and then **added** to it: the stream passes through the block without ever being replaced.
+A block applies two successive corrections to the stream of representations: attention first mixes information across positions, then the MLP transforms each position. Each correction is computed on a normalized copy of the stream and then **added** to the state carried by the residual path.
 :::
 
 The stack shown above consists of blocks of the same general type, repeated in depth. Each block chains together two main **sublayers**, framed by residual connections and normalizations:
@@ -123,7 +127,7 @@ In short, each block component has a distinct role:
 - **self-attention** mixes information across the allowed positions;
 - the **MLP** transforms each position separately, with shared weights;
 - the **residual connection** keeps a direct path for information and gradients;
-- **normalization** stabilizes magnitudes so the deep stack can train.
+- **normalization** helps control activation scale and can make a deep stack easier to train.
 
 For a precise implementation (pre-LN order, projections, and residual paths), see the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
 
@@ -147,7 +151,7 @@ Each attention sublayer is in fact **multi-head**: several attentions run in par
 
 A Transformer can compute representations for many positions of a training sequence in parallel: the input tokens are available, and the causal mask prevents each position from seeing the future. This removes the position-by-position recurrent dependency found in RNNs.
 
-- **Training:** `t₁ t₂ t₃ t₄` → a single pass; all positions are computed in parallel, and the causal mask stops each one from seeing the next.
+- **Training:** `t₁ t₂ t₃ t₄` → one pass computes all positions in parallel. The causal mask prevents each position from seeing any later token.
 - **Generation:** `t₁` → `t₂` → `t₃` → … one position per step; each token depends on the tokens already generated.
 
 **It does not make GPT generation fully parallel**: when producing a response, the next token depends on tokens already generated, so decoding steps remain autoregressive. The key-value cache (*KV cache*) avoids recomputing some past keys and values, but it does not remove this sequential dependency. See [the generation loop](generation.qmd) for the distinction between *prefill* and *decode*.
@@ -203,51 +207,7 @@ The output of the final block is the network's **final state**. The final normal
 
 Downstream, outside the network: `logits → softmax → probabilities → chosen token`.
 
-For our example prefix with GPT-2's dimensions: each position leaves the final block as a vector of 768 numbers, which becomes 50,257 scores. During generation, only the **logits of the last position** are used to choose the next token; the causal mask guarantees that they depend only on the tokens already known. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
-
-### Also read the Transformer's original architecture diagram
-
-**Second pass.** Return to this comparison after studying [Q, K, and V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd).
-
-<details>
-<summary>Open the comparison and guided reading</summary>
-
-If you have already come across the classic diagram from the founding paper (*Attention Is All You Need*), you will recognize the same building blocks here: the *Multi-Head Attention*, *Feed Forward*, and *Add & Norm* boxes correspond to the multi-head attention, the MLP, and the residual-plus-normalization pair described on this page. The paper and its visualizations are referenced in the [Deepen resources](deepen.qmd#transformer-resources).
-
-The GPT diagram above is not the historical diagram of every Transformer. To understand where the component names and block organization come from, also learn to read the 2017 paper [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which describes an **encoder–decoder Transformer**. Jay Alammar's [*The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) provides a step-by-step reading; it complements but does not replace the architectural distinction made here.
-
-In the original diagram, follow two streams:
-
-- **Encoder (left):** embeddings and positional encoding, then a stack of layers with multi-head self-attention and a feed-forward network. Each encoder position can use information from the other input positions.
-- **Decoder (right):** shifted target-sequence embeddings, masked self-attention to prevent access to future target tokens, then encoder–decoder attention over encoder representations, followed by the feed-forward network.
-- **Output:** a linear projection to vocabulary scores, then softmax in the paper's diagram to obtain a distribution.
-
-| Historical label | What to understand | Where to continue in LLM Lab |
-|---|---|---|
-| Input / Output Embedding | Lookup of vectors associated with IDs; during training, decoder inputs use the shifted target sequence | [Embeddings](embedding-space.qmd), [text and IDs](text-data.qmd) |
-| Positional Encoding | Order information; the original paper uses sinusoidal functions | [Positional information](positional-encoding.qmd), [sinusoidal derivation](sinusoidal-positional-encoding.qmd) |
-| Multi-Head Attention | Multiple heads computed from learned Q, K and V projections | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
-| Masked Multi-Head Attention | Decoder self-attention with a causal constraint | [Causal masking](causal-masking.qmd) |
-| Encoder–Decoder Attention | Cross-attention: Q comes from the decoder, K and V from encoder outputs | [Cross-attention](cross-attention.qmd) |
-| Add & Norm | Residual addition followed by normalization; the historical diagram is post-LN, unlike the pre-LN block above | [Transformer block](transformer-block-walkthrough.qmd), [tensors](tensors.qmd) |
-| Feed Forward | An MLP applied independently at each position, with parameters shared across positions | [Transformer block](transformer-block-walkthrough.qmd) |
-| Linear / Softmax | Projection to vocabulary logits, then conversion to probabilities | [Logits](logits.qmd), [probabilities](probabilities.qmd) |
-
-**Do not conflate three architectures:** the original encoder–decoder combines an encoder that reads the input and a decoder that produces an output conditioned on it; an encoder-only model (for example, BERT) builds input representations; a decoder-only model (for example, GPT) predicts sequence continuations using causal self-attention. GPT therefore does not contain the encoder–decoder attention block from the 2017 diagram. The [architecture comparison](transformer-architectures.qmd) explores these differences.
-
-#### Guided reading route
-
-Return to the diagram after studying the linked lessons. At each pass, answer a more precise question:
-
-1. **Locate:** where does information enter, which stacks are repeated, where do encoder and decoder streams separate, and where are output scores produced?
-2. **Explain:** where do Q, K and V come from for each attention operation? Which positions are allowed by the mask? Why is encoder–decoder attention not a third form of self-attention?
-3. **Compare:** what does Add & Norm mean? In what order are addition and normalization applied? Why does the historical post-LN diagram differ from the pre-LN block shown here?
-4. **Transfer:** which boxes disappear in decoder-only GPT? Which remain in an adapted form? Why does causal masking change the permitted computation?
-5. **Reconstruct:** explain the path of a representation from input to logits, separating network computation, conversion to probabilities, and generation of the next token.
-
-**What the diagram does not show:** tensor dimensions and axes, parameter sharing, projection details, memory and compute costs, training-versus-inference differences, or architectural variants introduced since 2017. The canonical lessons provide these details. Treat the diagram as a reading map, not an exhaustive specification of a modern model.
-
-</details>
+For our example prefix with GPT-2's dimensions: each position leaves the final block as a vector of 768 numbers, which becomes 50,257 scores. To extend an unpadded prefix, generation uses the **logits at its last position**; the causal mask guarantees that they depend only on the tokens already known. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="a-guided-four-part-exploration"></span>
@@ -300,7 +260,48 @@ Return to the diagram after studying the linked lessons. At each pass, answer a 
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 3. LayerNorm centers and rescales the components of each state. It helps control activation scale across residual additions and can improve gradient flow. Its effect on training stability depends on its placement, the architecture, and initialization.
 4. `d_model` to `d_ff` (the intermediate dimension, often about 4 × `d_model`), then back to `d_model`; the nonlinear activation applies to the intermediate representation.
-5. Only those of the last position: the causal mask guarantees they depend only on tokens already known. During training, by contrast, the logits of every position are used, each position being supervised to predict its next token.
+5. For an unpadded prefix, decoding uses the logits at its last position. The causal mask limits their computation to tokens already known. During training, the model can compute logits at all positions in parallel. The loss uses those whose next token is a valid target.
 
 </details>
 :::
+
+<span id="historical-transformer-diagram"></span>
+
+## Also read the Transformer's original architecture diagram
+
+This comparison uses the GPT block concepts to introduce the encoder–decoder data flow.
+
+If you have already come across the classic diagram from the founding paper (*Attention Is All You Need*), you will recognize the same building blocks here: the *Multi-Head Attention*, *Feed Forward*, and *Add & Norm* boxes correspond to the multi-head attention, the MLP, and the residual-plus-normalization pair described on this page. The paper and its visualizations are referenced in the [Deepen resources](deepen.qmd#transformer-resources).
+
+The GPT diagram above is not the historical diagram of every Transformer. To understand where the component names and block organization come from, also learn to read the 2017 paper [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which describes an **encoder–decoder Transformer**. Jay Alammar's [*The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) provides a step-by-step reading; it complements but does not replace the architectural distinction made here.
+
+In the original diagram, follow two streams:
+
+- **Encoder (left):** embeddings and positional encoding, then a stack of layers with multi-head self-attention and a feed-forward network. Each encoder position can use information from the other input positions.
+- **Decoder (right):** shifted target-sequence embeddings, masked self-attention to prevent access to future target tokens, then encoder–decoder attention over encoder representations, followed by the feed-forward network.
+- **Output:** a linear projection to vocabulary scores, then softmax in the paper's diagram to obtain a distribution.
+
+| Historical label | What to understand | Where to continue in LLM Lab |
+|---|---|---|
+| Input / Output Embedding | Lookup of vectors associated with IDs; during training, decoder inputs use the shifted target sequence | [Embeddings](embedding-space.qmd), [text and IDs](text-data.qmd) |
+| Positional Encoding | Order information; the original paper uses sinusoidal functions | [Positional information](positional-encoding.qmd), [sinusoidal derivation](sinusoidal-positional-encoding.qmd) |
+| Multi-Head Attention | Multiple heads computed from learned Q, K and V projections | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
+| Masked Multi-Head Attention | Decoder self-attention with a causal constraint | [Causal masking](causal-masking.qmd) |
+| Encoder–Decoder Attention | Cross-attention: Q comes from the decoder, K and V from encoder outputs | [Cross-attention](cross-attention.qmd) |
+| Add & Norm | Residual addition followed by normalization; the historical diagram is post-LN, unlike the pre-LN block above | [Transformer block](transformer-block-walkthrough.qmd), [tensors](tensors.qmd) |
+| Feed Forward | An MLP applied independently at each position, with parameters shared across positions | [Transformer block](transformer-block-walkthrough.qmd) |
+| Linear / Softmax | Projection to vocabulary logits, then conversion to probabilities | [Logits](logits.qmd), [probabilities](probabilities.qmd) |
+
+**Do not conflate three architectures:** the original encoder–decoder combines an encoder that reads the input and a decoder that produces an output conditioned on it; an encoder-only model (for example, BERT) builds input representations; a decoder-only model (for example, GPT) predicts sequence continuations using causal self-attention. GPT therefore does not contain the encoder–decoder attention block from the 2017 diagram. The [architecture comparison](transformer-architectures.qmd) explores these differences.
+
+### Guided reading route
+
+Return to the diagram after studying [Q, K, and V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd). At each pass, answer a more precise question:
+
+1. **Locate:** where does information enter, which stacks are repeated, where do encoder and decoder streams separate, and where are output scores produced?
+2. **Explain:** where do Q, K and V come from for each attention operation? Which positions are allowed by the mask? Why is encoder–decoder attention not a third form of self-attention?
+3. **Compare:** what does Add & Norm mean? In what order are addition and normalization applied? Why does the historical post-LN diagram differ from the pre-LN block shown here?
+4. **Transfer:** which boxes disappear in decoder-only GPT? Which remain in an adapted form? Why does causal masking change the permitted computation?
+5. **Reconstruct:** explain the path of a representation from input to logits, separating network computation, conversion to probabilities, and generation of the next token.
+
+**What the diagram does not show:** tensor dimensions and axes, parameter sharing, projection details, memory and compute costs, training-versus-inference differences, or architectural variants introduced since 2017. The canonical lessons provide these details. Treat the diagram as a reading map, not an exhaustive specification of a modern model.

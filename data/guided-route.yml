@@ -12,8 +12,8 @@ stages:
         fr: 'Que calcule un GPT à partir du texte qu’on lui donne ?'
         en: 'What does a GPT compute from the text it receives?'
       result:
-        fr: 'Il attribue des probabilités aux candidats pour la suite immédiate.'
-        en: 'It assigns probabilities to candidates for the next piece of text.'
+        fr: 'Il attribue une probabilité à chaque candidat pour la prochaine unité de texte, appelée token.'
+        en: 'It assigns a probability to each candidate for the next unit of text, called a token.'
       signature: 'c \mapsto p_\theta(\cdot \mid c)'
       criterion:
         fr: >-
@@ -47,12 +47,12 @@ stages:
         fr: 'Comment le texte devient-il une entrée du réseau ?'
         en: 'How does text become input to the network?'
       result:
-        fr: 'Un tokenizer découpe le texte en unités et retrouve le numéro de chacune dans son vocabulaire.'
-        en: 'A tokenizer splits the text into units and looks up each unit’s ID in its vocabulary.'
+        fr: 'Un tokenizer découpe le texte en tokens et retrouve l’identifiant de chacun dans son vocabulaire.'
+        en: 'A tokenizer splits the text into tokens and looks up each token’s ID in its vocabulary.'
       signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \{0,\ldots,V-1\}'
       criterion:
-        fr: 'La longueur $T$ dépend du texte et du tokenizer. $V$ est la taille du vocabulaire.'
-        en: 'The length $T$ depends on the text and the tokenizer. $V$ is the vocabulary size.'
+        fr: 'La longueur $T$ de la suite d’identifiants dépend du texte $s$ et du tokenizer choisi. $V$ est la taille de son vocabulaire.'
+        en: 'The length $T$ of the ID sequence depends on the text $s$ and the tokenizer used. $V$ is its vocabulary size.'
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
@@ -87,11 +87,13 @@ stages:
       signature: 'H^{(0)}_t = E_\theta[i_t] + P_\theta[t]'
       criterion:
         fr: >-
-          $E_\theta[i_t]$ est le même plongement de base pour toutes les occurrences du même ID, à table
-          fixée. $P_\theta[t]$ dépend de la position.
+          À table fixée, le même ID donne le même plongement de base $E_\theta[i_t]$. La formule décrit le
+          GPT du projet, qui ajoute le vecteur de position appris $P_\theta[t]$ avant le premier bloc.
+          Avec RoPE, l’information de position intervient sur les requêtes et les clés dans l’attention.
         en: >-
-          With a fixed embedding table, $E_\theta[i_t]$ is the same base embedding for every occurrence of
-          the same ID. $P_\theta[t]$ depends on the position.
+          With a fixed table, the same ID gives the same base embedding $E_\theta[i_t]$. The formula
+          describes the project’s GPT, which adds the learned position vector $P_\theta[t]$ before the
+          first block. RoPE instead applies positional information to queries and keys within attention.
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
@@ -126,21 +128,23 @@ stages:
         en: 'How does the prefix influence the representation at one position?'
       result:
         fr: >-
-          D’un bloc à l’autre, l’attention combine des informations des positions accessibles et chaque
-          position reçoit une représentation mise à jour.
+          Dans chaque bloc, l’attention combine des informations des positions accessibles. Le MLP
+          transforme ensuite la représentation de chaque position séparément.
         en: >-
-          Across blocks, attention combines information from accessible positions and each position
-          receives an updated representation.
+          In each block, attention combines information from accessible positions. The MLP then
+          transforms each position’s representation independently.
       signature: 'H^{(0)} \mapsto H^{(L)}, \qquad H^{(0)}, H^{(L)} \in \mathbb{R}^{T \times d}'
       criterion:
         fr: >-
-          $L$ est le nombre de blocs et $d$ la largeur des états. Dans un GPT causal, une modification
-          après $t$ laisse l’état en $t$ inchangé à chaque couche, à positions et paramètres fixes et en
-          mode déterministe.
+          La pile conserve les $T$ positions et la largeur $d$ sur ses $L$ blocs. Pour chaque requête,
+          le softmax d’attention normalise les scores sur les positions de clés autorisées. Dans un GPT
+          causal, modifier les tokens après $t$ laisse l’état en $t$ inchangé à chaque couche, à positions
+          et paramètres fixes et en mode déterministe.
         en: >-
-          $L$ is the number of blocks and $d$ is the width of the states. In a causal GPT, a change after
-          $t$ leaves the state at $t$ unchanged at each layer, with positions and parameters fixed and
-          deterministic execution.
+          The stack preserves the $T$ positions and width $d$ across its $L$ blocks. For each query,
+          attention softmax normalizes scores over the permitted key positions. In a causal GPT,
+          changing tokens after $t$ leaves the state at $t$ unchanged at each layer, with positions and
+          parameters fixed and deterministic execution.
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
@@ -179,20 +183,25 @@ stages:
         en: 'How do representations become probabilities?'
       result:
         fr: >-
-          L’état final donne un score brut par candidat. Le modèle transforme ces scores en probabilités
-          qui totalisent 100 %.
+          À chaque position, la tête de sortie donne un score par token du vocabulaire. Le softmax
+          transforme ces scores en probabilités qui totalisent 100 % à cette position.
         en: >-
-          The final state gives one raw score per candidate. The model converts those scores into
-          probabilities that total 100%.
-      signature: 'h_T \mapsto z = W_\theta h_T + b_\theta \mapsto p = \operatorname{softmax}(z)'
+          At each position the output head gives one score per vocabulary token. Softmax converts the
+          scores into probabilities that total 100% at that position.
+      signature: |-
+        \begin{aligned}
+        z_t &= W_\theta h_t + b_\theta, \\
+        p_t &= \operatorname{softmax}_{\mathrm{vocab}}(z_t).
+        \end{aligned}
       criterion:
         fr: >-
-          $h_T$ désigne l’état de la dernière position en entrée de la tête de sortie. Le softmax
-          transforme les scores en une distribution sur le vocabulaire. L’entropie dépend de toutes les
-          probabilités.
+          $h_t$ est l’état en entrée de la tête de sortie, après normalisation finale dans le GPT du projet.
+          Pour un préfixe de $T$ tokens sans padding, $p_T$ prédit le token suivant le préfixe entier.
+          L’entropie de cette distribution dépend des probabilités de tous les candidats.
         en: >-
-          $h_T$ is the state of the last position at the output head’s input. Softmax maps scores to a
-          distribution over the vocabulary. Entropy depends on all the probabilities.
+          $h_t$ is the state at the output head’s input, after final normalization in the project’s GPT.
+          For an unpadded prefix of $T$ tokens, $p_T$ predicts the token after the full prefix.
+          The entropy of that distribution depends on the probabilities of all candidates.
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
@@ -227,19 +236,25 @@ stages:
         en: 'How does a prediction become a continuation?'
       result:
         fr: >-
-          Une règle choisit un candidat. On l’ajoute au texte, puis on recommence jusqu’au critère
+          Une règle choisit un candidat. On ajoute le token à la séquence, puis on recommence jusqu’au critère
           d’arrêt.
         en: >-
-          A rule selects a candidate. It is appended to the text and the process repeats until the
+          A rule selects a candidate. The token is appended to the sequence and the process repeats until the
           stopping criterion is met.
-      signature: 'x_t \sim \pi(\cdot \mid p_\theta(\cdot\mid c_t)), \qquad c_{t+1} = c_t \Vert x_t'
+      signature: |-
+        \begin{aligned}
+        x_t &\sim \pi(\cdot \mid p_\theta(\cdot\mid c_t)), \\
+        c_{t+1} &= c_t \Vert x_t.
+        \end{aligned}
       criterion:
         fr: >-
           Le symbole $\Vert$ désigne la concaténation. Les paramètres $\theta$ restent fixes. La politique
-          de décodage $\pi$ règle le choix, qui peut être déterministe ou aléatoire.
+          de décodage $\pi$ donne les probabilités de sélection. Un choix déterministe donne une
+          probabilité de sélection de 1 au candidat retenu.
         en: >-
           The symbol $\Vert$ denotes concatenation. The parameters $\theta$ stay fixed. The decoding
-          policy $\pi$ controls selection, which can be deterministic or stochastic.
+          policy $\pi$ gives the selection probabilities. A deterministic choice assigns selection
+          probability 1 to the chosen candidate.
     pages:
       fr: [fr/generation]
       en: [en/generation]
@@ -272,12 +287,16 @@ stages:
         en: 'What changes when an instruction or document is added?'
       result:
         fr: >-
-          L’application sélectionne les éléments à transmettre. Le modèle recalcule sa prédiction à partir
-          du texte qu’il reçoit.
+          L’application choisit le contexte transmis au prochain appel. Le modèle calcule sa prédiction
+          à partir des tokens de ce contexte.
         en: >-
-          The application selects what to send. The model computes its prediction from the text it
-          receives.
-      signature: 'c \mapsto c'', \qquad p_\theta(\cdot\mid c) \mapsto p_\theta(\cdot\mid c'')'
+          The application chooses the context for the next call. The model computes its prediction
+          from the tokens in that context.
+      signature: |-
+        \begin{aligned}
+        c &\longmapsto p_\theta(\cdot\mid c), \\
+        c' &\longmapsto p_\theta(\cdot\mid c').
+        \end{aligned}
       criterion:
         fr: >-
           On compare les deux entrées à paramètres $\theta$ fixés. L’effet des éléments ajoutés dépend de
@@ -320,19 +339,25 @@ stages:
         en: 'What probability did the model assign to a known continuation?'
       result:
         fr: >-
-          On relève la probabilité de chaque token de la suite à partir du texte déjà observé, puis on les
-          combine.
+          À chaque pas, on lit la probabilité du token observé à partir du préfixe qui le précède.
+          Le produit de ces probabilités donne la vraisemblance de la suite.
         en: >-
-          Each token’s probability is read using the text observed so far. Those probabilities are then
-          combined.
-      signature: '\log p_\theta(x_{1:n}\mid c) = \sum_{t=1}^{n} \log p_\theta(x_t \mid c \Vert x_{<t})'
+          At each step, we read the probability of the observed token given the prefix before it.
+          The product of these probabilities gives the likelihood of the continuation.
+      signature: |-
+        \begin{gathered}
+        \log p_\theta(x_{1:n}\mid c) \\
+        = \sum_{t=1}^{n} \log p_\theta(x_t \mid c \Vert x_{<t}).
+        \end{gathered}
       criterion:
         fr: >-
-          À paramètres fixes, chaque terme utilise le préfixe observé à ce pas. Chaque probabilité de
-          cible est une composante de sa distribution prédictive.
+          À paramètres fixes, chaque terme utilise le contexte initial $c$ suivi des tokens observés
+          avant la cible $x_t$. L’entropie croisée à cette position vaut l’opposé du terme correspondant
+          lorsque la cible est one-hot.
         en: >-
-          At fixed parameters, each term uses the prefix observed at that step. Each target probability is
-          one component of its predictive distribution.
+          With parameters fixed, each term uses the initial context $c$ followed by the observed tokens
+          before target $x_t$. For a one-hot target, the cross-entropy at that position is the negative
+          of the corresponding term.
     pages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
@@ -371,14 +396,22 @@ stages:
           Les prédictions et les cibles donnent une perte. L’optimiseur utilise les gradients de cette
           perte pour ajuster les paramètres.
         en: 'Predictions and targets give a loss. The optimizer uses its gradients to update the parameters.'
-      signature: 'L(\theta) \mapsto \nabla_\theta L \mapsto \theta'''
+      signature: |-
+        \begin{aligned}
+        g &= \nabla_\theta \mathcal{L}(\theta), \\
+        \theta' &= \theta - \eta g \quad \text{(SGD)}.
+        \end{aligned}
       criterion:
         fr: >-
-          En teacher forcing, les préfixes et les cibles viennent des exemples observés. Les paramètres
-          sont mis à jour au pas de l’optimiseur.
+          En teacher forcing, les préfixes et les cibles viennent des exemples observés. La loss
+          $\mathcal{L}$ agrège les pertes des positions cibles valides. Le calcul de $g$ laisse les
+          paramètres fixes. La seconde ligne donne le pas de descente de gradient stochastique,
+          avec un taux d’apprentissage $\eta$. En validation, on mesure la loss à paramètres fixes.
         en: >-
-          With teacher forcing, prefixes and targets come from the observed examples. The optimizer step
-          is where parameters are updated.
+          With teacher forcing, prefixes and targets come from the observed examples. The loss
+          $\mathcal{L}$ aggregates losses at valid target positions. Computing $g$ leaves the parameters
+          fixed. The second line gives a stochastic gradient descent step with learning rate $\eta$.
+          Validation measures loss with the parameters fixed.
     pages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]

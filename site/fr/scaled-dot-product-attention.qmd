@@ -122,9 +122,9 @@ I(X;Y)=H(X)-H(X\mid Y)
 =\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
 $$
 
-Elle mesure la réduction d'incertitude sur $X$ apportée par l'observation de $Y$. Les poids d'attention, eux, sont des coefficients de compatibilité normalisés par softmax sur les positions accessibles ; ils servent à agréger les vecteurs $V$. Une ligne de poids d'attention n'est donc ni une distribution jointe sur $(X,Y)$, ni un estimateur automatique de $I(X;Y)$.
+Elle mesure la réduction d'incertitude sur $X$ apportée par l'observation de $Y$. Les poids d'attention, eux, sont des coefficients de compatibilité normalisés par softmax sur les positions accessibles ; ils dépendent de l'entrée, des requêtes, des clés et du masque, et servent à agréger les vecteurs $V$. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre. Une ligne de poids d'attention n'est donc ni une distribution jointe sur $(X,Y)$, ni un estimateur automatique de $I(X;Y)$.
 
-L'analogie peut aider à poser une question — quelles positions sont utiles au calcul d'une représentation contextualisée ? — mais elle ne constitue pas une équivalence mathématique. Un poids élevé ne quantifie pas « la quantité d'information » fournie par un token et ne démontre pas une dépendance statistique ou une importance causale.
+L'analogie peut aider à poser une question — quelles positions sont utiles au calcul d'une représentation contextualisée ? — mais elle ne constitue pas une équivalence mathématique. Un poids élevé ne quantifie pas « la quantité d'information » fournie par un token et ne démontre pas une dépendance statistique ou une importance causale. Une carte d'attention ne suffit pas à établir une explication causale ou sémantique.
 
 ## Liens avec les autres concepts
 
@@ -134,32 +134,6 @@ L'analogie peut aider à poser une question — quelles positions sont utiles au
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-
-
-## FlashAttention en images (approfondissement facultatif)
-
-Ces schémas sont des **reconstructions pédagogiques originales** fondées sur l'article FlashAttention et ses travaux de suivi ; ils ne reproduisent pas les figures de la newsletter.
-
-### 1. Déplacer des blocs plutôt que matérialiser toute la matrice
-
-<figure>
-  <img src="../images/flashattention/io-aware-tiling.svg" alt="Des blocs Q, K et V sont chargés depuis la mémoire HBM vers la SRAM sur puce ; le calcul par tuiles met à jour un état compact, puis écrit le résultat sans matérialiser la matrice complète dans la HBM." />
-  <figcaption>Le gain central est la réduction des transferts HBM↔SRAM et des intermédiaires matérialisés en mémoire globale. La matrice des scores reste conceptuellement dense ; elle n'est simplement pas stockée en entier en HBM.</figcaption>
-</figure>
-
-### 2. Fusionner les statistiques du softmax en ligne
-
-<figure>
-  <img src="../images/flashattention/online-softmax.svg" alt="Un état courant (maximum, somme exponentielle, somme pondérée) est fusionné avec les statistiques d'une nouvelle tuile après remise à l'échelle sur le nouveau maximum." />
-  <figcaption>La mise à l'échelle par le nouveau maximum permet de fusionner les statistiques partielles de manière numériquement stable. À la fin, la somme pondérée est divisée par le normalisateur.</figcaption>
-</figure>
-
-### 3. Ne pas confondre optimisation IO et sparsité
-
-<figure>
-  <img src="../images/flashattention/dense-vs-sparse.svg" alt="À gauche, toutes les positions query-key sont autorisées dans une matrice dense ; à droite, seule une bande et quelques blocs sont autorisés dans un exemple sparse." />
-  <figcaption>FlashAttention conserve les connexions de l'attention dense exacte (à tolérance flottante près). Une méthode sparse change le motif des connexions et donc le calcul mathématique effectué.</figcaption>
-</figure>
 
 
 {{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
@@ -194,17 +168,33 @@ Cette page appartient au parcours conceptuel **Théorie / Understand** : elle ex
 
 La définition mathématique de l'attention ne dicte pas à elle seule la manière dont le GPU exécute le calcul. [FlashAttention](https://arxiv.org/abs/2205.14135) conserve l'attention dense exacte tout en découpant le calcul en blocs et en réduisant les échanges entre mémoire GPU et mémoire rapide sur puce. Il ne faut pas le confondre avec l'attention sparse, qui modifie les positions autorisées. Pour comprendre le mécanisme, ses compromis et les limites des mesures, consultez [la revue pédagogique de FlashAttention](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/flashattention-io-aware-2026-11.md), puis la [documentation PyTorch SDPA](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) et [le protocole de benchmark reproductible](https://github.com/JM-Brun/llm-lab/blob/main/docs/experiments/flashattention-benchmark-protocol.md). Cette optimisation matérielle est un approfondissement, pas une étape supplémentaire du parcours conceptuel.
 
+#### FlashAttention en images (approfondissement facultatif)
+
+Ces schémas sont des **reconstructions pédagogiques originales** fondées sur l'article FlashAttention et ses travaux de suivi ; ils ne reproduisent pas les figures de la newsletter.
+
+##### 1. Déplacer des blocs plutôt que matérialiser toute la matrice
+
+<figure>
+  <img src="../images/flashattention/io-aware-tiling.svg" alt="Des blocs Q, K et V sont chargés depuis la mémoire HBM vers la SRAM sur puce ; le calcul par tuiles met à jour un état compact, puis écrit le résultat sans matérialiser la matrice complète dans la HBM." />
+  <figcaption>Le gain central est la réduction des transferts HBM↔SRAM et des intermédiaires matérialisés en mémoire globale. La matrice des scores reste conceptuellement dense ; elle n'est simplement pas stockée en entier en HBM.</figcaption>
+</figure>
+
+##### 2. Fusionner les statistiques du softmax en ligne
+
+<figure>
+  <img src="../images/flashattention/online-softmax.svg" alt="Un état courant (maximum, somme exponentielle, somme pondérée) est fusionné avec les statistiques d'une nouvelle tuile après remise à l'échelle sur le nouveau maximum." />
+  <figcaption>La mise à l'échelle par le nouveau maximum permet de fusionner les statistiques partielles de manière numériquement stable. À la fin, la somme pondérée est divisée par le normalisateur.</figcaption>
+</figure>
+
+##### 3. Ne pas confondre optimisation IO et sparsité
+
+<figure>
+  <img src="../images/flashattention/dense-vs-sparse.svg" alt="À gauche, toutes les positions query-key sont autorisées dans une matrice dense ; à droite, seule une bande et quelques blocs sont autorisés dans un exemple sparse." />
+  <figcaption>FlashAttention conserve les connexions de l'attention dense exacte (à tolérance flottante près). Une méthode sparse change le motif des connexions et donc le calcul mathématique effectué.</figcaption>
+</figure>
 
 :::
 
 </details>
 
 ::::
-
-L'analogie entre attention et dépendance statistique peut aider à poser une question, mais **un poids d'attention n'est pas une information mutuelle**. Une carte d'attention ne suffit pas non plus à établir une explication causale ou sémantique.
-Les poids d'attention ne calculent pas cette quantité. Ce sont des coefficients normalisés, dépendant de l'entrée, obtenus à partir des requêtes, des clés et du masque ; ils pondèrent l'agrégation des vecteurs de valeur. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre.
-\[
-I(X;Y)=H(X)-H(X\mid Y).
-\]
-L'information mutuelle entre deux variables aléatoires est une quantité définie à partir de leur distribution jointe :
-## Attention et information mutuelle : deux notions différentes

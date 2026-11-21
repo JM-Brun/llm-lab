@@ -30,7 +30,7 @@ This check focuses on the network computation, not on decoding, which is covered
 
 1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
 2. Why does a residual connection not replace the transformation computed by a sublayer?
-3. What problem does normalization prevent in a deep stack of blocks?
+3. What role does normalization play in a deep stack of blocks?
 4. Which dimensions does a representation traverse in a block's MLP, and in what order?
 5. During generation, which logits are used to choose the next token?
 
@@ -41,7 +41,7 @@ This check focuses on the network computation, not on decoding, which is covered
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 3. Normalization helps control activation scale and gradient flow. Its effect depends on placement: Xiong et al. (2020), for example, show that the original Post-LN design can have large gradients near the output at initialization, while the Pre-LN variant they study has better-behaved gradients. Do not conclude that every deep architecture fails without one particular normalization arrangement.
 4. `d_model` to `d_ff` (the MLP's intermediate dimension, often about 4 × `d_model`), a nonlinear activation on the intermediate representation, then back to `d_model`.
-5. Only those of the last position: the causal mask guarantees they depend only on tokens already known. During training, by contrast, the logits of every position are used, each position being supervised to predict its next token.
+5. For an unpadded prefix, decoding uses the logits at its last position. The causal mask limits their computation to tokens already known. During training, the model can compute logits at all positions in parallel. The loss uses those whose next token is a valid target.
 
 </details>
 

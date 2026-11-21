@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap specifies logit-target alignment, valid positions and aggregation; the lesson covers teacher forcing, masking, reduction and perplexity. Three answered questions check denominators, generalization and comparability."
+      note: "The recap specifies logit-target alignment, valid positions and aggregation; the lesson covers teacher forcing, masking, reduction and perplexity. The exercises check denominators, generalization, comparability and how aggregation can change the ranking of checkpoints."
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 -->
 
@@ -134,7 +134,7 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/loss.qmd).
+The [practice page](exercises/loss.qmd) includes a worked example that [compares two checkpoints by validation loss per valid token](exercises/loss.qmd#ex-validation-loss-by-token).
 
 
 ### Further reading

@@ -145,6 +145,8 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 
 
 
+[Return to the example with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). A change in the past can reach the current state. A change in the future can change the observed target at that position.
+
 {{< include ../includes/generated-suggested-route-en-causal-masking.qmd >}}
 
 :::: {.language-switch}

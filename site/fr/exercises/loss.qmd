@@ -84,6 +84,28 @@ Un GPT causal reçoit les entrées $(A,B,C)$ avec des paramètres fixes. La séq
 
 {{< include ../../includes/generated-exercise-review-fr-loss-exercises-ex-visible-token-masked-target.qmd >}}
 
+## Comparer deux checkpoints par la loss de validation {#ex-validation-loss-by-token}
+
+Deux checkpoints évaluent les mêmes tokens de validation, avec le même tokenizer et le même masque. Le tableau donne la somme des log-probabilités négatives (NLL, en nats) sur les cibles valides de chaque lot.
+
+| Lot | Cibles valides | NLL totale, X | NLL totale, Y |
+| --- | ---: | ---: | ---: |
+| 1 | 2 | 6 | 2 |
+| 2 | 8 | 4 | 12 |
+
+1. Calculez la NLL moyenne par token valide de chaque checkpoint sur l’ensemble des deux lots.
+2. Faites la moyenne des deux moyennes par lot à poids égal. Comment le classement change-t-il et quel calcul répond à la première question ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+- **Moyenne par token valide.** X obtient $(6+4)/10 = 1{,}0$ et Y obtient $(2+12)/10 = 1{,}4$. X a la loss de validation par token la plus faible.
+- **Moyenne des moyennes par lot.** X obtient $(3+0{,}5)/2 = 1{,}75$ et Y obtient $(1+1{,}5)/2 = 1{,}25$. Ce calcul classe Y en premier, car il donne au lot de deux tokens le même poids qu’au lot de huit tokens.
+
+Additionnez séparément les NLL et les nombres de cibles valides, puis divisez. Chaque cible valide a ainsi le même poids, quel que soit le regroupement en lots des prédictions et cibles fixées.
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](loss.qmd) · [English](../../en/exercises/loss.qmd)
 :::

@@ -34,7 +34,7 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 :::
 
 
-La page précédente a montré comment le masque causal limite les positions accessibles dans l'attention. Une fois les blocs du Transformer calculés, la tête de sortie projette la représentation finale vers ce vecteur de scores.
+La page précédente a montré comment le masque causal limite les positions accessibles dans l'attention. Dans le GPT du projet, les états issus du dernier bloc passent par une normalisation finale. La tête de sortie projette ensuite chaque état normalisé vers ce vecteur de scores.
 
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -120,6 +120,8 @@ La représentation cachée finale est projetée vers un vecteur de dimension $V$
 La documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) précise que l'entrée attendue correspond à des logits non normalisés.
 
 
+
+Pour relier l’axe des positions à l’axe du vocabulaire, [comparez deux cibles observées sous un même préfixe](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Identifiez la ligne de logits commune, puis la colonne utilisée dans chaque cas.
 
 {{< include ../includes/generated-suggested-route-fr-logits.qmd >}}
 

@@ -22,6 +22,10 @@ The `boundaries` entries in the same registry connect a distinction taught acros
 
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
+The [Understand route follow-up](understand-path-overview.md#understand-route-follow-up) records the remaining rendered and learner checks and the evidence for deciding which parts to revise.
+
+The [comparative audit](source-reviews/learning-path-comparison-2026-11-05.md#november-21-update-the-nine-stage-understand-route) maps the current stage and lesson contracts to six external resources and records which transitions warrant learner checks.
+
 ### Conceptual view of the current route
 
 Each stage's `conceptual_focus` names the concepts a visit mobilizes, the objects it studies and one short bilingual learning outcome. It is keyed by the lesson's bilingual page-map topic. The stage's `pages` lists supply the study order. A `concept:<id>` reference resolves to [the concept registry](../data/concepts.yml). A `node:<id>` reference resolves to an existing object or operation in [the computational graph](../data/computational-graph.yml). The generator checks that studied objects list the lesson as a resource. Mobilized concepts describe what the lesson draws on.
