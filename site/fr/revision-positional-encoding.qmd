@@ -41,6 +41,8 @@ Non, leurs IDs choisissent les mêmes lignes. Leurs positions dans la séquence 
 
 </details>
 
+[Retrouvez les deux vecteurs d’entrée à partir du même plongement et de deux vecteurs de position](exercises/text-data.qmd#ex-token-to-block-input).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-positional-encoding.qmd) · [English](../en/revision-positional-encoding.qmd)
 :::

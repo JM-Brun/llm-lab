@@ -33,10 +33,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaque ID permet de retrouver un vecteur appris dans une table de paramètres : la **matrice de plongements** (*embedding matrix*). Cette page explique ce lookup, puis distingue soigneusement l'adresse de la ligne, le vecteur stocké dans cette ligne et les représentations que le Transformer construira ensuite.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
-Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans l'espace. La matrice d'embeddings $E\in\mathbb{R}^{V\times d}$ associe à chaque ID un vecteur initial de dimension $d$. Deux occurrences du même ID partagent ce vecteur de lookup ; les couches du Transformer produisent ensuite des états contextualisés différents selon la position et le contexte.
-:::
-
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
 - expliquer comment un Token ID sélectionne une ligne de la matrice de plongements ;
@@ -50,9 +46,14 @@ Le texte déjà présent dans le contexte est :
 
 > **Préfixe / prompt :** « C'est une bonne situation, ça, scribe ? »
 
+Après la [tokenisation du préfixe](text-data.qmd), suivez son dernier token. Son ID sélectionne une ligne de la table ci-dessous. Sa position est son rang dans la séquence. La segmentation dépend du tokenizer, y compris à la fin de la question.
+
+<details>
+<summary>Contexte du fil rouge</summary>
+
 La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Elle n'est pas encore présente lorsque le modèle traite le préfixe ; elle sera ajoutée token par token pendant la génération. Aucune segmentation ni aucun ID ne doit être supposé universel.
 
-Après la [tokenisation du préfixe](text-data.qmd), suivez son dernier token. Son ID sélectionne une ligne de la table ci-dessous. Sa position est son rang dans la séquence. La segmentation dépend du tokenizer, y compris à la fin de la question.
+</details>
 
 ## Le lookup : sélectionner une ligne, pas une coordonnée {#lookup}
 
@@ -91,28 +92,45 @@ $$
 
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
-## D'où viennent les valeurs de la table ?
-
-Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres. Les gradients issus des exemples traversent aussi l'opération de lookup : les lignes sélectionnées par les IDs de ces exemples peuvent ainsi être ajustées pendant l'entraînement.
-
-Le détail du calcul et du code appartient au parcours **Build** : [assembler le GPT et suivre les tables d'embeddings](gpt-model-walkthrough.qmd), dans la [visite guidée de construction](build-path.qmd). Pour le rôle de la loss et des gradients, voir aussi [la fonction de perte](loss.qmd) et [les gradients](gradients.qmd).
-
 ## Du vecteur initial à la représentation contextualisée
 
 Avec une matrice fixe, deux occurrences du même ID sélectionnent la même ligne et obtiennent donc le même vecteur initial. Le lookup ne lit pas les mots voisins et ne désambiguïse pas le sens d'une phrase.
 
 La position et le contexte interviennent ensuite, selon l'architecture. Les couches du Transformer transforment les vecteurs d'entrée en **états cachés contextualisés** : deux occurrences ayant le même vecteur initial peuvent alors avoir des représentations différentes si leurs positions ou leurs contextes accessibles diffèrent.
 
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
+Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans l'espace. La matrice d'embeddings $E\in\mathbb{R}^{V\times d}$ associe à chaque ID un vecteur initial de dimension $d$. Deux occurrences du même ID partagent ce vecteur de lookup ; les couches du Transformer produisent ensuite des états contextualisés différents selon la position et le contexte.
+:::
+
+**Pratiquer :** [exercices sur les embeddings](exercises/embedding-space.qmd).
+
 Pour la suite immédiate, consultez [l'encodage positionnel](positional-encoding.qmd), puis [les représentations contextualisées](contextualized-representations.qmd).
-
-## Pour continuer selon votre objectif
-
-- **Pratiquer :** [exercices sur les embeddings](exercises/embedding-space.qmd).
-- **Construire :** [visite guidée du modèle GPT](gpt-model-walkthrough.qmd) — tables d'embeddings, dimensions et passe avant.
-- **Approfondir :** [outils mathématiques et géométrie des représentations](deepen.qmd#outils-mathematiques-et-geometrie), notamment l'histoire des vecteurs de mots statiques, la similarité cosinus et les limites des interprétations géométriques.
 
 {{< include ../includes/generated-suggested-route-fr-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)
 :::
+
+:::: {.supplementary-resources}
+
+<details class="learning-resources">
+<summary><span class="learning-resources__title">Ressources complémentaires</span></summary>
+::: {.learning-resources__content}
+
+### Pour continuer selon votre objectif
+
+- **Construire :** [visite guidée du modèle GPT](gpt-model-walkthrough.qmd) — tables d'embeddings, dimensions et passe avant.
+- **Approfondir :** [outils mathématiques et géométrie des représentations](deepen.qmd#outils-mathematiques-et-geometrie), notamment l'histoire des vecteurs de mots statiques, la similarité cosinus et les limites des interprétations géométriques.
+
+### D'où viennent les valeurs de la table ?
+
+Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres. Les gradients issus des exemples traversent aussi l'opération de lookup : les lignes sélectionnées par les IDs de ces exemples peuvent ainsi être ajustées pendant l'entraînement.
+
+Le détail du calcul et du code appartient au parcours **Build** : [assembler le GPT et suivre les tables d'embeddings](gpt-model-walkthrough.qmd), dans la [visite guidée de construction](build-path.qmd). Pour le rôle de la loss et des gradients, voir aussi [la fonction de perte](loss.qmd) et [les gradients](gradients.qmd).
+
+:::
+
+</details>
+
+::::
