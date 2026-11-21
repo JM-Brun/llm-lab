@@ -319,8 +319,10 @@ async function runCase(testCase, caseIndex) {
   const startedAt = performance.now();
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
   const mobileAttention = label === "mobile" && pagePath === "scaled-dot-product-attention.html";
+  const mobileTraining = label === "mobile" && pagePath === "training-examples.html";
   const context = await browser.newContext({
     viewport, deviceScaleFactor: 1, colorScheme: theme, hasTouch: mobileAttention,
+    reducedMotion: mobileTraining ? "reduce" : "no-preference",
   });
   const page = await context.newPage();
   page.setDefaultTimeout(5000);
@@ -517,6 +519,29 @@ async function runCase(testCase, caseIndex) {
       const windows = await comparison.locator(":scope > ul > li").count();
       if (windows !== 2 || !await comparison.evaluate(element => element.scrollWidth <= element.clientWidth + 1)) {
         throw new Error("The two stride examples must reflow within the reading column.");
+      }
+      if (mobileTraining) {
+        const diagramLabel = page.locator("main svg.mermaid-js .nodeLabel > p").first();
+        await diagramLabel.waitFor({ state: "visible" });
+        const fontSize = await diagramLabel.evaluate(element => {
+          const scale = element.closest("foreignObject").getScreenCTM().a;
+          return parseFloat(getComputedStyle(element).fontSize) * scale;
+        });
+        if (fontSize < 12) throw new Error(`Mermaid labels shrink to ${fontSize.toFixed(2)}px under reduced motion.`);
+
+        const callout = page.locator("main .callout-header[data-bs-toggle='collapse']").first();
+        await callout.focus();
+        await page.keyboard.press("Shift+Tab");
+        const help = page.locator("mjx-container:focus:not([display=true]) > mjx-help");
+        await help.waitFor({ state: "visible" });
+        const iconFits = await help.evaluate(element => {
+          const { left, right } = element.getBoundingClientRect();
+          return left >= 0 && right <= window.innerWidth;
+        });
+        await page.keyboard.press("Tab");
+        const pageFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+        if (!iconFits || !pageFits) throw new Error("MathJax's inline help widened the page during keyboard traversal.");
+        item.trainingAccessibility = { reducedMotion: true, mermaidLabelPx: fontSize, mathHelpFits: true };
       }
     }
     if (kind === "spine-overview") {
