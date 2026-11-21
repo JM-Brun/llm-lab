@@ -1501,6 +1501,22 @@ async function runCase(testCase, caseIndex) {
       item.responsiveTables = { count: responsiveTableCount, enhanced: enhancedTableCount };
     }
 
+    if (pagePath === "transformer-architectures.html" && viewport.width <= 700) {
+      try {
+        const region = page.locator('.table-responsive[role="region"][tabindex="0"]');
+        await region.focus();
+        const isScrollable = await region.evaluate(node => node.scrollWidth > node.clientWidth);
+        if (isScrollable) {
+          await page.keyboard.press("ArrowRight");
+          await page.waitForFunction(() => document.activeElement?.scrollLeft > 0, null, { timeout: 2000 });
+        } else {
+          throw new Error("the focusable table region has no horizontal scroll range");
+        }
+      } catch (error) {
+        report.failures.push(`${pagePath}/${lang}/${label}/${theme}: keyboard table scrolling failed: ${error.message}`);
+      }
+    }
+
     if (kind === "homepage" && pageErrors.length) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: uncaught page errors: ${pageErrors.join(" | ")}`);
     }
