@@ -320,7 +320,11 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         } else if (key === "area") {
           state.areaId = value;
         } else if (key === "page") {
-          state.pageId = value;
+          try {
+            state.pageId = decodeURIComponent(value);
+          } catch (error) {
+            state.pageId = null;
+          }
         } else if (key === "concept") {
           state.conceptId = value;
         } else if (key === "rel") {
@@ -1297,16 +1301,21 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (target && target !== document.body && !root.contains(target)) {
         return;
       }
+      var focusedControl = document.activeElement;
+      var nextFocus;
       if (state.query) {
         commitNextSync = true;
         state.query = "";
         searchInput.value = "";
         render();
+        nextFocus = searchInput;
       } else if (state.mode === "concepts" && state.conceptId) {
+        var conceptId = state.conceptId;
         commitNextSync = true;
         state.conceptId = null;
         render();
         renderPlaceholder();
+        nextFocus = viewport.querySelector('[data-concept-id="' + CSS.escape(conceptId) + '"]');
       } else if (state.mode === "concepts" && state.relationType) {
         commitNextSync = true;
         state.relationType = "";
@@ -1314,17 +1323,27 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           relationFilter.value = "";
         }
         render();
+        nextFocus = relationFilter;
       } else if (state.mode === "pages" && state.areaId) {
+        var areaId = state.areaId;
         commitNextSync = true;
         state.areaId = null;
         render();
+        nextFocus = viewport.querySelector('[data-area-id="' + CSS.escape(areaId) + '"]');
       } else if (state.pageId) {
+        var pageId = state.pageId;
         commitNextSync = true;
         state.pageId = null;
         markCurrentChip();
         renderPlaceholder();
         syncStateToHash(commitNextSync);
         commitNextSync = false;
+        nextFocus = viewport.querySelector('[data-page-id="' + CSS.escape(pageId) + '"]');
+      }
+      // Rendering replaces the active card or details. Keep focus in the map
+      // when that control disappears, and leave a surviving toolbar control alone.
+      if (focusedControl && !focusedControl.isConnected) {
+        (nextFocus || modeSelect).focus();
       }
     });
 

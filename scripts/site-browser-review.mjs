@@ -858,10 +858,10 @@ async function runCase(testCase, caseIndex) {
       }
       await page.keyboard.press("Escape");
       item.learningMap.escapeClearsSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 0;
-      if (!item.learningMap.escapeClearsSelection) {
-        throw new Error("Escape did not clear the selected concept");
+      const focusedConceptId = await page.locator(".map-concept-item:focus").getAttribute("data-concept-id", { timeout: 3000 });
+      if (!item.learningMap.escapeClearsSelection || focusedConceptId !== firstConceptId) {
+        throw new Error("Escape did not clear the selection and restore focus to the concept");
       }
-      await firstConcept.focus();
       await page.keyboard.press("Enter");
       const keyboardPressedIds = await page.locator(".map-concept-item[aria-pressed='true']").evaluateAll(items =>
         [...new Set(items.map(item => item.getAttribute("data-concept-id")))]
@@ -871,6 +871,29 @@ async function runCase(testCase, caseIndex) {
         throw new Error("Enter did not activate the focused concept button");
       }
       await page.keyboard.press("Escape");
+
+      await mode.selectOption("pages");
+      const firstArea = page.locator(".map-area-card").first();
+      const firstAreaId = await firstArea.getAttribute("data-area-id");
+      await firstArea.press("Enter");
+      if (!await page.locator("[data-map-home]:focus").count()) {
+        throw new Error("Opening a territory did not focus its Back button");
+      }
+      await page.keyboard.press("Escape");
+      const focusedAreaId = await page.locator(".map-area-card:focus").getAttribute("data-area-id", { timeout: 3000 });
+      if (focusedAreaId !== firstAreaId) {
+        throw new Error("Escape did not restore focus to the original territory");
+      }
+
+      await page.keyboard.press("Enter");
+      const pageChip = page.locator("[data-map-viewport] [data-page-id]").first();
+      const selectedPageId = await pageChip.getAttribute("data-page-id");
+      await pageChip.click();
+      await page.reload();
+      const currentPage = page.locator('[data-map-viewport] [data-page-id][aria-current="true"]');
+      if (await currentPage.getAttribute("data-page-id", { timeout: 5000 }) !== selectedPageId) {
+        throw new Error("The map did not restore the selected page from the URL");
+      }
     }
 
     if (kind === "build-tour") {
@@ -1363,17 +1386,24 @@ async function runCase(testCase, caseIndex) {
     } // end runInteractiveAudit callout checks
 
     if (runInteractiveAudit) {
-      const axe = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-        .analyze();
+      const scanner = new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]);
+      const axe = await scanner.analyze();
+      const violations = [...axe.violations];
+      if (kind === "learning-map") {
+        // Keep the concept audit as well as the selected-page details above.
+        await page.locator("[data-map-mode]").selectOption("concepts");
+        const conceptsAudit = await scanner.analyze();
+        violations.push(...conceptsAudit.violations);
+      }
       item.axe = {
-        violations: axe.violations.map(v => ({
+        violations: violations.map(v => ({
           id: v.id, impact: v.impact, description: v.description,
           help: v.help, nodes: v.nodes.slice(0, 8).map(n => ({
             target: n.target, html: n.html?.slice(0, 500), summary: n.failureSummary?.slice(0, 500),
           })),
         })),
-        violationCount: axe.violations.length,
+        violationCount: violations.length,
         passes: axe.passes.length,
         incomplete: axe.incomplete.length,
       };
