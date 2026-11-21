@@ -1459,8 +1459,7 @@ a.concept-link:focus-visible {
   text-decoration: none;
 }
 
-.map-chip:hover,
-.map-chip:focus-visible {
+main.content a.map-chip:not(.btn):not(.nav-link):is(:hover, :focus-visible, [aria-current="true"]) {
   background: var(--map-accent);
   color: #ffffff;
 }
