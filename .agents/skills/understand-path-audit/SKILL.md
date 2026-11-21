@@ -32,7 +32,7 @@ The output must answer:
 Read the relevant current versions before auditing; do not reproduce their rules as a competing system:
 
 - `docs/learning-path.md`: authoritative distinction and curriculum for Theory / Understand and Build.
-- `data/guided-route.yml`: canonical eight-stage Understand route and its bilingual stage/page assignments.
+- `data/guided-route.yml`: canonical Understand route and its bilingual stage/page assignments.
 - `docs/understand-path-overview.md`: concise reader-facing route overview, if present.
 - `docs/content-section-mapping.md`: page ownership, destination boundaries, cross-page content ownership.
 - `docs/information-architecture.md`: canonical data ownership and relationship semantics.
@@ -49,7 +49,7 @@ If a referenced document has moved, locate its current canonical owner. Do not s
 
 - Theory / Understand and Build are **distinct pathways**. Do not turn Understand into a prerequisite chain for Build, or Build milestones into theory chapters.
 - Understand is a conceptual progression, not a rigid linear textbook. Respect the canonical route while allowing meaningful non-linear entry points and optional depth.
-- The eight stages in `data/guided-route.yml` are authoritative. Do not add, remove, reorder, or rename stages merely to make a local sequence look neater. Propose a curriculum change separately and justify it with learner evidence.
+- The stages in `data/guided-route.yml` are authoritative. Do not add, remove, reorder, or rename stages merely to make a local sequence look neater. Propose a curriculum change separately and justify it with learner evidence.
 - Keep page navigation, conceptual hierarchy, semantic concept relations, curriculum prerequisites and implementation dependencies distinct. A suggested next page is not automatically a prerequisite or a parent-child relation.
 - Each concept has a canonical explanatory home. A reminder or overview may repeat a small amount of context; do not duplicate the full explanation or worked example without a distinct learning objective.
 - A page must remain self-contained for its LLM-specific learning objective. A link cannot replace a definition, assumption or derivation needed to follow the argument.

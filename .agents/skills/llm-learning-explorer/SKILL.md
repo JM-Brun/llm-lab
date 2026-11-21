@@ -46,7 +46,7 @@ Read the current versions relevant to the requested scope. Locate the canonical 
 
 - `README.md`: project purpose, scope, learning philosophy and evidence boundaries.
 - `docs/learning-path.md`: authoritative distinction between Theory / Understand and Build, canonical route and objectives.
-- `data/guided-route.yml`: eight-stage Understand route; do not create or reorder stages casually.
+- `data/guided-route.yml`: canonical Understand route; do not create or reorder stages casually.
 - `docs/content-section-mapping.md`: ownership boundaries for Understand, Build, Deepen and Practice & experiment.
 - `docs/information-architecture.md`: canonical ownership of pages, concepts, sources, resources and graph projections.
 - `docs/design-system.md`: visual language, accessibility and interaction conventions.
@@ -164,7 +164,7 @@ Before recommending a new page or module, ask in this order:
 4. Could the resource be added to the existing source catalogue or resource registry without changing the curriculum?
 5. Is a new page justified by a distinct learner outcome that has no suitable canonical home?
 
-Do not create new Understand stages or change the eight-stage route based on one interesting source. Do not duplicate canonical explanations. Do not turn every discovered project into a required reading.
+Do not create new Understand stages or change the canonical route based on one interesting source. Do not duplicate canonical explanations. Do not turn every discovered project into a required reading.
 
 ## Workflow
 
