@@ -22,6 +22,9 @@ related: ["en/llm-overview"]
 tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:en", "status:published"]
 -->
 
+
+<!-- self-check-coverage: enforced -->
+<!-- self-check-covers: what-model-predicts text-to-distribution one-computation-three-uses llm-transformer-gpt architecture-learning-use transformers-changed information-residence model-to-conversational-system choosing-an-approach -->
 [← Back to the lesson: Language model overview](../llm-overview.qmd)
 
 [Exercises and practice](../exercises.qmd).
