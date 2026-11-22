@@ -293,7 +293,7 @@ How do we measure the probability assigned to the token actually observed at one
 The model produces a predicted distribution (p). We then know the target token (y) present in the reference continuation. For a *one-hot* target, cross-entropy at that position reduces to negative log-likelihood:
 
 \[
-\\ell = -\ln p(y).
+\ell = -\ln p(y).
 \]
 
 The lower the probability assigned to the observed token, the larger the penalty. This is a local loss for one token; it is not yet a sequence or batch average.
