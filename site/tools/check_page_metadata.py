@@ -115,7 +115,7 @@ def _check_self_check_coverage(
         if "type:exercise-hub" not in source:
             errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
             return
-        related = re.search(r"^\s*related:\s*\["([^"]+)"\]", source, re.MULTILINE)
+        related = re.search(r'^\\s*related:\\s*\\["([^"]+)"\\]', source, re.MULTILINE)
         if related is None:
             errors.append(f"{relative}: practice coverage has no related lesson")
             return
@@ -270,7 +270,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     if tags.get("status") == "planned":
         errors.append(f"{relative}.tags: a page in the Quarto render list cannot be status:planned")
 
-    _check_self_check_coverage(source, relative, errors)
+    _check_self_check_coverage(source, relative, site_dir, errors)
 
     return {
         "path": relative,
