@@ -354,6 +354,8 @@ Do not publish the calendar as a finished learning product until:
 1. **Design and inventory:** audit concepts, computation nodes, route stages, published pages, and exercise resources; resolve gaps and day boundaries.
 2. **Sequence review:** score candidate topics for importance, readiness, prerequisite fit, teachability in 5–8 minutes, activity potential, coverage, and complementarity. Record why each topic is included or deferred.
 3. **Three-day pilot:** author tokenization, Q/K/V, and cross-entropy entries; run a novice review and revise the content contract.
+
+   Adjacent editorial drafts for days 01–02 and 04–06 are now included in `docs/advent-calendar-pilot-content.md`. They help test continuity across the opening sequence, but they are not learner-validated and do not enlarge the selected three-day validation pilot (days 03, 09 and 21).
 4. **Manifest and validation:** stabilize the YAML schema, then add a small validator to an existing build/test path.
 5. **Content production:** author the remaining entries and review bilingual parity.
 6. **Interface:** implement the 24-door view using the existing site design system and navigation.
