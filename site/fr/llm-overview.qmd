@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; le self-check et les six questions Practice couvrent les principaux repères d'orientation."
+      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; les questions de compréhension et les exercices sont regroupés dans la [page d'exercices dédiée](exercises/llm-overview.qmd), qui complète le récapitulatif sans dupliquer le parcours principal."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
