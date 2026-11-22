@@ -34,7 +34,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-
 
 **Débrief :** séparez (a) distance dans l'espace vectoriel d'origine, (b) proximité visuelle dans la projection, (c) appartenance à un cluster calculé et (d) catégorie fournie par les métadonnées. Ces notions ne sont pas équivalentes. Une projection 2D peut déformer distances, densités et formes ; un label automatique est une hypothèse descriptive, pas une vérité sémantique. Pour reproduire l'analyse, archivez dataset, modèle, prétraitement, métrique, paramètres et graine lorsque disponible.
 
-Voir aussi [les exercices sur l'espace des embeddings](exercises/embedding-space.qmd), la [documentation](https://apple.github.io/embedding-atlas/overview.html), le [guide CLI](https://apple.github.io/embedding-atlas/tool.html) et l'[article de recherche](https://machinelearning.apple.com/research/embedding-atlas).
+Voir aussi [les exercices sur l'espace des embeddings](embedding-space.qmd), la [documentation](https://apple.github.io/embedding-atlas/overview.html), le [guide CLI](https://apple.github.io/embedding-atlas/tool.html) et l'[article de recherche](https://machinelearning.apple.com/research/embedding-atlas).
 
 ::: {.language-switch}
 **Langue:** [Français](../../fr/exercises/embeddings-deep-dive.qmd) · [English](../../en/exercises/embeddings-deep-dive.qmd)
