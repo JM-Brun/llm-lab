@@ -52,14 +52,14 @@ At one position, which projections feed the score calculation and which feed the
   <div class="visual-recall__lane">
     <span class="visual-recall__slot"><strong>A</strong> · current position</span>
     <span class="visual-recall__operator">×</span>
-    <span class="visual-recall__slot"><strong>B</strong> · accessible positions</span>
+    <span class="visual-recall__slot"><strong>B</strong> · allowed positions</span>
     <span class="visual-recall__operator">→</span>
     <span class="visual-recall__node">Scores, then weights</span>
   </div>
   <div class="visual-recall__lane">
     <span class="visual-recall__node">Weights</span>
     <span class="visual-recall__operator">×</span>
-    <span class="visual-recall__slot"><strong>C</strong> · accessible positions</span>
+    <span class="visual-recall__slot"><strong>C</strong> · allowed positions</span>
     <span class="visual-recall__operator">→</span>
     <span class="visual-recall__node">Weighted sum</span>
   </div>

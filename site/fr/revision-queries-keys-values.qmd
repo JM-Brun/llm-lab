@@ -52,14 +52,14 @@ Modifier V peut changer la somme pondérée. Les poids dépendent des scores cal
   <div class="visual-recall__lane">
     <span class="visual-recall__slot"><strong>A</strong> · position courante</span>
     <span class="visual-recall__operator">×</span>
-    <span class="visual-recall__slot"><strong>B</strong> · positions accessibles</span>
+    <span class="visual-recall__slot"><strong>B</strong> · positions permises</span>
     <span class="visual-recall__operator">→</span>
     <span class="visual-recall__node">Scores, puis poids</span>
   </div>
   <div class="visual-recall__lane">
     <span class="visual-recall__node">Poids</span>
     <span class="visual-recall__operator">×</span>
-    <span class="visual-recall__slot"><strong>C</strong> · positions accessibles</span>
+    <span class="visual-recall__slot"><strong>C</strong> · positions permises</span>
     <span class="visual-recall__operator">→</span>
     <span class="visual-recall__node">Somme pondérée</span>
   </div>

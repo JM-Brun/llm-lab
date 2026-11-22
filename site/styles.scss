@@ -772,6 +772,7 @@ details.spot-the-fallacy .fallacy-content {
 /* A schematic prompt with a native answer disclosure on review sheets. */
 .visual-recall {
   margin: 1.2rem 0;
+  scroll-margin-block-start: 5.75rem;
   padding: clamp(.8rem, 2.5vw, 1.3rem);
   border: 1px solid #86B99A;
   border-radius: .75rem;
