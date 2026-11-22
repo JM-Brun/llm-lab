@@ -231,9 +231,9 @@ Comment mesurer, à une position, la probabilité attribuée au token effectivem
 
 Le modèle produit une distribution conditionnelle $p_\theta(\cdot\mid x_{<t})$. Le token cible observé est $y_t$, présent dans la continuation de référence. Pour une cible *one-hot*, l'entropie croisée à cette position se réduit à la log-vraisemblance négative :
 
-[
+$$
 \ell_t = -\ln p_\theta(y_t\mid x_{<t}).
-]
+$$
 
 Plus le modèle attribue une faible probabilité au token observé, plus la pénalité est grande. Cette quantité est une perte locale pour un token ; elle n'est pas encore la moyenne d'une séquence ou d'un batch.
 
@@ -250,15 +250,15 @@ Supposons que la distribution prédite soit :
 
 Si le token observé est « Vous », alors :
 
-[
+$$
 \ell=-\ln(0{,}6)\approx 0{,}511\;\text{nat}.
-]
+$$
 
 Si le token observé était « Moi », la distribution serait inchangée, mais la pénalité serait :
 
-[
+$$
 \ell=-\ln(0{,}1)\approx 2{,}303\;\text{nats}.
-]
+$$
 
 La distribution seule ne suffit donc pas à déterminer la cross-entropie : il faut aussi connaître la cible observée.
 
@@ -269,9 +269,9 @@ La cible est « Je », auquel le modèle attribue une probabilité de 0,2. Quell
 <details>
 <summary>Afficher la réponse</summary>
 
-[
+$$
 -\ln(0{,}2)\approx 1{,}609\;\text{nats}.
-]
+$$
 
 </details>
 
@@ -292,9 +292,9 @@ How do we measure the probability assigned to the token actually observed at one
 
 The model produces a conditional distribution $p_\theta(\cdot\mid x_{<t})$. The observed target token is $y_t$, present in the reference continuation. For a *one-hot* target, cross-entropy at that position reduces to negative log-likelihood:
 
-[
+$$
 \ell_t = -\ln p_\theta(y_t\mid x_{<t}).
-]
+$$
 
 The lower the probability assigned to the observed token, the larger the penalty. This is a local loss for one token; it is not yet a sequence or batch average.
 
@@ -311,15 +311,15 @@ Suppose the predicted distribution is:
 
 If the observed token is “They”, then:
 
-[
+$$
 \ell=-\ln(0.6)\approx 0.511\;\text{nats}.
-]
+$$
 
 If the observed token were “Nothing”, the distribution would be unchanged, but the penalty would be:
 
-[
+$$
 \ell=-\ln(0.1)\approx 2.303\;\text{nats}.
-]
+$$
 
 The distribution alone therefore does not determine cross-entropy: we also need the observed target.
 
@@ -330,9 +330,9 @@ The target is “Aqueducts”, to which the model assigns probability 0.2. What 
 <details>
 <summary>Show the answer</summary>
 
-[
+$$
 -\ln(0.2)\approx 1.609\;\text{nats}.
-]
+$$
 
 </details>
 
