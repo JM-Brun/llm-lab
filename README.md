@@ -6,6 +6,8 @@ The aim is to learn from small, inspectable models and evidence, not to train a 
 
 **[Explore LLM Lab in French](https://jm-brun.github.io/llm-lab/) · [Explore in English](https://jm-brun.github.io/llm-lab/en/)**
 
+[Fiches de révision et cartes visuelles](https://jm-brun.github.io/llm-lab/fr/review-path.html) · [Review sheets and visual cards](https://jm-brun.github.io/llm-lab/en/review-path.html)
+
 ## How the lab is designed
 
 - **Understand before scaling.** Follow inference through a small model before studying how its parameters learn. The guided build, pretrained-model adaptation, and cross-cutting evaluation have distinct dependencies; advanced mathematics is available when needed, not a blanket prerequisite.

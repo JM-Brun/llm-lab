@@ -41,6 +41,38 @@ Prefill already provides the logits used to select it. The selected token then b
 
 </details>
 
+::: {.visual-recall}
+
+### Visual card — One decode step with a KV cache {#visual-recall}
+
+In one causal attention head, the prefix A B C is already cached and D enters the model. Which vectors are read for A B C? Which are computed for D? Which positions can D attend to?
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="The prefix A B C feeds the cache read. The new token D feeds the projection step. Both rows have a blank for the vector types.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>A B C</code> · prefix</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot">Vectors read: <strong>?</strong></span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>D</code> · new input</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot">Vectors computed: <strong>?</strong></span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Show the card answer</summary>
+
+**A B C.** Read the keys K and values V for those three positions.
+
+**D.** Compute Q, K, and V for D and append its key and value to the cache. D’s query can use the keys and values at **A, B, C, and D**. The causal mask allows the current position.
+
+</details>
+
+:::
+
 [Trace the second step when generating or scoring an observed continuation](exercises/likelihood.qmd#ex-generation-versus-scoring).
 
 ::: {.callout-note collapse="true" title="Serving latency"}

@@ -41,6 +41,40 @@ Non, leurs IDs choisissent les mêmes lignes. Leurs positions dans la séquence 
 
 </details>
 
+::: {.visual-recall}
+
+### Carte visuelle — Même token, deux positions {#visual-recall}
+
+La tokenisation a donné le même ID aux deux occurrences de `chat`. Avec un encodage absolu additif, quelles cases sont identiques entre les deux positions et quelles cases peuvent contenir des vecteurs différents ?
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="Deux lignes. Position 0, token chat, case A pour le plongement, plus case B pour la position. Position 3, token chat, case C pour le plongement, plus case D pour la position.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>chat</code> · position 0</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot"><strong>A</strong> · plongement</span>
+    <span class="visual-recall__operator">+</span>
+    <span class="visual-recall__slot"><strong>B</strong> · position</span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>chat</code> · position 3</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot"><strong>C</strong> · plongement</span>
+    <span class="visual-recall__operator">+</span>
+    <span class="visual-recall__slot"><strong>D</strong> · position</span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Afficher la réponse de la carte</summary>
+
+**A et C** désignent le même plongement. L’ID sélectionne la même ligne de la table aux deux positions. **B et D** désignent les vecteurs associés aux positions 0 et 3. Ils peuvent différer, même si le token est identique.
+
+</details>
+
+:::
+
 [Retrouvez les deux vecteurs d’entrée à partir du même plongement et de deux vecteurs de position](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.language-switch}

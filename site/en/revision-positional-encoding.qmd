@@ -41,6 +41,40 @@ No, their IDs select the same rows. Their sequence positions change, which can a
 
 </details>
 
+::: {.visual-recall}
+
+### Visual card — Same token, two positions {#visual-recall}
+
+Tokenization assigned the same ID to both occurrences of `chat`. With additive absolute position encoding, which slots match across the two positions, and which may contain different vectors?
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="Two rows. Position 0, token chat, slot A for the embedding, plus slot B for position. Position 3, token chat, slot C for the embedding, plus slot D for position.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>chat</code> · position 0</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot"><strong>A</strong> · embedding</span>
+    <span class="visual-recall__operator">+</span>
+    <span class="visual-recall__slot"><strong>B</strong> · position</span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>chat</code> · position 3</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot"><strong>C</strong> · embedding</span>
+    <span class="visual-recall__operator">+</span>
+    <span class="visual-recall__slot"><strong>D</strong> · position</span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Show the card answer</summary>
+
+**A and C** are the same embedding. The ID selects the same table row at both positions. **B and D** are the vectors for positions 0 and 3. They can differ even though the token is the same.
+
+</details>
+
+:::
+
 [Recover the two input vectors from the same embedding and two position vectors](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.language-switch}
