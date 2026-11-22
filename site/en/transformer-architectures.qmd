@@ -22,7 +22,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap and comparison table cover the three architectures, information flow and attention mechanisms; the self-check and practice distinguish architecture, objective and task."
+      note: "The recap and comparison table cover the three architectures, information flow and attention mechanisms; the dedicated practice page helps distinguish architecture, objective and task."
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
@@ -135,8 +135,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-
-[Questions and exercises](exercises/transformer-architectures.qmd)
 
 
 </div>
