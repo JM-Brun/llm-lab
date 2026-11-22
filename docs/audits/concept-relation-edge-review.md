@@ -220,14 +220,18 @@ Two earlier edges were re-examined against the narrower definitions and the comp
 A later registry addition introduced the pedagogical edge
 `kl-divergence → prerequisite → cross-entropy`. A focused review against the canonical bilingual lesson and the day-21 calendar pilot found that this relation overstates the mathematical dependency.
 
-Cross-entropy is defined directly for target distribution (q) and predicted distribution (p):
-[
-H(q,p) = -sum_i q_i log p_i.
-]
+Cross-entropy is defined directly for target distribution $q$ and predicted distribution $p$:
+
+$
+H(q,p) = -\\sum_i q_i \\log p_i.
+$
+
 For a one-hot target, it reduces to the token-level negative log-probability. Neither definition requires KL divergence. The identity
-[
-H(q,p) = H(q) + D_{\mathrm{KL}}(q\Vert p)
-]
+
+$
+H(q,p) = H(q) + D_{\\mathrm{KL}}(q\\Vert p)
+$
+
 is a useful decomposition and supports an optional mathematical deepening, but it does not make KL a prerequisite for calculating cross-entropy.
 
 **Decision:** remove the `kl-divergence → prerequisite → cross-entropy` edge without replacement. The current cross-entropy concept retains its bilingual resource links to `language-modeling-math`, so the decomposition remains discoverable as optional depth. No new relation type is introduced. The separate `entropy → prerequisite → cross-entropy` edge is outside this targeted decision and is left unchanged.
