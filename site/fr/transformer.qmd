@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le nouveau rappel relie architecture décodeur seul, rôle de l'auto-attention et du MLP, connexions résiduelles, normalisation et sortie en logits ; cinq questions corrigées vérifient le transfert entre sous-couches, bloc et génération."
+      note: "Le nouveau rappel relie architecture décodeur seul, rôle de l'auto-attention et du MLP, connexions résiduelles, normalisation et sortie en logits ; la page d'exercices dédiée propose des questions de transfert entre sous-couches, bloc et génération."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -239,8 +239,6 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <h3 id="pour-approfondir">Pour approfondir</h3>
 <p>Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la <a href="deepen.qmd#ressources-transformer">rubrique Approfondir consacrée au Transformer</a>. Pour une première vue d'ensemble complémentaire, voir aussi <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>. Ces ressources sont facultatives et ne font pas partie du parcours principal.</p>
 
-<h3>Exercices</h3>
-<p>Les questions et exercices de cette leçon sont regroupés sur sa <a href="exercises/transformer.qmd">page d'exercices dédiée</a>.</p>
 
 </div>
 </details>
