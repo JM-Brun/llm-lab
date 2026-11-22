@@ -17,13 +17,15 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/contextualized-representations", "fr/linearite-embeddings", "fr/scaling-laws", "fr/llm-limits"]
+related: ["fr/contextualized-representations", "fr/linearite-embeddings", "fr/scaling-laws", "fr/llm-limits", "fr/jepa-platonic-representation-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Si un modèle apprend à partir de photographies et un autre à partir de texte, finiront-ils par organiser le monde de la même façon ? L'**hypothèse de représentation platonique** conjecture que oui, de plus en plus, à mesure que les modèles gagnent en capacité. Un théorème de Balestriero et LeCun (2026) rend précise une partie de cette conjecture : ce qui décide de la convergence n'est pas la seule échelle, mais les observations que l'objectif d'entraînement déclare liées.
 :::
+
+**Questions et exercices :** [Accéder à la page dédiée](exercises/jepa-platonic-representation.qmd).
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 Après cette étude, vous devriez savoir distinguer les paires positives à bonnes et à mauvaises vues et expliquer pourquoi ces étiquettes sont relatives à la tâche ; énoncer les hypothèses du théorème de représentation platonique avant sa conclusion ; suivre le mécanisme spectral qui relie le graphe des paires positives à l'ambiguïté de rotation ; et lire les résultats d'alignement et d'efficacité en échantillons sans confondre échantillons, tokens, calcul et intelligence.
@@ -140,14 +142,6 @@ Une précaution de provenance accompagne les chiffres à l'échelle du web : une
 **Limite de recherche.** Les annexes de preuve de l'article ont été auditées sélectivement, l'implémentation officielle n'a pas été exécutée et aucun résultat n'a été reproduit indépendamment. Traitez les chiffres rapportés comme des éléments de preuve rapportés par les auteurs et propres à leur protocole, conformément au dossier de revue des sources du dépôt.
 :::
 
-::: {.self-check}
-## Vérifiez votre compréhension
-
-1. Deux légendes décrivent la même photographie ; deux fragments masqués proviennent d'une même légende. Quelles paires sont des bonnes vues, et pourquoi l'étiquette bonne/mauvaise est-elle relative à la tâche plutôt qu'absolue ?
-2. Donnez deux hypothèses du théorème de représentation platonique sans lesquelles la conclusion « même représentation à une rotation près » ne suit pas.
-3. L'article rapporte 42 fois moins d'échantillons d'entraînement pour une JEPA à bonnes vues. Pourquoi cela n'est-il pas une affirmation sur 42 fois moins de calcul ?
-4. Pourquoi l'interprétation de la prédiction du prochain token comme JEPA à mauvaises vues est-elle heuristique plutôt qu'un théorème ?
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](jepa-platonic-representation.qmd) · [English](../en/jepa-platonic-representation.qmd)
