@@ -391,6 +391,7 @@ days:
       en: "Connect negative log-likelihood, per-token NLL, and cross-entropy for a one-hot target."
     concepts: [negative-log-likelihood, cross-entropy]
     lesson_pages: [fr/cross-entropy, en/cross-entropy]
+    deepening_pages: [fr/language-modeling-math, en/language-modeling-math]
     computational_nodes: [negative-log-probability, token-nll]
     practice_pages: [fr/cross-entropy-exercises, en/cross-entropy-exercises]
     activity: numerical
