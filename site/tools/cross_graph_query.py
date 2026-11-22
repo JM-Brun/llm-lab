@@ -447,7 +447,6 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
         )
 
     # Non-page resources remain distinct from both source extractions and computation nodes.
-    resource_path_count = 0
     for association in index.concept_resource_associations:
         if association.concept_id != concept_id:
             continue
@@ -457,23 +456,24 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             entity_type="resource",
             entity_id=resource.resource_id,
             label=_resource_label(resource, "fr"),
-            source_path=resource.path,
+            source_path="data/resources.yml",
             status=resource.status,
             details={
                 "kind": resource.kind,
                 "language": resource.language,
                 "location": resource.location,
                 "referenced_by": resource.referenced_by,
-                "relation": association.relation,
+                "programming_language": resource.programming_language,
+                "provenance": resource.provenance,
             },
         )
         resource_links = (
             EvidencePathLink(
                 source_ref=concept_step.ref,
                 target_ref=resource_step.ref,
-                relation=association.relation,
-                basis="resources.yml concept association",
-                source_path=resource.path,
+                relation="references-resource",
+                basis="resources[].concepts",
+                source_path="data/resources.yml",
             ),
         )
         paths.append(
@@ -485,7 +485,6 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                 links=resource_links,
             )
         )
-        resource_path_count += 1
         for page_id in resource.referenced_by:
             page_step = _page_step(index, page_id)
             paths.append(
@@ -501,7 +500,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                             target_ref=page_step.ref,
                             relation="referenced-by",
                             basis="resources.yml referenced_by",
-                            source_path=resource.path,
+                            source_path="data/resources.yml",
                         ),
                     ),
                 )
