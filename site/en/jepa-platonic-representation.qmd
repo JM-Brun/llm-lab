@@ -17,13 +17,15 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/contextualized-representations", "en/embedding-linearity", "en/scaling-laws", "en/llm-limits"]
+related: ["en/contextualized-representations", "en/embedding-linearity", "en/scaling-laws", "en/llm-limits", "en/jepa-platonic-representation-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 If one model learns from photographs and another learns from text, will they end up organizing the world the same way? The **Platonic Representation Hypothesis** conjectures that they increasingly do as models gain capability. A 2026 theorem by Balestriero and LeCun makes part of that conjecture precise: what decides convergence is not scale alone, but which observations the training objective declares to be related.
 :::
+
+**Questions and exercises:** [Open the dedicated practice page](exercises/jepa-platonic-representation.qmd).
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 After this study, you should be able to distinguish good-view and bad-view positive pairs and explain why the labels are task-relative; state the assumptions of the Platonic Representation Theorem before its conclusion; follow the spectral mechanism that links positive-pair graphs to rotation ambiguity; and read the reported alignment and sample-efficiency results without conflating samples, tokens, compute, or intelligence.
@@ -140,14 +142,6 @@ A provenance caveat travels with the web-scale numbers: much of the training tex
 **Research boundary.** The paper's proof appendices have been audited selectively, the official implementation has not been executed, and no result has been independently reproduced. Treat the reported numbers as author-reported, protocol-specific evidence, per the repository's source review dossier.
 :::
 
-::: {.self-check}
-## Check your understanding
-
-1. Two captions describe the same photograph; two masked spans come from one caption. Which pairs are good views, and why is the good/bad label task-relative rather than absolute?
-2. Give two assumptions of the Platonic Representation Theorem without which the "same representation up to a rotation" conclusion does not follow.
-3. The paper reports 42 times fewer training samples for a good-view JEPA. Why is this not a claim about 42 times less compute?
-4. Why is the interpretation of next-token prediction as a bad-view JEPA heuristic rather than a theorem?
-:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/jepa-platonic-representation.qmd) · [English](jepa-platonic-representation.qmd)
