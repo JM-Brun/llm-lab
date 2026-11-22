@@ -78,6 +78,19 @@ def test_source_paths_keep_exact_locators_confidence_and_scan_status(
         and path.steps[1].confidence == "established"
         for path in source_paths
     )
+    definition_path = next(
+        path
+        for path in source_paths
+        if path.steps[1].locator
+        and path.steps[1].locator.get("label") == "Definition 3"
+    )
+    item_step = definition_path.steps[1]
+    assert item_step.assumptions
+    assert item_step.limitations
+    assert item_step.details is not None
+    assert item_step.details["kind"] == "definition"
+    assert item_step.details["disposition_rationale"]
+    assert definition_path.links[0].basis == "classification.concept_ids"
     assert any(
         path.steps[2].details
         and path.steps[2].details.get("scan_status") == "partially-scanned"
