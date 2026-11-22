@@ -118,6 +118,8 @@ After the technical sequence above:
 - generate the learner-facing “Réviser” experience from the canonical relation and the Understand route;
 - keep issue #1109 open until the editorial contract, pilot, assessed coverage and learner-facing experience are complete.
 
+The [visual recall pilot](visual-recall-pilot.md) provides a text comparison and delayed transfer prompts for the three cards on position, Q/K/V and the KV cache.
+
 For Build-specific revision expectations, continue coordinating with [issue #78](https://github.com/JM-Brun/llm-lab/issues/78). A revision sheet does not demonstrate that the learner can implement the system unaided.
 
 ## 4. Acceptance criteria for completion
