@@ -474,7 +474,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             EvidencePathLink(
                 source_ref=concept_step.ref,
                 target_ref=resource_step.ref,
-                relation="references-resource",
+                relation="associated-with-resource",
                 basis="resources[].concepts",
                 source_path="data/resources.yml",
             ),
