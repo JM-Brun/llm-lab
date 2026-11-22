@@ -135,24 +135,8 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-::: {.self-check}
-## Check your understanding
 
-[Dedicated Transformer architecture exercises](exercises/transformer-architectures.qmd).
-
-1. Why can BERT use tokens that appear after the position being represented?
-2. Which operation particularly distinguishes an encoder–decoder from a decoder-only model?
-3. Does next-token prediction define every Transformer?
-
-<details>
-<summary>Show the answers</summary>
-
-1. Its encoder generally uses bidirectional attention over the input.
-2. The decoder's cross-attention to representations produced by the encoder.
-3. No. It is a typical objective for autoregressive decoders, not a property of every Transformer architecture.
-
-</details>
-:::
+[Questions and exercises](exercises/transformer-architectures.qmd)
 
 
 </div>
