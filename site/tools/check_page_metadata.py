@@ -98,15 +98,34 @@ def _tag_map(tags: Any, where: str, errors: list[str]) -> dict[str, str]:
     return dimensions
 
 
-def _check_self_check_coverage(source: str, relative: str, errors: list[str]) -> None:
-    """Validate section-to-question coverage when a page opts into the contract."""
+def _check_self_check_coverage(
+    source: str, relative: str, site_dir: Path, errors: list[str]
+) -> None:
+    """Validate section-to-question coverage on a lesson or its practice companion."""
     if "<!-- self-check-coverage: enforced -->" not in source:
         return
+
     check_start = source.find("::: {.self-check}")
-    if check_start < 0:
-        errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
-        return
-    lesson_source = source[:check_start]
+    if check_start >= 0:
+        lesson_source = source[:check_start]
+        coverage_source = source[check_start:]
+    else:
+        # A lesson's self-check may live on its dedicated exercise page. Resolve
+        # the canonical lesson through the companion's page-map relationship.
+        if "type:exercise-hub" not in source:
+            errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
+            return
+        related = re.search(r"^\s*related:\s*\["([^"]+)"\]", source, re.MULTILINE)
+        if related is None:
+            errors.append(f"{relative}: practice coverage has no related lesson")
+            return
+        lesson_path = site_dir / f"{related.group(1)}.qmd"
+        if not lesson_path.is_file():
+            errors.append(f"{relative}: related lesson does not exist: {related.group(1)}")
+            return
+        lesson_source = lesson_path.read_text(encoding="utf-8")
+        coverage_source = source
+
     headings = re.findall(r"^## (.+?)\s*$", lesson_source, re.MULTILINE)
     section_ids: set[str] = set()
     unanchored: list[str] = []
@@ -122,7 +141,7 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
         )
     covered_ids = {
         section_id
-        for marker in re.findall(r"<!-- self-check-covers: ([^>]+) -->", source[check_start:])
+        for marker in re.findall(r"<!-- self-check-covers: ([^>]+) -->", coverage_source)
         for section_id in marker.split()
     }
     missing = sorted(section_ids - covered_ids)
@@ -131,7 +150,6 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
         errors.append(f"{relative}: major sections lack self-check coverage: {missing}")
     if unknown:
         errors.append(f"{relative}: self-check coverage references unknown sections: {unknown}")
-
 
 def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] | None:
     relative = path.relative_to(site_dir).as_posix()
