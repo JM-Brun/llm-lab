@@ -515,6 +515,8 @@ def _load_cross_graph_evidence_projection(
     sources_by_id: dict[str, SourceEvidenceRecord] = {}
     source_level_concepts_by_id: dict[str, tuple[str, ...]] = {}
     for source_entry in source_entries:
+        if not isinstance(source_entry, dict):
+            raise ValueError("Every source catalogue entry must be a mapping")
         source_id = source_entry.get("id")
         if not isinstance(source_id, str) or not source_id:
             raise ValueError("Every source catalogue entry must have a non-empty id")
@@ -527,6 +529,13 @@ def _load_cross_graph_evidence_projection(
             )
         classification = source_entry.get("classification") or {}
         related = source_entry.get("related") or {}
+        if not isinstance(classification, dict) or not isinstance(related, dict):
+            raise ProjectIndexIntegrityError(
+                source="data/sources.yml",
+                record_id=source_id,
+                relation="classification and related mappings",
+                target="non-mapping value",
+            )
         classification_concepts = _string_tuple(
             classification.get("concept_ids"),
             source="data/sources.yml",
@@ -602,6 +611,13 @@ def _load_cross_graph_evidence_projection(
             )
         item_path = extraction_path.relative_to(root).as_posix()
         for item in items:
+            if not isinstance(item, dict):
+                raise ProjectIndexIntegrityError(
+                    source=item_path,
+                    record_id=source_id,
+                    relation="items entry",
+                    target=type(item).__name__,
+                )
             item_id = item.get("id")
             if not isinstance(item_id, str) or not item_id:
                 raise ProjectIndexIntegrityError(
@@ -713,9 +729,15 @@ def _load_cross_graph_evidence_projection(
 
     graph_path = root / "data" / "computational-graph.yml"
     graph_data = load_yaml(graph_path)
+    graph_nodes = graph_data.get("nodes")
+    graph_edges = graph_data.get("edges", [])
+    if not isinstance(graph_nodes, list) or not isinstance(graph_edges, list):
+        raise ValueError("data/computational-graph.yml must define nodes and edges lists")
     computational_nodes_by_id: dict[str, ComputationalNodeRecord] = {}
     computational_nodes_by_page: dict[str, list[str]] = defaultdict(list)
-    for node in graph_data.get("nodes", []):
+    for node in graph_nodes:
+        if not isinstance(node, dict):
+            raise ValueError("Every computational graph node must be a mapping")
         node_id = node.get("id")
         if not isinstance(node_id, str) or not node_id:
             raise ValueError("Every computational graph node must have a non-empty id")
@@ -754,7 +776,14 @@ def _load_cross_graph_evidence_projection(
         )
 
     computational_edges: list[ComputationalEdgeRecord] = []
-    for position, edge in enumerate(graph_data.get("edges", [])):
+    for position, edge in enumerate(graph_edges):
+        if not isinstance(edge, dict):
+            raise ProjectIndexIntegrityError(
+                source="data/computational-graph.yml",
+                record_id=str(position),
+                relation="edge",
+                target=type(edge).__name__,
+            )
         source_node_id = edge.get("from")
         target_node_id = edge.get("to")
         relation_type = edge.get("type")
@@ -790,11 +819,21 @@ def _load_cross_graph_evidence_projection(
     route_focus_groups: list[RouteFocusGroup] = []
     unresolved_route_focus: list[str] = []
     for stage in route_data.get("stages", []):
+        if not isinstance(stage, dict):
+            raise ValueError("Every guided-route stage must be a mapping")
         stage_id = stage.get("id")
+        stage_pages_data = stage.get("pages") or {}
+        if not isinstance(stage_pages_data, dict):
+            raise ProjectIndexIntegrityError(
+                source="data/guided-route.yml",
+                record_id=str(stage_id),
+                relation="pages",
+                target=type(stage_pages_data).__name__,
+            )
         stage_pages = [
             page_id
             for language in ("fr", "en")
-            for page_id in stage.get("pages", {}).get(language, [])
+            for page_id in stage_pages_data.get(language, [])
         ]
         for page_id in stage_pages:
             if page_id not in pages:
