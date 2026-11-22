@@ -693,6 +693,23 @@ def test_advanced_lessons_link_to_topic_exercise_collections() -> None:
         )
         source = (ROOT / path).read_text(encoding="utf-8")
         assert target in source
+        assert any(
+            edge.source == practice_id
+            and edge.target == lesson_id
+            and edge.family == "related"
+            for edge in index.page_edges
+        )
+
+    collection_links = (
+        ("site/fr/exercises-foundations.qmd", "cosine-similarity.qmd"),
+        ("site/fr/exercises-foundations.qmd", "linearite-embeddings.qmd"),
+        ("site/en/exercises-foundations.qmd", "cosine-similarity.qmd"),
+        ("site/en/exercises-foundations.qmd", "embedding-linearity.qmd"),
+        ("site/fr/exercises-attention.qmd", "attention-score-scaling.qmd"),
+        ("site/en/exercises-attention.qmd", "attention-score-scaling.qmd"),
+    )
+    for path, target in collection_links:
+        assert target in (ROOT / path).read_text(encoding="utf-8")
 
     for path in (
         "site/fr/exercises-foundations.qmd",
