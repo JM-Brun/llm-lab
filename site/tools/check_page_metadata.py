@@ -135,8 +135,7 @@ def _check_self_check_coverage(
             return
         related = page_metadata.get("related", []) if isinstance(page_metadata, dict) else []
         lesson_ids = [
-            item for item in related
-            if isinstance(item, str) and item.startswith(("fr/", "en/"))
+            item for item in related if isinstance(item, str) and item.startswith(("fr/", "en/"))
         ]
         if len(lesson_ids) != 1:
             errors.append(f"{relative}: practice coverage must identify exactly one related lesson")
