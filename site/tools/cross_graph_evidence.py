@@ -317,6 +317,14 @@ def load_cross_graph_evidence_projection(
                 record_id=item_id,
                 relation="candidate_destinations.concepts",
             )
+            for candidate_concept in candidate_concepts:
+                if candidate_concept not in concepts:
+                    raise ProjectIndexIntegrityError(
+                        source=item_path,
+                        record_id=item_id,
+                        relation="candidate_destinations.concepts",
+                        target=candidate_concept,
+                    )
             assumptions = _string_tuple(
                 evidence.get("assumptions", item.get("assumptions")),
                 source=item_path,
