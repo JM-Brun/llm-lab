@@ -1424,14 +1424,41 @@ async function runCase(testCase, caseIndex) {
           }
         }
         if (pagePath === "positional-encoding.html") {
-          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
-            comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
-            text: el.textContent || "",
-            className: el.className,
-          })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
-          if (audit.comparisonCount !== 2 || !/RoPE/i.test(audit.text) ||
-              !/absolute|absolu/i.test(audit.text)) {
-            throw new Error("positional map must present absolute encodings and RoPE as alternatives, not consecutive stages; rendered map: " + JSON.stringify(audit));
+          const audit = await page.evaluate(() => {
+            const flow = document.querySelector("main .pipeline-stepper.meta-flow");
+            if (flow) {
+              return {
+                kind: "flow",
+                comparisonCount: flow.querySelectorAll(".meta-flow__comparison-item").length,
+                text: flow.textContent || "",
+              };
+            }
+            // A semantic comparison table is an equally valid representation:
+            // each positional mechanism is an alternative, not a pipeline stage.
+            const table = [...document.querySelectorAll("main table")].map(element => ({
+              headers: [...element.querySelectorAll("thead th")].map(cell => cell.textContent.trim()),
+              rows: [...element.querySelectorAll("tbody tr")].map(row =>
+                [...row.querySelectorAll("th, td")].map(cell => cell.textContent.trim())
+              ),
+            })).find(candidate =>
+              /^(mechanism|mécanisme)$/i.test(candidate.headers[0] || "") &&
+              candidate.rows.length >= 3
+            );
+            return table
+              ? { kind: "table", ...table }
+              : { kind: "missing", comparisonCount: 0, text: "" };
+          });
+          const legacyFlowIsValid = audit.kind === "flow" &&
+            audit.comparisonCount === 2 && /RoPE/i.test(audit.text) &&
+            /absolute|absolu/i.test(audit.text);
+          const tableLabels = audit.kind === "table" ? audit.rows.map(row => row[0] || "") : [];
+          const comparisonTableIsValid = audit.kind === "table" &&
+            audit.rows.length === 3 &&
+            tableLabels.some(label => /absolute|absolu/i.test(label)) &&
+            tableLabels.some(label => /RoPE/i.test(label)) &&
+            tableLabels.some(label => /relative bias|biais relatif/i.test(label));
+          if (!legacyFlowIsValid && !comparisonTableIsValid) {
+            throw new Error("positional mechanisms must be presented as alternatives in a comparison flow or table; rendered audit: " + JSON.stringify(audit));
           }
         }
         if (pagePath === "generation.html") {
