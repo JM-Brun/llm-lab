@@ -21,7 +21,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel relie l'objectif de prédiction à ses limites et aux exigences d'évaluation ; la question rapide et les quatre exercices bilingues vérifient vérité, émergence, calibration et portée des benchmarks."
+      note: "Le rappel relie l'objectif de prédiction à ses limites et aux exigences d'évaluation ; la page d'exercices dédiée vérifie vérité, émergence, calibration et portée des benchmarks."
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -127,8 +127,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 
 
-
-[Questions et exercices](exercises/llm-limits.qmd)
 
 
 </div>
