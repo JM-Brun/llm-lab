@@ -46,6 +46,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis dans « de bonne ou de mauvaise situation ». Le premier emploi désigne un poste ; le second, les circonstances. En supposant un ID commun et une position simplifiée identique, le lookup initial est le même. **Le Transformer construit ensuite des états cachés contextualisés à partir du contexte.**
 :::
 
+**Questions et exercices :** [Accéder à la page dédiée](exercises/contextualized-representations.qmd).
+
 ## Ce qui reste identique
 
 Considérons deux emplois du mot `situation` :
@@ -104,7 +106,7 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 - **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
 :::
 
-Dans un GPT causal, le préfixe accessible à une position s’arrête au token courant. À position et poids fixés, [comparez trois suites contenant le même ID en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Repérez si le token modifié appartient au préfixe accessible avant de prédire l’effet du changement sur l’état.
+Dans un GPT causal, le préfixe accessible à une position s’arrête au token courant. À position et poids fixés, une modification du préfixe accessible peut changer l’état courant ; une modification située après cette position ne doit pas le changer.
 
 ## Où se situe cette étape dans le modèle ?
 
@@ -157,10 +159,6 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
 :::
 
-## Exercices
-
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
-
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -169,8 +167,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
 ::: {.learning-resources__content}
-
-
 
 
 

@@ -29,6 +29,8 @@ tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "le
 Un modèle ne s'entraîne pas directement sur « Internet » ou sur un ensemble abstrait de textes : il consomme des séquences construites à partir de sources sélectionnées et transformées. La préparation du corpus définit ce qui entre dans l'expérience, ce qui doit rester indépendant pour l'évaluation et les transformations qui doivent pouvoir être auditées. Ce travail est distinct de la tokenisation d'un prompt et de la construction des fenêtres d'entraînement.
 :::
 
+**Questions et exercices :** [Accéder à la page dédiée](exercises/corpus-preparation.qmd).
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - définir les sources admissibles et conserver leur provenance et leurs conditions d'utilisation ;
@@ -157,10 +159,6 @@ Cette page définit un cadre de traçabilité et de séparation des responsabili
 [Français](corpus-preparation.qmd) · [English](../en/corpus-preparation.qmd)
 :::
 
-## Exercices
-
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
-
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -173,8 +171,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - [Hugging Face — Datasets, traitement et manipulation](https://huggingface.co/learn/llm-course/en/chapter5/3) : charger, inspecter, filtrer et transformer des données.
 - [Hugging Face — Grands datasets, mémoire et streaming](https://huggingface.co/learn/llm-course/en/chapter5/4) : comprendre les fichiers memory-mapped et le traitement de corpus volumineux.
 - [Hugging Face — Annotation et curation avec Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1) : exemple d'outillage pour le protocole décrit plus haut.
-
-
 
 
 </div>

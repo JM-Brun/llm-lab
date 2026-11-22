@@ -33,6 +33,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", 
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
+**Questions et exercices :** [Accéder à la page dédiée](exercises/causal-masking.qmd).
+
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
@@ -147,10 +149,6 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 **Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)
 :::
 
-## Exercices
-
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
-
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -159,8 +157,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
 ::: {.learning-resources__content}
-
-
 
 
 

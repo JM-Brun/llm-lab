@@ -29,6 +29,8 @@ This page is an **advanced deep dive**. It assumes familiarity with the general 
 Cross-attention lets one sequence read representations from another. In an encoder–decoder Transformer, the decoder produces the queries **Q**, while the keys **K** and values **V** come from the encoder output. This separation of sources is what distinguishes cross-attention from self-attention.
 :::
 
+**Questions and exercises:** [Open the dedicated practice page](exercises/cross-attention.qmd).
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Deep-dive objectives"}
 You will be able to:
 - identify where Q, K, and V come from in cross-attention;
@@ -160,18 +162,12 @@ The mechanism is not limited to translation. It also appears in multimodal model
 **Language:** [Français](../fr/cross-attention.qmd) · [English](cross-attention.qmd)
 :::
 
-## Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-attention.qmd).
-
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
 <div class="learning-resources__content" markdown="1">
-
-
 
 
 </div>
