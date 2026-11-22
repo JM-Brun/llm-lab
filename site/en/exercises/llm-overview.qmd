@@ -36,7 +36,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 <details>
 <summary>Show the answer and reasoning</summary>
 
-The first case is **few-shot / in-context learning**: the examples condition the response during inference, without updating the parameters. Updating the weights on examples would be **fine-tuning**. Retrieving external documents and adding them to the context would be a **RAG** system. These mechanisms can complement one another, but they are not interchangeable. Pretraining may have exposed the model to related language patterns and task-like examples; “not specifically trained for this classification” does not mean “learned nothing relevant”.
+The first case is **few-shot / in-context learning**: the examples condition the response during inference, without updating the parameters. Updating the weights on examples would be **fine-tuning**. Retrieving external documents and adding them to the context would be a **RAG** system. These mechanisms can complement one another, but they are not interchangeable. Pretraining may have exposed the model to related language patterns and task-like examples; “not specifically trained for this classification” does not mean “learned nothing relevant”. To evaluate the classifier, compare predictions with labels from reviews held out from the prompt and tuning decisions.
 
 </details>
 
