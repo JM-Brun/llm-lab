@@ -70,7 +70,7 @@ An **additive absolute encoding** uses a token’s position. A **relative** mech
 
 The causal mask determines which keys can contribute regardless of the positional mechanism. See the lessons on [Q/K/V projections](queries-keys-values.qmd) and [sinusoidal encodings](sinusoidal-positional-encoding.qmd) for details.
 
-In the running example, each token generated after “What have the Romans ever done for us?” takes the next position in the sequence.
+In the running example, each token of “They built roads between distant towns.” appended after “What have the Romans ever done for us?” takes the next position in the sequence.
 
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 

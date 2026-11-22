@@ -70,7 +70,7 @@ Un encodage **absolu additif** utilise le rang du token. Un mécanisme **relatif
 
 Le masque causal détermine quelles clés peuvent contribuer, quel que soit le mécanisme positionnel utilisé. Les [projections Q/K/V](queries-keys-values.qmd) et les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) sont détaillés dans leurs leçons respectives.
 
-Dans le fil rouge, chaque token généré après « C’est une bonne situation, ça, scribe ? » occupe le rang suivant dans la séquence.
+Dans le fil rouge, chaque token de la continuation « Vous savez, moi… » ajouté après « C'est une bonne situation, ça, scribe ? » occupe le rang suivant dans la séquence.
 
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
