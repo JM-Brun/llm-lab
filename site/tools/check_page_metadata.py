@@ -107,7 +107,7 @@ def _check_self_check_coverage(
     related_ids: list[str],
     is_practice_page: bool,
 ) -> None:
-    """Validate that a self-check covers the lesson sections it accompanies."""
+    """Validate same-page and companion-page self-check coverage."""
     if "<!-- self-check-coverage: enforced -->" not in source:
         return
     check_start = source.find("::: {.self-check}")
