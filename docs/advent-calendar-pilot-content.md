@@ -49,7 +49,7 @@ Cette journée porte sur la segmentation elle-même. L'association de chaque tok
 
 **À vous de vérifier**
 
-Deux tokenizers segmentent la même chaîne différemment : le premier produit `[`chat`, `suit`]`, le second `[`cha`, `t`, `suit`]`. Ont-ils nécessairement produit la même séquence de tokens ?
+Deux tokenizers segmentent la même chaîne différemment : le premier produit `["chat", "suit"]`, le second `["cha", "t", "suit"]`. Ont-ils nécessairement produit la même séquence de tokens ?
 
 <details>
 <summary>Afficher la réponse</summary>
@@ -89,7 +89,7 @@ This day focuses on segmentation itself. Mapping each token to an integer ID is 
 
 **Check yourself**
 
-Two tokenizers segment the same string differently: the first produces `[`cat`, `follows`]`, while the second produces `[`ca`, `t`, `follows`]`. Have they necessarily produced the same token sequence?
+Two tokenizers segment the same string differently: the first produces `["cat", "follows"]`, while the second produces `["ca", "t", "follows"]`. Have they necessarily produced the same token sequence?
 
 <details>
 <summary>Show the answer</summary>
