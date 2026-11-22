@@ -1,0 +1,84 @@
+---
+title: "Exercises — JEPA and the Platonic Representation Hypothesis"
+subtitle: "Positive pairs, theorem assumptions, and limits of the evidence"
+description-meta: "Comprehension and transfer questions on JEPAs, positive views, and representation convergence."
+keywords: ["type:exercise-hub", "destination:practice", "topic:jepa-platonic-representation-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/jepa-platonic-representation-exercises"
+summary: "Self-check questions for the JEPA and Platonic Representation Hypothesis deep dive."
+scope: "Assesses good-versus-bad-view distinctions, theorem assumptions, interpretation of sample-count comparisons, and the status of the next-token-prediction analogy."
+purpose: "Check that readers can state the conditions of a theoretical result and avoid overinterpreting empirical findings."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/jepa-platonic-representation"]
+tags: ["type:exercise-hub", "destination:practice", "topic:jepa-platonic-representation-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: JEPA and the Platonic Representation Hypothesis](../jepa-platonic-representation.qmd)
+
+## Check your understanding
+
+### 1. Good views and bad views {#jepa-good-and-bad-views}
+
+Two captions describe the same photograph; two masked spans come from one caption. Which pairs are good views, and why is the good/bad label task-relative rather than absolute?
+
+<details>
+<summary>Show the worked answer</summary>
+
+The two captions of the same photograph are the good-view example: they describe one scene through distinct observations whose nuisances (wording, style) may be independent. The two masked spans from one caption are bad views in the paper's sense: they inherit the same source observation and may share its nuisance factors.
+
+The labels are not universal. A crop can be a useful augmentation for learning visual invariance; it is called “bad” here relative to the cross-modal alignment objective under study, because it does not necessarily provide two independent observations of the same world structure.
+
+</details>
+
+### 2. Theorem assumptions {#jepa-theorem-assumptions}
+
+Give two assumptions of the Platonic Representation Theorem without which the “same representation up to a rotation” conclusion does not follow.
+
+<details>
+<summary>Show the worked answer</summary>
+
+Several assumptions are required by the theorem as stated. Examples include:
+- a finite set of world states, each with strictly positive probability;
+- injective rendering of the state by each modality;
+- symmetric positive-pair distributions with the same marginal over world states;
+- a rotation-invariant objective combining a pairwise loss and an anti-collapse term;
+- population-level optimization with optima unique up to rotation.
+
+Two accurately stated assumptions suffice. Do not present the conclusion as a general scaling law independent of these conditions.
+
+</details>
+
+### 3. Samples and compute {#jepa-samples-vs-compute}
+
+The paper reports 42 times fewer training samples for a good-view JEPA. Why is this not a claim about 42 times less compute?
+
+<details>
+<summary>Show the worked answer</summary>
+
+The ratio compares the number of training samples (21.6 million versus 900 million), not a direct measure of FLOPs, wall-clock time, or energy. The compared runs also use different batch sizes and learning-rate recipes. The paper separately reports about 14 times fewer text tokens and 435 times fewer unique images in this comparison. These quantities are not interchangeable and do not, by themselves, establish a compute-reduction factor.
+
+</details>
+
+### 4. Theoretical status of the analogy {#jepa-next-token-analogy}
+
+Why is the interpretation of next-token prediction as a bad-view JEPA heuristic rather than a theorem?
+
+<details>
+<summary>Show the worked answer</summary>
+
+The paper proposes a generalized factorization in which the positive pair links a document prefix to its continuation and the softmax log-partition plays an anti-collapse role. But this reformulation is not a spectral JEPA in the sense of the rotation theorem's proof; the claim that the pairs share nuisances and indirectly connect different scenes remains a heuristic interpretation supported by experiments. It proves neither that language models cannot learn world structure from text nor a universal convergence law.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/jepa-platonic-representation.qmd) · [English](jepa-platonic-representation.qmd)
+:::
