@@ -98,24 +98,53 @@ def _tag_map(tags: Any, where: str, errors: list[str]) -> dict[str, str]:
     return dimensions
 
 
-def _check_self_check_coverage(source: str, relative: str, errors: list[str]) -> None:
-    """Validate section-to-question coverage when a page opts into the contract."""
+def _check_self_check_coverage(
+    source: str,
+    relative: str,
+    errors: list[str],
+    *,
+    site_dir: Path,
+    related_ids: list[str],
+    is_practice_page: bool,
+) -> None:
+    """Validate that a self-check covers the lesson sections it accompanies."""
     if "<!-- self-check-coverage: enforced -->" not in source:
         return
     check_start = source.find("::: {.self-check}")
     if check_start < 0:
         errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
         return
-    lesson_source = source[:check_start]
-    headings = re.findall(r"^## (.+?)\s*$", lesson_source, re.MULTILINE)
+
+    if is_practice_page:
+        lesson_sources: list[tuple[str, str]] = []
+        for related_id in related_ids:
+            lesson_path = site_dir / f"{related_id}.qmd"
+            if not lesson_path.is_file():
+                errors.append(
+                    f"{relative}: related lesson {related_id!r} for self-check coverage does not exist"
+                )
+                continue
+            lesson_source = lesson_path.read_text(encoding="utf-8")
+            lesson_check_start = lesson_source.find("::: {.self-check}")
+            if lesson_check_start >= 0:
+                lesson_source = lesson_source[:lesson_check_start]
+            lesson_sources.append((related_id, lesson_source))
+        if not lesson_sources:
+            errors.append(f"{relative}: practice-page self-check coverage needs at least one related lesson")
+            return
+    else:
+        lesson_sources = [(relative, source[:check_start])]
+
     section_ids: set[str] = set()
     unanchored: list[str] = []
-    for heading in headings:
-        match = re.search(r"\s+\{#([a-z0-9-]+)\}$", heading)
-        if match:
-            section_ids.add(match.group(1))
-        else:
-            unanchored.append(heading)
+    for lesson_id, lesson_source in lesson_sources:
+        headings = re.findall(r"^## (.+?)\\s*$", lesson_source, re.MULTILINE)
+        for heading in headings:
+            match = re.search(r"\\s+\\{#([a-z0-9-]+)\\}$", heading)
+            if match:
+                section_ids.add(match.group(1))
+            else:
+                unanchored.append(f"{lesson_id}: {heading}")
     if unanchored:
         errors.append(
             f"{relative}: major sections need explicit IDs for self-check coverage: {unanchored}"
@@ -252,7 +281,14 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     if tags.get("status") == "planned":
         errors.append(f"{relative}.tags: a page in the Quarto render list cannot be status:planned")
 
-    _check_self_check_coverage(source, relative, errors)
+    _check_self_check_coverage(
+        source,
+        relative,
+        errors,
+        site_dir=site_dir,
+        related_ids=relations["related"],
+        is_practice_page=tags.get("type") == "exercise-hub",
+    )
 
     return {
         "path": relative,
