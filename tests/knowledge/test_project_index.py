@@ -712,10 +712,7 @@ def test_advanced_lessons_link_to_topic_exercise_collections() -> None:
     for path, target in collection_links:
         assert target in (ROOT / path).read_text(encoding="utf-8")
 
-    for path in (
-        "site/fr/exercises-foundations.qmd",
-        "site/en/exercises-foundations.qmd",
-    ):
+    for path in ("site/fr/exercises-foundations.qmd", "site/en/exercises-foundations.qmd"):
         source = (ROOT / path).read_text(encoding="utf-8")
         assert "{#ex-foundations-cosine-similarity}" in source
         assert "{#ex-foundations-linear-probe-causality}" in source
