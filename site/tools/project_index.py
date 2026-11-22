@@ -408,7 +408,7 @@ class ProjectIndex:
     revision_edges: tuple[RevisionEdge, ...]
     revision_aids_by_lesson: dict[str, tuple[RevisionEdge, ...]]
     revision_lessons_by_aid: dict[str, tuple[RevisionEdge, ...]]
-    evidence_projection: CrossGraphEvidenceProjection | None
+    evidence_projection: CrossGraphEvidenceProjection | None = None
 
     @classmethod
     def build(cls, root: Path, *, include_evidence: bool = False) -> ProjectIndex:
