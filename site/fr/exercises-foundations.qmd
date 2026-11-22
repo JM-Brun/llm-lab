@@ -214,20 +214,20 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 Soient les vecteurs non nuls $a=(1,2)$, $b=(2,4)$, $c=(-2,-4)$ et $d=(2,-1)$.
 
-1. Calculer $\\cos(a,b)$, $\\cos(a,c)$ et $\\cos(a,d)$.
-2. Quelle propriété explique que $\\cos(a,2a)=1$ ?
+1. Calculer $\cos(a,b)$, $\cos(a,c)$ et $\cos(a,d)$.
+2. Quelle propriété explique que $\cos(a,2a)=1$ ?
 3. Si deux embeddings ont une similarité cosinus égale à 1, peut-on conclure qu'ils sont sémantiquement équivalents ?
 
 <details>
 <summary>Afficher le corrigé détaillé</summary>
 
-On utilise $\\cos(u,v)=\\frac{u\\cdot v}{\\lVert u\\rVert\\lVert v\\rVert}$.
+On utilise $\cos(u,v)=\frac{u\cdot v}{\lVert u\rVert\lVert v\rVert}$.
 
-- $a\\cdot b=10$, $\\lVert a\\rVert=\\sqrt{5}$ et $\\lVert b\\rVert=2\\sqrt{5}$ : $\\cos(a,b)=1$.
-- $a\\cdot c=-10$ et $\\lVert c\\rVert=2\\sqrt{5}$ : $\\cos(a,c)=-1$.
-- $a\\cdot d=2-2=0$ : $\\cos(a,d)=0$.
+- $a\cdot b=10$, $\lVert a\rVert=\sqrt{5}$ et $\lVert b\rVert=2\sqrt{5}$ : $\cos(a,b)=1$.
+- $a\cdot c=-10$ et $\lVert c\rVert=2\sqrt{5}$ : $\cos(a,c)=-1$.
+- $a\cdot d=2-2=0$ : $\cos(a,d)=0$.
 
-Multiplier un vecteur par un scalaire strictement positif ne change pas sa direction : $\\cos(a,\\lambda a)=1$ pour $\\lambda>0$. Le cosinus ignore donc l'échelle des normes et ne mesure que l'alignement angulaire.
+Multiplier un vecteur par un scalaire strictement positif ne change pas sa direction : $\cos(a,\lambda a)=1$ pour $\lambda>0$. Le cosinus ignore donc l'échelle des normes et ne mesure que l'alignement angulaire.
 
 Un cosinus égal à 1 établit un alignement géométrique, pas une équivalence sémantique, une pertinence pour une requête ou la vérité d'une proposition. L'interprétation dépend de la représentation, de l'objectif d'entraînement et de la tâche ; les normes peuvent aussi porter de l'information que la normalisation retire.
 
