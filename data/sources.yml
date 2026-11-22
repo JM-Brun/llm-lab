@@ -1697,7 +1697,7 @@ sources:
     updated_date: null
     language: en
     version: null
-    revision: null
+    revision: "bfe50afba10b9b560b84143ee1107d977defa74f"
     licence: {identifier: "MIT", url: "https://github.com/poloclub/transformer-explainer/blob/main/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
@@ -1730,6 +1730,15 @@ sources:
         limitations:
           - "This was selected-file static inspection, not a full repository audit or browser execution."
           - "Keyboard/mobile accessibility and numerical parity against a reference implementation remain unverified."
+      - accessed_at: "2026-11-22"
+        status: partially-scanned
+        inspected_scope:
+          - "Deployed preset selection, temperature and sampling controls in Chromium desktop and Android emulation"
+          - "ONNX Runtime CPU comparison of 50257 logits and 144 attention matrices against one cached example at the pinned repository revision"
+          - "Controlled final-token substitution and reference calculation of top-k and the 50-candidate top-p path"
+        limitations:
+          - "The browser test used bundled examples. Desktop custom-prompt inference, deployed weight hashes and independent PyTorch export parity were outside the check."
+          - "Keyboard trouble spots and narrow layout were recorded. Physical touch and assistive technologies were outside the check."
     related:
       pages: [en/transformer-explainer, fr/transformer-explainer]
       concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
