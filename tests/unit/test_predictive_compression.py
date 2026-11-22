@@ -84,7 +84,6 @@ def test_kraft_sum_rejects_non_binary_or_empty_codewords() -> None:
             raise AssertionError(f"Invalid codewords were accepted: {invalid}")
 
 
-
 def test_predictive_coder_cli_reports_finite_code_and_exact_round_trip(capsys) -> None:
     root = Path(__file__).resolve().parents[2]
     module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
