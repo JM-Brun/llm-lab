@@ -34,7 +34,7 @@ Que prédit exactement un modèle de langage autorégressif ?
 
 **Réponse courte**
 
-À partir d'un préfixe déjà fourni, le modèle calcule des logits ; la fonction softmax les transforme en distribution de probabilité sur les tokens possibles à l'étape suivante. Cette distribution dépend du préfixe : si le contexte change, la distribution peut changer.
+À partir d'un préfixe déjà fourni, le modèle calcule des logits ; la fonction softmax les transforme en une distribution de probabilité sur les tokens possibles à l'étape suivante. Cette distribution dépend du préfixe : si le contexte change, la distribution peut changer.
 
 Le modèle ne choisit pas nécessairement un token à cette étape. La sélection intervient ensuite, selon une politique de décodage (par exemple, prendre le token le plus probable ou échantillonner). Il faut donc distinguer **prédire une distribution** et **sélectionner un token**.
 
@@ -579,8 +579,8 @@ Token identity and position are distinct kinds of information. The Transformer n
 
 ## Day 07 — Why can the same token have different representations?
 
-**Theme:** From token embeddings to contextualized representations  
-**Activity:** Conceptual check  
+**Act:** Context and representations  
+**Activity:** conceptual check  
 **Target duration:** 6 minutes  
 **Canonical references:** `contextualized-representation`, `token-embedding`; computational nodes `initial-hidden-states`, `transformer-block-input`, `contextualized-hidden-states`
 
@@ -592,7 +592,7 @@ Deux occurrences du même token doivent-elles avoir le même état caché ?
 
 **Réponse courte**
 
-Avec un tokenizer, un vocabulaire et une matrice d'embeddings fixes, le même token ID sélectionne la même ligne (E[i]) lors du lookup initial. Mais cette égalité ne se propage pas automatiquement dans le réseau : l'information positionnelle et les tokens accessibles contribuent aux calculs des blocs Transformer. Les états cachés contextualisés peuvent donc différer selon la position et le contexte.
+Avec un tokenizer, un vocabulaire et une matrice d'embeddings fixes, le même token ID sélectionne la même ligne `E[i]` lors du lookup initial. Mais cette égalité ne se propage pas automatiquement dans le réseau : l'information positionnelle et les tokens accessibles contribuent aux calculs des blocs Transformer. Les états cachés contextualisés peuvent donc différer selon la position et le contexte.
 
 **Exemple guidé**
 
@@ -601,11 +601,11 @@ Considérons deux emplois de « vol » :
 - « Le pilote prépare le vol » — un trajet aérien.
 - « Le voleur prépare le vol » — un larcin.
 
-Le token « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial (E[i]) est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
+Le token « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial `E[i]` est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
 
 **À vous de vérifier**
 
-À poids fixes, deux occurrences ont le même ID et une position simplifiée identique, mais des préfixes accessibles différents. Leur état caché doit-il être identique ? Dans un GPT causal, un token strictement situé après la position courante peut-il modifier l'état calculé à cette position ?
+À poids fixes, deux occurrences ont le même ID et une même position, mais des préfixes accessibles différents. Leur état caché doit-il être identique ? Dans un GPT causal, un token strictement situé après la position courante peut-il modifier l'état calculé à cette position ?
 
 <details>
 <summary>Afficher la réponse</summary>
@@ -629,20 +629,20 @@ Must two occurrences of the same token have the same hidden state?
 
 **Short answer**
 
-With a fixed tokenizer, vocabulary, and embedding matrix, the same token ID selects the same row (E[i]) during the initial lookup. That equality does not automatically persist through the network: positional information and the tokens accessible to the position contribute to Transformer-block computations. Contextualized hidden states can therefore differ with position and context.
+With a fixed tokenizer, vocabulary, and embedding matrix, the same token ID selects the same row `E[i]` during the initial lookup. That equality does not automatically persist through the network: positional information and the tokens accessible to the position contribute to Transformer-block computations. Contextualized hidden states can therefore differ with position and context.
 
 **Guided example**
 
 Consider the two uses of “bat”:
 
 - “The player saw a bat” — sports equipment.
-- “The cave housed a bat” — an animal.
+- “The cave contained a bat” — an animal.
 
-The token “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup (E[i]) is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
+The token “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup `E[i]` is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
 
 **Check yourself**
 
-With fixed weights, two occurrences have the same ID and a simplified identical position, but different accessible prefixes. Must their hidden states be identical? In a causal GPT, can a token strictly after the current position change the state computed at that position?
+With fixed weights, two occurrences have the same ID and the same position, but different accessible prefixes. Must their hidden states be identical? In a causal GPT, can a token strictly after the current position change the state computed at that position?
 
 <details>
 <summary>Show the answer</summary>
@@ -662,8 +662,8 @@ Same ID → same initial embedding; accessible context and position then contrib
 
 ## Day 08 — What does a Transformer block do?
 
-**Theme:** The main computation units inside a Transformer  
-**Activity:** Trace  
+**Act:** Transformer computation  
+**Activity:** trace  
 **Target duration:** 7 minutes  
 **Canonical references:** `self-attention`, `multi-head-attention`; computational nodes `transformer-block-input`, `block-update`
 
