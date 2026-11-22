@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap and four answered questions check the one-hot case, logits[t] to target[t+1] alignment, causal-mask/loss-mask separation and averaging over valid positions only."
+      note: "The recap presents the one-hot case, logits[t] to target[t+1] alignment, causal-mask/loss-mask separation and averaging over valid positions only."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -131,8 +131,6 @@ For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends 
 
 
 
-
-[Questions and exercises](exercises/cross-entropy.qmd)
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
 
