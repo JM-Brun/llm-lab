@@ -225,13 +225,13 @@ In addition to the checks above, validate:
 
 1. Every `concepts` entry resolves to a concept ID in `data/concepts.yml`.
 2. Every `computational_nodes` entry resolves to a node ID (not merely a branch or edge) in `data/computational-graph.yml`.
-3. Every `lesson_pages` entry resolves to a published page with an appropriate reader-facing destination and language; FR and EN counterparts must be semantically aligned.
-4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the topic of the corresponding lesson or implementation page plus `-exercises`.
+3. Every `lesson_pages` entry resolves to a published page with `destination:understand` or `destination:orient` and the correct language; FR and EN counterparts must be semantically aligned.
+4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the topic of the corresponding lesson or Build page plus `-exercises`.
 5. Every `build_pages` entry resolves to a published page in `build` with the correct language; its type must be one of the existing Build-capable types (`guided-build` or `concept-bridge`). It must remain separate from the conceptual lesson.
 6. Every `deepening_pages` entry resolves to a published `deep-dive` page in `deepen`, with the correct language. It must remain optional and must not become a hidden prerequisite.
 7. Do not require every day to have a concept, computational node, exercise link, Build companion, or deepening link if the knowledge model does not currently represent one. Record a genuine registry gap for review rather than fabricating a reference.
-7. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
-8. Calendar order must not be translated into `prerequisite` concept relations, `hierarchy` page relations, or computational edges.
+8. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
+9. Calendar order must not be translated into `prerequisite` concept relations, `hierarchy` page relations, or computational edges.
 
 The manifest uses `lesson_pages`, `computational_nodes`, and optional `build_pages`, `deepening_pages`, and `practice_pages` to make these ownership boundaries explicit. The previous generic `resources` field is intentionally avoided because the repository now distinguishes page resources from first-class non-page resources in `data/resources.yml`.
 
