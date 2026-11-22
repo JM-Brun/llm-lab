@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel et six questions corrigées couvrent la distribution conditionnelle au contexte, l'entropie et le surprisal, l'effet de la température, la calibration empirique et les conventions de comparaison."
+      note: "Le rappel présente la distribution conditionnelle au contexte, l'entropie et le surprisal, l'effet de la température, la calibration empirique et les conventions de comparaison."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -154,8 +154,6 @@ Une température plus faible tend à concentrer la distribution ; une températu
 
 
 
-
-[Questions et exercices](exercises/entropy.qmd)
 
 Reprenez la [boucle de génération du scribe](generation.qmd#la-boucle-sur-un-exemple). Quand le décodage glouton choisit « Vous », ce token rejoint le préfixe et le modèle calcule une nouvelle distribution pour le deuxième tour.
 
