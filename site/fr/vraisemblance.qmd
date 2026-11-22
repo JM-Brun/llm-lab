@@ -117,24 +117,8 @@ Pour une NLL moyenne calculée avec le logarithme naturel, la **perplexité** va
 
 
 
-::: {.self-check}
-## Vérifier sa compréhension
 
-[Exercices dédiés sur la vraisemblance](exercises/vraisemblance.qmd).
-
-1. Pourquoi utiliser la log-vraisemblance plutôt que le produit direct des probabilités ?
-2. La règle de chaîne suppose-t-elle que les tokens sont indépendants ?
-3. Pourquoi documenter le tokenizer et la réduction de la NLL lors d'une comparaison ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. Le logarithme transforme le produit en somme, plus stable numériquement et plus simple à optimiser.
-2. Non. La règle de chaîne factorise une probabilité jointe en probabilités conditionnelles successives, sans hypothèse d'indépendance.
-3. Le tokenizer définit les unités évaluées et la réduction (somme ou moyenne) détermine l'échelle du score.
-
-</details>
-:::
+[Questions et exercices](exercises/vraisemblance.qmd)
 
 La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
 
