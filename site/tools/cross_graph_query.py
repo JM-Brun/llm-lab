@@ -227,7 +227,8 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             caveats.append(f"Source integration status: {source.integration_status}.")
         if item.disposition in {"defer", "reject"}:
             caveats.append(
-                f"Extraction disposition is {item.disposition}; do not treat it as an accepted integration."
+                "Extraction disposition is "
+                f"{item.disposition}; do not treat it as an accepted integration."
             )
         paths.append(
             EvidencePath(
@@ -321,7 +322,8 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                         ),
                     ),
                     caveats=(
-                        "Page-mediated association; this does not assert a direct concept-to-node edge.",
+                        "Page-mediated association; this does not assert a direct "
+                        "concept-to-node edge.",
                     ),
                 )
             )
@@ -385,7 +387,8 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                             ),
                         ),
                         caveats=(
-                            "Stage-mediated pedagogical focus; not a direct canonical concept-to-node relation.",
+                            "Stage-mediated pedagogical focus; not a direct canonical "
+                            "concept-to-node relation.",
                         ),
                     )
                 )
