@@ -102,6 +102,7 @@ days:
     concepts: [token]
     lesson_pages: [fr/text-data, en/text-data]
     computational_nodes: [token-id-encoding, token-ids]
+    practice_pages: [fr/text-data-exercises, en/text-data-exercises]
     activity: trace
     duration_minutes: 5
 
