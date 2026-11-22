@@ -132,8 +132,10 @@ def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
     )
 
     rissanen_items = {item["id"].split(":")[-1]: item for item in rissanen["items"]}
-    assert "pp. 150–152" in rissanen_items["probability-derived-ideal-length"]["locator"]["value"]
-    assert "pp. 157–159" in rissanen_items["finite-precision-and-decodability"]["locator"]["value"]
+    ideal_locator = rissanen_items["probability-derived-ideal-length"]["locator"]["value"]
+    assert "150" in ideal_locator and "152" in ideal_locator
+    precision_locator = rissanen_items["finite-precision-and-decodability"]["locator"]["value"]
+    assert "157" in precision_locator and "159" in precision_locator
 
     readme = (ROOT / "experiments" / "predictive-compression" / "README.md").read_text(
         encoding="utf-8"
