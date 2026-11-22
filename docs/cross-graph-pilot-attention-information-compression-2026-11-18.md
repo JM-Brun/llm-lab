@@ -9,7 +9,7 @@
 
 This pilot checks whether existing canonical structures can be traversed without flattening their semantics. It reuses the concept registry, computational graph, source catalogue, source extractions, bilingual page/resource associations, syntheses and experiment protocols. It does not create a graph, ontology, source record, concept or experiment.
 
-The initial inventory was made against `main` on 2026-11-18. This follow-up rechecked the P4/P5 source extractions, source scan states, experiment code and tests on 2026-11-22. Exact locators below come from the repository's extraction records. The quantized-coder unit test executes its CLI entry point through `main()`; no neural LLM experiment or fresh full corpus reproduction is claimed. A path described as a *manual join* is not evidence that a query engine or first-class cross-graph edge already exists.
+The initial inventory was made against `main` on 2026-11-18. This follow-up rechecked the P4/P5 source extractions, source scan states, experiment code and tests on 2026-11-22. Exact locators below come from the repository's extraction records. Unit tests execute both coding CLI entry points through `main()` and check the deterministic finite-code report and exact round trip; no neural LLM experiment or natural-language corpus reproduction is claimed. A path described as a *manual join* is not evidence that a query engine or first-class cross-graph edge already exists.
 
 ## Canonical owners and real endpoints
 
