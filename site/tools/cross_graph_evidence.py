@@ -39,6 +39,7 @@ class ExtractionItemRecord:
     concept_mapping_basis: dict[str, tuple[str, ...]]
     disposition: str | None
     candidate_pages: tuple[str, ...]
+    candidate_concepts: tuple[str, ...]
     path: str
 
 
@@ -310,6 +311,12 @@ def load_cross_graph_evidence_projection(
                 record_id=item_id,
                 relation="candidate_destinations.pages",
             )
+            candidate_concepts = _string_tuple(
+                candidate_destinations.get("concepts"),
+                source=item_path,
+                record_id=item_id,
+                relation="candidate_destinations.concepts",
+            )
             assumptions = _string_tuple(
                 evidence.get("assumptions", item.get("assumptions")),
                 source=item_path,
@@ -345,6 +352,7 @@ def load_cross_graph_evidence_projection(
                 disposition=_optional_text(classification.get("disposition"))
                 or _optional_text(item.get("disposition")),
                 candidate_pages=candidate_pages,
+                candidate_concepts=candidate_concepts,
                 path=item_path,
             )
 
