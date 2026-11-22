@@ -142,6 +142,10 @@ L'ICL décrit le comportement du modèle face aux informations du prompt. L'**in
 **Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/in-context-learning.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -151,9 +155,8 @@ L'ICL décrit le comportement du modèle face aux informations du prompt. L'**in
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/in-context-learning.qmd).
+
 
 ### Références
 

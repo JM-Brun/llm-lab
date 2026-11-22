@@ -104,11 +104,11 @@ stages:
       embedding-space:
         mobilizes: ["node:token-ids"]
         objects: ["concept:token-embedding"]
-        outcome: {fr: "Suivre les lignes lues pour une séquence d’identifiants", en: "Trace the rows read for a sequence of token IDs"}
+        outcome: {fr: "Retrouver le vecteur associé à un identifiant", en: "Retrieve the vector for a token ID"}
       positional-encoding:
         mobilizes: ["concept:token-embedding"]
         objects: ["concept:positional-encoding"]
-        outcome: {fr: "Prédire ce que l’ordre change pour un token selon le mécanisme positionnel et le masque", en: "Predict how order affects a token under different positional mechanisms and masks"}
+        outcome: {fr: "Distinguer le contenu du token et sa position", en: "Distinguish token content from its position"}
       contextualized-representations:
         mobilizes: ["concept:token-embedding", "concept:positional-encoding"]
         objects: ["concept:contextualized-representation"]

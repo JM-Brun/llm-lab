@@ -1,7 +1,7 @@
 ---
 title: "From token IDs to vectors: embeddings"
-subtitle: "Read one table row for each token occurrence"
-description-meta: "Follows a sequence of token IDs to the vectors read from the embedding matrix."
+subtitle: "How an ID selects a learned row — and why that row is not a coordinate"
+description-meta: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
-summary: "Follows a sequence of token IDs to the vectors read from the embedding matrix."
-scope: "Shows how the IDs in a sequence index learned rows of the embedding matrix."
-purpose: "Given a sequence of IDs, find the rows read in order, distinguish position from ID, and explain why neighboring IDs do not determine vector proximity."
+summary: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
+scope: "Shows how an ID indexes a learned row of the embedding matrix."
+purpose: "Given an ID, find the row of its initial embedding and explain why neighboring IDs do not determine vector proximity."
 suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"
@@ -23,19 +23,18 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes the ID, the retrieved vector, and contextualized states. The example shows all four row reads and their shape, and the exercise checks the effect of renumbering the vocabulary."
+      note: "The recap brings together the lesson's three distinctions: an ID is a row address, the row stores a static vector of dimension d, and Transformer layers then produce position- and context-dependent states. Three answered questions and guided exploration reinforce the recap."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-en-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-After tokenization, the model receives a sequence of **integer token IDs**. For each ID, it reads a vector from its **embedding matrix**, an operation called **lookup**. Training adjusts the values in the matrix.
+After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. Reading a row from this table is called **lookup**.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
-
 - explain how a token ID selects a row in the embedding matrix;
 - distinguish the row address from the vector stored in that row;
 - explain why two occurrences of the same ID share the same initial vector but may later have different contextualized states.
@@ -62,14 +61,7 @@ For a controlled, single-speaker continuation used to trace next-token mechanics
 
 The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
-To work by hand, switch from the GPT-2 prefix to the [toy tokenizer and table in the exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup). Positions $t$ and rows of $E$ are numbered from zero.
-
-| Position $t$ | 0 | 1 | 2 | 3 |
-|---|---:|---:|---:|---:|
-| ID $i_t$ in the sequence | 17 | 42 | 8 | 17 |
-| Row read from $E$ | 17 | 42 | 8 | 17 |
-
-The model stacks the four vectors in this order. The output has **four rows and $d$ columns**, one row per occurrence. At positions 0 and 3, `cat` has the same ID, so the model reads the same vector $E_{17,:}$ twice.
+To work out the rows and vectors by hand, switch from the GPT-2 prefix output to the toy sequence `[17, 42, 8, 17]`. In the [lookup exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup), the toy tokenizer assigns the token `cat` ID 17 at positions 0 and 3. The model reads row $E_{17,:}$ twice. That row contains a vector. Positions 0 and 3 identify where each occurrence appears in the sequence.
 
 ![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
@@ -90,10 +82,10 @@ $$
 E \in \mathbb{R}^{V \times d}
 $$
 
-At position $t$, lookup selects the row given by the ID $i_t$:
+For an ID $i$, lookup selects the corresponding row:
 
 $$
-\mathbf{x}_t = E_{i_t,:} \in \mathbb{R}^{d}
+\mathbf{x}_i = E_{i,:} \in \mathbb{R}^{d}
 $$
 
 - $V$ is the size of the vocabulary associated with the model's tokenizer.
@@ -114,7 +106,7 @@ A **token ID is a row address**, not a vector or a coordinate in space. The embe
 
 [Embedding-space exercises](exercises/embedding-space.qmd).
 
-In the toy table, both occurrences of `cat` share the embedding $(2,-1)$. How do their positions 0 and 3 change the first block’s input in the additive case? The [position lesson](positional-encoding.qmd) picks up these two occurrences. Transformer blocks then incorporate information from the accessible prefix to produce [contextualized representations](contextualized-representations.qmd).
+Both occurrences retrieve the same vector. [Positional encoding](positional-encoding.qmd) explains how their location enters the calculation. Transformer blocks then integrate information from the accessible prefix to produce [contextualized representations](contextualized-representations.qmd).
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
 

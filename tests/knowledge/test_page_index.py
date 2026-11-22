@@ -151,6 +151,8 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
 @pytest.mark.parametrize(
     "relative_path",
     [
+        "fr/positional-encoding.qmd",
+        "en/positional-encoding.qmd",
         "fr/queries-keys-values.qmd",
         "en/queries-keys-values.qmd",
         "fr/training-loop.qmd",

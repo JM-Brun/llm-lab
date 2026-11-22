@@ -315,6 +315,10 @@ To revisit the connection with information theory, see the [entropy synthesis](e
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
 ::::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-entropy.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -322,9 +326,8 @@ To revisit the connection with information theory, see the [entropy synthesis](e
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-entropy.qmd).
+
 
 
 ### Further practice

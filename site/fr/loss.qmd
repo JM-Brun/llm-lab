@@ -143,6 +143,10 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 [Français](loss.qmd) · [English](../en/loss.qmd)
 :::
 
+## Exercices
+
+La [page d’exercices](exercises/loss.qmd) propose un cas corrigé pour [comparer deux checkpoints par leur loss de validation par token valide](exercises/loss.qmd#ex-validation-loss-by-token).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -150,9 +154,8 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-La [page d’exercices](exercises/loss.qmd) propose un cas corrigé pour [comparer deux checkpoints par leur loss de validation par token valide](exercises/loss.qmd#ex-validation-loss-by-token).
+
 
 
 ### Pour approfondir

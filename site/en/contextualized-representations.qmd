@@ -46,6 +46,8 @@ By the end of this lesson, you should be able to:
 The question “What have the Romans ever done for us?” and a reply such as “The Romans built roads” contain the same visible word in different surrounding sequences. Under the assumption that the tokenizer assigns it the same ID, both occurrences retrieve the same initial vector. **The lookup does not change; the Transformer's processing of each sequence builds hidden states that depend on context.**
 :::
 
+**Questions and exercises:** [Open the dedicated practice page](exercises/contextualized-representations.qmd).
+
 ## Start with what stays the same
 
 In the question “What have the Romans ever done for us?” and in a reply such as “The Romans built roads”, the visible word `Romans` may be represented by the same token ID. Under that explicit assumption, both occurrences retrieve the same initial embedding:
@@ -101,7 +103,7 @@ This also does not guarantee that the model will represent human-interpreted sen
 - **Result:** hidden states can differ, without guaranteeing a clean geometric representation of human “senses.”
 :::
 
-In a causal GPT, the prefix accessible at a position ends at the current token. With position and weights fixed, [compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Check whether the changed token is in the accessible prefix before predicting its effect on the state.
+In a causal GPT, the prefix accessible at a position ends at the current token. With position and weights fixed, a change to the accessible prefix can change the current state; a change after that position must not change it.
 
 ## Where this fits in the model
 
@@ -163,9 +165,6 @@ For the dependencies between positions, causal masks, and the distinct roles of 
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
 
 :::

@@ -181,6 +181,10 @@ Compare this with the analytical gradient using absolute and relative tolerances
 [Français](../fr/gradients.qmd) · [English](gradients.qmd)
 ::::
 
+## Practice
+
+[More gradient exercises](exercises/gradients.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -188,9 +192,8 @@ Compare this with the analytical gradient using absolute and relative tolerances
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-[More gradient exercises](exercises/gradients.qmd).
+
 
 
 ### Further reading

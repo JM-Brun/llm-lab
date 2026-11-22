@@ -114,6 +114,10 @@ Citez le protocole, pas seulement la conclusion.
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -121,9 +125,8 @@ Citez le protocole, pas seulement la conclusion.
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
+
 
 
 

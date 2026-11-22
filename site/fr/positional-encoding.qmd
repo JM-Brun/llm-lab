@@ -11,19 +11,19 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
 summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 scope: "Explique où l’ordre des tokens intervient, avec un signal absolu à l’entrée et un signal relatif dans la comparaison en attention."
-purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les mécanismes présentés."
+purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les deux mécanismes présentés."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
 hierarchy:
   parents: ["fr/embedding-space"]
   children: ["fr/contextualized-representations", "fr/rope", "fr/sinusoidal-positional-encoding"]
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/positional-encoding-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif distingue addition, mécanismes relatifs et visibilité causale. La comparaison de B au milieu vérifie la différence entre lookup, attention de contenu et masque ; l’exercice avec B en dernier contrôle la portée de ce résultat."
+      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; la page d'exercices dédiée vérifie l'ordre, RoPE, le masque causal et les limites d'extrapolation."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -41,32 +41,36 @@ Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent êtr
 
 Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi… », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
 
-### Suivre B quand l’ordre change {#position-permutation}
-
-Considérons deux séquences déjà tokenisées, \`ABC\` et \`CBA\`. Le token B garde le même ID et le même rang au milieu. On échange les occurrences dans la séquence en conservant les IDs du vocabulaire. Comparons la sortie de B dans trois calculs, à paramètres fixes.
-
-| Calcul | Résultat pour B |
-|---|---|
-| Lecture de la table de plongements | B lit le même vecteur, puisque son ID est le même. |
-| Une couche d’auto-attention de contenu, sans mécanisme positionnel ni masque | B consulte les mêmes trois tokens. L’échange d’A et de C réordonne les contributions sans changer leur agrégation pour B. |
-| La même couche avec le seul masque causal | B voit \`AB\` dans un cas et \`CB\` dans l’autre. Le résultat peut changer, car les tokens visibles ont changé. |
-
-Dans le deuxième cas, permuter les entrées permute les sorties de la même façon. C’est l’**équivariance par permutation**. Le masque causal brise cette symétrie en faisant dépendre la visibilité du rang. Une requête à la position $t$ peut consulter les positions $s \le t$. Les encodages explicites peuvent aussi fournir une position ou un décalage.
-
-
-
 ## Deux familles et plusieurs mécanismes
 
-Un encodage **absolu additif** utilise le rang du token. Un mécanisme **relatif** rend l’attention sensible à l’écart entre deux rangs. Avant de comparer les positions, l’attention calcule des requêtes (Q), des clés (K) et des valeurs (V) à partir des états. Une requête est comparée aux clés pour déterminer les poids, qui servent ensuite à combiner les valeurs.
+- **Encodages absolus :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
+- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. Deux exemples importants sont :
+  - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
+  - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
 
-| Mécanisme | Où agit la position |
-|---|---|
-| Encodage absolu additif | Ajoute un vecteur à l’embedding avant le premier bloc. Le Transformer d’origine utilisait des vecteurs sinusoïdaux ; d’autres modèles les apprennent. |
-| [RoPE](rope.qmd) | Fait tourner Q et K après projection selon leurs rangs respectifs. À Q et K avant rotation fixés, leur produit scalaire dépend du **décalage relatif**. La rotation ne s’applique pas directement à V. |
-| Biais relatif | Ajoute aux scores d’attention, avant le softmax, un terme fondé sur le décalage. D’autres variantes utilisent des représentations relatives. |
+La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
 
-Le masque causal détermine quelles clés peuvent contribuer, indépendamment du mécanisme positionnel. Voir les leçons sur les [projections Q/K/V](queries-keys-values.qmd) et le [masque causal](causal-masking.qmd) pour distinguer ces opérations.
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
+::: {.meta-flow__source}
+<strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span>
+:::
+::: {.meta-flow__source .meta-flow__branch--active}
+<strong>Traitement de la position</strong><span>Le mécanisme dépend de l’architecture</span>
+:::
+::: {.meta-flow__comparison}
+::: {.meta-flow__comparison-item}
+<strong>Encodage absolu</strong><small>Ajouter un vecteur de position à l’embedding, puis calculer Q/K/V</small>
+:::
+::: {.meta-flow__comparison-item}
+<strong>RoPE</strong><small>Projeter Q/K, puis les faire tourner selon leur position ; V n’est pas tourné par RoPE</small>
+:::
+:::
+::: {.meta-flow__result}
+<strong>Scores d’attention sensibles à la position</strong> · [Projections Q/K/V](queries-keys-values.qmd)
+:::
+::::
 
+Dans le cas additif de l’exercice, la table jouet donne le même plongement $(2,-1)$ aux deux occurrences de `chat`. Le vecteur ajouté dépend de leur position. [Calculez les deux entrées du premier bloc](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
@@ -78,7 +82,7 @@ Le masque causal détermine quelles clés peuvent contribuer, indépendamment du
 La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
 :::
 
-Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd). Les questions et exercices corrigés sont regroupés sur la [page de pratique dédiée](exercises/positional-encoding.qmd).
+Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ## Idées reçues
 
@@ -100,6 +104,10 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 **Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -109,9 +117,8 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 
 
 ### Pourquoi l’auto-attention seule ne suffit-elle pas ?

@@ -1,6 +1,6 @@
 ---
 title: "From text to tokens: representing language"
-subtitle: "How the tokenizer produces the IDs the model receives"
+subtitle: "The conceptual path from text to model representations"
 description-meta: "Traces the transformation from source text to the discrete context supplied to the model: preprocessing, tokens, IDs, and embedding lookup. Distinguishes prompt encoding from training-corpus preparation."
 keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 lang: en
@@ -33,8 +33,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 In the overview, the model predicts the next token from the prefix “What have the Romans ever done for us?” In what form does it receive that question?
 
 A **tokenizer** splits text into units called **tokens**. Its **vocabulary** maps each token to an integer identifier (ID). The model receives those IDs in text order.
-
-The overview used whole words as tokens in a toy vocabulary. A real tokenizer can split a word into several tokens.
 :::
 
 ## From the prefix to token IDs {#the-path-from-text-to-model}
@@ -99,6 +97,10 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 **Language** · [Français](../fr/text-data.qmd) · [English](text-data.qmd)
 :::
 
+## Practice
+
+[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -131,9 +133,8 @@ flowchart TB
 
 The diagram groups positional handling with the Transformer. Some architectures add learned absolute position vectors to token embeddings. With [RoPE](positional-encoding.qmd), attention rotates the query and key vectors. These mechanisms act at different points in the sequence of operations that produces [contextual representations](contextualized-representations.qmd).
 
-### Practice {#practice}
 
-[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+
 
 ### Two uses, two paths {#two-uses-two-paths}
 

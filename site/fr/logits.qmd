@@ -121,6 +121,10 @@ La conversion en distribution de probabilité est une opération distincte. Elle
 [Français](logits.qmd) · [English](../en/logits.qmd)
 :::
 
+## Exercices
+
+[Comparez les deux axes du softmax](exercises/logits.qmd#ex-attention-vocabulary-softmax) ou parcourez les [autres exercices](exercises/logits.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -130,9 +134,8 @@ La conversion en distribution de probabilité est une opération distincte. Elle
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-[Comparez les deux axes du softmax](exercises/logits.qmd#ex-attention-vocabulary-softmax) ou parcourez les [autres exercices](exercises/logits.qmd).
+
 
 ### Dans un LLM
 

@@ -142,8 +142,8 @@ def test_writer_generates_page_contexts_for_every_route_member(
 @pytest.mark.parametrize(
     ("language", "expected"),
     [
-        ("en", "Page 2 of 4"),
-        ("fr", "Page 2 sur 4"),
+        ("en", "Stage 4 of 9 · page 2 of 4"),
+        ("fr", "Étape 4 sur 9 · page 2 sur 4"),
     ],
 )
 def test_core_page_context_states_position(language: str, expected: str) -> None:
@@ -215,12 +215,12 @@ def test_real_route_positions_are_complete_and_consistent(language: str) -> None
             assert membership.stage_count == len(stages)
             assert (membership.page_count is None) == (membership.role == "optional")
 
-    ranked_ids = {page.id for stage in stages if len(stage.pages) > 1 for page in stage.pages}
+    core_ids = {page.id for stage in stages for page in stage.pages}
     fragments = GENERATOR["prepare_guided_page_context_fragments"](language, stages)
     for path, text in fragments.items():
         page_id = path.name.removeprefix("generated-guided-context-").removesuffix(".qmd")
         page_id = page_id.replace("-", "/", 1)
-        assert ("guided-page-context__position" in text) == (page_id in ranked_ids), path.name
+        assert ("guided-page-context__position" in text) == (page_id in core_ids), path.name
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
