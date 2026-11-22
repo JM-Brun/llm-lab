@@ -121,7 +121,8 @@ def _check_self_check_coverage(
             lesson_path = site_dir / f"{related_id}.qmd"
             if not lesson_path.is_file():
                 errors.append(
-                    f"{relative}: related lesson {related_id!r} for self-check coverage does not exist"
+                    f"{relative}: related lesson {related_id!r} for self-check coverage "
+                    "does not exist"
                 )
                 continue
             lesson_source = lesson_path.read_text(encoding="utf-8")
