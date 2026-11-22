@@ -121,7 +121,7 @@ def _optional_text(value: Any) -> str | None:
     return value if isinstance(value, str) and value.strip() else None
 
 
-def _load_cross_graph_evidence_projection(
+def load_cross_graph_evidence_projection(
     root: Path,
     pages: dict[str, PublishedPage],
     concepts: dict[str, dict[str, Any]],
@@ -456,9 +456,6 @@ def _load_cross_graph_evidence_projection(
             for language in ("fr", "en")
             for page_id in stage_pages_data.get(language, [])
         ]
-        for page_id in stage_pages:
-            if page_id not in pages:
-                continue
         focus_map = stage.get("conceptual_focus") or {}
         if not isinstance(focus_map, dict):
             continue
