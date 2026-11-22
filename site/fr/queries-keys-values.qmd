@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif distingue Q/K (scores et poids) de V (contenu agrégé), précise ce qui change si V varie seul et renvoie aux limites d'interprétation ; un auto-contrôle corrigé et les exercices dédiés complètent le rappel."
+      note: "Le récapitulatif distingue Q/K (scores et poids) de V (contenu agrégé), précise ce qui change si V varie seul et renvoie aux limites d'interprétation ; les questions de compréhension et les exercices associés sont regroupés sur la page compagne dédiée."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
@@ -140,8 +140,6 @@ Chaque ligne correspond à une position. Les mêmes matrices de projection sont 
 
 [Calculer les projections Q, K et V et isoler l’effet d’un changement de $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-
-[Questions et exercices](exercises/queries-keys-values.qmd)
 
 ## À retenir et pour aller plus loin {#revision-summary}
 
