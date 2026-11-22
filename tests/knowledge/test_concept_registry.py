@@ -440,7 +440,6 @@ def test_concept_registry_requires_schema_version_two() -> None:
     assert errors == ["registry: expected mapping with schema_version: 2"]
 
 
-
 def test_kl_divergence_is_not_a_prerequisite_for_cross_entropy() -> None:
     registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
