@@ -127,22 +127,8 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-::: {.self-check}
-## Check your understanding
 
-[Exercises and practice](exercises/llm-limits.qmd).
-
-1. A model confidently generates a false statement. Is that necessarily an implementation defect?
-2. A capability rises from 0% to 60% on a thresholded metric. What should be examined before claiming emergence?
-
-<details>
-<summary>Show the reasoning</summary>
-
-1. No. The prediction objective learns probabilities for observed continuations; it does not guarantee a truth-verification mechanism.
-2. Examine the metric, threshold, compared models, and protocol. A thresholded metric can turn gradual improvement into an apparent jump.
-
-</details>
-:::
+[Questions and exercises](exercises/llm-limits.qmd)
 
 
 </div>
