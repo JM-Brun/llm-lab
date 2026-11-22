@@ -193,6 +193,8 @@ project:
     - fr/exercises/text-data.qmd
     - fr/exercises/embedding-space.qmd
     - fr/exercises/positional-encoding.qmd
+    - fr/exercises/rope.qmd
+    - fr/exercises/sinusoidal-positional-encoding.qmd
     - fr/exercises/contextualized-representations.qmd
     - fr/exercises/transformer.qmd
     - fr/exercises/queries-keys-values.qmd
@@ -205,6 +207,7 @@ project:
     - fr/exercises/cross-entropy.qmd
     - fr/exercises/loss.qmd
     - fr/exercises/gradients.qmd
+    - fr/exercises/training-loop.qmd
     - fr/exercises/transformer-architectures.qmd
     - fr/exercises/llm-limits.qmd
     - fr/exercises/post-training.qmd
@@ -229,6 +232,8 @@ project:
     - en/exercises/text-data.qmd
     - en/exercises/embedding-space.qmd
     - en/exercises/positional-encoding.qmd
+    - en/exercises/rope.qmd
+    - en/exercises/sinusoidal-positional-encoding.qmd
     - en/exercises/contextualized-representations.qmd
     - en/exercises/transformer.qmd
     - en/exercises/queries-keys-values.qmd
@@ -241,6 +246,7 @@ project:
     - en/exercises/cross-entropy.qmd
     - en/exercises/loss.qmd
     - en/exercises/gradients.qmd
+    - en/exercises/training-loop.qmd
     - en/exercises/transformer-architectures.qmd
     - en/exercises/llm-limits.qmd
     - en/exercises/post-training.qmd
@@ -444,6 +450,7 @@ website:
                   contents:
                     - fr/exercises/loss.qmd
                     - fr/exercises/gradients.qmd
+                    - fr/exercises/training-loop.qmd
                 - section: "Architectures et limites"
                   contents:
                     - fr/exercises/transformer-architectures.qmd
@@ -463,9 +470,11 @@ website:
                     - fr/exercises/gpt-generation-walkthrough.qmd
             - section: "Approfondir"
               contents:
-                - section: "Attention et architectures"
+                - section: "Attention, position et architectures"
                   contents:
                     - fr/exercises/cross-attention.qmd
+                    - fr/exercises/rope.qmd
+                    - fr/exercises/sinusoidal-positional-encoding.qmd
                     - fr/exercises/hybrid-llm-architectures.qmd
                 - section: "Texte et tokenisation"
                   contents:
@@ -648,6 +657,7 @@ website:
                   contents:
                     - en/exercises/loss.qmd
                     - en/exercises/gradients.qmd
+                    - en/exercises/training-loop.qmd
                 - section: "Architectures and limits"
                   contents:
                     - en/exercises/transformer-architectures.qmd
@@ -667,9 +677,11 @@ website:
                     - en/exercises/gpt-generation-walkthrough.qmd
             - section: "Deepen"
               contents:
-                - section: "Attention and architectures"
+                - section: "Attention, position, and architectures"
                   contents:
                     - en/exercises/cross-attention.qmd
+                    - en/exercises/rope.qmd
+                    - en/exercises/sinusoidal-positional-encoding.qmd
                     - en/exercises/hybrid-llm-architectures.qmd
                 - section: "Text and tokenization"
                   contents:
