@@ -52,3 +52,7 @@ Award one point per satisfied criterion. Accept an equivalent explanation in eit
 | Position | The fixed position keeps the same positional term. The changed ID selects a different row in the embedding table. | The two input vectors are `(1, 5)` and `(2, 4)`, in that order. |
 | Q, K, V | The scores change from `(1, −1)` to `(−1, 1)`, so the larger weight switches from the value `2` to the value `7`. | The sum increases because the larger of the two values now receives more weight, while the weights still sum to one. |
 | Cache KV | The weights from `Y` depend on the query at `Y`. Computing the new weights calls for comparing the query at `Z` to the keys at `W X Y Z`. The old weights alone are insufficient. | The new output combines the values at `W X Y Z` with the new weights. The prefix keys and values are reused, while the key and value for `Z` are computed at this step. |
+
+## Browser verification
+
+The browser matrix covers all three revision pages in French and English at desktop and mobile widths. It checks the diagram's accessible name, card/lane overflow, and keyboard opening and closing of the answer disclosure.
