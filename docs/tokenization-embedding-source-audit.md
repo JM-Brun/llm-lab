@@ -135,6 +135,30 @@ The two language versions should remain structurally and conceptually equivalent
 
 **Visual decision:** external link only. No copy; no unique concept has yet been identified that requires a local figure.
 
+#### Execution follow-up · 2026-11-22
+
+Read the community article and the repository separately. The article is dated 1 March 2026 and presents a PNG/PDF merge graph and an ID output for GPT-2. The recorded repository revision is still `1a802315afc0e17dddf3a64972cf25dddda8bbfe`. Its wheel `0.0.7` matches the PyPI SHA-256 `c5ca1c0045c050ed239c031d48526e9cee0274501b556f73aefaca563374f8f0`. It declares Python ≥3.9 and provides an MIT software licence. It declares no `Requires-Dist`. Nothing in the audit establishes reuse rights for the article's figures. [Article](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) · [Pinned repository](https://github.com/SauravP97/hf-tokenizer-visualizer/tree/1a802315afc0e17dddf3a64972cf25dddda8bbfe) · [PyPI](https://pypi.org/project/hf-tokenizer-visualizer/0.0.7/)
+
+Executed offline with Python 3.12.14, `transformers==4.57.1`, `tokenizers==0.22.1`, `graphviz==0.21` and Graphviz 2.42.4. Loaded the tokenizer files from GPT-2 revision `607a30d783dfa663caf39e06633721c8d4cfcd7e`. The `tokenizer.json` SHA-256 was `8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6`. Used the official `Tokenizer.from_file(...).encode(...)` as reference and recorded the final graph chunks by observing the package's unmodified merge method. [Pinned tokenizer JSON](https://huggingface.co/openai-community/gpt2/blob/607a30d783dfa663caf39e06633721c8d4cfcd7e/tokenizer.json) · [Encoding API](https://huggingface.co/docs/tokenizers/main/en/api/encoding)
+
+`␠` marks one U+0020 in the displayed input. Graph chunks use an ordinary space inside the string quotes.
+
+| Input | Reference IDs and token strings | Final chunks in the graph replay |
+| --- | --- | --- |
+| `hello` | `[31373]` · `["hello"]` | `["hello"]` |
+| `hello world` | `[31373, 995]` · `["hello", "Ġworld"]` | `["hello", " ", "world"]` |
+| `hello␠␠world` | `[31373, 220, 995]` · `["hello", "Ġ", "Ġworld"]` | `["hello", " ", " ", "world"]` |
+| `ababab` | `[397, 397, 397]` · `["ab", "ab", "ab"]` | `["ab", "ab", "ab"]` |
+| `babab` | `[65, 397, 397]` · `["b", "ab", "ab"]` | `["b", "ab", "ab"]` |
+| `é😀` | `[2634, 47249, 222]` · `["Ã©", "ðŁĺ", "Ģ"]` | `["é", "😀"]` |
+| `<\|endoftext\|>` | `[50256]` · one added token | seven chunks, from `<` through `>` |
+
+`encode()` returned the reference IDs in all seven cases because it delegates to the pretrained tokenizer. `visualize_encoding()` instead starts from Python characters and replays the configured BPE merges on those characters. It bypasses the pretrained normalization, pre-tokenization, byte mapping, added-token handling and post-processing. The BPE model is required. A local WordPiece fixture was rejected. Visualization accepts 1–200 characters. The two repeated-pair samples use trained merge ranks. The examples in #770 and #771 count pairs in a new training corpus.
+
+PNG and PDF exports ran using the system Graphviz executables. In the rendered `hello world` graph the space node is blank. Identical strings share a node identifier, so the three `ab` occurrences do not give three distinguishable nodes. The graph does not preserve offsets and does not provide a text alternative containing token IDs or the input spans. The official `Encoding` IDs, tokens and offsets are the reproducible basis for that analysis. [Implementation](https://github.com/SauravP97/hf-tokenizer-visualizer/blob/1a802315afc0e17dddf3a64972cf25dddda8bbfe/src/hf_tokenizer_visualizer/hf_tokenizer.py) · [Official encoding visualizer](https://huggingface.co/docs/tokenizers/api/visualizer)
+
+**Decision.** Keep the community tutorial as a source link and the graph as an example of simplified merge replay. The existing LLM Lab exercise distinguishes candidate counts from non-overlapping replacements. Müller–Steinbach supplies optional interactive merge inspection. Use the official tokenizer for exact whitespace, Unicode, IDs and spans. Keep generated graphs in the audit examples and the lesson's interaction on the existing resource link. [Project audit #774](https://github.com/JM-Brun/llm-lab/issues/774) · [Müller–Steinbach #770](https://github.com/JM-Brun/llm-lab/issues/770) · [Cornell #771](https://github.com/JM-Brun/llm-lab/issues/771)
+
 ## 2. Educational implementations and technical references
 
 ### 2.1 OpenAI — [tiktoken educational implementation](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py)

@@ -1489,12 +1489,12 @@ sources:
 
   - id: sauravp97-hf-bpe-visualizer-article
     title: "Visualizing BPE Tokenizer Encoding"
-    creators: ["Saurav P"]
+    creators: ["Saurav Prateek"]
     source_type: blog
     identifiers: {}
     canonical_url: "https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize"
     publisher: "Hugging Face"
-    publication_date: null
+    publication_date: "2026-03-01"
     updated_date: null
     language: en
     version: null
@@ -1521,14 +1521,22 @@ sources:
         limitations:
           - "The article was not treated as proof that the visualizer reproduces the full GPT-2 tokenizer pipeline."
           - "The article's embedded visual assets and reuse rights were not separately audited."
+      - accessed_at: "2026-11-22"
+        status: partially-scanned
+        inspected_scope:
+          - "Hugging Face community article by Saurav Prateek, dated 2026-03-01 on its page"
+          - "Advertised GPT-2 example, method descriptions and comparison with executable package behavior"
+        limitations:
+          - "The article's example output is correct for encode(), which delegates to the pretrained tokenizer. The graph uses a separate merge replay."
+          - "Embedded visual assets and their reuse rights were not separately audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sauravp97-hf-bpe-visualizer-repository
     title: "hf-tokenizer-visualizer"
-    creators: ["Saurav P"]
+    creators: ["Saurav Prateek"]
     source_type: repository
     identifiers: {}
     canonical_url: "https://github.com/SauravP97/hf-tokenizer-visualizer"
@@ -1536,9 +1544,9 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: null
+    version: "0.0.7"
     revision: "1a802315afc0e17dddf3a64972cf25dddda8bbfe"
-    licence: {identifier: null, url: null, status: unknown}
+    licence: {identifier: "MIT", url: "https://github.com/SauravP97/hf-tokenizer-visualizer/blob/1a802315afc0e17dddf3a64972cf25dddda8bbfe/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
@@ -1562,10 +1570,19 @@ sources:
           - "The code was inspected but not executed in a clean environment."
           - "The visualizer does not reproduce the normalizer, pre-tokenizer, byte-level alphabet mapping or post-processing of a production tokenizer."
           - "Repository dependency declarations and README instructions are inconsistent."
+      - accessed_at: "2026-11-22"
+        status: partially-scanned
+        inspected_scope:
+          - "Wheel 0.0.7 matches PyPI SHA-256 and was executed with explicit dependencies and pinned GPT-2 tokenizer files"
+          - "Compared encode() and graph replay against official Hugging Face Tokenizers on whitespace, repeated pairs, Unicode and an added token"
+          - "Generated PNG/PDF and inspected the MIT licence at the recorded repository revision"
+        limitations:
+          - "The successful ID comparison does not validate graph chunks or occurrence identity, as shown by the whitespace, Unicode and added-token fixtures."
+          - "The repository software licence does not establish reuse terms for figures in the Hugging Face article."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: rushang-chauhan-embeddings-bridge-tokens-context
     title: "Embeddings: The Bridge Between Tokens and Context"
