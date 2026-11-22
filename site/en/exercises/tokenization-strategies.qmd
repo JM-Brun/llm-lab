@@ -28,7 +28,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategi
 
 Formative exercises extend this page, notably on BPE merges, in the [Text-data collection](../exercises.qmd#text-data).
 
-1. One tokenizer produces fewer tokens than another on the same text. Does that prove it is better?
+1. Two tokenizers produce different token counts for the same text. What observations and measurements would you compare before concluding that one yields a better downstream model?
 
 <details>
 <summary>Show the answer</summary>
@@ -54,6 +54,18 @@ No. The tokenizer has its own training (merge rules, vocabulary, normalization) 
 Generally yes: an ID only has meaning relative to the vocabulary of the tokenizer that produced it. Unless the tokenizer or its revision is identical, the same integer can correspond to different fragments; IDs do not transfer as-is between models.
 
 </details>
+
+## Experiment: compare multiple tokenizers
+
+Encode the same text — “What have the Romans ever done for us?” — with at least two tokenizers. If possible, choose different tokenizer families or vocabularies.
+
+For each tokenizer, record:
+
+- the exact pieces and token IDs returned;
+- the total token count and the effects of normalization or special tokens;
+- segmentation differences for rare words, accents, punctuation, and whitespace.
+
+Interpret the results without conflating sequence length, compression, linguistic suitability, and downstream model quality. A tokenizer comparison alone cannot attribute a quality difference to the tokenizer: the model, data, task, and evaluation protocol must be controlled.
 
 You have understood this step if you can distinguish training the tokenizer from encoding at inference, and explain why IDs depend on the vocabulary and its version.
 
