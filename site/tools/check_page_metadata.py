@@ -138,9 +138,9 @@ def _check_self_check_coverage(
     section_ids: set[str] = set()
     unanchored: list[str] = []
     for lesson_id, lesson_source in lesson_sources:
-        headings = re.findall(r"^## (.+?)\\s*$", lesson_source, re.MULTILINE)
+        headings = re.findall(r"^## (.+?)\s*$", lesson_source, re.MULTILINE)
         for heading in headings:
-            match = re.search(r"\\s+\\{#([a-z0-9-]+)\\}$", heading)
+            match = re.search(r"\s+\{#([a-z0-9-]+)\}$", heading)
             if match:
                 section_ids.add(match.group(1))
             else:
