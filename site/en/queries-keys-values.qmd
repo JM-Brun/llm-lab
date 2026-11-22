@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The takeaway separates Q/K (scores and weights) from V (aggregated content), explains what changes when V alone varies and flags interpretation limits; an answered self-check and dedicated exercises reinforce it."
+      note: "The takeaway separates Q/K (scores and weights) from V (aggregated content), explains what changes when V alone varies and flags interpretation limits; the comprehension questions and associated exercises are collected on the dedicated companion page."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
@@ -140,8 +140,6 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 [Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-
-[Questions and exercises](exercises/queries-keys-values.qmd)
 
 ## Takeaway and next steps {#revision-summary}
 
