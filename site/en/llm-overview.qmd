@@ -31,30 +31,9 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-“What have the Romans ever done for us?” The question sets off a long series of answers. Put the same question to a conversational assistant: it carries on too. How does a program produce a continuation from a question?
+“What have the Romans ever done for us?” How does an assistant produce an answer to this question? The [conversational assistant](#model-to-conversational-system) queries a language model. A language model trained at scale is a **large language model** (LLM).
 
-The response is built one token at a time. From the text so far, the **language model** computes probabilities for the next token. A decoding rule selects a token, which is appended to the text before the next calculation. A language model trained at scale is a **large language model** (LLM).
-:::
-
-::: {.callout-note title="Running example: a question and its continuation"}
-**The prefix** is the question: “What have the Romans ever done for us?” It is the text supplied to the model. **The continuation** is what comes next. In the film, several characters answer in turn with aqueducts, sanitation, roads, and irrigation.
-
-The scene is a hook, not a literal single-speaker generation. For calculations, the path uses an original continuation written for LLM Lab: “They built roads between distant towns.” The characters are fictional. The LLM is the model that the [conversational assistant](#model-to-conversational-system) queries. This overview starts by following the model’s computation.
-:::
-
-::: {.callout-tip title="The one-minute mental model" #revision-summary}
-A model estimates a next-token distribution. It can be used to generate, score, or train: three distinct uses, not steps in one execution. An **LLM** is a model category, **Transformer** an architecture family, and **GPT** a decoder-only Transformer family.
-:::
-
-::: {.callout-note .learning-outcomes}
-**Estimated reading time: 8–10 minutes.**
-
-**By the end of this page, you should be able to:**
-- explain next-token prediction and why a probable continuation is not necessarily true;
-- distinguish architecture, parameter learning, and model use;
-- tell generation, scoring, and training apart;
-- locate where information is stored, retrieved, supplied, and used;
-- explain why a general objective can support varied tasks without guaranteeing success.
+Follow a GPT as it builds a response one **token** at a time. On each turn, the model computes next-token probabilities, then a decoding rule selects a token.
 :::
 
 ## What the model predicts {#what-model-predicts}
@@ -68,21 +47,11 @@ The question “What have the Romans ever done for us?” is the **prefix**: the
 | “Nothing” | 0.1 |
 | “Well” | 0.1 |
 
-These values are illustrative. Real tokens can be word fragments; the same numbers are reused across pages so the calculations can be checked by hand.
+The probabilities and the tokens in this toy vocabulary are illustrative. The same numbers are reused across pages so the calculations can be checked by hand. The [tokenization lesson](text-data.qmd#tokenizer-output) shows the split from a real tokenizer.
 
 This is a **conditional distribution**: probabilities are computed given the prefix and sum to 1. If the decoding rule selects “They”, the token is appended to the context; the model then computes a new distribution conditioned on the extended prefix.
 
 In turn 2, the question followed by “They” yields a new illustrative distribution. “built” gets 0.5, “gave” 0.3 and “made” 0.2. If the rule selects “built,” the context now contains “They built.” The parameters are the same in both turns.
-
-Three terms are enough:
-
-- **Token:** a unit handled by the model, not necessarily a whole word ([tokenization](text-data.qmd)).
-- **Context:** supplied tokens and tokens already generated.
-- **Parameters:** learned numbers that stay fixed during ordinary inference.
-
-A probable continuation is not necessarily true: good prediction does not prove human-like understanding ([limits](llm-limits.qmd)).
-
-## From text to a distribution {#text-to-distribution}
 
 {{< include ../includes/next-token-explorer.html >}}
 
@@ -93,11 +62,42 @@ The new prefix ends in “Aqueducts.” The model recomputes the distribution fr
 
 </details>
 
+<details>
+<summary>The scene and the running example</summary>
+
+In the film, several characters answer in turn with aqueducts, sanitation, roads, and irrigation. For a single-speaker generation trace, LLM Lab uses an original illustrative continuation: “They built roads between distant towns.”
+
+</details>
+
+Three terms are enough:
+
+- **Token:** a unit handled by the model, not necessarily a whole word ([tokenization](text-data.qmd)).
+- **Context:** supplied tokens and tokens already generated.
+- **Parameters:** learned numbers that stay fixed during ordinary inference.
+
+A probable continuation is not necessarily true: good prediction does not prove human-like understanding ([limits](llm-limits.qmd)).
+
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
+A model estimates a next-token distribution. It can be used to generate, score, or train: three distinct uses, not steps in one execution. An **LLM** is a model category, **Transformer** an architecture family, and **GPT** a decoder-only Transformer family.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes | 8–10 min"}
+**By the end of this page, you should be able to:**
+
+- explain next-token prediction and why a probable continuation is not necessarily true;
+- distinguish architecture, parameter learning, and model use;
+- tell generation, scoring, and training apart;
+- locate where information is stored, retrieved, supplied, and used;
+- explain why a general objective can support varied tasks without guaranteeing success.
+:::
+
+## From text to a distribution {#text-to-distribution}
+
 ### A preview of computation inside a GPT
 
 ![Six-stage reference diagram: input text, tokenization, numeric representations, computation in Transformer blocks, next-token distribution, and selection in the generation loop.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="An autoregressive GPT processes the prefix: text, tokens and IDs, embeddings and positional information, repeated Transformer blocks, logits converted into probabilities, then selection of a token appended to the prefix. Computation repeats with the extended context. Probabilities are illustrative."}
 
-An autoregressive GPT turns text into tokens, their IDs into numeric representations, and processes those representations through Transformer blocks. The output head produces logits, which are converted into probabilities; a decoding rule then selects a token, appends it to the context, and starts the next computation. Selection happens after the Transformer has computed the distribution.
+The tokenizer turns text into token IDs. GPT turns those IDs into numeric representations and processes them through its Transformer blocks. The output head produces scores called **logits**, which are converted into probabilities. Token selection then happens during decoding. The token joins the context before the next turn.
 
 The diagram describes **one computation**, not a reading order. The canonical Understand sequence is shown in the [learning map](learning-map.qmd). For the individual mechanisms, see [text and tokenization](text-data.qmd), [embeddings](embedding-space.qmd), [the Transformer](transformer.qmd), [logits and probabilities](probabilities.qmd), and [generation](generation.qmd).
 
@@ -114,9 +114,16 @@ A computed distribution can be used to produce a continuation, score a known seq
 - **Score:** calculate the probability of an observed sequence, its **likelihood** ([likelihood](likelihood.qmd)).
 - **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* uses the actual tokens ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
 
-For a token with probability 0.6, surprisal is $-\ln(0.6)\approx 0.511$ nats. [Entropy](entropy.qmd) is expected surprisal. Scoring measures the likelihood of a target or sequence. Evaluation compares results on held-out examples. Only learning changes parameters.
+In this workflow, training is the use that updates the parameters. Evaluation compares results on examples held out from training.
+
+<details>
+<summary>Calculate surprisal and likelihood</summary>
+
+For a token with probability 0.6, surprisal is $-\ln(0.6)\approx 0.511$ nats. [Entropy](entropy.qmd) is expected surprisal. Scoring measures the likelihood of a target or sequence.
 
 A sequence likelihood is the product of its successive conditional token probabilities ([mathematical formulation](language-modeling-math.qmd)). [Practise the calculation on an observed continuation](exercises/likelihood.qmd#ex-overview-likelihood-transfer).
+
+</details>
 
 ## LLM, Transformer, GPT: three notions {#llm-transformer-gpt}
 

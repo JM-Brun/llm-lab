@@ -66,6 +66,19 @@ No. The formula defines a signal for that position, but the model still has to l
 
 You have understood this step if you can explain why order must be taken into account, distinguish absolute encodings from relative mechanisms (of which RoPE is one example), separate positional signals from the causal visibility constraint, and explain why a computable signal does not guarantee extrapolation.
 
+## Compare two visible prefixes {#ex-positional-mask-transfer}
+
+Consider one layer of causal self-attention with no explicit positional mechanism. The input queries, keys, and values are fixed per token. Compare B’s output in `ACB` and `CAB`, where B stays in the last position. Can the causal mask alone distinguish this swap at B’s output?
+
+<details>
+<summary>Show the reasoning</summary>
+
+B sees the same three tokens in both cases. The key-value pairs for A and C switch places, so their weights and contributions are permuted together. In this layer, B’s output is the same weighted sum. In a stack of layers, the states for A and C may already have changed in an earlier block, because each sees its own prefix there.
+
+</details>
+
+[Return to the comparison with B in the middle](../positional-encoding.qmd#position-permutation)
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](positional-encoding.qmd)
 :::
