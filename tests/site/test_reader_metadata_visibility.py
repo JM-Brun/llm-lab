@@ -45,11 +45,11 @@ def test_overview_questions_live_on_dedicated_practice_pages_in_both_languages()
         assert "::: {.self-check}" not in lesson
         assert "<!-- self-check-coverage: enforced -->" not in lesson
         lesson_links = re.findall(
-            r"(?m)^\\[[^\\]]+\\]\\(exercises/llm-overview\\.qmd\\)\\s*$", lesson
+            r"(?m)^\[[^\]]+\]\(exercises/llm-overview\.qmd\)\s*$", lesson
         )
         assert len(lesson_links) == 1, f"{language}: expected one visible companion link"
         assert practice_path.is_file()
-        assert re.search(r"(?m)^\\[.*?\\]\\(\\.\\./llm-overview\\.qmd\\)", practice)
+        assert re.search(r"(?m)^\[.*?\]\(\.\./llm-overview\.qmd\)", practice)
 
-        questions = re.findall(r"(?m)^\\d+\\. \\*\\*", practice)
+        questions = re.findall(r"(?m)^\d+\. \*\*", practice)
         assert len(questions) == 9, f"{language}: expected nine preserved overview questions"
