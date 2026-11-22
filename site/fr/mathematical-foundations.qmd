@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/tensors"]
-related: []
+related: ["fr/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -29,6 +29,8 @@ Un modèle autorégressif produit des **logits** pour le token suivant. Le softm
 
 
 ![Schéma original de la chaîne mathématique : logits, probabilités, vraisemblance, perte et gradients.](../images/math-training-pipeline.svg){fig-alt="Chaîne du calcul : logits z, softmax vers p, probabilité du token cible, log-vraisemblance négative, puis gradient de la perte vers les paramètres." width=100%}
+
+**S'exercer :** [Exercices — Fondations mathématiques](exercises-foundations.qmd) pour travailler la chaîne logits → loss → gradients.
 
 ## La chaîne en un coup d'œil
 
