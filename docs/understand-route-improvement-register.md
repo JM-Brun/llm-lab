@@ -34,7 +34,7 @@ La cohérence des fichiers, graphes et métadonnées est nécessaire, mais n'est
 2. **Graphe de connaissances** : concepts, définitions, relations conceptuelles, domaines et ressources.
 3. **Parcours pédagogique** : ordre de présentation recommandé, niveau d'explication et transitions utiles.
 
-Le parcours est une projection pédagogique des connaissances et mécanismes ; il ne copie pas le graphe de calcul et n'impose pas l'ordre d'exécution comme ordre de lecture. Le document architectural fourni avec la demande insiste sur la convergence des usages autour de la distribution prédictive, sans confondre génération, scoring et apprentissage. Cette distinction est déjà représentée dans le registre computationnel du dépôt : il faut le vérifier et le réutiliser, pas créer un graphe concurrent.
+Le parcours est une projection pédagogique des connaissances et mécanismes ; il ne copie pas le graphe de calcul et n'impose pas l'ordre d'exécution comme ordre de lecture. Le [modèle computationnel canonique](canonical-computational-spine.md) formalise la convergence des usages autour de la distribution prédictive, sans confondre génération, scoring et apprentissage. Cette distinction est déjà représentée dans le registre computationnel du dépôt : il faut le vérifier et le réutiliser, pas créer un graphe concurrent.
 
 ### 1.3 Understand et Build sont deux parcours primaires indépendants
 
