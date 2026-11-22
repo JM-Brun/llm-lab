@@ -112,6 +112,10 @@ Pour situer ces méthodes dans l'histoire des modèles d'assistant, voir l'[évo
 [Français](post-training.qmd) · [English](../en/post-training.qmd)
 :::
 
+## Exercices
+
+Vérifier les distinctions entre SFT, RLHF, DPO, LoRA et récupération sur la [page d'exercices dédiée au post-entraînement](exercises/post-training.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -119,9 +123,8 @@ Pour situer ces méthodes dans l'histoire des modèles d'assistant, voir l'[évo
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Vérifier les distinctions entre SFT, RLHF, DPO, LoRA et récupération sur la [page d'exercices dédiée au post-entraînement](exercises/post-training.qmd).
+
 
 ### Pour approfondir
 

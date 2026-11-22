@@ -147,6 +147,10 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 **Language:** [Français](../fr/causal-masking.qmd) · [English](causal-masking.qmd)
 ::::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -156,9 +160,8 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+
 
 
 ::: {.callout-note collapse="true" title="Code API conventions (advanced)"}

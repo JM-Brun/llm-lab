@@ -272,9 +272,8 @@ Les questions de cette visite et leurs corrigés sont regroupés sur la [page de
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
+
 
 </div>
 </details>

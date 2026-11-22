@@ -196,6 +196,10 @@ Pour appliquer ces distinctions à des choix d'architecture : [architectures hyb
 **Langue :** [Français](llm-computational-complexity.qmd) · [English](../en/llm-computational-complexity.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-computational-complexity.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -203,9 +207,8 @@ Pour appliquer ces distinctions à des choix d'architecture : [architectures hyb
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-computational-complexity.qmd).
+
 
 
 [**Fiche de révision — Compression et LLM**](compression-revision.qmd) : distinguer la taille du checkpoint, la mémoire temporaire et le coût de codage des données.

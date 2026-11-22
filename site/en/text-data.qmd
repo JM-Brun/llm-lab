@@ -97,6 +97,10 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 **Language** · [Français](../fr/text-data.qmd) · [English](text-data.qmd)
 :::
 
+## Practice
+
+[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -129,9 +133,8 @@ flowchart TB
 
 The diagram groups positional handling with the Transformer. Some architectures add learned absolute position vectors to token embeddings. With [RoPE](positional-encoding.qmd), attention rotates the query and key vectors. These mechanisms act at different points in the sequence of operations that produces [contextual representations](contextualized-representations.qmd).
 
-### Practice {#practice}
 
-[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+
 
 ### Two uses, two paths {#two-uses-two-paths}
 

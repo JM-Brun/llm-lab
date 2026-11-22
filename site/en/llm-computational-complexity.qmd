@@ -196,6 +196,10 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 **Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-computational-complexity.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -203,9 +207,8 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-computational-complexity.qmd).
+
 
 
 [**Revision sheet — Compression and LLMs**](compression-revision.qmd): distinguish checkpoint size, temporary memory, and the cost of coding data.

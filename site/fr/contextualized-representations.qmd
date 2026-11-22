@@ -157,6 +157,10 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -166,9 +170,8 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
+
 
 
 :::

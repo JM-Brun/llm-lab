@@ -200,6 +200,10 @@ Pour relier ce cas au parcours : [architectures Transformer](transformer-archite
 **Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../en/hybrid-llm-architectures.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/hybrid-llm-architectures.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -207,9 +211,8 @@ Pour relier ce cas au parcours : [architectures Transformer](transformer-archite
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/hybrid-llm-architectures.qmd).
+
 
 </div>
 </details>

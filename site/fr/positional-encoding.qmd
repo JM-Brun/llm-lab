@@ -104,6 +104,10 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 **Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -113,9 +117,8 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 
 
 ### Pourquoi l’auto-attention seule ne suffit-elle pas ?

@@ -160,6 +160,10 @@ Le mécanisme n'est pas réservé à la traduction. Il apparaît notamment dans 
 **Langue :** [Français](cross-attention.qmd) · [English](../en/cross-attention.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-attention.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -167,9 +171,8 @@ Le mécanisme n'est pas réservé à la traduction. Il apparaît notamment dans 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-attention.qmd).
+
 
 </div>
 </details>

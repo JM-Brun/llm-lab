@@ -103,6 +103,10 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 **Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -112,9 +116,8 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
+
 
 
 ### Why is self-attention alone not enough?

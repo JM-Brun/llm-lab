@@ -154,6 +154,10 @@ For the dependencies between positions, causal masks, and the distinct roles of 
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -163,9 +167,8 @@ For the dependencies between positions, causal masks, and the distinct roles of 
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
+
 
 
 :::

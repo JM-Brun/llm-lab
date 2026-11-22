@@ -147,6 +147,10 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 **Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -156,9 +160,8 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
+
 
 
 ::: {.callout-note collapse="true" title="Convention des API de code (approfondissement)"}

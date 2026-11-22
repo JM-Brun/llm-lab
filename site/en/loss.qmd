@@ -125,6 +125,10 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 [Français](../fr/loss.qmd) · [English](loss.qmd)
 ::::
 
+## Practice
+
+The [practice page](exercises/loss.qmd) includes a worked example that [compares two checkpoints by validation loss per valid token](exercises/loss.qmd#ex-validation-loss-by-token).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -132,9 +136,8 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The [practice page](exercises/loss.qmd) includes a worked example that [compares two checkpoints by validation loss per valid token](exercises/loss.qmd#ex-validation-loss-by-token).
+
 
 
 ### Further reading

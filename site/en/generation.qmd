@@ -252,6 +252,10 @@ An advanced optimization, **speculative decoding**, has a draft model propose se
 [Français](../fr/generation.qmd) · [English](generation.qmd)
 :::
 
+## Practice
+
+[Check your understanding of the lesson](exercises/generation.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -264,9 +268,8 @@ An advanced optimization, **speculative decoding**, has a draft model propose se
 - [Hugging Face — Behind the pipeline](https://huggingface.co/learn/llm-course/en/chapter2/2): trace the steps connecting the high-level API to model components.
 - [Hugging Face — Optimized Inference Deployment](https://huggingface.co/learn/llm-course/en/chapter2/7): a practical extension on running models.
 
-### Practice
 
-[Check your understanding of the lesson](exercises/generation.qmd).
+
 
 </div>
 </details>
