@@ -24,7 +24,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 45 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 46 pages d’exercices par leçon"}
 
 ### Comprendre
 
@@ -114,6 +114,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 - [Émergence](exercises/emergence.qmd)
 - [Évolution des LLM](exercises/llm-evolution.qmd)
+- [JEPA et représentation platonique](exercises/jepa-platonic-representation.qmd)
 
 :::
 
