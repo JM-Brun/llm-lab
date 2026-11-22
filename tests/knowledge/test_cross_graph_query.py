@@ -50,6 +50,7 @@ def test_five_pilot_concepts_resolve_typed_cross_graph_paths(
         "scaled-dot-product-attention": {
             "source-evidence",
             "computation-via-page",
+            "computation-edge-via-page",
             "route-focus-computation",
         },
         "predictive-compression": {"source-evidence"},
@@ -98,6 +99,7 @@ def test_route_focus_path_preserves_pedagogical_roles(
     result = query_concept(evidence_index, "scaled-dot-product-attention")
     path = next(path for path in result.paths if path.kind == "route-focus-computation")
     focus_step = next(step for step in path.steps if step.entity_type == "route_focus")
+    assert focus_step.details is not None
     references = focus_step.details["references"]
 
     assert any(
