@@ -213,3 +213,25 @@ Two earlier edges were re-examined against the narrower definitions and the comp
 - Edge 9 was removed without replacement: `next-token-prediction` is the task; `training-objective` is the optimized function. Their relationship is explained by the endpoint definitions and the computational graph, not by a structural `part-of` edge.
 - Keep the distinction between the concept graph and the computational graph: the latter supplies the explicit differentiation and final-hidden-state operations.
 - After removing row 9, the registry contains 66 relation assertions: 25 retained edges from the original inventory plus 41 retained later additions. All 66 have received a source-semantic review. Rendered graph usability, accessibility, and learner validation remain separate gates.
+
+
+## Targeted follow-up — KL divergence is not a prerequisite for cross-entropy (2026-11-22)
+
+A later registry addition introduced the pedagogical edge
+`kl-divergence → prerequisite → cross-entropy`. A focused review against the canonical bilingual lesson and the day-21 calendar pilot found that this relation overstates the mathematical dependency.
+
+Cross-entropy is defined directly for target distribution (q) and predicted distribution (p):
+[
+H(q,p) = -sum_i q_i log p_i.
+]
+For a one-hot target, it reduces to the token-level negative log-probability. Neither definition requires KL divergence. The identity
+[
+H(q,p) = H(q) + D_{\mathrm{KL}}(q\Vert p)
+]
+is a useful decomposition and supports an optional mathematical deepening, but it does not make KL a prerequisite for calculating cross-entropy.
+
+**Decision:** remove the `kl-divergence → prerequisite → cross-entropy` edge without replacement. The current cross-entropy concept retains its bilingual resource links to `language-modeling-math`, so the decomposition remains discoverable as optional depth. No new relation type is introduced. The separate `entropy → prerequisite → cross-entropy` edge is outside this targeted decision and is left unchanged.
+
+### Registry coverage boundary
+
+The historical edge review above covered 66 retained relation assertions at its recorded state. The current registry had 125 assertions immediately before this targeted removal and has 124 afterward. Therefore, 66 reviewed assertions must not be presented as a complete review of the current registry; 58 current assertions remain outside that historical review. This targeted correction does not claim to audit those other assertions.
