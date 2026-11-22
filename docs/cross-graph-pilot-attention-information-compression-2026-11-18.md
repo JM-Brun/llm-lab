@@ -1,14 +1,15 @@
 # Cross-graph scientific pilot: attention, information theory and compression
 
-**Date:** 2026-11-18  
-**Status:** repository-grounded inventory and manual traversal review, with three deterministic regression tests for the attention evidence path, the KL/MI counterexample and FlashAttention's IO scope; not a general cross-graph query benchmark or a fresh full experiment run.  
+**Initial inventory:** 2026-11-18  
+**Follow-up review:** 2026-11-22  
+**Status:** repository-grounded manual traversal review, with five deterministic regression tests covering the attention evidence path, KL/MI counterexample, FlashAttention IO scope, predictive-coding evidence and the V-information source-local boundary. This is not a general cross-graph query benchmark or a neural-LLM compression reproduction.  
 **Parent tracking:** [#1233](https://github.com/JM-Brun/llm-lab/issues/1233) · [scientific pilot #1237](https://github.com/JM-Brun/llm-lab/issues/1237)
 
 ## Purpose and method
 
 This pilot checks whether existing canonical structures can be traversed without flattening their semantics. It reuses the concept registry, computational graph, source catalogue, source extractions, bilingual page/resource associations, syntheses and experiment protocols. It does not create a graph, ontology, source record, concept or experiment.
 
-The review is a static inspection of the current `main` content on 2026-11-18. Exact locators below are taken from the source extraction/review records. Experiment outputs are cited as repository-documented outputs; they were not rerun in this pass. A path described as a *manual join* is not evidence that a query engine or first-class cross-graph edge already exists.
+The initial inventory was made against `main` on 2026-11-18. This follow-up rechecked the P4/P5 source extractions, source scan states, experiment code and tests on 2026-11-22. Exact locators below come from the repository's extraction records. The quantized-coder unit test executes its CLI entry point through `main()`; no neural LLM experiment or fresh full corpus reproduction is claimed. A path described as a *manual join* is not evidence that a query engine or first-class cross-graph edge already exists.
 
 ## Canonical owners and real endpoints
 
@@ -60,23 +61,35 @@ The Vaswani record is still `partially-scanned`; its 2026-11-18 scan explicitly 
 
 ### P4 — Predictive log-loss → ideal code length → finite exact coding
 
-**Path:** `cross-entropy` / `negative-log-likelihood` → `predictive-compression` → `entropy-coding` / `arithmetic-coding` → `experiments/predictive-compression/` → documented exact decode check.
+**Path:** canonical concepts `cross-entropy` / `negative-log-likelihood` → `predictive-compression` → `entropy-coding` / `arithmetic-coding` → primary-source extraction items from Shannon and Rissanen → `experiments/predictive-compression/` → unit tests and exact decoder checks.
 
-**What is supported:** for a specified model assigning conditional probabilities to a sequence, the ideal predictive cost is the sum of (-\log_2 p(x_t\mid context)). The existing bigram experiment turns those probabilities into arithmetic-coding intervals and decodes the finite message exactly. The README documents a 19.642-bit ideal cost, 21-bit finite code and exact reconstruction for its fixed synthetic example.
+**What is supported:**
+- For a specified autoregressive model and a fixed sequence, the ideal predictive cost in bits is the sum of token surprisals, `-log2 p(x_t | context)`. This is a model-dependent ideal length, not automatically the size of a finite file.
+- Shannon's `noiseless-channel-coding-theorem` extraction records the asymptotic entropy-limited rate and a finite-block construction with integer code lengths. It does not claim that a finite implementation has exactly the real-valued sum of NLLs as its bit count.
+- Rissanen's `probability-derived-ideal-length` extraction connects symbol ideal lengths to negative log-probabilities and accumulates the probability cost over a sequence. Its `finite-precision-and-decodability` item treats finite precision and unique inversion as separate construction constraints.
+- The repository contains two deliberately distinct executable paths:
+  - `run.py`: exact rational interval arithmetic, a finite dyadic code and exact reconstruction. The documented synthetic example reports 19.642 ideal bits, a 21-bit finite code and a successful round trip.
+  - `quantized_coder.py`: positive integer frequencies summing to `2^12`, deterministic frame header and packed payload. The JSON report separates floating-point NLL, quantized ideal NLL, payload, padding, header and total serialized size. `tests/unit/test_quantized_predictive_coder.py::test_cli_runs_and_reports_distinct_coding_costs` executes the CLI entry point and checks exact reconstruction.
 
-**Limits:** this is a synthetic bigram example, not a neural network or LLM benchmark. The decoder is assumed to share the model, message length and conventions; model-training and metadata costs are excluded. The example does not prove that prompting or generation is lossless decompression.
+**Evidence locators:**
+- `shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem` — §9, pp. 16–17, Theorem 9 and second proof.
+- `rissanen-langdon-arithmetic-coding-1979:probability-derived-ideal-length` — pp. 150–152, especially Eqs. (1)–(5).
+- `rissanen-langdon-arithmetic-coding-1979:finite-precision-and-decodability` — pp. 151–152 and the decodability criteria, pp. 157–159.
 
-**Evidence:** `experiments/predictive-compression/README.fr.md` (documented output and limits); `docs/source-syntheses/compression-two-meanings-2026-11.md`; concepts in `data/concepts.yml`.
+**Limits:** the two experiments use a fixed synthetic four-symbol bigram source, not a neural network, LLM or natural-language corpus. The model, training sequence, alphabet and probability tables are shared out of band and excluded from the frame-size metric. The message length is carried in the header. The quantized coder still uses exact rational interval arithmetic; it is not a bounded-state production range coder. Shannon and Rissanen are both marked `partially-scanned`; their extraction locators and scope/limitations must travel with the claim. The Rissanen scan also records OCR/layout artefacts, so exact equation typography must be checked against the publisher copy before quotation.
 
-### P5 — Predictive information → restricted model family → canonical concepts
+### P5 — Predictive information → restricted model family → source-local theory
 
-**Path:** `mutual-information` / `cross-entropy` → source `xu-et-al-usable-information-2020` → source-local definitions `src-predictive-family`, `src-predictive-v-entropy`, `src-v-information` → extraction item `predictive-family-definition` and subsequent V-information items → bilingual experiment guide.
+**Path:** canonical `mutual-information` / `v-information` concepts → source record `xu-et-al-usable-information-2020` → source-local pedagogical nodes `src-predictive-family`, `src-predictive-v-entropy`, `src-v-information`, `src-pac-estimation` → extraction items → bilingual information-theory experience guide.
 
-**What is supported:** predictive V-information is relative to an explicitly specified predictive family and logarithmic loss. Its relationship to Shannon mutual information depends on the unrestricted-family special case; it is not a universal synonym. The extraction keeps its source-local teaching model distinct from the canonical concept graph.
+**What is supported:** the paper defines predictive V-information relative to an explicitly specified family of probabilistic predictors and logarithmic loss. The no-input and conditional predictive V-entropies are compared; the relationship to Shannon mutual information depends on the unrestricted-family special case. The paper's PAC-style estimation result depends on bounded log-probabilities and a complexity condition for the selected predictive family.
 
-**Limits:** the source-local `src-` nodes are not canonical concept IDs and must not be promoted automatically. The project XOR example is a finite exact population calculation, not a reproduction of the paper's high-dimensional experiments or PAC guarantee.
+**Evidence locators:**
+- `xu-et-al-usable-information-2020:predictive-family-definition` — §2, Definition 1.
+- `xu-et-al-usable-information-2020:v-information-definition` — §2, Definition 3.
+- `xu-et-al-usable-information-2020:pac-estimation` — §4, Theorem 1.
 
-**Evidence:** `data/extractions/xu-et-al-usable-information-2020.yml`, source-local graph and item locators (Definitions 1–3, Theorem 1); `data/sources.yml` source record; `experiments/information-theory-llm/README.fr.md`.
+**Limits:** the source record is `partially-scanned`, and the extraction's pedagogical reconstruction is explicitly `partial`; this is not a claim that the entire paper was exhaustively audited. The PAC statement requires the paper's bounded-log-probability and function-family complexity assumptions. The `src-*` nodes are source-local teaching nodes, not canonical concept IDs, and must not be promoted automatically. The project's XOR example is a finite exact population calculation, not a reproduction of the paper's high-dimensional experiments or PAC guarantee.
 
 ## Negative and ambiguous bridge benchmark
 
@@ -94,7 +107,11 @@ The Vaswani record is still `partially-scanned`; its 2026-11-18 scan explicitly 
 
 This is a reviewed hand-curated candidate set, not a precision benchmark for an automated discovery system. No automated recommendations are being advertised.
 
-## Automated regression coverage\n\nA focused test at `tests/knowledge/test_cross_graph_scientific_pilot.py` now locks three repository-grounded checks: (1) the existing attention computation chain resolves to the Vaswani §3.2.1 extraction item and retains its explicit non-MI limitation; (2) the existing toy experiment gives positive row-to-uniform KL but zero mutual information when every context has the same non-uniform row; and (3) the FlashAttention extraction resolves to §§3.1–3.2 and retains its IO-aware implementation scope and floating-point/FLOP caveats. These tests protect selected endpoints and a negative control; they do not implement graph traversal, evaluate arbitrary candidate edges, establish source completeness, or constitute a precision benchmark.\n\n## Coverage and missing links
+## Automated regression coverage
+
+`tests/knowledge/test_cross_graph_scientific_pilot.py` now contains five focused checks: (1) attention computation to the Vaswani §3.2.1 locator; (2) the KL/MI negative control; (3) FlashAttention's IO-aware implementation scope; (4) the predictive-coding path to Shannon/Rissanen locators, with model-compression and runtime-memory boundaries; and (5) the V-information source-local graph, partial-scan state and exact Definition 1 / Definition 3 / Theorem 1 locators. These tests protect selected endpoints and semantic boundaries; they do not implement general graph traversal, evaluate arbitrary candidate edges, establish source completeness, or constitute a precision benchmark.
+
+## Coverage and missing links
 
 | Acceptance check | Current result |
 |---|---|
@@ -108,7 +125,7 @@ This is a reviewed hand-curated candidate set, not a precision benchmark for an 
 | Fresh experiment execution in this pass | Not performed |
 | Rendered page parity | Resource registrations are bilingual; rendered FR/EN narrative parity has not been re-audited here |
 
-The source-to-extraction path is strongest for Vaswani and Dao. The information-theory synthesis documents the Wayland notebook inspection, but the source-specific extraction filename was not confirmed in this pass; do not invent it or use it as a locator. The experiment path for predictive compression has a documented exact output, but no new run was performed. These are explicit gaps, not reasons to create substitute records.
+The source-to-extraction paths are now explicit for Vaswani, Dao, Shannon, Rissanen and Xu, with the partial-scan boundaries retained. The information-theory synthesis documents the Wayland notebook inspection, but the source-specific extraction filename remains unconfirmed; do not invent it or use it as a locator. The quantized-coder CLI is exercised by its unit test; no fresh neural-LLM experiment or reproduction of Huang et al. is claimed. These are explicit scope boundaries, not reasons to create substitute records.
 
 ## Decisions and next work
 

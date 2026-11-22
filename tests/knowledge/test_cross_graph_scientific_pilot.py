@@ -81,3 +81,103 @@ def test_flashattention_evidence_is_an_io_implementation_not_source_coding() -> 
     limitations = " ".join(item["evidence"]["limitations"]).lower()
     assert "floating-point" in limitations
     assert "o(n^2" in limitations
+
+
+def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
+    concepts = _load_yaml(ROOT / "data" / "concepts.yml")
+    computational = _load_yaml(ROOT / "data" / "computational-graph.yml")
+    sources = _load_yaml(ROOT / "data" / "sources.yml")
+    shannon = _load_yaml(
+        ROOT / "data" / "extractions" / "shannon-mathematical-theory-communication-1948.yml"
+    )
+    rissanen = _load_yaml(
+        ROOT / "data" / "extractions" / "rissanen-langdon-arithmetic-coding-1979.yml"
+    )
+
+    concept_ids = {item["id"] for item in concepts["concepts"]}
+    assert {
+        "cross-entropy",
+        "negative-log-likelihood",
+        "predictive-compression",
+        "entropy-coding",
+        "arithmetic-coding",
+        "model-compression",
+        "quantization",
+    } <= concept_ids
+
+    concept_edges = {(item["from"], item["type"], item["to"]) for item in concepts["relations"]}
+    assert ("predictive-compression", "contributes-to", "entropy-coding") in concept_edges
+    assert ("arithmetic-coding", "part-of", "entropy-coding") in concept_edges
+    assert ("quantization", "part-of", "model-compression") in concept_edges
+    assert ("model-compression", "contrasts-with", "predictive-compression") in concept_edges
+
+    computation_ids = {item["id"] for item in computational["nodes"]}
+    assert {"token-nll", "sequence-log-likelihood", "kv-cache"} <= computation_ids
+
+    source_states = {item["id"]: item["scan_status"] for item in sources["sources"]}
+    assert source_states["shannon-mathematical-theory-communication-1948"] == "partially-scanned"
+    assert source_states["rissanen-langdon-arithmetic-coding-1979"] == "partially-scanned"
+
+    shannon_item = next(
+        item
+        for item in shannon["items"]
+        if item["id"]
+        == "shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem"
+    )
+    assert "§9" in shannon_item["locator"]["value"]
+    assert "Theorem 9" in shannon_item["locator"]["value"]
+    assert any(
+        "finite encoded file" in limitation
+        for limitation in shannon_item["evidence"]["limitations"]
+    )
+
+    rissanen_items = {item["id"].split(":")[-1]: item for item in rissanen["items"]}
+    ideal_locator = rissanen_items["probability-derived-ideal-length"]["locator"]["value"]
+    assert "150" in ideal_locator and "152" in ideal_locator
+    precision_locator = rissanen_items["finite-precision-and-decodability"]["locator"]["value"]
+    assert "157" in precision_locator and "159" in precision_locator
+
+    readme = (ROOT / "experiments" / "predictive-compression" / "README.md").read_text(
+        encoding="utf-8"
+    )
+    assert "quantized_coder.py" in readme
+    assert "not transmitted or included" in readme
+    assert "not a bounded-state production range coder" in readme
+    quantized_tests = (ROOT / "tests" / "unit" / "test_quantized_predictive_coder.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'module["main"]()' in quantized_tests
+
+
+def test_v_information_path_preserves_source_local_scope_and_partial_evidence() -> None:
+    concepts = _load_yaml(ROOT / "data" / "concepts.yml")
+    sources = _load_yaml(ROOT / "data" / "sources.yml")
+    extraction = _load_yaml(ROOT / "data" / "extractions" / "xu-et-al-usable-information-2020.yml")
+
+    concept_ids = {item["id"] for item in concepts["concepts"]}
+    assert {"v-information", "mutual-information"} <= concept_ids
+
+    source = next(
+        item for item in sources["sources"] if item["id"] == "xu-et-al-usable-information-2020"
+    )
+    assert source["scan_status"] == "partially-scanned"
+    assert extraction["pedagogical_model"]["reconstruction"]["status"] == "partial"
+
+    source_graph_ids = {
+        item["id"] for item in extraction["pedagogical_model"]["source_graph"]["nodes"]
+    }
+    assert {
+        "src-predictive-family",
+        "src-predictive-v-entropy",
+        "src-v-information",
+        "src-pac-estimation",
+    } <= source_graph_ids
+    assert source_graph_ids.isdisjoint(concept_ids)
+
+    items = {item["id"].split(":")[-1]: item for item in extraction["items"]}
+    assert items["predictive-family-definition"]["locator"]["label"] == "Definition 1"
+    assert items["v-information-definition"]["locator"]["label"] == "Definition 3"
+    assert items["pac-estimation"]["locator"]["label"] == "Theorem 1"
+    assert "Log-probabilities are uniformly bounded" in " ".join(
+        items["pac-estimation"]["evidence"]["assumptions"]
+    )
