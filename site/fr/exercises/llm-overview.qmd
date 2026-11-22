@@ -45,7 +45,34 @@ Le premier cas relève du **few-shot / in-context learning** : les exemples cond
 <details>
 <summary>Afficher la réponse et le raisonnement</summary>
 
-Le traitement initial du prompt (f) commence par la tokenisation du texte (b), puis le modèle calcule la distribution (d). La règle de décodage sélectionne un token (e), qui est ajouté au contexte (a). On vérifie ensuite la condition d'arrêt (c) ; si la limite n'est pas atteinte, on recalcule une distribution à partir du contexte enrichi et on recommence la sélection. Les paramètres restent fixes pendant toute cette inférence : seul le contexte change. La limite de trois tokens est ici un critère d'arrêt externe, pas une modification du modèle.
+Le traitement initial du prompt (f) commence par la tokenisation du texte (b), puis le modèle calcule la distribution (d). La règle de décodage sélectionne un token (e), qui est ajouté au contexte (a). On vérifie ensuite la condition d'arrêt (c) ; si la limite n'est pas atteinte, on recalcule une distribution à partir du contexte enrichi et on recommence la sélection. Les paramètres restent fixes pendant toute cette inférence : seul le contexte change. La limite de trois tokens est ici un critère d'arrêt externe, pas une modification du modèle. Les tokens nouvellement générés dépendent des choix précédents : on ne peut donc pas produire cette continuation autorégressive en parallèle, même si le calcul d'un même tour peut exploiter le parallélisme interne du modèle.
+
+</details>
+
+7. **Une suite possible reçoit une probabilité de 0,6. Peut-on en conclure qu'elle est vraie ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. La valeur 0,6 exprime une probabilité conditionnelle attribuée par le modèle à une continuation dans un contexte donné. Elle ne constitue ni une vérification factuelle ni une garantie de vérité. Une réponse très probable peut rester fausse.
+
+</details>
+
+8. **Générer, scorer une cible observée et apprendre sont-ils trois noms pour la même opération ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. La génération sélectionne un token puis prolonge le contexte ; le scoring évalue la probabilité d'un token ou d'une séquence observée ; l'apprentissage utilise une loss et ses gradients pour mettre à jour les paramètres. Génération et scoring peuvent être effectués à paramètres fixes ; l'apprentissage modifie les paramètres.
+
+</details>
+
+9. **Tout grand modèle de langage (LLM) est-il nécessairement un GPT ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. LLM désigne une catégorie de modèles de langage entraînés à grande échelle. GPT désigne une famille fondée sur une architecture Transformer décodeur seul et un objectif autorégressif. Il existe d'autres configurations de modèles de langage, notamment encodeur seul et encodeur-décodeur.
 
 </details>
 
