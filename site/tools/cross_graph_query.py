@@ -136,6 +136,8 @@ def _extraction_step(item: ExtractionItemRecord, concept_id: str) -> EvidencePat
         limitations=item.limitations,
         details={
             "source_id": item.source_id,
+            "kind": item.kind,
+            "disposition_rationale": item.disposition_rationale,
             "concept_mapping_basis": item.concept_mapping_basis.get(concept_id, ()),
             "candidate_pages": item.candidate_pages,
             "candidate_concepts": item.candidate_concepts,
@@ -241,7 +243,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                         source_ref=concept_step.ref,
                         target_ref=item_step.ref,
                         relation="mapped-to-concept",
-                        basis="item.mapped_concepts or item.classification.concept_ids",
+                        basis=", ".join(item.concept_mapping_basis.get(concept_id, ())),
                         source_path=item.path,
                         note="Item-level mapping; source-level catalogue tags are not substituted.",
                     ),
