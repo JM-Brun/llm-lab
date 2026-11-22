@@ -1,7 +1,7 @@
 schema_version: 1
 
 # Editorial proposal only. This file is not yet consumed by the site or CI.
-# Concept IDs and page IDs refer to canonical LLM Lab registries and pages.
+# Concept IDs, computational-node IDs, and page IDs refer to canonical LLM Lab registries and pages.
 calendar:
   id: llm-advent-24
   status: proposed
