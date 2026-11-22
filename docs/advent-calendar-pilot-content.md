@@ -1,9 +1,10 @@
-# LLM Advent Calendar — three-day content pilot
+# LLM Advent Calendar — content drafts and pilot
 
-**Status:** editorial pilot draft; not yet learner-tested  
-**Purpose:** test the daily learning contract before writing the remaining 21 entries  
+**Status:** editorial drafts; not yet learner-tested  
+**Purpose:** develop the daily learning contract and prepare a deliberately varied three-day novice pilot  
 **Languages:** French and English  
-**Canonical days:** 03 (tokenization), 09 (Q/K/V), 21 (cross-entropy)
+**Drafted days:** 01–06 (except 07), 09, 21  
+**Pilot candidates:** 03 (tokenization), 09 (Q/K/V), 21 (cross-entropy)
 
 This document contains short calendar-sized explanations, not replacement lessons. The linked LLM Lab pages remain authoritative for full explanations, figures, mathematical details, and extended exercises. The examples below are deliberately bounded to what those pages and their exercise hubs support.
 
@@ -15,6 +16,192 @@ This document contains short calendar-sized explanations, not replacement lesson
 - The answer is available after the learner commits to a response; the calendar must not require an account or a custom interactive widget.
 - The primary link goes to Understand. Practice is a separate link to the dedicated exercise hub.
 - A calendar entry should take about 5–8 minutes including the active check. This is a hypothesis to test, not a measured result.
+
+---
+
+## Day 01 — What does an LLM predict?
+
+**Act:** Context and representations  
+**Activity:** conceptual check  
+**Target duration:** 6 minutes  
+**Canonical references:** next-token-prediction, conditional-distribution; computational nodes raw-text-context, logits, next-token-distribution
+
+### Français
+
+**Question**
+
+Que prédit exactement un modèle de langage autorégressif ?
+
+**Réponse courte**
+
+À partir d'un préfixe déjà fourni, le modèle calcule des scores (logits), puis une distribution de probabilité sur les tokens possibles à l'étape suivante. Cette distribution dépend du préfixe : si le contexte change, la distribution peut changer.
+
+Le modèle ne choisit pas nécessairement un token à cette étape. La sélection intervient ensuite, selon une politique de décodage (par exemple, prendre le token le plus probable ou échantillonner). Il faut donc distinguer **prédire une distribution** et **sélectionner un token**.
+
+**Exemple guidé**
+
+Après le préfixe « Le chat », imaginons la distribution jouet suivante :
+
+| Token candidat | Probabilité |
+|---|---:|
+| « dort » | 0,55 |
+| « mange » | 0,25 |
+| « court » | 0,15 |
+| Autres | 0,05 |
+
+Ces nombres sont illustratifs, pas une sortie mesurée d'un modèle réel. Le modèle attribue 0,55 à « dort », mais il ne s'agit pas encore d'une certitude ni d'un choix obligatoire.
+
+**À vous de vérifier**
+
+La distribution attribue 0,55 à « dort ». Peut-on conclure que le modèle a déjà généré ce token, ou qu'il est certain que « dort » est la bonne continuation ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le modèle a attribué une probabilité conditionnelle de 0,55 à « dort » pour le préfixe considéré. Aucun token n'a encore été sélectionné par le décodage, et cette probabilité ne garantit pas que la continuation soit vraie ou correcte.
+
+</details>
+
+**À retenir**
+
+À chaque étape autorégressive, le modèle calcule une distribution conditionnelle sur le prochain token. La génération ajoute ensuite une règle de sélection ; elle ne doit pas être confondue avec le calcul de la distribution.
+
+**Pour aller plus loin :** [Panorama : qu'est-ce qu'un LLM ?](../site/fr/llm-overview.qmd)  
+**S'exercer :** [Exercices — Panorama des LLM](../site/fr/exercises/llm-overview.qmd)
+
+### English
+
+**Question**
+
+What exactly does an autoregressive language model predict?
+
+**Short answer**
+
+Given a supplied prefix, the model computes scores (logits) and then a probability distribution over possible next tokens. This distribution is conditional on the prefix: changing the context can change the distribution.
+
+The model does not necessarily select a token at this stage. Selection happens afterward, according to a decoding policy (for example, choosing the most likely token or sampling). We must therefore distinguish **predicting a distribution** from **selecting a token**.
+
+**Worked example**
+
+After the prefix “The cat”, imagine the following toy distribution:
+
+| Candidate token | Probability |
+|---|---:|
+| “sleeps” | 0.55 |
+| “eats” | 0.25 |
+| “runs” | 0.15 |
+| Other | 0.05 |
+
+These values are illustrative, not measured output from a real model. The model assigns 0.55 to “sleeps”, but that is neither certainty nor a mandatory choice.
+
+**Check yourself**
+
+The distribution assigns 0.55 to “sleeps”. Can we conclude that the model has already generated this token, or that it is certain “sleeps” is the correct continuation?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The model assigned a conditional probability of 0.55 to “sleeps” for the given prefix. Decoding has not selected a token yet, and this probability does not guarantee that the continuation is true or correct.
+
+</details>
+
+**Takeaway**
+
+At each autoregressive step, the model computes a conditional distribution over the next token. Generation then adds a selection rule; it should not be confused with computing the distribution.
+
+**Understand more:** [Overview: what is an LLM?](../site/en/llm-overview.qmd)  
+**Practice:** [Exercises — LLM overview](../site/en/exercises/llm-overview.qmd)
+
+---
+
+## Day 02 — Context: what information does the model have?
+
+**Act:** Context and representations  
+**Activity:** trace  
+**Target duration:** 5 minutes  
+**Canonical references:** computational nodes raw-text-context, token-context
+
+### Français
+
+**Question**
+
+Quelles informations peuvent conditionner la prochaine prédiction ?
+
+**Réponse courte**
+
+À une étape donnée, le **contexte du modèle** est le préfixe de tokens qui lui est effectivement fourni. Le prochain token à prédire se trouve après ce préfixe : il n'en fait pas encore partie.
+
+Pendant une génération, le token sélectionné est ajouté au préfixe. Il devient alors une information disponible pour l'étape suivante. Le contexte est donc différent d'un texte futur que le modèle n'a pas encore reçu.
+
+Ici, « contexte » désigne l'entrée immédiate du modèle à une étape donnée. Ce n'est pas encore le sujet plus large de la construction d'un contexte applicatif (instructions, documents récupérés, mémoire, etc.).
+
+**Exemple guidé**
+
+- Préfixe fourni : « Le chat »
+- Le modèle calcule une distribution pour le token suivant.
+- Si le décodage sélectionne « dort », le nouveau préfixe devient « Le chat dort ».
+- Le modèle calcule alors une nouvelle distribution, conditionnée par ce préfixe plus long.
+
+Le second calcul ne repart pas du même contexte : le token ajouté fait désormais partie de l'entrée.
+
+**À vous de vérifier**
+
+Le préfixe fourni est « Le chat dort ». Le token « dort » est-il encore le prochain token à prédire ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. « dort » appartient déjà au préfixe fourni. Le modèle calcule une distribution pour le token qui vient après « Le chat dort ».
+
+</details>
+
+**À retenir**
+
+Le contexte est le préfixe disponible au moment du calcul. Un token futur n'en fait pas partie avant d'avoir été fourni ou réinjecté dans la séquence.
+
+**Pour aller plus loin :** [Panorama : qu'est-ce qu'un LLM ?](../site/fr/llm-overview.qmd)  
+**S'exercer :** [Exercices — Panorama des LLM](../site/fr/exercises/llm-overview.qmd)
+
+### English
+
+**Question**
+
+Which information can condition the next prediction?
+
+**Short answer**
+
+At a given step, the model's **context** is the prefix of tokens actually supplied to it. The next token to predict comes after that prefix; it is not part of the context yet.
+
+During generation, the selected token is appended to the prefix. It then becomes available information for the next step. The context is therefore different from future text that the model has not received.
+
+Here, “context” means the model's immediate input at a particular step. It is not yet the broader topic of constructing an application context (instructions, retrieved documents, memory, and so on).
+
+**Worked example**
+
+- Supplied prefix: “The cat”
+- The model computes a distribution for the next token.
+- If decoding selects “sleeps”, the new prefix becomes “The cat sleeps”.
+- The model then computes a new distribution conditioned on this longer prefix.
+
+The second computation does not use the same context: the appended token is now part of the input.
+
+**Check yourself**
+
+The supplied prefix is “The cat sleeps”. Is “sleeps” still the next token to predict?
+
+<details>
+<summary>Show the answer</summary>
+
+No. “sleeps” is already part of the supplied prefix. The model computes a distribution for the token that follows “The cat sleeps”.
+
+</details>
+
+**Takeaway**
+
+The context is the prefix available at the time of computation. A future token is not part of it until it has been supplied or fed back into the sequence.
+
+**Understand more:** [Overview: what is an LLM?](../site/en/llm-overview.qmd)  
+**Practice:** [Exercises — LLM overview](../site/en/exercises/llm-overview.qmd)
 
 ---
 
@@ -104,6 +291,289 @@ Tokenization turns a character string into an ordered sequence of discrete units
 
 **Understand more:** [From text to tokens](../site/en/text-data.qmd)  
 **Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
+
+---
+
+## Day 04 — From token to token ID
+
+**Act:** Context and representations  
+**Activity:** trace  
+**Target duration:** 5 minutes  
+**Canonical references:** concept token; computational nodes token-id-encoding, token-ids
+
+### Français
+
+**Question**
+
+Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?
+
+**Réponse courte**
+
+Après la segmentation, le tokenizer associe chaque token à une entrée de son vocabulaire et à un **identifiant entier** (token ID). Le modèle consomme cette séquence d'identifiants, pas directement les chaînes de caractères.
+
+Un identifiant est un index local au vocabulaire et à la version du tokenizer. Ce n'est ni une mesure de sens, ni un rang de fréquence, ni une quantité : deux identifiants proches numériquement ne désignent pas nécessairement des tokens proches.
+
+**Exemple guidé**
+
+Considérons un vocabulaire jouet :
+
+| Token | Identifiant |
+|---|---:|
+| « le » | 17 |
+| « chat » | 42 |
+| « dort » | 8 |
+
+Le texte « le chat dort » devient la séquence d'identifiants [17, 42, 8]. Les valeurs sont arbitraires et servent uniquement à illustrer l'indexation.
+
+Un autre tokenizer pourrait attribuer d'autres identifiants aux mêmes chaînes, ou produire une segmentation différente. Pour interpréter une séquence d'IDs, il faut donc connaître le tokenizer et son vocabulaire.
+
+**À vous de vérifier**
+
+Deux tokenizers différents attribuent l'identifiant 42 à un élément de leur vocabulaire. Peut-on en déduire qu'ils désignent le même token ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. L'identifiant 42 n'a de sens qu'à l'intérieur du vocabulaire correspondant. Dans deux vocabulaires différents, le même entier peut désigner des tokens différents.
+
+</details>
+
+**À retenir**
+
+Le token est une unité discrète ; le token ID est l'index entier qui la désigne dans un vocabulaire donné. L'identifiant sert ensuite à sélectionner une ligne de la matrice d'embeddings.
+
+**Pour aller plus loin :** [Du texte aux tokens](../site/fr/text-data.qmd)  
+**S'exercer :** [Exercices — Texte et données](../site/fr/exercises/text-data.qmd)
+
+### English
+
+**Question**
+
+How does the model retrieve the ID associated with each token?
+
+**Short answer**
+
+After segmentation, the tokenizer maps each token to a vocabulary entry and an integer **token ID**. The model consumes this sequence of IDs, not the character strings directly.
+
+An ID is local to a vocabulary and tokenizer version. It is not a measure of meaning, a frequency rank, or a quantity: numerically close IDs do not necessarily represent similar tokens.
+
+**Worked example**
+
+Consider a toy vocabulary:
+
+| Token | ID |
+|---|---:|
+| “the” | 17 |
+| “cat” | 42 |
+| “sleeps” | 8 |
+
+The text “the cat sleeps” becomes the ID sequence [17, 42, 8]. These values are arbitrary and only illustrate indexing.
+
+Another tokenizer could assign different IDs to the same strings, or produce a different segmentation. To interpret a sequence of IDs, we must know which tokenizer and vocabulary were used.
+
+**Check yourself**
+
+Two different tokenizers assign ID 42 to one of their vocabulary entries. Can we infer that they refer to the same token?
+
+<details>
+<summary>Show the answer</summary>
+
+No. ID 42 only has meaning within its corresponding vocabulary. In two different vocabularies, the same integer may refer to different tokens.
+
+</details>
+
+**Takeaway**
+
+A token is a discrete unit; a token ID is the integer index that identifies it in a given vocabulary. The ID is then used to select a row from the embedding matrix.
+
+**Understand more:** [From text to tokens](../site/en/text-data.qmd)  
+**Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
+
+---
+
+## Day 05 — An ID becomes a vector
+
+**Act:** Context and representations  
+**Activity:** numerical  
+**Target duration:** 7 minutes  
+**Canonical references:** concept token-embedding; computational nodes embedding-lookup, token-embeddings
+
+### Français
+
+**Question**
+
+Comment un identifiant discret sélectionne-t-il une représentation numérique ?
+
+**Réponse courte**
+
+Le modèle possède une matrice d'embeddings E de forme V × d, où V est la taille du vocabulaire et d la dimension des vecteurs. Pour un token ID i, le lookup sélectionne la ligne E[i].
+
+L'identifiant n'est pas transformé en vecteur par une opération arithmétique sur sa valeur. Il sert d'index pour retrouver un vecteur appris. La proximité numérique entre deux IDs ne dit donc rien sur la proximité de leurs embeddings.
+
+**Exemple guidé**
+
+Supposons une petite table jouet de dimension d = 3 :
+
+| ID | Ligne de la matrice |
+|---:|---|
+| 0 | [0.1, 0.0, -0.2] |
+| 1 | [0.3, 0.4, 0.1] |
+| 2 | [0.4, -0.1, 0.7] |
+| 3 | [-0.2, 0.5, 0.2] |
+
+L'ID 2 sélectionne le vecteur [0.4, -0.1, 0.7]. Pour une séquence de trois IDs, le lookup produit une matrice de forme 3 × d ; avec un batch, la forme usuelle devient B × T × d.
+
+Ces valeurs sont fictives. Dans un modèle entraîné, les lignes de la matrice sont des paramètres appris.
+
+**À vous de vérifier**
+
+Si l'ID passe de 2 à 3, obtient-on nécessairement un vecteur légèrement différent, comme si l'on avait ajouté 1 à une coordonnée ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. L'ID est un index, pas une coordonnée. Passer de 2 à 3 sélectionne une autre ligne de la matrice ; les deux vecteurs peuvent être proches, éloignés ou quelconques selon les paramètres appris.
+
+</details>
+
+**À retenir**
+
+Un token ID sélectionne une ligne de la matrice d'embeddings. Le vecteur est appris ; la valeur entière de l'ID n'est pas une mesure géométrique.
+
+**Pour aller plus loin :** [Des identifiants aux vecteurs : les embeddings](../site/fr/embedding-space.qmd)  
+**S'exercer :** [Exercices — Espace des embeddings](../site/fr/exercises/embedding-space.qmd)
+
+### English
+
+**Question**
+
+How does a discrete ID select a numerical representation?
+
+**Short answer**
+
+The model has an embedding matrix E with shape V × d, where V is the vocabulary size and d is the vector dimension. For a token ID i, the lookup selects row E[i].
+
+The ID is not turned into a vector by arithmetic on its numeric value. It is an index used to retrieve a learned vector. Numerical closeness between two IDs therefore says nothing about the distance between their embeddings.
+
+**Worked example**
+
+Suppose we have a small toy table with dimension d = 3:
+
+| ID | Matrix row |
+|---:|---|
+| 0 | [0.1, 0.0, -0.2] |
+| 1 | [0.3, 0.4, 0.1] |
+| 2 | [0.4, -0.1, 0.7] |
+| 3 | [-0.2, 0.5, 0.2] |
+
+ID 2 selects the vector [0.4, -0.1, 0.7]. For a sequence of three IDs, lookup produces a matrix of shape 3 × d; with a batch, the usual shape is B × T × d.
+
+These values are fictional. In a trained model, the matrix rows are learned parameters.
+
+**Check yourself**
+
+If the ID changes from 2 to 3, must the resulting vector be only slightly different, as if we had added 1 to one coordinate?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The ID is an index, not a coordinate. Changing from 2 to 3 selects a different matrix row; the two vectors may be close, far apart, or unrelated depending on the learned parameters.
+
+</details>
+
+**Takeaway**
+
+A token ID selects a row from the embedding matrix. The vector is learned; the integer value of the ID is not a geometric measurement.
+
+**Understand more:** [From IDs to vectors: embeddings](../site/en/embedding-space.qmd)  
+**Practice:** [Exercises — Embedding space](../site/en/exercises/embedding-space.qmd)
+
+---
+
+## Day 06 — Why does position matter?
+
+**Act:** Context and representations  
+**Activity:** visual  
+**Target duration:** 7 minutes  
+**Canonical references:** concept positional-encoding; computational node positional-information
+
+### Français
+
+**Question**
+
+Pourquoi les représentations doivent-elles tenir compte de l'ordre des tokens ?
+
+**Réponse courte**
+
+L'embedding initial représente l'identité du token. Il ne suffit pas, à lui seul, à indiquer sa position dans la séquence. Or l'ordre change le rôle des mots et donc le sens d'une phrase.
+
+L'information positionnelle permet au Transformer de distinguer les occurrences selon leur place. Dans un schéma additif simple, on combine embedding du token et vecteur de position. D'autres méthodes, comme les positions relatives ou RoPE, injectent cette information autrement : il ne faut pas supposer qu'une seule méthode est universelle.
+
+**Exemple guidé**
+
+Comparez :
+
+- « Le chien poursuit le chat. »
+- « Le chat poursuit le chien. »
+
+Les tokens sont les mêmes, mais leur ordre change qui poursuit qui. Les représentations doivent donc contenir une information sur la position, en plus de l'identité lexicale.
+
+**À vous de vérifier**
+
+Le même token ID apparaît à deux positions différentes. Son embedding lexical initial est-il nécessairement différent ? L'information de position utilisée par le Transformer est-elle la même ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+L'embedding lexical sélectionné par le même ID est le même pour une matrice donnée. En revanche, l'information positionnelle dépend de la position : dans un schéma additif, un vecteur de position différent est ajouté à l'entrée ; avec RoPE, la position intervient dans la transformation des requêtes et des clés. Les calculs d'attention peuvent donc différer sans que l'embedding lexical initial change.
+
+</details>
+
+**À retenir**
+
+L'identité du token et sa position sont deux informations distinctes. Le Transformer doit disposer d'un signal d'ordre, mais les méthodes qui l'encodent varient selon les architectures.
+
+**Pour aller plus loin :** [Encodage positionnel](../site/fr/positional-encoding.qmd)  
+**S'exercer :** [Exercices — Encodage positionnel](../site/fr/exercises/positional-encoding.qmd)
+
+### English
+
+**Question**
+
+Why must representations account for token order?
+
+**Short answer**
+
+The initial embedding represents token identity. By itself, it does not indicate the token's position in the sequence. Yet word order changes grammatical roles and therefore the meaning of a sentence.
+
+Positional information lets the Transformer distinguish occurrences by their place. In a simple additive scheme, the token embedding is combined with a position vector. Other methods, such as relative positions or RoPE, inject this information differently; no single method should be assumed universal.
+
+**Worked example**
+
+Compare:
+
+- “The dog chases the cat.”
+- “The cat chases the dog.”
+
+The tokens are the same, but their order changes who chases whom. Representations therefore need information about position in addition to lexical identity.
+
+**Check yourself**
+
+The same token ID appears at two different positions. Must its initial lexical embedding be different? Is the positional information used by the Transformer the same?
+
+<details>
+<summary>Show the answer</summary>
+
+The lexical embedding selected by the same ID is the same for a fixed matrix. Positional information, however, depends on position: an additive scheme adds a different position vector to the input, while RoPE applies position-dependent transformations to queries and keys. Attention computations can therefore differ even though the initial lexical embedding is unchanged.
+
+</details>
+
+**Takeaway**
+
+Token identity and position are distinct kinds of information. The Transformer needs an order signal, but the methods used to encode it vary across architectures.
+
+**Understand more:** [Positional encoding](../site/en/positional-encoding.qmd)  
+**Practice:** [Exercises — Positional encoding](../site/en/exercises/positional-encoding.qmd)
 
 ---
 
