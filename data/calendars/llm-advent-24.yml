@@ -237,7 +237,7 @@ days:
     concepts: []
     lesson_pages: [fr/transformer, en/transformer]
     computational_nodes: [block-update]
-    implementation_pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    build_pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
     practice_pages: [fr/transformer-block-walkthrough-exercises, en/transformer-block-walkthrough-exercises]
     activity: trace
     duration_minutes: 8
@@ -304,8 +304,9 @@ days:
       fr: "Comparer greedy decoding, température et échantillonnage sans les confondre avec l'apprentissage."
       en: "Compare greedy decoding, temperature, and sampling without confusing them with learning."
     concepts: [decoding-policy]
-    lesson_pages: [fr/decoding-strategies, en/decoding-strategies]
+    lesson_pages: [fr/generation, en/generation]
     computational_nodes: [decoding-policy, next-token-distribution]
+    deepening_pages: [fr/decoding-strategies, en/decoding-strategies]
     activity: visual
     duration_minutes: 7
 
@@ -354,8 +355,9 @@ days:
       fr: "Distinguer préfixe observé, token cible et réinjection teacher-forced du token observé."
       en: "Distinguish the observed prefix, target token, and teacher-forced use of the observed token."
     concepts: [observed-target, teacher-forcing, training-example]
-    lesson_pages: [fr/training-examples, en/training-examples]
+    lesson_pages: [fr/vraisemblance, en/likelihood]
     computational_nodes: [teacher-forcing, observed-prefix-context, observed-target]
+    build_pages: [fr/training-examples, en/training-examples]
     practice_pages: [fr/training-examples-exercises, en/training-examples-exercises]
     activity: trace
     duration_minutes: 8
