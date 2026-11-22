@@ -1,8 +1,10 @@
 # Registre des améliorations possibles du parcours Understand
 
-**Statut :** registre d'opportunités et cadre d'audit. Il ne constitue ni une liste de défauts tous confirmés, ni un engagement à tout implémenter.  
+**Rôle :** catalogue ponctuel de questions d'audit et d'hypothèses d'amélioration, issu de [PR #1510](https://github.com/JM-Brun/llm-lab/pull/1510) (fusionnée le 22 novembre 2026). Ce n'est ni un inventaire des défauts confirmés, ni un backlog, ni un tableau de statut.  
 **Périmètre :** parcours principal Theory / Understand, pages canoniques FR/EN, vues de découverte, métadonnées et relations vers Deepen, Practice & experiment et Build.  
-**État de référence :** dépôt consulté le 22 novembre 2026.
+**État de référence :** photographie documentaire du 22 novembre 2026 ; les statuts courants restent dans les issues et PR propriétaires.
+
+Les identifiants C01, P01, S01, etc. sont des repères stables pour discuter d'une question d'audit, pas des identifiants de tâches. Les priorités P0/P1/P2 expriment un impact potentiel à examiner, pas un ordre automatique d'exécution ni une correspondance avec les labels GitHub. Une ligne peut déjà être couverte par un audit ou un contrat existant : ne pas la réauditer sans raison ni ouvrir une issue pour chaque ligne.
 
 Ce document complète les contrats existants : [learning path](learning-path.md), [content-section mapping](content-section-mapping.md), [page metadata schema](page-metadata-schema.md), [page-template system](page-template-system.md), [reader-experience method](reader-experience-and-editorial-method.md), [page harmonization plan](page-harmonization-plan.md), [information architecture](information-architecture.md), [guided route](../data/guided-route.yml), [computational graph](../data/computational-graph.yml) et [concept registry](../data/concepts.yml). Il ne les remplace pas et ne crée aucune nouvelle source de vérité.
 
@@ -73,11 +75,11 @@ Le dépôt possède déjà une architecture pédagogique et éditoriale substant
 | Registre de concepts | data/concepts.yml avec définitions bilingues, importance, domaines et ressources | Améliorer qualité des relations, pas créer une ontologie parallèle |
 | Métadonnées de pages | Contrat LLM-LAB-PAGE-MAP v1 et vocabulaire contrôlé | Corriger valeurs et usages ; ne pas exposer les champs techniques |
 | Gabarits et archétypes | Templates souples et familles de pages existants | Converger sur une expérience cohérente sans uniformiser toutes les pages |
-| Exercices | Pages dédiées dans Practice & experiment | Maintenir la séparation explication / accumulation d'exercices |
+| Exercices | 45 pages compagnes par langue recensées dans le catalogue bilingue ; les migrations de [PR #1511](https://github.com/JM-Brun/llm-lab/pull/1511) sont fusionnées | Maintenir la séparation explication / accumulation d'exercices ; poursuivre seulement l'inventaire exhaustif restant dans [#1512](https://github.com/JM-Brun/llm-lab/issues/1512) |
 | Bilinguisme | Pages, registres et navigation FR/EN | Vérifier la parité sémantique et fonctionnelle, pas seulement la présence de fichiers |
 | Validation | Builds, liens, audits éditoriaux et vérifications rendues ciblées | Compléter par des tests d'usage et d'apprentissage |
 
-Références de cet état : learning-path.md, understand-path-overview.md, audits/understand-lesson-contracts-2026-11-20.md, content-section-mapping.md, page-metadata-schema.md et project-status.md. Ces constats sont datés : vérifier les évolutions ultérieures avant toute action.
+Références de cet état : learning-path.md, understand-path-overview.md, audits/understand-lesson-contracts-2026-11-20.md, content-section-mapping.md, page-metadata-schema.md et project-status.md. Les 45 pages compagnes et les migrations listées dans #1512 sont une photographie de la fusion de #1511 ; les contrôles du commit de fusion doivent être vérifiés séparément. Ces constats sont datés : vérifier les évolutions ultérieures avant toute action.
 
 ---
 
@@ -244,7 +246,7 @@ Le contrat existant est la référence. Ces pistes visent l'exactitude et l'expl
 
 ## 4. Priorisation consolidée
 
-Les priorités organisent l'investigation ; elles n'impliquent pas de tout réaliser.
+Les priorités organisent l'investigation ; elles n'impliquent pas de tout réaliser. Elles ne sont ni des statuts de tâches ni un engagement de livraison. Une piste P0 déjà validée par un contrat ou une preuve récente n'appelle pas une nouvelle action.
 
 ### P0 — Justesse et obstacles fondamentaux
 
@@ -335,7 +337,7 @@ Ne pas auditer toutes les pages dans une passe superficielle. Réutiliser les au
 
 Comparer guided-route.yml, learning-path.md, carte, review path, sidebar et métadonnées. Examiner chaque transition des neuf étapes et les trois usages du prédicteur. Réutiliser #130, #575, #971 et les audits de novembre.
 
-**Livrable :** tableau des transitions avec rôle, acquis, question suivante, page canonique et preuve.
+**Réutilisation :** partir de `learning-path.md`, `data/guided-route.yml`, `understand-path-overview.md` et des preuves de #584. Ne créer ou compléter un tableau que si une transition précise reste non représentée ; rattacher alors cette correction à son propriétaire existant.
 
 ### Lot 2 — Audit de fond par familles de pages
 
@@ -343,43 +345,47 @@ Traiter des groupes cohérents : entrée et texte ; représentations et position
 
 Pour chaque groupe : justesse, portée des affirmations, exemples, notations, frontières de responsabilité, contenu à préserver, liens vers exercices et approfondissements.
 
-**Livrable :** écarts confirmés et corrections proposées, pas une réécriture systématique.
+**Sortie attendue :** uniquement les écarts confirmés et corrections proposées dans l'issue propriétaire ; ne pas produire un second inventaire page par page.
 
 ### Lot 3 — Squelette, rédaction et forme
 
 Comparer ouverture, sections, exemples, figures, limites et clôtures. Évaluer densité, répétitions, méta-discours, callouts et visualisations. Vérifier rendu desktop/mobile/clavier.
 
-**Livrable :** corrections communes seulement si un motif récurrent est démontré ; sinon corrections locales.
+**Sortie attendue :** corrections communes seulement si un motif récurrent est démontré ; sinon corrections locales dans les issues propriétaires et les audits existants.
 
 ### Lot 4 — Métadonnées et graphes
 
 Auditer tags et champs, relations suggested_route / hierarchy / related, cohérence pages-concepts-domaines-nœuds computationnels, pages orphelines, liens cassés et identifiants exposés.
 
-**Livrable :** anomalies de données et corrections ciblées, sans extension de schéma par défaut.
+**Sortie attendue :** anomalies de données et corrections ciblées, sans extension de schéma par défaut ; réutiliser les validateurs et le propriétaire des métadonnées.
 
 ### Lot 5 — Exercices et validation apprenant
 
-Cartographier objectifs et exercices ; vérifier rappel, calcul, interprétation, prédiction et transfert ; exécuter le protocole de parcours complet ; distinguer observations et interprétations.
+Réutiliser l'inventaire de [#1512](https://github.com/JM-Brun/llm-lab/issues/1512) et les pages compagnes existantes. Pour le pilote novice, [#447](https://github.com/JM-Brun/llm-lab/issues/447) reste bloquée par la revue rendue et accessibilité de [#483](https://github.com/JM-Brun/llm-lab/issues/483) ; ne pas lancer de session indépendante avant cette gate. Distinguer observations, interprétations et limites de preuve.
 
-**Livrable :** compte rendu du pilote, propositions hiérarchisées et limites de preuve.
+**Sortie attendue :** compte rendu dans l'issue propriétaire ; pas de second protocole ni de catalogue d'exercices.
 
 ---
 
-## 7. Tableau de suivi
+## 7. Utilisation, rattachement et maintenance
 
-Ce tableau pilote le registre. Il ne remplace ni les issues GitHub ni les inventaires de pages.
+Ce catalogue sert à **formuler et discuter des questions**, pas à suivre leur état. Pour chaque piste examinée :
 
-| Axe | État initial | Prochaine preuve utile | Règle de décision |
-|---|---|---|---|
-| Contenu scientifique | Audits de fond et graphe computationnel existants | Vérifier transitions et contre-exemples | Corriger les erreurs ou ambiguïtés démontrées |
-| Progression | 9 étapes structurées | Parcours novice sans coaching | Ne pas réordonner sur intuition seule |
-| Squelette | Templates souples et contrats | Audit comparatif de groupes de pages | Corriger motifs récurrents, préserver exceptions utiles |
-| Forme | Design system et contrôles rendus partiels | Revue desktop/mobile/clavier | Pas d'ornement sans gain de compréhension |
-| Navigation | Carte, sidebar, review path et liens contextuels | Trajets réels FR/EN | Une fonction claire par repère |
-| Métadonnées | Schéma et registres contrôlés | Audit d'intégrité et de visibilité | Réutiliser le schéma avant extension |
-| Exercices | Pages dédiées et distinctions transversales | Couverture objectifs/exercices et pilote | Modifier seulement si manque constaté |
-| Bilinguisme | Structure FR/EN en place | Revue de parité sémantique et fonctionnelle | Même savoir, exemples adaptés si nécessaire |
-| Preuve d'apprentissage | Protocoles écrits, pilote complet à exécuter | Session réelle et compte rendu | Ne pas confondre build, lecture experte et maîtrise |
+1. retrouver d'abord l'audit, le contrat, la page ou l'issue qui en est déjà propriétaire ;
+2. vérifier si une preuve existante répond déjà à la question, en respectant son périmètre (source, scientifique, code/tests, rendu, accessibilité ou apprenant) ;
+3. si un écart concret reste confirmé, le documenter dans l'issue propriétaire et y référencer l'identifiant de piste utile ;
+4. si la piste est déjà couverte, conditionnelle ou non pertinente, ne rien créer et conserver cette décision dans le compte rendu de l'audit concerné ;
+5. ne pas maintenir ici de statut, date de fraîcheur, prochaine preuve ou avancement : GitHub reste la source du statut opérationnel.
+
+Les principaux rattachements sont :
+
+- architecture et relations entre parcours : [#130](https://github.com/JM-Brun/llm-lab/issues/130), [#575](https://github.com/JM-Brun/llm-lab/issues/575) et [#584](https://github.com/JM-Brun/llm-lab/issues/584) ;
+- convergence éditoriale et archétypes : [#280](https://github.com/JM-Brun/llm-lab/issues/280) ;
+- pages d'exercices : [#1512](https://github.com/JM-Brun/llm-lab/issues/1512) ;
+- validation rendue et accessibilité : [#483](https://github.com/JM-Brun/llm-lab/issues/483), [#988](https://github.com/JM-Brun/llm-lab/issues/988) ;
+- preuve d'apprentissage : [#447](https://github.com/JM-Brun/llm-lab/issues/447) et [#971](https://github.com/JM-Brun/llm-lab/issues/971).
+
+Cette liste oriente vers les propriétaires existants ; elle ne crée pas de sous-système de suivi. Si un propriétaire change, corriger uniquement ce renvoi. Ne pas recopier l'historique des PR ni transformer chaque ligne du catalogue en issue.
 
 ---
 
@@ -414,6 +420,6 @@ Les améliorations propres à Build, à l'ingestion des sources, aux référence
 - [Information architecture](information-architecture.md) — propriétaires canoniques et projections.
 - [Computational graph](../data/computational-graph.yml) — objets et opérations de calcul.
 - [Concept registry](../data/concepts.yml) — définitions et relations conceptuelles.
-- [#130](https://github.com/JM-Brun/llm-lab/issues/130), [#575](https://github.com/JM-Brun/llm-lab/issues/575), [#971](https://github.com/JM-Brun/llm-lab/issues/971), [#447](https://github.com/JM-Brun/llm-lab/issues/447) — coordination et validation existantes.
+- [#130](https://github.com/JM-Brun/llm-lab/issues/130), [#280](https://github.com/JM-Brun/llm-lab/issues/280), [#575](https://github.com/JM-Brun/llm-lab/issues/575), [#584](https://github.com/JM-Brun/llm-lab/issues/584), [#1512](https://github.com/JM-Brun/llm-lab/issues/1512), [#483](https://github.com/JM-Brun/llm-lab/issues/483), [#971](https://github.com/JM-Brun/llm-lab/issues/971), [#447](https://github.com/JM-Brun/llm-lab/issues/447) — propriétaires et preuves existants.
 
-**Règle de maintenance :** mettre à jour ce registre lorsqu'un audit confirme, invalide ou clôt une piste structurante. Les issues GitHub restent la source du statut opérationnel. Ne pas recopier ici l'historique détaillé des PR ni transformer chaque ligne en issue indépendante.
+**Règle de maintenance :** modifier ce catalogue seulement si une question d'audit, une distinction structurante ou un critère de décision est réellement ajouté, supprimé ou reformulé. Ne pas le mettre à jour à chaque changement de statut : consigner les constats dans l'issue ou l'audit propriétaire. Les issues GitHub restent la source du statut opérationnel. Ne pas recopier ici l'historique détaillé des PR ni transformer chaque ligne en issue indépendante.
