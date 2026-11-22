@@ -87,8 +87,8 @@ A day can use one primary format and optionally one secondary format. Do not for
 
 The proposed four acts are editorial groupings, not new curriculum stages:
 
-1. **Days 1–6 — Context and representations:** what conditions the prediction, then how text becomes numerical input.
-2. **Days 7–12 — Transformer computation:** how representations are transformed and contextualized.
+1. **Days 1–7 — Context and representations:** what conditions the prediction, then how text becomes numerical input.
+2. **Days 8–12 — Transformer computation:** how representations are transformed and contextualized.
 3. **Days 13–18 — Prediction and generation:** how logits become a distribution and how inference uses it.
 4. **Days 19–24 — Scoring and learning:** how observed targets support likelihood and loss, then how training updates parameters while evaluation measures held-out data without updates.
 
@@ -106,7 +106,7 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 | 04 | Text and representations | Vocabulary and token IDs | How does the model identify each token? |
 | 05 | Text and representations | Token embeddings | How does an ID select a vector? |
 | 06 | Text and representations | Positional information | Why does token order matter? |
-| 07 | Transformer computation | Contextualized representations | Why can the same token have different representations in different contexts? |
+| 07 | Context and representations | Contextualized representations | Why can the same token have different representations in different contexts? |
 | 08 | Transformer computation | Transformer block | What transformations happen inside a block? |
 | 09 | Transformer computation | Queries, Keys, Values | What distinct roles do Q, K, and V play? |
 | 10 | Transformer computation | Scaled dot-product attention | How do scores become a weighted combination of values? |
