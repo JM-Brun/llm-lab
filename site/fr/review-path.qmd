@@ -28,4 +28,4 @@ Choisissez une étape pour retrouver les idées à maîtriser et les réviser av
 
 {{< include ../includes/generated-lesson-contracts-fr.qmd >}}
 
-[Relier les étapes dans l’exercice de fin de parcours](exercises/training-loop.qmd#end-to-end-transfer).
+[Relier les étapes dans l’exercice de fin de parcours](exercises/exercises/training-loop.qmd#end-to-end-transfer).
