@@ -62,19 +62,19 @@ Score each dimension independently: 0 = incorrect/absent, 1 = partially correct,
 
 ### Day 03 — Tokenization
 
-**Baseline:** “If two tokenizers both output the integer ID 17, does that guarantee that the ID refers to the same token and embedding?”
+**Baseline:** “Does a tokenizer always split text into whole words? Can two tokenizers split the same character string differently?”
 
-**Transfer:** “In one fixed tokenizer and one fixed model, the same token ID occurs twice in a sequence. What is guaranteed to be the same at the embedding lookup? What may differ after the Transformer processes the two positions?”
+**Transfer:** “Two tokenizers process the string `unbelievable`. Tokenizer A returns `["un", "believable"]`; tokenizer B returns `["un", "believ", "able"]`. What differs, what remains the same, and what determines the segmentation?”
 
 **Expected reasoning:**
-- An ID is local to a tokenizer vocabulary; equal integers across different vocabularies do not establish token identity.
-- In one fixed embedding table, the same ID selects the same row/vector at lookup.
-- The final contextualized representations may differ because the positions have different surrounding context and/or positional information.
+- A token is not necessarily a whole word; it may be a word, subword, character, or byte sequence, depending on the tokenizer.
+- The original character string is the same, but the token sequences differ.
+- Segmentation depends on the tokenizer's vocabulary and rules; token boundaries are not an intrinsic property of the text alone.
 
 | Dimension | 0 | 1 | 2 |
 |---|---|---|---|
-| Token vs ID | Treats the ID as the token or as a semantic magnitude | Identifies an index but misses vocabulary locality | Distinguishes token, vocabulary-local ID, and tokenization |
-| Lookup vs contextual state | Says repeated ID guarantees identical final state | Identifies the same lookup but cannot explain later differences | Distinguishes same initial lookup from potentially different contextualized states |
+| Token vs word | Assumes every token is a complete word | Recognizes subword tokens but treats them as exceptional or incidental | Explains that tokens may be words, subwords, characters, or byte sequences |
+| Tokenizer-dependent segmentation | Assumes one canonical segmentation for a string | Notices that tokenizers may differ but cannot explain why | Explains that vocabulary and segmentation rules determine token boundaries |
 
 ### Day 09 — Query, Key, and Value
 
@@ -120,7 +120,7 @@ Use one or more codes per observed error. Add a short verbatim excerpt or faithf
 
 | Code | Misconception / reasoning failure |
 |---|---|
-| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
+| TOK-WORD-ASSUMPTION | Assumes every token corresponds to a complete readable word |\n| TOK-SEGMENTATION-INVARIANT | Assumes the same character string must yield the same token boundaries with every tokenizer |\n| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
 | TOK-CROSS-VOCAB | Assumes equal IDs across tokenizers identify the same token |
 | TOK-LOOKUP-CONTEXT | Assumes equal initial embedding lookup forces equal contextualized states |
 | QKV-ROLE-SWAP | Swaps or merges Query, Key, and Value roles |
@@ -134,7 +134,7 @@ Use one or more codes per observed error. Add a short verbatim excerpt or faithf
 | CE-ALIGNMENT | Does not identify which observed token is the target of a prediction |
 | OTHER | Record the reasoning explicitly; do not force it into an existing category |
 
-A wrong final answer is not enough to diagnose a misconception. Record the reasoning path, the point where it diverged, and whether the learner self-corrected before feedback.
+A wrong final answer is not enough to diagnose a misconception. Record the reasoning path, the point where it diverged, and whether the learner self-corrected before feedback. The ID- and embedding-related codes remain in the catalogue for a later day-4/day-5 review; they are not scored as day-3 outcomes in this pilot.
 
 ## 5. Results log — leave blank until sessions occur
 
