@@ -194,3 +194,19 @@ The comparison is about learning goals, sequence, scope, practice and evidenceâ€
 - Existing internal baseline: [Raschka/Hugging Face comparative audit](source-reviews/learning-path-comparison-2026-11-05.md), plus the peer entries and verification caveats above.
 
 **Maintenance:** recheck the primary pages when their structure changes materially. Do not treat this dated snapshot as a live syllabus; do not infer notebook execution, learner outcomes, or full source audits from README descriptions alone.
+
+
+## Advent-calendar and daily-learning formats
+
+**Checked:** 2026-11-22. These are format references for a proposed LLM Lab calendar, not additions to the canonical LLM syllabus. See the [LLM Advent Calendar design](advent-calendar-design.md) for the detailed synthesis and proposed 24-day sequence.
+
+| Project | Format | Transferable practice | Boundary |
+|---|---|---|---|
+| [Advent of Code](https://adventofcode.com/about) | Daily programming puzzles with examples and testable answers | Problem-solving, progressive challenge, worked examples and hand-checkable tests | Its official terms prohibit copying puzzle text and replicating its distinctive design; take the pedagogy, not the presentation |
+| [DFKI/RPTU AI Advent Calendar](https://www.ki-adventskalender.de/en/) | 24 doors with daily AI tasks, designed for school learners | Low-threshold daily discovery and interactive challenges without requiring programming knowledge | Different audience and broader AI scope |
+| [Advent ML](https://mlatlas.org/en/advent/) | 12 reproducible ML tasks with fixed settings and checked numerical answers | Explicit seeds, parameters, tolerances and worked solutions | A 12-task applied ML format, not a 24-day LLM conceptual progression |
+| [Santa has Everything under Control](https://www.research.unipd.it/handle/11577/3542097) | Research paper on a 24-problem control-engineering advent calendar and student feedback | Collaborative design of questions and collecting learner feedback | Different domain; use as a design/evaluation reference |
+| [LLM Daily](https://llmdaily.org/) | A growing collection of short technical lessons on LLMs | Concise technical granularity for concepts such as prefill/decode and tensor shapes | Daily lessons, not an advent calendar or an authoritative LLM Lab curriculum |
+| [The AI-dvent Calendar â€” Context Jamming](https://www.contextjamming.com/AI-dventCalendar) | 25 mixed-format entries in a visual grid, openable in any order | Visual discovery, mixed media and a plain-link index | Non-linear collection; does not provide the progressive sequence LLM Lab needs |
+
+The design should combine the problem-solving discipline of Advent of Code, the approachable daily discovery of DFKI/RPTU, the reproducibility of Advent ML, the learner-feedback perspective of the control-calendar paper, the technical granularity of LLM Daily, and the visual discovery pattern of Context Jamming. It should not become a competition or an unordered link collection. In particular, do not copy Advent of Code's text, visual identity, or distinctive calendar design.

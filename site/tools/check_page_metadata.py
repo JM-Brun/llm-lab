@@ -99,62 +99,51 @@ def _tag_map(tags: Any, where: str, errors: list[str]) -> dict[str, str]:
 
 
 def _check_self_check_coverage(
-    source: str,
-    relative: str,
-    errors: list[str],
-    *,
-    site_dir: Path,
-    related_ids: list[str],
-    is_practice_page: bool,
+    source: str, relative: str, site_dir: Path, errors: list[str]
 ) -> None:
-    """Validate same-page and companion-page self-check coverage."""
+    """Validate section-to-question coverage on a lesson or its practice companion."""
     if "<!-- self-check-coverage: enforced -->" not in source:
         return
-    check_start = source.find("::: {.self-check}")
-    if check_start < 0:
-        errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
-        return
 
-    if is_practice_page:
-        lesson_sources: list[tuple[str, str]] = []
-        for related_id in related_ids:
-            lesson_path = site_dir / f"{related_id}.qmd"
-            if not lesson_path.is_file():
-                errors.append(
-                    f"{relative}: related lesson {related_id!r} for self-check coverage "
-                    "does not exist"
-                )
-                continue
-            lesson_source = lesson_path.read_text(encoding="utf-8")
-            lesson_check_start = lesson_source.find("::: {.self-check}")
-            if lesson_check_start >= 0:
-                lesson_source = lesson_source[:lesson_check_start]
-            lesson_sources.append((related_id, lesson_source))
-        if not lesson_sources:
+    check_start = source.find("::: {.self-check}")
+    if check_start >= 0:
+        lesson_source = source[:check_start]
+        coverage_source = source[check_start:]
+    else:
+        # A lesson's self-check may live on its dedicated exercise page. Resolve
+        # the canonical lesson through the companion's page-map relationship.
+        if "type:exercise-hub" not in source:
             errors.append(
-                f"{relative}: practice-page self-check coverage needs at least one related lesson"
+                f"{relative}: self-check coverage is enforced but no self-check block exists"
             )
             return
-    else:
-        lesson_sources = [(relative, source[:check_start])]
+        related = re.search(r'^\s*related:\s*\["([^"]+)"\]', source, re.MULTILINE)
+        if related is None:
+            errors.append(f"{relative}: practice coverage has no related lesson")
+            return
+        lesson_path = site_dir / f"{related.group(1)}.qmd"
+        if not lesson_path.is_file():
+            errors.append(f"{relative}: related lesson does not exist: {related.group(1)}")
+            return
+        lesson_source = lesson_path.read_text(encoding="utf-8")
+        coverage_source = source
 
+    headings = re.findall(r"^## (.+?)\s*$", lesson_source, re.MULTILINE)
     section_ids: set[str] = set()
     unanchored: list[str] = []
-    for lesson_id, lesson_source in lesson_sources:
-        headings = re.findall(r"^## (.+?)\s*$", lesson_source, re.MULTILINE)
-        for heading in headings:
-            match = re.search(r"\s+\{#([a-z0-9-]+)\}$", heading)
-            if match:
-                section_ids.add(match.group(1))
-            else:
-                unanchored.append(f"{lesson_id}: {heading}")
+    for heading in headings:
+        match = re.search(r"\s+\{#([a-z0-9-]+)\}$", heading)
+        if match:
+            section_ids.add(match.group(1))
+        else:
+            unanchored.append(heading)
     if unanchored:
         errors.append(
             f"{relative}: major sections need explicit IDs for self-check coverage: {unanchored}"
         )
     covered_ids = {
         section_id
-        for marker in re.findall(r"<!-- self-check-covers: ([^>]+) -->", source[check_start:])
+        for marker in re.findall(r"<!-- self-check-covers: ([^>]+) -->", coverage_source)
         for section_id in marker.split()
     }
     missing = sorted(section_ids - covered_ids)
@@ -284,14 +273,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     if tags.get("status") == "planned":
         errors.append(f"{relative}.tags: a page in the Quarto render list cannot be status:planned")
 
-    _check_self_check_coverage(
-        source,
-        relative,
-        errors,
-        site_dir=site_dir,
-        related_ids=relations["related"],
-        is_practice_page=tags.get("type") == "exercise-hub",
-    )
+    _check_self_check_coverage(source, relative, site_dir, errors)
 
     return {
         "path": relative,

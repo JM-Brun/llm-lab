@@ -6,8 +6,6 @@ The aim is to learn from small, inspectable models and evidence, not to train a 
 
 **[Explore LLM Lab in French](https://jm-brun.github.io/llm-lab/) · [Explore in English](https://jm-brun.github.io/llm-lab/en/)**
 
-[Fiches de révision et cartes de rappel visuel](https://jm-brun.github.io/llm-lab/fr/review-path.html) · [Review sheets and visual recall cards](https://jm-brun.github.io/llm-lab/en/review-path.html)
-
 ## How the lab is designed
 
 - **Understand before scaling.** Follow inference through a small model before studying how its parameters learn. The guided build, pretrained-model adaptation, and cross-cutting evaluation have distinct dependencies; advanced mathematics is available when needed, not a blanket prerequisite.
@@ -17,7 +15,7 @@ The aim is to learn from small, inspectable models and evidence, not to train a 
 - **Keep the public material complete and bilingual.** French and English should preserve the same claims and qualifications. The public lab must stand on its own even when general concepts are also developed in a separate private knowledge base; no private repository is a reading or build dependency.
 - **Respect provenance and reuse.** Cite the work that supports a claim, check rights for code, data, and figures, and avoid committing secrets, raw datasets, or model weights.
 
-See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [content-section map](docs/content-section-mapping.md) for destination boundaries and page ownership, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md).
+See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [content-section map](docs/content-section-mapping.md) for destination boundaries and page ownership, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md). The proposed [LLM Advent Calendar design](docs/advent-calendar-design.md) and its [24-day editorial manifest](data/calendars/llm-advent-24.yml) document a future seasonal learning experience; neither is published or consumed by the site yet.
 
 ## Knowledge management and cross-project architecture
 

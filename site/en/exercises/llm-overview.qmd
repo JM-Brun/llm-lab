@@ -22,23 +22,18 @@ related: ["en/llm-overview"]
 tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:en", "status:published"]
 -->
 
-[← Back to the lesson: Language model overview](../llm-overview.qmd)
 
 <!-- self-check-coverage: enforced -->
+<!-- self-check-covers: what-model-predicts text-to-distribution one-computation-three-uses llm-transformer-gpt architecture-learning-use transformers-changed information-residence model-to-conversational-system choosing-an-approach -->
+[← Back to the lesson: Language model overview](../llm-overview.qmd)
 
 [Exercises and practice](../exercises.qmd).
 
-::: {.self-check}
-
-<!-- self-check-covers: architecture-learning-use -->
 1. **Does fine-tuning necessarily change the architecture?** No: it primarily updates parameters. Some methods also add modules, so distinguish the model family from the full structure of the adapted system.
-<!-- self-check-covers: information-residence choosing-an-approach -->
 2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
-<!-- self-check-covers: model-to-conversational-system -->
 3. **A model returns a structured request to call `lookup_order(order_id=42)`. Has the order system been queried yet?** No. The model has produced a request; the surrounding application must validate the arguments and permissions, execute the tool, and return its result to the model. Generating a tool call is not the same as executing it.
 4. **A chat transcript labels messages `system`, `user`, and `assistant`. Are these three Transformer layers?** No. They are roles in the message format used by the application/API. The model's architecture is a separate question, and a role label alone does not enforce a policy.
 
-<!-- self-check-covers: transformers-changed -->
 5. **A pretrained model must classify reviews as positive or negative.** It receives an instruction and three labeled examples in the prompt; no additional training is run. Which mechanism is being used? What would change if the weights were updated on a set of examples? And what if external reviews or documentation were retrieved and added to the context?
 
 <details>
@@ -48,7 +43,6 @@ The first case is **few-shot / in-context learning**: the examples condition the
 
 </details>
 
-<!-- self-check-covers: text-to-distribution -->
 6. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
 
 <details>
@@ -58,7 +52,6 @@ The initial prompt processing (f) starts with tokenizing the text (b), then the 
 
 </details>
 
-<!-- self-check-covers: what-model-predicts -->
 7. **A possible continuation receives probability 0.6. Does this establish that it is true?**
 
 <details>
@@ -68,7 +61,6 @@ No. The value 0.6 is a conditional probability assigned by the model to a contin
 
 </details>
 
-<!-- self-check-covers: one-computation-three-uses -->
 8. **Are generating, scoring an observed target, and learning three names for the same operation?**
 
 <details>
@@ -78,7 +70,6 @@ No. Generation selects a token and extends the context; scoring evaluates the pr
 
 </details>
 
-<!-- self-check-covers: llm-transformer-gpt -->
 9. **Is every large language model (LLM) necessarily a GPT?**
 
 <details>
@@ -87,8 +78,6 @@ No. Generation selects a token and extends the context; scoring evaluates the pr
 No. LLM describes a category of language models trained at scale. GPT describes a family based on a decoder-only Transformer architecture and an autoregressive objective. Other language-model configurations exist, including encoder-only and encoder-decoder models.
 
 </details>
-
-:::
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-overview.qmd) · [English](llm-overview.qmd)

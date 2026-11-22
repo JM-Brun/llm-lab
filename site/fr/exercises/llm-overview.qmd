@@ -22,23 +22,18 @@ related: ["fr/llm-overview"]
 tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-[← Retour à la leçon : Panorama des modèles de langage](../llm-overview.qmd)
 
 <!-- self-check-coverage: enforced -->
+<!-- self-check-covers: what-model-predicts text-to-distribution one-computation-three-uses llm-transformer-gpt architecture-learning-use transformers-changed information-residence model-to-conversational-system choosing-an-approach -->
+[← Retour à la leçon : Panorama des modèles de langage](../llm-overview.qmd)
 
 [Exercices et mises en pratique](../exercises.qmd).
 
-::: {.self-check}
-
-<!-- self-check-covers: architecture-learning-use -->
 1. **Le fine-tuning change-t-il nécessairement l'architecture ?** Non : il modifie d'abord les paramètres. Certaines méthodes ajoutent aussi des modules ; il faut distinguer la famille du modèle de la structure complète du système adapté.
-<!-- self-check-covers: information-residence choosing-an-approach -->
 2. **Une documentation change chaque jour : RAG ou fine-tuning ?** Le RAG peut récupérer les nouveaux documents à l'inférence sans modifier les poids. Il ne garantit toutefois ni la pertinence des documents récupérés ni la fidélité de la réponse.
-<!-- self-check-covers: model-to-conversational-system -->
 3. **Un modèle renvoie une demande structurée pour appeler `lookup_order(order_id=42)`. Le système de commande a-t-il déjà été interrogé ?** Non. Le modèle a produit une demande ; l'application qui l'entoure doit en valider les arguments et les permissions, exécuter l'outil, puis renvoyer son résultat au modèle. Produire un appel d'outil ne signifie pas l'exécuter.
 4. **Une conversation étiquette les messages `system`, `user` et `assistant`. S'agit-il de trois couches du Transformer ?** Non. Ce sont des rôles du format de message utilisé par l'application ou l'API. L'architecture du modèle est une question distincte, et une étiquette de rôle n'impose pas à elle seule une politique.
 
-<!-- self-check-covers: transformers-changed -->
 5. **Un modèle pré-entraîné doit classer des avis comme positifs ou négatifs.** On lui donne une consigne et trois exemples étiquetés dans le prompt ; aucun entraînement supplémentaire n'est lancé. Quel mécanisme est mobilisé ? Qu'est-ce qui changerait si l'on ajustait les poids sur un jeu d'exemples ? Et si l'on récupérait des avis ou une documentation externe pour les ajouter au contexte ?
    
 <details>
@@ -48,7 +43,6 @@ Le premier cas relève du **few-shot / in-context learning** : les exemples cond
 
 </details>
 
-<!-- self-check-covers: text-to-distribution -->
 6. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
 
 <details>
@@ -58,7 +52,6 @@ Le traitement initial du prompt (f) commence par la tokenisation du texte (b), p
 
 </details>
 
-<!-- self-check-covers: what-model-predicts -->
 7. **Une suite possible reçoit une probabilité de 0,6. Peut-on en conclure qu'elle est vraie ?**
 
 <details>
@@ -68,7 +61,6 @@ Non. La valeur 0,6 exprime une probabilité conditionnelle attribuée par le mod
 
 </details>
 
-<!-- self-check-covers: one-computation-three-uses -->
 8. **Générer, scorer une cible observée et apprendre sont-ils trois noms pour la même opération ?**
 
 <details>
@@ -78,7 +70,6 @@ Non. La génération sélectionne un token puis prolonge le contexte ; le scorin
 
 </details>
 
-<!-- self-check-covers: llm-transformer-gpt -->
 9. **Tout grand modèle de langage (LLM) est-il nécessairement un GPT ?**
 
 <details>
@@ -87,8 +78,6 @@ Non. La génération sélectionne un token puis prolonge le contexte ; le scorin
 Non. LLM désigne une catégorie de modèles de langage entraînés à grande échelle. GPT désigne une famille fondée sur une architecture Transformer décodeur seul et un objectif autorégressif. Il existe d'autres configurations de modèles de langage, notamment encodeur seul et encodeur-décodeur.
 
 </details>
-
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../../en/exercises/llm-overview.qmd)
