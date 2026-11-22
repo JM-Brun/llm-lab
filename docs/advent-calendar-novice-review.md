@@ -64,7 +64,7 @@ Score each dimension independently: 0 = incorrect/absent, 1 = partially correct,
 
 **Baseline:** “Does a tokenizer always split text into whole words? Can two tokenizers split the same character string differently?”
 
-**Transfer:** “Two tokenizers process the string `unbelievable`. Tokenizer A returns `["un", "believable"]`; tokenizer B returns `["un", "believ", "able"]`. What differs, what remains the same, and what determines the segmentation?”
+**Transfer:** “Suppose two toy tokenizers process the string `unbelievable` and produce these schematic outputs: A: `["un", "believable"]`; B: `["un", "believ", "able"]`. What differs, what remains the same, and what determines the segmentation? These are illustrative outputs, not claims about named production tokenizers.”
 
 **Expected reasoning:**
 - A token is not necessarily a whole word; it may be a word, subword, character, or byte sequence, depending on the tokenizer.
@@ -121,7 +121,8 @@ Use one or more codes per observed error. Add a short verbatim excerpt or faithf
 | Code | Misconception / reasoning failure |
 |---|---|
 | TOK-WORD-ASSUMPTION | Assumes every token corresponds to a complete readable word |
-| TOK-SEGMENTATION-INVARIANT | Assumes the same character string must yield the same token boundaries with every tokenizer |\n| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
+| TOK-SEGMENTATION-INVARIANT | Assumes the same character string must yield the same token boundaries with every tokenizer | | Treats token IDs as quantities of meaning, similarity, or frequency |
+| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
 | TOK-CROSS-VOCAB | Assumes equal IDs across tokenizers identify the same token |
 | TOK-LOOKUP-CONTEXT | Assumes equal initial embedding lookup forces equal contextualized states |
 | QKV-ROLE-SWAP | Swaps or merges Query, Key, and Value roles |
