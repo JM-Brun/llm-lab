@@ -214,20 +214,20 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 Let the non-zero vectors be $a=(1,2)$, $b=(2,4)$, $c=(-2,-4)$, and $d=(2,-1)$.
 
-1. Compute $\\cos(a,b)$, $\\cos(a,c)$, and $\\cos(a,d)$.
-2. Which property explains why $\\cos(a,2a)=1$?
+1. Compute $\cos(a,b)$, $\cos(a,c)$, and $\cos(a,d)$.
+2. Which property explains why $\cos(a,2a)=1$?
 3. If two embeddings have cosine similarity 1, can we conclude that they are semantically equivalent?
 
 <details>
 <summary>Show the worked solution</summary>
 
-Use $\\cos(u,v)=\\frac{u\\cdot v}{\\lVert u\\rVert\\lVert v\\rVert}$.
+Use $\cos(u,v)=\frac{u\cdot v}{\lVert u\rVert\lVert v\rVert}$.
 
-- $a\\cdot b=10$, $\\lVert a\\rVert=\\sqrt{5}$, and $\\lVert b\\rVert=2\\sqrt{5}$, so $\\cos(a,b)=1$.
-- $a\\cdot c=-10$ and $\\lVert c\\rVert=2\\sqrt{5}$, so $\\cos(a,c)=-1$.
-- $a\\cdot d=2-2=0$, so $\\cos(a,d)=0$.
+- $a\cdot b=10$, $\lVert a\rVert=\sqrt{5}$, and $\lVert b\rVert=2\sqrt{5}$, so $\cos(a,b)=1$.
+- $a\cdot c=-10$ and $\lVert c\rVert=2\sqrt{5}$, so $\cos(a,c)=-1$.
+- $a\cdot d=2-2=0$, so $\cos(a,d)=0$.
 
-Multiplying a vector by a strictly positive scalar does not change its direction: $\\cos(a,\\lambda a)=1$ for $\\lambda>0$. Cosine therefore ignores vector magnitude and measures angular alignment.
+Multiplying a vector by a strictly positive scalar does not change its direction: $\cos(a,\lambda a)=1$ for $\lambda>0$. Cosine therefore ignores vector magnitude and measures angular alignment.
 
 A cosine of 1 establishes geometric alignment, not semantic equivalence, relevance to a query, or truth. Interpretation depends on the representation, training objective, and task; vector norms may also carry information that normalization removes.
 
