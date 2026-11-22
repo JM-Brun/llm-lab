@@ -83,7 +83,6 @@ def test_flashattention_evidence_is_an_io_implementation_not_source_coding() -> 
     assert "o(n^2" in limitations
 
 
-
 def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
     concepts = _load_yaml(ROOT / "data" / "concepts.yml")
     computational = _load_yaml(ROOT / "data" / "computational-graph.yml")
@@ -117,11 +116,15 @@ def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
     shannon_item = next(
         item
         for item in shannon["items"]
-        if item["id"] == "shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem"
+        if item["id"]
+        == "shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem"
     )
     assert "§9" in shannon_item["locator"]["value"]
     assert "Theorem 9" in shannon_item["locator"]["value"]
-    assert any("finite encoded file" in limitation for limitation in shannon_item["evidence"]["limitations"])
+    assert any(
+        "finite encoded file" in limitation
+        for limitation in shannon_item["evidence"]["limitations"]
+    )
 
     rissanen_items = {item["id"].split(":")[-1]: item for item in rissanen["items"]}
     assert "pp. 150–152" in rissanen_items["probability-derived-ideal-length"]["locator"]["value"]
