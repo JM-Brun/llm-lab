@@ -529,9 +529,26 @@ async function runCase(testCase, caseIndex) {
         });
         if (fontSize < 12) throw new Error(`Mermaid labels shrink to ${fontSize.toFixed(2)}px under reduced motion.`);
 
-        const callout = page.locator("main .callout-header[data-bs-toggle='collapse']").first();
-        await callout.focus();
-        await page.keyboard.press("Shift+Tab");
+        const mathFocus = await page.evaluate(() => {
+          const callout = document.querySelector("main .callout-header[data-bs-toggle='collapse']");
+          if (!callout) return { focused: false, reason: "missing callout" };
+          const candidates = [...document.querySelectorAll("mjx-container:not([display=true])")]
+            .filter(element =>
+              element.getClientRects().length > 0 &&
+              Boolean(element.compareDocumentPosition(callout) & Node.DOCUMENT_POSITION_FOLLOWING)
+            );
+          const target = candidates.at(-1);
+          if (!target) return { focused: false, reason: "no visible inline MathJax expression before callout" };
+          target.focus();
+          return {
+            focused: document.activeElement === target && target.tabIndex >= 0,
+            tabIndex: target.tabIndex,
+            expression: (target.textContent || "").trim().slice(0, 80),
+          };
+        });
+        if (!mathFocus.focused) {
+          throw new Error("The inline MathJax expression before the callout is not keyboard-focusable: " + JSON.stringify(mathFocus));
+        }
         const help = page.locator("mjx-container:focus:not([display=true]) > mjx-help");
         await help.waitFor({ state: "visible" });
         const iconFits = await help.evaluate(element => {
@@ -541,7 +558,7 @@ async function runCase(testCase, caseIndex) {
         await page.keyboard.press("Tab");
         const pageFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
         if (!iconFits || !pageFits) throw new Error("MathJax's inline help widened the page during keyboard traversal.");
-        item.trainingAccessibility = { reducedMotion: true, mermaidLabelPx: fontSize, mathHelpFits: true };
+        item.trainingAccessibility = { reducedMotion: true, mermaidLabelPx: fontSize, mathHelpFits: true, mathFocus };
       }
     }
     if (kind === "spine-overview") {
