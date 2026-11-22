@@ -596,12 +596,12 @@ Avec un tokenizer, un vocabulaire et une matrice d'embeddings fixes, le même to
 
 **Exemple guidé**
 
-Considérons deux emplois de « situation » :
+Considérons deux emplois de « vol » :
 
-- « Elle cherche une bonne situation » — un emploi ou un poste.
-- « Il a traversé une période de bonne situation » — un état ou un ensemble de circonstances.
+- « Le pilote prépare le vol » — un trajet aérien.
+- « Le voleur prépare le vol » — un larcin.
 
-Pour isoler l'effet du contexte, supposons que le tokenizer attribue le même ID au mot et comparons une position simplifiée identique. Le lookup initial (E[i]) est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
+Le token « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial (E[i]) est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
 
 **À vous de vérifier**
 
@@ -633,12 +633,12 @@ With a fixed tokenizer, vocabulary, and embedding matrix, the same token ID sele
 
 **Guided example**
 
-Consider the two uses of “bank”:
+Consider the two uses of “bat”:
 
-- “The bank approved the loan” — a financial institution.
-- “The boat reached the bank” — the edge of a river.
+- “The player saw a bat” — sports equipment.
+- “The cave housed a bat” — an animal.
 
-To isolate the effect of context, assume the tokenizer assigns the same ID to “bank” and compare a simplified identical position. The initial lookup (E[i]) is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
+The token “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup (E[i]) is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
 
 **Check yourself**
 
