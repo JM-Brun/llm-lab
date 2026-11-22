@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes absolute and relative positional mechanisms, situates RoPE and separates positional encoding from causal masking; four answered in-page questions check order, RoPE, causal masks and extrapolation limits."
+      note: "The recap distinguishes absolute and relative positional mechanisms, situates RoPE and separates positional encoding from causal masking; the dedicated practice page checks order, RoPE, causal masks and extrapolation limits."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -116,8 +116,6 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
 
-
-[Questions and exercises](exercises/positional-encoding.qmd)
 
 ### Why is self-attention alone not enough?
 
