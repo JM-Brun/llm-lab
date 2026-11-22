@@ -6,7 +6,7 @@ The aim is to learn from small, inspectable models and evidence, not to train a 
 
 **[Explore LLM Lab in French](https://jm-brun.github.io/llm-lab/) · [Explore in English](https://jm-brun.github.io/llm-lab/en/)**
 
-[Fiches de révision et cartes visuelles](https://jm-brun.github.io/llm-lab/fr/review-path.html) · [Review sheets and visual cards](https://jm-brun.github.io/llm-lab/en/review-path.html)
+[Fiches de révision et cartes de rappel visuel](https://jm-brun.github.io/llm-lab/fr/review-path.html) · [Review sheets and visual recall cards](https://jm-brun.github.io/llm-lab/en/review-path.html)
 
 ## How the lab is designed
 
