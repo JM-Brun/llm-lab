@@ -111,19 +111,38 @@ def _check_self_check_coverage(
         coverage_source = source[check_start:]
     else:
         # A lesson's self-check may live on its dedicated exercise page. Resolve
-        # the canonical lesson through the companion's page-map relationship.
-        if "type:exercise-hub" not in source:
+        # the canonical lesson from structured page-map metadata.
+        metadata_blocks = COMMENT.findall(source)
+        if len(metadata_blocks) != 1:
+            errors.append(f"{relative}: practice coverage requires one page-map block")
+            return
+        try:
+            page_metadata = parse_yaml(metadata_blocks[0], source=f"{relative} (page map)")
+        except yaml.YAMLError as exc:
+            errors.append(f"{relative}: invalid page-map metadata for practice coverage: {exc}")
+            return
+        tags = page_metadata.get("tags", []) if isinstance(page_metadata, dict) else []
+        dimensions = {
+            key: value
+            for tag in tags
+            if isinstance(tag, str) and ":" in tag
+            for key, value in [tag.split(":", maxsplit=1)]
+        }
+        if dimensions.get("type") != "exercise-hub":
             errors.append(
                 f"{relative}: self-check coverage is enforced but no self-check block exists"
             )
             return
-        related = re.search(r'^\s*related:\s*\["([^"]+)"\]', source, re.MULTILINE)
-        if related is None:
-            errors.append(f"{relative}: practice coverage has no related lesson")
+        related = page_metadata.get("related", []) if isinstance(page_metadata, dict) else []
+        lesson_ids = [
+            item for item in related if isinstance(item, str) and item.startswith(("fr/", "en/"))
+        ]
+        if len(lesson_ids) != 1:
+            errors.append(f"{relative}: practice coverage must identify exactly one related lesson")
             return
-        lesson_path = site_dir / f"{related.group(1)}.qmd"
+        lesson_path = site_dir / f"{lesson_ids[0]}.qmd"
         if not lesson_path.is_file():
-            errors.append(f"{relative}: related lesson does not exist: {related.group(1)}")
+            errors.append(f"{relative}: related lesson does not exist: {lesson_ids[0]}")
             return
         lesson_source = lesson_path.read_text(encoding="utf-8")
         coverage_source = source

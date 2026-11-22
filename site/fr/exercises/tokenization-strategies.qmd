@@ -28,7 +28,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategi
 
 Des exercices formatifs prolongent cette page, notamment sur les fusions BPE, dans la [collection Données textuelles](../exercises.qmd#donnees-textuelles).
 
-1. Un tokenizer produit moins de tokens qu'un autre sur le même texte. Cela prouve-t-il qu'il est meilleur ?
+1. Deux tokenizers produisent des nombres de tokens différents sur le même texte. Quelles observations et mesures faudrait-il comparer avant de conclure que l'un donne un meilleur modèle en aval ?
 
 <details>
 <summary>Afficher la réponse</summary>
@@ -54,6 +54,18 @@ Non. Le tokenizer a son propre apprentissage (règles de fusion, vocabulaire, no
 Oui en général : un identifiant n'a de sens que relativement au vocabulaire du tokenizer qui l'a produit. Sauf tokenizer ou révision identiques, le même entier peut correspondre à des fragments différents ; les identifiants ne se transfèrent pas tels quels entre modèles.
 
 </details>
+
+## Expérimenter : comparer plusieurs tokenizers
+
+Encodez le même texte — « C'est une bonne situation, ça, scribe ? » — avec au moins deux tokenizers. Si possible, choisissez des familles ou des vocabulaires différents.
+
+Pour chaque tokenizer, relevez :
+
+- les fragments exacts produits et leurs identifiants ;
+- le nombre total de tokens et les effets de la normalisation ou des tokens spéciaux ;
+- les différences de segmentation sur les mots rares, les accents, la ponctuation et les espaces.
+
+Interprétez les résultats sans confondre longueur de séquence, compression, adéquation linguistique et qualité du modèle en aval. Une comparaison de tokenizers ne permet pas, à elle seule, d'attribuer une différence de qualité au tokenizer : il faut contrôler le modèle, les données, la tâche et le protocole d'évaluation.
 
 Vous avez compris cette étape si vous pouvez distinguer l'entraînement du tokenizer de l'encodage à l'inférence, et expliquer pourquoi les identifiants dépendent du vocabulaire et de sa version.
 
