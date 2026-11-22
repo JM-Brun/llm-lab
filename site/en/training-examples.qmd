@@ -259,6 +259,10 @@ This page explains core mechanisms without prescribing a universal strategy for 
 **Language:** [Français](../fr/training-examples.qmd) · [English](training-examples.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/training-examples.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -277,9 +281,8 @@ This page explains core mechanisms without prescribing a universal strategy for 
 
 To revisit the input stage, see [From text to tokens](text-data.qmd). To continue the conceptual course, see [cross-entropy](cross-entropy.qmd) and [the Transformer](transformer.qmd). The [tensor](tensors.qmd) and [mathematical training-chain](mathematical-foundations.qmd) pages are supporting references, not prerequisites to master before moving on.
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/training-examples.qmd).
+
 
 </div>
 </details>

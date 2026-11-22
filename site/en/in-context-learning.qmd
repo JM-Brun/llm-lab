@@ -142,6 +142,10 @@ ICL describes the model's behavior in response to information in its prompt. **C
 **Language:** [Français](../fr/in-context-learning.qmd) · [English](in-context-learning.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/in-context-learning.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -151,9 +155,8 @@ ICL describes the model's behavior in response to information in its prompt. **C
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/in-context-learning.qmd).
+
 
 ### References
 

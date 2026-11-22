@@ -1,7 +1,7 @@
 ---
 title: "Des identifiants aux vecteurs : les embeddings"
-subtitle: "Lire une ligne de la table pour chaque occurrence de token"
-description-meta: "Suit une séquence d’identifiants jusqu’aux vecteurs lus dans la matrice de plongements."
+subtitle: "Comment un ID sélectionne une ligne apprise — et pourquoi cette ligne n'est pas une coordonnée"
+description-meta: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
-summary: "Suit une séquence d’identifiants jusqu’aux vecteurs lus dans la matrice de plongements."
-scope: "Montre comment les IDs d’une séquence indexent les lignes apprises de la matrice de plongements."
-purpose: "Pour une séquence d’IDs, retrouver les lignes lues dans l’ordre, distinguer le rang de l’ID et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs."
+summary: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
+scope: "Montre comment un ID indexe une ligne apprise de la matrice de plongements."
+purpose: "Pour un ID donné, retrouver la ligne du plongement initial et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"
@@ -23,19 +23,18 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue l’ID, le vecteur lu et les états contextualisés. L’exemple donne les quatre lectures de ligne et leur forme, puis l’exercice vérifie l’effet d’une renumérotation du vocabulaire."
+      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées et l'exploration guidée renforcent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-fr-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-Après la tokenisation, le modèle reçoit une séquence d’**IDs entiers**. Pour chaque ID, il lit un vecteur dans sa **matrice de plongements** (*embedding matrix*). Cet accès s’appelle le **lookup**. Les valeurs de la table sont ajustées pendant l’entraînement.
+Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaque ID permet de retrouver un vecteur appris dans une table de paramètres : la **matrice de plongements** (*embedding matrix*). Cet accès à la table s’appelle le **lookup**.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
-
 - expliquer comment un Token ID sélectionne une ligne de la matrice de plongements ;
 - distinguer l'adresse de ligne du vecteur qui occupe cette ligne ;
 - expliquer pourquoi deux occurrences du même ID partagent le même vecteur initial, mais peuvent ensuite avoir des états contextualisés différents.
@@ -60,14 +59,7 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 
 La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 
-Pour calculer à la main, passons du préfixe GPT-2 au [tokenizer et à la table jouets de l’exercice](exercises/text-data.qmd#ex-text-to-embedding-lookup). Les rangs $t$ et les lignes de $E$ sont numérotés à partir de zéro.
-
-| Rang $t$ | 0 | 1 | 2 | 3 |
-|---|---:|---:|---:|---:|
-| ID $i_t$ dans la séquence | 17 | 42 | 8 | 17 |
-| Ligne lue dans $E$ | 17 | 42 | 8 | 17 |
-
-Le modèle empile les quatre vecteurs dans cet ordre. La sortie a **quatre lignes et $d$ colonnes**, une ligne par occurrence. Aux rangs 0 et 3, `chat` porte le même ID et le modèle lit deux fois le même vecteur $E_{17,:}$.
+Pour calculer les lignes et les vecteurs à la main, remplaçons la sortie GPT-2 du préfixe par la séquence jouet `[17, 42, 8, 17]`. Dans l’[exercice sur le lookup](exercises/text-data.qmd#ex-text-to-embedding-lookup), le tokenizer jouet associe le token `chat` à l’ID 17 aux positions 0 et 3. Le modèle lit deux fois la ligne $E_{17,:}$. Cette ligne contient un vecteur. Les positions 0 et 3 indiquent où chaque occurrence se trouve dans la séquence.
 
 ![Du préfixe au vecteur : l'ID sélectionne une ligne de la matrice, puis le vecteur de cette ligne peut être représenté comme un point dans l'espace.](../images/embedding-lookup-fr.svg){fig-alt="Le préfixe est découpé en tokens. Un token reçoit un ID i, utilisé comme indice ou adresse de ligne pour sélectionner la ligne i de la matrice E. Cette ligne contient un vecteur de d nombres, représentable comme un point dans l'espace de plongement. L'adresse de ligne et le point sont deux objets différents." fig-cap="Le Token ID sert à retrouver une ligne dans la table ; le vecteur contenu dans cette ligne est l'objet représenté dans l'espace vectoriel." width=100%}
 
@@ -88,10 +80,10 @@ $$
 E \in \mathbb{R}^{V \times d}
 $$
 
-Au rang $t$, le lookup sélectionne la ligne indiquée par l’ID $i_t$ :
+Pour un ID $i$, le lookup sélectionne la ligne correspondante :
 
 $$
-\mathbf{x}_t = E_{i_t,:} \in \mathbb{R}^{d}
+\mathbf{x}_i = E_{i,:} \in \mathbb{R}^{d}
 $$
 
 - $V$ est la taille du vocabulaire du tokenizer associé au modèle.
@@ -112,7 +104,7 @@ Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans
 
 [Exercices sur les plongements](exercises/embedding-space.qmd).
 
-Dans la table jouet, les deux occurrences de `chat` partagent le plongement $(2,-1)$. Comment leurs rangs 0 et 3 modifient-ils l’entrée du premier bloc dans le cas additif ? La [leçon sur la position](positional-encoding.qmd) reprend ces deux occurrences. Les blocs Transformer intègrent ensuite les informations du préfixe accessible pour produire des [représentations contextualisées](contextualized-representations.qmd).
+Ces deux occurrences lisent le même vecteur. L’[encodage positionnel](positional-encoding.qmd) explique comment leur rang intervient dans le calcul. Les blocs Transformer intègrent les informations du préfixe accessible pour produire des [représentations contextualisées](contextualized-representations.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-embedding-space.qmd >}}
 

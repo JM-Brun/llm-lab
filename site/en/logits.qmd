@@ -121,6 +121,10 @@ Converting scores into a probability distribution is a separate operation. It is
 [Français](../fr/logits.qmd) · [English](logits.qmd)
 ::::
 
+## Practice
+
+[Compare the two softmax axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) or explore the [other practice questions](exercises/logits.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -130,9 +134,8 @@ Converting scores into a probability distribution is a separate operation. It is
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-[Compare the two softmax axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) or explore the [other practice questions](exercises/logits.qmd).
+
 
 ### In an LLM
 

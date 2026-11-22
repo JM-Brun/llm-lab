@@ -112,6 +112,10 @@ For the position of these methods in the history of assistant models, see [LLM e
 [Français](../fr/post-training.qmd) · [English](post-training.qmd)
 ::::
 
+## Practice
+
+Check the distinctions between SFT, RLHF, DPO, LoRA and retrieval on the [dedicated post-training exercise page](exercises/post-training.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -119,9 +123,8 @@ For the position of these methods in the history of assistant models, see [LLM e
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-Check the distinctions between SFT, RLHF, DPO, LoRA and retrieval on the [dedicated post-training exercise page](exercises/post-training.qmd).
+
 
 ### Further reading
 

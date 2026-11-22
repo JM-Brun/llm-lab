@@ -162,6 +162,10 @@ The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -173,7 +177,7 @@ The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
+
 
 The [next attention exercises](exercises-attention.qmd#ex-attention-predict-projection-change) cover the effects of projection changes, how projections are learned, and transfer to cross-attention and GQA/MQA.
 

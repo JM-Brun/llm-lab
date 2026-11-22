@@ -11,19 +11,19 @@ LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
 summary: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 scope: "Explains where token order enters, with an absolute signal at the input and a relative signal in attention comparisons."
-purpose: "Predict what changes when two tokens swap places and locate positional information in the mechanisms shown."
+purpose: "Predict what changes when two tokens swap places and locate positional information in both mechanisms."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
 hierarchy:
   parents: ["en/embedding-space"]
   children: ["en/contextualized-representations", "en/rope", "en/sinusoidal-positional-encoding"]
-related: ["en/transformer"]
+related: ["en/transformer", "en/positional-encoding-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes additive and relative mechanisms from causal visibility. Comparing B in the middle tests lookup, content attention, and masking; the exercise with B last checks the scope of that result."
+      note: "The recap distinguishes absolute and relative positional mechanisms, situates RoPE and separates positional encoding from causal masking; the dedicated practice page checks order, RoPE, causal masks and extrapolation limits."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -41,32 +41,35 @@ When used, the causal mask indicates which positions may be attended to (`j ≤ 
 
 In “What have the Romans ever done for us?”, token order is part of the input. As generation adds “They built roads between distant towns.”, each new token takes its own position in the growing sequence.
 
-### Follow B when the order changes {#position-permutation}
-
-Consider two already tokenized sequences, \`ABC\` and \`CBA\`. B keeps the same ID and the same middle position. We swap occurrences in the sequence and keep the vocabulary IDs fixed. Compare B’s output in three computations, with fixed parameters.
-
-| Computation | Result for B |
-|---|---|
-| Embedding lookup | B retrieves the same vector, since its ID is the same. |
-| One layer of content-only self-attention, with no positional mechanism or mask | B can attend to the same three tokens. Swapping A and C reorders the contributions without changing their aggregation for B. |
-| The same layer with only a causal mask | B sees \`AB\` in one case and \`CB\` in the other. Its output can change because the set of visible tokens changes. |
-
-In the second case, permuting the inputs permutes the outputs in the same way. This is **permutation equivariance**. The causal mask breaks this symmetry by making visibility depend on position. A query at position $t$ can see positions $s \le t$. Explicit encodings can also supply a position or an offset.
-
-
-
 ## Two families, with several mechanisms
 
-An **additive absolute encoding** uses a token’s position. A **relative** mechanism makes attention sensitive to the offset between two positions. Before comparing positions, attention computes queries (Q), keys (K), and values (V) from the states. A query is compared with the keys to determine weights, which are then used to combine the values.
+- **Absolute encoding added to the vector:** add a position-specific vector to the token representation. The original Transformer used sinusoidal encodings; other models learn positional embeddings.
+- **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
+- **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
-| Mechanism | Where position acts |
-|---|---|
-| Additive absolute encoding | Adds a vector to the embedding before the first block. The original Transformer used sinusoidal vectors; other models learn them. |
-| [RoPE](rope.qmd) | Rotates Q and K after projection according to their respective positions. For fixed Q and K before rotation, their dot product depends on the **relative offset**. The rotation is not applied directly to V. |
-| Relative bias | Adds a term based on the offset to attention scores before softmax. Other variants use relative representations. |
+The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint.
 
-The causal mask determines which keys can contribute regardless of the positional mechanism. See the lessons on [Q/K/V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd) for these distinct operations.
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Two common ways to inject positional information"}
+::: {.meta-flow__source}
+<strong>Token embeddings</strong><span>Content vectors before positional handling</span>
+:::
+::: {.meta-flow__source .meta-flow__branch--active}
+<strong>Positional handling</strong><span>The mechanism depends on the architecture</span>
+:::
+::: {.meta-flow__comparison}
+::: {.meta-flow__comparison-item}
+<strong>Absolute encoding</strong><small>Add a position vector to the embedding, then compute Q/K/V</small>
+:::
+::: {.meta-flow__comparison-item}
+<strong>RoPE</strong><small>Project Q/K, then rotate them according to position; RoPE does not rotate V</small>
+:::
+:::
+::: {.meta-flow__result}
+<strong>Position-aware attention scores</strong> · [Q/K/V projections](queries-keys-values.qmd)
+:::
+::::
 
+In the additive exercise, the toy table gives both occurrences of `cat` the same embedding $(2,-1)$. The vector added at each occurrence depends on its position. [Compute the two first-block inputs](exercises/text-data.qmd#ex-token-to-block-input).
 
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
@@ -92,13 +95,17 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 
 ## Where does this step sit in the route?
 
-The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access. Questions and worked exercises are collected on the [dedicated practice page](exercises/positional-encoding.qmd).
+The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access.
 
 {{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
 :::
+
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
 
 :::: {.supplementary-resources}
 
@@ -109,9 +116,8 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
+
 
 
 ### Why is self-attention alone not enough?

@@ -255,6 +255,10 @@ Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/
 [Français](generation.qmd) · [English](../en/generation.qmd)
 :::
 
+## Exercices
+
+[Vérifier sa compréhension de la leçon](exercises/generation.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -267,9 +271,8 @@ Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/
 - [Hugging Face — Derrière le pipeline](https://huggingface.co/learn/llm-course/en/chapter2/2) : suivre les étapes qui relient l'API de haut niveau aux composants du modèle.
 - [Hugging Face — Déploiement et inférence optimisée](https://huggingface.co/learn/llm-course/en/chapter2/7) : prolongement pratique sur l'exécution des modèles.
 
-### Exercices
 
-[Vérifier sa compréhension de la leçon](exercises/generation.qmd).
+
 
 </div>
 </details>

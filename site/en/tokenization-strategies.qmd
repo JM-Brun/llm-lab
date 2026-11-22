@@ -286,6 +286,10 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -293,9 +297,8 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
+
 
 </div>
 </details>

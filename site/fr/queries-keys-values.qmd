@@ -162,6 +162,10 @@ La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -173,7 +177,7 @@ La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
+
 
 La [suite des exercices d’attention](exercises-attention.qmd#ex-attention-predict-projection-change) porte sur l’effet d’une modification des projections, leur apprentissage et le transfert vers l’attention croisée et GQA/MQA.
 

@@ -871,11 +871,23 @@ def render_stage_badge(membership: GuidedRouteMembership, language: str) -> str:
 
 
 def render_membership_position(membership: GuidedRouteMembership, language: str) -> str:
-    """Add the page rank when the stage contains multiple core pages."""
-    if membership.page_index is None or membership.page_count is None or membership.page_count < 2:
+    """Say where a core page sits: stage out of stages, page out of the stage's pages.
+
+    An optional resource has no rank, and its stage number is already in the
+    stage cue, so it gets no position text.
+    """
+    if (
+        membership.stage_count is None
+        or membership.page_index is None
+        or membership.page_count is None
+    ):
         return ""
     of = "sur" if language == "fr" else "of"
-    return f"Page {membership.page_index} {of} {membership.page_count}"
+    stage_word = "Étape" if language == "fr" else "Stage"
+    return (
+        f"{stage_word} {membership.stage_index} {of} {membership.stage_count}"
+        f" · page {membership.page_index} {of} {membership.page_count}"
+    )
 
 
 def render_guided_page_context_markdown(
