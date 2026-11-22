@@ -120,7 +120,8 @@ Use one or more codes per observed error. Add a short verbatim excerpt or faithf
 
 | Code | Misconception / reasoning failure |
 |---|---|
-| TOK-WORD-ASSUMPTION | Assumes every token corresponds to a complete readable word |\n| TOK-SEGMENTATION-INVARIANT | Assumes the same character string must yield the same token boundaries with every tokenizer |\n| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
+| TOK-WORD-ASSUMPTION | Assumes every token corresponds to a complete readable word |
+| TOK-SEGMENTATION-INVARIANT | Assumes the same character string must yield the same token boundaries with every tokenizer |\n| TOK-ID-MEANING | Treats token IDs as quantities of meaning, similarity, or frequency |
 | TOK-CROSS-VOCAB | Assumes equal IDs across tokenizers identify the same token |
 | TOK-LOOKUP-CONTEXT | Assumes equal initial embedding lookup forces equal contextualized states |
 | QKV-ROLE-SWAP | Swaps or merges Query, Key, and Value roles |
