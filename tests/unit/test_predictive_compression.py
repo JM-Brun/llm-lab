@@ -82,3 +82,16 @@ def test_kraft_sum_rejects_non_binary_or_empty_codewords() -> None:
             pass
         else:
             raise AssertionError(f"Invalid codewords were accepted: {invalid}")
+
+
+
+def test_predictive_coder_cli_reports_finite_code_and_exact_round_trip(capsys) -> None:
+    root = Path(__file__).resolve().parents[2]
+    module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
+
+    module["main"]()
+
+    output = capsys.readouterr().out
+    assert "Ideal model cost: 19.642 bits" in output
+    assert "Actual code:      21 bits" in output
+    assert "Decoded exactly:  True" in output
