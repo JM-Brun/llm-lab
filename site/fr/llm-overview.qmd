@@ -181,46 +181,8 @@ Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir
 
 [Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
 
-::: {.self-check}
 [Questions et exercices associés au panorama](exercises/llm-overview.qmd).
 
-<!-- self-check-coverage: enforced -->
-<!-- self-check-covers: what-model-predicts -->
-1. **Probabilité 0,6 : la suite est-elle vraie ?**
-<details><summary>Réponse</summary>Non : c'est une probabilité conditionnelle, pas une preuve de vérité.</details>
-
-<!-- self-check-covers: text-to-distribution -->
-2. **Que fait-on après avoir choisi un token ? Dans cette boucle, peut-on produire les nouveaux tokens en parallèle ?**
-<details><summary>Réponse</summary>On ajoute le token au contexte et on recalcule. Chaque tour dépend des tokens choisis aux tours précédents, donc les nouveaux tokens sont produits successivement.</details>
-
-<!-- self-check-covers: one-computation-three-uses -->
-3. **Générer, scorer et apprendre sont-ils identiques ?**
-<details><summary>Réponse</summary>Non : seul l'apprentissage modifie les paramètres.</details>
-
-<!-- self-check-covers: llm-transformer-gpt -->
-4. **Tout LLM est-il un GPT ?**
-<details><summary>Réponse</summary>Non : LLM est une catégorie, GPT une famille de modèles Transformer.</details>
-
-<!-- self-check-covers: architecture-learning-use -->
-5. **Le fine-tuning change-t-il l'architecture ?**
-<details><summary>Réponse</summary>Non : il adapte les paramètres.</details>
-
-<!-- self-check-covers: transformers-changed -->
-6. **Un GPT pré-entraîné doit classer des avis comme positifs ou négatifs. Il reçoit une consigne et trois exemples étiquetés. Que peut-il réutiliser du pré-entraînement, et comment évaluer ses prédictions ?**
-<details><summary>Réponse</summary>Il peut réutiliser des régularités et des représentations acquises pendant le pré-entraînement. Les exemples précisent la tâche à paramètres fixes. Pour évaluer la classification, comparez les prédictions aux étiquettes d’avis tenus à l’écart du prompt.</details>
-
-<!-- self-check-covers: information-residence -->
-7. **Un document récupéré par RAG est-il dans les paramètres ?**
-<details><summary>Réponse</summary>Non : il reste externe et doit être transmis.</details>
-
-<!-- self-check-covers: model-to-conversational-system -->
-8. **Une demande d'outil est-elle déjà exécutée ?**
-<details><summary>Réponse</summary>Non : l'application doit l'exécuter et renvoyer le résultat.</details>
-
-<!-- self-check-covers: choosing-an-approach -->
-9. **Une documentation change souvent : faut-il réentraîner ?**
-<details><summary>Réponse</summary>Pas nécessairement : un RAG peut récupérer la source actualisée.</details>
-:::
 
 ::: {.callout-tip title="Pour approfondir"}
 - **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).
