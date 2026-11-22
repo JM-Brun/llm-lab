@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel et quatre questions corrigées vérifient le cas one-hot, l'alignement logits[t] avec cible[t+1], la séparation masque causal/masque de loss et le dénominateur des seules positions valides."
+      note: "Le rappel présente le cas one-hot, l'alignement logits[t] avec cible[t+1], la séparation masque causal/masque de loss et le dénominateur des seules positions valides."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -133,8 +133,6 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 
 
-
-[Questions et exercices](exercises/cross-entropy.qmd)
 
 {{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
 
