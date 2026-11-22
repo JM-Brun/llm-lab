@@ -90,12 +90,12 @@ Use the existing four-token running example from **Logits**, **Probabilities** a
 
 Given the illustrative distribution:
 
-| Candidate | Probability |
-|---|---:|
-| A | 0.6 |
-| B | 0.2 |
-| C | 0.1 |
-| D | 0.1 |
+| Symbol | Français | English | Probability |
+|---|---|---|---:|
+| A | « Vous » | “They” | 0.6 |
+| B | « Je » | “Aqueducts” | 0.2 |
+| C | « Moi » | “Nothing” | 0.1 |
+| D | « Oui » | “Well” | 0.1 |
 
 Ask:
 
@@ -163,6 +163,8 @@ Then ask:
 - What would you change about the route?
 
 Finish by asking the learner to distinguish the main Understand route from optional Deepen material, Practice exercises and the separate Build route.
+
+**Optional extension, only if the core tasks are complete:** ask what temperature changes in the distribution and how top-k/top-p restrict candidate tokens. Use the existing generation exercises or Deepen page. Do not score this as a prerequisite for understanding the shared predictor, and do not let it displace the scoring/training tasks.
 
 ## Observation record
 
