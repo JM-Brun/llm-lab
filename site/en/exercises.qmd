@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 37 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 39 per-lesson practice pages"}
 
 ### Understand / Comprendre
 
@@ -67,10 +67,15 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 - [Sinusoidal positional encoding](exercises/sinusoidal-positional-encoding.qmd)
 - [Hybrid LLM architectures](exercises/hybrid-llm-architectures.qmd)
 - [Tokenization strategies](exercises/tokenization-strategies.qmd)
+- [Unicode, UTF-8, and normalization](exercises/unicode-text.qmd)
 - [In-context learning](exercises/in-context-learning.qmd)
 - [LLM computational complexity](exercises/llm-computational-complexity.qmd)
 - [Emergence](exercises/emergence.qmd)
 - [LLM evolution](exercises/llm-evolution.qmd)
+
+### Mathematical tools and geometry
+
+- [Embedding deep dive](exercises/embeddings-deep-dive.qmd)
 
 :::
 
