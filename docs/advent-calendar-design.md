@@ -20,7 +20,7 @@ The calendar is a reader-facing editorial projection of canonical project knowle
 | Concern | Canonical owner | Calendar responsibility |
 |---|---|---|
 | Scientific concepts and bilingual definitions | `data/concepts.yml` | Reference stable concept IDs |
-| Concept relations | `data/concept-graph.yml` (where applicable) | Do not redefine or flatten relations |
+| Concept definitions and semantic relations | `data/concepts.yml` | Reference stable concept IDs; do not redefine or flatten relations |
 | Computational operations and dataflow | `data/computational-graph.yml` and [canonical computational spine](canonical-computational-spine.md) | Respect the shared prediction mechanism and its typed branches |
 | Theory / Understand progression | `data/guided-route.yml` and [learning path](learning-path.md) | Select and compress a coherent subset; do not create prerequisite edges |
 | Build implementation dependencies | Build route and implementation documentation | Link only where a hands-on implementation adds value |
