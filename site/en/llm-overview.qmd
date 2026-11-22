@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap presents the next-token distribution and distinguishes generation, scoring and training; the self-check and six Practice questions cover the main orientation concepts."
+      note: "The recap presents the next-token distribution and distinguishes generation, scoring and training; the comprehension questions and exercises are collected on the [dedicated practice page](exercises/llm-overview.qmd), complementing the recap without duplicating the main learning path."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
