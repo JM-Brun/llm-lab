@@ -2,7 +2,7 @@
 title: "Exercises — Sinusoidal positional encoding"
 subtitle: "Questions, exercises, and worked answers"
 description-meta: "Questions and answer sketches associated with sinusoidal positional encoding."
-keywords: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:deepening", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/sinusoidal-positional-encoding"]
-tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:deepening", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Sinusoidal positional encoding](../sinusoidal-positional-encoding.qmd)
