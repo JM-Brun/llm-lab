@@ -119,7 +119,7 @@ Le principe de **longueur minimale de description (MDL)** cherche un compromis e
 
 L'expérience [forward/reverse et coût de description du modèle](https://github.com/JM-Brun/llm-lab/blob/main/experiments/forward-reverse-compression/README.md) illustre ce compromis sur des données synthétiques. Son coût paramétrique fixe est une convention pédagogique explicite, pas un code universel optimal.
 
-**Question de contrôle :** pourquoi un modèle qui prédit presque parfaitement les données d'entraînement peut-il perdre face à un modèle moins précis, une fois le coût de description du modèle inclus ?
+[Question de contrôle sur le coût de description](exercises/compression-revision.qmd).
 
 
 ## 3. Ne pas confondre les budgets
