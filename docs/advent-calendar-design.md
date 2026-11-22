@@ -87,10 +87,10 @@ A day can use one primary format and optionally one secondary format. Do not for
 
 The proposed four acts are editorial groupings, not new curriculum stages:
 
-1. **Days 1–6 — Text and representations:** what the model receives and how it becomes numerical input.
+1. **Days 1–6 — Context and representations:** what conditions the prediction, then how text becomes numerical input.
 2. **Days 7–12 — Transformer computation:** how representations are transformed and contextualized.
 3. **Days 13–18 — Prediction and generation:** how logits become a distribution and how inference uses it.
-4. **Days 19–24 — Scoring and learning:** how observed targets support likelihood, loss, gradients, and parameter updates.
+4. **Days 19–24 — Scoring and learning:** how observed targets support likelihood and loss, then how training updates parameters while evaluation measures held-out data without updates.
 
 The progression should be checked against actual conceptual dependencies. A topic must not appear early merely because it is popular or easy to illustrate.
 
@@ -135,7 +135,7 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 - Day 18 must distinguish prefill from autoregressive decode and explain KV cache as an optional inference optimization, not a new prediction mechanism.
 - Day 19 must distinguish the observed prefix/target shift from generation feedback. Teacher forcing is a context policy for scoring/training, not a separate forward mechanism.
 - Days 20–22 must distinguish sequence likelihood, log-likelihood, per-token NLL/cross-entropy, and the reduction/masking used to form an objective.
-- Days 23–24 must distinguish gradients from optimizer updates.
+- Days 23–24 must distinguish gradients from optimizer updates. Day 24 must also show held-out evaluation as a sibling use of the prediction/scoring mechanism: it measures loss with fixed parameters and must not be drawn as a mandatory step after the optimizer update.
 - The current NumPy implementation and project status must be represented honestly: documentation of training concepts does not imply a complete trained-model pipeline or demonstrated language quality.
 
 ## 5. Daily content template
