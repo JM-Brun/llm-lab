@@ -170,6 +170,7 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 - Day 19 must distinguish the observed prefix/target shift from generation feedback. Teacher forcing is a context policy for scoring/training, not a separate forward mechanism.
 - Days 20–22 must distinguish sequence likelihood, log-likelihood, per-token NLL/cross-entropy, and the reduction/masking used to form an objective.
 - Days 23–24 must distinguish gradients from optimizer updates. Day 24 must also show held-out evaluation as a sibling measurement of the current model: it uses fixed parameters and must not be drawn as a mandatory step after the optimizer update.
+- Day 24 should use the training-loop lesson to explain validation at fixed parameters. Do not present the existing `experimental-evaluation` exercise as a canonical LLM-evaluation lesson: it is a transfer exercise for a scientific-passage ranker, not an LLM benchmark or a report on a locally trained GPT.
 - The current NumPy implementation and project status must be represented honestly: documentation of training concepts does not imply a complete trained-model pipeline or demonstrated language quality.
 
 ## 5. Daily content template
