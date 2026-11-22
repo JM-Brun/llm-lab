@@ -18,12 +18,12 @@ calendar:
 
 acts:
   - id: context-to-representations
-    day_range: [1, 6]
+    day_range: [1, 7]
     title:
       fr: "Du contexte aux représentations"
       en: "From context to representations"
   - id: transformer-computation
-    day_range: [7, 12]
+    day_range: [8, 12]
     title:
       fr: "Le calcul du Transformer"
       en: "Transformer computation"
@@ -141,7 +141,7 @@ days:
 
   - day: 7
     id: contextualized-representations
-    act: transformer-computation
+    act: context-to-representations
     title: {fr: "Un token, plusieurs représentations", en: "One token, multiple representations"}
     question:
       fr: "Pourquoi deux occurrences du même token peuvent-elles avoir des représentations différentes ?"
