@@ -108,6 +108,8 @@ Georgia Tech's **[Transformer Explainer](https://poloclub.github.io/transformer-
 
 [Open Transformer Explainer in a new tab](https://poloclub.github.io/transformer-explainer/) if the embed does not display, or if you prefer the full window.
 
+On a phone, choose a preset from **Examples**. Entering a custom prompt requires the model to finish loading on desktop. To isolate the effect of temperature at fixed scores, you can also use the [LLM Lab temperature explorer](probabilities.qmd#temp-explorer-en).
+
 ### A guided experiment in four observations
 
 1. **Tokens and representations.** Slightly change the input text and watch its segmentation. Connect the tokens to the IDs and embeddings described in [the representations page](embedding-space.qmd).
