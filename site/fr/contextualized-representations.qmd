@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, trois questions corrigées et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
+      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, la page d'exercices dédiée et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -170,8 +170,6 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-
-[Questions et exercices](exercises/contextualized-representations.qmd)
 
 :::
 
