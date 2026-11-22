@@ -163,6 +163,10 @@ Return to the [generation loop for the Roman example](generation.qmd#the-loop-on
 [Français](../fr/entropy.qmd) · [English](entropy.qmd)
 ::::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/entropy.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -170,9 +174,8 @@ Return to the [generation loop for the Roman example](generation.qmd#the-loop-on
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/entropy.qmd).
+
 
 
 ### Further reading

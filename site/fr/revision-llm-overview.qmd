@@ -42,8 +42,6 @@ Le deuxième contexte contient la question initiale suivie de « Vous ». Les pa
 
 </details>
 
-[Rejouer les deux tours de génération](llm-overview.qmd#what-model-predicts) · [Faire les exercices du panorama](exercises/llm-overview.qmd)
-
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-llm-overview.qmd) · [English](../en/revision-llm-overview.qmd)
 :::

@@ -168,6 +168,10 @@ This distribution is the starting point for three uses. [Generation](generation.
 [Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
 ::::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -177,9 +181,8 @@ This distribution is the starting point for three uses. [Generation](generation.
 </summary>
 ::: {.learning-resources__content}
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
+
 
 
 ### Further reading

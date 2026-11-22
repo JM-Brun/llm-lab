@@ -181,6 +181,10 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 [Français](gradients.qmd) · [English](../en/gradients.qmd)
 :::
 
+## Exercices
+
+[Autres exercices sur les gradients](exercises/gradients.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -188,9 +192,8 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-[Autres exercices sur les gradients](exercises/gradients.qmd).
+
 
 
 ### Pour approfondir

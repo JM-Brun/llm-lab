@@ -163,6 +163,10 @@ Reprenez la [boucle de génération du scribe](generation.qmd#la-boucle-sur-un-e
 [Français](entropy.qmd) · [English](../en/entropy.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/entropy.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -170,9 +174,8 @@ Reprenez la [boucle de génération du scribe](generation.qmd#la-boucle-sur-un-e
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/entropy.qmd).
+
 
 
 ### Pour poursuivre

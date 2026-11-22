@@ -122,6 +122,10 @@ The conceptual comparison is sufficient to locate the architectures. To run one 
 **Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -129,9 +133,8 @@ The conceptual comparison is sufficient to locate the architectures. To run one 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
+
 
 
 

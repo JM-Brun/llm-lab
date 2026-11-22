@@ -85,6 +85,10 @@ A capability may be new from a user's perspective while arising from mechanisms 
 **Language:** [Français](../fr/emergence.qmd) · [English](emergence.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/emergence.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -92,9 +96,8 @@ A capability may be new from a user's perspective while arising from mechanisms 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/emergence.qmd).
+
 
 </div>
 </details>

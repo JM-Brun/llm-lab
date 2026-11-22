@@ -168,6 +168,10 @@ Cette distribution est le point de départ de trois usages. [Générer](generati
 [Français](probabilites.qmd) · [English](../en/probabilities.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/probabilites.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -177,9 +181,8 @@ Cette distribution est le point de départ de trois usages. [Générer](generati
 </summary>
 ::: {.learning-resources__content}
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/probabilites.qmd).
+
 
 
 ### Pour poursuivre

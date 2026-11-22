@@ -122,6 +122,10 @@ La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter
 **Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-architectures.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -129,9 +133,8 @@ La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
+
 
 
 

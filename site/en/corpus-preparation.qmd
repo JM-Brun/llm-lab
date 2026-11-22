@@ -29,6 +29,8 @@ tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "le
 A model is not trained directly on “the internet” or on an abstract collection of text: it consumes sequences built from selected and transformed sources. Corpus preparation defines what enters the experiment, what must remain independent for evaluation, and which transformations must be auditable. This work is distinct from tokenizing a prompt and from constructing training windows.
 :::
 
+**Questions and exercises:** [Open the dedicated practice page](exercises/corpus-preparation.qmd).
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - define eligible sources and preserve provenance and usage conditions;
@@ -170,9 +172,6 @@ This page defines a traceability framework and separation of responsibilities, n
 - [Hugging Face — Large datasets, memory, and streaming](https://huggingface.co/learn/llm-course/en/chapter5/4): understand memory-mapped files and large-corpus processing.
 - [Hugging Face — Annotation and curation with Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1): a tooling example for the protocol described above.
 
-### Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
 
 </div>
 </details>

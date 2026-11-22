@@ -1,6 +1,6 @@
 ---
 title: "Du texte aux tokens : représenter le langage"
-subtitle: "Comment le tokenizer produit les identifiants que reçoit le modèle"
+subtitle: "Le parcours conceptuel du texte aux représentations du modèle"
 description-meta: "Suit le passage du texte source au contexte discret fourni au modèle : prétraitement, tokens, identifiants et lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus d’entraînement."
 keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 lang: fr
@@ -33,8 +33,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 Dans le panorama, le modèle prédit le prochain token à partir du préfixe « C'est une bonne situation, ça, scribe ? ». Sous quelle forme reçoit-il cette question ?
 
 Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
-
-Le Panorama utilisait des mots comme tokens dans un vocabulaire jouet. Avec un tokenizer réel, un mot comme « Vous » peut correspondre à plusieurs tokens.
 :::
 
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
@@ -99,6 +97,10 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 **Langue** · [Français](text-data.qmd) · [English](../en/text-data.qmd)
 :::
 
+## Exercices
+
+[Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -131,9 +133,8 @@ Le [texte source en Unicode](unicode-text.qmd) peut contenir des espaces, de la 
 
 Le schéma regroupe le traitement positionnel et le Transformer. Certaines architectures ajoutent des vecteurs de position absolue appris aux plongements des tokens. Avec [RoPE](positional-encoding.qmd), l'attention fait tourner les vecteurs requête et clé. Ces mécanismes interviennent à des endroits différents dans la chaîne qui produit les [représentations contextualisées](contextualized-representations.qmd).
 
-### Exercices {#exercices}
 
-[Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
+
 
 ### Deux usages, deux parcours {#deux-usages-deux-parcours}
 

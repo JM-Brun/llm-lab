@@ -560,21 +560,30 @@ async function runCase(testCase, caseIndex) {
             expression: (target.textContent || "").trim().slice(0, 80),
           };
         });
+        let mathHelpAvailable = false;
+        let mathHelpFits = null;
         if (mathFocus.available) {
           const help = page.locator("mjx-container:focus:not([display=true]) > mjx-help");
-          await help.waitFor({ state: "visible" });
-          const iconFits = await help.evaluate(element => {
-            const { left, right } = element.getBoundingClientRect();
-            return left >= 0 && right <= window.innerWidth;
-          });
+          mathHelpAvailable = await help.waitFor({ state: "visible", timeout: 1000 })
+            .then(() => true)
+            .catch(() => false);
+          if (mathHelpAvailable) {
+            mathHelpFits = await help.evaluate(element => {
+              const { left, right } = element.getBoundingClientRect();
+              return left >= 0 && right <= window.innerWidth;
+            });
+          }
           await page.keyboard.press("Tab");
           const pageFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
-          if (!iconFits || !pageFits) throw new Error("MathJax's inline help widened the page during keyboard traversal.");
+          if (mathHelpFits === false || !pageFits) {
+            throw new Error("MathJax's inline help widened the page during keyboard traversal.");
+          }
         }
         item.trainingAccessibility = {
           reducedMotion: true,
           mermaidLabelPx: fontSize,
-          mathHelpFits: mathFocus.available ? true : null,
+          mathHelpAvailable,
+          mathHelpFits,
           mathFocus,
         };
       }

@@ -171,6 +171,10 @@ The analogy can motivate a useful question — which positions contribute to a c
 **Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
 ::::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
@@ -183,7 +187,7 @@ The analogy can motivate a useful question — which positions contribute to a c
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
+
 
 Two follow-up exercises ask you to [distinguish weighted mixing from selection](exercises-attention.qmd#ex-attention-weighted-mixture-vs-selection) and [compute multi-head attention by hand](exercises-attention.qmd#ex-attention-multihead-manual-calculation).
 

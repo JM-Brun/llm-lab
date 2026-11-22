@@ -85,6 +85,10 @@ Une capacité peut être nouvelle du point de vue de l'usage tout en résultant 
 **Langue :** [Français](emergence.qmd) · [English](../en/emergence.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/emergence.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -92,9 +96,8 @@ Une capacité peut être nouvelle du point de vue de l'usage tout en résultant 
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/emergence.qmd).
+
 
 </div>
 </details>

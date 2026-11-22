@@ -317,6 +317,10 @@ Pour revisiter le lien avec la théorie de l’information, consultez la [synth�
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-entropy.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -324,9 +328,8 @@ Pour revisiter le lien avec la théorie de l’information, consultez la [synth�
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-entropy.qmd).
+
 
 
 ### Exercices complémentaires
