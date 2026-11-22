@@ -150,18 +150,12 @@ def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
 def test_v_information_path_preserves_source_local_scope_and_partial_evidence() -> None:
     concepts = _load_yaml(ROOT / "data" / "concepts.yml")
     sources = _load_yaml(ROOT / "data" / "sources.yml")
-    extraction = _load_yaml(
-        ROOT / "data" / "extractions" / "xu-et-al-usable-information-2020.yml"
-    )
+    extraction = _load_yaml(ROOT / "data" / "extractions" / "xu-et-al-usable-information-2020.yml")
 
     concept_ids = {item["id"] for item in concepts["concepts"]}
     assert {"v-information", "mutual-information"} <= concept_ids
 
-    source = next(
-        item
-        for item in sources["sources"]
-        if item["id"] == "xu-et-al-usable-information-2020"
-    )
+    source = next(item for item in sources["sources"] if item["id"] == "xu-et-al-usable-information-2020")
     assert source["scan_status"] == "partially-scanned"
     assert extraction["pedagogical_model"]["reconstruction"]["status"] == "partial"
 
@@ -180,6 +174,6 @@ def test_v_information_path_preserves_source_local_scope_and_partial_evidence() 
     assert items["predictive-family-definition"]["locator"]["label"] == "Definition 1"
     assert items["v-information-definition"]["locator"]["label"] == "Definition 3"
     assert items["pac-estimation"]["locator"]["label"] == "Theorem 1"
-    assert "bounded log-probabilities" in " ".join(
+    assert "Log-probabilities are uniformly bounded" in " ".join(
         items["pac-estimation"]["evidence"]["assumptions"]
     )
