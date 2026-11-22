@@ -222,11 +222,15 @@ project:
     - fr/exercises/gpt-generation-walkthrough.qmd
     - fr/exercises/cross-attention.qmd
     - fr/exercises/hybrid-llm-architectures.qmd
+    - fr/exercises/multimodal-architectures.qmd
+    - fr/exercises/next-concept-modeling.qmd
     - fr/exercises/tokenization-strategies.qmd
     - fr/exercises/in-context-learning.qmd
     - fr/exercises/context-engineering.qmd
     - fr/exercises/rag-memory-boundaries.qmd
+    - fr/exercises/decoding-strategies.qmd
     - fr/exercises/llm-computational-complexity.qmd
+    - fr/exercises/compression-revision.qmd
     - fr/exercises/emergence.qmd
     - fr/exercises/llm-evolution.qmd
     - en/exercises/llm-overview.qmd
@@ -263,11 +267,15 @@ project:
     - en/exercises/gpt-generation-walkthrough.qmd
     - en/exercises/cross-attention.qmd
     - en/exercises/hybrid-llm-architectures.qmd
+    - en/exercises/multimodal-architectures.qmd
+    - en/exercises/next-concept-modeling.qmd
     - en/exercises/tokenization-strategies.qmd
     - en/exercises/in-context-learning.qmd
     - en/exercises/context-engineering.qmd
     - en/exercises/rag-memory-boundaries.qmd
+    - en/exercises/decoding-strategies.qmd
     - en/exercises/llm-computational-complexity.qmd
+    - en/exercises/compression-revision.qmd
     - en/exercises/emergence.qmd
     - en/exercises/llm-evolution.qmd
     - fr/evaluation-experimentale.qmd
@@ -480,6 +488,8 @@ website:
                     - fr/exercises/rope.qmd
                     - fr/exercises/sinusoidal-positional-encoding.qmd
                     - fr/exercises/hybrid-llm-architectures.qmd
+                    - fr/exercises/multimodal-architectures.qmd
+                    - fr/exercises/next-concept-modeling.qmd
                 - section: "Texte et tokenisation"
                   contents:
                     - fr/exercises/tokenization-strategies.qmd
@@ -489,7 +499,9 @@ website:
                     - fr/exercises/embeddings-deep-dive.qmd
                 - section: "Inférence et efficacité"
                   contents:
+                    - fr/exercises/decoding-strategies.qmd
                     - fr/exercises/llm-computational-complexity.qmd
+                    - fr/exercises/compression-revision.qmd
                     - fr/exercises/rag-memory-boundaries.qmd
                 - section: "Échelle et recherche"
                   contents:
@@ -691,6 +703,8 @@ website:
                     - en/exercises/rope.qmd
                     - en/exercises/sinusoidal-positional-encoding.qmd
                     - en/exercises/hybrid-llm-architectures.qmd
+                    - en/exercises/multimodal-architectures.qmd
+                    - en/exercises/next-concept-modeling.qmd
                 - section: "Text and tokenization"
                   contents:
                     - en/exercises/tokenization-strategies.qmd
@@ -700,7 +714,9 @@ website:
                     - en/exercises/embeddings-deep-dive.qmd
                 - section: "Inference and efficiency"
                   contents:
+                    - en/exercises/decoding-strategies.qmd
                     - en/exercises/llm-computational-complexity.qmd
+                    - en/exercises/compression-revision.qmd
                     - en/exercises/rag-memory-boundaries.qmd
                 - section: "Scale and research"
                   contents:
