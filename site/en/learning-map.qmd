@@ -65,7 +65,7 @@ These stages follow the canonical curriculum. They show the study order and opti
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
-[Try the end-of-path exercise](exercises/training-loop.qmd#end-to-end-transfer), then [design an evaluation on held-out data](experimental-evaluation.qmd).
+[Try the end-of-path exercise](exercises/exercises/training-loop.qmd#end-to-end-transfer), then [design an evaluation on held-out data](experimental-evaluation.qmd).
 
 ::: {.guided-route-companion}
 
