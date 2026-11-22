@@ -205,6 +205,95 @@ The context is the prefix available at the time of computation. A future token i
 
 ---
 
+## Day 03 — How does text become tokens?
+
+**Act:** Context and representations  
+**Activity:** visual + conceptual check  
+**Target duration:** 5–7 minutes  
+**Canonical references:** `token`; computational nodes `tokenization`, `tokens`
+
+### Français
+
+**Question**
+
+Comment un tokenizer transforme-t-il un texte en unités discrètes ?
+
+**Réponse courte**
+
+Un tokenizer applique une règle de segmentation à une chaîne de caractères et produit une séquence ordonnée de *tokens*. Un token est une unité du vocabulaire du tokenizer : selon la méthode et le vocabulaire, il peut correspondre à un mot, une partie de mot, un caractère ou une séquence d'octets.
+
+Il ne faut donc pas supposer qu'un token correspond toujours à un mot lisible. La segmentation dépend du tokenizer utilisé ; deux tokenizers peuvent découper différemment une même chaîne.
+
+**Exemple guidé**
+
+Avec un tokenizer jouet, « chat suit le chat » peut être segmenté en quatre tokens :
+
+`chat | suit | le | chat`
+
+Un autre tokenizer pourrait découper certains mots en sous-unités. La séquence obtenue dépend de son vocabulaire et de ses règles de segmentation.
+
+Cette journée porte sur la segmentation elle-même. L'association de chaque token à un identifiant entier sera étudiée au jour 4 ; l'utilisation de cet identifiant pour lire un vecteur dans la table d'embeddings viendra au jour 5.
+
+**À vous de vérifier**
+
+Deux tokenizers segmentent la même chaîne différemment : le premier produit `["chat", "suit"]`, le second `["cha", "t", "suit"]`. Ont-ils nécessairement produit la même séquence de tokens ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Les deux segmentations sont différentes, même si elles représentent la même chaîne de départ. Le découpage dépend du tokenizer et de son vocabulaire ; il faut connaître le tokenizer utilisé pour interpréter la séquence de tokens.
+
+</details>
+
+**À retenir**
+
+La tokenisation transforme une chaîne de caractères en une séquence ordonnée d'unités discrètes. Un token n'est pas nécessairement un mot, et sa segmentation dépend du tokenizer.
+
+**Pour aller plus loin :** [Du texte aux tokens](../site/fr/text-data.qmd)  
+**S'exercer :** [Exercices — Texte et données](../site/fr/exercises/text-data.qmd)
+
+### English
+
+**Question**
+
+How does a tokenizer turn text into discrete units?
+
+**Short answer**
+
+A tokenizer applies a segmentation rule to a character string and produces an ordered sequence of *tokens*. A token is a unit in the tokenizer's vocabulary: depending on the method and vocabulary, it may correspond to a word, part of a word, a character, or a byte sequence.
+
+A token should therefore not be assumed to be a readable word. Segmentation depends on the tokenizer; two tokenizers may split the same string differently.
+
+**Worked example**
+
+With a toy tokenizer, “cat follows the cat” can be split into four tokens:
+
+`cat | follows | the | cat`
+
+Another tokenizer might split some words into smaller units. The resulting sequence depends on its vocabulary and segmentation rules.
+
+This day focuses on segmentation itself. Mapping each token to an integer ID is covered on day 4; using that ID to look up a vector in the embedding table follows on day 5.
+
+**Check yourself**
+
+Two tokenizers segment the same string differently: the first produces `["cat", "follows"]`, while the second produces `["ca", "t", "follows"]`. Have they necessarily produced the same token sequence?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The two segmentations differ, even though they represent the same original string. The split depends on the tokenizer and its vocabulary; you need to know which tokenizer was used to interpret the token sequence.
+
+</details>
+
+**Takeaway**
+
+Tokenization turns a character string into an ordered sequence of discrete units. A token is not necessarily a word, and segmentation depends on the tokenizer.
+
+**Understand more:** [From text to tokens](../site/en/text-data.qmd)  
+**Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
+
+---
+
 ## Day 04 — From token to token ID
 
 **Act:** Context and representations  
@@ -485,95 +574,6 @@ Token identity and position are distinct kinds of information. The Transformer n
 
 **Understand more:** [Positional encoding](../site/en/positional-encoding.qmd)  
 **Practice:** [Exercises — Positional encoding](../site/en/exercises/positional-encoding.qmd)
-
----
-
-## Day 03 — How does text become tokens?
-
-**Act:** Context and representations  
-**Activity:** visual + conceptual check  
-**Target duration:** 5–7 minutes  
-**Canonical references:** `token`; computational nodes `tokenization`, `tokens`
-
-### Français
-
-**Question**
-
-Comment un tokenizer transforme-t-il un texte en unités discrètes ?
-
-**Réponse courte**
-
-Un tokenizer applique une règle de segmentation à une chaîne de caractères et produit une séquence ordonnée de *tokens*. Un token est une unité du vocabulaire du tokenizer : selon la méthode et le vocabulaire, il peut correspondre à un mot, une partie de mot, un caractère ou une séquence d'octets.
-
-Il ne faut donc pas supposer qu'un token correspond toujours à un mot lisible. La segmentation dépend du tokenizer utilisé ; deux tokenizers peuvent découper différemment une même chaîne.
-
-**Exemple guidé**
-
-Avec un tokenizer jouet, « chat suit le chat » peut être segmenté en quatre tokens :
-
-`chat | suit | le | chat`
-
-Un autre tokenizer pourrait découper certains mots en sous-unités. La séquence obtenue dépend de son vocabulaire et de ses règles de segmentation.
-
-Cette journée porte sur la segmentation elle-même. L'association de chaque token à un identifiant entier sera étudiée au jour 4 ; l'utilisation de cet identifiant pour lire un vecteur dans la table d'embeddings viendra au jour 5.
-
-**À vous de vérifier**
-
-Deux tokenizers segmentent la même chaîne différemment : le premier produit `["chat", "suit"]`, le second `["cha", "t", "suit"]`. Ont-ils nécessairement produit la même séquence de tokens ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Non. Les deux segmentations sont différentes, même si elles représentent la même chaîne de départ. Le découpage dépend du tokenizer et de son vocabulaire ; il faut connaître le tokenizer utilisé pour interpréter la séquence de tokens.
-
-</details>
-
-**À retenir**
-
-La tokenisation transforme une chaîne de caractères en une séquence ordonnée d'unités discrètes. Un token n'est pas nécessairement un mot, et sa segmentation dépend du tokenizer.
-
-**Pour aller plus loin :** [Du texte aux tokens](../site/fr/text-data.qmd)  
-**S'exercer :** [Exercices — Texte et données](../site/fr/exercises/text-data.qmd)
-
-### English
-
-**Question**
-
-How does a tokenizer turn text into discrete units?
-
-**Short answer**
-
-A tokenizer applies a segmentation rule to a character string and produces an ordered sequence of *tokens*. A token is a unit in the tokenizer's vocabulary: depending on the method and vocabulary, it may correspond to a word, part of a word, a character, or a byte sequence.
-
-A token should therefore not be assumed to be a readable word. Segmentation depends on the tokenizer; two tokenizers may split the same string differently.
-
-**Worked example**
-
-With a toy tokenizer, “cat follows the cat” can be split into four tokens:
-
-`cat | follows | the | cat`
-
-Another tokenizer might split some words into smaller units. The resulting sequence depends on its vocabulary and segmentation rules.
-
-This day focuses on segmentation itself. Mapping each token to an integer ID is covered on day 4; using that ID to look up a vector in the embedding table follows on day 5.
-
-**Check yourself**
-
-Two tokenizers segment the same string differently: the first produces `["cat", "follows"]`, while the second produces `["ca", "t", "follows"]`. Have they necessarily produced the same token sequence?
-
-<details>
-<summary>Show the answer</summary>
-
-No. The two segmentations differ, even though they represent the same original string. The split depends on the tokenizer and its vocabulary; you need to know which tokenizer was used to interpret the token sequence.
-
-</details>
-
-**Takeaway**
-
-Tokenization turns a character string into an ordered sequence of discrete units. A token is not necessarily a word, and segmentation depends on the tokenizer.
-
-**Understand more:** [From text to tokens](../site/en/text-data.qmd)  
-**Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
 
 ---
 
