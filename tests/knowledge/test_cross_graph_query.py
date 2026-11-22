@@ -127,18 +127,27 @@ def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
     source_levels[source_id] = tuple(
         sorted(set(source_levels.get(source_id, ())) | {"mutual-information"})
     )
-    candidate_item = next(
-        item
-        for item in projection.extraction_items_by_id.values()
-        if not item.mapped_concepts and not item.classification_concepts
+    candidate_item = next(iter(projection.extraction_items_by_id.values()))
+    updated_item = replace(
+        candidate_item,
+        mapped_concepts=(),
+        classification_concepts=(),
+        concept_mapping_basis={},
+        candidate_concepts=("mutual-information",),
     )
-    updated_item = replace(candidate_item, candidate_concepts=("mutual-information",))
     items = dict(projection.extraction_items_by_id)
     items[candidate_item.item_id] = updated_item
+    item_mappings = {
+        concept_id: tuple(
+            item_id for item_id in item_ids if item_id != candidate_item.item_id
+        )
+        for concept_id, item_ids in projection.extraction_items_by_concept.items()
+    }
     updated_projection = replace(
         projection,
         source_level_concepts_by_id=source_levels,
         extraction_items_by_id=items,
+        extraction_items_by_concept=item_mappings,
     )
     updated_index = replace(evidence_index, evidence_projection=updated_projection)
 
