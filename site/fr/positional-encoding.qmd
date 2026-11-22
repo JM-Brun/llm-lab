@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
 summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 scope: "Explique où l’ordre des tokens intervient, avec un signal absolu à l’entrée et un signal relatif dans la comparaison en attention."
-purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les deux mécanismes présentés."
+purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les mécanismes présentés."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
