@@ -2,6 +2,7 @@
 
 **Status:** architectural decision for issue #575  
 **Date:** 2026-11-06  
+**Last reconciled:** 2026-11-22  
 **Scope:** conceptual model, knowledge graph, guided route, page-level orientation, and Build crosswalk.
 
 ## 1. Decision
@@ -162,7 +163,11 @@ Candidate canonical page IDs already in the route include `contextualized-repres
 
 ## 10. Integration hand-off
 
-The canonical model, eight-stage guided route, teacher-forcing/prefill teaching, concept metadata, and computational registry/first graph views are now integrated on `main` through [PR #578](https://github.com/JM-Brun/llm-lab/pull/578) and the generated-route refresh [PR #586](https://github.com/JM-Brun/llm-lab/pull/586). The detailed persistent-spine and evaluation views were embedded in the bilingual overview through [PR #589](https://github.com/JM-Brun/llm-lab/pull/589). The subsequent pedagogical review identified that these structural projections were too metadata-like for the overview's introductory audience. [PR #782](https://github.com/JM-Brun/llm-lab/pull/782) replaces them there with a simpler learner-facing diagram while preserving the canonical registry and this architectural document. The revised PR's Quarto rendering and browser review are pending. A manual screen-reader review is still required before claiming full accessibility validation. The active hand-off is [computational-spine-integration-plan.md](computational-spine-integration-plan.md) and child issue [#584](https://github.com/JM-Brun/llm-lab/issues/584). Continue reusing the existing registries and validators rather than introducing a parallel graph or workflow framework.
+The canonical model and original eight-stage guided route were integrated on `main` through [PR #578](https://github.com/JM-Brun/llm-lab/pull/578) and the generated-route refresh [PR #586](https://github.com/JM-Brun/llm-lab/pull/586). The reader-facing Theory route was subsequently extended to **nine stages** when context use was made explicit; the current stage definitions live in `data/guided-route.yml`, while the two typed transition records in that file are not stages. [docs/learning-path.md](learning-path.md#canonical-module-topology-shared-core-and-operational-branches) remains the authority for curriculum-module scope and dependencies; the YAML route is its bilingual reader-facing projection.
+
+The detailed persistent-spine and evaluation views were embedded in the bilingual overview through [PR #589](https://github.com/JM-Brun/llm-lab/pull/589). A later pedagogical review found that these structural projections were too metadata-like for the overview's introductory audience. [PR #782](https://github.com/JM-Brun/llm-lab/pull/782) replaced them with a simpler learner-facing diagram while preserving the canonical registry and this architectural document. PR #782 was merged on 2026-11-09; its merge commit [766c243](https://github.com/JM-Brun/llm-lab/commit/766c24377f3b5b485b380aed797dc3f3c3ba1b10) has successful Python, Quarto render, bilingual browser-audit, and Pages-deployment checks. These automated results do not establish manual screen-reader or learner validation. The remaining manual accessibility work is tracked in [#584](https://github.com/JM-Brun/llm-lab/issues/584), while independent learner evidence belongs to [#447](https://github.com/JM-Brun/llm-lab/issues/447).
+
+The active implementation/evidence hand-off is [computational-spine-integration-plan.md](computational-spine-integration-plan.md) and child issue [#584](https://github.com/JM-Brun/llm-lab/issues/584). Continue reusing the existing registries and validators rather than introducing a parallel graph or workflow framework.
 
 ## 9. Adopted curriculum topology
 
