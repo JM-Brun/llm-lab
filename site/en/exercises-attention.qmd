@@ -528,7 +528,7 @@ G. Every model has as many query heads as key/value heads.
 
 ### Exercise AT-D — Why divide scores by √dₖ? {#ex-attention-score-scaling-variance}
 
-Assume that the components of $q$ and $k$ are mutually independent, independent across the two vectors, zero-mean, and have unit variance. Let $S=q^\top k=\sum_{i=1}^{d_k}q_i k_i$.
+Assume that all components $q_i$ and $k_i$ are mutually independent, zero-mean, and have unit variance. Let $S=q^\top k=\sum_{i=1}^{d_k}q_i k_i$.
 
 1. Compute $\mathbb{E}[S]$.
 2. Show that $\operatorname{Var}(q_i k_i)=1$, then derive $\operatorname{Var}(S)$.
