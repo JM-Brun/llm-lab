@@ -24,7 +24,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 37 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 39 pages d’exercices par leçon"}
 
 ### Comprendre
 
@@ -67,10 +67,15 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 - [Encodage positionnel sinusoïdal](exercises/sinusoidal-positional-encoding.qmd)
 - [Architectures hybrides](exercises/hybrid-llm-architectures.qmd)
 - [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
+- [Unicode, UTF-8 et normalisation](exercises/unicode-text.qmd)
 - [Apprentissage en contexte](exercises/in-context-learning.qmd)
 - [Complexité computationnelle des LLM](exercises/llm-computational-complexity.qmd)
 - [Émergence](exercises/emergence.qmd)
 - [Évolution des LLM](exercises/llm-evolution.qmd)
+
+### Outils mathématiques et géométrie
+
+- [Approfondissement sur les embeddings](exercises/embeddings-deep-dive.qmd)
 
 :::
 
