@@ -1,0 +1,40 @@
+---
+title: "Question — Coût de description et compression"
+subtitle: "Question de contrôle et corrigé"
+description-meta: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
+keywords: ["type:exercise-hub", "destination:practice", "topic:compression-revision-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/compression-revision-exercises"
+summary: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
+scope: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
+purpose: "Relier la longueur minimale de description au compromis entre coût du modèle et coût résiduel des données."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/compression-revision"]
+tags: ["type:exercise-hub", "destination:practice", "topic:compression-revision-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la fiche : Compression et LLM](../compression-revision.qmd)
+
+## Question de contrôle
+
+Pourquoi un modèle qui prédit presque parfaitement les données d'entraînement peut-il perdre face à un modèle moins précis, une fois le coût de description du modèle inclus ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le critère MDL considère le coût total $L(M)+L(D\mid M)$, pas seulement l'erreur résiduelle. Un modèle très ajusté peut réduire $L(D\mid M)$ tout en augmentant fortement $L(M)$ parce qu'il est plus coûteux à décrire. Si le surcoût de description dépasse le gain sur les données, le modèle moins précis peut avoir une longueur totale plus courte. Le résultat dépend du protocole et de ce qui est compté dans la description du modèle (structure, paramètres, tokenizer, décodeur et informations auxiliaires).
+
+</details>
+
+::: {.language-switch}
+**Langue:** [Français](../../fr/exercises/compression-revision.qmd) · [English](../../en/exercises/compression-revision.qmd)
+:::
