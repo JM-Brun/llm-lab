@@ -1169,12 +1169,6 @@ relations:
     rationale:
       fr: "L'entropie de la cible est le terme de référence dans la décomposition de l'entropie croisée."
       en: "Target entropy is the reference term in the cross-entropy decomposition."
-  - from: kl-divergence
-    type: prerequisite
-    to: cross-entropy
-    rationale:
-      fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
-      en: "KL divergence measures the mismatch term between the target and predicted distributions."
   - from: cross-entropy
     type: prerequisite
     to: knowledge-distillation
