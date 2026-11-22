@@ -2,7 +2,7 @@
 title: "Exercises — RoPE"
 subtitle: "Questions, exercises, and worked answers"
 description-meta: "Questions and reasoning associated with rotary positional encoding (RoPE)."
-keywords: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:deepening", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/rope"]
-tags: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:deepening", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: RoPE](../rope.qmd)
