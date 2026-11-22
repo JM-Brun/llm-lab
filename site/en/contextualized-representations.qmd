@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap separates initial embeddings from contextualized states; the diagram, five-step route, context-dependence examples, three answered questions and SAE investigation support recall and critical interpretation."
+      note: "The recap separates initial embeddings from contextualized states; the diagram, five-step route, context-dependence examples, the dedicated practice page and SAE investigation support recall and critical interpretation."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
@@ -167,8 +167,6 @@ For the dependencies between positions, causal masks, and the distinct roles of 
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-
-[Questions and exercises](exercises/contextualized-representations.qmd)
 
 :::
 
