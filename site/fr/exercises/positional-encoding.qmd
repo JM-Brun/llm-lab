@@ -66,6 +66,19 @@ Non. La formule définit un signal pour cette position, mais le modèle doit enc
 
 Vous avez compris cette étape si vous pouvez expliquer pourquoi l'ordre doit être pris en compte, distinguer les encodages absolus des mécanismes relatifs (dont RoPE est un exemple), séparer le signal positionnel de la contrainte de visibilité causale et expliquer pourquoi un signal calculable ne garantit pas l'extrapolation.
 
+## Suivre l’entrée additive et la visibilité causale {#ex-additive-position-and-causal-mask}
+
+Dans un GPT additif à paramètres fixes, à quelle étape deux occurrences de `chat` reçoivent-elles des entrées différentes ? Avec le seul masque causal, pourquoi l’état de B peut-il changer entre `ABC` et `CBA` ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Les deux occurrences de `chat` lisent le même vecteur initial, $E[17]$. Leurs entrées divergent lorsque les vecteurs de position $P[0]$ et $P[3]$ sont ajoutés avant le premier bloc Transformer. Pour B, l’ID du token et le rang sont identiques, mais le masque causal rend visibles des préfixes différents : `AB` dans `ABC` et `CB` dans `CBA`. La sortie de l’attention peut donc différer.
+
+</details>
+
+[Comparer deux contextes à rang fixe](../exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+
 ## Comparer deux préfixes visibles {#ex-positional-mask-transfer}
 
 On étudie une seule couche d’auto-attention causale, sans mécanisme positionnel explicite. Les requêtes, clés et valeurs d’entrée sont fixées par token. Comparez la sortie de B dans `ACB` et `CAB`, où B reste au dernier rang. Le seul masque causal permet-il de distinguer cet échange à la sortie de B ?

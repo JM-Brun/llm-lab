@@ -66,6 +66,19 @@ No. The formula defines a signal for that position, but the model still has to l
 
 You have understood this step if you can explain why order must be taken into account, distinguish absolute encodings from relative mechanisms (of which RoPE is one example), separate positional signals from the causal visibility constraint, and explain why a computable signal does not guarantee extrapolation.
 
+## Trace the additive input and causal visibility {#ex-additive-position-and-causal-mask}
+
+With fixed parameters in an additive GPT, where do two occurrences of `cat` get distinct inputs? With only a causal mask, why can B’s state change between `ABC` and `CBA`?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Both occurrences of `cat` retrieve the same initial vector, $E[17]$. Their inputs diverge when the position vectors $P[0]$ and $P[3]$ are added before the first Transformer block. For B, the token ID and position are identical, but the causal mask exposes different prefixes: `AB` in `ABC` and `CB` in `CBA`. The attention output can therefore differ.
+
+</details>
+
+[Compare two contexts at the same position](../exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+
 ## Compare two visible prefixes {#ex-positional-mask-transfer}
 
 Consider one layer of causal self-attention with no explicit positional mechanism. The input queries, keys, and values are fixed per token. Compare B’s output in `ACB` and `CAB`, where B stays in the last position. Can the causal mask alone distinguish this swap at B’s output?

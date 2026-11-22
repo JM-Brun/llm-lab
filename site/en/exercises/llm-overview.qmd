@@ -49,6 +49,15 @@ The initial prompt processing (f) starts with tokenizing the text (b), then the 
 
 </details>
 
+10. **The decoding rule selects “Aqueducts” as the first token instead of “They”. What happens on the next turn?**
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+The new prefix ends in “Aqueducts.” The model recomputes the next-token distribution from that different prefix, using the same parameters. The illustrative second-turn probabilities in the lesson apply only to the prefix ending in “They.”
+
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-overview.qmd) · [English](llm-overview.qmd)
 :::

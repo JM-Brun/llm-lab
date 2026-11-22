@@ -87,18 +87,7 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 <span id="common-misconceptions"></span>
 <span id="check-your-understanding"></span>
 
-## Check your understanding {#position-self-check}
-
-With fixed parameters in an additive GPT, where do the two occurrences of `cat` get distinct inputs? With only a causal mask, why can B’s state change between `ABC` and `CBA`?
-
-<details>
-<summary>Show the reasoning</summary>
-
-Both occurrences of `cat` retrieve $E[17]$. Their inputs diverge when $P[0]$ and $P[3]$ are added. For B, the ID and position are identical, but the mask makes different prefixes visible, `AB` and `CB`.
-
-</details>
-
-[Check the case where B is last](exercises/positional-encoding.qmd#ex-positional-mask-transfer) · [Compare two contexts at the same position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+[Check the related questions on the dedicated practice page](exercises/positional-encoding.qmd#ex-additive-position-and-causal-mask) · [Compare two contexts at the same position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Why:** content embeddings alone do not say where a token occurs. Without positional information or an order-dependent constraint, self-attention is permutation equivariant.

@@ -49,6 +49,15 @@ Le traitement initial du prompt (f) commence par la tokenisation du texte (b), p
 
 </details>
 
+10. **La règle de décodage choisit « Je » plutôt que « Vous » au premier tour. Que se passe-t-il au tour suivant ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distribution du prochain token à partir de ce préfixe différent, avec les mêmes paramètres. Les probabilités illustratives du deuxième tour dans la leçon s’appliquent uniquement au préfixe qui se termine par « Vous ».
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../../en/exercises/llm-overview.qmd)
 :::

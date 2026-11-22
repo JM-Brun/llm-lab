@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; le self-check et les six questions Practice couvrent les principaux repères d'orientation."
+      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; les questions de compréhension et les exercices sont regroupés dans la page d'exercices dédiée."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -55,12 +55,7 @@ Au tour 2, la question suivie de « Vous » donne une nouvelle distribution illu
 
 {{< include ../includes/next-token-explorer.html >}}
 
-<details>
-<summary>Si la règle retient « Je » au premier tour, qu'est-ce qui change au deuxième ?</summary>
-
-Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distribution à partir de ce préfixe, avec les mêmes paramètres. Les probabilités du tableau du deuxième tour correspondent au préfixe qui se termine par « Vous ».
-
-</details>
+Au tour suivant, le modèle conditionne son calcul sur le token effectivement choisi. La distribution illustrative du deuxième tour correspond au préfixe qui se termine par « Vous » ; choisir « Je » impose de la recalculer à partir de cet autre préfixe.
 
 <details>
 <summary>La continuation du fil rouge</summary>
@@ -187,9 +182,7 @@ Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir
 [Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
 
 ::: {.self-check}
-## Vérifier sa compréhension
-
-Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd).
+[Questions et exercices associés au panorama](exercises/llm-overview.qmd).
 
 <!-- self-check-coverage: enforced -->
 <!-- self-check-covers: what-model-predicts -->

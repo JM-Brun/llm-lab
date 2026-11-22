@@ -87,18 +87,7 @@ Pour comprendre la dépendance au décalage relatif et les conventions de rotati
 <span id="idées-reçues"></span>
 <span id="vérifier-sa-compréhension"></span>
 
-## Vérifier sa compréhension {#position-self-check}
-
-Dans un GPT additif à paramètres fixes, à quelle étape les deux occurrences de `chat` se différencient-elles en entrée ? Avec le seul masque causal, pourquoi B peut-il changer d’état entre `ABC` et `CBA` ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Les deux occurrences de `chat` lisent $E[17]$. Elles se différencient à l’ajout de $P[0]$ et de $P[3]$. Pour B, l’ID et le rang sont identiques, mais le masque donne accès à des préfixes différents, `AB` et `CB`.
-
-</details>
-
-[Vérifier le cas où B est en dernière position](exercises/positional-encoding.qmd#ex-positional-mask-transfer) · [Comparer deux contextes à rang fixe](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+[Retrouvez les questions associées sur la page d’exercices dédiée](exercises/positional-encoding.qmd#ex-additive-position-and-causal-mask) · [Comparer deux contextes à rang fixe](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Pourquoi :** les embeddings de contenu seuls ne disent pas où se trouve un token. Sans signal positionnel ni contrainte d'ordre, l'auto-attention est équivariante par permutation.
