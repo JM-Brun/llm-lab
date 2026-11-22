@@ -618,3 +618,90 @@ def test_real_repository_index_has_referential_integrity() -> None:
     )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
+
+
+def test_advanced_lessons_link_to_topic_exercise_collections() -> None:
+    index = ProjectIndex.build(ROOT)
+    expected = (
+        (
+            "fr/attention-score-scaling",
+            "fr/exercises-attention",
+            "site/fr/attention-score-scaling.qmd",
+            "exercises-attention.qmd",
+        ),
+        (
+            "en/attention-score-scaling",
+            "en/exercises-attention",
+            "site/en/attention-score-scaling.qmd",
+            "exercises-attention.qmd",
+        ),
+        (
+            "fr/cosine-similarity",
+            "fr/exercises-foundations",
+            "site/fr/cosine-similarity.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "en/cosine-similarity",
+            "en/exercises-foundations",
+            "site/en/cosine-similarity.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "fr/language-modeling-math",
+            "fr/exercises-foundations",
+            "site/fr/language-modeling-math.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "en/language-modeling-math",
+            "en/exercises-foundations",
+            "site/en/language-modeling-math.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "fr/linearite-embeddings",
+            "fr/exercises-foundations",
+            "site/fr/linearite-embeddings.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "en/embedding-linearity",
+            "en/exercises-foundations",
+            "site/en/embedding-linearity.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "fr/mathematical-foundations",
+            "fr/exercises-foundations",
+            "site/fr/mathematical-foundations.qmd",
+            "exercises-foundations.qmd",
+        ),
+        (
+            "en/mathematical-foundations",
+            "en/exercises-foundations",
+            "site/en/mathematical-foundations.qmd",
+            "exercises-foundations.qmd",
+        ),
+    )
+    for lesson_id, practice_id, path, target in expected:
+        assert any(
+            edge.source == lesson_id
+            and edge.target == practice_id
+            and edge.family == "related"
+            for edge in index.page_edges
+        )
+        source = (ROOT / path).read_text(encoding="utf-8")
+        assert target in source
+
+    for path in (
+        "site/fr/exercises-foundations.qmd",
+        "site/en/exercises-foundations.qmd",
+    ):
+        source = (ROOT / path).read_text(encoding="utf-8")
+        assert "{#ex-foundations-cosine-similarity}" in source
+        assert "{#ex-foundations-linear-probe-causality}" in source
+
+    for path in ("site/fr/exercises-attention.qmd", "site/en/exercises-attention.qmd"):
+        source = (ROOT / path).read_text(encoding="utf-8")
+        assert "{#ex-attention-score-scaling-variance}" in source
