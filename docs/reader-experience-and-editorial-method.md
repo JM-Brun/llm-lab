@@ -449,3 +449,21 @@ When a page benefits from an explicit statement of what the reader should be abl
 - Keep outcomes distinct from a comprehension check: outcomes state the intended capability; a `.self-check` tests whether the learner can demonstrate it.
 
 The block is a compact learning contract, not a summary, navigation list, or claim that mastery has been measured. French and English versions must express equivalent capabilities.
+
+## 10. Keep practice questions on dedicated companion pages
+
+A learning page and its practice page have different jobs. The learning page explains the concept, develops the mechanism, and may include worked examples that are necessary to understand it. The practice page asks the learner to retrieve, apply, diagnose, calculate, or transfer that knowledge.
+
+Apply this rule across the **Understand**, **Build**, and **Deepen** branches:
+
+- Give each learning page (or deliberately coherent lesson group) a dedicated bilingual companion page under **Practise and experiment** / **S'exercer et expérimenter**. Reuse an existing companion page where one already owns the topic; do not create duplicate destinations for the same lesson.
+- Keep prompts that assess understanding, questions with answer keys, quizzes, problem sets, and learner-directed experiments on the companion page. Do not leave a second copy of the same question or solution in the lesson.
+- Keep explanatory worked examples, derivations, numerical demonstrations, diagrams, and code walkthroughs in the lesson when they teach the mechanism. A worked example becomes an exercise only when the learner is asked to solve, predict, diagnose, or justify something before seeing the explanation.
+- On the learning page, replace moved questions with one short, visible link to the companion page. Do not reproduce the prompt, answer, hint, or solution there. The companion page must link back to its canonical lesson.
+- Preserve every distinct prompt, assumption, numerical value, hint, answer, misconception explanation, assessment criterion, source, executable check, and stable activity ID. Merge only genuinely equivalent questions; retain any additional reasoning or qualification when consolidating duplicates.
+- Keep the practice navigation structurally aligned with the learning navigation: group companion pages by the corresponding **Understand**, **Build**, and **Deepen** topics. The exercise catalogue remains an index, not a second flat curriculum.
+- Maintain FR/EN equivalence in content, difficulty, identifiers, answer keys, and navigation. Check the rendered links in both languages after a move.
+- Register each companion page in the bilingual Quarto render list and in the matching nested practice-navigation group; keep the catalogue synchronized with that rendered inventory rather than maintaining a stale hand-count.
+- The practice catalogue must mirror the main learning structure (Understand / Build / Deepen and its meaningful subgroups). Every rendered companion page must appear exactly once in the corresponding language catalogue and have a working return link.
+
+During a migration, compare the lesson and its companion page before deleting anything. If a companion page is missing, create it (and register it in the bilingual render list, catalogue, and practice navigation) before removing the source exercise. Never treat a link to a generic collection as a substitute for preserving a lesson-specific question and its answer.

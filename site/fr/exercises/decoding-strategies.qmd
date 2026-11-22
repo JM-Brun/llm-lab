@@ -1,0 +1,40 @@
+---
+title: "Question — Stratégies de décodage"
+subtitle: "Question de compréhension et corrigé"
+description-meta: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
+keywords: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/decoding-strategies-exercises"
+summary: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
+scope: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
+purpose: "Distinguer les transformations locales de la distribution des méthodes de recherche sur plusieurs séquences."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/decoding-strategies"]
+tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Stratégies de décodage](../decoding-strategies.qmd)
+
+## Question de compréhension
+
+Pouvez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Une transformation locale modifie les probabilités des tokens candidats à une position donnée (par exemple avec la température, top-k ou top-p). Une recherche sur les séquences compare plusieurs continuations sur plusieurs étapes et cumule leurs scores (par exemple avec beam search). La première agit sur une distribution locale ; la seconde explore plusieurs hypothèses de séquence.
+
+</details>
+
+::: {.language-switch}
+**Langue:** [Français](../../fr/exercises/decoding-strategies.qmd) · [English](../../en/exercises/decoding-strategies.qmd)
+:::

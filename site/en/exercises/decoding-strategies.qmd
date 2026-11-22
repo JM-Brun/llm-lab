@@ -1,0 +1,40 @@
+---
+title: "Question — Decoding strategies"
+subtitle: "Comprehension question and worked answer"
+description-meta: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
+keywords: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/decoding-strategies-exercises"
+summary: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
+scope: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
+purpose: "Distinguish local distribution transformations from search methods over multiple sequences."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/decoding-strategies"]
+tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Decoding strategies](../decoding-strategies.qmd)
+
+## Comprehension question
+
+Can you distinguish transforming a distribution at one position from searching over multiple sequences?
+
+<details>
+<summary>Show the worked answer</summary>
+
+A local transformation changes candidate-token probabilities at one position (for example through temperature, top-k, or top-p). Sequence search compares several continuations across multiple steps and accumulates their scores (for example with beam search). The first acts on a local distribution; the second explores multiple sequence hypotheses.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/decoding-strategies.qmd) · [English](../../en/exercises/decoding-strategies.qmd)
+:::

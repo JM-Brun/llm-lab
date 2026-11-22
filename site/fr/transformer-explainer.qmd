@@ -108,6 +108,8 @@ Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-expla
 
 [Ouvrir Transformer Explainer dans un nouvel onglet](https://poloclub.github.io/transformer-explainer/) si l'intégration ne s'affiche pas ou si vous préférez disposer de toute la fenêtre.
 
+Sur téléphone, choisissez un exemple avec **Examples**. Sur ordinateur, attendez le chargement du modèle pour saisir votre propre prompt. Pour isoler l’effet de la température à partir de scores fixes, utilisez aussi l’[explorateur de température de LLM Lab](probabilites.qmd#temp-explorer).
+
 ### Une expérience guidée en quatre observations
 
 1. **Tokens et représentations.** Modifiez légèrement le texte d'entrée et observez sa segmentation. Reliez les tokens aux identifiants et aux embeddings décrits dans [la page sur les représentations](embedding-space.qmd).

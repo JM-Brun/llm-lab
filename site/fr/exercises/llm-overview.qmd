@@ -24,28 +24,65 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 
 [← Retour à la leçon : Panorama des modèles de langage](../llm-overview.qmd)
 
+<!-- self-check-coverage: enforced -->
+
 [Exercices et mises en pratique](../exercises.qmd).
 
+<!-- self-check-covers: architecture-learning-use -->
 1. **Le fine-tuning change-t-il nécessairement l'architecture ?** Non : il modifie d'abord les paramètres. Certaines méthodes ajoutent aussi des modules ; il faut distinguer la famille du modèle de la structure complète du système adapté.
+<!-- self-check-covers: information-residence choosing-an-approach -->
 2. **Une documentation change chaque jour : RAG ou fine-tuning ?** Le RAG peut récupérer les nouveaux documents à l'inférence sans modifier les poids. Il ne garantit toutefois ni la pertinence des documents récupérés ni la fidélité de la réponse.
+<!-- self-check-covers: model-to-conversational-system -->
 3. **Un modèle renvoie une demande structurée pour appeler `lookup_order(order_id=42)`. Le système de commande a-t-il déjà été interrogé ?** Non. Le modèle a produit une demande ; l'application qui l'entoure doit en valider les arguments et les permissions, exécuter l'outil, puis renvoyer son résultat au modèle. Produire un appel d'outil ne signifie pas l'exécuter.
 4. **Une conversation étiquette les messages `system`, `user` et `assistant`. S'agit-il de trois couches du Transformer ?** Non. Ce sont des rôles du format de message utilisé par l'application ou l'API. L'architecture du modèle est une question distincte, et une étiquette de rôle n'impose pas à elle seule une politique.
 
+<!-- self-check-covers: transformers-changed -->
 5. **Un modèle pré-entraîné doit classer des avis comme positifs ou négatifs.** On lui donne une consigne et trois exemples étiquetés dans le prompt ; aucun entraînement supplémentaire n'est lancé. Quel mécanisme est mobilisé ? Qu'est-ce qui changerait si l'on ajustait les poids sur un jeu d'exemples ? Et si l'on récupérait des avis ou une documentation externe pour les ajouter au contexte ?
    
 <details>
 <summary>Afficher la réponse et le raisonnement</summary>
 
-Le premier cas relève du **few-shot / in-context learning** : les exemples conditionnent la réponse pendant l'inférence, sans mise à jour des paramètres. Ajuster les poids sur les exemples serait du **fine-tuning**. Récupérer des documents externes et les ajouter au contexte relèverait d'un système **RAG**. Ces mécanismes sont complémentaires, mais ne sont pas interchangeables. Le pré-entraînement a pu exposer le modèle à des formulations et régularités proches de la tâche ; « non entraîné spécifiquement pour cette classification » ne signifie pas « sans apprentissage pertinent ».
+Le premier cas relève du **few-shot / in-context learning** : les exemples conditionnent la réponse pendant l'inférence, sans mise à jour des paramètres. Ajuster les poids sur les exemples serait du **fine-tuning**. Récupérer des documents externes et les ajouter au contexte relèverait d'un système **RAG**. Ces mécanismes sont complémentaires, mais ne sont pas interchangeables. Le pré-entraînement a pu exposer le modèle à des formulations et régularités proches de la tâche ; « non entraîné spécifiquement pour cette classification » ne signifie pas « sans apprentissage pertinent ». Pour évaluer la classification, comparez les prédictions aux étiquettes d'avis tenus à l'écart du prompt et des décisions de réglage.
 
 </details>
 
+<!-- self-check-covers: text-to-distribution -->
 6. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
 
 <details>
 <summary>Afficher la réponse et le raisonnement</summary>
 
-Le traitement initial du prompt (f) commence par la tokenisation du texte (b), puis le modèle calcule la distribution (d). La règle de décodage sélectionne un token (e), qui est ajouté au contexte (a). On vérifie ensuite la condition d'arrêt (c) ; si la limite n'est pas atteinte, on recalcule une distribution à partir du contexte enrichi et on recommence la sélection. Les paramètres restent fixes pendant toute cette inférence : seul le contexte change. La limite de trois tokens est ici un critère d'arrêt externe, pas une modification du modèle.
+Le traitement initial du prompt (f) commence par la tokenisation du texte (b), puis le modèle calcule la distribution (d). La règle de décodage sélectionne un token (e), qui est ajouté au contexte (a). On vérifie ensuite la condition d'arrêt (c) ; si la limite n'est pas atteinte, on recalcule une distribution à partir du contexte enrichi et on recommence la sélection. Les paramètres restent fixes pendant toute cette inférence : seul le contexte change. La limite de trois tokens est ici un critère d'arrêt externe, pas une modification du modèle. Les tokens nouvellement générés dépendent des choix précédents : on ne peut donc pas produire cette continuation autorégressive en parallèle, même si le calcul d'un même tour peut exploiter le parallélisme interne du modèle.
+
+</details>
+
+<!-- self-check-covers: what-model-predicts -->
+7. **Une suite possible reçoit une probabilité de 0,6. Peut-on en conclure qu'elle est vraie ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. La valeur 0,6 exprime une probabilité conditionnelle attribuée par le modèle à une continuation dans un contexte donné. Elle ne constitue ni une vérification factuelle ni une garantie de vérité. Une réponse très probable peut rester fausse.
+
+</details>
+
+<!-- self-check-covers: one-computation-three-uses -->
+8. **Générer, scorer une cible observée et apprendre sont-ils trois noms pour la même opération ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. La génération sélectionne un token puis prolonge le contexte ; le scoring évalue la probabilité d'un token ou d'une séquence observée ; l'apprentissage utilise une loss et ses gradients pour mettre à jour les paramètres. Génération et scoring peuvent être effectués à paramètres fixes ; l'apprentissage modifie les paramètres.
+
+</details>
+
+<!-- self-check-covers: llm-transformer-gpt -->
+9. **Tout grand modèle de langage (LLM) est-il nécessairement un GPT ?**
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Non. LLM désigne une catégorie de modèles de langage entraînés à grande échelle. GPT désigne une famille fondée sur une architecture Transformer décodeur seul et un objectif autorégressif. Il existe d'autres configurations de modèles de langage, notamment encodeur seul et encodeur-décodeur.
 
 </details>
 

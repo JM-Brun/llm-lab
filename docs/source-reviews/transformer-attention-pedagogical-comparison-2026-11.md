@@ -16,7 +16,7 @@ Review depth is deliberately explicit:
 | Jay Alammar, *The Illustrated GPT-2* | Full article text via indexed page content | Fresh asset-level rights review |
 | Jay Alammar / Maarten Grootendorst, *How Transformer LLMs Work* (2025) | Official course outline and course announcement | Full videos, code examples and quiz |
 | 3Blue1Brown, *Attention in Transformers, step by step* (lesson by Grant Sanderson; text adaptation by Justin Sun) | Full text adaptation, lesson structure, embedded questions, YouTube description and timestamps | Independent audiovisual viewing and animation timing review |
-| Polo Club, *Transformer Explainer* | CHI 2026 paper, README, MIT licence, selected Svelte components, sampling/data code and model metadata | Live browser testing, keyboard/mobile checks and numerical parity run |
+| Polo Club, *Transformer Explainer* | CHI 2026 paper, source and model metadata, cached-example browser controls, pinned ONNX parity | In-browser inference with a custom prompt, physical devices and assistive technologies |
 
 A text adaptation is not equivalent to watching a video. Static source inspection is not equivalent to executing the deployed interactive tool.
 
@@ -80,6 +80,24 @@ The evidence is promising but bounded:
 
 Selected code inspection found model metadata for GPT-2 small (default), medium and large; block/head navigation; QKV and attention matrix views; masked and softmaxed attention values; hoverable numerical cells; logits/probabilities; temperature and top-k/top-p controls; and an MLP view. These are static source observations, not confirmation of live deployment behavior.
 
+#### Browser and numerical follow-up · 2026-11-22
+
+**Deployed interface.** Chromium 141.0.7390.37 at 1,440 × 950 and 390 × 844, plus a Pixel 7 emulation at 390 × 844. The initial preset `Data visualization empowers users to` displays the six units `Data`, ` visualization`, ` em`, `powers`, ` users`, ` to`. The learner can follow embeddings, the attention/MLP stages and the candidate distribution, then change options with a fixed preset. The keyboard opens Examples, selects another example, changes temperature with an arrow key and changes the sampling mode with Space. The mobile interface explicitly directs custom prompts to desktop. A 390 px desktop viewport had a 1,300 px document scroll width, and the emulated Android layout used a 1,300 px layout viewport. The sliders and head navigation buttons examined lacked explicit accessible names. The attention matrix expanded on click. The matrix and probability expansion targets examined have no tab stop. The browser session inspected cached examples with desktop model chunks blocked. Physical touch and assistive technologies were outside this check. [Published application](https://poloclub.github.io/transformer-explainer/)
+
+**Pinned computation.** Concatenated the 63 numbered `static/model-v2/gpt2.onnx.part*` files at `bfe50afba10b9b560b84143ee1107d977defa74f` in numeric order. The assembled 656,662,664-byte model SHA-256 was `ccf64e934094054603c5b7bd98191f0fd2ea0315a81e9e0d8104070f64413119`. ONNX Runtime 1.23.0 CPU received one int64 row of six IDs `[6601,32704,795,30132,2985,284]`. Compared `linear_output` and the 144 named softmax attention outputs against the bundled example `ex0`.
+
+| Quantity | Reproduced result |
+|---|---|
+| Last-position logits | 50,257 values, maximum absolute error `7.6294e-5`. The five highest IDs retain their order `[38350,2251,766,787,3538]`. |
+| Attention softmax | 144 matrices of size 6 × 6, maximum absolute error `2.3842e-6`. All strictly upper-triangular weights are zero. The maximum row-sum error from one is `1.7881e-7`. |
+| Change final input ID from 284 to 995 | The 5 × 5 prefix of every matrix is identical. The maximum absolute change in the sixth row is about 0.7184. |
+| Fixed logits, top-k = 5, temperature 0.8 → 0.9 | The reference probability of ID 38350 falls from about 54.67% to 50.65%. The raw score remains about −135.9132. |
+| Temperature 0.9, top-p = 0.5 | Four candidates survive after preselecting the top 50. Renormalized top probability is about 54.59%, also observed in the settled browser view. |
+
+The sampling calculations were checked independently against the TypeScript functions from the pinned commit. The CPU run validates the supplied example against the supplied export. The published page's desktop custom-prompt path, PyTorch export parity and equivalence of deployed weight bytes were outside the test. [Pinned source and weights](https://github.com/poloclub/transformer-explainer/tree/bfe50afba10b9b560b84143ee1107d977defa74f) · [Cached example](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/constants/examples/ex0.js)
+
+**Learner decision.** Reuse the existing fixed-prompt exercise. Ask which of logits, candidate probabilities and the sampled token can change when the learner changes only temperature. Observe the candidate probabilities before touching the sampling filter. On mobile use a preset, or use the local temperature explorer for the same distinction. Keep the causal-prefix exercise and its invariant rows separate from next-token prediction. [Audit #762](https://github.com/JM-Brun/llm-lab/issues/762)
+
 ### 2.4 Existing LLM Lab integration
 
 LLM Lab already has a substantial bilingual Practice & experiment page:
@@ -88,7 +106,7 @@ LLM Lab already has a substantial bilingual Practice & experiment page:
 
 It already links the three architecture families to a live GPT-2 small experiment; includes controlled tests for causal-prefix invariance and temperature; distinguishes observation from computational evidence; maps interface components to the PyTorch reference model and ONNX execution path; and documents the demonstrator's top-p behavior over a 50-candidate truncated set.
 
-The page pins repository commit `bfe50afba10b9b560b84143ee1107d977defa74f` (2026-06-06), which exists. The pinned source is useful for reproducible citations. Current-main code was sampled as a cross-check, but no live browser session was run in this review.
+The page pins repository commit `bfe50afba10b9b560b84143ee1107d977defa74f` (2026-06-06), which exists. The pinned source is useful for reproducible citations. The follow-up above checks the deployed example interactions and their numerical reference at the pinned source.
 
 **Decision:** do not create another explainer page, duplicate experiments or add another visualization framework. The existing bilingual page is the integration destination. The CHI paper can be cited there with a short description of its study design and limitations, but learner benefit for LLM Lab itself must not be inferred from the external study.
 
@@ -169,8 +187,7 @@ MQA/GQA and sparse attention should first be compared as architectural variants 
 ### Deferred
 - Full audiovisual review of the selected 3Blue1Brown lesson.
 - Full review of Jay Alammar's 2025 course videos and code examples.
-- Live browser, keyboard and mobile testing of Polo Club.
-- Numerical parity checks against its pinned PyTorch/ONNX model path.
+- Custom-prompt inference in the deployed desktop browser, independent PyTorch export parity and assistive-technology checks for Polo Club.
 - Asset-specific rights review before any external illustration or screenshot reuse.
 - Final placement decisions for MQA, GQA, sparse attention and MoE.
 

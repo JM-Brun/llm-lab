@@ -1,0 +1,41 @@
+---
+title: "Experiment — Explore an embedding dataset"
+subtitle: "Exploration protocol, questions, and debrief"
+description-meta: "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks."
+keywords: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/embeddings-deep-dive-exercises"
+summary: "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks."
+scope: "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks."
+purpose: "Examine what projections, neighbourhoods, clusters, and metadata do and do not show, separating original-space geometry from 2D visualization."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/embeddings-deep-dive"]
+tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: embeddings and representation geometry](../embeddings-deep-dive.qmd)
+
+**Question:** do the neighbourhoods and groups visible in a projection tell the same story as the original vectors and metadata?
+
+1. Choose a dataset whose objects, metadata, and vectors are documented. Record the embedding model/version, preprocessing, metric, and provenance. Do not mix vectors from different models or layers without saying so.
+2. Before opening the atlas, predict which metadata field should be associated with the expected neighbourhoods or groups; state what could disconfirm the prediction.
+3. Load vectors and metadata. Identify the projection, automatic clusters/labels, and nearest-neighbour search. Filter one category and observe which points disappear, which groups change, and any outliers.
+4. Select several points, inspect their original content, and compare displayed neighbours with a search in the original vector space if your pipeline supports it.
+5. Change one projection or clustering setting and record what changes. Do not tune settings after the fact merely to produce a persuasive picture.
+
+**Debrief:** distinguish (a) distance in the original vector space, (b) visual proximity in the projection, (c) membership in a computed cluster, and (d) a category supplied as metadata. These are not equivalent. A 2D projection can distort distances, densities, and shapes; an automatic label is a descriptive hypothesis, not semantic ground truth. For reproducibility, record the dataset, model, preprocessing, metric, parameters, and random seed when available.
+
+See also the [embedding-space exercises](embedding-space.qmd), [official documentation](https://apple.github.io/embedding-atlas/overview.html), [CLI guide](https://apple.github.io/embedding-atlas/tool.html), and [research paper](https://machinelearning.apple.com/research/embedding-atlas).
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/embeddings-deep-dive.qmd) · [English](../../en/exercises/embeddings-deep-dive.qmd)
+:::

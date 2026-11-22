@@ -1,0 +1,37 @@
+---
+title: "Questions — Analysing a multimodal architecture"
+subtitle: "Analysis framework and transfer questions"
+description-meta: "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence."
+keywords: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectures-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/multimodal-architectures-exercises"
+summary: "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence."
+scope: "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence."
+purpose: "Analyse a multimodal architecture without conflating understanding, generation, components, and performance evidence."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/multimodal-architectures"]
+tags: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectures-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Multimodal architectures](../multimodal-architectures.qmd)
+
+## Questions to ask when reading an architecture
+
+1. **Which modalities actually enter and leave?** Do not infer generation from input understanding alone.
+2. **Where are the boundaries?** Identify encoders, projectors, language models, generators, codecs, and runtime.
+3. **Which representation is predicted?** Text tokens, audio codes, visual tokens, patches, or latent states.
+4. **Which mechanism produces the output?** Autoregressive decoding, iterative denoising, codec decoding, or an external call.
+5. **What evidence supports the comparison?** A published architecture does not by itself prove better quality, cost, or speed.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/multimodal-architectures.qmd) · [English](../../en/exercises/multimodal-architectures.qmd)
+:::

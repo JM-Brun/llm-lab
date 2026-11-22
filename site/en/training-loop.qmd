@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap separates forward pass, loss, gradient, actual parameter update and independent validation measurement; the lesson includes an answered self-check on the loop and overfitting."
+      note: "The recap separates forward pass, loss, gradient, actual parameter update and independent validation measurement; the worked questions, SGD calculations, and integrative exercise are collected on the [dedicated practice page](exercises/training-loop.qmd)."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:en", "status:published"]
 -->
 
@@ -123,72 +123,7 @@ To compare two checkpoints, try [aggregating validation loss over batches with d
 
 The from-scratch implementation of this loop, with checkpointing and a validation runner, is a milestone of the [Build path](build-path.qmd); its status is tracked there. This lesson does not require it. Training a pretrained model further on a narrower objective (supervised fine-tuning and related methods) reuses the same loop with different data and targets; it is introduced in the [LLM panorama](llm-overview.qmd), not here.
 
-## Check your understanding
-
-Try to answer before opening the worked answers. The goal is to connect the steps, not recite a definition.
-
-1. **After the loss and gradient have been computed, which operation actually changes the parameters?**
-
-<details>
-<summary>Show the worked answer</summary>
-
-The optimizer's update is the operation that changes the parameters. The forward pass computes predictions, the loss evaluates their mismatch with targets, and backpropagation computes the gradient; none of these operations changes the parameters by itself. The optimizer uses the gradient (and possibly its internal state) to produce the new parameters.
-
-</details>
-
-2. **Training loss decreases, but validation loss rises. What can you conclude, and what can you not conclude?**
-
-<details>
-<summary>Show the worked answer</summary>
-
-This is evidence of overfitting: the model keeps fitting the training examples better, but that fit transfers less well to held-out data. It does not, by itself, prove one unique cause or that every model capability is getting worse. Check the split protocol, data representativeness, and metrics, then make decisions using validation without reusing the test set to tune the model.
-
-</details>
-
-3. **Why keep a test set if a validation set is already available?**
-
-<details>
-<summary>Show the worked answer</summary>
-
-Validation guides repeated decisions (stopping, hyperparameters, model selection). By making those decisions based on validation results, we gradually adapt to that set indirectly. The test set therefore remains untouched until final assessment, providing an estimate less biased by those choices. If the test set is used again to tune the system, it no longer serves that role.
-
-</details>
-
-
-4. **Can you calculate one SGD step without confusing the gradient with the update?** Take an illustrative loss $L(\theta)=(\theta-5)^2$, current value $\theta=2$, and learning rate $\eta=0.1$. Calculate the gradient and then the new parameter under SGD. Should a validation-loss measurement performed afterwards change $\theta$?
-
-<details>
-<summary>Show the worked answer</summary>
-
-The gradient is $L'(\theta)=2(\theta-5)$, so $L'(2)=-6$. SGD applies $\theta_{new}=\theta-\eta L'(\theta)=2-0.1(-6)=2.6$. The gradient is the quantity being computed; the optimizer uses it to change the parameter. A validation measurement is a forward pass with fixed parameters: it computes a metric but must not update $\theta$.
-
-**Success criterion:** get the gradient's sign and value right, apply the learning rate with the correct sign, and explicitly distinguish measurement from update.
-
-</details>
-
-
-### End-of-path transfer exercise {#end-to-end-transfer}
-
-A toy GPT processes a tokenized prefix $c=(U,V)$. At its final position, it assigns probabilities $(0.5,0.3,0.1,0.1)$ to four candidates $A,B,C,D$. The observed continuation starts with $B$. The values in the table are illustrative. At each checkpoint, the two losses are measured in nats per valid token, each on the same data from its own split.
-
-| Update | Training loss | Validation loss |
-|---:|---:|---:|
-| 0 | 1.60 | 1.63 |
-| 20 | 1.12 | 1.28 |
-| 40 | 0.82 | 1.34 |
-
-1. Trace what transforms IDs $U,V$ into logits. If the application adds an instruction before $U$, what changes before the forward pass?
-2. What prefix does the second greedy generation step use? What prefix do you use to score the second reference token? Compute the penalty for the first observed token.
-3. When do weights change if you use this penalty for training? Which checkpoint minimizes validation loss, and what remains to be measured?
-
-<details>
-<summary>Show the worked answer</summary>
-
-1. The IDs select [embedding vectors](embedding-space.qmd). The network uses [position information](positional-encoding.qmd) and transforms representations inside its [Transformer blocks](transformer.qmd). The output head projects the final state of the last position to [logits over the vocabulary](logits.qmd). Adding an instruction changes the [tokenized context](context-engineering.qmd) supplied to the model. The parameters are the same when computation starts.
-2. [Greedy generation](generation.qmd) extends $c$ with $A$. [Scoring](likelihood.qmd) the next position uses $c$ extended with the observed token $B$. The first-token penalty is $-\ln(0.3)\approx 1.204$ nats.
-3. After [loss aggregation](loss.qmd) and [backpropagation](gradients.qmd), the optimizer applies the update. Validation uses fixed parameters. Checkpoint 20 has the lowest validation loss among the three shown. Decreasing training loss and increasing validation loss are evidence of overfitting. Estimate final performance on a reserved test set with a metric that fits what you intend to measure. See the [experimental evaluation case](experimental-evaluation.qmd).
-
-</details>
+[Training-loop questions and exercises](exercises/training-loop.qmd).
 
 [Review the Training stage in the learning plan](review-path.qmd#training).
 

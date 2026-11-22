@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap presents the next-token distribution and distinguishes generation, scoring and training; the self-check and six Practice questions cover the main orientation concepts."
+      note: "The recap presents the next-token distribution and distinguishes generation, scoring and training; the comprehension questions and exercises are collected on the [dedicated practice page](exercises/llm-overview.qmd), complementing the recap without duplicating the main learning path."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
@@ -179,48 +179,7 @@ Depending on the task, one can use a general model as is, supply context and ext
 
 [Compare the roles of context and model parameters in the review plan](review-path.qmd#compare-prediction-uses).
 
-::: {.self-check}
-## Check your understanding
-
-Related exercises: [overview practice page](exercises/llm-overview.qmd).
-
-<!-- self-check-coverage: enforced -->
-<!-- self-check-covers: what-model-predicts -->
-1. **Probability 0.6: does that make the continuation true?**
-<details><summary>Answer</summary>No: it is conditional probability, not proof of truth.</details>
-
-<!-- self-check-covers: text-to-distribution -->
-2. **What happens after a token is selected? Can new tokens be generated in parallel in this loop?**
-<details><summary>Answer</summary>The token is appended to context, then the model recomputes. Each turn depends on the tokens selected in earlier turns, so new tokens are produced successively.</details>
-
-<!-- self-check-covers: one-computation-three-uses -->
-3. **Are generation, scoring, and learning identical?**
-<details><summary>Answer</summary>No: only learning updates parameters.</details>
-
-<!-- self-check-covers: llm-transformer-gpt -->
-4. **Is every LLM a GPT?**
-<details><summary>Answer</summary>No: LLM is a category; GPT is a Transformer model family.</details>
-
-<!-- self-check-covers: architecture-learning-use -->
-5. **Does fine-tuning change the architecture?**
-<details><summary>Answer</summary>No: it adapts parameters.</details>
-
-<!-- self-check-covers: transformers-changed -->
-6. **A pretrained GPT must classify reviews as positive or negative. It receives an instruction and three labeled examples. What can it reuse from pretraining, and how would you evaluate its predictions?**
-<details><summary>Answer</summary>It can reuse regularities and representations acquired during pretraining. The examples specify the task while parameters stay fixed. To evaluate classification, compare the predictions with the labels of reviews held out of the prompt.</details>
-
-<!-- self-check-covers: information-residence -->
-7. **Does RAG retrieval put a document in the parameters?**
-<details><summary>Answer</summary>No: it remains external and must be supplied.</details>
-
-<!-- self-check-covers: model-to-conversational-system -->
-8. **Has a tool run when the model requests it?**
-<details><summary>Answer</summary>No: the application must execute it and return the result.</details>
-
-<!-- self-check-covers: choosing-an-approach -->
-9. **Must changing documentation require retraining?**
-<details><summary>Answer</summary>Not necessarily: RAG can retrieve the updated source.</details>
-:::
+[Questions and exercises for this overview](exercises/llm-overview.qmd).
 
 ::: {.callout-tip title="Go further"}
 - **History and architecture:** [history of Transformers](transformer-history.qmd) and [architecture comparison](transformer-architectures.qmd).

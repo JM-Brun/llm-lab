@@ -1,0 +1,58 @@
+---
+title: "Questions and exercises — Compression and LLMs"
+subtitle: "Calculations, self-check, and minimum description length"
+description-meta: "Exercises associated with the revision sheet on predictive compression, model description cost, entropy, and runtime memory."
+keywords: ["type:exercise-hub", "destination:practice", "topic:compression-revision-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/compression-revision-exercises"
+summary: "Calculation, self-check, and reasoning exercises on model description cost."
+scope: "Preserves the numerical checks on entropy and Huffman coding, the five self-check questions, and the MDL check question."
+purpose: "Calculate a simple coding cost, distinguish surprisal from entropy, explain lossless reconstruction, and reason about the trade-off between model cost and residual cost."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/compression-revision"]
+tags: ["type:exercise-hub", "destination:practice", "topic:compression-revision-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the revision sheet: Compression and LLMs](../compression-revision.qmd)
+
+## Check question: model description cost
+
+Why might a model that predicts the training data almost perfectly lose to a less accurate model once the model description cost is included?
+
+<details>
+<summary>Show the worked answer</summary>
+
+The MDL criterion considers the total cost $L(M)+L(D\mid M)$, not only the residual error. A highly fitted model may reduce $L(D\mid M)$ while greatly increasing $L(M)$ because it is more expensive to describe. If the extra description cost exceeds the gain on the data, the less accurate model can have a shorter total description. The result depends on the protocol and on what is counted in the model description (structure, parameters, tokenizer, decoder, and auxiliary information).
+
+</details>
+
+**Quick check.** For $p=(1/2,1/4,1/8,1/8)$, recover the ideal lengths $(1,2,3,3)$ bits and entropy $1.75$ bits. With the Huffman codewords $0,10,110,111$, verify that average length is also $1.75$ bits and Kraft's sum is 1. Finally, explain why exact equality holds here because the probabilities are dyadic, and is not guaranteed for every distribution.
+
+## Self-check
+
+1. Why is an LLM not an LZW decompressor?
+2. How does surprisal differ from entropy?
+3. Why is a shared decoder needed for lossless reconstruction?
+4. Why can a quantized model be smaller without being faster?
+5. Does the KV cache belong to the checkpoint or to runtime memory?
+
+::: {.callout-tip title="Expected answers"}
+1. It learns a parametric distribution; it does not store a reversible dictionary of the corpus.
+2. Surprisal concerns an observed event; entropy is expected surprisal under a distribution.
+3. Encoder and decoder must reconstruct the same intervals/symbols using identical conventions.
+4. Gains depend on kernels, hardware, format, and workload.
+5. It belongs to temporary runtime memory.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/compression-revision.qmd) · [English](../../en/exercises/compression-revision.qmd)
+:::

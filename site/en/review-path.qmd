@@ -30,4 +30,4 @@ Choose a stage to find the ideas to master and review them with a question and a
 
 {{< include ../includes/generated-lesson-contracts-en.qmd >}}
 
-[Connect the stages in the end-of-path exercise](training-loop.qmd#end-to-end-transfer).
+[Connect the stages in the end-of-path exercise](exercises/training-loop.qmd#end-to-end-transfer).

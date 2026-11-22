@@ -1,21 +1,21 @@
-# Public page audit inventory
+# Public page audit evidence log
 
-**Status:** first-pass audit, not a certification of all claims or a rendered-site review.  
+**Status:** cumulative record of bounded, dated audits. It is neither a complete site-wide certification nor a live operational status board.  
 **Started:** 2026-10-28  
-**Scope of this pass:** Transformer overview and its direct concept chain.  
+**Latest entry in this file:** 2026-11-16. Later Raschka chapter and appendix audits are recorded in [the full curriculum plan](full-curriculum-plan.md).  
+**Scope:** selected bilingual pages, page groups, source contributions, scientific claims, implementation evidence, and rendered/visual observations. Each entry states its own scope and evidence boundary.  
 **Method:** [Reader experience and editorial method](reader-experience-and-editorial-method.md).
 
-For the primary reader-facing destination of every current FR/EN page (Understand, Build, Deepen, or Practice & experiment), see the [content-section mapping](content-section-mapping.md). This classification does not replace the page-by-page evidence and review status recorded here.
+Use the [content-section mapping](content-section-mapping.md) for the current reader-facing destination and ownership of every FR/EN page (Understand, Build, Deepen, or Practice & experiment). This evidence log does not replace that page inventory.
 
-This file records what was actually reviewed and what remains to be checked. A page is not marked complete because it exists, is linked, or has a green CI run. Scientific review, French/English parity, rendered-page review, implementation evidence, and learner mastery are separate checks.
+This file preserves what a particular audit actually inspected and what remained uncertain at that time. Its historical statements such as “remaining work” are not automatically current: consult the linked GitHub issue/PR and any later dated reconciliation before acting. A page is not considered validated merely because it exists, is linked, or has a green CI run.
 
 ## Status vocabulary
 
-- **Reviewed — follow-up open:** source content inspected; concrete remaining checks are recorded.
-- **Updated in PR:** source edits proposed in an open pull request; not yet merged or rendered.
+- **Reviewed — follow-up open:** source content inspected; concrete remaining checks are recorded in that dated audit.
+- **Updated in PR:** source edits were proposed in the referenced pull request; this does not imply merge, render, or browser validation.
 - **Not reviewed:** no claim of content review.
 - **Not applicable:** criterion does not apply to this page type.
-
 
 ## First vertical slice: LLM panorama → GPT/Transformer → attention → position
 
@@ -221,16 +221,25 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 
 **Validation status:** source-level review only. No Quarto render, screenshot review, or automated SVG accessibility check has been run for this change.
 
-## Next audit steps
+## How to use this evidence log
 
-1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
-2. Finish the mathematical-chain audit: verify equations, worked examples, notation consistency, rendering, and bilingual meaning; the source-coverage pass above is not a full scientific review.
-3. Finish the text/data and training-example audit: verify external/local links, scientific claims, worked examples, masks, diagrams, and responsive rendering.
-4. Review the remaining pages (tensors, embedding space, evaluation, critical notes, glossary, history, references, exercises) and record missing counterparts or artifacts explicitly.
-5. Prioritize concrete defects by reader impact. Do not bulk-rewrite pages that already satisfy the contract.
-6. Do not add implementations or experiments until their prerequisites pass the existing knowledge-validation gate.
+1. **Find the dated audit that matches the page, source, or claim.** Its scope is limited to the objects and checks it explicitly names; do not generalize a sample to the whole site.
+2. **Resolve current page ownership and destination** in [content-section-mapping.md](content-section-mapping.md), not by inferring them from an old audit row.
+3. **Apply the shared review method** in [reader-experience-and-editorial-method.md](reader-experience-and-editorial-method.md) and the relevant page archetype guidance in [page-template-guide.md](page-template-guide.md).
+4. **Resolve current work and status in GitHub.** The principal owners are:
+   - [#130](https://github.com/JM-Brun/llm-lab/issues/130): high-level learning-design coordination;
+   - [#280](https://github.com/JM-Brun/llm-lab/issues/280): incremental page-archetype convergence;
+   - [#78](https://github.com/JM-Brun/llm-lab/issues/78): Build sequence and implementation evidence;
+   - [#1512](https://github.com/JM-Brun/llm-lab/issues/1512): separation of learning and practice pages;
+   - [#756](https://github.com/JM-Brun/llm-lab/issues/756): external learning-source portfolio;
+   - [#584](https://github.com/JM-Brun/llm-lab/issues/584) and [#988](https://github.com/JM-Brun/llm-lab/issues/988): reader-facing rendering/accessibility and navigation contracts;
+   - [#447](https://github.com/JM-Brun/llm-lab/issues/447): independent learner evidence.
+5. **Keep evidence types separate:** source inspection, scientific/numerical verification, code and unit tests, Quarto/rendered-link checks, browser/responsive/accessibility review, and learner observation answer different questions. A result in one category does not certify another.
+6. **Turn only confirmed defects into work.** Update the existing owning issue where possible. Do not create a second page inventory, opportunity register, generic checklist, workflow, or issue merely to restate a finding.
 
-## What this inventory does not claim
+When new evidence supersedes an older observation, preserve the historical record and add a concise dated reconciliation with a link to the current owner/evidence. Do not silently rewrite an old audit as though the newer check had been performed at the time.
+
+## What this evidence log does not claim
 
 - It is not a complete audit of every page in the repository.
 - Source inspection is not a rendered Quarto review.
