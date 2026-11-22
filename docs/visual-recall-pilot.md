@@ -17,7 +17,7 @@ The trial compares two ways to present the same three recall prompts. Does a sch
 
 Before the first session, freeze the exact prompts, corrections, scoring rubric, and time budgets; record deviations rather than changing one condition during the trial.
 
-A small trial can flag confusing diagrams or recurring reasoning errors, but it cannot establish a stable learning effect on its own. Treat an apparent score advantage as a hypothesis for a larger trial. An exploratory comparison can also show whether differences coincide with prior experience, unequal review, or missed follow-up.
+A small trial can flag confusing diagrams or recurring reasoning errors, but it cannot establish a stable learning effect on its own. Record the protocol deviations and follow-up losses separately from incorrect answers. Treat an apparent score advantage as a hypothesis for a larger trial. An exploratory comparison can also show whether differences coincide with prior experience, unequal review, or missed follow-up.
 
 ## Day 0 text equivalents
 
