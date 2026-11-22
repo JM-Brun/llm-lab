@@ -427,7 +427,7 @@ class ProjectIndex:
         )
         revision_support_by_page, revision_edges = _load_revision_relations(pages)
         evidence_projection = (
-            _load_cross_graph_evidence_projection(root, pages, concepts, route_data)
+            load_cross_graph_evidence_projection(root, pages, concepts, route_data)
             if include_evidence
             else None
         )
