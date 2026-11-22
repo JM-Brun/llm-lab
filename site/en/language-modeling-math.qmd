@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/probabilities", "en/likelihood", "en/cross-entropy", "en/loss", "en/mathematical-foundations"]
+related: ["en/probabilities","en/likelihood","en/cross-entropy","en/loss","en/mathematical-foundations","en/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -35,6 +35,8 @@ By the end of this page, you will be able to:
 - derive the identity between cross-entropy, target entropy, and KL divergence;
 - state the assumptions, direction, and cases in which these quantities become infinite.
 :::
+
+**Practice:** [Mathematical foundations exercises](exercises-foundations.qmd) for loss, soft-target and KL calculations.
 
 ## 1. From the chain rule to autoregressive factorization
 
