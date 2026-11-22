@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif distingue Q/K (scores et poids) de V (contenu agrégé), précise ce qui change si V varie seul et renvoie aux limites d'interprétation ; un auto-contrôle corrigé et les exercices dédiés complètent le rappel."
+      note: "Le récapitulatif distingue Q/K (scores et poids) de V (contenu agrégé), précise ce qui change si V varie seul et renvoie aux limites d'interprétation ; les questions de compréhension et les exercices associés sont regroupés sur la page compagne dédiée."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
@@ -140,20 +140,6 @@ Chaque ligne correspond à une position. Les mêmes matrices de projection sont 
 
 [Calculer les projections Q, K et V et isoler l’effet d’un changement de $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-::: {.self-check}
-## Vérifier sa compréhension
-
-[Exercices dédiés sur Q/K/V et l'attention](exercises/queries-keys-values.qmd).
-
-Quelles projections déterminent les poids d'attention, et laquelle fournit le contenu agrégé ? Que se passe-t-il si V change alors que Q et K restent fixes ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Q et K déterminent les scores et donc les poids d'attention. V fournit les vecteurs agrégés. Si seul V change, les poids restent identiques, mais le résultat agrégé peut changer.
-
-</details>
-:::
 
 ## À retenir et pour aller plus loin {#revision-summary}
 

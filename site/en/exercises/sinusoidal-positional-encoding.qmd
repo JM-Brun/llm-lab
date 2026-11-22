@@ -1,0 +1,47 @@
+---
+title: "Exercises — Sinusoidal positional encoding"
+subtitle: "Questions, exercises, and worked answers"
+description-meta: "Questions and answer sketches associated with sinusoidal positional encoding."
+keywords: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/sinusoidal-positional-encoding-exercises"
+summary: "Questions and answer sketches associated with sinusoidal positional encoding."
+scope: "Questions and answer sketches associated with sinusoidal positional encoding."
+purpose: "Apply the relationships between dimension, frequencies, offsets, positional similarity, and extrapolation."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/sinusoidal-positional-encoding"]
+tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Sinusoidal positional encoding](../sinusoidal-positional-encoding.qmd)
+
+## 8. Check your understanding
+
+::: {.callout-tip title="Your turn"}
+1. If $d_{\text{model}}$ doubles, how many frequency pairs are used?
+2. As pair index $i$ increases, does wavelength increase or decrease?
+3. Why does the transformation associated with offset $k$ not depend on the starting position $p$?
+4. What is the difference between “computing the signal at position 20,000” and “successfully performing a task with a 20,000-token context”?
+5. Is $PE(p)^\top PE(q)$ a learned attention score?
+:::
+
+::: {.callout-note collapse="true" title="Answer sketch"}
+1. The number of pairs changes from $d_{\text{model}}/2$ to $d_{\text{model}}$.
+2. It increases: $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
+3. Addition identities express the sine and cosine at $p+k$ as a linear combination of those at $p$, with coefficients depending only on $k$ and $\omega_i$.
+4. The first is a property of the formula; the second depends on the model's learned behaviour and must be evaluated empirically.
+5. No. It is a similarity between fixed positional vectors; an attention score depends on learned projections of representations.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/sinusoidal-positional-encoding.qmd) · [English](../../en/exercises/sinusoidal-positional-encoding.qmd)
+:::

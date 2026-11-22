@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel et quatre questions corrigées vérifient le cas one-hot, l'alignement logits[t] avec cible[t+1], la séparation masque causal/masque de loss et le dénominateur des seules positions valides."
+      note: "Le rappel présente le cas one-hot, l'alignement logits[t] avec cible[t+1], la séparation masque causal/masque de loss et le dénominateur des seules positions valides."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -133,26 +133,6 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 
 
-::: {.self-check}
-## Vérifier sa compréhension
-
-[Exercices dédiés](exercises/cross-entropy.qmd).
-
-1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
-2. Pourquoi faut-il exclure les positions masquées du dénominateur de la moyenne ?
-3. La perplexité mesure-t-elle directement la vérité ou l'utilité d'une réponse ?
-4. En entraînement next-token, pourquoi les logits à la position $t$ doivent-ils être alignés avec la cible à la position $t+1$ ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. La perte vaut $-\log p_y$ : elle est nulle lorsque $p_y=1$.
-2. Sinon, la moyenne ne porte plus uniquement sur les tokens valides et son échelle est faussée.
-3. Non. Elle mesure l'attribution de probabilités aux tokens d'un jeu de données donné ; elle ne mesure pas directement la vérité, l'utilité ou la sécurité.
-4. La représentation à la position $t$ ne voit que le préfixe jusqu'à $t$ et prédit le token suivant. Sans décalage, on comparerait les logits au token déjà présent à la position $t$ au lieu de la cible suivante.
-
-</details>
-:::
 
 {{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
 

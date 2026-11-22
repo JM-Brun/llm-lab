@@ -1,0 +1,40 @@
+---
+title: "Exercices — Next-Concept Modeling"
+subtitle: "Question de compréhension et corrigé"
+description-meta: "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku."
+keywords: ["type:exercise-hub", "destination:practice", "topic:next-concept-modeling-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/next-concept-modeling-exercises"
+summary: "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku."
+scope: "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku."
+purpose: "Distinguer génération séquentielle des niveaux de codes et prédiction parallèle des positions d'un même niveau, puis limiter la portée d'un résultat expérimental."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/next-concept-modeling"]
+tags: ["type:exercise-hub", "destination:practice", "topic:next-concept-modeling-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : Next-Concept Modeling](../next-concept-modeling.qmd)
+
+## Vérifier le mécanisme et la portée des résultats
+
+Dans NCM, quelle partie de la génération est séquentielle, et quelle partie peut être parallélisée ? Quelle conclusion serait excessive à partir d'un bon résultat sur Sudoku ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Les niveaux de codes sont générés séquentiellement, du grossier au fin ; les positions d'un même niveau peuvent être prédites en parallèle. Un résultat sur Sudoku documente une performance dans un protocole et un domaine précis. Il ne suffit pas à établir une capacité générale de raisonnement, l'interprétabilité des codes latents ou une supériorité universelle sur les modèles autorégressifs et de diffusion.
+
+</details>
+
+::: {.language-switch}
+**Langue:** [Français](../../fr/exercises/next-concept-modeling.qmd) · [English](../../en/exercises/next-concept-modeling.qmd)
+:::

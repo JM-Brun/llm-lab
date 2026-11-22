@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue passe avant, loss, gradient, mise à jour effective et mesure indépendante sur validation ; la leçon contient un auto-contrôle corrigé sur la boucle et le surapprentissage."
+      note: "Le rappel distingue passe avant, loss, gradient, mise à jour effective et mesure indépendante sur validation ; les questions corrigées, les calculs SGD et l'exercice intégrateur sont regroupés dans la [page d'exercices dédiée](exercises/training-loop.qmd)."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 -->
 
@@ -123,72 +123,7 @@ Le *pré-entraînement* désigne cette boucle appliquée à un corpus de texte t
 
 L'implémentation de cette boucle depuis zéro, avec points de sauvegarde et exécuteur de validation, est un jalon du [parcours Construire](build-path.qmd) ; son état y est suivi. Cette leçon ne l'exige pas. Poursuivre l'entraînement d'un modèle pré-entraîné sur un objectif plus étroit (fine-tuning supervisé et méthodes voisines) réutilise la même boucle avec d'autres données et d'autres cibles ; il est présenté dans le [panorama des LLM](llm-overview.qmd), pas ici.
 
-## Vérifier sa compréhension
-
-Essayez de répondre avant d'ouvrir les corrigés. L'objectif est de relier les étapes, pas de réciter une définition.
-
-1. **Après le calcul de la loss et du gradient, quelle opération modifie effectivement les paramètres ?**
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-C'est l'étape de mise à jour appliquée par l'optimiseur. La passe avant calcule les prédictions, la loss évalue les écarts et la rétropropagation calcule le gradient ; ces opérations ne changent pas à elles seules les paramètres. L'optimiseur utilise le gradient (et éventuellement son état interne) pour produire les nouveaux paramètres.
-
-</details>
-
-2. **La loss d'entraînement baisse, mais la loss de validation remonte. Que peut-on conclure, et que ne peut-on pas conclure ?**
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-C'est un indice de surapprentissage : le modèle continue de mieux ajuster les exemples d'entraînement, mais cet ajustement se transfère moins bien aux données réservées. Cela ne prouve pas à lui seul une cause unique ni que toutes les capacités du modèle régressent. Il faut vérifier le protocole de séparation, la représentativité des données et les métriques, puis décider à partir de la validation sans réutiliser le jeu de test pour régler le modèle.
-
-</details>
-
-3. **Pourquoi conserver un jeu de test si l'on dispose déjà d'un jeu de validation ?**
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-La validation sert à guider des décisions répétées (arrêt, hyperparamètres, choix de modèle). À force de prendre ces décisions en fonction de ses résultats, on finit indirectement par s'y adapter. Le jeu de test reste donc intact jusqu'à l'évaluation finale afin de fournir une estimation moins biaisée par ces choix. Si le test sert à nouveau à ajuster le système, il cesse de jouer ce rôle.
-
-</details>
-
-
-4. **Un pas de SGD peut-il être calculé sans confondre gradient et mise à jour ?** On prend une loss illustrative $L(\theta)=(\theta-5)^2$, une valeur courante $\theta=2$ et un taux d'apprentissage $\eta=0{,}1$. Calculez le gradient puis le nouveau paramètre avec SGD. Une mesure de loss de validation effectuée ensuite doit-elle modifier $\theta$ ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règle de mise à jour $\theta_{nouveau}=\theta-\eta L'(\theta)=2-0{,}1(-6)=2{,}6$. Le gradient est la quantité calculée ; l'optimiseur l'utilise pour modifier le paramètre. Une mesure de validation est une passe avant avec paramètres fixes : elle calcule une métrique, mais ne doit pas mettre à jour $\theta$.
-
-**Critère de réussite :** obtenir le signe et la valeur du gradient, appliquer le taux d'apprentissage avec le bon signe, puis distinguer explicitement mesure et mise à jour.
-
-</details>
-
-
-### Exercice de fin de parcours {#end-to-end-transfer}
-
-Un GPT jouet traite le préfixe déjà tokenisé $c=(U,V)$. À sa dernière position, il attribue les probabilités $(0{,}5;\,0{,}3;\,0{,}1;\,0{,}1)$ aux quatre candidats $A,B,C,D$. La continuation observée commence par $B$. Les valeurs du tableau sont fictives. À chaque point de contrôle, les deux pertes sont calculées en nats par token valide, sur les mêmes données de leur partition.
-
-| Mise à jour | Loss d'entraînement | Loss de validation |
-|---:|---:|---:|
-| 0 | 1,60 | 1,63 |
-| 20 | 1,12 | 1,28 |
-| 40 | 0,82 | 1,34 |
-
-1. Retracez ce qui transforme les identifiants $U,V$ en logits. Si l'application ajoute une consigne avant $U$, qu'est-ce qui change avant la passe avant ?
-2. Quel est le préfixe du deuxième tour de génération gloutonne ? Pour scorer le deuxième token de référence, quel préfixe faut-il utiliser ? Calculez la pénalité du premier token observé.
-3. À quel moment les poids changent-ils lorsqu'on utilise cette pénalité pour entraîner le modèle ? Quel point de contrôle choisir pour minimiser la loss de validation, et que reste-t-il à mesurer ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-1. Les identifiants sélectionnent des [vecteurs de plongement](embedding-space.qmd). Le réseau exploite la [position](positional-encoding.qmd) et transforme les représentations dans les [blocs Transformer](transformer.qmd). La tête de sortie projette l'état final de la dernière position en [logits sur le vocabulaire](logits.qmd). Ajouter une consigne change le [contexte tokenisé](context-engineering.qmd) transmis au modèle. Les paramètres sont identiques au début du calcul.
-2. La [génération gloutonne](generation.qmd) prolonge $c$ par $A$. Le [scoring](vraisemblance.qmd) de la position suivante utilise $c$ prolongé par le token observé $B$. La pénalité du premier token vaut $-\ln(0{,}3)\approx 1{,}204$ nat.
-3. Après la [loss agrégée](loss.qmd) et la [rétropropagation](gradients.qmd), l'optimiseur applique la mise à jour. La validation s'effectue à paramètres fixes. Parmi les trois points observés, le point 20 minimise la loss de validation. La baisse de la loss d'entraînement alors que la loss de validation remonte est un indice de surapprentissage. Estimez la performance finale sur un ensemble de test réservé et avec une métrique adaptée à ce que vous voulez mesurer. Voir le [cas d'évaluation expérimentale](evaluation-experimentale.qmd).
-
-</details>
+[Questions et exercices sur la boucle d'entraînement](exercises/training-loop.qmd).
 
 [Revoir l’étape Entraînement dans le plan de révision](review-path.qmd#training).
 

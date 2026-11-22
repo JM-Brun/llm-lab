@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The new recap connects decoder-only architecture, self-attention and MLP roles, residual connections, normalization and logits; five answered questions check transfer across sublayers, blocks and generation."
+      note: "The new recap connects decoder-only architecture, self-attention and MLP roles, residual connections, normalization and logits; the dedicated practice page provides transfer questions across sublayers, blocks and generation."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -217,28 +217,8 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 <span id="what-this-demonstration-does-and-does-not-establish"></span>
 <span id="observe-a-transformer-in-action"></span>
 
-::: {.self-check}
-## Check your understanding
 
-[Dedicated Transformer exercises](exercises/transformer.qmd).
-
-1. Which operation mixes information across positions, and which transforms each position independently?
-2. Why does a residual connection not replace the sublayer's transformation?
-3. What role does normalization play in a deep stack of blocks?
-4. Which dimensions does a representation traverse in a block's MLP, and in what order?
-5. During generation, which logits are used to choose the next token?
-
-<details>
-<summary>Show the answers</summary>
-
-1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
-2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
-3. LayerNorm centers and rescales the components of each state. It helps control activation scale across residual additions and can improve gradient flow. Its effect on training stability depends on its placement, the architecture, and initialization.
-4. `d_model` to `d_ff` (the intermediate dimension, often about 4 × `d_model`), then back to `d_model`; the nonlinear activation applies to the intermediate representation.
-5. For an unpadded prefix, decoding uses the logits at its last position. The causal mask limits their computation to tokens already known. During training, the model can compute logits at all positions in parallel. The loss uses those whose next token is a valid target.
-
-</details>
-:::
+[Questions and exercises](exercises/transformer.qmd)
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 
@@ -259,8 +239,6 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 <h3 id="further-reading">Further reading</h3>
 <p>For visualizations, the foundational paper, and implementation resources, see the <a href="deepen.qmd#transformer-resources">Transformer resources in Deepen</a>. For a complementary first overview, see <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>.</p>
 
-<h3>Practice</h3>
-<p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
 
 </div>
 </details>

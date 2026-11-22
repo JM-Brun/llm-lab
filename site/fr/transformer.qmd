@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le nouveau rappel relie architecture décodeur seul, rôle de l'auto-attention et du MLP, connexions résiduelles, normalisation et sortie en logits ; cinq questions corrigées vérifient le transfert entre sous-couches, bloc et génération."
+      note: "Le nouveau rappel relie architecture décodeur seul, rôle de l'auto-attention et du MLP, connexions résiduelles, normalisation et sortie en logits ; la page d'exercices dédiée propose des questions de transfert entre sous-couches, bloc et génération."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -217,28 +217,8 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <span id="ce-que-cette-démonstration-permet-et-ne-permet-pas-de-conclure"></span>
 <span id="observer-un-transformer-en-fonctionnement"></span>
 
-::: {.self-check}
-## Vérifier sa compréhension
 
-[Exercices dédiés au Transformer](exercises/transformer.qmd).
-
-1. Quelle opération mélange l'information entre positions, et laquelle transforme chaque position indépendamment ?
-2. Pourquoi une connexion résiduelle ne remplace-t-elle pas la transformation de la sous-couche ?
-3. Quel rôle la normalisation joue-t-elle dans une pile de blocs profonde ?
-4. Dans le MLP d'un bloc, quelles dimensions traverse une représentation, dans quel ordre ?
-5. Pendant la génération, quels logits servent à choisir le prochain token ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position avec des poids partagés.
-2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
-3. La LayerNorm recentre et remet à l’échelle les composantes de chaque état. Elle aide à contrôler l’échelle des activations au fil des additions résiduelles et peut améliorer la propagation des gradients. L’effet sur la stabilité de l’entraînement dépend de son emplacement, de l’architecture et de l’initialisation.
-4. `d_model` vers `d_ff` (la dimension intermédiaire, souvent environ 4 × `d_model`), puis retour vers `d_model` ; l'activation non linéaire s'applique sur la représentation intermédiaire.
-5. Pour un préfixe sans padding, le décodage utilise les logits de sa dernière position. Le masque causal limite leur calcul aux tokens déjà connus. Pendant l’entraînement, le modèle peut calculer les logits de toutes les positions en parallèle. La loss utilise ceux dont le token suivant est une cible valide.
-
-</details>
-:::
+[Questions et exercices](exercises/transformer.qmd)
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 
@@ -259,8 +239,6 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <h3 id="pour-approfondir">Pour approfondir</h3>
 <p>Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la <a href="deepen.qmd#ressources-transformer">rubrique Approfondir consacrée au Transformer</a>. Pour une première vue d'ensemble complémentaire, voir aussi <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>. Ces ressources sont facultatives et ne font pas partie du parcours principal.</p>
 
-<h3>Exercices</h3>
-<p>Les questions et exercices de cette leçon sont regroupés sur sa <a href="exercises/transformer.qmd">page d'exercices dédiée</a>.</p>
 
 </div>
 </details>

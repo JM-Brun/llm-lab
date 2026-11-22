@@ -174,20 +174,7 @@ def rope_params(head_dim, positions, base=10_000):
 For a complete PyTorch implementation of Qwen3, see [Raschka's tutorial and repository](https://github.com/rasbt/LLMs-from-scratch); external code is not copied here.
 
 
-## Check your understanding
-
-Consider an attention head using standard RoPE.
-
-1. Which components are rotated: Q, K, or V?
-2. Why does the dot product between a query and a key depend on the relative offset of their positions?
-3. What does — and does not — follow from the score being invariant when the same shift is added to every position?
-
-<details>
-<summary>Show the reasoning</summary>
-
-Standard RoPE rotates queries Q and keys K after projection, not values V. For one coordinate pair, the rotations make the dot product depend on the difference between the two angles, hence on the relative offset. Common-shift invariance holds for fixed, unrotated Q/K; it does not guarantee that adding a real prefix leaves hidden states and Q/K projections unchanged. Nor does it prove reliable extrapolation to arbitrary lengths.
-
-</details>
+[Questions and exercises on RoPE](exercises/rope.qmd).
 
 ## References
 

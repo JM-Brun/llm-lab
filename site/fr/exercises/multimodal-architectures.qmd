@@ -1,0 +1,37 @@
+---
+title: "Questions — Analyse d'une architecture multimodale"
+subtitle: "Grille d'analyse et questions de transfert"
+description-meta: "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives."
+keywords: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectures-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/multimodal-architectures-exercises"
+summary: "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives."
+scope: "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives."
+purpose: "Analyser une architecture multimodale sans confondre compréhension, génération, composants et preuves de performance."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/multimodal-architectures"]
+tags: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectures-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Architectures multimodales](../multimodal-architectures.qmd)
+
+## Questions à poser devant une architecture
+
+1. **Quelles modalités entrent et sortent réellement ?** Ne pas inférer la génération à partir de la seule compréhension.
+2. **Où sont les frontières ?** Identifier encodeurs, projecteurs, modèle de langage, générateurs, codecs et runtime.
+3. **Quelle représentation est prédite ?** Tokens textuels, codes audio, tokens visuels, patches ou états latents.
+4. **Quel mécanisme produit la sortie ?** Décodage autorégressif, débruitage itératif, décodage de codec ou appel externe.
+5. **Quelle preuve soutient la comparaison ?** Une architecture publiée ne prouve pas à elle seule une supériorité de qualité, de coût ou de vitesse.
+
+::: {.language-switch}
+**Langue:** [Français](../../fr/exercises/multimodal-architectures.qmd) · [English](../../en/exercises/multimodal-architectures.qmd)
+:::

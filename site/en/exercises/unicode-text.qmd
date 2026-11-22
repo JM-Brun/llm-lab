@@ -1,0 +1,44 @@
+---
+title: "Exercises — Unicode, UTF-8, and normalization"
+subtitle: "Comprehension question and worked answer"
+description-meta: "Comprehension question about characters, Unicode code points, and UTF-8 bytes."
+keywords: ["type:exercise-hub", "destination:practice", "topic:unicode-text-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/unicode-text-exercises"
+summary: "Comprehension question about characters, Unicode code points, and UTF-8 bytes."
+scope: "Comprehension question about characters, Unicode code points, and UTF-8 bytes."
+purpose: "Distinguish an abstract character, a Unicode code point, and a UTF-8 byte without confusing them with a tokenizer's tokens and IDs."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/unicode-text"]
+tags: ["type:exercise-hub", "destination:practice", "topic:unicode-text-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Unicode, UTF-8, and text normalization](../unicode-text.qmd)
+
+## Check the distinctions
+
+A letter “é” is displayed on screen. Which statement correctly distinguishes the representation layers?
+
+1. A character is an abstract text unit; a Unicode code point identifies an element of the code space; UTF-8 encodes code points as bytes.
+2. A character is always one byte; a code point is the token; UTF-8 is the model's vocabulary.
+3. A code point and a UTF-8 byte are two names for the same thing.
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+The first statement is correct. A perceived character may be represented by one or more code points; each code point is then encoded as a sequence of one to four UTF-8 bytes. Normalization can also map distinct sequences to the same normalized form. Neither code points nor bytes are, by themselves, the tokens or IDs of a particular tokenizer.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/unicode-text.qmd) · [English](../../en/exercises/unicode-text.qmd)
+:::

@@ -1,0 +1,44 @@
+---
+title: "Exercises — RoPE"
+subtitle: "Questions, exercises, and worked answers"
+description-meta: "Questions and reasoning associated with rotary positional encoding (RoPE)."
+keywords: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/rope-exercises"
+summary: "Questions and reasoning associated with rotary positional encoding (RoPE)."
+scope: "Questions and reasoning associated with rotary positional encoding (RoPE)."
+purpose: "Check understanding of Q/K rotations, relative offsets, and the limits of common-shift invariance."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/rope"]
+tags: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: RoPE](../rope.qmd)
+
+## Check your understanding
+
+Consider an attention head using standard RoPE.
+
+1. Which components are rotated: Q, K, or V?
+2. Why does the dot product between a query and a key depend on the relative offset of their positions?
+3. What does — and does not — follow from the score being invariant when the same shift is added to every position?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Standard RoPE rotates queries Q and keys K after projection, not values V. For one coordinate pair, the rotations make the dot product depend on the difference between the two angles, hence on the relative offset. Common-shift invariance holds for fixed, unrotated Q/K; it does not guarantee that adding a real prefix leaves hidden states and Q/K projections unchanged. Nor does it prove reliable extrapolation to arbitrary lengths.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/rope.qmd) · [English](../../en/exercises/rope.qmd)
+:::

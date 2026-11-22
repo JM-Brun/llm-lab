@@ -24,30 +24,54 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 34 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 45 pages d’exercices par leçon"}
 
 ### Comprendre
 
 - [Panorama des LLM](exercises/llm-overview.qmd)
 - [Génération autorégressive](exercises/generation.qmd)
+
+#### Contexte et adaptation
+
+- [Apprentissage en contexte](exercises/in-context-learning.qmd)
+- [Ingénierie du contexte](exercises/context-engineering.qmd)
+
+#### Texte et représentations
+
 - [Texte et données](exercises/text-data.qmd)
 - [Espace des embeddings](exercises/embedding-space.qmd)
 - [Encodage positionnel](exercises/positional-encoding.qmd)
 - [Représentations contextualisées](exercises/contextualized-representations.qmd)
+
+#### Transformer les représentations
+
 - [Transformer](exercises/transformer.qmd)
 - [Requêtes, clés et valeurs](exercises/queries-keys-values.qmd)
 - [Attention à produit scalaire](exercises/scaled-dot-product-attention.qmd)
 - [Masquage causal](exercises/causal-masking.qmd)
+
+#### Scores et probabilités
+
 - [Logits](exercises/logits.qmd)
 - [Probabilités](exercises/probabilites.qmd)
 - [Entropie](exercises/entropy.qmd)
+
+#### Scoring des tokens observés
+
 - [Vraisemblance](exercises/vraisemblance.qmd)
 - [Entropie croisée](exercises/cross-entropy.qmd)
+
+#### Loss et gradients
+
 - [Fonction de perte](exercises/loss.qmd)
 - [Gradients](exercises/gradients.qmd)
+- [Boucle d'entraînement](exercises/training-loop.qmd)
+- [Post-entraînement](exercises/post-training.qmd)
+
+#### Architectures et limites
+
 - [Architectures Transformer](exercises/transformer-architectures.qmd)
 - [Limites des LLM](exercises/llm-limits.qmd)
-- [Post-entraînement](exercises/post-training.qmd)
 
 ### Construire
 
@@ -61,11 +85,33 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ### Approfondir
 
+#### Attention, position et architectures
+
 - [Attention croisée](exercises/cross-attention.qmd)
+- [RoPE](exercises/rope.qmd)
+- [Encodage positionnel sinusoïdal](exercises/sinusoidal-positional-encoding.qmd)
 - [Architectures hybrides](exercises/hybrid-llm-architectures.qmd)
+- [Architectures multimodales](exercises/multimodal-architectures.qmd)
+- [Next-Concept Modeling](exercises/next-concept-modeling.qmd)
+
+#### Texte et tokenisation
+
 - [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
-- [Apprentissage en contexte](exercises/in-context-learning.qmd)
-- [Complexité computationnelle des LLM](exercises/llm-computational-complexity.qmd)
+- [Unicode, UTF-8 et normalisation](exercises/unicode-text.qmd)
+
+#### Outils mathématiques et géométrie
+
+- [Approfondissement sur les embeddings](exercises/embeddings-deep-dive.qmd)
+
+#### Inférence et efficacité
+
+- [Stratégies de décodage](exercises/decoding-strategies.qmd)
+- [Complexité de calcul des LLM](exercises/llm-computational-complexity.qmd)
+- [Compression et LLM](exercises/compression-revision.qmd)
+- [RAG, mémoire et transmission au contexte](exercises/rag-memory-boundaries.qmd)
+
+#### Échelle et recherche
+
 - [Émergence](exercises/emergence.qmd)
 - [Évolution des LLM](exercises/llm-evolution.qmd)
 
