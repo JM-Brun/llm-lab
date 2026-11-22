@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap separates forward pass, loss, gradient, actual parameter update and independent validation measurement; the lesson includes an answered self-check on the loop and overfitting."
+      note: "The recap separates forward pass, loss, gradient, actual parameter update and independent validation measurement; the worked questions, SGD calculations, and integrative exercise are collected on the [dedicated practice page](exercises/training-loop.qmd)."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:en", "status:published"]
 -->
 
