@@ -225,7 +225,7 @@ In addition to the checks above, validate:
 1. Every `concepts` entry resolves to a concept ID in `data/concepts.yml`.
 2. Every `computational_nodes` entry resolves to a node ID (not merely a branch or edge) in `data/computational-graph.yml`.
 3. Every `lesson_pages` entry resolves to a published page with an appropriate reader-facing destination and language; FR and EN counterparts must be semantically aligned.
-4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the lesson topic plus `-exercises`.
+4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the topic of the corresponding lesson or implementation page plus `-exercises`.
 5. Every `implementation_pages` entry resolves to a published `guided-build` page in `build`, with the correct language. It must remain an optional implementation link, not a substitute for the conceptual lesson.
 6. Do not require every day to have a concept, computational node, exercise link, or implementation companion if the knowledge model does not currently represent one. Record a genuine registry gap for review rather than fabricating a reference.
 7. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
@@ -233,20 +233,17 @@ In addition to the checks above, validate:
 
 The manifest uses `lesson_pages`, `computational_nodes`, and optional `practice_pages` / `implementation_pages` to make these ownership boundaries explicit. The previous generic `resources` field is intentionally avoided because the repository now distinguishes page resources from first-class non-page resources in `data/resources.yml`.
 
-### Validation expectations
+### Manifest-level validation expectations
 
-A future validator should check, at minimum:
+In addition to the metadata-reference checks in §7.2, a future validator should check:
 
 1. Exactly 24 unique day numbers, with no gaps.
-2. Unique, stable day IDs.
+2. Unique, stable day IDs and valid act references.
 3. Both FR and EN titles, questions, and outcomes.
-4. Every referenced concept ID exists in `data/concepts.yml`.
-5. Every referenced page/resource ID resolves to a published bilingual page or an explicitly documented language exception.
-6. Exercise references resolve to the Practice & experiment destination.
-7. Activity types belong to the controlled set.
-8. No duplicate primary topic without an explicit pedagogical rationale.
-9. No calendar ordering is accidentally exported as hard prerequisite edges.
-10. No reader-facing YAML metadata is rendered as lesson prose.
+4. Activity types belong to the controlled set and duration estimates are positive, bounded values.
+5. No duplicate primary topic without an explicit pedagogical rationale.
+6. No calendar ordering is accidentally exported as hard prerequisite edges.
+7. No reader-facing YAML metadata is rendered as lesson prose.
 
 Do not add a new CI workflow for this feature. Extend an existing validation/build entry point only when the data model and acceptance rules are stable and the check provides real value.
 
