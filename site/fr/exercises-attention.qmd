@@ -528,7 +528,7 @@ G. Tous les modèles ont autant de têtes de requête que de têtes clés/valeur
 
 ### Exercice AT-D — Pourquoi diviser les scores par √dₖ ? {#ex-attention-score-scaling-variance}
 
-On suppose que les composantes de $q$ et $k$ sont indépendantes entre elles, indépendantes d'un vecteur à l'autre, de moyenne nulle et de variance unité. On pose $S=q^\top k=\sum_{i=1}^{d_k}q_i k_i$.
+On suppose que toutes les composantes $q_i$ et $k_i$ sont mutuellement indépendantes, de moyenne nulle et de variance unité. On pose $S=q^\top k=\sum_{i=1}^{d_k}q_i k_i$.
 
 1. Calculer $\mathbb{E}[S]$.
 2. Montrer que $\operatorname{Var}(q_i k_i)=1$, puis en déduire $\operatorname{Var}(S)$.
