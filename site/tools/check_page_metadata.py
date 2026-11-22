@@ -130,7 +130,9 @@ def _check_self_check_coverage(
                 lesson_source = lesson_source[:lesson_check_start]
             lesson_sources.append((related_id, lesson_source))
         if not lesson_sources:
-            errors.append(f"{relative}: practice-page self-check coverage needs at least one related lesson")
+            errors.append(
+                f"{relative}: practice-page self-check coverage needs at least one related lesson"
+            )
             return
     else:
         lesson_sources = [(relative, source[:check_start])]
