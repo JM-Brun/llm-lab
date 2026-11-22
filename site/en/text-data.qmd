@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes token, ID and embedding, then traces Unicode text → tokens → IDs → vectors → contextual representations. The bilingual collection provides six formative exercises, worked solutions and a reproducible GPT-2 tokenizer trace; the introductory running example differs from FR without changing the concepts assessed."
+      note: "The recap distinguishes the token, its ID in the vocabulary, and the embedding from the table. It explains why a repeated ID reads the same initial vector twice with fixed parameters."
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
@@ -38,7 +38,7 @@ A **tokenizer** splits text into units called **tokens**. Its **vocabulary** map
 ## From the prefix to token IDs {#the-path-from-text-to-model}
 
 ::: {#tokenizer-output}
-With the GPT-2 tokenizer, the last token of “What have the Romans ever done for us?” is the **question mark** (`"?"`). Its ID is `30`.
+Exact prefix to copy: `What have the Romans ever done for us?`. The GPT-2 tokenizer produces nine tokens. The last is the **question mark** (`"?"`), with ID `30`.
 
 The shorter text `hello world` lets you follow the entire sequence. The quotes mark the contents of each token.
 
@@ -51,6 +51,17 @@ The space before `world` is part of the second token. Across the two examples, s
 :::
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
+
+### One text, two tokenizations {#compare-tokenizers}
+
+Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below, `␠` stands for a space in the input. Each fragment matches the ID at the same position.
+
+| Tokenizer | Fragments in order | IDs in the same order | Total |
+|---|---|---|---:|
+| `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
+| `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
+
+The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
@@ -76,7 +87,7 @@ The **token** is the unit produced by the split. The **ID** is its reference num
 - **Compute.** A longer sequence adds positions to process. The effect on time and cost depends on the architecture, hardware, and service. [Inference complexity](llm-computational-complexity.qmd).
 - **Languages.** Two translations of the same passage can use different numbers of tokens. A fixed context budget or, depending on the protocol, a fixed training budget can therefore cover different amounts of text across languages. Measure the efficiency of the split by language and text type, then evaluate quality separately on the target tasks. [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
-[Check your understanding by following IDs to the rows of the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+[Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
 In the next lesson, return to the last token of the prefix. With the GPT-2 tokenizer and its corresponding table, ID `30` tells the model which row to read. [What does that row contain, and how does the model use it?](embedding-space.qmd)
 

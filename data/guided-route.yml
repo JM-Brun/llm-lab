@@ -49,10 +49,10 @@ stages:
       result:
         fr: 'Un tokenizer découpe le texte en tokens et retrouve l’identifiant de chacun dans son vocabulaire.'
         en: 'A tokenizer splits the text into tokens and looks up each token’s ID in its vocabulary.'
-      signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \{0,\ldots,V-1\}'
+      signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \mathcal{I}_{\mathrm{tok}}'
       criterion:
-        fr: 'La longueur $T$ de la suite d’identifiants dépend du texte $s$ et du tokenizer choisi. $V$ est la taille de son vocabulaire.'
-        en: 'The length $T$ of the ID sequence depends on the text $s$ and the tokenizer used. $V$ is its vocabulary size.'
+        fr: 'La longueur $T$ dépend du texte $s$ et du tokenizer choisi. $\mathcal{I}_{\mathrm{tok}}$ est l’ensemble des IDs valides de ce tokenizer.'
+        en: 'The length $T$ depends on the text $s$ and the tokenizer used. $\mathcal{I}_{\mathrm{tok}}$ is the set of valid IDs for that tokenizer.'
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
@@ -61,7 +61,9 @@ stages:
       text-data:
         mobilizes: ["node:raw-text-context"]
         objects: ["concept:token", "node:token-ids"]
-        outcome: {fr: "Relier chaque token à son identifiant", en: "Relate each token to its ID"}
+        outcome:
+          fr: "Suivre le passage du texte aux IDs et expliquer ce qui varie entre deux tokenizers."
+          en: "Trace text to IDs and explain what can change between two tokenizers."
     optional_pages:
       fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation]
       en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation]

@@ -41,6 +41,8 @@ No. Proximity between vocabulary indices places no constraint on the geometry of
 
 </details>
 
+[Check what stays the same when you renumber the IDs and reorder the table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-embedding-space.qmd) · [English](../en/revision-embedding-space.qmd)
 :::

@@ -41,6 +41,8 @@ Non. La proximité des indices dans le vocabulaire ne contraint pas la géométr
 
 </details>
 
+[Vérifier ce qui reste identique quand on renumérote les IDs et qu’on réordonne la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-embedding-space.qmd) · [English](../en/revision-embedding-space.qmd)
 :::

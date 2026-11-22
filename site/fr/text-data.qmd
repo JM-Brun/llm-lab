@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue token, ID et embedding, puis déroule la chaîne texte Unicode → tokens → IDs → vecteurs → représentations contextualisées. La collection bilingue propose six exercices formatifs, des corrigés et une trace reproductible avec tokenizer GPT-2 ; l'exemple introductif diffère de la version EN sans changer les notions évaluées."
+      note: "Le rappel distingue le token, son ID dans le vocabulaire et le plongement lu dans la table. Il explique pourquoi un ID répété lit deux fois le même vecteur initial à paramètres fixes."
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
@@ -38,7 +38,7 @@ Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabu
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
 
 ::: {#tokenizer-output}
-Avec le tokenizer de GPT-2, le dernier token de « C'est une bonne situation, ça, scribe ? » contient **l'espace et le point d'interrogation** (`" ?"`). Son ID est `5633`.
+Préfixe exact à copier (apostrophe droite) : `C'est une bonne situation, ça, scribe ?`. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
 
 Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
 
@@ -51,6 +51,17 @@ L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, 
 :::
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
+
+### Un texte, deux découpages {#compare-tokenizers}
+
+Gardons le texte `2 + 2 = 4` fixe et changeons de tokenizer. Dans les fragments ci-dessous, `␠` représente un espace du texte. Chaque fragment s’aligne avec l’ID de même rang.
+
+| Tokenizer | Fragments dans l’ordre | IDs dans le même ordre | Total |
+|---|---|---|---:|
+| `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
+| `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
+
+La [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace) reproduit le tableau avec `tiktoken==0.14.0` et vérifie que chaque liste d’IDs se décode en texte d’origine.
 
 ::: {.callout-tip title="Token, ID et plongement" #revision-summary}
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
@@ -76,7 +87,7 @@ Le **token** est l'unité issue du découpage. L'**ID** est son numéro de réf�
 - **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
 - **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
-[Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+[Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
 Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenizer de GPT-2 et sa table associée, l'ID `5633` indique quelle ligne lire. [Que contient cette ligne et comment le modèle s'en sert-il ?](embedding-space.qmd)
 
