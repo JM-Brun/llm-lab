@@ -29,42 +29,38 @@ This document contains short calendar-sized explanations, not replacement lesson
 
 **Question**
 
-Comment un texte devient-il une séquence que le modèle peut traiter ?
+Comment un tokenizer transforme-t-il un texte en unités discrètes ?
 
 **Réponse courte**
 
-Un tokenizer découpe le texte en unités appelées *tokens*. Son vocabulaire associe chaque token à un identifiant entier (*token ID*). Le modèle reçoit la séquence ordonnée de ces identifiants.
+Un tokenizer applique une règle de segmentation à une chaîne de caractères et produit une séquence ordonnée de *tokens*. Un token est une unité du vocabulaire du tokenizer : selon la méthode et le vocabulaire, il peut correspondre à un mot, une partie de mot, un caractère ou une séquence d'octets.
 
-Il faut distinguer trois objets :
-
-1. le **token**, fragment de texte produit par le découpage ;
-2. son **ID**, indice dans le vocabulaire de ce tokenizer ;
-3. son **embedding**, vecteur lu dans la ligne correspondante de la table d'embeddings.
-
-Un ID n'est pas une quantité de sens. L'ID 17 n'est ni « plus grand », ni plus fréquent, ni plus proche sémantiquement de l'ID 18. C'est un identifiant local à un vocabulaire. Deux tokenizers peuvent découper le même texte différemment et attribuer des IDs différents.
+Il ne faut donc pas supposer qu'un token correspond toujours à un mot lisible. La segmentation dépend du tokenizer utilisé ; deux tokenizers peuvent découper différemment une même chaîne.
 
 **Exemple guidé**
 
-Avec un tokenizer jouet, « chat suit le chat » peut être découpé en quatre tokens :
+Avec un tokenizer jouet, « chat suit le chat » peut être segmenté en quatre tokens :
 
 `chat | suit | le | chat`
 
-Le vocabulaire associe ici les IDs `[17, 42, 8, 17]`. La table d'embeddings lit donc les lignes 17, 42, 8 et 17, dans cet ordre. Les deux occurrences de `chat` sélectionnent le même vecteur initial si les paramètres de la table sont identiques. Le Transformer pourra ensuite produire des états contextualisés différents pour ces deux positions.
+Un autre tokenizer pourrait découper certains mots en sous-unités. La séquence obtenue dépend de son vocabulaire et de ses règles de segmentation.
+
+Cette journée porte sur la segmentation elle-même. L'association de chaque token à un identifiant entier sera étudiée au jour 4 ; l'utilisation de cet identifiant pour lire un vecteur dans la table d'embeddings viendra au jour 5.
 
 **À vous de vérifier**
 
-Deux tokenizers donnent l'ID `17` à des tokens différents. Peut-on comparer directement leurs IDs ou conclure que les deux tokens ont le même embedding ?
+Deux tokenizers segmentent la même chaîne différemment : le premier produit `["chat", "suit"]`, le second `["cha", "t", "suit"]`. Ont-ils nécessairement produit la même séquence de tokens ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Non. Un ID n'a de sens que dans le vocabulaire qui le définit. Il faut connaître le tokenizer et sa version. Les embeddings appartiennent également aux poids du modèle associé ; l'ID 17 d'un autre vocabulaire ne sélectionne pas nécessairement la même ligne ni le même vecteur.
+Non. Les deux segmentations sont différentes, même si elles représentent la même chaîne de départ. Le découpage dépend du tokenizer et de son vocabulaire ; il faut connaître le tokenizer utilisé pour interpréter la séquence de tokens.
 
 </details>
 
 **À retenir**
 
-Le tokenizer transforme le texte en tokens, puis en IDs. L'ID sert d'indice pour lire un embedding ; il n'encode pas directement le sens du token.
+La tokenisation transforme une chaîne de caractères en une séquence ordonnée d'unités discrètes. Un token n'est pas nécessairement un mot, et sa segmentation dépend du tokenizer.
 
 **Pour aller plus loin :** [Du texte aux tokens](../site/fr/text-data.qmd)  
 **S'exercer :** [Exercices — Texte et données](../site/fr/exercises/text-data.qmd)
@@ -73,19 +69,13 @@ Le tokenizer transforme le texte en tokens, puis en IDs. L'ID sert d'indice pour
 
 **Question**
 
-How does text become a sequence the model can process?
+How does a tokenizer turn text into discrete units?
 
 **Short answer**
 
-A tokenizer splits text into units called *tokens*. Its vocabulary maps each token to an integer identifier (*token ID*). The model receives the ordered sequence of those IDs.
+A tokenizer applies a segmentation rule to a character string and produces an ordered sequence of *tokens*. A token is a unit in the tokenizer's vocabulary: depending on the method and vocabulary, it may correspond to a word, part of a word, a character, or a byte sequence.
 
-Keep three objects distinct:
-
-1. the **token**, the text fragment produced by tokenization;
-2. its **ID**, an index in that tokenizer's vocabulary;
-3. its **embedding**, the vector read from the corresponding row of the embedding table.
-
-An ID is not an amount of meaning. ID 17 is not larger in meaning, more frequent, or semantically closer to ID 18. It is an identifier local to one vocabulary. Different tokenizers can split the same text differently and assign different IDs.
+A token should therefore not be assumed to be a readable word. Segmentation depends on the tokenizer; two tokenizers may split the same string differently.
 
 **Worked example**
 
@@ -93,22 +83,24 @@ With a toy tokenizer, “cat follows the cat” can be split into four tokens:
 
 `cat | follows | the | cat`
 
-The vocabulary maps them here to IDs `[17, 42, 8, 17]`. The embedding lookup therefore reads rows 17, 42, 8, and 17, in that order. Both occurrences of `cat` select the same initial vector when the table parameters are fixed. The Transformer can later produce different contextualized states for the two positions.
+Another tokenizer might split some words into smaller units. The resulting sequence depends on its vocabulary and segmentation rules.
+
+This day focuses on segmentation itself. Mapping each token to an integer ID is covered on day 4; using that ID to look up a vector in the embedding table follows on day 5.
 
 **Check yourself**
 
-Two tokenizers assign ID `17` to different tokens. Can you compare those IDs directly or conclude that the tokens have the same embedding?
+Two tokenizers segment the same string differently: the first produces `["cat", "follows"]`, while the second produces `["ca", "t", "follows"]`. Have they necessarily produced the same token sequence?
 
 <details>
 <summary>Show the answer</summary>
 
-No. An ID has meaning only within the vocabulary that defines it. You need to know the tokenizer and its version. Embeddings also belong to the associated model weights; ID 17 in another vocabulary does not necessarily select the same row or vector.
+No. The two segmentations differ, even though they represent the same original string. The split depends on the tokenizer and its vocabulary; you need to know which tokenizer was used to interpret the token sequence.
 
 </details>
 
 **Takeaway**
 
-The tokenizer turns text into tokens and then IDs. An ID is used to look up an embedding; it does not directly encode the token's meaning.
+Tokenization turns a character string into an ordered sequence of discrete units. A token is not necessarily a word, and segmentation depends on the tokenizer.
 
 **Understand more:** [From text to tokens](../site/en/text-data.qmd)  
 **Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
@@ -366,7 +358,7 @@ For each day:
 
 | Day | Transfer prompt | Evidence of understanding |
 |---|---|---|
-| 03 — Tokenization | Explain why ID 17 cannot be compared across two tokenizer vocabularies. | Distinguishes token, vocabulary-local ID, and embedding lookup. |
+| 03 — Tokenization | Explain why two tokenizers can segment the same character string into different token sequences. | Distinguishes the original string from tokenizer-dependent token segmentation. |
 | 09 — Q/K/V | Predict the effect of changing K alone, then V alone, with the other inputs fixed. | Recognizes that Q/K affect scores and weights, while V affects the aggregated content. |
 | 21 — Cross-entropy | Keep the target fixed and compare losses when its probability changes from 0.8 to 0.2. | Uses (-\ln p(y)), gets the direction right, and does not confuse local token loss with batch loss. |
 
