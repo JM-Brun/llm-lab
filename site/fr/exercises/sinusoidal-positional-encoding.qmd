@@ -2,7 +2,7 @@
 title: "Exercices — Encodage positionnel sinusoïdal"
 subtitle: "Questions, exercices et éléments de réponse"
 description-meta: "Questions et éléments de réponse associés à l'encodage positionnel sinusoïdal."
-keywords: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:deepening", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/sinusoidal-positional-encoding"]
-tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:deepening", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional-encoding-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : Encodage positionnel sinusoïdal](../sinusoidal-positional-encoding.qmd)
