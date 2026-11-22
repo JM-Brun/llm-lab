@@ -45,7 +45,34 @@ The first case is **few-shot / in-context learning**: the examples condition the
 <details>
 <summary>Show the answer and reasoning</summary>
 
-The initial prompt processing (f) starts with tokenizing the text (b), then the model computes the distribution (d). The decoding rule selects a token (e), which is appended to the context (a). The stopping condition is then checked (c); if the limit has not been reached, a new distribution is computed from the extended context and selection repeats. The parameters remain fixed throughout inference: only the context changes. The three-token limit is an external stopping condition, not a model update.
+The initial prompt processing (f) starts with tokenizing the text (b), then the model computes the distribution (d). The decoding rule selects a token (e), which is appended to the context (a). The stopping condition is then checked (c); if the limit has not been reached, a new distribution is computed from the extended context and selection repeats. The parameters remain fixed throughout inference: only the context changes. The three-token limit is an external stopping condition, not a model update. Newly generated tokens depend on previous selections, so an autoregressive continuation cannot be produced in parallel, even though the computation within one model step can use the model's internal parallelism.
+
+</details>
+
+7. **A possible continuation receives probability 0.6. Does this establish that it is true?**
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+No. The value 0.6 is a conditional probability assigned by the model to a continuation in a given context. It is not a factual verification or a guarantee of truth. A highly probable answer can still be false.
+
+</details>
+
+8. **Are generating, scoring an observed target, and learning three names for the same operation?**
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+No. Generation selects a token and extends the context; scoring evaluates the probability of an observed token or sequence; learning uses a loss and its gradients to update parameters. Generation and scoring can be performed with fixed parameters; learning changes the parameters.
+
+</details>
+
+9. **Is every large language model (LLM) necessarily a GPT?**
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+No. LLM describes a category of language models trained at scale. GPT describes a family based on a decoder-only Transformer architecture and an autoregressive objective. Other language-model configurations exist, including encoder-only and encoder-decoder models.
 
 </details>
 
