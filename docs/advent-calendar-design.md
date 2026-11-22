@@ -201,6 +201,7 @@ The manifest is an editorial index, not a metadata registry. Its references must
 | `computational_nodes` | `data/computational-graph.yml` | Stable node IDs for computational states and operations that are not necessarily concepts. Do not put branch IDs or edge IDs here. An empty list is valid when a day is about a quantity not represented as a computational node. |
 | `lesson_pages` | Page-map metadata in `site/**/*.qmd` | Existing FR/EN page IDs. Resolve their `type`, `destination`, `topic`, `level`, `language`, and `status` from the page metadata; do not repeat those tags in the calendar manifest. |
 | `practice_pages` | Page-map metadata in `site/**/*.qmd` | Optional existing exercise-page IDs. Each must resolve to a published `type:exercise-hub`, `destination:practice` page in the matching language. Omit the field when no sufficiently relevant exercise page exists; do not create artificial links to fill all 24 days. |
+| `implementation_pages` | Page-map metadata in `site/**/*.qmd` | Optional implementation companions, kept separate from the main lesson and exercises. Each must resolve to a published `type:guided-build`, `destination:build` page in the matching language. |
 | Concept domains and importance | `data/concepts.yml` and `data/domains.yml` | Derive these from referenced concepts when needed for filtering or reporting. Never copy `domains` or `importance` into each day, because that would drift from the concept registry. |
 | Computational branch membership | `data/computational-graph.yml` | Derive branch membership from the referenced nodes. It is not a calendar act or a prerequisite edge. |
 | Daily question, micro-outcome, activity, duration, day number, act | Calendar manifest | Calendar-specific editorial information. The micro-outcome is deliberately narrower than a page's `purpose`; it is not a replacement for the page learning contract. |
@@ -225,11 +226,12 @@ In addition to the checks above, validate:
 2. Every `computational_nodes` entry resolves to a node ID (not merely a branch or edge) in `data/computational-graph.yml`.
 3. Every `lesson_pages` entry resolves to a published page with an appropriate reader-facing destination and language; FR and EN counterparts must be semantically aligned.
 4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the lesson topic plus `-exercises`.
-5. Do not require every day to have a concept, computational node, or exercise link if the knowledge model does not currently represent one. Record a genuine registry gap for review rather than fabricating a reference.
-6. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
-7. Calendar order must not be translated into `prerequisite` concept relations, `hierarchy` page relations, or computational edges.
+5. Every `implementation_pages` entry resolves to a published `guided-build` page in `build`, with the correct language. It must remain an optional implementation link, not a substitute for the conceptual lesson.
+6. Do not require every day to have a concept, computational node, exercise link, or implementation companion if the knowledge model does not currently represent one. Record a genuine registry gap for review rather than fabricating a reference.
+7. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
+8. Calendar order must not be translated into `prerequisite` concept relations, `hierarchy` page relations, or computational edges.
 
-The manifest uses `lesson_pages`, `computational_nodes`, and optional `practice_pages` to make these ownership boundaries explicit. The previous generic `resources` field is intentionally avoided because the repository now distinguishes page resources from first-class non-page resources in `data/resources.yml`.
+The manifest uses `lesson_pages`, `computational_nodes`, and optional `practice_pages` / `implementation_pages` to make these ownership boundaries explicit. The previous generic `resources` field is intentionally avoided because the repository now distinguishes page resources from first-class non-page resources in `data/resources.yml`.
 
 ### Validation expectations
 
