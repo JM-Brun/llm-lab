@@ -463,6 +463,7 @@ website:
                     - fr/exercises/loss.qmd
                     - fr/exercises/gradients.qmd
                     - fr/exercises/training-loop.qmd
+                    - fr/exercises/post-training.qmd
                 - section: "Architectures et limites"
                   contents:
                     - fr/exercises/transformer-architectures.qmd
@@ -678,6 +679,7 @@ website:
                     - en/exercises/loss.qmd
                     - en/exercises/gradients.qmd
                     - en/exercises/training-loop.qmd
+                    - en/exercises/post-training.qmd
                 - section: "Architectures and limits"
                   contents:
                     - en/exercises/transformer-architectures.qmd
