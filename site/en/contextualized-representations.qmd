@@ -103,7 +103,7 @@ This also does not guarantee that the model will represent human-interpreted sen
 - **Result:** hidden states can differ, without guaranteeing a clean geometric representation of human “senses.”
 :::
 
-In a causal GPT, the prefix accessible at a position ends at the current token. With position and weights fixed, [compare three sequences with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Check whether the changed token is in the accessible prefix before predicting its effect on the state.
+In a causal GPT, the prefix accessible at a position ends at the current token. With position and weights fixed, a change to the accessible prefix can change the current state; a change after that position must not change it.
 
 ## Where this fits in the model
 
