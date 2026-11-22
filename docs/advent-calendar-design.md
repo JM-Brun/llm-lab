@@ -13,6 +13,21 @@ The intended learner outcome is cumulative: explain how a text context becomes a
 
 The initial format is **24 short daily units**, suitable for December 1–24, but the content should remain useful as an evergreen mini-course after the seasonal event.
 
+### 1.1 Scope boundary
+
+The 24 days focus on the **core autoregressive language-model mechanism**: supplied context, text/token representations, Transformer computation, next-token distributions, generation, observed-target scoring, the basic training objective, parameter updates, and held-out evaluation.
+
+The calendar is not intended to cover the whole LLM application or research landscape. In particular, these topics remain outside the core 24-day sequence and should be reached through optional LLM Lab resources where useful:
+
+- application-level context use and design (in-context learning, context engineering, retrieval, and memory);
+- post-training, instruction tuning, preference optimization, and reinforcement learning;
+- tool calling and agentic systems;
+- alternative model families and multimodal architectures;
+- scaling laws, emergent-ability claims, and research-frontier topics;
+- production deployment, serving, and infrastructure optimization beyond the prefill/decode/KV-cache intuition.
+
+This boundary is deliberate. It keeps the calendar focused on one coherent computational model rather than turning it into a compressed survey of every topic in the repository. Exclusion from the 24 days does not imply low importance; it means the topic belongs in a different route or an optional follow-up.
+
 ## 2. Architectural fit with LLM Lab
 
 The calendar is a reader-facing editorial projection of canonical project knowledge. It does not own scientific definitions or dependency semantics.
