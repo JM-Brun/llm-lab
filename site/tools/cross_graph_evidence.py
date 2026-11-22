@@ -29,6 +29,7 @@ class SourceEvidenceRecord:
 class ExtractionItemRecord:
     item_id: str
     source_id: str
+    kind: str
     claim: str
     locator: dict[str, Any] | None
     confidence: str | None
@@ -38,6 +39,7 @@ class ExtractionItemRecord:
     classification_concepts: tuple[str, ...]
     concept_mapping_basis: dict[str, tuple[str, ...]]
     disposition: str | None
+    disposition_rationale: str | None
     candidate_pages: tuple[str, ...]
     candidate_concepts: tuple[str, ...]
     path: str
@@ -338,6 +340,7 @@ def load_cross_graph_evidence_projection(
             extraction_items_by_id[item_id] = ExtractionItemRecord(
                 item_id=item_id,
                 source_id=source_id,
+                kind=_optional_text(item.get("kind")) or "unspecified",
                 claim=claim,
                 locator=locator,
                 confidence=_optional_text(evidence.get("confidence"))
@@ -351,6 +354,7 @@ def load_cross_graph_evidence_projection(
                 },
                 disposition=_optional_text(classification.get("disposition"))
                 or _optional_text(item.get("disposition")),
+                disposition_rationale=_optional_text(item.get("disposition_rationale")),
                 candidate_pages=candidate_pages,
                 candidate_concepts=candidate_concepts,
                 path=item_path,
