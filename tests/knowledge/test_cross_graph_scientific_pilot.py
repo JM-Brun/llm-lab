@@ -86,6 +86,7 @@ def test_flashattention_evidence_is_an_io_implementation_not_source_coding() -> 
 def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
     concepts = _load_yaml(ROOT / "data" / "concepts.yml")
     computational = _load_yaml(ROOT / "data" / "computational-graph.yml")
+    sources = _load_yaml(ROOT / "data" / "sources.yml")
     shannon = _load_yaml(
         ROOT / "data" / "extractions" / "shannon-mathematical-theory-communication-1948.yml"
     )
@@ -112,6 +113,10 @@ def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
 
     computation_ids = {item["id"] for item in computational["nodes"]}
     assert {"token-nll", "sequence-log-likelihood", "kv-cache"} <= computation_ids
+
+    source_states = {item["id"]: item["scan_status"] for item in sources["sources"]}
+    assert source_states["shannon-mathematical-theory-communication-1948"] == "partially-scanned"
+    assert source_states["rissanen-langdon-arithmetic-coding-1979"] == "partially-scanned"
 
     shannon_item = next(
         item
