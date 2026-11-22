@@ -45,8 +45,10 @@ By the end of this page, you will be able to:
 - **Search:** greedy decoding optimizes a local decision; beam search keeps several hypotheses; contrastive decoding compares an expert and an amateur model.
 - **Evaluation:** quality and diversity depend on the task, metrics, and protocol; documenting settings is necessary for reproducibility. No strategy guarantees truth or global coherence.
 
-**Quick question:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
+
 :::
+
+[Comprehension question on decoding](exercises/decoding-strategies.qmd).
 
 At the first step of the Romans example, the [illustrative distribution](probabilities.qmd#running-example-next-token) assigns 0.6 to “They” and 0.2 to “Aqueducts”. Greedy selection takes “They”. Unfiltered sampling can also draw “Aqueducts”. The [selected token is appended to the prefix](generation.qmd), which conditions the next step.
 
