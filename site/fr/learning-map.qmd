@@ -65,7 +65,7 @@ Ces étapes suivent le curriculum canonique. Elles détaillent l’ordre de lect
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
-[Résoudre l’exercice de fin de parcours](exercises/training-loop.qmd#end-to-end-transfer), puis [concevoir une évaluation sur des données tenues à l’écart](evaluation-experimentale.qmd).
+[Résoudre l’exercice de fin de parcours](exercises/exercises/training-loop.qmd#end-to-end-transfer), puis [concevoir une évaluation sur des données tenues à l’écart](evaluation-experimentale.qmd).
 
 ::: {.guided-route-companion}
 
