@@ -235,8 +235,9 @@ days:
       fr: "Décrire le rôle du MLP, des connexions résiduelles et de la normalisation, en signalant que leur ordre dépend de l'architecture."
       en: "Describe the roles of the MLP, residual connections, and normalization, noting that their order depends on the architecture."
     concepts: []
-    lesson_pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    lesson_pages: [fr/transformer, en/transformer]
     computational_nodes: [block-update]
+    implementation_pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
     practice_pages: [fr/transformer-block-walkthrough-exercises, en/transformer-block-walkthrough-exercises]
     activity: trace
     duration_minutes: 8
