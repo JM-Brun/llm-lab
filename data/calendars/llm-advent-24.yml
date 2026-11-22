@@ -18,22 +18,22 @@ calendar:
 
 acts:
   - id: text-and-representations
-    days: [1, 6]
+    day_range: [1, 6]
     title:
       fr: "Du texte aux représentations"
       en: "From text to representations"
   - id: transformer-computation
-    days: [7, 12]
+    day_range: [7, 12]
     title:
       fr: "Le calcul du Transformer"
       en: "Transformer computation"
   - id: prediction-and-generation
-    days: [13, 18]
+    day_range: [13, 18]
     title:
       fr: "Prédiction et génération"
       en: "Prediction and generation"
   - id: scoring-and-learning
-    days: [19, 24]
+    day_range: [19, 24]
     title:
       fr: "Scoring et apprentissage"
       en: "Scoring and learning"
