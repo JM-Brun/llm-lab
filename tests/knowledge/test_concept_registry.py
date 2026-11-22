@@ -438,3 +438,22 @@ def test_concept_registry_requires_schema_version_two() -> None:
     data["schema_version"] = 1
     errors = validate_registry(data)
     assert errors == ["registry: expected mapping with schema_version: 2"]
+
+
+
+def test_kl_divergence_is_not_a_prerequisite_for_cross_entropy() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    concepts = {item["id"]: item for item in data["concepts"]}
+    edges = {(item["from"], item["type"], item["to"]) for item in data["relations"]}
+
+    # Cross-entropy is defined directly from a target distribution and a
+    # predicted distribution. KL is useful for the decomposition
+    # H(q, p) = H(q) + D_KL(q || p), but is not a learning prerequisite.
+    assert "kl-divergence" in concepts
+    assert ("kl-divergence", "prerequisite", "cross-entropy") not in edges
+
+    # Preserve the optional mathematical route instead of encoding a false
+    # prerequisite edge in the concept graph.
+    assert "fr/language-modeling-math" in concepts["cross-entropy"]["resources"]
+    assert "en/language-modeling-math" in concepts["cross-entropy"]["resources"]
