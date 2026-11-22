@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The new recap connects decoder-only architecture, self-attention and MLP roles, residual connections, normalization and logits; five answered questions check transfer across sublayers, blocks and generation."
+      note: "The new recap connects decoder-only architecture, self-attention and MLP roles, residual connections, normalization and logits; the dedicated practice page provides transfer questions across sublayers, blocks and generation."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -239,8 +239,6 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 <h3 id="further-reading">Further reading</h3>
 <p>For visualizations, the foundational paper, and implementation resources, see the <a href="deepen.qmd#transformer-resources">Transformer resources in Deepen</a>. For a complementary first overview, see <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>.</p>
 
-<h3>Practice</h3>
-<p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
 
 </div>
 </details>
