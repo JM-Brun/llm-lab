@@ -127,6 +127,13 @@ def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
     source_levels[source_id] = tuple(
         sorted(set(source_levels.get(source_id, ())) | {"mutual-information"})
     )
+    sources = dict(projection.sources_by_id)
+    sources[source_id] = replace(
+        sources[source_id],
+        related_concepts=tuple(
+            sorted(set(sources[source_id].related_concepts) | {"mutual-information"})
+        ),
+    )
     candidate_item = next(iter(projection.extraction_items_by_id.values()))
     updated_item = replace(
         candidate_item,
@@ -146,21 +153,26 @@ def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
     updated_projection = replace(
         projection,
         source_level_concepts_by_id=source_levels,
+        sources_by_id=sources,
         extraction_items_by_id=items,
         extraction_items_by_concept=item_mappings,
     )
     updated_index = replace(evidence_index, evidence_projection=updated_projection)
 
     result = query_concept(updated_index, "mutual-information")
-    assert any(
-        gap.kind == "source-catalogue-only" and gap.source_id == source_id
+    source_gap = next(
+        gap
         for gap in result.gaps
+        if gap.kind == "source-catalogue-only" and gap.source_id == source_id
     )
-    assert any(
-        gap.kind == "candidate-destination-not-promoted"
+    assert source_gap.basis == ("related.concepts",)
+    candidate_gap = next(
+        gap
+        for gap in result.gaps
+        if gap.kind == "candidate-destination-not-promoted"
         and gap.item_id == candidate_item.item_id
-        for gap in result.gaps
     )
+    assert candidate_gap.basis == ("candidate_destinations.concepts",)
     assert not any(
         step.entity_type == "extraction_item" and step.entity_id == candidate_item.item_id
         for path in result.paths
@@ -183,10 +195,12 @@ def test_missing_item_locator_is_reported_as_a_gap(
     )
 
     result = query_concept(updated_index, "v-information")
-    assert any(
-        gap.kind == "missing-item-locator" and gap.item_id == item_id
+    missing_locator_gap = next(
+        gap
         for gap in result.gaps
+        if gap.kind == "missing-item-locator" and gap.item_id == item_id
     )
+    assert missing_locator_gap.basis == ("item.locator",)
     path = next(
         path
         for path in result.paths
