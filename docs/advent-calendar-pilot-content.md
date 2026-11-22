@@ -601,7 +601,7 @@ Considérons deux emplois de « vol » :
 - « Le pilote prépare le vol » — un trajet aérien.
 - « Le voleur prépare le vol » — un larcin.
 
-Le token « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial `E[i]` est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
+Dans cette illustration simplifiée où chaque mot est un token, « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial `E[i]` est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
 
 **À vous de vérifier**
 
@@ -638,7 +638,7 @@ Consider the two uses of “bat”:
 - “The player saw a bat” — sports equipment.
 - “The cave contained a bat” — an animal.
 
-The token “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup `E[i]` is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
+In this word-level toy segmentation, “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup `E[i]` is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
 
 **Check yourself**
 
@@ -684,6 +684,8 @@ Dans le GPT de référence étudié ici, un bloc Transformer est une unité de c
 | Connexions résiduelles | Réinjectent l'état précédent et l'actualisation produite par une sous-couche dans le flux résiduel. |
 | Normalisation | Stabilise l'échelle des activations ; son placement dépend de la variante d'architecture. |
 
+Dans le GPT étudié ici, l'auto-attention est multi-tête : plusieurs têtes fonctionnent en parallèle, puis leurs sorties sont combinées. Leur rôle sera étudié plus tard.
+
 **Exemple guidé**
 
 Suivez les états d'entrée d'un bloc : l'auto-attention permet à chaque position de combiner des informations provenant des positions autorisées ; la MLP transforme ensuite l'état de chaque position. Les connexions résiduelles et la normalisation accompagnent ces sous-couches. Les états de sortie deviennent l'entrée du bloc suivant.
@@ -724,6 +726,8 @@ In the reference GPT studied here, a Transformer block is a repeated computation
 | MLP (feed-forward network) | Transforms each position independently, using weights shared across positions. |
 | Residual connections | Carry the previous state and the sublayer update into the residual stream. |
 | Normalization | Stabilizes activation scale; its placement depends on the architecture variant. |
+
+In the GPT studied here, self-attention is multi-head: several heads operate in parallel and their outputs are combined. Their role is examined later.
 
 **Guided example**
 
