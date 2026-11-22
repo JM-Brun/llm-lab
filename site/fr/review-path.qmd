@@ -26,7 +26,7 @@ Choisissez une étape pour retrouver les idées à maîtriser et les réviser av
 
 [Parcours guidé et ressources facultatives](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
-**Cartes visuelles pour se tester** · [Même token, deux positions](revision-positional-encoding.qmd#visual-recall) · [Des scores à la sortie](revision-queries-keys-values.qmd#visual-recall) · [Un pas de decode avec le cache KV](revision-inference-generation.qmd#visual-recall)
+**Cartes de rappel visuel pour s’auto-tester** · [Même token, deux positions](revision-positional-encoding.qmd#visual-recall) · [Des scores à la sortie](revision-queries-keys-values.qmd#visual-recall) · [Un pas de decode avec le cache KV](revision-inference-generation.qmd#visual-recall)
 
 {{< include ../includes/generated-lesson-contracts-fr.qmd >}}
 
