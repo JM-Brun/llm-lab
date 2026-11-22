@@ -329,6 +329,51 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             )
             computation_path_count += 1
 
+            for edge in projection.computational_edges:
+                if edge.source_node_id != node_id:
+                    continue
+                target_node = projection.computational_nodes_by_id[edge.target_node_id]
+                target_step = _node_step(target_node, index.pages_by_id[page_id].language)
+                paths.append(
+                    EvidencePath(
+                        path_id=(
+                            f"computation-edge-via-page:{concept_id}:"
+                            f"{page_id}:{edge.edge_id}"
+                        ),
+                        kind="computation-edge-via-page",
+                        concept_id=concept_id,
+                        steps=(concept_step, page_step, node_step, target_step),
+                        links=(
+                            EvidencePathLink(
+                                source_ref=concept_step.ref,
+                                target_ref=page_step.ref,
+                                relation="has-concept-resource",
+                                basis="concepts[].resources",
+                                source_path="data/concepts.yml",
+                            ),
+                            EvidencePathLink(
+                                source_ref=page_step.ref,
+                                target_ref=node_step.ref,
+                                relation="computational-resource-for",
+                                basis="computational_graph.nodes[].resources",
+                                source_path=node.path,
+                            ),
+                            EvidencePathLink(
+                                source_ref=node_step.ref,
+                                target_ref=target_step.ref,
+                                relation=edge.relation_type,
+                                basis="computational_graph.edges[].type",
+                                source_path=edge.path,
+                            ),
+                        ),
+                        caveats=(
+                            "The concept-to-computation association is page-mediated; "
+                            "the final hop is a typed computational-graph edge.",
+                        ),
+                    )
+                )
+                computation_path_count += 1
+
     # Route focus is a separate, stage-mediated pedagogical relation.
     for group in projection.route_focus_groups:
         concept_refs = [
