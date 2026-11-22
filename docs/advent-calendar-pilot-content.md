@@ -18,6 +18,180 @@ This document contains short calendar-sized explanations, not replacement lesson
 
 ---
 
+## Day 01 — What does an LLM predict?
+
+**Act:** Context and representations  
+**Activity:** conceptual check  
+**Target duration:** 6 minutes  
+**Canonical references:** `next-token-prediction`, `conditional-distribution`; computational nodes `raw-text-context`, `forward-computation`, `logits`, `vocabulary-softmax`, `next-token-distribution`
+
+### Français
+
+**Question**
+
+Que calcule réellement un modèle autorégressif à partir d'un contexte ?
+
+**Réponse courte**
+
+À partir du préfixe qui lui est fourni, un modèle autorégressif calcule une **distribution de probabilités sur le token suivant**. Il ne prédit pas directement une phrase entière. Une règle de décodage utilise ensuite cette distribution pour sélectionner un token ; celui-ci est ajouté au contexte avant le calcul suivant.
+
+**Exemple guidé**
+
+Supposons que le préfixe soit « C'est une bonne situation, ça, scribe ? ». Le modèle pourrait attribuer les probabilités illustratives suivantes au prochain token :
+
+| Token suivant possible | Probabilité |
+|---|---:|
+| « Vous » | 0,6 |
+| « Je » | 0,2 |
+| « Moi » | 0,1 |
+| « Eh » | 0,1 |
+
+La somme vaut 1. Le modèle a produit une distribution conditionnée par le préfixe. Si la règle de décodage sélectionne « Vous », le contexte est prolongé ; le modèle calcule alors une nouvelle distribution pour le token suivant. Les valeurs sont fictives et servent uniquement à illustrer le mécanisme.
+
+**À vous de vérifier**
+
+Le modèle attribue 0,6 à « Vous » et 0,2 à « Je ». Peut-on conclure qu'il a déjà choisi « Vous », ou qu'il prédit la phrase complète ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Il a attribué des probabilités aux tokens candidats. Le choix dépend de la règle de décodage appliquée ensuite ; la phrase se construit au fil des étapes, avec une nouvelle distribution après chaque token ajouté.
+
+</details>
+
+**À retenir**
+
+Un LLM autorégressif calcule une distribution conditionnelle pour le prochain token. La génération sélectionne ensuite un token et recommence à partir du contexte enrichi.
+
+**Comprendre davantage :** [Panorama : qu'est-ce qu'un LLM ?](../site/fr/llm-overview.qmd)  
+**S'exercer :** [Exercices — Panorama des modèles de langage](../site/fr/exercises/llm-overview.qmd)
+
+### English
+
+**Question**
+
+What does an autoregressive language model actually compute from a context?
+
+**Short answer**
+
+Given a supplied prefix, an autoregressive model computes a **probability distribution over the next token**. It does not directly predict a complete sentence. A decoding rule then uses that distribution to select a token; the selected token is appended to the context before the next computation.
+
+**Worked example**
+
+Suppose the prefix is “What have the Romans ever done for us?” The model might assign the following illustrative probabilities to the next token:
+
+| Possible next token | Probability |
+|---|---:|
+| “They” | 0.6 |
+| “Aqueducts” | 0.2 |
+| “Nothing” | 0.1 |
+| “Well” | 0.1 |
+
+The probabilities sum to 1. The model has produced a distribution conditioned on the prefix. If the decoding rule selects “They”, the context is extended; the model then computes a new distribution for the next token. These values are illustrative only.
+
+**Check yourself**
+
+The model assigns 0.6 to “They” and 0.2 to “Aqueducts”. Can we conclude that it has already selected “They”, or that it predicts the complete sentence?
+
+<details>
+<summary>Show the answer</summary>
+
+No. It has assigned probabilities to candidate next tokens. The choice depends on the decoding rule applied afterwards; the sentence is built step by step, with a new distribution after each appended token.
+
+</details>
+
+**Takeaway**
+
+An autoregressive LLM computes a conditional distribution for the next token. Generation then selects a token and repeats the computation with the extended context.
+
+**Understand more:** [Language model overview](../site/en/llm-overview.qmd)  
+**Practice:** [Exercises — Language model overview](../site/en/exercises/llm-overview.qmd)
+
+---
+
+## Day 02 — Context: what information does the model have?
+
+**Act:** Context and representations  
+**Activity:** trace  
+**Target duration:** 5 minutes  
+**Canonical references:** computational nodes `raw-text-context`, `token-context`; lesson page `llm-overview`
+
+### Français
+
+**Question**
+
+Quelles informations peuvent conditionner la prochaine prédiction ?
+
+**Réponse courte**
+
+Pour une prédiction autorégressive, le modèle reçoit un **préfixe** : les tokens déjà présents dans le contexte. Il doit estimer le token qui vient ensuite. La continuation visée n'est pas encore une partie du préfixe au moment où elle est prédite.
+
+Après sélection, le token généré est ajouté au contexte et peut conditionner la prédiction suivante. Il faut donc distinguer ce qui est déjà fourni au modèle de ce qu'il est en train de produire.
+
+**Exemple guidé**
+
+Considérons la consigne :
+
+> « La capitale de la France est »
+
+À cet instant, cette chaîne est le préfixe fourni. « Paris » est une continuation possible, mais elle n'est pas encore dans le contexte. Après sélection de « Paris », le préfixe devient « La capitale de la France est Paris » ; le modèle peut alors calculer la distribution suivante.
+
+**À vous de vérifier**
+
+On demande au modèle de continuer « Le résultat de 2 + 2 est ». Avant la génération, le token « 4 » fait-il déjà partie du préfixe ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le préfixe s'arrête après « est ». « 4 » est une continuation candidate. Il ne devient une partie du contexte qu'après avoir été sélectionné et ajouté.
+
+</details>
+
+**À retenir**
+
+Le préfixe décrit l'information effectivement fournie au modèle à un instant donné. La continuation est ce qu'il doit encore prédire ; chaque token généré peut ensuite enrichir le contexte.
+
+**Comprendre davantage :** [Panorama : qu'est-ce qu'un LLM ?](../site/fr/llm-overview.qmd)
+
+### English
+
+**Question**
+
+Which information can condition the next prediction?
+
+**Short answer**
+
+For an autoregressive prediction, the model receives a **prefix**: the tokens already present in the context. It must estimate the token that comes next. The intended continuation is not yet part of the prefix when it is being predicted.
+
+After selection, the generated token is appended to the context and can condition the following prediction. We must distinguish what is already supplied to the model from what it is currently producing.
+
+**Worked example**
+
+Consider the prompt:
+
+> “The capital of France is”
+
+At this point, that string is the supplied prefix. “Paris” is a possible continuation, but it is not yet in the context. After “Paris” is selected, the prefix becomes “The capital of France is Paris”; the model can then compute the next distribution.
+
+**Check yourself**
+
+The model is asked to continue “The result of 2 + 2 is”. Before generation, is the token “4” already part of the prefix?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The prefix ends after “is”. “4” is a candidate continuation. It becomes part of the context only after it has been selected and appended.
+
+</details>
+
+**Takeaway**
+
+The prefix is the information actually supplied to the model at a given moment. The continuation is what it still has to predict; each generated token can then extend the context.
+
+**Understand more:** [Language model overview](../site/en/llm-overview.qmd)
+
+---
+
 ## Day 03 — How does text become tokens?
 
 **Act:** Context and representations  
@@ -104,6 +278,202 @@ Tokenization turns a character string into an ordered sequence of discrete units
 
 **Understand more:** [From text to tokens](../site/en/text-data.qmd)  
 **Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
+
+---
+
+## Day 04 — From a token to its ID
+
+**Act:** Context and representations  
+**Activity:** trace  
+**Target duration:** 5 minutes  
+**Canonical references:** computational nodes `token-id-encoding`, `token-ids`; lesson page `text-data`
+
+### Français
+
+**Question**
+
+Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?
+
+**Réponse courte**
+
+Le vocabulaire d'un tokenizer associe chaque token à un **identifiant entier** (*token ID*). L'identifiant est une adresse discrète utilisée pour retrouver les paramètres correspondants ; ce n'est ni le token lui-même, ni une mesure de sens, de fréquence ou de proximité.
+
+Les IDs sont définis relativement à un vocabulaire donné. Un même entier dans deux vocabulaires différents ne garantit donc pas le même token.
+
+**Exemple guidé**
+
+Considérons un vocabulaire jouet :
+
+| Token | ID |
+|---|---:|
+| `chat` | 17 |
+| `chien` | 42 |
+| `dort` | 8 |
+
+La séquence `chat dort` devient la séquence d'IDs `[17, 8]`. L'ordre est conservé. Le nombre 17 ne signifie pas que « chat » possède davantage de sens que « chien » identifié par 42.
+
+**À vous de vérifier**
+
+Dans un autre tokenizer, l'ID 17 est associé à `chien`. Est-ce contradictoire avec le premier tableau ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Chaque tokenizer possède son propre vocabulaire et sa propre convention d'identifiants. L'ID 17 n'a de sens que relativement au vocabulaire qui le définit.
+
+</details>
+
+**À retenir**
+
+La tokenisation produit des tokens ; le vocabulaire du tokenizer associe ensuite chacun d'eux à un ID entier. Un ID est un indice local au vocabulaire, pas une quantité numérique porteuse de sens.
+
+**Comprendre davantage :** [Du texte aux tokens](../site/fr/text-data.qmd)  
+**S'exercer :** [Exercices — Texte et données](../site/fr/exercises/text-data.qmd)
+
+### English
+
+**Question**
+
+How does the model retrieve the ID associated with each token?
+
+**Short answer**
+
+A tokenizer's vocabulary maps each token to an **integer identifier** (*token ID*). The ID is a discrete address used to retrieve the corresponding parameters; it is neither the token itself nor a measure of meaning, frequency, or proximity.
+
+IDs are defined relative to a particular vocabulary. The same integer in two different vocabularies therefore does not guarantee the same token.
+
+**Worked example**
+
+Consider a toy vocabulary:
+
+| Token | ID |
+|---|---:|
+| `cat` | 17 |
+| `dog` | 42 |
+| `sleeps` | 8 |
+
+The sequence `cat sleeps` becomes the ID sequence `[17, 8]`. The order is preserved. The number 17 does not mean that “cat” has more meaning than “dog”, which is assigned 42.
+
+**Check yourself**
+
+In another tokenizer, ID 17 is assigned to `dog`. Does this contradict the first table?
+
+<details>
+<summary>Show the answer</summary>
+
+No. Each tokenizer has its own vocabulary and identifier convention. ID 17 has meaning only relative to the vocabulary that defines it.
+
+</details>
+
+**Takeaway**
+
+Tokenization produces tokens; the tokenizer's vocabulary then maps each one to an integer ID. An ID is a vocabulary-local index, not a numerical quantity carrying meaning.
+
+**Understand more:** [From text to tokens](../site/en/text-data.qmd)  
+**Practice:** [Exercises — Text and data](../site/en/exercises/text-data.qmd)
+
+---
+
+## Day 05 — An ID becomes a vector
+
+**Act:** Context and representations  
+**Activity:** numerical  
+**Target duration:** 7 minutes  
+**Canonical references:** concept `token-embedding`; computational nodes `embedding-lookup`, `token-embeddings`
+
+### Français
+
+**Question**
+
+Comment un identifiant discret sélectionne-t-il une représentation numérique ?
+
+**Réponse courte**
+
+Le modèle utilise l'ID comme indice dans une **matrice d'embeddings** apprise. Si le vocabulaire contient (V) IDs et si chaque vecteur a (d) composantes, la matrice possède (V) lignes et (d) colonnes :
+
+[
+E in mathbb{R}^{V 	imes d}
+]
+
+Le lookup de l'ID (i) sélectionne la ligne (E_{i,:}), un vecteur de dimension (d). L'ID sert à adresser la ligne ; il n'est pas lui-même le vecteur.
+
+**Exemple guidé**
+
+Voici une matrice jouet de 4 lignes et 3 colonnes. Les valeurs sont fictives et servent uniquement à illustrer l'accès à une ligne.
+
+| ID (ligne) | Composante 1 | Composante 2 | Composante 3 |
+|---:|---:|---:|---:|
+| 0 | 0,1 | 0,0 | −0,2 |
+| 1 | 0,3 | 0,4 | 0,1 |
+| 2 | −0,1 | 0,2 | 0,5 |
+| 3 | 0,0 | −0,3 | 0,2 |
+
+Pour l'ID 2, le lookup renvoie ((-0,1; 0,2; 0,5)). Le vecteur contient trois composantes : sa dimension est donc (d=3). La matrice contient (Vd=4	imes3=12) valeurs.
+
+**À vous de vérifier**
+
+Avec cette même matrice, quel vecteur est sélectionné par l'ID 1 ? Combien de composantes possède-t-il ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La ligne 1 est ((0,3; 0,4; 0,1)). Elle possède trois composantes. L'ID 1 désigne la ligne ; il ne constitue pas une composante du vecteur.
+
+</details>
+
+**À retenir**
+
+La matrice (Einmathbb{R}^{V	imes d}) associe un vecteur appris à chaque ID. Le lookup sélectionne une ligne de dimension (d) ; la contextualisation intervient ensuite dans le Transformer.
+
+**Comprendre davantage :** [Des identifiants aux vecteurs : les embeddings](../site/fr/embedding-space.qmd)  
+**S'exercer :** [Exercices — Espace des embeddings](../site/fr/exercises/embedding-space.qmd)
+
+### English
+
+**Question**
+
+How does a discrete identifier select a numerical representation?
+
+**Short answer**
+
+The model uses the ID as an index into a learned **embedding matrix**. If the vocabulary contains (V) IDs and each vector has (d) components, the matrix has (V) rows and (d) columns:
+
+[
+E in mathbb{R}^{V 	imes d}
+]
+
+Looking up ID (i) selects row (E_{i,:}), a vector of dimension (d). The ID addresses the row; it is not itself the vector.
+
+**Worked example**
+
+Here is a toy matrix with 4 rows and 3 columns. The values are synthetic and illustrate row lookup only.
+
+| ID (row) | Component 1 | Component 2 | Component 3 |
+|---:|---:|---:|---:|
+| 0 | 0.1 | 0.0 | −0.2 |
+| 1 | 0.3 | 0.4 | 0.1 |
+| 2 | −0.1 | 0.2 | 0.5 |
+| 3 | 0.0 | −0.3 | 0.2 |
+
+For ID 2, lookup returns ((-0.1, 0.2, 0.5)). The vector has three components, so its dimension is (d=3). The matrix contains (Vd=4	imes3=12) values.
+
+**Check yourself**
+
+Using the same matrix, which vector is selected by ID 1? How many components does it have?
+
+<details>
+<summary>Show the answer</summary>
+
+Row 1 is ((0.3, 0.4, 0.1)). It has three components. ID 1 identifies the row; it is not a component of the vector.
+
+</details>
+
+**Takeaway**
+
+The matrix (Einmathbb{R}^{V	imes d}) associates a learned vector with each ID. Lookup selects a row of dimension (d); contextualization happens later in the Transformer.
+
+**Understand more:** [From token IDs to vectors: embeddings](../site/en/embedding-space.qmd)  
+**Practice:** [Exercises — Embedding space](../site/en/exercises/embedding-space.qmd)
 
 ---
 
