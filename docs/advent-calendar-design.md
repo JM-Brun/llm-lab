@@ -191,6 +191,46 @@ The proposed manifest is `data/calendars/llm-advent-24.yml`. It should own only:
 
 It must not duplicate concept definitions, page content, source bibliographies, or computational edges.
 
+### 7.1 Reuse the existing metadata model
+
+The manifest is an editorial index, not a metadata registry. Its references must resolve through the existing sources of truth:
+
+| Calendar field | Canonical metadata owner | Contract |
+|---|---|---|
+| `concepts` | `data/concepts.yml` | Stable language-independent concept IDs only. Keep the list focused on concepts actually taught or explicitly contrasted that day. |
+| `computational_nodes` | `data/computational-graph.yml` | Stable node IDs for computational states and operations that are not necessarily concepts. Do not put branch IDs or edge IDs here. An empty list is valid when a day is about a quantity not represented as a computational node. |
+| `lesson_pages` | Page-map metadata in `site/**/*.qmd` | Existing FR/EN page IDs. Resolve their `type`, `destination`, `topic`, `level`, `language`, and `status` from the page metadata; do not repeat those tags in the calendar manifest. |
+| `practice_pages` | Page-map metadata in `site/**/*.qmd` | Optional existing exercise-page IDs. Each must resolve to a published `type:exercise-hub`, `destination:practice` page in the matching language. Omit the field when no sufficiently relevant exercise page exists; do not create artificial links to fill all 24 days. |
+| Concept domains and importance | `data/concepts.yml` and `data/domains.yml` | Derive these from referenced concepts when needed for filtering or reporting. Never copy `domains` or `importance` into each day, because that would drift from the concept registry. |
+| Computational branch membership | `data/computational-graph.yml` | Derive branch membership from the referenced nodes. It is not a calendar act or a prerequisite edge. |
+| Daily question, micro-outcome, activity, duration, day number, act | Calendar manifest | Calendar-specific editorial information. The micro-outcome is deliberately narrower than a page's `purpose`; it is not a replacement for the page learning contract. |
+
+The distinction between concept and computational-node references is intentional. For example, token IDs are represented as nodes in the computational graph, while the broader token concept is in the concept registry. Likewise, the Transformer-block computation is represented in the computational graph; it must not be invented as a concept merely to populate a calendar field. Days 2, 4, 8, and 12 therefore use computational-node references to cover important ideas that do not currently have matching first-class concept records.
+
+Do not copy page tags into the manifest. In particular:
+
+- `topic` is a page-grouping identifier, not a concept ID or calendar-day ID.
+- `level` describes editorial depth, not calendar difficulty or mandatory status.
+- `destination` and `type` classify the linked page, not the calendar entry.
+- `domain` is a primary classification for eligible Deepen pages; it is not a field to add to calendar days. Concept domains remain multi-valued in the concept registry.
+- `status` and `language` belong to the linked page record. The calendar itself has its own lifecycle status and bilingual content.
+
+This avoids creating a competing taxonomy while preserving useful derived views. A future calendar renderer may filter days by concept domain or importance, or show a “Understand” / “Practice” link, but it must resolve those labels from the canonical registries and render localized human-readable text rather than exposing raw IDs.
+
+### 7.2 Validation expectations for metadata links
+
+In addition to the checks above, validate:
+
+1. Every `concepts` entry resolves to a concept ID in `data/concepts.yml`.
+2. Every `computational_nodes` entry resolves to a node ID (not merely a branch or edge) in `data/computational-graph.yml`.
+3. Every `lesson_pages` entry resolves to a published page with an appropriate reader-facing destination and language; FR and EN counterparts must be semantically aligned.
+4. Every `practice_pages` entry resolves to a published `exercise-hub` in `practice`, with the correct language. Where an exercise companion follows the established convention, its topic should be the lesson topic plus `-exercises`.
+5. Do not require every day to have a concept, computational node, or exercise link if the knowledge model does not currently represent one. Record a genuine registry gap for review rather than fabricating a reference.
+6. If a derived view needs concept importance, domains, or computational branches, compute them from their canonical owner; do not persist a copied value in the calendar manifest.
+7. Calendar order must not be translated into `prerequisite` concept relations, `hierarchy` page relations, or computational edges.
+
+The manifest uses `lesson_pages`, `computational_nodes`, and optional `practice_pages` to make these ownership boundaries explicit. The previous generic `resources` field is intentionally avoided because the repository now distinguishes page resources from first-class non-page resources in `data/resources.yml`.
+
 ### Validation expectations
 
 A future validator should check, at minimum:
