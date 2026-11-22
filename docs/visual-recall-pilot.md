@@ -15,6 +15,8 @@ The trial compares two ways to present the same three recall prompts. Does a sch
 3. Five to seven days later, hand out only the three delayed prompts in the learner's language. Ask learners to work from memory and explain their reasoning. Use the same time limit in both conditions. After submission, ask whether they revisited the material and record the actual delay. Score without the format assignment visible where possible.
 4. Use a participant code to match sessions. Record the format, language, relevant prior experience, delay in days, reported review in the interval, each item score, and any incomplete items. Start with the delayed total out of six among learners with all three answers. For randomized pairs with two complete scores, compute the visual score minus the text score. Summarize the totals, those paired differences, and the completion counts. Report missing items and losses to follow-up separately from wrong answers.
 
+Before the first session, freeze the exact prompts, corrections, scoring rubric, and time budgets; record deviations rather than changing one condition during the trial.
+
 A small trial can flag confusing diagrams or recurring reasoning errors. Treat an apparent score advantage as a hypothesis for a larger trial. An exploratory comparison can also show whether differences coincide with prior experience, unequal review, or missed follow-up.
 
 ## Day 0 text equivalents
