@@ -17,9 +17,11 @@ suggested_route:
 hierarchy:
   parents: ["fr/embedding-space"]
   children: []
-related: []
+related: ["fr/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:fr", "status:published"]
 -->
+
+**S'exercer :** [Exercices — Fondations mathématiques](exercises-foundations.qmd), notamment la différence entre décodabilité linéaire et usage fonctionnel.
 
 ## Que signifie « linéaire » ici ?
 
