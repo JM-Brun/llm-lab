@@ -397,6 +397,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             str(page.front.get("title", group.page_id)),
             page.language,
         )
+        page_slug = group.page_id.rsplit("/", 1)[-1]
         for concept_ref in concept_refs:
             for node_ref in node_refs:
                 node = projection.computational_nodes_by_id[node_ref.reference_id]
@@ -415,21 +416,21 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                                 source_ref=concept_step.ref,
                                 target_ref=focus_step.ref,
                                 relation=f"route-focus-{concept_ref.role}",
-                                basis=f"conceptual_focus.{concept_ref.role}",
+                                basis=f"conceptual_focus.{page_slug}.{concept_ref.role}",
                                 source_path=group.path,
                             ),
                             EvidencePathLink(
                                 source_ref=focus_step.ref,
                                 target_ref=node_step.ref,
                                 relation=f"route-focus-{node_ref.role}",
-                                basis=f"conceptual_focus.{node_ref.role}",
+                                basis=f"conceptual_focus.{page_slug}.{node_ref.role}",
                                 source_path=group.path,
                             ),
                             EvidencePathLink(
                                 source_ref=focus_step.ref,
                                 target_ref=page_step.ref,
                                 relation="focus-context-page",
-                                basis="conceptual_focus page-slug key",
+                                basis=f"conceptual_focus.{page_slug}",
                                 source_path=group.path,
                             ),
                         ),
