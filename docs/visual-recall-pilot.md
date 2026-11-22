@@ -56,3 +56,16 @@ Award one point per satisfied criterion. Accept an equivalent explanation in eit
 ## Browser verification
 
 The browser matrix covers all three revision pages in French and English at desktop and mobile widths. It checks the diagram's accessible name, card/lane overflow, and keyboard opening and closing of the answer disclosure.
+
+## Remaining work and completion criteria
+
+The cards, bilingual text equivalents, scoring rubric, and browser checks are implemented. The technical checks establish that the materials render and can be used; they do **not** establish that the diagrams improve recall or transfer. The empirical part of the pilot remains open.
+
+1. **Freeze the materials.** Before recruiting, record the exact card versions, prompts, corrections, scoring rubric, and common time budgets used in both conditions. Do not change one condition after data collection starts; log any unavoidable deviation.
+2. **Run the day-0 sessions.** Recruit learners who have completed the three relevant lessons, record language and prior implementation experience, assign the visual or text condition using the pairing procedure above, and retain incomplete sessions in the completion accounting.
+3. **Complete delayed follow-up.** Collect the three transfer responses five to seven days later, recording the actual delay and any review of the material during the interval.
+4. **Score and analyze.** Apply the six-point rubric without viewing condition assignment where possible. Report participant and completion counts, missing responses, score distributions, paired visual-minus-text differences for complete randomized pairs, and relevant protocol deviations. Do not treat missing responses as incorrect answers.
+5. **Inspect learning failures.** Review incorrect and incomplete explanations by mechanism. Distinguish a misleading visual, a notation problem, a prerequisite gap, and a prompt that does not test the intended transfer.
+6. **Decide and document.** Record the observed limitations and any revisions to the cards. Treat results from a small pilot as diagnostic evidence, not as proof of a general learning effect. Keep issue #1109 open until the sessions, delayed follow-up, analysis, and resulting editorial decisions are documented.
+
+A pilot with no completed delayed follow-up is not an evaluated pilot. In that case, report recruitment and attrition status only and leave the learning-effect question unresolved.
