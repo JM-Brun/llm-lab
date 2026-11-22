@@ -109,9 +109,27 @@ The proposed four acts are editorial groupings, not new curriculum stages:
 
 The progression should be checked against actual conceptual dependencies. A topic must not appear early merely because it is popular or easy to illustrate.
 
+### Relationship to the nine-stage guided route
+
+The calendar is a **selective short-form projection**, not a compressed copy of every guided-route stage:
+
+| Guided-route stage | Calendar coverage | Decision |
+|---|---|---|
+| Orientation | Day 1 | Introduce the conditional next-token prediction mechanism. |
+| Text input | Days 2–4 | Cover context/prefix, tokenization, and vocabulary-local IDs. |
+| Representations | Days 5–7 | Cover embeddings, positional information, and contextualized representations. |
+| Transformer computation | Days 8–12 | Cover the block, Q/K/V, attention, causal masking, and the non-attention sublayers. |
+| Prediction | Days 13–15 | Cover logits, the vocabulary distribution, and predictive entropy. |
+| Inference | Days 16–18 | Cover decoding, autoregressive feedback, prefill, decode, and KV cache. |
+| Context use and design | Not included | Deliberately excluded from this core calendar; retrieval, memory, in-context learning, and context engineering remain optional follow-up resources. Day 2 covers the immediate prefix available to the model, not application-level context engineering. |
+| Observed-target scoring | Days 19–21 | Cover teacher-forced observed targets, sequence likelihood, and token-level cross-entropy. |
+| Training | Days 22–24 | Cover loss aggregation, gradients, optimizer updates, and held-out evaluation. |
+
+This mapping preserves the distinction between the immediate model context (needed to explain next-token prediction) and the broader system-level work of designing, retrieving, or managing context. The omitted guided-route stage is an explicit scope decision, not a missing day to be filled automatically.
+
 ## 4. Initial 24-day editorial proposal
 
-This sequence is a **candidate for review**, not an approved syllabus. The machine-readable proposal is in `data/calendars/llm-advent-24.yml`.
+This sequence is a **candidate for review**, not an approved syllabus. The machine-readable proposal is in `data/calendars/llm-advent-24.yml`. Three bilingual content pilots (days 03, 09, and 21) are drafted in [advent-calendar-pilot-content.md](advent-calendar-pilot-content.md); they are not yet learner-tested.
 
 | Day | Act | Candidate topic | Core question |
 |---:|---|---|---|
@@ -150,7 +168,7 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 - Day 18 must distinguish prefill from autoregressive decode and explain KV cache as an optional inference optimization, not a new prediction mechanism.
 - Day 19 must distinguish the observed prefix/target shift from generation feedback. Teacher forcing is a context policy for scoring/training, not a separate forward mechanism.
 - Days 20–22 must distinguish sequence likelihood, log-likelihood, per-token NLL/cross-entropy, and the reduction/masking used to form an objective.
-- Days 23–24 must distinguish gradients from optimizer updates. Day 24 must also show held-out evaluation as a sibling use of the prediction/scoring mechanism: it measures loss with fixed parameters and must not be drawn as a mandatory step after the optimizer update.
+- Days 23–24 must distinguish gradients from optimizer updates. Day 24 must also show held-out evaluation as a sibling measurement of the current model: it uses fixed parameters and must not be drawn as a mandatory step after the optimizer update.
 - The current NumPy implementation and project status must be represented honestly: documentation of training concepts does not imply a complete trained-model pipeline or demonstrated language quality.
 
 ## 5. Daily content template
