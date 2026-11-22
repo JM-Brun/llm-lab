@@ -684,6 +684,7 @@ def test_advanced_lessons_link_to_topic_exercise_collections() -> None:
             "exercises-foundations.qmd",
         ),
     )
+    # Both directions are authored so readers can navigate from either page.
     for lesson_id, practice_id, path, target in expected:
         assert any(
             edge.source == lesson_id
