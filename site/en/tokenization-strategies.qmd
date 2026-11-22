@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", 
 A tokenizer is a representation and engineering choice. It must cover expected inputs while managing vocabulary size and sequence cost. No segmentation—word, character, byte, or subword—is optimal for every corpus and task.
 :::
 
+**Questions and exercises:** [Open the dedicated practice page](exercises/tokenization-strategies.qmd).
+
 ::: {.callout-tip title="The one-minute mental model"}
 - **Granularity**: word, character, byte, or learned fragment.
 - **Algorithm**: BPE, WordPiece, unigram, and variants are not interchangeable.
@@ -35,11 +37,6 @@ A tokenizer is a representation and engineering choice. It must cover expected i
 - **Compatibility**: IDs have operational meaning only with the associated tokenizer and model weights.
 - **Evaluation**: fewer tokens may reduce cost, but do not prove better downstream quality.
 
-**Check yourself:** two tokenizers reduce the token count on the same text; why is that not enough to conclude that one yields a better downstream model?
-:::
-
-::: {.callout-note title="A text to run through the tokenizer"}
-Try “What have the Romans ever done for us?” with different tokenizers. Inspect the actual pieces and IDs returned: do not infer token boundaries from visible words, or assume they will be identical across tokenizers.
 :::
 
 ## 1. Concept map
@@ -286,9 +283,6 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
 :::
 
-## Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
 
 <details class="learning-resources">
 <summary>
