@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; quatre questions intégrées corrigées vérifient ordre, RoPE, masque causal et limites d'extrapolation."
+      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; la page d'exercices dédiée vérifie l'ordre, RoPE, le masque causal et les limites d'extrapolation."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -117,8 +117,6 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
 
-
-[Questions et exercices](exercises/positional-encoding.qmd)
 
 ### Pourquoi l’auto-attention seule ne suffit-elle pas ?
 
