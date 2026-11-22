@@ -17,11 +17,11 @@ calendar:
     en: "A short, progressive learning experience built from LLM Lab's canonical resources."
 
 acts:
-  - id: text-and-representations
+  - id: context-to-representations
     day_range: [1, 6]
     title:
-      fr: "Du texte aux représentations"
-      en: "From text to representations"
+      fr: "Du contexte aux représentations"
+      en: "From context to representations"
   - id: transformer-computation
     day_range: [7, 12]
     title:
@@ -41,7 +41,7 @@ acts:
 days:
   - day: 1
     id: next-token-prediction
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Que prédit un LLM ?", en: "What does an LLM predict?"}
     question:
       fr: "Que calcule réellement un modèle de langage à partir d'un contexte ?"
@@ -58,7 +58,7 @@ days:
 
   - day: 2
     id: context-and-prefix
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Le contexte : de quoi le modèle dispose-t-il ?", en: "Context: what information does the model have?"}
     question:
       fr: "Quelles informations peuvent conditionner la prochaine prédiction ?"
@@ -74,7 +74,7 @@ days:
 
   - day: 3
     id: tokenization
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Comment le texte devient-il des tokens ?", en: "How does text become tokens?"}
     question:
       fr: "Comment un tokenizer transforme-t-il une chaîne de caractères en unités discrètes ?"
@@ -91,7 +91,7 @@ days:
 
   - day: 4
     id: vocabulary-and-token-ids
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Du token à son identifiant", en: "From token to token ID"}
     question:
       fr: "Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?"
@@ -107,7 +107,7 @@ days:
 
   - day: 5
     id: token-embeddings
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Un identifiant devient un vecteur", en: "An ID becomes a vector"}
     question:
       fr: "Comment un identifiant discret sélectionne-t-il une représentation numérique ?"
@@ -124,7 +124,7 @@ days:
 
   - day: 6
     id: positional-information
-    act: text-and-representations
+    act: context-to-representations
     title: {fr: "Pourquoi la position compte-t-elle ?", en: "Why does position matter?"}
     question:
       fr: "Pourquoi les représentations doivent-elles tenir compte de l'ordre des tokens ?"
@@ -433,15 +433,15 @@ days:
   - day: 24
     id: optimizer-and-parameter-update
     act: scoring-and-learning
-    title: {fr: "Mettre à jour les paramètres", en: "Updating the parameters"}
+    title: {fr: "Modifier les paramètres ou mesurer le modèle ?", en: "Update parameters or evaluate the model?"}
     question:
-      fr: "Comment un optimiseur utilise-t-il les gradients pour modifier les paramètres ?"
-      en: "How does an optimizer use gradients to change parameters?"
+      fr: "Qu’est-ce qui modifie les paramètres, et qu’est-ce qui ne fait que mesurer le modèle ?"
+      en: "What changes the parameters, and what only measures the model?"
     outcome:
-      fr: "Distinguer calcul du gradient, règle de l'optimiseur et mise à jour effective des paramètres."
-      en: "Distinguish gradient computation, optimizer rule, and the actual parameter update."
-    concepts: [optimizer, parameter-update, training-loop]
+      fr: "Distinguer la mise à jour des paramètres par l’optimiseur de l’évaluation sur données réservées, qui mesure la loss à paramètres fixes."
+      en: "Distinguish the optimizer’s parameter update from evaluation on held-out data, which measures loss with parameters fixed."
+    concepts: [optimizer, parameter-update, training-loop, held-out-evaluation]
     lesson_pages: [fr/training-loop, en/training-loop]
-    computational_nodes: [optimizer-update, updated-parameters]
+    computational_nodes: [optimizer-update, updated-parameters, evaluation-metrics]
     activity: trace
     duration_minutes: 8
