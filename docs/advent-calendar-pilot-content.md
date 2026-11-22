@@ -520,12 +520,12 @@ Les tokens sont les mêmes, mais leur ordre change qui poursuit qui. Les représ
 
 **À vous de vérifier**
 
-Le même token ID apparaît à deux positions différentes. Son embedding lexical initial est-il nécessairement différent ? Et son entrée position-aware l'est-elle ?
+Le même token ID apparaît à deux positions différentes. Son embedding lexical initial est-il nécessairement différent ? L'information de position utilisée par le Transformer est-elle la même ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-L'embedding lexical sélectionné par le même ID est le même pour une matrice donnée. En revanche, l'information positionnelle dépend de la position : dans un schéma additif, le vecteur de position ajouté diffère ; dans d'autres méthodes, la position intervient autrement dans les calculs. Les représentations utilisées par le Transformer peuvent donc différer.
+L'embedding lexical sélectionné par le même ID est le même pour une matrice donnée. En revanche, l'information positionnelle dépend de la position : dans un schéma additif, un vecteur de position différent est ajouté à l'entrée ; avec RoPE, la position intervient dans la transformation des requêtes et des clés. Les calculs d'attention peuvent donc différer sans que l'embedding lexical initial change.
 
 </details>
 
@@ -559,12 +559,12 @@ The tokens are the same, but their order changes who chases whom. Representation
 
 **Check yourself**
 
-The same token ID appears at two different positions. Must its initial lexical embedding be different? Is its position-aware input necessarily the same?
+The same token ID appears at two different positions. Must its initial lexical embedding be different? Is the positional information used by the Transformer the same?
 
 <details>
 <summary>Show the answer</summary>
 
-The lexical embedding selected by the same ID is the same for a fixed matrix. Positional information, however, depends on position: in an additive scheme the added position vector differs; in other methods position enters the computation differently. The representations used by the Transformer can therefore differ.
+The lexical embedding selected by the same ID is the same for a fixed matrix. Positional information, however, depends on position: an additive scheme adds a different position vector to the input, while RoPE applies position-dependent transformations to queries and keys. Attention computations can therefore differ even though the initial lexical embedding is unchanged.
 
 </details>
 
