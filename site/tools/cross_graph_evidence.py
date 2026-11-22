@@ -223,6 +223,10 @@ def load_cross_graph_evidence_projection(
     )
     for extraction_path in extraction_paths:
         extraction_data = load_yaml(extraction_path)
+        if not isinstance(extraction_data, dict):
+            raise ValueError(
+                f"{extraction_path.relative_to(root).as_posix()}: expected a mapping"
+            )
         source_id = extraction_data.get("source_id")
         if not isinstance(source_id, str) or source_id not in sources_by_id:
             raise ProjectIndexIntegrityError(
