@@ -21,7 +21,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap connects the prediction objective to its limitations and evaluation requirements; the quick question and four bilingual exercises test truth, emergence, calibration and benchmark scope."
+      note: "The recap connects the prediction objective to its limitations and evaluation requirements; the dedicated practice page tests truth, emergence, calibration and benchmark scope."
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
@@ -127,8 +127,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-
-[Questions and exercises](exercises/llm-limits.qmd)
 
 
 </div>
