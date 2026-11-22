@@ -44,7 +44,7 @@ Supposons que le préfixe soit « C'est une bonne situation, ça, scribe ? ». L
 | « Vous » | 0,6 |
 | « Je » | 0,2 |
 | « Moi » | 0,1 |
-| « Eh » | 0,1 |
+| « Oui » | 0,1 |
 
 La somme vaut 1. Le modèle a produit une distribution conditionnée par le préfixe. Si la règle de décodage sélectionne « Vous », le contexte est prolongé ; le modèle calcule alors une nouvelle distribution pour le token suivant. Les valeurs sont fictives et servent uniquement à illustrer le mécanisme.
 
