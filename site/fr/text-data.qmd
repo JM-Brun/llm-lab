@@ -1,6 +1,6 @@
 ---
 title: "Du texte aux tokens : représenter le langage"
-subtitle: "Le parcours conceptuel du texte aux représentations du modèle"
+subtitle: "Comment le tokenizer produit les identifiants que reçoit le modèle"
 description-meta: "Suit le passage du texte source au contexte discret fourni au modèle : prétraitement, tokens, identifiants et lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus d’entraînement."
 keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 lang: fr
@@ -33,6 +33,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 Dans le panorama, le modèle prédit le prochain token à partir du préfixe « C'est une bonne situation, ça, scribe ? ». Sous quelle forme reçoit-il cette question ?
 
 Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
+
+Le Panorama utilisait des mots comme tokens dans un vocabulaire jouet. Avec un tokenizer réel, un mot comme « Vous » peut correspondre à plusieurs tokens.
 :::
 
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}

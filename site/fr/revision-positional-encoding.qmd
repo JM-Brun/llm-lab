@@ -75,7 +75,10 @@ La tokenisation a donné le même ID aux deux occurrences de `chat`. Avec un enc
 
 :::
 
+
 [Retrouvez les deux vecteurs d’entrée à partir du même plongement et de deux vecteurs de position](exercises/text-data.qmd#ex-token-to-block-input).
+
+[Comparer le rôle de l’ordre et de la visibilité](positional-encoding.qmd#position-permutation) · [Vérifier la sortie quand B est en dernier](exercises/positional-encoding.qmd#ex-positional-mask-transfer)
 
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-positional-encoding.qmd) · [English](../en/revision-positional-encoding.qmd)

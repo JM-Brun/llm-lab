@@ -72,6 +72,14 @@ Les versions FR et EN expliquent qu’un même token garde son ID dans un vocabu
 
 La comparaison à `56e1cdf` retrouve les titres et ancres, les figures et leurs textes alternatifs, les équations affichées, les destinations existantes et les ressources complémentaires des six pages. Les exercices et leurs corrigés restent identiques. Les trajets vers les trois exercices et l’ouverture des corrigés au clavier ont été vérifiés dans Chromium en FR et EN à 390 et 1 280 px.
 
+### Première lecture et transfert, du Panorama à la position
+
+Le Panorama place les deux tours et l’explorateur dans la même section. La définition de la surprise et le calcul de vraisemblance restent accessibles dans un volet de la section sur les trois usages. Le rappel sur le découpage réel se trouve au raccord [Panorama → Texte](../site/fr/text-data.qmd#tokenizer-output). Les probabilités illustratives du Panorama et les sorties GPT‑2 de la trace conservent leur provenance respective.
+
+Les leçons FR/EN donnent les quatre lectures de la table pour la séquence jouet, puis réutilisent ses occurrences aux rangs 0 et 3 dans le cas additif. La [comparaison positionnelle](../site/fr/positional-encoding.qmd#position-permutation) fixe le rang et l’ID de B entre `ABC` et `CBA`. Le [cas de transfert](../site/fr/exercises/positional-encoding.qmd#ex-positional-mask-transfer) garde B en dernier dans `ACB` et `CAB`, pour vérifier les limites de l’effet du seul masque dans une couche. La preuve d’équivariance, les SVG et les limites d’extrapolation restent accessibles depuis la leçon.
+
+Le bandeau généré conserve le numéro d’étape et ajoute le rang de la page uniquement dans les étapes à plusieurs leçons. La hiérarchie documentaire de la carte reste à examiner dans [#1492](https://github.com/JM-Brun/llm-lab/issues/1492), [#1493](https://github.com/JM-Brun/llm-lab/issues/1493) et [#1499](https://github.com/JM-Brun/llm-lab/issues/1499). Le [pilote indépendant #447](https://github.com/JM-Brun/llm-lab/issues/447) peut maintenant demander au lecteur de justifier successivement la ligne lue, le point d’insertion de la position et le préfixe accessible.
+
 ### Travail restant
 
 | Ordre | Travail restant | Résultat à consigner |
