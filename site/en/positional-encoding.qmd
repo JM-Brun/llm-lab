@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
 summary: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 scope: "Explains where token order enters, with an absolute signal at the input and a relative signal in attention comparisons."
-purpose: "Predict what changes when two tokens swap places and locate positional information in both mechanisms."
+purpose: "Predict what changes when two tokens swap places and locate positional information in the mechanisms shown."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
