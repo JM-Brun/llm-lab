@@ -1,8 +1,8 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, route, resource and revision relations
-stay distinct.
+new registry or source of truth. Page, concept, route, resource, revision, source-evidence
+and computation relations stay distinct; source/extraction loading is opt-in.
 """
 
 from __future__ import annotations
@@ -13,11 +13,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from page_index import PublishedPage, group_bilingual_topics, load_published_pages
 from cross_graph_evidence import (
     CrossGraphEvidenceProjection,
     load_cross_graph_evidence_projection,
 )
+from page_index import PublishedPage, group_bilingual_topics, load_published_pages
 from project_index_errors import ProjectIndexIntegrityError
 from strict_yaml import load_yaml
 
