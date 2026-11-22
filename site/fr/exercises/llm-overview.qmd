@@ -28,6 +28,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 
 [Exercices et mises en pratique](../exercises.qmd).
 
+::: {.self-check}
+
 <!-- self-check-covers: architecture-learning-use -->
 1. **Le fine-tuning change-t-il nécessairement l'architecture ?** Non : il modifie d'abord les paramètres. Certaines méthodes ajoutent aussi des modules ; il faut distinguer la famille du modèle de la structure complète du système adapté.
 <!-- self-check-covers: information-residence choosing-an-approach -->
@@ -85,6 +87,8 @@ Non. La génération sélectionne un token puis prolonge le contexte ; le scorin
 Non. LLM désigne une catégorie de modèles de langage entraînés à grande échelle. GPT désigne une famille fondée sur une architecture Transformer décodeur seul et un objectif autorégressif. Il existe d'autres configurations de modèles de langage, notamment encodeur seul et encodeur-décodeur.
 
 </details>
+
+:::
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../../en/exercises/llm-overview.qmd)
