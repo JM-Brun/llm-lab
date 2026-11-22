@@ -35,7 +35,7 @@ def test_page_classification_tags_are_preserved_in_source_metadata() -> None:
 def test_overview_practice_page_covers_every_major_section_in_both_languages() -> None:
     import re
 
-    heading = re.compile(r"^## .+?\\s+\\{#([a-z0-9-]+)\\}\\s*$", re.MULTILINE)
+    heading = re.compile(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", re.MULTILINE)
     marker = re.compile(r"<!-- self-check-covers: ([^>]+) -->")
     for language in ("fr", "en"):
         lesson = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
@@ -43,7 +43,7 @@ def test_overview_practice_page_covers_every_major_section_in_both_languages() -
         assert "exercises/llm-overview.qmd" in lesson
         assert "::: {.self-check}" not in lesson
         assert "<!-- self-check-coverage: enforced -->" in practice
-        major_headings = re.findall(r"^## .+?\\s*$", lesson, re.MULTILINE)
+        major_headings = re.findall(r"^## .+?\s*$", lesson, re.MULTILINE)
         sections = set(heading.findall(lesson))
         covered = {item for group in marker.findall(practice) for item in group.split()}
         assert major_headings
