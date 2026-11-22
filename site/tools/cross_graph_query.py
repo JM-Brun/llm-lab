@@ -59,6 +59,7 @@ class EvidenceGap:
     source_id: str | None = None
     item_id: str | None = None
     source_path: str | None = None
+    basis: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -221,6 +222,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                     source_id=source.source_id,
                     item_id=item.item_id,
                     source_path=item.path,
+                    basis=("item.locator",),
                 )
             )
         if source.scan_status != "scanned":
@@ -263,6 +265,11 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
     for source_id, source_concepts in projection.source_level_concepts_by_id.items():
         if concept_id in source_concepts and source_id not in item_sources:
             source = projection.sources_by_id[source_id]
+            source_basis = []
+            if concept_id in source.classification_concepts:
+                source_basis.append("classification.concept_ids")
+            if concept_id in source.related_concepts:
+                source_basis.append("related.concepts")
             gaps.append(
                 EvidenceGap(
                     kind="source-catalogue-only",
@@ -272,6 +279,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                     ),
                     source_id=source_id,
                     source_path=source.path,
+                    basis=tuple(source_basis),
                 )
             )
 
@@ -291,6 +299,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                     source_id=item.source_id,
                     item_id=item.item_id,
                     source_path=item.path,
+                    basis=("candidate_destinations.concepts",),
                 )
             )
 
@@ -450,6 +459,11 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                     "No explicit computation path was found through a concept page resource "
                     "or a guided-route conceptual-focus group."
                 ),
+                basis=(
+                    "concepts[].resources",
+                    "computational_graph.nodes[].resources",
+                    "guided-route.conceptual_focus",
+                ),
             )
         )
 
@@ -494,6 +508,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             EvidenceGap(
                 kind="no-practice-path",
                 message="No authored related edge to a page tagged destination:practice was found.",
+                basis=("page-map.related", "destination:practice"),
             )
         )
 
@@ -562,6 +577,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             EvidenceGap(
                 kind="no-item-level-evidence",
                 message="No extraction item has an explicit item-level mapping to this concept.",
+                basis=("mapped_concepts", "classification.concept_ids"),
             )
         )
 
