@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap and six answered questions cover context-conditional distributions, entropy vs surprisal, temperature effects, empirical calibration and comparison conventions."
+      note: "The recap presents context-conditional distributions, entropy vs surprisal, temperature effects, empirical calibration and comparison conventions."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -154,8 +154,6 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 
 
 
-
-[Questions and exercises](exercises/entropy.qmd)
 
 Return to the [generation loop for the Roman example](generation.qmd#the-loop-on-an-example). When greedy decoding selects “They”, that token joins the prefix and the model computes a new distribution for the second turn.
 
