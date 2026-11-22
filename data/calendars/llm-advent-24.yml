@@ -1,0 +1,404 @@
+schema_version: 1
+
+# Editorial proposal only. This file is not yet consumed by the site or CI.
+# Concept IDs and page IDs refer to canonical LLM Lab registries and pages.
+calendar:
+  id: llm-advent-24
+  status: proposed
+  duration_days: 24
+  event_window: "December 1–24"
+  evergreen: true
+  languages: [fr, en]
+  title:
+    fr: "24 jours pour comprendre les LLM"
+    en: "24 days to understand LLMs"
+  description:
+    fr: "Un parcours court et progressif, construit à partir des ressources canoniques de LLM Lab."
+    en: "A short, progressive learning experience built from LLM Lab's canonical resources."
+
+acts:
+  - id: text-and-representations
+    days: [1, 6]
+    title:
+      fr: "Du texte aux représentations"
+      en: "From text to representations"
+  - id: transformer-computation
+    days: [7, 12]
+    title:
+      fr: "Le calcul du Transformer"
+      en: "Transformer computation"
+  - id: prediction-and-generation
+    days: [13, 18]
+    title:
+      fr: "Prédiction et génération"
+      en: "Prediction and generation"
+  - id: scoring-and-learning
+    days: [19, 24]
+    title:
+      fr: "Scoring et apprentissage"
+      en: "Scoring and learning"
+
+days:
+  - day: 1
+    id: next-token-prediction
+    act: text-and-representations
+    title: {fr: "Que prédit un LLM ?", en: "What does an LLM predict?"}
+    question:
+      fr: "Que calcule réellement un modèle de langage à partir d'un contexte ?"
+      en: "What does a language model actually compute from a context?"
+    outcome:
+      fr: "Expliquer qu'un modèle autorégressif attribue une distribution conditionnelle au prochain token."
+      en: "Explain that an autoregressive model assigns a conditional distribution to the next token."
+    concepts: [next-token-prediction, conditional-distribution]
+    resources: [fr/llm-overview, en/llm-overview]
+    activity: conceptual-check
+    duration_minutes: 6
+
+  - day: 2
+    id: context-and-prefix
+    act: text-and-representations
+    title: {fr: "Le contexte : de quoi le modèle dispose-t-il ?", en: "Context: what information does the model have?"}
+    question:
+      fr: "Quelles informations peuvent conditionner la prochaine prédiction ?"
+      en: "Which information can condition the next prediction?"
+    outcome:
+      fr: "Distinguer le préfixe effectivement fourni au modèle de la suite qu'il doit prédire."
+      en: "Distinguish the prefix supplied to the model from the continuation it must predict."
+    concepts: []
+    resources: [fr/llm-overview, en/llm-overview]
+    activity: trace
+    duration_minutes: 5
+    editorial_note: "No dedicated context/prefix concept is referenced yet; verify whether an existing computational node or page is the right canonical target. Do not substitute context-engineering without review."
+
+  - day: 3
+    id: tokenization
+    act: text-and-representations
+    title: {fr: "Comment le texte devient-il des tokens ?", en: "How does text become tokens?"}
+    question:
+      fr: "Comment un tokenizer transforme-t-il une chaîne de caractères en unités discrètes ?"
+      en: "How does a tokenizer turn a character string into discrete units?"
+    outcome:
+      fr: "Suivre un exemple de texte jusqu'à sa segmentation en tokens."
+      en: "Trace a text example through token segmentation."
+    concepts: [token]
+    resources: [fr/text-data, en/text-data]
+    activity: visual
+    duration_minutes: 6
+
+  - day: 4
+    id: vocabulary-and-token-ids
+    act: text-and-representations
+    title: {fr: "Du token à son identifiant", en: "From token to token ID"}
+    question:
+      fr: "Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?"
+      en: "How does the model retrieve the ID associated with each token?"
+    outcome:
+      fr: "Distinguer le token lisible, l'entrée du vocabulaire et son identifiant entier."
+      en: "Distinguish a readable token, its vocabulary entry, and its integer ID."
+    concepts: [token]
+    resources: [fr/text-data, en/text-data]
+    activity: trace
+    duration_minutes: 5
+    editorial_note: "Token IDs are represented in the computational graph; consider whether they need a first-class concept entry before finalizing."
+
+  - day: 5
+    id: token-embeddings
+    act: text-and-representations
+    title: {fr: "Un identifiant devient un vecteur", en: "An ID becomes a vector"}
+    question:
+      fr: "Comment un identifiant discret sélectionne-t-il une représentation numérique ?"
+      en: "How does a discrete ID select a numerical representation?"
+    outcome:
+      fr: "Expliquer le rôle de la matrice d'embeddings et retrouver la forme du vecteur sélectionné."
+      en: "Explain the role of the embedding matrix and identify the shape of the selected vector."
+    concepts: [token-embedding]
+    resources: [fr/embedding-space, en/embedding-space]
+    activity: numerical
+    duration_minutes: 7
+
+  - day: 6
+    id: positional-information
+    act: text-and-representations
+    title: {fr: "Pourquoi la position compte-t-elle ?", en: "Why does position matter?"}
+    question:
+      fr: "Pourquoi les représentations doivent-elles tenir compte de l'ordre des tokens ?"
+      en: "Why must representations account for token order?"
+    outcome:
+      fr: "Distinguer information lexicale et information positionnelle, sans généraliser une seule méthode à toutes les architectures."
+      en: "Distinguish lexical and positional information without assuming one method applies to every architecture."
+    concepts: [positional-encoding]
+    resources: [fr/positional-encoding, en/positional-encoding]
+    activity: visual
+    duration_minutes: 7
+
+  - day: 7
+    id: contextualized-representations
+    act: transformer-computation
+    title: {fr: "Un token, plusieurs représentations", en: "One token, multiple representations"}
+    question:
+      fr: "Pourquoi deux occurrences du même token peuvent-elles avoir des représentations différentes ?"
+      en: "Why can two occurrences of the same token have different representations?"
+    outcome:
+      fr: "Expliquer le passage des états initiaux aux représentations contextualisées."
+      en: "Explain the transition from initial states to contextualized representations."
+    concepts: [contextualized-representation, token-embedding]
+    resources: [fr/contextualized-representations, en/contextualized-representations]
+    activity: conceptual-check
+    duration_minutes: 6
+
+  - day: 8
+    id: transformer-block
+    act: transformer-computation
+    title: {fr: "Que fait un bloc Transformer ?", en: "What does a Transformer block do?"}
+    question:
+      fr: "Quelles grandes opérations transforment les états d'entrée d'un bloc ?"
+      en: "Which major operations transform a block's input states?"
+    outcome:
+      fr: "Situer attention, sous-couche MLP, connexions résiduelles et normalisation dans un bloc."
+      en: "Locate attention, the MLP sublayer, residual connections, and normalization in a block."
+    concepts: [self-attention, multi-head-attention]
+    resources: [fr/transformer, en/transformer]
+    activity: trace
+    duration_minutes: 7
+    editorial_note: "Keep this as a block-level map; reserve the detailed MLP/residual/normalization explanation for day 12."
+
+  - day: 9
+    id: queries-keys-values
+    act: transformer-computation
+    title: {fr: "Les trois rôles de Q, K et V", en: "The three roles of Q, K, and V"}
+    question:
+      fr: "Quelles informations portent les projections Query, Key et Value ?"
+      en: "What information do the Query, Key, and Value projections carry?"
+    outcome:
+      fr: "Distinguer les rôles de Q, K et V et prédire l'effet d'une modification de V à Q, K et masque fixés."
+      en: "Distinguish Q, K, and V and predict the effect of changing V while Q, K, and the mask stay fixed."
+    concepts: [query, key, value]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+    activity: visual
+    duration_minutes: 8
+
+  - day: 10
+    id: scaled-dot-product-attention
+    act: transformer-computation
+    title: {fr: "Comment fonctionne l'attention ?", en: "How does attention work?"}
+    question:
+      fr: "Comment les scores deviennent-ils des poids qui agrègent les valeurs ?"
+      en: "How do scores become weights that aggregate values?"
+    outcome:
+      fr: "Suivre produit scalaire, mise à l'échelle, masque éventuel, softmax et agrégation de V."
+      en: "Trace dot products, scaling, any applicable mask, softmax, and aggregation of V."
+    concepts: [scaled-dot-product-attention, attention-score, attention-weight, softmax]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    activity: numerical
+    duration_minutes: 8
+
+  - day: 11
+    id: causal-masking
+    act: transformer-computation
+    title: {fr: "Empêcher le regard vers le futur", en: "Preventing access to future tokens"}
+    question:
+      fr: "Comment un modèle causal empêche-t-il une position d'utiliser les tokens futurs ?"
+      en: "How does a causal model prevent a position from using future tokens?"
+    outcome:
+      fr: "Expliquer où le masque causal intervient dans le calcul des scores et du softmax."
+      en: "Explain where the causal mask acts in the score and softmax computation."
+    concepts: [causal-mask, attention-mask]
+    resources: [fr/causal-masking, en/causal-masking]
+    activity: visual
+    duration_minutes: 7
+
+  - day: 12
+    id: mlp-residuals-normalization
+    act: transformer-computation
+    title: {fr: "Au-delà de l'attention", en: "Beyond attention"}
+    question:
+      fr: "Comment les autres opérations du bloc transforment-elles les états ?"
+      en: "How do the other block operations transform the hidden states?"
+    outcome:
+      fr: "Décrire le rôle du MLP, des connexions résiduelles et de la normalisation, en signalant que leur ordre dépend de l'architecture."
+      en: "Describe the roles of the MLP, residual connections, and normalization, noting that their order depends on the architecture."
+    concepts: []
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    activity: trace
+    duration_minutes: 8
+    editorial_note: "No dedicated concepts for MLP/residual/normalization are currently referenced here; decide whether to add canonical concepts or keep these as operations described by the page."
+
+  - day: 13
+    id: logits
+    act: prediction-and-generation
+    title: {fr: "Les logits : des scores avant les probabilités", en: "Logits: scores before probabilities"}
+    question:
+      fr: "Que produit la projection de sortie avant la normalisation ?"
+      en: "What does the output projection produce before normalization?"
+    outcome:
+      fr: "Interpréter les logits comme des scores non normalisés indexés par le vocabulaire."
+      en: "Interpret logits as unnormalized scores indexed by the vocabulary."
+    concepts: [output-projection, logits]
+    resources: [fr/logits, en/logits]
+    activity: numerical
+    duration_minutes: 6
+
+  - day: 14
+    id: softmax-and-probabilities
+    act: prediction-and-generation
+    title: {fr: "Des scores à une distribution", en: "From scores to a distribution"}
+    question:
+      fr: "Comment les logits deviennent-ils une distribution conditionnelle sur le prochain token ?"
+      en: "How do logits become a conditional distribution over the next token?"
+    outcome:
+      fr: "Calculer ou interpréter un softmax et vérifier les propriétés d'une distribution."
+      en: "Compute or interpret a softmax and check the properties of a distribution."
+    concepts: [softmax, conditional-distribution]
+    resources: [fr/probabilites, en/probabilities]
+    activity: numerical
+    duration_minutes: 7
+
+  - day: 15
+    id: entropy-and-uncertainty
+    act: prediction-and-generation
+    title: {fr: "Que mesure l'entropie ?", en: "What does entropy measure?"}
+    question:
+      fr: "Que nous apprend la forme d'une distribution sur son incertitude ?"
+      en: "What does the shape of a distribution tell us about its uncertainty?"
+    outcome:
+      fr: "Calculer l'entropie d'une petite distribution et ne pas la confondre avec la calibration."
+      en: "Compute the entropy of a small distribution and distinguish it from calibration."
+    concepts: [entropy, calibration]
+    resources: [fr/entropy, en/entropy]
+    activity: numerical
+    duration_minutes: 7
+
+  - day: 16
+    id: decoding-policies
+    act: prediction-and-generation
+    title: {fr: "Choisir le prochain token", en: "Selecting the next token"}
+    question:
+      fr: "Comment une politique de décodage transforme-t-elle une distribution en choix ?"
+      en: "How does a decoding policy turn a distribution into a selection?"
+    outcome:
+      fr: "Comparer greedy decoding, température et échantillonnage sans les confondre avec l'apprentissage."
+      en: "Compare greedy decoding, temperature, and sampling without confusing them with learning."
+    concepts: [decoding-policy]
+    resources: [fr/decoding-strategies, en/decoding-strategies]
+    activity: visual
+    duration_minutes: 7
+
+  - day: 17
+    id: autoregressive-generation
+    act: prediction-and-generation
+    title: {fr: "Une prédiction devient le contexte suivant", en: "A prediction becomes the next context"}
+    question:
+      fr: "Comment la génération produit-elle une séquence token après token ?"
+      en: "How does generation produce a sequence one token at a time?"
+    outcome:
+      fr: "Tracer la boucle autorégressive en distinguant paramètres fixes et contexte qui s'allonge."
+      en: "Trace the autoregressive loop, distinguishing fixed parameters from the growing context."
+    concepts: [autoregressive-generation, generated-token-feedback]
+    resources: [fr/generation, en/generation]
+    activity: trace
+    duration_minutes: 7
+
+  - day: 18
+    id: prefill-decode-kv-cache
+    act: prediction-and-generation
+    title: {fr: "Prefill, decode et cache KV", en: "Prefill, decode, and the KV cache"}
+    question:
+      fr: "Pourquoi l'inférence distingue-t-elle le traitement initial du contexte et la génération token par token ?"
+      en: "Why does inference distinguish initial context processing from token-by-token generation?"
+    outcome:
+      fr: "Distinguer prefill, decode et réutilisation facultative des clés et valeurs mises en cache."
+      en: "Distinguish prefill, decode, and optional reuse of cached keys and values."
+    concepts: [prefill, decode-step, kv-cache]
+    resources: [fr/generation, en/generation]
+    activity: visual
+    duration_minutes: 8
+
+  - day: 19
+    id: observed-targets-and-teacher-forcing
+    act: scoring-and-learning
+    title: {fr: "Prédire avec une cible connue", en: "Predicting with a known target"}
+    question:
+      fr: "Comment évaluer la prédiction du prochain token lorsque la séquence correcte est connue ?"
+      en: "How do we evaluate next-token predictions when the correct sequence is known?"
+    outcome:
+      fr: "Distinguer préfixe observé, token cible et réinjection teacher-forced du token observé."
+      en: "Distinguish the observed prefix, target token, and teacher-forced use of the observed token."
+    concepts: [observed-target, teacher-forcing, training-example]
+    resources: [fr/training-examples, en/training-examples]
+    activity: trace
+    duration_minutes: 8
+
+  - day: 20
+    id: sequence-likelihood
+    act: scoring-and-learning
+    title: {fr: "Quelle probabilité pour une séquence ?", en: "What probability does a sequence receive?"}
+    question:
+      fr: "Comment les probabilités conditionnelles des tokens observés se combinent-elles ?"
+      en: "How do the conditional probabilities of observed tokens combine?"
+    outcome:
+      fr: "Relier probabilités conditionnelles, vraisemblance de séquence et log-vraisemblance."
+      en: "Connect conditional probabilities, sequence likelihood, and log-likelihood."
+    concepts: [conditional-distribution, observed-target, sequence-likelihood, log-likelihood]
+    resources: [fr/vraisemblance, en/likelihood]
+    activity: numerical
+    duration_minutes: 8
+
+  - day: 21
+    id: negative-log-likelihood-and-cross-entropy
+    act: scoring-and-learning
+    title: {fr: "De la probabilité au coût", en: "From probability to cost"}
+    question:
+      fr: "Comment mesurer le coût probabiliste attribué à une cible observée ?"
+      en: "How do we measure the probabilistic cost assigned to an observed target?"
+    outcome:
+      fr: "Relier log-vraisemblance négative, NLL par token et cross-entropy pour une cible one-hot."
+      en: "Connect negative log-likelihood, per-token NLL, and cross-entropy for a one-hot target."
+    concepts: [negative-log-likelihood, cross-entropy]
+    resources: [fr/cross-entropy, en/cross-entropy]
+    activity: numerical
+    duration_minutes: 8
+
+  - day: 22
+    id: training-objective
+    act: scoring-and-learning
+    title: {fr: "Des coûts par token à la loss", en: "From token costs to a loss"}
+    question:
+      fr: "Comment agréger les coûts des positions valides en un objectif d'entraînement ?"
+      en: "How are costs at valid positions aggregated into a training objective?"
+    outcome:
+      fr: "Expliquer masque de loss, réduction et différence entre scoring d'une cible et objectif agrégé."
+      en: "Explain loss masking, reduction, and the difference between target scoring and an aggregated objective."
+    concepts: [training-objective, loss-mask]
+    resources: [fr/loss, en/loss]
+    activity: numerical
+    duration_minutes: 8
+
+  - day: 23
+    id: gradients-and-backpropagation
+    act: scoring-and-learning
+    title: {fr: "Comment obtenir les gradients ?", en: "How do we obtain gradients?"}
+    question:
+      fr: "Comment la loss indique-t-elle la sensibilité de l'objectif aux paramètres ?"
+      en: "How does the loss reveal the objective's sensitivity to the parameters?"
+    outcome:
+      fr: "Interpréter un gradient comme une dérivée de l'objectif par rapport aux paramètres et situer la rétropropagation."
+      en: "Interpret a gradient as a derivative of the objective with respect to parameters and locate backpropagation."
+    concepts: [gradient]
+    resources: [fr/gradients, en/gradients]
+    activity: numerical
+    duration_minutes: 8
+
+  - day: 24
+    id: optimizer-and-parameter-update
+    act: scoring-and-learning
+    title: {fr: "Mettre à jour les paramètres", en: "Updating the parameters"}
+    question:
+      fr: "Comment un optimiseur utilise-t-il les gradients pour modifier les paramètres ?"
+      en: "How does an optimizer use gradients to change parameters?"
+    outcome:
+      fr: "Distinguer calcul du gradient, règle de l'optimiseur et mise à jour effective des paramètres."
+      en: "Distinguish gradient computation, optimizer rule, and the actual parameter update."
+    concepts: [optimizer, parameter-update, training-loop]
+    resources: [fr/training-loop, en/training-loop]
+    activity: trace
+    duration_minutes: 8
