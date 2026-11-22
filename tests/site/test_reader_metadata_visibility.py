@@ -32,18 +32,24 @@ def test_page_classification_tags_are_preserved_in_source_metadata() -> None:
     assert '"status:published"' in page
 
 
-def test_overview_self_checks_cover_every_major_section_in_both_languages() -> None:
+def test_overview_questions_live_on_dedicated_practice_pages_in_both_languages() -> None:
     import re
 
-    heading = re.compile(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", re.MULTILINE)
-    marker = re.compile(r"<!-- self-check-covers: ([^>]+) -->")
     for language in ("fr", "en"):
-        source = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
-        assert "<!-- self-check-coverage: enforced -->" in source
-        check_start = source.index("::: {.self-check}")
-        major_headings = re.findall(r"^## (.+?)\s*$", source[:check_start], re.MULTILINE)
-        sections = set(heading.findall(source[:check_start]))
-        covered = {item for group in marker.findall(source[check_start:]) for item in group.split()}
-        assert major_headings
-        assert len(sections) == len(major_headings), f"{language}: every major section needs an ID"
-        assert sections == covered
+        lesson = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
+        practice_path = SITE / language / "exercises" / "llm-overview.qmd"
+        practice = practice_path.read_text(encoding="utf-8")
+
+        # The lesson explains the model; comprehension questions belong to its
+        # dedicated companion page. Keep one visible, direct link in each language.
+        assert "::: {.self-check}" not in lesson
+        assert "<!-- self-check-coverage: enforced -->" not in lesson
+        lesson_links = re.findall(
+            r"(?m)^\\[[^\\]]+\\]\\(exercises/llm-overview\\.qmd\\)\\s*$", lesson
+        )
+        assert len(lesson_links) == 1, f"{language}: expected one visible companion link"
+        assert practice_path.is_file()
+        assert re.search(r"(?m)^\\[.*?\\]\\(\\.\\./llm-overview\\.qmd\\)", practice)
+
+        questions = re.findall(r"(?m)^\\d+\\. \\*\\*", practice)
+        assert len(questions) == 9, f"{language}: expected nine preserved overview questions"
