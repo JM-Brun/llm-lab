@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/tensors"]
-related: []
+related: ["en/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -28,6 +28,8 @@ An autoregressive model produces **logits** for the next token. Softmax turns th
 :::
 
 ![Original diagram of the mathematical chain: logits, probabilities, likelihood, loss, and gradients.](../images/math-training-pipeline.svg){fig-alt="Computation chain: logits z, softmax to p, target-token probability, negative log-likelihood, then loss gradient with respect to parameters." width=100%}
+
+**Practice:** [Mathematical foundations exercises](exercises-foundations.qmd) to work through the logits → loss → gradients chain.
 
 ## The chain at a glance
 
