@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space"]
   children: ["en/contextualized-representations", "en/rope", "en/sinusoidal-positional-encoding"]
-related: ["en/transformer", "en/positional-encoding-exercises"]
+related: ["en/transformer"]
 revision_support:
   status: integrated_sufficient
   evidence:

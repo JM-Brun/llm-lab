@@ -45,6 +45,12 @@ const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
+// PR #1507: review all three visual recall cards at desktop and mobile widths.
+  ...visualCases.flatMap(testCase =>
+    ["revision-inference-generation.html", "revision-positional-encoding.html", "revision-queries-keys-values.html"].map(page => ({
+      ...testCase, page, kind: "visual-recall-card",
+    }))
+  ),
   ...routeContextCases.flatMap(testCase =>
     ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
@@ -1514,6 +1520,60 @@ async function runCase(testCase, caseIndex) {
           item.routeContext.openingOrder = openingOrder;
         }
       }
+    }
+
+    if (kind === "visual-recall-card") {
+      const card = page.locator("main .visual-recall");
+      if (await card.count() !== 1) {
+        throw new Error("revision page must expose exactly one visual recall card");
+      }
+      const diagram = card.locator(".visual-recall__diagram[role='img'][aria-label]");
+      if (await diagram.count() !== 1) {
+        throw new Error("visual recall diagram must expose one named image role");
+      }
+      const accessibleName = (await diagram.getAttribute("aria-label") || "").trim();
+      const geometry = await card.evaluate(element => {
+        const rect = element.getBoundingClientRect();
+        const diagram = element.querySelector(".visual-recall__diagram");
+        const diagramRect = diagram?.getBoundingClientRect();
+        const lanes = [...(diagram?.querySelectorAll(".visual-recall__lane") || [])];
+        return {
+          left: rect.left,
+          right: rect.right,
+          viewportWidth: window.innerWidth,
+          cardOverflow: element.scrollWidth > element.clientWidth + 1,
+          diagramOverflow: Boolean(diagram && diagram.scrollWidth > diagram.clientWidth + 1),
+          laneOverflow: lanes.some(lane => lane.scrollWidth > lane.clientWidth + 1),
+          diagramLeft: diagramRect?.left ?? null,
+          diagramRight: diagramRect?.right ?? null,
+        };
+      });
+      if (!accessibleName || geometry.left < -1 || geometry.right > geometry.viewportWidth + 1 ||
+          geometry.cardOverflow || geometry.diagramOverflow || geometry.laneOverflow ||
+          geometry.diagramLeft < -1 || geometry.diagramRight > geometry.viewportWidth + 1) {
+        throw new Error("visual recall card is unnamed, clipped, or horizontally overflowing: " + JSON.stringify({ accessibleName, geometry }));
+      }
+      const disclosure = card.locator("details");
+      if (await disclosure.count() !== 1) {
+        throw new Error("visual recall card must expose exactly one answer disclosure");
+      }
+      const summary = disclosure.locator("summary");
+      if (!(await summary.evaluate(element => element.tabIndex >= 0))) {
+        throw new Error("visual recall answer summary must be keyboard focusable");
+      }
+      if (label === "desktop") {
+        await summary.focus();
+        await page.keyboard.press("Enter");
+        if (!await disclosure.evaluate(element => element.open)) {
+          throw new Error("visual recall answer did not open with Enter");
+        }
+        await page.keyboard.press("Space");
+        if (await disclosure.evaluate(element => element.open)) {
+          throw new Error("visual recall answer did not close with Space");
+        }
+        item.visualRecallKeyboard = true;
+      }
+      item.visualRecallCard = { accessibleName, geometry };
     }
 
     if (runInteractiveAudit) {

@@ -41,6 +41,40 @@ Modifier V peut changer la somme pondérée. Les poids dépendent des scores cal
 
 </details>
 
+::: {.visual-recall}
+
+### Carte visuelle — Des scores à la sortie {#visual-recall}
+
+À une position donnée, quelles projections alimentent le calcul des scores, puis la somme pondérée ? Placez Q, K et V dans les cases A, B et C.
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="Étape 1, A pour la position courante et B pour les positions accessibles donnent les scores, puis les poids. Étape 2, ces poids et C pour les positions accessibles donnent la sortie.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__slot"><strong>A</strong> · position courante</span>
+    <span class="visual-recall__operator">×</span>
+    <span class="visual-recall__slot"><strong>B</strong> · positions permises</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__node">Scores, puis poids</span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node">Poids</span>
+    <span class="visual-recall__operator">×</span>
+    <span class="visual-recall__slot"><strong>C</strong> · positions permises</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__node">Somme pondérée</span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Afficher la réponse de la carte</summary>
+
+**A = Q** et **B = K**. Le produit scalaire de la requête courante avec chaque clé accessible, mis à l’échelle, donne un score. La softmax donne les poids sur les positions accessibles. **C = V**. La sortie est la somme des valeurs pondérées par ces poids.
+
+</details>
+
+:::
+
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-queries-keys-values.qmd) · [English](../en/revision-queries-keys-values.qmd)
 :::

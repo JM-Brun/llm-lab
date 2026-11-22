@@ -26,6 +26,10 @@ Choose a stage to find the ideas to master and review them with a question and a
 
 [Guided route and optional resources](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
+**Visual recall cards for self-testing**
+
+Each card is a short retrieval prompt with a concise correction; try to reconstruct the diagram before opening its answer. Worked exercises remain on the dedicated practice pages. · [Same token, two positions](revision-positional-encoding.qmd#visual-recall) · [From scores to output](revision-queries-keys-values.qmd#visual-recall) · [One decode step with a KV cache](revision-inference-generation.qmd#visual-recall)
+
 {{< include ../includes/generated-lesson-contracts-en.qmd >}}
 
 [Connect the stages in the end-of-path exercise](exercises/training-loop.qmd#end-to-end-transfer).

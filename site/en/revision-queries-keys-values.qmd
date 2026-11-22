@@ -41,6 +41,40 @@ Changing V can change the weighted sum. The weights depend on the scores compute
 
 </details>
 
+::: {.visual-recall}
+
+### Visual card — From scores to output {#visual-recall}
+
+At one position, which projections feed the score calculation and which feed the weighted sum? Place Q, K, and V in slots A, B, and C.
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="Step 1, A for the current position and B for the accessible positions give the scores and then the weights. Step 2, those weights and C for the accessible positions give the output.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__slot"><strong>A</strong> · current position</span>
+    <span class="visual-recall__operator">×</span>
+    <span class="visual-recall__slot"><strong>B</strong> · allowed positions</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__node">Scores, then weights</span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node">Weights</span>
+    <span class="visual-recall__operator">×</span>
+    <span class="visual-recall__slot"><strong>C</strong> · allowed positions</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__node">Weighted sum</span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Show the card answer</summary>
+
+**A = Q** and **B = K**. The scaled dot product of the current query and each accessible key gives one score. Softmax gives the weights over the accessible positions. **C = V**. The output is the sum of the values weighted by those weights.
+
+</details>
+
+:::
+
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-queries-keys-values.qmd) · [English](../en/revision-queries-keys-values.qmd)
 :::

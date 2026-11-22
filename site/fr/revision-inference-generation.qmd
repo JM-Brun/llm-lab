@@ -41,6 +41,38 @@ Les logits qui permettent de l’obtenir sont déjà produits par le prefill. Le
 
 </details>
 
+::: {.visual-recall}
+
+### Carte visuelle — Un pas de decode avec le cache KV {#visual-recall}
+
+Dans une tête d’attention causale, le préfixe A B C est déjà en cache et D entre dans le modèle. Quels vecteurs relit-on pour A B C ? Lesquels calcule-t-on pour D ? À quelles positions D peut-il prêter attention ?
+
+```{=html}
+<div class="visual-recall__diagram" role="img" aria-label="Le préfixe A B C alimente la lecture du cache. Le nouveau token D alimente le calcul des projections. Les types de vecteurs sont à compléter dans les deux lignes.">
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>A B C</code> · préfixe</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot">Vecteurs relus : <strong>?</strong></span>
+  </div>
+  <div class="visual-recall__lane">
+    <span class="visual-recall__node"><code>D</code> · nouvelle entrée</span>
+    <span class="visual-recall__operator">→</span>
+    <span class="visual-recall__slot">Vecteurs calculés : <strong>?</strong></span>
+  </div>
+</div>
+```
+
+<details>
+<summary>Afficher la réponse de la carte</summary>
+
+**A B C.** On relit les clés K et les valeurs V de ces trois positions.
+
+**D.** On calcule Q, K et V pour D et on ajoute sa clé et sa valeur au cache. La requête de D peut consulter les clés et valeurs de **A, B, C et D**. Le masque causal autorise la position courante.
+
+</details>
+
+:::
+
 [Suivre le deuxième tour quand on génère ou quand on score une suite observée](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
 
 ::: {.callout-note collapse="true" title="Latence en production"}

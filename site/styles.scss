@@ -769,6 +769,81 @@ details.spot-the-fallacy .fallacy-content {
   .self-check details:hover { border-color: #86B99A; }
 }
 
+/* A schematic prompt with a native answer disclosure on review sheets. */
+.visual-recall {
+  margin: 1.2rem 0;
+  scroll-margin-block-start: 5.75rem;
+  padding: clamp(.8rem, 2.5vw, 1.3rem);
+  border: 1px solid #86B99A;
+  border-radius: .75rem;
+  background: #F6FBF7;
+  box-shadow: var(--llm-soft-shadow);
+}
+.visual-recall h3 {
+  margin: 0 0 .6rem;
+  color: var(--llm-brand-dark);
+  font-size: 1.15rem;
+}
+.visual-recall__diagram {
+  container-type: inline-size;
+  display: grid;
+  gap: .5rem;
+  margin: .85rem 0;
+}
+.visual-recall__lane {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: .35rem;
+}
+.visual-recall__lane:has(> :nth-child(5)) {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+}
+.visual-recall__node,
+.visual-recall__slot {
+  padding: .45rem .35rem;
+  border: 1px solid #86B99A;
+  border-radius: .4rem;
+  background: #fff;
+  text-align: center;
+  line-height: 1.3;
+  font-size: .9rem;
+  overflow-wrap: anywhere;
+}
+.visual-recall__slot {
+  border-style: dashed;
+  border-color: var(--llm-brand-action);
+  color: var(--llm-brand-dark);
+  background: var(--llm-brand-tint);
+}
+.visual-recall__operator {
+  color: var(--llm-brand-action);
+  text-align: center;
+  font-weight: 750;
+}
+@container (max-width: 30rem) {
+  .visual-recall__lane:has(> :nth-child(5)) {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .visual-recall__lane > :nth-child(4) { grid-column: 2; }
+}
+.visual-recall details {
+  padding: .55rem .65rem;
+  border: 1px solid #86B99A;
+  border-radius: .4rem;
+  background: #fff;
+}
+.visual-recall summary {
+  color: var(--llm-brand-dark);
+  font-weight: 650;
+  cursor: pointer;
+}
+.visual-recall summary:focus-visible {
+  outline: 2px solid var(--llm-brand-action);
+  outline-offset: 2px;
+}
+.visual-recall details > p { margin: .6rem 0 0; }
+
 
 /* Shared learning-outcome callout: one selector controls every page and language. */
 .callout.learning-outcomes {
