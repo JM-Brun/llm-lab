@@ -167,26 +167,8 @@ For the dependencies between positions, causal masks, and the distinct roles of 
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-::: {.self-check}
-### Check your understanding
 
-**Quick question:** how can two occurrences share the same initial vector yet have different hidden states?
-
-[Dedicated exercises](exercises/contextualized-representations.qmd).
-
-Two occurrences of the same token ID appear in different sentences.
-
-1. Does the embedding lookup return the same initial vector?
-2. Must their hidden states remain identical after the Transformer layers?
-3. At what stage does contextual information enter the computation?
-
-<details>
-<summary>Show the reasoning</summary>
-
-With a fixed embedding matrix, the same token ID selects the same row. Hidden states can differ after the Transformer layers combine positional information with information from other accessible tokens. The lookup itself does not disambiguate the word's meaning.
-
-</details>
-:::
+[Questions and exercises](exercises/contextualized-representations.qmd)
 
 :::
 
