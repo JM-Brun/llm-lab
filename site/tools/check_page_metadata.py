@@ -113,7 +113,9 @@ def _check_self_check_coverage(
         # A lesson's self-check may live on its dedicated exercise page. Resolve
         # the canonical lesson through the companion's page-map relationship.
         if "type:exercise-hub" not in source:
-            errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
+            errors.append(
+                f"{relative}: self-check coverage is enforced but no self-check block exists"
+            )
             return
         related = re.search(r'^\s*related:\s*\["([^"]+)"\]', source, re.MULTILINE)
         if related is None:
