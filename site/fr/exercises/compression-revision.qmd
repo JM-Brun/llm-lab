@@ -1,7 +1,7 @@
 ---
-title: "Question — Coût de description et compression"
-subtitle: "Question de contrôle et corrigé"
-description-meta: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
+title: "Questions et exercices — Compression et LLM"
+subtitle: "Calcul, auto-évaluation et longueur minimale de description"
+description-meta: "Exercices associés à la fiche de révision sur la compression prédictive, le coût de description du modèle, l'entropie et la mémoire d'exécution."
 keywords: ["type:exercise-hub", "destination:practice", "topic:compression-revision-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/compression-revision-exercises"
-summary: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
-scope: "Question de contrôle sur le compromis entre coût de description du modèle et coût résiduel des données dans MDL."
-purpose: "Relier la longueur minimale de description au compromis entre coût du modèle et coût résiduel des données."
+summary: "Exercices de calcul, auto-évaluation et raisonnement sur le coût de description du modèle."
+scope: "Préserve les vérifications numériques sur l'entropie et le code de Huffman, les cinq questions d'auto-évaluation et la question de contrôle MDL."
+purpose: "Calculer un coût de codage simple, distinguer surprisal et entropie, expliquer la reconstruction sans perte et raisonner sur le compromis entre coût du modèle et coût résiduel."
 suggested_route:
   previous: null
   next: null
@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:compression-revision-
 
 [← Retour à la fiche : Compression et LLM](../compression-revision.qmd)
 
-## Question de contrôle
+## Question de contrôle : coût de description
 
 Pourquoi un modèle qui prédit presque parfaitement les données d'entraînement peut-il perdre face à un modèle moins précis, une fois le coût de description du modèle inclus ?
 
@@ -35,6 +35,24 @@ Le critère MDL considère le coût total $L(M)+L(D\mid M)$, pas seulement l'err
 
 </details>
 
+**Mini-vérification.** Pour $p=(1/2,1/4,1/8,1/8)$, retrouvez les longueurs idéales $(1,2,3,3)$ bits, puis l'entropie $1,75$ bit. Avec le code de Huffman $0,10,110,111$, vérifiez que la longueur moyenne vaut aussi $1,75$ bit et que la somme de Kraft vaut 1. Enfin, expliquez pourquoi cette égalité exacte dépend ici des probabilités dyadiques et n'est pas garantie pour toute distribution.
+
+## Auto-évaluation
+
+1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
+2. Quelle différence entre surprisal et entropie ?
+3. Pourquoi faut-il un décodeur partagé pour garantir une reconstruction sans perte ?
+4. Pourquoi un modèle quantifié peut-il être plus petit sans être plus rapide ?
+5. Le cache KV appartient-il au checkpoint ou à la mémoire d'exécution ?
+
+::: {.callout-tip title="Réponses attendues"}
+1. Il apprend une distribution paramétrique et ne stocke pas un dictionnaire réversible du corpus.
+2. Le surprisal porte sur un événement observé ; l'entropie est la moyenne du surprisal sous une distribution.
+3. L'encodeur et le décodeur doivent reconstruire les mêmes intervalles/symboles avec des conventions identiques.
+4. Le gain dépend des kernels, du matériel, du format et du workload.
+5. À la mémoire temporaire d'exécution.
+:::
+
 ::: {.language-switch}
-**Langue:** [Français](../../fr/exercises/compression-revision.qmd) · [English](../../en/exercises/compression-revision.qmd)
+**Langue :** [Français](../../fr/exercises/compression-revision.qmd) · [English](../../en/exercises/compression-revision.qmd)
 :::
