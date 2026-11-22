@@ -92,7 +92,7 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 
 ## Where does this step sit in the route?
 
-The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access.
+The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access. Questions and worked exercises are collected on the [dedicated practice page](exercises/positional-encoding.qmd).
 
 {{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
 
