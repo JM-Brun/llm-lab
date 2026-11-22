@@ -1,0 +1,84 @@
+---
+title: "Exercices — JEPA et représentation platonique"
+subtitle: "Paires positives, hypothèses du théorème et limites des résultats"
+description-meta: "Questions de compréhension et de transfert sur les JEPA, les vues positives et la convergence des représentations."
+keywords: ["type:exercise-hub", "destination:practice", "topic:jepa-platonic-representation-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/jepa-platonic-representation-exercises"
+summary: "Questions de vérification associées à l'approfondissement sur les JEPA et l'hypothèse de représentation platonique."
+scope: "Évalue la distinction entre bonnes et mauvaises vues, les hypothèses du théorème, l'interprétation des comparaisons d'échantillons et le statut de l'analogie avec la prédiction du prochain token."
+purpose: "Vérifier que le lecteur peut restituer les conditions d'un résultat théorique et ne pas surinterpréter les résultats empiriques."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/jepa-platonic-representation"]
+tags: ["type:exercise-hub", "destination:practice", "topic:jepa-platonic-representation-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : JEPA et représentation platonique](../jepa-platonic-representation.qmd)
+
+## Vérifier sa compréhension
+
+### 1. Bonnes vues et mauvaises vues {#jepa-good-and-bad-views}
+
+Deux légendes décrivent la même photographie ; deux fragments masqués proviennent d'une même légende. Quelles paires sont des bonnes vues, et pourquoi l'étiquette bonne/mauvaise est-elle relative à la tâche plutôt qu'absolue ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les deux légendes de la même photographie sont l'exemple de bonnes vues : elles décrivent une même scène à travers des observations distinctes, dont les nuisances (formulation, style) peuvent être indépendantes. Les deux fragments masqués d'une même légende sont des mauvaises vues au sens de l'article : ils héritent de la même observation d'origine et peuvent partager ses facteurs de nuisance.
+
+Les qualificatifs ne sont pas universels. Un recadrage peut être une augmentation utile pour apprendre une invariance visuelle ; il est dit « mauvais » ici relativement à l'objectif d'alignement intermodal étudié, car il ne fournit pas nécessairement deux observations indépendantes de la même structure du monde.
+
+</details>
+
+### 2. Hypothèses du théorème {#jepa-theorem-assumptions}
+
+Donnez deux hypothèses du théorème de représentation platonique sans lesquelles la conclusion « même représentation à une rotation près » ne suit pas.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Plusieurs hypothèses sont nécessaires dans l'énoncé étudié. On peut notamment citer :
+- un ensemble fini d'états du monde, chacun de probabilité strictement positive ;
+- un rendu injectif de l'état par chaque modalité ;
+- des distributions de paires positives symétriques, avec la même marginale sur les états du monde ;
+- un objectif invariant par rotation, combinant perte par paires et terme anti-effondrement ;
+- une optimisation au niveau de la population et des optima uniques à une rotation près.
+
+Deux éléments correctement formulés suffisent pour répondre à la question. Il faut éviter de présenter la conclusion comme une loi générale indépendante de ces hypothèses.
+
+</details>
+
+### 3. Échantillons et calcul {#jepa-samples-vs-compute}
+
+L'article rapporte 42 fois moins d'échantillons d'entraînement pour une JEPA à bonnes vues. Pourquoi cela n'est-il pas une affirmation sur 42 fois moins de calcul ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le rapport compare le nombre d'échantillons d'entraînement (21,6 millions contre 900 millions), pas une mesure directe des FLOPs, du temps mur-à-mur ou de l'énergie. Les recettes comparées utilisent aussi des tailles de lot et des taux d'apprentissage différents. L'article rapporte séparément environ 14 fois moins de tokens de texte et 435 fois moins d'images uniques dans cette comparaison. Ces quantités ne sont pas interchangeables et ne permettent pas, à elles seules, de conclure à un facteur de réduction du calcul.
+
+</details>
+
+### 4. Analogie et statut théorique {#jepa-next-token-analogy}
+
+Pourquoi l'interprétation de la prédiction du prochain token comme JEPA à mauvaises vues est-elle heuristique plutôt qu'un théorème ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+L'article propose une factorisation généralisée dans laquelle la paire positive relie un préfixe de document à sa continuation et où la log-partition du softmax joue un rôle anti-effondrement. Mais cette reformulation n'est pas une JEPA spectrale au sens de la preuve du théorème de rotation ; l'argument selon lequel les paires partagent des nuisances et relient indirectement des scènes reste une interprétation heuristique soutenue par des expériences. Elle ne démontre ni l'impossibilité pour les modèles de langage d'apprendre la structure du monde à partir du texte, ni une loi universelle de convergence.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](jepa-platonic-representation.qmd) · [English](../../en/exercises/jepa-platonic-representation.qmd)
+:::
