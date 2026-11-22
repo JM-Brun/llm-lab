@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data"
 
 ## Recall from memory {#revision-check}
 
-Two tokenizers return different ID lists for the same text. Does this imply a bug?
+Two tokenizers return different ID lists for the same text. Does this imply a bug? What stays fixed, and what can change?
 
 <details>
 <summary>Show the answer</summary>
 
-No. Their segmentation rules and vocabularies may differ. Each ID list is interpreted with its own tokenizer.
+No. The input text stays fixed. Token boundaries, the number of tokens, and their IDs can change with the segmentation rules and vocabulary. Each ID list is interpreted with its own tokenizer.
 
 </details>
 

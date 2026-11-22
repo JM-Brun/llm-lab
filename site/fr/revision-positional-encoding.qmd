@@ -32,7 +32,7 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 ## Vérifier de mémoire {#revision-check}
 
-Quand on réordonne deux tokens, leur ligne dans la table de plongements change-t-elle ?
+Après tokenisation, on échange les positions de deux IDs dans la séquence. Leur ligne dans la table de plongements change-t-elle ?
 
 <details>
 <summary>Afficher la réponse</summary>

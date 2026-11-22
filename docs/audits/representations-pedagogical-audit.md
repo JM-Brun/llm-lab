@@ -57,7 +57,7 @@ The French and English concept pages now share an enhanced pedagogical structure
 
 - The page IDs, destination, level, suggested route, hierarchy, and related-page metadata were not changed.
 - Existing project-owned SVGs and external illustrations under review were retained without alteration.
-- The `tiktoken` reproducible trace in `embedding-space.qmd` was preserved intact to ensure compatibility with `site/tools/check_embedding_trace.py`.
+- The [reproducible tokenizer and lookup trace](../../site/en/exercises-text-data.qmd#tokenizer-embedding-trace) now lives in the exercise collection ([FR](../../site/fr/exercises-text-data.qmd#tokenizer-embedding-trace)). `site/tools/check_embedding_trace.py` executes the bilingual source blocks.
 - Numerical values in micro-workbenches are explicitly labelled synthetic and illustrative.
 - The distinction between static token embeddings, contextualized states, and sentence embeddings remains strictly maintained.
 

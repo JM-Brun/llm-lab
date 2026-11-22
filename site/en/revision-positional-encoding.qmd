@@ -32,7 +32,7 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 ## Recall from memory {#revision-check}
 
-If two tokens swap positions, do their rows in the embedding table change?
+After tokenization, swap the positions of two IDs in the sequence. Do their rows in the embedding table change?
 
 <details>
 <summary>Show the answer</summary>

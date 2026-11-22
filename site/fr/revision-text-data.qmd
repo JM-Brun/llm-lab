@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data"
 
 ## Vérifier de mémoire {#revision-check}
 
-Deux tokenizers donnent des listes d’IDs différentes pour le même texte. Est-ce forcément une erreur ?
+Deux tokenizers donnent des listes d’IDs différentes pour le même texte. Est-ce forcément une erreur ? Qu’est-ce qui reste fixe, et qu’est-ce qui peut changer ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Non. Ils peuvent avoir des règles de segmentation et des vocabulaires différents. Chaque liste s’interprète avec son propre tokenizer.
+Non. Le texte source reste fixe. Les frontières des tokens, leur nombre et leurs IDs peuvent changer selon les règles de segmentation et le vocabulaire. Chaque liste s’interprète avec son propre tokenizer.
 
 </details>
 
