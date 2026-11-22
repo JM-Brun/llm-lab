@@ -132,6 +132,12 @@ def load_cross_graph_evidence_projection(
 ) -> CrossGraphEvidenceProjection:
     source_path = root / "data" / "sources.yml"
     source_data = load_yaml(source_path)
+    if (
+        not isinstance(source_data, dict)
+        or type(source_data.get("schema_version")) is not int
+        or source_data.get("schema_version") != 1
+    ):
+        raise ValueError("data/sources.yml: expected mapping with schema_version: 1")
     source_entries = source_data.get("sources")
     if not isinstance(source_entries, list):
         raise ValueError("data/sources.yml must define a sources list")
@@ -362,6 +368,12 @@ def load_cross_graph_evidence_projection(
 
     graph_path = root / "data" / "computational-graph.yml"
     graph_data = load_yaml(graph_path)
+    if (
+        not isinstance(graph_data, dict)
+        or type(graph_data.get("schema_version")) is not int
+        or graph_data.get("schema_version") != 1
+    ):
+        raise ValueError("data/computational-graph.yml: expected mapping with schema_version: 1")
     graph_nodes = graph_data.get("nodes")
     graph_edges = graph_data.get("edges", [])
     if not isinstance(graph_nodes, list) or not isinstance(graph_edges, list):
