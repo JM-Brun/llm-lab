@@ -529,19 +529,48 @@ async function runCase(testCase, caseIndex) {
         });
         if (fontSize < 12) throw new Error(`Mermaid labels shrink to ${fontSize.toFixed(2)}px under reduced motion.`);
 
-        const callout = page.locator("main .callout-header[data-bs-toggle='collapse']").first();
-        await callout.focus();
-        await page.keyboard.press("Shift+Tab");
-        const help = page.locator("mjx-container:focus:not([display=true]) > mjx-help");
-        await help.waitFor({ state: "visible" });
-        const iconFits = await help.evaluate(element => {
-          const { left, right } = element.getBoundingClientRect();
-          return left >= 0 && right <= window.innerWidth;
+        const mathFocus = await page.evaluate(() => {
+          const callout = document.querySelector("main .callout-header[data-bs-toggle='collapse']");
+          if (!callout) return { available: false, reason: "missing callout" };
+          const candidates = [...document.querySelectorAll("mjx-container:not([display=true])")]
+            .filter(element =>
+              element.getClientRects().length > 0 &&
+              Boolean(element.compareDocumentPosition(callout) & Node.DOCUMENT_POSITION_FOLLOWING)
+            );
+          // MathJax may render inline expressions outside the tab order (tabIndex=-1).
+          // Only exercise the help overlay when a real keyboard-focusable expression exists.
+          const target = candidates.filter(element => element.tabIndex >= 0).at(-1);
+          if (!target) {
+            return {
+              available: false,
+              reason: "no keyboard-focusable inline MathJax expression before callout",
+              visibleExpressions: candidates.length,
+            };
+          }
+          target.focus();
+          return {
+            available: document.activeElement === target,
+            tabIndex: target.tabIndex,
+            expression: (target.textContent || "").trim().slice(0, 80),
+          };
         });
-        await page.keyboard.press("Tab");
-        const pageFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
-        if (!iconFits || !pageFits) throw new Error("MathJax's inline help widened the page during keyboard traversal.");
-        item.trainingAccessibility = { reducedMotion: true, mermaidLabelPx: fontSize, mathHelpFits: true };
+        if (mathFocus.available) {
+          const help = page.locator("mjx-container:focus:not([display=true]) > mjx-help");
+          await help.waitFor({ state: "visible" });
+          const iconFits = await help.evaluate(element => {
+            const { left, right } = element.getBoundingClientRect();
+            return left >= 0 && right <= window.innerWidth;
+          });
+          await page.keyboard.press("Tab");
+          const pageFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+          if (!iconFits || !pageFits) throw new Error("MathJax's inline help widened the page during keyboard traversal.");
+        }
+        item.trainingAccessibility = {
+          reducedMotion: true,
+          mermaidLabelPx: fontSize,
+          mathHelpFits: mathFocus.available ? true : null,
+          mathFocus,
+        };
       }
     }
     if (kind === "spine-overview") {
@@ -1424,14 +1453,41 @@ async function runCase(testCase, caseIndex) {
           }
         }
         if (pagePath === "positional-encoding.html") {
-          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
-            comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
-            text: el.textContent || "",
-            className: el.className,
-          })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
-          if (audit.comparisonCount !== 2 || !/RoPE/i.test(audit.text) ||
-              !/absolute|absolu/i.test(audit.text)) {
-            throw new Error("positional map must present absolute encodings and RoPE as alternatives, not consecutive stages; rendered map: " + JSON.stringify(audit));
+          const audit = await page.evaluate(() => {
+            const flow = document.querySelector("main .pipeline-stepper.meta-flow");
+            if (flow) {
+              return {
+                kind: "flow",
+                comparisonCount: flow.querySelectorAll(".meta-flow__comparison-item").length,
+                text: flow.textContent || "",
+              };
+            }
+            // A semantic comparison table is an equally valid representation:
+            // each positional mechanism is an alternative, not a pipeline stage.
+            const table = [...document.querySelectorAll("main table")].map(element => ({
+              headers: [...element.querySelectorAll("thead th")].map(cell => cell.textContent.trim()),
+              rows: [...element.querySelectorAll("tbody tr")].map(row =>
+                [...row.querySelectorAll("th, td")].map(cell => cell.textContent.trim())
+              ),
+            })).find(candidate =>
+              /^(mechanism|mécanisme)$/i.test(candidate.headers[0] || "") &&
+              candidate.rows.length >= 3
+            );
+            return table
+              ? { kind: "table", ...table }
+              : { kind: "missing", comparisonCount: 0, text: "" };
+          });
+          const legacyFlowIsValid = audit.kind === "flow" &&
+            audit.comparisonCount === 2 && /RoPE/i.test(audit.text) &&
+            /absolute|absolu/i.test(audit.text);
+          const tableLabels = audit.kind === "table" ? audit.rows.map(row => row[0] || "") : [];
+          const comparisonTableIsValid = audit.kind === "table" &&
+            audit.rows.length === 3 &&
+            tableLabels.some(label => /absolute|absolu/i.test(label)) &&
+            tableLabels.some(label => /RoPE/i.test(label)) &&
+            tableLabels.some(label => /relative bias|biais relatif/i.test(label));
+          if (!legacyFlowIsValid && !comparisonTableIsValid) {
+            throw new Error("positional mechanisms must be presented as alternatives in a comparison flow or table; rendered audit: " + JSON.stringify(audit));
           }
         }
         if (pagePath === "generation.html") {

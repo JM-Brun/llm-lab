@@ -82,12 +82,7 @@ Une suite probable n'est pas nécessairement vraie : bien prédire ne prouve pas
 
 {{< include ../includes/next-token-explorer.html >}}
 
-<details>
-<summary>Si la règle retient « Je » au premier tour, qu'est-ce qui change au deuxième ?</summary>
-
-Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distribution à partir de ce préfixe, avec les mêmes paramètres. Les probabilités du tableau du deuxième tour correspondent au préfixe qui se termine par « Vous ».
-
-</details>
+Au tour suivant, le modèle conditionne son calcul sur le token effectivement choisi. La distribution illustrative du deuxième tour correspond au préfixe qui se termine par « Vous » ; choisir « Je » impose de la recalculer à partir de cet autre préfixe.
 
 ### Aperçu du calcul à l'intérieur d'un GPT
 
