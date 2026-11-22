@@ -44,6 +44,8 @@ def test_overview_questions_are_collected_on_the_dedicated_practice_pages() -> N
         assert "exercises/llm-overview.qmd" in lesson
         assert "<!-- self-check-coverage: enforced -->" in practice
         assert "::: {.self-check}" in practice
+        check_start = practice.index("::: {.self-check}")
+        assert "<!-- self-check-covers:" in practice[check_start:]
         major_headings = re.findall(r"^## (.+?)\\s*$", lesson, re.MULTILINE)
         sections = set(heading.findall(lesson))
         covered = {item for group in marker.findall(practice) for item in group.split()}
