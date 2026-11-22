@@ -140,20 +140,8 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 [Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-::: {.self-check}
-## Check your understanding
 
-[Dedicated exercises on Q/K/V and attention](exercises/queries-keys-values.qmd).
-
-Which projections determine attention weights, and which one supplies the aggregated content? What happens if V changes while Q and K remain fixed?
-
-<details>
-<summary>Show the reasoning</summary>
-
-Q and K determine the scores and therefore the attention weights. V supplies the aggregated vectors. If only V changes, the weights remain the same, but the aggregated result can change.
-
-</details>
-:::
+[Questions and exercises](exercises/queries-keys-values.qmd)
 
 ## Takeaway and next steps {#revision-summary}
 
