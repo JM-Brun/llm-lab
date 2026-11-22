@@ -24,16 +24,33 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; les questions de compréhension et les exercices sont regroupés dans la page d'exercices dédiée."
+      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; les questions de compréhension et les exercices sont regroupés dans la [page d'exercices dédiée](exercises/llm-overview.qmd), qui complète le récapitulatif sans dupliquer le parcours principal."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-« C’est une bonne situation, ça, scribe ? » Comment un assistant produit-il une réponse à cette question ? L’[assistant conversationnel](#model-to-conversational-system) interroge un modèle de langage. Entraîné à grande échelle, ce type de modèle s’appelle un **grand modèle de langage** (*large language model*, LLM).
+« C'est une bonne situation, ça, scribe ? » Une question courte peut appeler une réponse beaucoup plus longue. Posez-la à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
-Suivons un GPT qui construit sa réponse un **token** à la fois. À chaque tour, le modèle calcule les probabilités du prochain token, puis une règle de décodage en choisit un.
+La réponse se construit un token après l'autre. À partir du texte déjà écrit, le **modèle de langage** calcule des probabilités pour le prochain token. Une règle de décodage sélectionne un token, qui rejoint le texte avant le calcul suivant. Un modèle de langage entraîné à grande échelle est un **grand modèle de langage** (*large language model*, LLM).
+
+Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. Le LLM est le modèle qu’interroge [l’assistant conversationnel](#model-to-conversational-system). Le panorama commence par suivre le calcul du modèle.
+:::
+
+::: {.callout-tip title="L'idée à retenir" #revision-summary}
+Un modèle estime une distribution du prochain token. Elle sert à générer, scorer ou entraîner : trois usages distincts, pas les étapes d'une même exécution.
+:::
+
+::: {.callout-note .learning-outcomes}
+**Durée indicative : 8–10 minutes.**
+
+**À la fin de cette page, vous saurez :**
+- expliquer la prédiction du prochain token et pourquoi une suite probable n'est pas nécessairement vraie ;
+- distinguer architecture, apprentissage des paramètres et utilisation du modèle ;
+- différencier génération, scoring et apprentissage ;
+- repérer où l'information est conservée, récupérée, transmise et exploitée ;
+- expliquer pourquoi un objectif général peut soutenir plusieurs tâches, sans garantir leur réussite.
 :::
 
 ## Ce que le modèle prédit {#what-model-predicts}
@@ -47,22 +64,11 @@ Le texte « C'est une bonne situation, ça, scribe ? » est le **préfixe** : la
 | « Moi » | 0,1 |
 | « Oui » | 0,1 |
 
-Ces valeurs et les tokens de ce petit vocabulaire sont fictifs. Le même exemple numérique est repris dans plusieurs pages pour permettre des calculs à la main. La [tokenisation](text-data.qmd#tokenizer-output) montre le découpage d’un vrai tokenizer.
+Ces valeurs sont fictives. Dans un vrai tokenizer, un token peut être un fragment de mot ; le même exemple numérique est repris dans plusieurs pages pour permettre des calculs à la main.
 
 C'est une **distribution conditionnelle** : les probabilités sont calculées en tenant compte du préfixe et leur somme vaut 1. Si la règle de décodage choisit « Vous », ce token est ajouté au contexte ; le modèle recalcule alors une nouvelle distribution, désormais conditionnée par le préfixe enrichi.
 
 Au tour 2, la question suivie de « Vous » donne une nouvelle distribution illustrative. « savez » reçoit 0,5, « êtes » 0,3 et « voyez » 0,2. Si la règle choisit « savez », le contexte contient désormais « Vous savez ». Les paramètres sont les mêmes aux deux tours.
-
-{{< include ../includes/next-token-explorer.html >}}
-
-Au tour suivant, le modèle conditionne son calcul sur le token effectivement choisi. La distribution illustrative du deuxième tour correspond au préfixe qui se termine par « Vous » ; choisir « Je » impose de la recalculer à partir de cet autre préfixe.
-
-<details>
-<summary>La continuation du fil rouge</summary>
-
-La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ».
-
-</details>
 
 Trois termes suffisent :
 
@@ -72,27 +78,17 @@ Trois termes suffisent :
 
 Une suite probable n'est pas nécessairement vraie : bien prédire ne prouve pas une compréhension humaine ([limites](llm-limits.qmd)).
 
-::: {.callout-tip title="L'idée à retenir" #revision-summary}
-Un modèle estime une distribution du prochain token. Elle sert à générer, scorer ou entraîner : trois usages distincts, pas les étapes d'une même exécution.
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs de lecture | 8–10 min"}
-**À la fin de cette page, vous saurez :**
-
-- expliquer la prédiction du prochain token et pourquoi une suite probable n'est pas nécessairement vraie ;
-- distinguer architecture, apprentissage des paramètres et utilisation du modèle ;
-- différencier génération, scoring et apprentissage ;
-- repérer où l'information est conservée, récupérée, transmise et exploitée ;
-- expliquer pourquoi un objectif général peut soutenir plusieurs tâches, sans garantir leur réussite.
-:::
-
 ## Du texte à la distribution {#text-to-distribution}
+
+{{< include ../includes/next-token-explorer.html >}}
+
+Au tour suivant, le modèle conditionne son calcul sur le token effectivement choisi. La distribution illustrative du deuxième tour correspond au préfixe qui se termine par « Vous » ; choisir « Je » impose de la recalculer à partir de cet autre préfixe.
 
 ### Aperçu du calcul à l'intérieur d'un GPT
 
 ![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits convertis en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
 
-Le tokenizer transforme le texte en identifiants de tokens. Le GPT convertit ces identifiants en représentations numériques et les traite dans ses blocs Transformer. La tête de sortie produit des scores, appelés **logits**, que l’on convertit en probabilités. La sélection du token intervient ensuite, au décodage. Le token rejoint le contexte avant le tour suivant.
+Un GPT autorégressif transforme le texte en tokens, leurs identifiants en représentations numériques, puis traite ces représentations dans les blocs Transformer. La tête de sortie produit des logits, convertis en probabilités ; une règle de décodage sélectionne ensuite un token, qui est ajouté au contexte avant le calcul suivant. La sélection n'est pas une opération interne à l'attention : elle intervient après le calcul de la distribution.
 
 La figure décrit **une computation**, pas un ordre de lecture. Le parcours Understand canonique est présenté dans la [carte d'apprentissage](learning-map.qmd). Pour approfondir chaque mécanisme : [texte et tokenisation](text-data.qmd), [embeddings](embedding-space.qmd), [Transformer](transformer.qmd), [logits et probabilités](probabilites.qmd), puis [génération](generation.qmd).
 
@@ -109,16 +105,9 @@ Une distribution calculée peut servir à produire une suite, à scorer une suit
 - **Scorer :** calculer la probabilité d'une séquence observée, sa **vraisemblance** ([vraisemblance](vraisemblance.qmd)).
 - **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* utilise les tokens réels ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
 
-Dans ce parcours, l’apprentissage est l’usage qui met à jour les paramètres. L’évaluation compare des résultats sur des exemples tenus à l’écart de l’entraînement.
-
-<details>
-<summary>Calculer la surprise et la vraisemblance</summary>
-
-Pour une probabilité de 0,6, la surprise vaut $-\ln(0{,}6)\approx 0{,}511$ nat. L'[entropie](entropy.qmd) est la surprise moyenne attendue. Le scoring mesure la vraisemblance d'une cible ou d'une suite.
+Pour une probabilité de 0,6, la surprise vaut $-\ln(0{,}6)\approx 0{,}511$ nat. L'[entropie](entropy.qmd) est la surprise moyenne attendue. Le scoring mesure la vraisemblance d'une cible ou d'une suite. L'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
 
 La vraisemblance d'une séquence est le produit des probabilités conditionnelles de ses tokens ([formalisation mathématique](language-modeling-math.qmd)). [Refaire le calcul sur une continuation observée](exercises/vraisemblance.qmd#ex-overview-likelihood-transfer).
-
-</details>
 
 ## LLM, Transformer, GPT : trois notions {#llm-transformer-gpt}
 
@@ -182,7 +171,6 @@ Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir
 [Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
 
 [Questions et exercices associés au panorama](exercises/llm-overview.qmd).
-
 
 ::: {.callout-tip title="Pour approfondir"}
 - **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).

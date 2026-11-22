@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The takeaway separates Q/K (scores and weights) from V (aggregated content), explains what changes when V alone varies and flags interpretation limits; an answered self-check and dedicated exercises reinforce it."
+      note: "The takeaway separates Q/K (scores and weights) from V (aggregated content), explains what changes when V alone varies and flags interpretation limits; the comprehension questions and associated exercises are collected on the dedicated companion page."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
@@ -140,20 +140,6 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 [Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
 
-::: {.self-check}
-## Check your understanding
-
-[Dedicated exercises on Q/K/V and attention](exercises/queries-keys-values.qmd).
-
-Which projections determine attention weights, and which one supplies the aggregated content? What happens if V changes while Q and K remain fixed?
-
-<details>
-<summary>Show the reasoning</summary>
-
-Q and K determine the scores and therefore the attention weights. V supplies the aggregated vectors. If only V changes, the weights remain the same, but the aggregated result can change.
-
-</details>
-:::
 
 ## Takeaway and next steps {#revision-summary}
 

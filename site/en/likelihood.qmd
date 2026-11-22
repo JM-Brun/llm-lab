@@ -116,24 +116,8 @@ For mean NLL computed with the natural logarithm, **perplexity** is $\operatorna
 
 
 
-::: {.self-check}
-## Check your understanding
 
-[Dedicated exercises](exercises/likelihood.qmd).
-
-1. Why use log-likelihood rather than the direct product of probabilities?
-2. Does the chain rule assume that tokens are independent?
-3. Why document the tokenizer and NLL reduction when comparing models?
-
-<details>
-<summary>Show the answers</summary>
-
-1. The logarithm turns a product into a sum, which is more numerically stable and easier to optimize.
-2. No. The chain rule factorizes a joint probability into successive conditional probabilities without an independence assumption.
-3. The tokenizer defines the evaluated units, while the reduction (sum or mean) determines the score's scale.
-
-</details>
-:::
+[Questions and exercises](exercises/likelihood.qmd)
 
 The next page decomposes this NLL at one target position and generalizes the one-hot case to a target distribution: [cross-entropy](cross-entropy.qmd).
 
@@ -150,9 +134,6 @@ The next page decomposes this NLL at one target position and generalizes the one
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-### Practice
-
-[More likelihood exercises](exercises/likelihood.qmd).
 
 
 ### Further reading

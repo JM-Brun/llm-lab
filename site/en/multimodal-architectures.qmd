@@ -95,13 +95,7 @@ The word *token* does not always mean a unit of text. Depending on the system, i
 
 AudioLM, for example, combines semantic representations intended to preserve long-range structure with acoustic codes carrying more reconstruction detail. Acoustic units are not words, and should not be interpreted as text tokens merely because a Transformer predicts them.
 
-## Questions to ask when reading an architecture
-
-1. **Which modalities actually enter and leave?** Do not infer generation from input understanding alone.
-2. **Where are the boundaries?** Identify encoders, projectors, language models, generators, codecs, and runtime.
-3. **Which representation is predicted?** Text tokens, audio codes, visual tokens, patches, or latent states.
-4. **Which mechanism produces the output?** Autoregressive decoding, iterative denoising, codec decoding, or an external call.
-5. **What evidence supports the comparison?** A published architecture does not by itself prove better quality, cost, or speed.
+[Questions for analysing a multimodal architecture](exercises/multimodal-architectures.qmd).
 
 ## Key takeaways
 

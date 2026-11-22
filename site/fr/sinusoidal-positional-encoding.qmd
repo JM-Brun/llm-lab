@@ -283,23 +283,7 @@ Autres propriétés à tester : norme unitaire de chaque paire, valeurs comprise
 
 La longueur d'entraînement, les distributions de données, les mécanismes d'attention, la précision numérique et les poids appris influencent les performances à longue séquence. La capacité à calculer un vecteur ne doit donc jamais être présentée comme une preuve de capacité à raisonner sur un contexte plus long.
 
-## 8. Vérifier sa compréhension
-
-::: {.callout-tip title="À vous de jouer"}
-1. Si $d_{\text{model}}$ double, combien de paires de fréquences sont utilisées ?
-2. Si l'indice de paire $i$ augmente, la longueur d'onde augmente-t-elle ou diminue-t-elle ?
-3. Pourquoi la transformation associée au décalage $k$ ne dépend-elle pas de la position initiale $p$ ?
-4. Quelle différence y a-t-il entre « calculer le signal à la position 20 000 » et « réussir une tâche avec un contexte de 20 000 tokens » ?
-5. Le produit scalaire $PE(p)^\top PE(q)$ est-il un score d'attention appris ?
-:::
-
-::: {.callout-note collapse="true" title="Éléments de réponse"}
-1. Le nombre de paires passe de $d_{\text{model}}/2$ à $d_{\text{model}}$.
-2. Elle augmente : $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
-3. Les identités d'addition expriment les sinus et cosinus de $p+k$ comme une combinaison linéaire de ceux de $p$, avec des coefficients qui ne dépendent que de $k$ et de $\omega_i$.
-4. Le premier est une propriété de la formule ; le second dépend du comportement appris du modèle et doit être évalué empiriquement.
-5. Non. C'est une similarité entre vecteurs positionnels fixes ; un score d'attention dépend de projections apprises des représentations.
-:::
+[Questions et exercices sur l'encodage sinusoïdal](exercises/sinusoidal-positional-encoding.qmd).
 
 ## Références et ressources pédagogiques
 

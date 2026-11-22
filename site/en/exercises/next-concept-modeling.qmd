@@ -1,0 +1,40 @@
+---
+title: "Exercises — Next-Concept Modeling"
+subtitle: "Comprehension question and worked answer"
+description-meta: "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results."
+keywords: ["type:exercise-hub", "destination:practice", "topic:next-concept-modeling-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/next-concept-modeling-exercises"
+summary: "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results."
+scope: "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results."
+purpose: "Distinguish sequential generation across code levels from parallel prediction within one level, and limit the scope of an experimental result."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/next-concept-modeling"]
+tags: ["type:exercise-hub", "destination:practice", "topic:next-concept-modeling-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: Next-Concept Modeling](../next-concept-modeling.qmd)
+
+## Check the mechanism and the scope of the evidence
+
+In NCM, which part of generation is sequential, and which part can be parallelized? What would be an excessive conclusion from a strong Sudoku result?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Code levels are generated sequentially, from coarse to fine; positions within one level can be predicted in parallel. A Sudoku result documents performance in a specific domain and protocol. It does not establish general reasoning ability, interpretability of latent codes, or universal superiority over autoregressive and diffusion models.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/next-concept-modeling.qmd) · [English](../../en/exercises/next-concept-modeling.qmd)
+:::

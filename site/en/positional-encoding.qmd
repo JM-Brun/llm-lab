@@ -1,6 +1,6 @@
 ---
 title: "Positional encoding: giving tokens an order"
-subtitle: "Where position and visibility enter the computation"
+subtitle: "Why order must be injected—and where"
 description-meta: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 lang: en
@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
 summary: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 scope: "Explains where token order enters, with an absolute signal at the input and a relative signal in attention comparisons."
-purpose: "Predict what changes when two tokens swap places and locate positional information in the mechanisms shown."
+purpose: "Predict what changes when two tokens swap places and locate positional information in both mechanisms."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
@@ -30,33 +30,30 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-“The cat chases the dog” and “the dog chases the cat” use the same words, but their order changes who chases whom. Where does a token’s position enter the computation in GPT?
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; the detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd). For the original Transformer's sinusoidal encodings, see the [dedicated deep dive](sinusoidal-positional-encoding.qmd).
 :::
 
 ## Why add positional information?
 
-Both occurrences of `cat` at positions 0 and 3 retrieve the same vector $(2,-1)$ from the [toy embedding table](embedding-space.qmd#lookup). In the exercise’s additive GPT, a vector for each position is added to the token vector before the first block.
+The two occurrences of `cat` at positions 0 and 3 retrieve the same vector from the [embedding table](embedding-space.qmd). The model needs an ordering signal to account for where each token occurs. Changing the order in “the cat chases the dog” can change who is chasing whom.
 
-[Compute the two first-block inputs](exercises/text-data.qmd#ex-token-to-block-input) with $P[0]=(0,1)$ and $P[3]=(1,0)$.
+When used, the causal mask indicates which positions may be attended to (`j ≤ i`). Positional mechanisms can additionally represent an absolute position or a relative offset. These signals are complementary, not interchangeable.
 
-<details>
-<summary>Show both input vectors</summary>
-
-At position 0, $(2,-1)+(0,1)=(2,0)$. At position 3, $(2,-1)+(1,0)=(3,-1)$. The lookup is identical; adding the position vector creates the difference.
-
-</details>
+In “What have the Romans ever done for us?”, token order is part of the input. As generation adds “They built roads between distant towns.”, each new token takes its own position in the growing sequence.
 
 ### Follow B when the order changes {#position-permutation}
 
-Consider two already tokenized sequences, `ABC` and `CBA`. B keeps the same ID and the same middle position. We swap occurrences in the sequence and keep the vocabulary IDs fixed. Compare B’s output in three computations, with fixed parameters.
+Consider two already tokenized sequences, \`ABC\` and \`CBA\`. B keeps the same ID and the same middle position. We swap occurrences in the sequence and keep the vocabulary IDs fixed. Compare B’s output in three computations, with fixed parameters.
 
 | Computation | Result for B |
 |---|---|
 | Embedding lookup | B retrieves the same vector, since its ID is the same. |
 | One layer of content-only self-attention, with no positional mechanism or mask | B can attend to the same three tokens. Swapping A and C reorders the contributions without changing their aggregation for B. |
-| The same layer with only a causal mask | B sees `AB` in one case and `CB` in the other. Its output can change because the set of visible tokens changes. |
+| The same layer with only a causal mask | B sees \`AB\` in one case and \`CB\` in the other. Its output can change because the set of visible tokens changes. |
 
 In the second case, permuting the inputs permutes the outputs in the same way. This is **permutation equivariance**. The causal mask breaks this symmetry by making visibility depend on position. A query at position $t$ can see positions $s \le t$. Explicit encodings can also supply a position or an offset.
+
+
 
 ## Two families, with several mechanisms
 
@@ -68,9 +65,8 @@ An **additive absolute encoding** uses a token’s position. A **relative** mech
 | [RoPE](rope.qmd) | Rotates Q and K after projection according to their respective positions. For fixed Q and K before rotation, their dot product depends on the **relative offset**. The rotation is not applied directly to V. |
 | Relative bias | Adds a term based on the offset to attention scores before softmax. Other variants use relative representations. |
 
-The causal mask determines which keys can contribute regardless of the positional mechanism. See the lessons on [Q/K/V projections](queries-keys-values.qmd) and [sinusoidal encodings](sinusoidal-positional-encoding.qmd) for details.
+The causal mask determines which keys can contribute regardless of the positional mechanism. See the lessons on [Q/K/V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd) for these distinct operations.
 
-In the running example, each token of “They built roads between distant towns.” appended after “What have the Romans ever done for us?” takes the next position in the sequence.
 
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
@@ -78,16 +74,15 @@ In the running example, each token of “They built roads between distant towns.
 
 :::
 
-::: {.callout-note collapse="true" title="A computable signal does not guarantee extrapolation"}
+::: {.callout-note title="A computable signal does not guarantee extrapolation"}
 The sinusoidal formula can be evaluated at arbitrarily large position indices. That does not guarantee that a model trained on shorter sequences will use those unseen positions reliably. Likewise, RoPE alone does not guarantee reliable long-context behaviour: this depends in part on the frequencies, any scaling method, training sequence length, and data. **Being able to represent a position is not the same as generalizing to it.** The deep dives on [sinusoidal encodings](sinusoidal-positional-encoding.qmd) and [RoPE](rope.qmd) examine these limitations.
 :::
 
 At this stage, it is enough to understand the mechanisms' role and approximate location in the computation. For relative-offset dependence and rotation conventions, see the [advanced RoPE deep dive](rope.qmd).
 
-<span id="common-misconceptions"></span>
-<span id="check-your-understanding"></span>
+## Common misconceptions
 
-[Check the related questions on the dedicated practice page](exercises/positional-encoding.qmd#ex-additive-position-and-causal-mask) · [Compare two contexts at the same position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+- **“Attention naturally knows which token comes first.”** Content-based attention does not carry that order on its own; a positional mechanism or structural constraint such as causal masking must supply it.
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Why:** content embeddings alone do not say where a token occurs. Without positional information or an order-dependent constraint, self-attention is permutation equivariant.
@@ -97,7 +92,7 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 
 ## Where does this step sit in the route?
 
-The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. In the [lesson on contextualized representations](contextualized-representations.qmd), position stays fixed. The accessible context changes to show how Transformer blocks transform those initial states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access.
+The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it determines which positions each query can access.
 
 {{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
 
@@ -117,6 +112,7 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 ### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
+
 
 ### Why is self-attention alone not enough?
 

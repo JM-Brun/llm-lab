@@ -45,8 +45,10 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 - **Recherche :** greedy optimise une décision locale ; beam search conserve plusieurs hypothèses ; le décodage contrastif compare un modèle expert et un modèle amateur.
 - **Évaluation :** qualité et diversité dépendent de la tâche, des métriques et du protocole ; documenter les paramètres est nécessaire à la reproductibilité. Aucune stratégie ne garantit la vérité ou la cohérence globale.
 
-**Question rapide :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+
 :::
+
+[Question de compréhension sur le décodage](exercises/decoding-strategies.qmd).
 
 Au premier tour du scribe, la [distribution illustrative](probabilites.qmd#running-example-next-token) attribue 0,6 à « Vous » et 0,2 à « Je ». La sélection gloutonne retient « Vous ». L'échantillonnage sans filtre peut aussi tirer « Je ». Le [token retenu est ajouté au préfixe](generation.qmd), ce qui conditionne le tour suivant.
 

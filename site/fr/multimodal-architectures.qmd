@@ -95,13 +95,7 @@ Le mot *token* ne désigne pas toujours une unité de texte. Selon le système, 
 
 AudioLM, par exemple, combine des représentations sémantiques destinées à préserver une structure de long terme et des codes acoustiques qui portent davantage de détails de reconstruction. Les unités acoustiques ne sont pas des mots, et ne doivent pas être interprétées comme des tokens textuels simplement parce qu'un Transformer les prédit.
 
-## Questions à poser devant une architecture
-
-1. **Quelles modalités entrent et sortent réellement ?** Ne pas inférer la génération à partir de la seule compréhension.
-2. **Où sont les frontières ?** Identifier encodeurs, projecteurs, modèle de langage, générateurs, codecs et runtime.
-3. **Quelle représentation est prédite ?** Tokens textuels, codes audio, tokens visuels, patches ou états latents.
-4. **Quel mécanisme produit la sortie ?** Décodage autorégressif, débruitage itératif, décodage de codec ou appel externe.
-5. **Quelle preuve soutient la comparaison ?** Une architecture publiée ne prouve pas à elle seule une supériorité de qualité, de coût ou de vitesse.
+[Questions d'analyse d'une architecture multimodale](exercises/multimodal-architectures.qmd).
 
 ## À retenir
 

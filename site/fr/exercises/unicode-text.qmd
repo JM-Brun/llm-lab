@@ -1,0 +1,44 @@
+---
+title: "Exercices — Unicode, UTF-8 et normalisation"
+subtitle: "Question de compréhension et corrigé"
+description-meta: "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8."
+keywords: ["type:exercise-hub", "destination:practice", "topic:unicode-text-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/unicode-text-exercises"
+summary: "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8."
+scope: "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8."
+purpose: "Distinguer caractère abstrait, point de code Unicode et octet UTF-8, sans les confondre avec les tokens et IDs d'un tokenizer."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/unicode-text"]
+tags: ["type:exercise-hub", "destination:practice", "topic:unicode-text-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Unicode, UTF-8 et normalisation du texte](../unicode-text.qmd)
+
+## Vérifier les distinctions
+
+Une lettre « é » est affichée à l'écran. Quelle proposition distingue correctement les niveaux de représentation ?
+
+1. Le caractère est l'unité abstraite de texte ; un point de code Unicode identifie un élément de l'espace de codes ; UTF-8 encode les points de code en octets.
+2. Le caractère est toujours un octet ; le point de code est le token ; UTF-8 est le vocabulaire du modèle.
+3. Un point de code et un octet UTF-8 sont deux noms pour la même chose.
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+La première proposition est la bonne. Un caractère perçu peut être représenté par un ou plusieurs points de code ; chaque point de code est ensuite encodé en une séquence d'un à quatre octets en UTF-8. La normalisation peut aussi faire correspondre des séquences distinctes à une même forme normalisée. Ni les points de code ni les octets ne sont, à eux seuls, les tokens ou IDs d'un tokenizer donné.
+
+</details>
+
+::: {.language-switch}
+**Langue:** [Français](../../fr/exercises/unicode-text.qmd) · [English](../../en/exercises/unicode-text.qmd)
+:::

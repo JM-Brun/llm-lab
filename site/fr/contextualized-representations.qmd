@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, trois questions corrigées et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
+      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, la page d'exercices dédiée et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -170,26 +170,6 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-::: {.self-check}
-### Vérifier sa compréhension
-
-**Question rapide :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
-
-[Exercices dédiés](exercises/contextualized-representations.qmd).
-
-Deux occurrences du même ID de token apparaissent dans deux phrases différentes.
-
-1. Le lookup renvoie-t-il le même vecteur initial ?
-2. Les états cachés après les couches Transformer doivent-ils rester identiques ?
-3. À quelle étape l'information contextuelle intervient-elle ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Avec une matrice d'embeddings fixe, le même ID sélectionne la même ligne. Les états cachés peuvent ensuite différer, car les couches Transformer combinent l'information de la position avec celle des autres tokens accessibles. Le lookup seul ne désambiguïse pas le sens du mot.
-
-</details>
-:::
 
 :::
 

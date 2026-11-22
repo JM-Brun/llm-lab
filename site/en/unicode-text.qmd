@@ -72,20 +72,7 @@ NFC/NFD concern canonical forms; NFKC/NFKD also apply certain compatibility equi
 3. A tokenizer may normalize and pre-split text before applying segmentation rules; the exact steps depend on the implementation.
 4. The figure illustrates Unicode and UTF-8, **not** the output of a particular tokenizer. To inspect real tokens and IDs, run the exact tokenizer with its version and configuration.
 
-## Check the distinctions
-
-A letter “é” is displayed on screen. Which statement correctly distinguishes the representation layers?
-
-1. A character is an abstract text unit; a Unicode code point identifies an element of the code space; UTF-8 encodes code points as bytes.
-2. A character is always one byte; a code point is the token; UTF-8 is the model's vocabulary.
-3. A code point and a UTF-8 byte are two names for the same thing.
-
-<details>
-<summary>Show the answer and reasoning</summary>
-
-The first statement is correct. A perceived character may be represented by one or more code points; each code point is then encoded as a sequence of one to four UTF-8 bytes. Normalization can also map distinct sequences to the same normalized form. Neither code points nor bytes are, by themselves, the tokens or IDs of a particular tokenizer.
-
-</details>
+[Unicode comprehension question](exercises/unicode-text.qmd).
 
 ## Technical references
 

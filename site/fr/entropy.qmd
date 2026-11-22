@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel et six questions corrigées couvrent la distribution conditionnelle au contexte, l'entropie et le surprisal, l'effet de la température, la calibration empirique et les conventions de comparaison."
+      note: "Le rappel présente la distribution conditionnelle au contexte, l'entropie et le surprisal, l'effet de la température, la calibration empirique et les conventions de comparaison."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -154,30 +154,6 @@ Une température plus faible tend à concentrer la distribution ; une températu
 
 
 
-::: {.self-check}
-## Vérifier sa compréhension
-
-[Exercices dédiés](exercises/entropy.qmd).
-
-1. Une entropie faible garantit-elle que le token le plus probable est correct ?
-2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
-3. Pourquoi faut-il documenter le tokenizer pour comparer des perplexités ?
-4. Pourquoi peut-on obtenir des valeurs d'entropie différentes avec le même modèle selon le contexte ?
-5. Que change une température plus élevée, et que ne permet-elle pas de conclure ?
-6. Une faible entropie garantit-elle que les prédictions sont bien calibrées ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
-2. L'entropie est l'espérance de la surprise sous $p$ ; la surprise observée est la valeur $-\ln p(x_t)$ pour la cible effectivement rencontrée.
-3. Les tokenizers segmentent différemment le texte, ce qui change les unités et le nombre de positions évaluées.
-4. L'entropie porte sur $p(\cdot\mid contexte)$ : un contexte différent peut produire une distribution différente, donc une dispersion différente.
-5. La température redimensionne les logits avant le softmax et tend à aplatir la distribution lorsqu'elle augmente. Elle ne met pas à jour les paramètres et ne prouve ni vérité ni calibration.
-6. Non. La calibration compare les confiances annoncées aux fréquences observées sur un ensemble de prédictions ; une distribution concentrée peut rester souvent erronée.
-
-</details>
-:::
 
 Reprenez la [boucle de génération du scribe](generation.qmd#la-boucle-sur-un-exemple). Quand le décodage glouton choisit « Vous », ce token rejoint le préfixe et le modèle calcule une nouvelle distribution pour le deuxième tour.
 

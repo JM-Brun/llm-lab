@@ -22,7 +22,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le récapitulatif et le tableau comparent les trois architectures, les flux d'information et les mécanismes d'attention ; le self-check et la pratique distinguent architecture, objectif et tâche."
+      note: "Le récapitulatif et le tableau comparent les trois architectures, les flux d'information et les mécanismes d'attention ; la page d'exercices dédiée aide à distinguer architecture, objectif et tâche."
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
@@ -135,24 +135,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-::: {.self-check}
-## Vérifier sa compréhension
-
-[Exercices dédiés aux architectures Transformer](exercises/transformer-architectures.qmd).
-
-1. Pourquoi BERT peut-il exploiter des tokens situés après la position représentée ?
-2. Quelle opération distingue particulièrement un encodeur-décodeur d'un décodeur seul ?
-3. La prédiction du prochain token définit-elle tous les Transformers ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. Son encodeur utilise généralement une attention bidirectionnelle sur l'entrée.
-2. L'attention croisée du décodeur vers les représentations produites par l'encodeur.
-3. Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de toutes les architectures Transformer.
-
-</details>
-:::
 
 
 </div>

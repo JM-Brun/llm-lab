@@ -1,6 +1,6 @@
 ---
 title: "Encodage positionnel : donner un ordre aux tokens"
-subtitle: "Où la position et la visibilité interviennent dans le calcul"
+subtitle: "Pourquoi l'ordre doit être injecté — et où"
 description-meta: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 lang: fr
@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
 summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 scope: "Explique où l’ordre des tokens intervient, avec un signal absolu à l’entrée et un signal relatif dans la comparaison en attention."
-purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les mécanismes présentés."
+purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les deux mécanismes présentés."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
@@ -30,47 +30,43 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-« Le chat poursuit le chien » et « le chien poursuit le chat » utilisent les mêmes mots, mais l’ordre change qui poursuit qui. Dans un GPT, où le rang d’un token intervient-il dans le calcul ?
+Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd). Pour les encodages sinusoïdaux du Transformer original, consultez l'[approfondissement dédié](sinusoidal-positional-encoding.qmd).
 :::
 
 ## Pourquoi ajouter une information de position ?
 
-Les deux occurrences de `chat` aux rangs 0 et 3 lisent le même vecteur $(2,-1)$ dans la [table de plongements jouet](embedding-space.qmd#lookup). Dans le GPT additif de l’exercice, on ajoute au vecteur du token un vecteur associé à son rang avant le premier bloc.
+Les deux occurrences de `chat` aux positions 0 et 3 lisent le même vecteur dans la [table de plongements](embedding-space.qmd). Pour tenir compte de leur rang, le modèle a besoin d’un signal d’ordre. Permuter « le chat poursuit le chien » peut changer qui poursuit qui.
 
-[Calculez les deux entrées du premier bloc](exercises/text-data.qmd#ex-token-to-block-input) avec $P[0]=(0,1)$ et $P[3]=(1,0)$.
+Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
 
-<details>
-<summary>Afficher les deux vecteurs d’entrée</summary>
-
-Au rang 0, $(2,-1)+(0,1)=(2,0)$. Au rang 3, $(2,-1)+(1,0)=(3,-1)$. La lecture de la table est identique ; l’addition du vecteur de rang crée la différence.
-
-</details>
+Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi… », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
 
 ### Suivre B quand l’ordre change {#position-permutation}
 
-Considérons deux séquences déjà tokenisées, `ABC` et `CBA`. Le token B garde son ID et son rang au milieu. On échange des occurrences dans la séquence et on conserve les IDs du vocabulaire. Comparons la sortie de B dans trois calculs, à paramètres fixes.
+Considérons deux séquences déjà tokenisées, \`ABC\` et \`CBA\`. Le token B garde le même ID et le même rang au milieu. On échange les occurrences dans la séquence en conservant les IDs du vocabulaire. Comparons la sortie de B dans trois calculs, à paramètres fixes.
 
 | Calcul | Résultat pour B |
 |---|---|
 | Lecture de la table de plongements | B lit le même vecteur, puisque son ID est le même. |
 | Une couche d’auto-attention de contenu, sans mécanisme positionnel ni masque | B consulte les mêmes trois tokens. L’échange d’A et de C réordonne les contributions sans changer leur agrégation pour B. |
-| La même couche avec le seul masque causal | B voit `AB` dans un cas et `CB` dans l’autre. Le résultat peut changer, car les tokens autorisés ont changé. |
+| La même couche avec le seul masque causal | B voit \`AB\` dans un cas et \`CB\` dans l’autre. Le résultat peut changer, car les tokens visibles ont changé. |
 
-Dans le deuxième cas, permuter les entrées permute les sorties de la même façon. C’est l’**équivariance par permutation**. Le masque causal brise cette symétrie en faisant dépendre la visibilité du rang. Il autorise à la position $t$ les positions $s \le t$. Les encodages explicites permettent en plus de fournir un rang ou un décalage.
+Dans le deuxième cas, permuter les entrées permute les sorties de la même façon. C’est l’**équivariance par permutation**. Le masque causal brise cette symétrie en faisant dépendre la visibilité du rang. Une requête à la position $t$ peut consulter les positions $s \le t$. Les encodages explicites peuvent aussi fournir une position ou un décalage.
+
+
 
 ## Deux familles et plusieurs mécanismes
 
 Un encodage **absolu additif** utilise le rang du token. Un mécanisme **relatif** rend l’attention sensible à l’écart entre deux rangs. Avant de comparer les positions, l’attention calcule des requêtes (Q), des clés (K) et des valeurs (V) à partir des états. Une requête est comparée aux clés pour déterminer les poids, qui servent ensuite à combiner les valeurs.
 
-| Mécanisme | Où la position agit |
+| Mécanisme | Où agit la position |
 |---|---|
-| Encodage absolu additif | Ajoute un vecteur à l’embedding avant le premier bloc. Le Transformer d’origine utilisait des vecteurs sinusoïdaux ; d’autres modèles apprennent ces vecteurs. |
-| [RoPE](rope.qmd) | Fait tourner Q et K après projection selon leurs rangs respectifs. À Q et K avant rotation fixés, leur produit scalaire dépend du **décalage relatif**. La rotation n’est pas appliquée directement à V. |
-| Biais relatif | Ajoute aux scores d’attention un terme dépendant du décalage, avant le softmax. D’autres variantes utilisent des représentations relatives. |
+| Encodage absolu additif | Ajoute un vecteur à l’embedding avant le premier bloc. Le Transformer d’origine utilisait des vecteurs sinusoïdaux ; d’autres modèles les apprennent. |
+| [RoPE](rope.qmd) | Fait tourner Q et K après projection selon leurs rangs respectifs. À Q et K avant rotation fixés, leur produit scalaire dépend du **décalage relatif**. La rotation ne s’applique pas directement à V. |
+| Biais relatif | Ajoute aux scores d’attention, avant le softmax, un terme fondé sur le décalage. D’autres variantes utilisent des représentations relatives. |
 
-Le masque causal détermine quelles clés peuvent contribuer, quel que soit le mécanisme positionnel utilisé. Les [projections Q/K/V](queries-keys-values.qmd) et les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) sont détaillés dans leurs leçons respectives.
+Le masque causal détermine quelles clés peuvent contribuer, indépendamment du mécanisme positionnel. Voir les leçons sur les [projections Q/K/V](queries-keys-values.qmd) et le [masque causal](causal-masking.qmd) pour distinguer ces opérations.
 
-Dans le fil rouge, chaque token de la continuation « Vous savez, moi… » ajouté après « C'est une bonne situation, ça, scribe ? » occupe le rang suivant dans la séquence.
 
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
@@ -78,16 +74,15 @@ Dans le fil rouge, chaque token de la continuation « Vous savez, moi… » ajou
 
 :::
 
-::: {.callout-note collapse="true" title="Un signal calculable ne garantit pas l'extrapolation"}
+::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
 La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
 :::
 
 Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
-<span id="idées-reçues"></span>
-<span id="vérifier-sa-compréhension"></span>
+## Idées reçues
 
-[Retrouvez les questions associées sur la page d’exercices dédiée](exercises/positional-encoding.qmd#ex-additive-position-and-causal-mask) · [Comparer deux contextes à rang fixe](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary)
+- **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Pourquoi :** les embeddings de contenu seuls ne disent pas où se trouve un token. Sans signal positionnel ni contrainte d'ordre, l'auto-attention est équivariante par permutation.
@@ -97,7 +92,7 @@ Pour comprendre la dépendance au décalage relatif et les conventions de rotati
 
 ## Où se situe cette étape dans le parcours ?
 
-Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Dans la [leçon sur les représentations contextualisées](contextualized-representations.qmd), le rang reste fixe. On fait varier le contexte accessible pour comprendre comment les blocs Transformer transforment ces états initiaux. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il détermine les positions visibles par chaque requête.
+Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Les [représentations contextualisées](contextualized-representations.qmd), prochaine étape du parcours, décrivent comment les blocs Transformer transforment ces états initiaux en états dépendants du contexte. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il détermine les positions visibles par chaque requête.
 
 {{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
 
@@ -117,6 +112,7 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 
 ### Pourquoi l’auto-attention seule ne suffit-elle pas ?
 
