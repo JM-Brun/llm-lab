@@ -17,9 +17,11 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space"]
   children: []
-related: []
+related: ["en/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:en", "status:published"]
 -->
+
+**Practice:** [Mathematical foundations exercises](exercises-foundations.qmd), including the distinction between linear decodability and functional use.
 
 ## What kind of linearity are we talking about?
 
