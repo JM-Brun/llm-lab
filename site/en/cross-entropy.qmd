@@ -131,26 +131,8 @@ For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends 
 
 
 
-::: {.self-check}
-## Check your understanding
 
-[Dedicated exercises](exercises/cross-entropy.qmd).
-
-1. Why is the loss zero when the target probability is 1?
-2. Why should masked positions be excluded from the denominator of the mean?
-3. Does perplexity directly measure the truth or usefulness of an answer?
-4. In next-token training, why must logits at position $t$ align with the target at position $t+1$?
-
-<details>
-<summary>Show the answers</summary>
-
-1. The loss is $-\log p_y$, which is zero when $p_y=1$.
-2. Otherwise, the mean is no longer taken only over valid tokens and its scale is distorted.
-3. No. Perplexity measures probability assigned to tokens in a particular dataset; it does not directly measure truth, usefulness, or safety.
-4. The representation at position $t$ sees only the prefix through $t$ and predicts the next token. Without the shift, logits would be compared with the token already at position $t$ instead of the next-token target.
-
-</details>
-:::
+[Questions and exercises](exercises/cross-entropy.qmd)
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
 
