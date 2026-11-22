@@ -2,7 +2,7 @@
 title: "Exercices — RoPE"
 subtitle: "Questions de compréhension et raisonnement"
 description-meta: "Questions et raisonnement associés à l'encodage positionnel rotatif (RoPE)."
-keywords: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:deepening", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/rope"]
-tags: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:deepening", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:rope-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : RoPE](../rope.qmd)
