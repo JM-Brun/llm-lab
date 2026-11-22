@@ -141,9 +141,9 @@ def test_predictive_coding_path_resolves_to_primary_coding_evidence() -> None:
     assert "quantized_coder.py" in readme
     assert "not transmitted or included" in readme
     assert "not a bounded-state production range coder" in readme
-    quantized_tests = (
-        ROOT / "tests" / "unit" / "test_quantized_predictive_coder.py"
-    ).read_text(encoding="utf-8")
+    quantized_tests = (ROOT / "tests" / "unit" / "test_quantized_predictive_coder.py").read_text(
+        encoding="utf-8"
+    )
     assert 'module["main"]()' in quantized_tests
 
 
@@ -155,7 +155,9 @@ def test_v_information_path_preserves_source_local_scope_and_partial_evidence() 
     concept_ids = {item["id"] for item in concepts["concepts"]}
     assert {"v-information", "mutual-information"} <= concept_ids
 
-    source = next(item for item in sources["sources"] if item["id"] == "xu-et-al-usable-information-2020")
+    source = next(
+        item for item in sources["sources"] if item["id"] == "xu-et-al-usable-information-2020"
+    )
     assert source["scan_status"] == "partially-scanned"
     assert extraction["pedagogical_model"]["reconstruction"]["status"] == "partial"
 
