@@ -508,6 +508,7 @@ website:
                   contents:
                     - fr/exercises/emergence.qmd
                     - fr/exercises/llm-evolution.qmd
+                    - fr/exercises/jepa-platonic-representation.qmd
 
             - fr/transformer-explainer.qmd
             - fr/evaluation-experimentale.qmd
@@ -724,6 +725,7 @@ website:
                   contents:
                     - en/exercises/emergence.qmd
                     - en/exercises/llm-evolution.qmd
+                    - en/exercises/jepa-platonic-representation.qmd
 
             - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
