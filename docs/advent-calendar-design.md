@@ -133,12 +133,12 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 
 | Day | Act | Candidate topic | Core question |
 |---:|---|---|---|
-| 01 | Text and representations | Next-token prediction | What does a language model predict? |
-| 02 | Text and representations | Context and prefix | What information can the model use for its next prediction? |
-| 03 | Text and representations | Tokenization | How does text become discrete tokens? |
-| 04 | Text and representations | Vocabulary and token IDs | How does the model identify each token? |
-| 05 | Text and representations | Token embeddings | How does an ID select a vector? |
-| 06 | Text and representations | Positional information | Why does token order matter? |
+| 01 | Context and representations | Next-token prediction | What does a language model predict? |
+| 02 | Context and representations | Context and prefix | What information can the model use for its next prediction? |
+| 03 | Context and representations | Tokenization | How does text become discrete tokens? |
+| 04 | Context and representations | Vocabulary and token IDs | How does the model identify each token? |
+| 05 | Context and representations | Token embeddings | How does an ID select a vector? |
+| 06 | Context and representations | Positional information | Why does token order matter? |
 | 07 | Context and representations | Contextualized representations | Why can the same token have different representations in different contexts? |
 | 08 | Transformer computation | Transformer block | What transformations happen inside a block? |
 | 09 | Transformer computation | Queries, Keys, Values | What distinct roles do Q, K, and V play? |
@@ -165,6 +165,7 @@ This sequence is a **candidate for review**, not an approved syllabus. The machi
 - Day 8 and day 12 need a clean boundary: day 8 introduces the block as a whole; day 12 explains the non-attention sublayers and residual/normalization flow. Avoid teaching the same diagram twice.
 - Days 9–11 must preserve the exact Q/K/V and masking computation; changing V while Q, K, and the mask are fixed is a useful intervention.
 - Day 15 must distinguish entropy of the predictive distribution from uncertainty about correctness or calibration.
+- Day 21 teaches one-hot token-level cross-entropy as a core calculation. KL divergence remains an optional mathematical extension linked through `language-modeling-math`; however, `data/concepts.yml` currently marks `kl-divergence` as a prerequisite of `cross-entropy`. This relation conflicts with the existing page's core-before-deepening structure and must be reviewed before the calendar sequence is approved. Do not silently promote KL divergence into the core day.
 - Day 18 must distinguish prefill from autoregressive decode and explain KV cache as an optional inference optimization, not a new prediction mechanism.
 - Day 19 must distinguish the observed prefix/target shift from generation feedback. Teacher forcing is a context policy for scoring/training, not a separate forward mechanism.
 - Days 20–22 must distinguish sequence likelihood, log-likelihood, per-token NLL/cross-entropy, and the reduction/masking used to form an objective.
