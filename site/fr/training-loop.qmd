@@ -24,7 +24,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue passe avant, loss, gradient, mise à jour effective et mesure indépendante sur validation ; la leçon contient un auto-contrôle corrigé sur la boucle et le surapprentissage."
+      note: "Le rappel distingue passe avant, loss, gradient, mise à jour effective et mesure indépendante sur validation ; les questions corrigées, les calculs SGD et l'exercice intégrateur sont regroupés dans la [page d'exercices dédiée](exercises/training-loop.qmd)."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 -->
 
