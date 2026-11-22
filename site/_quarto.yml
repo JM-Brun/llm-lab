@@ -192,7 +192,9 @@ project:
     - fr/exercises/generation.qmd
     - fr/exercises/text-data.qmd
     - fr/exercises/embedding-space.qmd
+    - fr/exercises/embeddings-deep-dive.qmd
     - fr/exercises/positional-encoding.qmd
+    - fr/exercises/unicode-text.qmd
     - fr/exercises/rope.qmd
     - fr/exercises/sinusoidal-positional-encoding.qmd
     - fr/exercises/contextualized-representations.qmd
@@ -231,7 +233,9 @@ project:
     - en/exercises/generation.qmd
     - en/exercises/text-data.qmd
     - en/exercises/embedding-space.qmd
+    - en/exercises/embeddings-deep-dive.qmd
     - en/exercises/positional-encoding.qmd
+    - en/exercises/unicode-text.qmd
     - en/exercises/rope.qmd
     - en/exercises/sinusoidal-positional-encoding.qmd
     - en/exercises/contextualized-representations.qmd
@@ -479,6 +483,10 @@ website:
                 - section: "Texte et tokenisation"
                   contents:
                     - fr/exercises/tokenization-strategies.qmd
+                    - fr/exercises/unicode-text.qmd
+                - section: "Outils mathématiques et géométrie"
+                  contents:
+                    - fr/exercises/embeddings-deep-dive.qmd
                 - section: "Inférence et efficacité"
                   contents:
                     - fr/exercises/llm-computational-complexity.qmd
@@ -686,6 +694,10 @@ website:
                 - section: "Text and tokenization"
                   contents:
                     - en/exercises/tokenization-strategies.qmd
+                    - en/exercises/unicode-text.qmd
+                - section: "Mathematical tools and geometry"
+                  contents:
+                    - en/exercises/embeddings-deep-dive.qmd
                 - section: "Inference and efficiency"
                   contents:
                     - en/exercises/llm-computational-complexity.qmd
