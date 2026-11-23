@@ -2,7 +2,7 @@
 title: "Quel rapport entre une sinusoïde et l’ordre des mots ?"
 subtitle: "Une coordonnée devient une représentation à plusieurs échelles"
 description-meta: "Une histoire autonome sur les Fourier features, les fréquences et le biais spectral, avec le codage positionnel du Transformer comme application."
-keywords: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:planned"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
 ---
@@ -21,7 +21,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/positional-encoding"]
-tags: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:planned"]
+tags: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:published"]
 -->
 
 *Histoire indépendante · environ 10 minutes · Pilote A — brouillon pour relecture*
