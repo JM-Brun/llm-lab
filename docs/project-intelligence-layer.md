@@ -119,7 +119,7 @@ index.concepts_for_resource("transformer-block-module")
 index.incoming_pages("en/queries-keys-values")
 index.outgoing_pages("en/queries-keys-values")
 index.route_stage("computation", language="en", role="core")
-index.revision_aids_for_lesson("en/queries-keys-values")  # empty is an explicit result
+index.revision_aids_for_lesson("en/queries-keys-values")
 index.revision_support_for_lesson("en/queries-keys-values")
 ~~~
 
