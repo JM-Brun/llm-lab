@@ -1,7 +1,7 @@
 ---
 title: "Day 3 — How does text become tokens?"
 description: "Understand how a character string is segmented into an ordered sequence of tokens."
-keywords: ["type:concept-lesson", "destination:understand", "topic:token-segmentation", "level:core", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:orient", "topic:token-segmentation", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
 toc: false
@@ -22,7 +22,7 @@ hierarchy:
   parents: ["en/advent-calendar"]
   children: []
 related: ["en/text-data", "en/tokenization-strategies"]
-tags: ["type:concept-lesson", "destination:understand", "topic:token-segmentation", "level:core", "language:en", "status:published"]
+tags: ["type:concept-bridge", "destination:orient", "topic:token-segmentation", "level:overview", "language:en", "status:published"]
 -->
 
 <div class="advent-day-shell">
