@@ -1,6 +1,6 @@
 # LLM Lab architecture — implementation backlog and session handoff
 
-**Status:** documentation baseline created; implementation work below remains to be verified or completed  
+**Status:** canonical inventory reconciled in this branch; specialist implementation and learner-validation work remains  
 **Date:** 2026-11-23  
 **Parent architecture:** [LLM Lab knowledge and learning ecosystem architecture](llm-lab-knowledge-learning-architecture.md)
 
@@ -65,7 +65,8 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 - [x] Link the ecosystem architecture and backlog from docs/information-architecture.md and README.
 - [x] Reconcile README claims about the advent calendar with the merged 2026 editorial redesign: README now describes the independent-story direction and explicitly says implementation/migration remain.
 - [x] Reconcile the calendar row in docs/information-architecture.md with the superseded old manifest and the independent-story model.
-- [ ] Finish the current architecture-document reconciliation PR: update the validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence; then recheck all remaining status statements.
+- [x] Update the architecture validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence.
+- [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
 - [ ] Keep a clear status vocabulary: implemented, partially implemented, proposed, deferred, superseded and not assessed.
 
 **Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model.
@@ -86,7 +87,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 - [ ] Reconcile docs/revision-resource-contract.md with metadata actually used by revision pages.
 - [x] Confirm the canonical declaration location for page-based aids: page-map metadata; keep page IDs separate from resource IDs. Non-page revision aids remain deferred until a real learner-facing artifact is identified.
-- [ ] Decide whether the ProjectIndex-based revision audit remains the single semantic validation boundary or whether a shared validator is needed by another consumer. Current CI runs audit_revision_coverage.py (which builds ProjectIndex); check_page_metadata.py intentionally does not duplicate these rules.
+- [x] Keep the CI-invoked ProjectIndex revision audit as the single semantic validation boundary. `check_page_metadata.py` remains focused on general page-map structure; do not duplicate revision checks without a second demonstrated consumer.
 - [x] Generate reverse lesson-to-aids indexes rather than authoring both directions: ProjectIndex builds aid→lesson and lesson→aid indexes and exposes both query directions. Reader-facing completeness remains under #1541.
 - [x] Keep link existence separate from coverage sufficiency; preserve not_assessed as a valid state in ProjectIndex and the revision inventory.
 - [ ] Audit Understand and Build lessons for revision coverage without automatically declaring every lesson deficient.
