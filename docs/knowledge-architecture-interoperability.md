@@ -86,18 +86,9 @@ Before implementation, inspect #416, #415, #130, #225, #355, #458 and the active
 
 ## Initial audit of the current canonical relation registry (2026-11-05)
 
-Inspected `data/concepts.yml` on the default branch. The registry currently declares ten relation types: `represented-by`, `prerequisite`, `part-of`, `constrains`, `contributes-to`, `applies-to`, `mapped-by`, `produces`, `normalized-by`, and `evaluated-by` (all currently declare `direction: directed`). The records provide bilingual labels and descriptions, which is a useful base.
+Historical snapshot (2026-11-05): the registry then declared ten relation types and 26 edges. This section records the original gap analysis; it is not a description of current main. The contract and validator work described below were subsequently implemented, and the current inventory is 12 relation types / 114 typed edges (2026-11-23).
 
-The current contract does **not** yet encode:
-- permitted source/target object kinds or concept/domain constraints;
-- inverse relation or symmetry policy;
-- transitivity policy (including an explicit default of non-transitive);
-- cardinality or cycle constraints where applicable;
-- evidence/provenance expectations for asserting a relation;
-- whether a relation is semantic, structural, functional, evidential, or pedagogical;
-- whether it may be used to infer a learning dependency or only to explain a mechanism.
-
-This is a schema/documentation gap, not proof that current edges are factually wrong. It must be resolved by reviewing actual edges and intended usage, not by adding theoretical metadata mechanically.
+The initial schema did not encode the above properties. The implemented contract now declares family, direction, transitivity, acyclicity, learning-dependency eligibility and inverse policy, with bilingual rationale required for learning-dependency edges. Concept endpoints remain the only supported endpoint kind; fine-grained domain/range restrictions are intentionally deferred because concepts are multi-domain. The remaining gap is not the absence of a relation schema: it is keeping the 114-edge scientific review current and validating the semantics of bridges between distinct graph families.
 
 ### Concrete review cases
 
@@ -119,7 +110,7 @@ This is a schema/documentation gap, not proof that current edges are factually w
 - [ ] Keep the registry as the single source of truth; render labels/legend from metadata, not duplicated code.
 - [ ] Confirm that the learner-facing graph, guided route, and curriculum sequence remain distinct projections.
 
-The initial audit is deliberately bounded to the registry. It does not claim the renderer, all relation consumers, or the complete pedagogical effect have been tested.
+The initial audit was deliberately bounded to the registry. Later browser reviews cover rendered FR/EN graph behavior, but touch/screen-reader validation, all consumer paths and learner comprehension remain separate acceptance items.
 
 
 ## Relation contract implemented in main (initial implementation 2026-11-05; reconciled 2026-11-23)
