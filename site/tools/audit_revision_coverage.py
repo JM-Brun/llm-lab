@@ -42,6 +42,7 @@ def build_revision_inventory(
     route_memberships: dict[str, list[dict[str, Any]]] | None = None,
     revision_support_by_page: dict[str, dict[str, Any]] | None = None,
     revision_aids_by_lesson: dict[str, list[dict[str, Any]]] | None = None,
+    page_edges: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """Project all published destination pages and their explicit relations."""
     concept_ids_by_page: dict[str, list[str]] = defaultdict(list)
@@ -123,10 +124,15 @@ def build_revision_inventory(
                 "topic": page.get("topic"),
                 "level": page.get("level"),
                 "type": page.get("type"),
+                "domain": page.get("domain"),
+                "covered_stages": page.get("covered_stages", []),
                 "title": page.get("title"),
                 "href": page.get("href"),
+                "scope": page.get("scope"),
+                "purpose": page.get("purpose"),
                 "route_memberships": memberships,
                 "route_status": route_status,
+                "suggested_route": page.get("route", {}),
                 "parents": sorted(page.get("parents", [])),
                 "children": sorted(page.get("children", [])),
                 "related": sorted(page.get("related", [])),
@@ -155,6 +161,45 @@ def build_revision_inventory(
             "pages_with_revision_aids": sum(bool(page["revision_aids"]) for page in subset),
             "revision_aid_links": sum(len(page["revision_aids"]) for page in subset),
         }
+
+    route_membership_by_role: Counter[str] = Counter()
+    route_membership_by_language: dict[str, Counter[str]] = defaultdict(Counter)
+    route_membership_by_stage: dict[str, Counter[str]] = defaultdict(Counter)
+    route_pages_by_role: dict[str, set[str]] = defaultdict(set)
+    route_pages_by_language_and_role: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    for page_id, memberships in route_memberships.items():
+        language = page_id.split("/", 1)[0]
+        for membership in memberships:
+            role = membership["role"]
+            stage_id = membership["stage_id"]
+            route_membership_by_role[role] += 1
+            route_membership_by_language[language][role] += 1
+            route_membership_by_stage[stage_id][role] += 1
+            route_pages_by_role[role].add(page_id)
+            route_pages_by_language_and_role[language][role].add(page_id)
+
+    guided_route_counts = {
+        "membership_total": sum(route_membership_by_role.values()),
+        "membership_by_role": dict(sorted(route_membership_by_role.items())),
+        "unique_pages_by_role": {
+            role: len(page_ids) for role, page_ids in sorted(route_pages_by_role.items())
+        },
+        "membership_by_language": {
+            language: dict(sorted(counts.items()))
+            for language, counts in sorted(route_membership_by_language.items())
+        },
+        "unique_pages_by_language_and_role": {
+            language: {role: len(page_ids) for role, page_ids in sorted(role_pages.items())}
+            for language, role_pages in sorted(route_pages_by_language_and_role.items())
+        },
+        "membership_by_stage": {
+            stage_id: dict(sorted(counts.items()))
+            for stage_id, counts in sorted(route_membership_by_stage.items())
+        },
+    }
+    counts["guided_route"] = guided_route_counts
 
     topic_language_counts: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
     missing_topic_pages: list[dict[str, str]] = []
@@ -189,8 +234,91 @@ def build_revision_inventory(
                 }
             )
 
+    affected_page_ids = {record["id"] for record in records}
+    affected_page_edges = [
+        edge
+        for edge in (page_edges or [])
+        if edge.get("source") in affected_page_ids or edge.get("target") in affected_page_ids
+    ]
+    affected_page_edges.sort(
+        key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
+    )
+
+    associated_page_roles: dict[str, set[str]] = defaultdict(set)
+    for lesson_page_id, aids in revision_aids_by_lesson.items():
+        if lesson_page_id not in affected_page_ids:
+            continue
+        for aid in aids:
+            associated_page_roles[aid["id"]].add(aid["role"])
+
+    associated_page_ids = {
+        page_id
+        for edge in affected_page_edges
+        for page_id in (edge["source"], edge["target"])
+        if page_id not in affected_page_ids
+    }
+    associated_page_ids.update(associated_page_roles)
+    associated_page_ids.update(set(route_memberships) - affected_page_ids)
+    associated_page_records: list[dict[str, Any]] = []
+    missing_associated_page_ids: list[str] = []
+    page_fields = (
+        "id",
+        "language",
+        "destination",
+        "topic",
+        "level",
+        "type",
+        "domain",
+        "title",
+        "href",
+        "scope",
+        "purpose",
+        "covered_stages",
+        "route",
+        "parents",
+        "children",
+        "related",
+    )
+    for page_id in sorted(associated_page_ids):
+        page = page_by_id.get(page_id)
+        if page is None:
+            missing_associated_page_ids.append(page_id)
+            continue
+        associated_page_records.append(
+            {
+                **{field: page.get(field) for field in page_fields if field in page},
+                "route_memberships": route_memberships.get(page_id, []),
+                "concept_ids": sorted(concept_ids_by_page.get(page_id, [])),
+                "implementation_resource_ids": sorted(implementation_ids_by_page.get(page_id, [])),
+                "revision_roles": sorted(associated_page_roles.get(page_id, set())),
+            }
+        )
+
+    associated_page_scope = affected_page_ids | {page["id"] for page in associated_page_records}
+    associated_resource_ids = sorted(
+        {
+            resource_id
+            for page_id in associated_page_scope
+            for resource_id in implementation_ids_by_page.get(page_id, [])
+        }
+    )
+    resource_by_id = {resource["id"]: resource for resource in resources}
+    associated_resources = [
+        resource_by_id[resource_id]
+        for resource_id in associated_resource_ids
+        if resource_id in resource_by_id
+    ]
+    missing_associated_resource_ids = sorted(set(associated_resource_ids) - set(resource_by_id))
+    associated_concept_ids = sorted(
+        {
+            concept_id
+            for page_id in associated_page_scope
+            for concept_id in concept_ids_by_page.get(page_id, [])
+        }
+    )
+
     return {
-        "schema_version": 2,
+        "schema_version": 5,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -208,6 +336,12 @@ def build_revision_inventory(
         "missing_topic_pages": missing_topic_pages,
         "unexpected_languages": unexpected_languages,
         "pages": records,
+        "affected_page_edges": affected_page_edges,
+        "associated_page_records": associated_page_records,
+        "associated_resources": associated_resources,
+        "associated_concept_ids": associated_concept_ids,
+        "missing_associated_page_ids": missing_associated_page_ids,
+        "missing_associated_resource_ids": missing_associated_resource_ids,
     }
 
 
@@ -239,10 +373,10 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             [
                 "",
                 (
-                    "| Language | Page | Topic | Route | Revision support | Revision aids | "
-                    "Concepts | Implementation resources |"
+                    "| Language | Page | Topic | Route | Suggested previous / next | "
+                    "Revision support | Revision aids | Concepts | Implementation resources |"
                 ),
-                "|---|---|---|---|---|---:|---:|---:|",
+                "|---|---|---|---|---|---|---:|---:|---:|",
             ]
         )
         for page in inventory["pages"]:
@@ -251,6 +385,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             lines.append(
                 f"| {page['language']} | [{page['title']}]({page['href']}) "
                 f"({page['id']}) | {page['topic']} | {page['route_status']} | "
+                f"{page['suggested_route'].get('previous') or '—'} / "
+                f"{page['suggested_route'].get('next') or '—'} | "
                 f"{page['revision_support']['status']} | {len(page['revision_aids'])} | "
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
             )
@@ -267,6 +403,40 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             status = "balanced" if item["balanced"] else "mismatch"
             lines.append(f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |")
         lines.append("")
+    guided_route = inventory["counts"]["guided_route"]
+    lines.extend(
+        [
+            "## Guided-route membership coverage",
+            "",
+            f"- Core lesson memberships: **{guided_route['membership_by_role'].get('core', 0)}** "
+            f"across **{guided_route['unique_pages_by_role'].get('core', 0)}** unique pages",
+            f"- Optional memberships: **{guided_route['membership_by_role'].get('optional', 0)}** "
+            f"across **{guided_route['unique_pages_by_role'].get('optional', 0)}** unique pages",
+            "",
+            "## Page-graph edges incident to Understand/Build pages",
+            "",
+            "| Source | Family | Relation | Target |",
+            "|---|---|---|---|",
+        ]
+    )
+    for edge in inventory["affected_page_edges"]:
+        lines.append(
+            f"| {edge['source']} | {edge['family']} | {edge['relation']} | {edge['target']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Direct resource closure",
+            "",
+            f"- Associated page records: **{len(inventory['associated_page_records'])}**",
+            f"- Associated non-page resources: **{len(inventory['associated_resources'])}**",
+            f"- Associated concept IDs: **{len(inventory['associated_concept_ids'])}**",
+            f"- Missing associated page IDs: **{len(inventory['missing_associated_page_ids'])}**",
+            f"- Missing associated resource IDs: "
+            f"**{len(inventory['missing_associated_resource_ids'])}**",
+        ]
+    )
+    lines.append("")
     lines.extend(
         [
             "## Metadata diagnostics",
@@ -289,6 +459,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "- Build is inventoried from the published destination tag;",
             "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
+            "- JSON inventory preserves all page-graph edges incident to Understand/Build pages,",
+            "  including route, hierarchy and related links; revision-aid edges are separate.",
             "- not_assessed means no editorial revision-support assessment is recorded;",
             "  it does not mean a page lacks a synthesis or revision aid.",
             "- Revision-aid links and revision-support assessments are independent:",
@@ -317,6 +489,15 @@ def main() -> int:
         registry_entries(ROOT / "data/resources.yml", "resources"),
         revision_support_by_page=project_index.revision_support_by_page,
         revision_aids_by_lesson=revision_aids_by_lesson,
+        page_edges=[
+            {
+                "source": edge.source,
+                "target": edge.target,
+                "family": edge.family,
+                "relation": edge.relation,
+            }
+            for edge in project_index.page_edges
+        ],
     )
     payload = json.dumps(inventory, ensure_ascii=False, indent=2) + "\n"
     if args.json:
