@@ -175,7 +175,7 @@ This log should record outcomes, not merely activity.
 ## 8. Session completion log
 
 - **Date:** 2026-11-23
-- **Branch / PR:** `calendar/day06-spectral-bias-revision` — revision in progress
+- **Branch / PR:** `calendar/day06-spectral-bias-revision` — PR #1562 merged; follow-up math-render correction in PR #1563
 - **Files changed:** French and English Day 06 drafts; Day 06 source dossier; this handoff.
 - **Work completed:** strengthened the distinction between expressivity and learning dynamics; added a qualified account of spectral bias grounded in Rahaman et al. (2019); clarified the frequency-bandwidth trade-off from Tancik et al. (2020); replaced the recall-style challenge with a two-frequency transfer example; aligned the source dossier with the revised claims.
 - **Validation performed and results:** primary-source abstracts and paper descriptions checked; numerical examples and the linear-readout argument checked analytically. No Quarto render, screenshot review, accessibility audit or novice review was performed in this session.
