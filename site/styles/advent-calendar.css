@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap");
 
 /* Advent calendar — editorial, paper-and-forest visual language */
+
+/* Calendar pages provide their own designed H1; avoid Quarto's duplicate title block. */
+#title-block-header { display: none; }
+
 .advent-hero {
   --adv-ink: #142c28;
   --adv-forest: #123c33;
