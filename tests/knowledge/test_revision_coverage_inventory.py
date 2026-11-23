@@ -243,7 +243,6 @@ def test_unexpected_language_values_are_reported() -> None:
     assert inventory["unexpected_languages"] == [{"id": "shared/page", "language": "shared"}]
 
 
-
 def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
     lesson = page("fr/lesson", "fr", "understand", "lesson")
     lesson.update(
