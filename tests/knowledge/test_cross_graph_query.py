@@ -81,8 +81,7 @@ def test_source_paths_keep_exact_locators_confidence_and_scan_status(
     definition_path = next(
         path
         for path in source_paths
-        if path.steps[1].locator
-        and path.steps[1].locator.get("label") == "Definition 3"
+        if path.steps[1].locator and path.steps[1].locator.get("label") == "Definition 3"
     )
     item_step = definition_path.steps[1]
     assert item_step.assumptions
@@ -92,8 +91,7 @@ def test_source_paths_keep_exact_locators_confidence_and_scan_status(
     assert item_step.details["disposition_rationale"]
     assert definition_path.links[0].basis == "classification.concept_ids"
     assert any(
-        path.steps[2].details
-        and path.steps[2].details.get("scan_status") == "partially-scanned"
+        path.steps[2].details and path.steps[2].details.get("scan_status") == "partially-scanned"
         for path in source_paths
     )
 
@@ -110,9 +108,7 @@ def test_route_focus_path_preserves_pedagogical_roles(
     evidence_index: ProjectIndex,
 ) -> None:
     result = query_concept(evidence_index, "scaled-dot-product-attention")
-    route_focus_paths = [
-        path for path in result.paths if path.kind == "route-focus-computation"
-    ]
+    route_focus_paths = [path for path in result.paths if path.kind == "route-focus-computation"]
 
     assert any(
         focus_step.details is not None
@@ -162,9 +158,7 @@ def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
     items = dict(projection.extraction_items_by_id)
     items[candidate_item.item_id] = updated_item
     item_mappings = {
-        concept_id: tuple(
-            item_id for item_id in item_ids if item_id != candidate_item.item_id
-        )
+        concept_id: tuple(item_id for item_id in item_ids if item_id != candidate_item.item_id)
         for concept_id, item_ids in projection.extraction_items_by_concept.items()
     }
     updated_projection = replace(
@@ -213,9 +207,7 @@ def test_missing_item_locator_is_reported_as_a_gap(
 
     result = query_concept(updated_index, "v-information")
     missing_locator_gap = next(
-        gap
-        for gap in result.gaps
-        if gap.kind == "missing-item-locator" and gap.item_id == item_id
+        gap for gap in result.gaps if gap.kind == "missing-item-locator" and gap.item_id == item_id
     )
     assert missing_locator_gap.basis == ("item.locator",)
     path = next(
