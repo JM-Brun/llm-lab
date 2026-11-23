@@ -36,29 +36,29 @@ One idea is to transform the coordinate into several sinusoidal features. This i
 
 ## One coordinate, several scales
 
-Consider a normalized coordinate (x \in [0,1]) and the function:
+Consider a normalized coordinate $x \in [0,1]$ and the function:
 
 $$
 f(x)=\sin(16\pi x).
 $$
 
-This function completes eight oscillations over the interval ([0,1]). A few values make this visible:
+This function completes eight oscillations over the interval [0,1]. A few values make this visible:
 
-| (x) | (16\pi x) | (f(x)) |
+| $x$ | $16\pi x$ | $f(x)$ |
 |---:|---:|---:|
-| (0) | (0) | (0) |
-| (1/32) | (\pi/2) | (1) |
-| (1/16) | (\pi) | (0) |
-| (3/32) | (3\pi/2) | (-1) |
-| (1/8) | (2\pi) | (0) |
+| 0 | 0 | 0 |
+| $1/32$ | $\pi/2$ | 1 |
+| $1/16$ | $\pi$ | 0 |
+| $3/32$ | $3\pi/2$ | -1 |
+| $1/8$ | $2\pi$ | 0 |
 
-A linear readout of the number (x) alone cannot reproduce this oscillation exactly. But if the input already contains the feature (\sin(16\pi x)), a simple linear readout can recover (f(x)) exactly: it only needs a weight of 1 on that coordinate.
+A linear readout of the number $x$ alone cannot reproduce this oscillation exactly. But if the input already contains the feature $\sin(16\pi x)$, a simple linear readout can recover $f(x)$ exactly: it only needs a weight of 1 on that coordinate.
 
-This small example does not prove that a nonlinear network cannot learn the function from (x). It shows something more specific: **the chosen representation determines which variations are directly accessible to a given readout**.
+This small example does not prove that a nonlinear network cannot learn the function from $x$. It shows something more specific: **the chosen representation determines which variations are directly accessible to a given readout**.
 
 ![Two frequencies over the same interval: one slow oscillation and eight rapid oscillations.](../images/advent-frequency-scales.svg){#fig-advent-frequency-scales width=95%}
 
-*The coordinate (x) spans the same interval in both panels. Only the frequency changes.*
+*The coordinate $x$ spans the same interval in both panels. Only the frequency changes.*
 
 ## Spectral bias: representation is not learning
 
@@ -86,7 +86,7 @@ $$
 ].
 $$
 
-Each frequency (b_j) provides a pair of coordinates. Low frequencies change slowly as (x) varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
+Each frequency $b_j$ provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
 
 We can think of the frequency choice as a choice of resolution:
 
@@ -128,16 +128,16 @@ $$
 g(x)=\sin(2\pi x)+0.2\sin(16\pi x).
 $$
 
-We first use a linear readout supplied only with the features (\sin(2\pi x)) and (\cos(2\pi x)).
+We first use a linear readout supplied only with the features $\sin(2\pi x)$ and $\cos(2\pi x)$.
 
-**Question:** is this representation sufficient to reconstruct (g) exactly? Which feature should we add to make both components directly accessible?
+**Question:** is this representation sufficient to reconstruct $g$ exactly? Which feature should we add to make both components directly accessible?
 
 <details>
 <summary>Show the solution</summary>
 
-No. The initial feature bank provides direct access to the frequency with one cycle over the interval, but not to the frequency with eight cycles. We need to add at least the feature (\sin(16\pi x)). A symmetric bank may add the pair (\sin(16\pi x),\cos(16\pi x)).
+No. The initial feature bank provides direct access to the frequency with one cycle over the interval, but not to the frequency with eight cycles. We need to add at least the feature $\sin(16\pi x)$. A symmetric bank may add the pair $\sin(16\pi x),\cos(16\pi x)$.
 
-A linear readout can then reconstruct the signal by combining the first component with weight 1 and the second with weight 0.2. This demonstrates a property of this representation and linear readout; it does not mean that an MLP without these features would be unable to learn (g).
+A linear readout can then reconstruct the signal by combining the first component with weight 1 and the second with weight 0.2. This demonstrates a property of this representation and linear readout; it does not mean that an MLP without these features would be unable to learn $g$.
 
 </details>
 
