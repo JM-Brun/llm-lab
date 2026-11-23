@@ -86,7 +86,7 @@ $$
 ].
 $$
 
-Chaque fréquence $b_j$ fournit une paire de coordonnées. Les basses fréquences changent lentement lorsque $x$ varie ; les hautes fréquences changent plus rapidement. La représentation donne donc au modèle plusieurs « horloges » qui ne battent pas au même rythme.
+Chaque fréquence $b_j$, exprimée en cycles par unité de $x$, fournit une paire de coordonnées. Les basses fréquences changent lentement lorsque $x$ varie ; les hautes fréquences changent plus rapidement. La représentation donne donc au modèle plusieurs « horloges » qui ne battent pas au même rythme.
 
 On peut voir le choix de ces fréquences comme un choix de résolution :
 
