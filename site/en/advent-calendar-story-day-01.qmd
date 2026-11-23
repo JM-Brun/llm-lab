@@ -47,6 +47,18 @@ In a corpus, we count the occurrences of each type and sort the types from most 
 
 The ranking depends on the corpus, language, period, text genre and normalization conventions: capitalization, punctuation, lemmatization and inflected forms, for example. There is no single ranking that applies to every text.
 
+Consider a small fictional corpus whose occurrences have already been counted. We sort the lexical forms by decreasing frequency:
+
+| Form | Occurrences | Rank |
+|---|---:|---:|
+| the | 12 | 1 |
+| and | 7 | 2 |
+| cat | 4 | 3 |
+| dog | 3 | 4 |
+| firefly | 1 | 5 |
+
+Rank is therefore not an intrinsic property of a word: it results from counting and sorting within a particular corpus. Here, “the” has rank 1 because it is the most frequent form. A different corpus, or a different counting convention, could produce a different ranking.
+
 ## Zipf's law: a surprisingly compact approximation
 
 Zipf's law describes an empirical regularity often observed in lexical frequencies:
