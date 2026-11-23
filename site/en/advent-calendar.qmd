@@ -15,8 +15,8 @@ id: "en/advent-calendar"
 scope: "Landing page for a 24-day learning calendar about the central mechanism of an autoregressive language model."
 purpose: "Present the 24 days, their four-part progression, and links to canonical resources."
 suggested_route:
-  previous: "en/index"
-  next: "en/llm-overview"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/index"]
   children: []
