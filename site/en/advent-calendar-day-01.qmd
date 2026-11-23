@@ -16,7 +16,7 @@ summary: "A first look at predictive computation: given a prefix, the model assi
 scope: "Introduces next-token prediction and distinguishes computing a distribution from the selection performed by decoding."
 purpose: "Explain what an autoregressive model computes at a given step without conflating probability, choice, and truth."
 suggested_route:
-  previous: "en/advent-calendar"
+  previous: null
   next: "en/advent-calendar-day-02"
 hierarchy:
   parents: ["en/advent-calendar"]
