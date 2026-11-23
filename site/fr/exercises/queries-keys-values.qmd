@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/queries-keys-values"]
+related: ["fr/queries-keys-values", "fr/exercises-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-e
 
 ## Vérifier l'idée essentielle
 
-[Exercices approfondis sur Q/K/V et l'attention](../exercises.qmd#attention).
+[Exercices approfondis sur Q/K/V et l'attention](../exercises-attention.qmd#attention).
 
 **Quelles projections déterminent les poids d'attention, et laquelle fournit les vecteurs agrégés ? Que se passe-t-il si V change alors que Q et K restent fixes ?**
 
