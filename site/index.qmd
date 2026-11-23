@@ -34,6 +34,7 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 <div class="hero-actions">
 [Comprendre le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
 [Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
+[Explorer le calendrier des 24 jours](fr/advent-calendar.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
