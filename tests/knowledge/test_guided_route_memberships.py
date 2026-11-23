@@ -134,3 +134,61 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
     assert memberships["en/core"][0].role == "core"
     assert memberships["en/optional"][0].role == "optional"
     assert "en/unassigned" not in memberships
+
+
+@pytest.mark.parametrize(
+    ("language", "expected_labels", "expected_parts"),
+    [
+        (
+            "fr",
+            [
+                "Vue d’ensemble",
+                "Tokeniser",
+                "Représenter",
+                "Contextualiser",
+                "Prédire",
+                "Générer",
+                "Adapter le contexte",
+                "Scorer",
+                "Entraîner",
+            ],
+            ["Le modèle", "Prédire un token", "Utiliser et entraîner"],
+        ),
+        (
+            "en",
+            [
+                "Overview",
+                "Tokenize",
+                "Represent",
+                "Contextualize",
+                "Predict",
+                "Generate",
+                "Shape context",
+                "Score",
+                "Train",
+            ],
+            ["The model", "Predict a token", "Use and train"],
+        ),
+    ],
+)
+def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
+    language: str,
+    expected_labels: list[str],
+    expected_parts: list[str],
+) -> None:
+    pages = [
+        page
+        for page in GENERATOR["load_pages"]()
+        if page["language"] in {language, "shared"}
+    ]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    rendered = GENERATOR["render_guided_rail"](stages, language)
+
+    assert [stage.compact_title for stage in stages] == expected_labels
+    assert all(f"<span class=\"guided-rail__title\">{label}</span>" in rendered for label in expected_labels)
+    assert all(f">{part}</span>" in rendered for part in expected_parts)
+    assert rendered.count('aria-label="') == len(stages)
+    assert rendered.count('title="') == len(stages)
+    for index, stage in enumerate(stages, start=1):
+        assert f'aria-label="{index:02d} · {stage.title.replace("&", "&amp;").replace(chr(34), "&quot;")}"' in rendered
+        assert f'href="#guided-stage-{stage.id}"' in rendered
