@@ -29,16 +29,29 @@ Editorial constraints:
 - do not say the distribution is exactly Zipfian or that a power law is the uniquely correct model;
 - do not infer a causal explanation from the observed curve.
 
-### Piantadosi (2017), “Unzipping Zipf's law”
+### Lestrade (2017), “Unzipping Zipf's law”
 
 https://doi.org/10.1371/journal.pone.0181987
 
 Supports:
-- discussion of syntactic and semantic factors as contributors to word-frequency distributions;
-- an account in which multiple ingredients are considered rather than one universal cause.
+- a proposed model in which syntactic class sizes and semantic specificity/reusability interact to produce a near-Zipfian distribution.
 
 Editorial constraints:
-- the article proposes a model; do not present its account as settled consensus or a complete explanation.
+- identify this as Sander Lestrade's proposal, not as a consensus explanation;
+- retain the paper's explicit caveat that the origins of Zipf's law remain elusive.
+
+### Pilgrim and Hills (2021), “Bias in Zipf's law estimators”
+
+https://doi.org/10.1038/s41598-021-96214-w
+
+Supports:
+- common maximum-likelihood estimators can be biased for rank-frequency data because empirical ranks are not known a priori;
+- splitting a corpus can reduce the correlated-error problem discussed by Piantadosi (2014), but does not eliminate all rank-estimation errors;
+- estimation remains difficult for natural language because a simple power-law sampling model does not capture the full data-generating process.
+
+Editorial constraints:
+- do not imply that corpus splitting completely solves Zipf exponent estimation;
+- keep the story's claim narrow: later work documents residual bias, especially in the rare-word tail.
 
 ### Zipf (1949), *Human Behavior and the Principle of Least Effort*
 
@@ -54,7 +67,8 @@ Historical source for Zipf's popularization and broader framing. The draft does 
 | \(f(r) \approx C/r^\alpha\), often with \(\alpha\) near 1 | Piantadosi 2014; Zipf 1949 | Approximation, not exact identity |
 | Log-log transformation yields slope \(-\alpha\) | Algebraic derivation | Exact for the stated power-law model |
 | Rank/frequency estimates from the same sample can create correlated errors | Piantadosi 2014 | State as a methodological warning, not a claim that all Zipf plots are false |
-| Multiple syntactic/semantic factors may contribute | Piantadosi 2017 | Proposed explanation, not settled consensus |
+| Independent corpus splits reduce correlated errors but do not remove every estimation bias | Piantadosi 2014; Pilgrim and Hills 2021 | Avoid presenting splitting as a complete solution; note residual uncertainty in rare-word ranks |
+| Multiple syntactic/semantic factors may contribute | Lestrade 2017 | Proposed explanation, not settled consensus |
 | Rare forms have fewer observed training examples in a fixed corpus | Direct consequence of lower count | Do not claim that frequency alone determines model performance |
 | Word-frequency counts differ from tokenizer-token counts | Definition of lexical type vs model token | Avoid drifting into a tokenization explanation |
 
@@ -79,7 +93,7 @@ All values are mathematical consequences of the toy model, not corpus measuremen
 ## Scope and non-claims
 
 - The word “the” is an English hook; the French story uses “de” as its natural counterpart. Neither is claimed to be the most frequent word in every corpus.
-- The draft distinguishes lexical word types/tokens from model tokenizer tokens.
+- The draft distinguishes lexical word types/tokens from model tokenizer tokens, explicitly disambiguating the two meanings of *token*. 
 - The story does not claim that Zipf's law is exact, universal, or a complete causal explanation.
 - The draft does not infer a model's tokenization strategy or rare-word capability from a lexical rank-frequency curve.
 - The synthetic plot is illustrative, not fitted to a corpus.
@@ -90,7 +104,7 @@ The file site/images/advent-zipf-rank-frequency.svg is an original vector diagra
 
 ## Review still required
 
-- Verify the exact canonical lesson paths in both languages.
+- Verify the exact canonical lesson paths in both languages (the metadata references now use the canonical `tokenization-strategies` page IDs).
 - Render both QMD versions and inspect math, figure, caption and responsive layout.
 - Confirm Quarto's relative image path for the new story location.
 - Obtain a novice read-through and record actual reading time.
