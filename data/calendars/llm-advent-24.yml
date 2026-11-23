@@ -44,10 +44,10 @@ days:
     act: context-to-representations
     title: {fr: "Que prédit un LLM ?", en: "What does an LLM predict?"}
     question:
-      fr: "Que calcule réellement un modèle de langage à partir d'un contexte ?"
+      fr: "Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?"
       en: "What does a language model actually compute from a context?"
     outcome:
-      fr: "Expliquer qu'un modèle autorégressif attribue une distribution conditionnelle au prochain token."
+      fr: "Expliquer qu'un modèle autorégressif calcule une distribution conditionnelle sur le prochain token et distinguer ce calcul de la sélection opérée par le décodage."
       en: "Explain that an autoregressive model assigns a conditional distribution to the next token."
     concepts: [next-token-prediction, conditional-distribution]
     calendar_pages: [fr/advent-calendar/day-01, en/advent-calendar/day-01]
