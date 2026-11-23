@@ -42,25 +42,38 @@ $$
 f(x)=\sin(16\pi x).
 $$
 
-This function completes eight oscillations over the interval $[0,1]$. A few values make this visible:
+This function completes eight oscillations over the interval [0,1]. A few values make this visible:
 
 | $x$ | $16\pi x$ | $f(x)$ |
 |---:|---:|---:|
-| $0$ | $0$ | $0$ |
-| $1/32$ | $\pi/2$ | $1$ |
-| $1/16$ | $\pi$ | $0$ |
-| $3/32$ | $3\pi/2$ | $-1$ |
-| $1/8$ | $2\pi$ | $0$ |
+| 0 | 0 | 0 |
+| $1/32$ | $\pi/2$ | 1 |
+| $1/16$ | $\pi$ | 0 |
+| $3/32$ | $3\pi/2$ | -1 |
+| $1/8$ | $2\pi$ | 0 |
 
 A linear readout of the number $x$ alone cannot reproduce this oscillation exactly. But if the input already contains the feature $\sin(16\pi x)$, a simple linear readout can recover $f(x)$ exactly: it only needs a weight of 1 on that coordinate.
 
-This small example does not prove that a nonlinear network cannot learn the function from $x$. It shows something more specific: **the chosen representation determines which variations are immediately accessible**.
+This small example does not prove that a nonlinear network cannot learn the function from $x$. It shows something more specific: **the chosen representation determines which variations are directly accessible to a given readout**.
 
 ![Two frequencies over the same interval: one slow oscillation and eight rapid oscillations.](../images/advent-frequency-scales.svg){#fig-advent-frequency-scales width=95%}
 
 *The coordinate $x$ spans the same interval in both panels. Only the frequency changes.*
 
-## The idea behind Fourier features
+## Spectral bias: representation is not learning
+
+We need to distinguish two questions:
+
+- **Expressivity:** does the network have a function that can reproduce the signal we want?
+- **Learning dynamics:** given the data, initialization and optimization procedure, does it learn that function quickly and reliably?
+
+These properties are not equivalent. Networks may represent a wide range of functions while learning some frequency components earlier than others.
+
+Rahaman and co-authors studied this phenomenon using Fourier analysis. In the networks and settings they examined, low-frequency components are generally learned before high-frequency components. They call this **spectral bias**. It does not mean that fine details cannot be represented; it means that learning speed can depend on frequency.
+
+The *Fourier features* introduced by Tancik and co-authors address a related difficulty in MLPs that learn functions from low-dimensional coordinates. Their mapping makes selected frequencies more accessible and changes the network's effective frequency behaviour. In the tasks they study, it can therefore make high-frequency details easier to learn.
+
+## Choosing frequencies: a trade-off
 
 A simple bank of sinusoidal features can be written as:
 
@@ -75,9 +88,13 @@ $$
 
 Each frequency $b_j$ provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
 
-In their work on *Fourier features*, Tancik and co-authors study this kind of transformation for networks that receive low-dimensional coordinates. Their central result is that the choice of features changes the frequencies a network can learn efficiently: in the settings they study, Fourier features can mitigate the spectral bias of MLPs and make faster variations more accessible.
+We can think of the frequency choice as a choice of resolution:
 
-The point is not that sine waves automatically make a model intelligent. They move part of the work: rather than asking the network to discover an oscillatory basis from raw coordinates alone, we explicitly provide components at multiple frequencies.
+- a bank concentrated on low frequencies readily describes slow variations, but exposes rapid details less directly;
+- a bank that includes higher frequencies makes those details accessible to the readout;
+- increasing the frequency range indiscriminately is not a universal solution: it must be matched to the signal, the available data and the risk of fitting variations that will not recur.
+
+The result of Tancik and co-authors is therefore not “more frequencies are always better”. The frequency scale — including the bandwidth of the mapping — is a design choice that must be tuned to the problem.
 
 ## Why does this appear in a Transformer?
 
@@ -91,7 +108,7 @@ This is an idea related to *Fourier features*: transform a coordinate into a vec
 
 The sine wave does not mean that text is periodic. It provides a coordinate system for positions. The model then combines this signal with token content and learns during training which information to use.
 
-The algebraic property that relates a fixed offset to a linear transformation of each pair is important, but it is already derived in the [canonical positional-encoding lesson](positional-encoding.qmd). This story takes a different angle: why a bank of frequencies can be a useful representation of a coordinate.
+The algebraic property that relates a fixed offset to a linear transformation of each pair is important, but it is already derived in the [canonical positional-encoding lesson](positional-encoding.qmd). This story takes a different angle: why a bank of frequencies can be a useful representation of a coordinate, and why the choice of those frequencies influences what a network learns easily.
 
 ## What this idea does not guarantee
 
@@ -101,22 +118,26 @@ Three cautions prevent overly strong conclusions.
 2. **A finite bank does not cover every possible variation.** The chosen frequencies define the scales that are directly available; they do not guarantee that every function will be well represented.
 3. **A representation is not an acquired capability.** The model still has to learn how to use the features. The original Transformer authors presented extrapolation to longer sequences as a possible motivation, not a universal guarantee.
 
-The connection to *Fourier features* is therefore a way to understand a shared representation idea: make several frequency scales explicit. It does not make the two methods identical in purpose, frequency distribution or theoretical properties.
+Nor is spectral bias a uniform law that applies to every architecture, dataset or training regime. The cited results describe particular network families and settings. They provide a framework for reasoning, not an automatic prediction of every LLM's behaviour.
 
 ## Try it
 
-Suppose a model receives only the two features $\sin(2\pi x)$ and $\cos(2\pi x)$, followed by a linear readout.
+Suppose we want to represent the signal:
 
-**Question:** can this readout represent $\sin(16\pi x)$ exactly for every $x \in [0,1]$? What would you add to make that possible directly?
+$$
+g(x)=\sin(2\pi x)+0.2\sin(16\pi x).
+$$
+
+We first use a linear readout supplied only with the features $\sin(2\pi x)$ and $\cos(2\pi x)$.
+
+**Question:** is this representation sufficient to reconstruct $g$ exactly? Which feature should we add to make both components directly accessible?
 
 <details>
 <summary>Show the solution</summary>
 
-No. A linear combination of $\sin(2\pi x)$ and $\cos(2\pi x)$ remains a sinusoid with one cycle over the interval. It cannot exactly produce the eight oscillations of $\sin(16\pi x)$.
+No. The initial feature bank provides direct access to the frequency with one cycle over the interval, but not to the frequency with eight cycles. We need to add at least the feature $\sin(16\pi x)$. A symmetric bank may add the pair $\sin(16\pi x),\cos(16\pi x)$.
 
-Adding the feature $\sin(16\pi x)$ (or the pair $\sin(16\pi x),\cos(16\pi x)$) makes that component directly available to the linear readout.
-
-This conclusion is about this linear readout and this feature bank. A nonlinear MLP can construct harmonics from other inputs, but learning difficulty depends on the architecture, data and optimization.
+A linear readout can then reconstruct the signal by combining the first component with weight 1 and the second with weight 0.2. This demonstrates a property of this representation and linear readout; it does not mean that an MLP without these features would be unable to learn $g$.
 
 </details>
 
@@ -126,5 +147,6 @@ The [positional-encoding lesson](positional-encoding.qmd) explains the Transform
 
 ### Sources
 
+- [Rahaman et al. (2019), *On the Spectral Bias of Neural Networks*](https://proceedings.mlr.press/v97/rahaman19a.html) — spectral bias, frequency-dependent learning speed and the role of data geometry.
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), Section 3.5 — sinusoidal positional encodings and their relative-position motivation.
 - [Tancik et al. (2020), *Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains*](https://proceedings.neurips.cc/paper/2020/hash/55053683268957697aa39fba6f231c68-Abstract.html) — Fourier features, spectral bias and learning high-frequency functions.

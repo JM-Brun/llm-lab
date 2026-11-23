@@ -171,3 +171,13 @@ This log should record outcomes, not merely activity.
 - **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render of the Day 06 draft, browser screenshot, numerical-table verification or novice review has yet been performed. The first CI run also exposed the explicit language-switch mapping requirement for planned source pages; the bilingual mapping entry is now included.
 - **Open defects / decisions:** PR checks and visual rendering; verify the page metadata and the PR-only published preview status; run FR/EN desktop/mobile and accessibility review; verify the numerical table and SVG in the rendered pages; obtain novice feedback.
 - **Exact next action:** inspect the PR render and metadata checks, revise the Day 06 draft, then decide whether to proceed with Days 17 and 23. Do not create the story manifest yet.
+
+## 8. Session completion log
+
+- **Date:** 2026-11-23
+- **Branch / PR:** `calendar/day06-spectral-bias-revision` — revision in progress
+- **Files changed:** French and English Day 06 drafts; Day 06 source dossier; this handoff.
+- **Work completed:** strengthened the distinction between expressivity and learning dynamics; added a qualified account of spectral bias grounded in Rahaman et al. (2019); clarified the frequency-bandwidth trade-off from Tancik et al. (2020); replaced the recall-style challenge with a two-frequency transfer example; aligned the source dossier with the revised claims.
+- **Validation performed and results:** primary-source abstracts and paper descriptions checked; numerical examples and the linear-readout argument checked analytically. No Quarto render, screenshot review, accessibility audit or novice review was performed in this session.
+- **Open defects / decisions:** the draft still needs word-count/timing validation with readers, rendered FR/EN desktop/mobile review, SVG verification, and scientific/editorial acceptance. It remains `status:planned` and outside the render list.
+- **Exact next action:** run the repository's Quarto and metadata checks on the revision branch; if they pass, inspect rendered FR/EN previews at desktop and mobile widths before deciding whether to publish Pilot A. Do not start Pilots B and C until this gate passes.
