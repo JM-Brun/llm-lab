@@ -42,6 +42,7 @@ def build_revision_inventory(
     route_memberships: dict[str, list[dict[str, Any]]] | None = None,
     revision_support_by_page: dict[str, dict[str, Any]] | None = None,
     revision_aids_by_lesson: dict[str, list[dict[str, Any]]] | None = None,
+    page_edges: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """Project all published destination pages and their explicit relations."""
     concept_ids_by_page: dict[str, list[str]] = defaultdict(list)
@@ -123,10 +124,15 @@ def build_revision_inventory(
                 "topic": page.get("topic"),
                 "level": page.get("level"),
                 "type": page.get("type"),
+                "domain": page.get("domain"),
+                "covered_stages": page.get("covered_stages", []),
                 "title": page.get("title"),
                 "href": page.get("href"),
+                "scope": page.get("scope"),
+                "purpose": page.get("purpose"),
                 "route_memberships": memberships,
                 "route_status": route_status,
+                "suggested_route": page.get("route", {}),
                 "parents": sorted(page.get("parents", [])),
                 "children": sorted(page.get("children", [])),
                 "related": sorted(page.get("related", [])),
@@ -189,8 +195,18 @@ def build_revision_inventory(
                 }
             )
 
+    affected_page_ids = {record["id"] for record in records}
+    affected_page_edges = [
+        edge
+        for edge in (page_edges or [])
+        if edge.get("source") in affected_page_ids or edge.get("target") in affected_page_ids
+    ]
+    affected_page_edges.sort(
+        key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
+    )
+
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -208,6 +224,7 @@ def build_revision_inventory(
         "missing_topic_pages": missing_topic_pages,
         "unexpected_languages": unexpected_languages,
         "pages": records,
+        "affected_page_edges": affected_page_edges,
     }
 
 
@@ -239,10 +256,10 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             [
                 "",
                 (
-                    "| Language | Page | Topic | Route | Revision support | Revision aids | "
-                    "Concepts | Implementation resources |"
+                    "| Language | Page | Topic | Route | Suggested previous / next | "
+                    "Revision support | Revision aids | Concepts | Implementation resources |"
                 ),
-                "|---|---|---|---|---|---:|---:|---:|",
+                "|---|---|---|---|---|---|---:|---:|---:|",
             ]
         )
         for page in inventory["pages"]:
@@ -251,6 +268,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             lines.append(
                 f"| {page['language']} | [{page['title']}]({page['href']}) "
                 f"({page['id']}) | {page['topic']} | {page['route_status']} | "
+                f"{page['suggested_route'].get('previous') or '—'} / "
+                f"{page['suggested_route'].get('next') or '—'} | "
                 f"{page['revision_support']['status']} | {len(page['revision_aids'])} | "
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
             )
@@ -267,6 +286,19 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             status = "balanced" if item["balanced"] else "mismatch"
             lines.append(f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |")
         lines.append("")
+    lines.extend(
+        [
+            "## Page-graph edges incident to Understand/Build pages",
+            "",
+            "| Source | Family | Relation | Target |",
+            "|---|---|---|---|",
+        ]
+    )
+    for edge in inventory["affected_page_edges"]:
+        lines.append(
+            f"| {edge['source']} | {edge['family']} | {edge['relation']} | {edge['target']} |"
+        )
+    lines.append("")
     lines.extend(
         [
             "## Metadata diagnostics",
@@ -289,6 +321,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "- Build is inventoried from the published destination tag;",
             "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
+            "- JSON inventory preserves all page-graph edges incident to Understand/Build pages,",
+            "  including route, hierarchy and related links; revision-aid edges are separate.",
             "- not_assessed means no editorial revision-support assessment is recorded;",
             "  it does not mean a page lacks a synthesis or revision aid.",
             "- Revision-aid links and revision-support assessments are independent:",
@@ -317,6 +351,15 @@ def main() -> int:
         registry_entries(ROOT / "data/resources.yml", "resources"),
         revision_support_by_page=project_index.revision_support_by_page,
         revision_aids_by_lesson=revision_aids_by_lesson,
+        page_edges=[
+            {
+                "source": edge.source,
+                "target": edge.target,
+                "family": edge.family,
+                "relation": edge.relation,
+            }
+            for edge in project_index.page_edges
+        ],
     )
     payload = json.dumps(inventory, ensure_ascii=False, indent=2) + "\n"
     if args.json:
