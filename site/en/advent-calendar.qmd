@@ -52,7 +52,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">THE IDEA</p>
-  <p><strong>One precise question each day.</strong> The first three doors contain short guided lessons directly in the calendar. The remaining 21 progressively open the route to canonical resources. Full explanations and exercises remain on their dedicated pages.</p>
+  <p><strong>One precise question each day.</strong> The first three doors contain short guided lessons directly in the calendar. The remaining 21 progressively open the route to canonical resources. Full explanations and exercises remain on their dedicated pages. All 24 doors stay accessible after December 24: the 2026 edition becomes a learning archive, with no date-based locks.</p>
 </div>
 
 ## The 24 doors
