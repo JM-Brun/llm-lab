@@ -20,6 +20,7 @@ id: "fr/story-stable-id"
 summary: "One-sentence summary."
 scope: "The precise question and boundary of this story."
 purpose: "What the reader should be able to explain afterwards."
+domain: "replace-with-controlled-domain-id"
 suggested_route:
   previous: null
   next: null
