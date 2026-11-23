@@ -19,7 +19,7 @@ MATRIX_SCHEMA_VERSION = 1
 UNREGISTERED_DIMENSIONS = {
     "build": "No reviewed machine-readable Build milestone/evidence crosswalk exists.",
     "computation": "No canonical concept-to-computational-node bridge exists.",
-    "sources": "The opt-in source/extraction adapter exists, but no complete reviewed concept-to-source/item coverage mapping exists.",
+    "sources": "Opt-in source adapter exists; complete concept-to-source/item mapping is not registered.",
     "practice": "No complete canonical exercise/test/experiment mapping exists.",
 }
 
