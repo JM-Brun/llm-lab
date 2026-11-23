@@ -1,6 +1,6 @@
 # Revision-resource relationship contract
 
-**Status:** partially implemented for page-based aids through ProjectIndex; unified page-metadata validation and non-page revision aids remain open.  
+**Status:** page-based aid→lesson relations and lesson assessments are implemented and exercised through ProjectIndex in CI; non-page revision aids remain unsupported and deferred.  
 **Date:** 2026-11-23  
 **Scope:** explicit links from revision aids to the published Understand/Build lessons they support, plus a separate assessment of each lesson's revision coverage.
 
