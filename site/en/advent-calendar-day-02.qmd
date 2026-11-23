@@ -58,7 +58,7 @@ During generation, the selected token is appended to the prefix. It then becomes
 The second computation therefore does not start from the same context: the prefix has grown. The model parameters can remain unchanged; the conditioning input has changed.
 
 <div class="advent-note">
-  **A terminology note.** Here, “context” means only the model's immediate input at a given step. Designing an application context — instructions, retrieved documents, memory, or conversation history — is a broader topic covered elsewhere in LLM Lab.
+  **A terminology note.** Here, “context” means only the model's immediate input at a given step. Designing an application context — instructions, retrieved documents, memory, or conversation history — is a broader topic covered in the [context engineering](context-engineering.qmd) lesson.
 </div>
 
 ## Check yourself
