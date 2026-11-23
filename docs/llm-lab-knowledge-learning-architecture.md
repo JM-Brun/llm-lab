@@ -131,13 +131,13 @@ LLM Lab should have an ecosystem of interoperable graph families, not one univer
 | Semantic knowledge graph | Concepts, domains and typed conceptual relations | data/concepts.yml, data/domains.yml; implemented seed and validators |
 | Page/navigation graph | Published pages; route, hierarchy and related-page edges | Page-map metadata; generated bilingual learning-map projection |
 | Pedagogical route graph | Lessons/stages; recommended order and justified learning prerequisites | data/guided-route.yml, docs/learning-path.md; separate from concept relations |
-| Revision graph | Aids/resources → lessons supported; role and coverage assessment | Contract proposed; enforcement and inventory reconciliation remain |
-| Practice graph | Activities ↔ concepts, lessons, skills and evidence/solutions | Dedicated practice content exists; complete canonical activity model remains future work |
-| Build dependency graph | Implementation modules/components and dependency/verification edges | Build route, data/resources.yml, docs/learning-path.md; bounded scope |
-| Computational graph | Operations, state/data artifacts and computational flow | data/computational-graph.yml and docs/canonical-computational-spine.md |
-| Source/provenance graph | Sources, inspections, extracted claims and supported project artifacts | Source catalogue, extraction records and source-lineage architecture |
+| Revision graph | Page-based aids → lessons; typed role and separate lesson coverage assessment | Page-based relation adapter in ProjectIndex and generated revision inventory; non-page revision aids remain unsupported. See the revision-resource contract. |
+| Practice graph | Per-lesson exercise hubs, shared collections and anchored activities; page-level lesson associations | Bilingual hubs/collections and page-level related edges exist. The Q/K/V pilot uses page ID + explicit anchor; no global activity registry or per-activity concept mapping is established. |
+| Build dependency graph | G0–G9 implementation milestones, modules, code evidence and verification dependencies | docs/learning-path.md, implementation modules and data/resources.yml. Resource/code validators exist, but no single canonical cross-graph Build dependency validator is established. |
+| Computational graph | Operations, state/data artifacts and typed computational flow | data/computational-graph.yml; check_computational_graph.py and tests/site/test_computational_graph.py; optional ProjectIndex evidence adapter. |
+| Source/provenance graph | Source records, scan/integration status, extraction items, locators and evidence mappings | check_source_catalogue.py; optional ProjectIndex adapter and cross_graph_query.py. The source-lineage per-source migration and decision model remain incomplete. |
 | Editorial graph | Collections, editions, stories and editorial membership/order | Calendar redesign documented; generalized model not yet implemented |
-| Historical graph | Events, concepts, sources and evidence-backed historical relations | data/history-pilot.yml and docs/history-data-model.md; specialized, not a second concept registry |
+| Historical graph | Events, sources, dated evidence and historical relations | data/history-pilot.yml; check_history_pilot.py, render_history_pilot.py and rendered timeline checks. Not yet traversed by cross_graph_query.py. |
 
 Not every family needs an independently persisted graph file. A graph can be a deterministic projection from a canonical route, resource registry or relationship declaration.
 
@@ -213,6 +213,43 @@ The following foundations should be preserved and extended:
 - docs/advent-calendar-editorial-redesign.md, docs/advent-calendar-next-steps.md: 2026 editorial decision and handoff.
 
 This inventory does not claim equivalent maturity or complete validation. See [the implementation backlog](llm-lab-architecture-implementation-backlog.md) for verified gaps and acceptance gates.
+
+## 9.1 Validator and interoperability matrix
+
+The canonical owner and its validator must be explicit. A cross-graph adapter may check references that span owners, but it does not replace the validator of either owner.
+
+| Family | Canonical owner | Integrity validator / regression tests | Current projection or bridge | Explicit boundary |
+|---|---|---|---|---|
+| Concepts and domains | data/concepts.yml, data/domains.yml | site/tools/check_concept_registry.py; tests/knowledge/test_concept_registry.py | ProjectIndex, learning-map concept view, export_knowledge_graph.py | Typed concept relations and multi-domain membership; page tags are not concepts. |
+| Page/navigation | LLM-LAB-PAGE-MAP v1 in site/**/*.qmd | site/tools/check_page_metadata.py | page_index.py, ProjectIndex, build_learning_map.py | Hierarchy, related and suggested-route edges remain page relations; they do not imply concept semantics or prerequisites. |
+| Understand route | data/guided-route.yml and lesson_contracts | Strict Pydantic models in build_learning_map.py; guided_route_transitions.py; tests/knowledge/test_lesson_contracts.py and test_flat_curriculum_sidebar.py | Generated bilingual guided route, conceptual-focus groups and peer Review navigation | Nine stages and explicit transitions are distinct. Route focus is a pedagogical association, not a direct concept→computation edge. |
+| Revision | Page-map revision_role, revision_of and revision_support fields | ProjectIndex._load_revision_relations; tests/knowledge/test_project_index.py | audit_revision_coverage.py; generated lesson-contract and Review-route projections | Page-based aids only. Non-page revision aids are not supported by resources.yml. Relation existence and pedagogical sufficiency remain separate. |
+| Practice | Published pages tagged destination:practice; authored related links and explicit heading anchors | check_page_metadata.py; ProjectIndex page-edge checks; bilingual page tests | Per-lesson exercise hubs, shared collections and Q/K/V activity pilot | No global activity registry. Page-level related links do not imply that every activity maps to every lesson or concept. |
+| Build | docs/learning-path.md, implementation modules/tests and data/resources.yml | check_resource_registry.py plus module-specific tests; no single Build graph validator identified | Build milestones and code/resource references | The milestone dependency model is not yet a unified machine-readable cross-graph owner. Do not infer implementation dependencies from lesson order. |
+| Computation | data/computational-graph.yml | site/tools/check_computational_graph.py; tests/site/test_computational_graph.py | render_computational_graph.py; ProjectIndex evidence adapter | Computational edges describe data/operation flow. Page-mediated and route-focus associations must remain distinct from direct concept edges. |
+| Sources and extraction evidence | data/sources.yml and data/extractions/*.yml | site/tools/check_source_catalogue.py | include_evidence=True adapter in cross_graph_evidence.py; cross_graph_query.py; tests/knowledge/test_cross_graph_query.py | Only explicit item-level concept mappings create source-evidence paths. Catalogue-only mappings and candidate destinations are reported as gaps, not evidence. |
+| Non-page resources | data/resources.yml | site/tools/check_resource_registry.py; tests/knowledge/test_resource_registry.py | ProjectIndex resource associations and JSON-LD export | Current registry contains implementation resources; it is not a generic activity, revision-aid or source-extraction registry. |
+| Historical genealogy | data/history-pilot.yml | site/tools/check_history_pilot.py; render_history_pilot.py; rendered timeline tests | Bilingual historical timeline | Chronology is not causal influence. Historical paths are not yet part of cross_graph_query.py. |
+| Editorial collections | Calendar editorial documents and authored story pages | No generalized editorial membership validator established | 2026 calendar and story pages | Calendar membership/order is editorial, not a new curriculum or concept graph. |
+| Linked-data export | Derived from concepts, pages and resources | tests/knowledge/test_knowledge_graph_export.py; tests/site/test_knowledge_graph_rendered.py | site/knowledge-graph.jsonld | This is a bounded export projection, not a universal serialization of every graph family or complete claim-level PROV-O provenance. |
+
+### ProjectIndex and cross-graph query boundary
+
+- ProjectIndex.build(root) is the default, read-only joined view of pages, concepts/domains, guided-route membership, resources, page relations and page-based revision relations.
+- ProjectIndex.build(root, include_evidence=True) opts into the larger source/extraction, computational and route-focus projection. The default must remain lightweight.
+- cross_graph_query.py currently supports concept-centred paths for item-level source evidence, catalogue-only gaps, page-mediated computation, stage-mediated route-focus computation, Practice links and non-page resources.
+- The query layer preserves exact locators, source scan/integration status, extraction disposition, confidence, assumptions and limitations. It explicitly reports missing locators and unpromoted candidate destinations.
+- The current query layer does not yet traverse historical events, Build milestone dependencies, source-local pedagogical graphs or structured decision records; it is not a page-originating reverse evidence query or a general recommendation engine.
+- The concept coverage matrix and report_project_index.py remain separate from the opt-in evidence-path query. A missing matrix dimension must not be interpreted as proof that no underlying records exist.
+
+### CI and validation orchestration
+
+The existing workflows already provide shared validation entry points; do not add a workflow per graph or concept.
+
+- .github/workflows/ci.yml runs the source catalogue, page metadata, concept registry, resource registry and history validators, then the repository test suite.
+- .github/workflows/quarto.yml validates page/resource metadata, renders history and computational graph fragments, checks rendered learning-map/knowledge-graph/history outputs and verifies local rendered links.
+- The computational graph validator is exercised by tests/site/test_computational_graph.py; it is not a separate per-concept workflow.
+- Cross-graph query behavior is covered by tests/knowledge/test_cross_graph_query.py. Its five checked-in concept cases are a bounded regression set, not a general precision/recall benchmark.
 
 ## 10. Change-control rule
 
