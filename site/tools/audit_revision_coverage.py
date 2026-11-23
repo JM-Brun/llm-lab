@@ -249,16 +249,12 @@ def build_revision_inventory(
                 **{field: page.get(field) for field in page_fields if field in page},
                 "route_memberships": route_memberships.get(page_id, []),
                 "concept_ids": sorted(concept_ids_by_page.get(page_id, [])),
-                "implementation_resource_ids": sorted(
-                    implementation_ids_by_page.get(page_id, [])
-                ),
+                "implementation_resource_ids": sorted(implementation_ids_by_page.get(page_id, [])),
                 "revision_roles": sorted(associated_page_roles.get(page_id, set())),
             }
         )
 
-    associated_page_scope = affected_page_ids | {
-        page["id"] for page in associated_page_records
-    }
+    associated_page_scope = affected_page_ids | {page["id"] for page in associated_page_records}
     associated_resource_ids = sorted(
         {
             resource_id
