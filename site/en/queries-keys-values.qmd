@@ -138,8 +138,6 @@ With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{mode
 
 Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here. This shared provenance is specific to self-attention; in [cross-attention](cross-attention.qmd), Q comes from the querying stream, while K and V come from the stream being queried. To trace these projections in the block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
-[Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
-
 
 ## Takeaway and next steps {#revision-summary}
 
@@ -171,15 +169,9 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+  <span class="learning-resources__description">Explore the mathematical and architectural extensions of this lesson.</span>
 </summary>
 ::: {.learning-resources__content}
-
-### Practice
-
-
-
-The [next attention exercises](exercises-attention.qmd#ex-attention-predict-projection-change) cover the effects of projection changes, how projections are learned, and transfer to cross-attention and GQA/MQA.
 
 ### Mathematical and architectural deep dive
 
