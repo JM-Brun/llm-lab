@@ -60,7 +60,6 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 ::: {.advent-act-heading}
 <span class="advent-act-number">01 — 07</span>
 <div><h3>Du contexte aux représentations</h3><p>Comment un texte devient-il une entrée numérique que le modèle peut traiter ?</p></div>
-</div>
 :::
 
 ::: {.advent-grid}
@@ -118,7 +117,6 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 ::: {.advent-act-heading}
 <span class="advent-act-number">08 — 12</span>
 <div><h3>Le calcul du Transformer</h3><p>Comment les états sont-ils transformés à l’intérieur des blocs ?</p></div>
-</div>
 :::
 
 ::: {.advent-grid}
@@ -162,7 +160,6 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 ::: {.advent-act-heading}
 <span class="advent-act-number">13 — 18</span>
 <div><h3>Prédiction et génération</h3><p>Comment les états deviennent-ils une distribution, puis un token choisi ?</p></div>
-</div>
 :::
 
 ::: {.advent-grid}
@@ -213,7 +210,6 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 ::: {.advent-act-heading}
 <span class="advent-act-number">19 — 24</span>
 <div><h3>Scoring et apprentissage</h3><p>Que change la présence d’une cible observée, et comment les paramètres apprennent-ils ?</p></div>
-</div>
 :::
 
 ::: {.advent-grid}
