@@ -1,12 +1,18 @@
 # LLM Advent Calendar — content drafts and pilot
 
-**Status:** editorial drafts; not yet learner-tested  
+**Status:** editorial drafts; days 01–03 implemented as bilingual QMD pages; not yet learner-tested  
 **Purpose:** develop the daily learning contract and prepare a deliberately varied three-day novice pilot  
 **Languages:** French and English  
 **Drafted days:** 01–09 (except 10–20), 21  
 **Pilot candidates:** 03 (tokenization), 09 (Q/K/V), 21 (cross-entropy)
 
 This document contains short calendar-sized explanations, not replacement lessons. The linked LLM Lab pages remain authoritative for full explanations, figures, mathematical details, and extended exercises. The examples below are deliberately bounded to what those pages and their exercise hubs support.
+
+## Implementation status
+
+The French and English versions of days 01–03 are implemented as reader-facing pages under `site/{fr,en}/advent-calendar/`. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
+
+The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test or a complete visual review of the rendered site.
 
 ## Pilot design principles
 
