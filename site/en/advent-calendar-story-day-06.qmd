@@ -2,7 +2,7 @@
 title: "What does a sine wave have to do with word order?"
 subtitle: "Turning one coordinate into a multi-scale representation"
 description-meta: "An independent story about Fourier features, frequencies and spectral bias, using Transformer positional encoding as one application."
-keywords: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:en", "status:planned"]
 lang: en
 toc: true
 ---
@@ -21,7 +21,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/positional-encoding"]
-tags: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:en", "status:planned"]
 -->
 
 *Independent story · about 10 minutes · Pilot A — draft for review*
