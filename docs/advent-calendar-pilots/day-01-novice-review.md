@@ -32,7 +32,7 @@ Use a simple observation log:
 Ask openly first. Do not show the expected answer until the reader has responded.
 
 1. **Main idea:** In your own words, what does the story say about how often words occur?
-2. **Rank and frequency:** If a word moves from rank 2 to rank 10, what happens to its frequency in the toy model (f(r)=C/r)?
+2. **Building the ranking:** In the small count table in the story, why is “de” / “the” at rank 1, and what would make its rank change?
 3. **Graph:** What do the horizontal and vertical axes represent? What does a roughly straight line on log-log axes suggest, and what does it not prove?
 4. **Worked example:** If (C=12,000), what frequency does the model predict at rank 4? Can you explain the calculation?
 5. **Limits:** Name one reason not to treat the formula as an exact law for every word or every corpus.
