@@ -1,8 +1,8 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, route, resource and revision relations
-stay distinct.
+new registry or source of truth. Page, concept, route, resource, revision, source-evidence
+and computation relations stay distinct; source/extraction loading is opt-in.
 """
 
 from __future__ import annotations
@@ -13,21 +13,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from cross_graph_evidence import (
+    CrossGraphEvidenceProjection,
+    load_cross_graph_evidence_projection,
+)
 from page_index import PublishedPage, group_bilingual_topics, load_published_pages
+from project_index_errors import ProjectIndexIntegrityError
 from strict_yaml import load_yaml
-
-
-class ProjectIndexIntegrityError(ValueError):
-    """A canonical project relation points to a missing or invalid record."""
-
-    def __init__(self, *, source: str, record_id: str, relation: str, target: object) -> None:
-        self.source = source
-        self.record_id = record_id
-        self.relation = relation
-        self.target = target
-        super().__init__(
-            f"{source}: record {record_id!r} has invalid {relation} reference {target!r}"
-        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -393,7 +385,7 @@ class RouteMembership:
 
 @dataclass(slots=True)
 class ProjectIndex:
-    """In-memory projection of canonical page, concept, route and resource records."""
+    """In-memory projection of canonical records, with opt-in cross-graph evidence."""
 
     pages_by_id: dict[str, PublishedPage]
     concepts_by_id: dict[str, dict[str, Any]]
@@ -416,10 +408,11 @@ class ProjectIndex:
     revision_edges: tuple[RevisionEdge, ...]
     revision_aids_by_lesson: dict[str, tuple[RevisionEdge, ...]]
     revision_lessons_by_aid: dict[str, tuple[RevisionEdge, ...]]
+    evidence_projection: CrossGraphEvidenceProjection | None = None
 
     @classmethod
-    def build(cls, root: Path) -> ProjectIndex:
-        """Build a deterministic snapshot from the repository root."""
+    def build(cls, root: Path, *, include_evidence: bool = False) -> ProjectIndex:
+        """Build a deterministic snapshot; source evidence loading is opt-in."""
         root = Path(root)
         published = load_published_pages(root / "site")
         pages = {page.page_id: page for page in published}
@@ -433,6 +426,11 @@ class ProjectIndex:
             _load_non_page_resources(root, pages, concepts)
         )
         revision_support_by_page, revision_edges = _load_revision_relations(pages)
+        evidence_projection = (
+            load_cross_graph_evidence_projection(root, pages, concepts, route_data)
+            if include_evidence
+            else None
+        )
         aids_by_lesson: dict[str, list[RevisionEdge]] = defaultdict(list)
         lessons_by_aid: dict[str, list[RevisionEdge]] = defaultdict(list)
         for revision_edge in revision_edges:
@@ -561,6 +559,7 @@ class ProjectIndex:
                 key: tuple(sorted(value, key=lambda edge: edge.source_page_id))
                 for key, value in lessons_by_aid.items()
             },
+            evidence_projection=evidence_projection,
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
