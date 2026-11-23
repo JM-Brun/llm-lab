@@ -32,6 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:tokenization", "l
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Troisième journée sur vingt-quatre"><span style="width: 12.5%"></span></div>
   <p class="advent-day-kicker">DÉCOUPER LE TEXTE · 6 MINUTES</p>
+  <h1 class="advent-day-title">Comment le texte devient-il des tokens ?</h1>
   <p class="advent-day-lead">Le modèle ne manipule pas directement les phrases comme nous les lisons. Avant de calculer, le texte doit être découpé en unités discrètes : les <strong>tokens</strong>.</p>
 </div>
 
