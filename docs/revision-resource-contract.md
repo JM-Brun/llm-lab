@@ -115,7 +115,7 @@ Do not infer assessment from a “one-minute” callout, a Practice page, a gene
 
 ## 5. Validation contract and current enforcement
 
-The contract below describes the required behavior. The page-based subset is already enforced by `ProjectIndex._load_revision_relations`; it is not yet implemented in `check_page_metadata.py`. Non-page revision aids are not supported by the current resource registry validator.
+The page-based subset is enforced by `ProjectIndex._load_revision_relations`. The normal CI workflow runs `audit_revision_coverage.py`, which builds ProjectIndex and therefore exercises these semantic checks against the repository's actual pages. `check_page_metadata.py` remains responsible for the general page-map contract and does not duplicate revision semantics. Non-page revision aids are not supported by the current resource registry validator.
 
 ### 5.1 Aid structure
 
@@ -190,10 +190,10 @@ These tests establish the ProjectIndex behavior. They do not establish that `che
 
 ### 6.6 Compatibility conclusion
 
-The page-based revision relation is **partially implemented and exercised through ProjectIndex**. The contract is not wholly unimplemented, but it is also not a complete, unified metadata schema:
+The page-based revision relation is **implemented and exercised through ProjectIndex and the CI revision-inventory step**. It is a complete supported subset, but not a complete all-artifact revision model:
 
 - page-based relationships and lesson assessments are parsed and validated by ProjectIndex;
-- the owning page metadata validator does not validate these fields;
+- `check_page_metadata.py` does not validate these fields; the CI-invoked ProjectIndex revision audit is the semantic validation boundary, avoiding duplicate validators;
 - the non-page resource registry does not support revision-aid resources;
 - the revision inventory projects page-based aids and assessments but not non-page aids;
 - the reader-facing peer Review route remains a separate projection owned by [#1541](https://github.com/JM-Brun/llm-lab/issues/1541).
@@ -203,8 +203,8 @@ Do not create a second revision registry. Reconcile the existing adapter, valida
 ## 7. Updated implementation order
 
 1. **Preserve the existing page-based implementation.** Do not remove or rewrite the current `revision_role`, `revision_of` and `revision_support` metadata.
-2. **Choose one validation boundary.** Either make the page metadata validation pipeline call the shared ProjectIndex revision checks, or extract a small shared validator consumed by both paths. Avoid maintaining two independent implementations of the same rules.
-3. **Add integration tests for the chosen validation boundary.** Verify that the normal CI/page-metadata command rejects malformed roles, duplicate/unknown/unpublished/ineligible targets, language mismatches and invalid assessment evidence.
+2. **Keep one semantic validation boundary.** The CI-invoked `audit_revision_coverage.py` builds ProjectIndex and exercises the page-based revision checks. Do not duplicate these rules in `check_page_metadata.py` unless a second consumer demonstrates a concrete need.
+3. **Preserve the integration tests.** Existing ProjectIndex tests cover malformed roles, duplicate/unknown/unpublished/ineligible targets, language mismatches and invalid assessment evidence; keep them aligned with any future schema change.
 4. **Retain and extend the existing revision inventory.** Keep aid links, assessment state and implementation-resource associations separate; report unknown/unassessed counts explicitly.
 5. **Inventory non-page candidates before extending resources.** Confirm whether `docs/revision-sheets/` or any other artifact is genuinely learner-facing and needs a stable non-page identity. Do not add a resource kind merely for architectural symmetry.
 6. **Only if justified, extend `check_resource_registry.py`.** Define the minimal non-page aid fields, target semantics, language and lifecycle behavior; preserve the implementation-resource contract.
@@ -214,10 +214,10 @@ Do not create a second revision registry. Reconcile the existing adapter, valida
 
 ## 8. Decisions still open
 
-- Confirm the final controlled role vocabulary and whether a separate role is needed for short recall prompts embedded in a lesson.
-- Confirm whether the Markdown file in `docs/revision-sheets/` is a learner-facing non-page aid or a source artifact.
-- Decide the exact structured evidence fields and whether section anchors need static existence validation.
-- Define legitimate exceptions for `shared`/multilingual resources and pages outside Understand/Build.
-- Agree the first bounded migration sample after the resource inventory.
+- The current role vocabulary is `synthesis`, `flashcards`, and `revision_sheet`. Short recall prompts embedded in a lesson are not a separate aid role; they are assessed as integrated support through `revision_support` and explicit section evidence.
+- Inspect `docs/revision-sheets/` only if a real reader-facing use case requires a non-page aid identity; otherwise keep non-page revision aids deferred.
+- Keep the current structured evidence and anchor rules; add rendered anchor validation only if the current CI/rendered-link checks cannot establish the required guarantee.
+- Keep `shared`/multilingual exceptions explicit and evidence-based; do not broaden them by default.
+- No further page-based migration is authorized until the current inventory and learner-facing Review gaps are reconciled.
 
 Until these decisions are closed, this remains a proposed contract. No metadata, registry, validator, graph or generated output should be changed on the assumption that these fields already work.
