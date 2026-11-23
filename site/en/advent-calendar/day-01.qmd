@@ -3,6 +3,7 @@ title: "Day 1 — What does an LLM predict?"
 description: "Understand the conditional distribution computed by an autoregressive model before any token is selected."
 keywords: ["type:concept-lesson", "destination:understand", "topic:next-token-prediction", "level:core", "language:en", "status:published"]
 lang: en
+sidebar: en
 toc: false
 page-layout: custom
 css: ../../styles/advent-calendar.css
