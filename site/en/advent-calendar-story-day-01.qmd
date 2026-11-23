@@ -1,0 +1,165 @@
+---
+title: "Why does the word “the” appear everywhere?"
+subtitle: "A simple statistical law behind a highly uneven distribution of words"
+description-meta: "Discover Zipf's law, long-tailed distributions and what they do — and do not — imply for language data."
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/advent-calendar-story-day-01"
+summary: "Explores the highly uneven distribution of word frequencies and the rank-frequency approximation known as Zipf's law."
+scope: "Explains the rank-frequency relation, long tails, empirical limitations and one implication for language-training corpora."
+purpose: "Interpret rank and frequency, calculate a Zipf approximation and avoid treating a log-log straight line as a universal law."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/text-data", "en/tokenization-strategies"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+-->
+
+*Independent story · about 10 minutes · Day 1 — draft for review*
+
+## Why do some words seem to appear everywhere?
+
+In an English text, words such as “the”, “of”, “and” or “to” appear again and again. Others — “firefly”, “catamaran”, “nephrology” — may occur only once or twice, or not at all.
+
+This is not just a vocabulary detail. When we count occurrences in a large corpus, we usually find a highly uneven distribution: a few words are extremely frequent, while a long tail of words is much rarer.
+
+Can we describe this inequality with a simple formula? And what does it tell us — or not tell us — about language?
+
+## Count before explaining
+
+First, distinguish two objects:
+
+- A **type** is a distinct lexical form under the chosen counting convention: for example, the word “house”.
+- A **token** is an occurrence of that form in the text. The sentence “the house near the house” contains two occurrences of “house”.
+
+Here, *token* means a lexical occurrence. In an LLM, *token* usually means a unit produced by the tokenizer (a whole word or a subword). The two uses are related, but they are not interchangeable.
+
+In a corpus, we count the occurrences of each type and sort the types from most frequent to least frequent. Rank \(r=1\) denotes the most frequent type, \(r=2\) the second, and so on. The frequency \(f(r)\) is its occurrence count — or its relative frequency if we divide by the total number of tokens.
+
+The ranking depends on the corpus, language, period, text genre and normalization conventions: capitalization, punctuation, lemmatization and inflected forms, for example. There is no single ranking that applies to every text.
+
+Consider a small fictional corpus whose occurrences have already been counted. We sort the lexical forms by decreasing frequency:
+
+| Form | Occurrences | Rank |
+|---|---:|---:|
+| the | 12 | 1 |
+| and | 7 | 2 |
+| cat | 4 | 3 |
+| dog | 3 | 4 |
+| firefly | 1 | 5 |
+
+Rank is therefore not an intrinsic property of a word: it results from counting and sorting within a particular corpus. Here, “the” has rank 1 because it is the most frequent form. A different corpus, or a different counting convention, could produce a different ranking.
+
+## Zipf's law: a surprisingly compact approximation
+
+Zipf's law describes an empirical regularity often observed in lexical frequencies:
+
+$$
+f(r) \approx \frac{C}{r^\alpha},
+\qquad \alpha \approx 1.
+$$
+
+- \(r\) is the word's rank in the frequency ordering;
+- \(f(r)\) is its frequency;
+- \(C\) depends, among other things, on the counting scale and corpus size;
+- \(\alpha\) is an exponent estimated from data.
+
+When \(\alpha=1\), doubling the rank approximately halves the frequency. A word at rank 10 is then about ten times less frequent than the word at rank 1 — under this simplified model.
+
+Consider a deliberately artificial example. If the word at rank 1 occurs 1,000 times and \(\alpha=1\), the formula gives:
+
+| Rank \(r\) | Indicative frequency \(C/r\) |
+|---:|---:|
+| 1 | 1,000 |
+| 2 | 500 |
+| 5 | 200 |
+| 10 | 100 |
+| 100 | 10 |
+| 1,000 | 1 |
+
+These are not measurements from an English corpus. They illustrate only the arithmetic consequence of the approximation with \(C=1000\) and \(\alpha=1\).
+
+![Illustrative rank-frequency curve under Zipf's law with alpha equal to one.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency fig-alt="On logarithmic axes, the synthetic curve f(r)=1000/r falls from 1,000 occurrences at rank 1 to 1 occurrence at rank 1,000; its slope is −1." width=95%}
+
+*Synthetic example: on logarithmic axes, the relation \(f(r)=C/r\) becomes a straight line with slope \(-1\). A real corpus distribution is not required to follow this line exactly.*
+
+## Why does a straight line appear on a logarithmic plot?
+
+Start with \(f(r)=C/r^\alpha\). Taking logarithms on both sides gives:
+
+$$
+\log f(r)=\log C-\alpha\log r.
+$$
+
+This is the equation of a straight line when we plot \(\log f(r)\) against \(\log r\). Its slope is \(-\alpha\).
+
+This transformation makes a relationship spanning several orders of magnitude easier to inspect: the most frequent words may occur thousands or millions of times, while many others occur only rarely.
+
+But beware: **an approximate straight line on a log-log plot is not enough to prove that a power law explains the mechanism generating the data**. The choice of axes and the way ranks are estimated matter.
+
+## A real regularity, but not a complete explanation
+
+The law is named after George Kingsley Zipf, who popularized this regularity in the quantitative study of language. It has become a classical reference point: a few very frequent words, many infrequent ones.
+
+However, it would be too strong to conclude that every lexical distribution follows an exact power law with exponent 1. Observed distributions show deviations, particularly at the ends of the ranking. Other models may describe some corpora better.
+
+Steven Piantadosi highlights an important statistical pitfall: if rank and frequency are estimated from the same sample, their errors are related. A word that is overcounted by chance has a higher measured frequency and moves up the ranking, so its two plotted coordinates are linked. The traditional rank-frequency plot can then make the regularity look more convincing than it is, especially for rare words. Separating the data used to estimate ranks from the data used to estimate frequencies reduces this correlation. It does not, however, remove every estimation bias: later work shows that exponent estimators can remain biased, particularly when empirical ranks in the rare-word tail are uncertain.
+
+Zipf's law is therefore a **useful descriptive approximation**, not a universal explanation of the origin of language or a demonstrated causal mechanism. Several linguistic and statistical factors may contribute to the observed shape.
+
+## Why does this matter for language models?
+
+A model trained on text also encounters highly uneven frequencies. Frequent forms occur in many contexts and provide many training examples. Rare forms have fewer observed occurrences: their contexts are harder to cover and their estimates may be less robust.
+
+This does not mean that a model can never produce a rare word. It can exploit its structure, the contexts it has encountered and regularities shared with other examples. But data frequency affects the available learning opportunities.
+
+We should also be precise about the counted unit. A lexical study may count words, whereas a language model predicts **tokens** produced by its tokenizer. A word may be represented by one token or several subword units; the token-frequency distribution is therefore not identical to the word-frequency distribution. This story is about lexical frequencies, not tokenization algorithms.
+
+## Try it
+
+In a toy corpus, the word at rank 1 occurs 12,000 times. Assume Zipf's law with \(\alpha=1\) is a reasonable approximation.
+
+1. What frequency does it predict for the word at rank 4?
+2. What about the word at rank 20?
+3. Can we conclude that the word at rank 20 will occur exactly 600 times in another corpus?
+
+<details>
+<summary>Show the solution</summary>
+
+Using \(f(r)=C/r\) and \(C=12,000\):
+
+- rank 4: \(12,000/4=3,000\) occurrences;
+- rank 20: \(12,000/20=600\) occurrences.
+
+These are values predicted by the toy model, not guarantees. In another corpus, size, domain, period, counting conventions and deviations from the law can all change the observed frequencies.
+
+</details>
+
+## The takeaway
+
+Language does not use all its words at the same frequency. Zipf's law provides a compact approximation of this inequality: rank and frequency are often related by something close to a power law. This regularity helps describe data, but it does not by itself explain their origin or predict the exact frequency of every word.
+
+## Go further
+
+- The [text-data lesson](text-data.qmd) introduces the representations and units handled by the LLM pipeline.
+- The [tokenization lesson](tokenization-strategies.qmd) explains how a string is split into tokens. It addresses a different question from the lexical counting in this story.
+
+### Sources
+
+- [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — rank-frequency approximation, limits of simple fits and the same-sample estimation pitfall.
+- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.
+- [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
+- [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — historical book that popularized the law in language study.
+
+::: {.language-switch}
+**Language:** [Français](../fr/advent-calendar-story-day-01.qmd) · [English](advent-calendar-story-day-01.qmd)
+:::

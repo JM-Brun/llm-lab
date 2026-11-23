@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" role="img" aria-labelledby="title desc">
+<title id="title">Illustrative Zipf rank-frequency curve</title>
+<desc id="desc">A descending straight line on logarithmic axes, showing the synthetic relation frequency equals one thousand divided by rank.</desc>
+<rect x="0" y="0" width="760" height="430" fill="#fbfcfa"/>
+<text x="380" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="#183d2b">A power law becomes a straight line in log-log space</text>
+<g stroke="#d7e1da" stroke-width="1">
+<line x1="100" y1="75" x2="100" y2="340"/><line x1="100" y1="340" x2="700" y2="340"/>
+<line x1="100" y1="75" x2="700" y2="75" stroke-dasharray="3 5"/><line x1="100" y1="145.67" x2="700" y2="145.67" stroke-dasharray="3 5"/><line x1="100" y1="216.33" x2="700" y2="216.33" stroke-dasharray="3 5"/><line x1="100" y1="287" x2="700" y2="287" stroke-dasharray="3 5"/>
+<line x1="300" y1="75" x2="300" y2="340" stroke-dasharray="3 5"/><line x1="500" y1="75" x2="500" y2="340" stroke-dasharray="3 5"/><line x1="700" y1="75" x2="700" y2="340" stroke-dasharray="3 5"/>
+</g>
+<g font-family="system-ui,sans-serif" font-size="12" fill="#42574a">
+<text x="88" y="79" text-anchor="end">1,000</text><text x="88" y="149.67" text-anchor="end">100</text><text x="88" y="220.33" text-anchor="end">10</text><text x="88" y="291" text-anchor="end">1</text>
+<text x="100" y="360" text-anchor="middle">1</text><text x="300" y="360" text-anchor="middle">10</text><text x="500" y="360" text-anchor="middle">100</text><text x="700" y="360" text-anchor="middle">1,000</text>
+<text x="400" y="400" text-anchor="middle" font-size="14">Word rank r (log scale)</text><text transform="translate(28 210) rotate(-90)" text-anchor="middle" font-size="14">Frequency f(r) (log scale)</text>
+</g>
+<path d="M100 75 L700 287" fill="none" stroke="#28744b" stroke-width="4" stroke-linecap="round"/>
+<g fill="#28744b" stroke="#ffffff" stroke-width="2"><circle cx="100" cy="75" r="6"/><circle cx="300" cy="145.67" r="6"/><circle cx="500" cy="216.33" r="6"/><circle cx="700" cy="287" r="6"/></g>
+<text x="535" y="105" font-family="system-ui,sans-serif" font-size="13" fill="#28744b">slope = −1</text>
+<text x="380" y="423" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#718077">Synthetic relation: f(r) = 1000 / r</text>
+</svg>

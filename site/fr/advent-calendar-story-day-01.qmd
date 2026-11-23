@@ -1,0 +1,165 @@
+---
+title: "Pourquoi le mot « de » revient-il si souvent ?"
+subtitle: "Une loi statistique simple derrière une distribution de mots très inégale"
+description-meta: "Découvrir la loi de Zipf, les distributions à longue traîne et ce qu'elles impliquent — avec prudence — pour les données de langage."
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/advent-calendar-story-day-01"
+summary: "Explore la distribution très inégale des fréquences de mots et l'approximation de Zipf par rang."
+scope: "Explique la loi rang-fréquence, les distributions à longue traîne, leurs limites empiriques et une conséquence pour les corpus d'entraînement."
+purpose: "Interpréter un rang et une fréquence, calculer une approximation de Zipf et éviter de prendre une droite log-log pour une loi universelle."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/text-data", "fr/tokenization-strategies"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Histoire indépendante · environ 10 minutes · Jour 1 — brouillon pour relecture*
+
+## Pourquoi certains mots semblent-ils partout ?
+
+Dans un texte français, des mots comme « de », « le », « et » ou « à » reviennent sans cesse. D'autres — « luciole », « catamaran », « néphrologie » — peuvent n'apparaître qu'une ou deux fois, voire pas du tout.
+
+Cette différence n'est pas un détail de vocabulaire. Si l'on compte les occurrences dans un grand corpus, on observe généralement une distribution très déséquilibrée : quelques mots sont extrêmement fréquents, tandis qu'une longue traîne de mots est beaucoup plus rare.
+
+Comment décrire cette inégalité avec une formule simple ? Et que nous apprend-elle — ou ne nous apprend-elle pas — sur la langue ?
+
+## Compter avant d'expliquer
+
+Commençons par distinguer deux objets :
+
+- Un **type** est une forme lexicale distincte dans le comptage choisi : par exemple le mot « maison ».
+- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».
+
+Dans ce passage, *token* désigne donc une occurrence lexicale. Dans un LLM, le mot *token* désigne plutôt une unité produite par le tokenizer (mot entier ou sous-mot). Les deux usages sont liés, mais ne sont pas interchangeables.
+
+Dans un corpus, on compte les occurrences de chaque type, puis on classe les types du plus fréquent au moins fréquent. Le rang \(r=1\) désigne le type le plus fréquent, \(r=2\) le deuxième, etc. La fréquence \(f(r)\) est son nombre d'occurrences — ou sa fréquence relative, si l'on divise par le nombre total de tokens.
+
+Le classement dépend du corpus, de la langue, de la période, du genre de texte et des conventions de normalisation : majuscules, ponctuation, lemmatisation, formes fléchies, notamment. Il n'existe donc pas un classement unique valable pour tous les textes.
+
+Prenons un petit corpus fictif dont les occurrences ont déjà été comptées. On classe les formes lexicales par fréquence décroissante :
+
+| Forme | Occurrences | Rang |
+|---|---:|---:|
+| de | 12 | 1 |
+| et | 7 | 2 |
+| chat | 4 | 3 |
+| chien | 3 | 4 |
+| luciole | 1 | 5 |
+
+Le rang n'est donc pas une propriété intrinsèque du mot : il résulte du comptage et du tri dans ce corpus précis. Ici, « de » occupe le rang 1 parce que c'est la forme la plus fréquente. Un autre corpus, ou une autre convention de comptage, pourrait produire un classement différent.
+
+## La loi de Zipf : une approximation étonnamment compacte
+
+La loi de Zipf décrit une régularité empirique souvent observée dans les fréquences lexicales :
+
+$$
+f(r) \approx \frac{C}{r^\alpha},
+\qquad \alpha \approx 1.
+$$
+
+- \(r\) est le rang du mot dans le classement ;
+- \(f(r)\) est sa fréquence ;
+- \(C\) dépend notamment de l'échelle de comptage et de la taille du corpus ;
+- \(\alpha\) est un exposant estimé à partir des données.
+
+Lorsque \(\alpha=1\), doubler le rang divise approximativement la fréquence par deux. Un mot de rang 10 est alors environ dix fois moins fréquent que le mot de rang 1 — dans ce modèle simplifié.
+
+Prenons un exemple volontairement artificiel. Si le mot de rang 1 apparaît 1 000 fois et si \(\alpha=1\), la formule donne :
+
+| Rang \(r\) | Fréquence indicative \(C/r\) |
+|---:|---:|
+| 1 | 1 000 |
+| 2 | 500 |
+| 5 | 200 |
+| 10 | 100 |
+| 100 | 10 |
+| 1 000 | 1 |
+
+Ces nombres ne sont pas des mesures d'un corpus français. Ils illustrent seulement la conséquence arithmétique de l'approximation avec \(C=1000\) et \(\alpha=1\).
+
+![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency-fr.svg){#fig-advent-zipf-rank-frequency fig-alt="Sur des axes logarithmiques, la courbe synthétique f(r)=1000/r descend de 1 000 occurrences au rang 1 à 1 occurrence au rang 1 000 ; sa pente vaut −1." width=95%}
+
+*Exemple synthétique : sur des axes logarithmiques, la relation \(f(r)=C/r\) devient une droite de pente \(-1\). Une vraie distribution de corpus n'est pas tenue de suivre exactement cette droite.*
+
+## Pourquoi une droite sur un graphique logarithmique ?
+
+Partons de \(f(r)=C/r^\alpha\). En prenant le logarithme des deux côtés :
+
+$$
+\log f(r)=\log C-\alpha\log r.
+$$
+
+C'est l'équation d'une droite si l'on représente \(\log f(r)\) en fonction de \(\log r\). Sa pente vaut \(-\alpha\).
+
+Cette transformation rend lisible une relation qui couvre plusieurs ordres de grandeur : les premiers mots peuvent apparaître des milliers ou des millions de fois, tandis que de nombreux autres n'apparaissent que rarement.
+
+Mais attention : **une droite approximative sur un graphique log-log ne suffit pas à prouver qu'une loi de puissance explique le mécanisme qui produit les données**. Le choix des axes et la façon d'estimer les rangs comptent.
+
+## Une régularité réelle, mais pas une explication complète
+
+La loi porte le nom de George Kingsley Zipf, qui a popularisé cette régularité dans l'étude quantitative des langues. Elle est devenue un repère classique : peu de mots très fréquents, beaucoup de mots peu fréquents.
+
+Cependant, il serait excessif d'en conclure que toute distribution lexicale suit exactement une loi de puissance d'exposant 1. Les distributions observées présentent des écarts, notamment aux extrémités du classement. D'autres modèles peuvent mieux décrire certains corpus.
+
+Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Un mot surestimé par hasard gagne en fréquence mesurée et remonte dans le classement : ses deux coordonnées sont donc liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences réduit cette corrélation. Cela ne règle toutefois pas tous les biais d'estimation : des travaux ultérieurs montrent que les estimateurs de l'exposant peuvent rester biaisés, notamment lorsque les rangs empiriques sont incertains dans la traîne rare.
+
+La loi de Zipf est donc une **approximation descriptive utile**, pas une explication universelle de l'origine du langage ni un mécanisme causal démontré. Plusieurs facteurs linguistiques et statistiques peuvent contribuer à la forme observée.
+
+## Pourquoi cela compte pour les modèles de langage
+
+Un modèle entraîné sur du texte rencontre lui aussi des fréquences très inégales. Les formes fréquentes apparaissent dans de nombreux contextes et fournissent beaucoup d'exemples d'apprentissage. Les formes rares disposent de moins d'occurrences observées : leurs contextes sont plus difficiles à couvrir et leurs estimations peuvent être moins robustes.
+
+Cela ne signifie pas qu'un modèle ne peut jamais produire un mot rare. Il peut exploiter sa structure, les contextes rencontrés et les régularités partagées avec d'autres exemples. Mais la fréquence des données influence les occasions d'apprentissage.
+
+Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des mots, alors qu'un modèle de langage prédit des **tokens** issus de son tokenizer. Un mot peut être représenté par un token ou par plusieurs sous-unités ; la distribution des fréquences de tokens n'est donc pas identique à celle des mots. Cette histoire porte sur les fréquences lexicales, pas sur les algorithmes de tokenisation.
+
+## À vous de jouer
+
+Dans un corpus jouet, le mot de rang 1 apparaît 12 000 fois. Supposons que la loi de Zipf avec \(\alpha=1\) soit une approximation acceptable.
+
+1. Quelle fréquence prédit-elle pour le mot de rang 4 ?
+2. Et pour le mot de rang 20 ?
+3. Peut-on en déduire que le mot de rang 20 apparaîtra exactement 600 fois dans un autre corpus ?
+
+<details>
+<summary>Voir la solution</summary>
+
+Avec \(f(r)=C/r\) et \(C=12\,000\) :
+
+- rang 4 : \(12\,000/4=3\,000\) occurrences ;
+- rang 20 : \(12\,000/20=600\) occurrences.
+
+Ce sont des valeurs prédites par le modèle jouet, pas des garanties. Dans un autre corpus, la taille, le domaine, la période, les conventions de comptage et les écarts à la loi peuvent modifier les fréquences observées.
+
+</details>
+
+## L'idée à retenir
+
+La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fournit une approximation compacte de cette inégalité : le rang et la fréquence sont souvent liés par une relation proche d'une loi de puissance. Cette régularité aide à décrire les données, mais elle ne suffit ni à expliquer leur origine ni à prédire exactement chaque mot.
+
+## Pour aller plus loin
+
+- La leçon sur les [données textuelles](text-data.qmd) présente les représentations et unités manipulées dans le pipeline du LLM.
+- La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens. Elle traite d'une autre question que le comptage lexical de cette histoire.
+
+### Sources
+
+- [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — approximation rang-fréquence, limites des ajustements simples et piège d'estimation sur le même corpus.
+- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.
+- [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
+- [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
+
+::: {.language-switch}
+**Langue :** [Français](advent-calendar-story-day-01.qmd) · [English](../en/advent-calendar-story-day-01.qmd)
+:::

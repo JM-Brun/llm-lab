@@ -123,6 +123,21 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  // New Quarto pages are not necessarily represented in the fixed site-review
+  // matrix yet. Add a bilingual desktop/mobile case for each changed page so
+  // new content receives the same math, layout, keyboard and Axe checks.
+  const renderConfig = fs.readFileSync(path.resolve("site/_quarto.yml"), "utf8");
+  const changedPageTargets = changedFiles
+    .map(file => file.match(/^site\/(en|fr)\/(?!exercises\/)(.+)\.qmd$/))
+    .filter(Boolean)
+    .filter(([, language, slug]) => renderConfig.includes(`${language}/${slug}.qmd`))
+    .map(([, language, slug]) => ({ language, page: `${slug}.html` }));
+  for (const { language, page } of changedPageTargets) {
+    if (cases.some(testCase => testCase.lang === language && testCase.page === page)) continue;
+    cases.push(...visualCases
+      .filter(testCase => testCase.lang === language)
+      .map(testCase => ({ ...testCase, page, kind: "changed-page" })));
+  }
   const changedCompanions = changedFiles
     .map(file => file.match(/^site\/(en|fr)\/exercises\/([a-z0-9-]+)\.qmd$/))
     .filter(Boolean);
