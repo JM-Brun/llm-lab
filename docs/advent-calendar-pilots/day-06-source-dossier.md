@@ -74,9 +74,9 @@ Editorial constraint:
 
 Use:
 
-$
-f(x)=\\sin(16\\pi x), \\qquad x\\in[0,1].
-$
+$$
+f(x)=\sin(16\pi x), \qquad x\in[0,1].
+$$
 
 This has eight cycles on [0,1]. The exact values are:
 
@@ -90,11 +90,11 @@ This has eight cycles on [0,1]. The exact values are:
 
 The revised transfer challenge uses:
 
-$
-g(x)=\\sin(2\\pi x)+0.2\\sin(16\\pi x).
-$
+$$
+g(x)=\sin(2\pi x)+0.2\sin(16\pi x).
+$$
 
-A linear readout with only the pair $\\sin(2\\pi x),\\cos(2\\pi x)$ cannot represent the eight-cycle component. Adding $\\sin(16\\pi x)$ makes both components directly accessible. This remains a statement about the specified feature bank and linear readout, not a general impossibility result for nonlinear networks.
+A linear readout with only the pair $\sin(2\pi x),\cos(2\pi x)$ cannot represent the eight-cycle component. Adding $\sin(16\pi x)$ makes both components directly accessible. This remains a statement about the specified feature bank and linear readout, not a general impossibility result for nonlinear networks.
 
 ## Visual provenance
 
