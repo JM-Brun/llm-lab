@@ -225,8 +225,11 @@ The architecture program is not complete merely because graph families have name
 
 ### Active pull requests
 
-- **PR #1561 — registry inventory / Project Intelligence reconciliation:** open. It updates this backlog, the ecosystem architecture matrix, revision contract, Project Intelligence design and metric registry; it also corrects the source-coverage diagnostic wording and adds a regression test. Secret scanning and Python quality passed on the latest observed head; test suite and Quarto/browser workflow were still running at the last check. Do not merge until fresh checks complete and the inventory is reviewed.
+- **PR #1567 — registry inventory / Project Intelligence reconciliation:** open on current main. It updates this backlog, the ecosystem architecture/interoperability matrix, relation-edge review status, revision contract, Project Intelligence design and metric registry; it also reconciles the calendar handoff, records the Q/K/V pilot outcome, corrects the source-coverage diagnostic wording and adds a regression test. Latest observed checks: secret scanning and Python quality passed; test suite and Quarto/browser workflow are running. Merge only after all required checks pass.
+- **PR #1561:** closed as superseded after #1558/#1563 advanced main and caused a merge conflict; its changes were replayed on current main in #1567.
 - **PR #1558 — Q/K/V practice pilot:** merged as `4f0302a`. Python quality, test suite, Quarto/browser audit and secret scanning passed on the final head. Learner review and the full 45-pair audit remain separate gates.
+- **PR #1523 — companion-link visibility batch:** merged; 20 hidden-only links and 9 mixed visible/hidden cases were reconciled across 29 bilingual page pairs, preserving distinct deep links.
+- **PR #1563 — Day 06 mathematical correction:** merged; FR/EN math notation and frequency/source-scope definitions were corrected. The story remains planned and outside the production render list.
 - **PR #1560 — Day 06 story/template pilot:** merged. The bilingual source drafts and template remain planned/source-only and outside the render list; publication review is not complete.
 - **PR #1553 — ecosystem architecture:** merged. **Issue #575** is closed; residual reader-facing computational-spine review remains in #584.
 
@@ -236,7 +239,7 @@ The standard CI workflow skips the opt-in full-corpus extraction locator invento
 
 ### Merge and migration guardrails
 
-- Do not merge PR #1561 solely because the structural tests pass; respect its remaining review gates. PR #1558 is merged after all required checks passed.
+- Do not merge PR #1567 until the latest test suite and Quarto/browser audit pass; secret scanning and Python quality have already passed. PR #1558 is merged after all required checks passed.
 - Do not bulk-migrate page metadata or create a universal graph/registry.
 - Keep source membership, revision sufficiency, scientific evidence and learner outcomes as distinct assertions.
 - Update this dated handoff when CI/PR states change; the specialist issues remain the source of truth for their detailed acceptance criteria.
