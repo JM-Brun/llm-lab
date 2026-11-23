@@ -1,6 +1,6 @@
 # Project intelligence layer
 
-**Status:** proposed architecture with a read-only `ProjectIndex`, resource/revision adapters and inverse queries merged in [PR #1399](https://github.com/JM-Brun/llm-lab/pull/1399). The metric registry is documented in [project-metric-registry.md](project-metric-registry.md); the first concept-centred matrix builder is in [project_coverage.py](../site/tools/project_coverage.py), with validation pending. Diagnostics and interfaces remain planned.  
+**Status:** partial implementation, reconciled against main on 2026-11-23. The read-only `ProjectIndex`, page/concept/domain/resource/route indexes, page-based revision relations and reverse lookups are implemented. The concept-centred coverage matrix and Markdown/JSON report are implemented. An opt-in source/computation/route-focus evidence projection and concept-centred `cross_graph_query.py` are implemented and tested (PR #1535). Complete Build/computation/source/Practice coverage mappings, cross-family diagnostics, history/decision traversal, a unified CLI and recommendations remain incomplete.  
 **Scope:** reusable, deterministic queries and explainable diagnostics over the canonical LLM Lab metadata, registries, routes, graph families and project artifacts.  
 **Related architecture:** [Information architecture](information-architecture.md), [scalability audit](scalability-capacity-audit-2026-11-18.md), [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md), [cross-graph discovery issue #1233](https://github.com/JM-Brun/llm-lab/issues/1233).
 
@@ -8,7 +8,7 @@
 
 LLM Lab should be able to inspect and reason about its own structure through documented, reusable tools. Metadata must be more than passive annotations: it should support reliable inventories, counts, reverse lookups, coverage analysis, consistency checks, impact analysis and carefully governed construction recommendations.
 
-The proposed **Project Intelligence Layer (PIL)** is a read-only query and analysis layer over existing canonical sources. It is not a new registry, ontology, curriculum, graph, database or source of truth.
+The **Project Intelligence Layer (PIL)** is a read-only query and analysis layer over existing canonical sources. Its implemented subset is not a new registry, ontology, curriculum, graph, database or source of truth. Keep the implemented read model distinct from the broader target described in the remaining sections.
 
 It should answer questions such as:
 
@@ -22,6 +22,21 @@ It should answer questions such as:
 - Which proposed learning resources would address a demonstrated gap without duplicating existing material?
 
 The layer must make each result explainable and reproducible: users should be able to identify the canonical records, relation semantics, filters and snapshot used to produce it.
+
+## 1.1 Verified implementation state — 2026-11-23
+
+| Component | Implemented behavior | Current limit |
+|---|---|---|
+| Default read model | `ProjectIndex.build(root)` joins published pages, concepts/domains, page relations, guided-route memberships, non-page implementation resources and page-based revision relations. It exposes deterministic statistics and forward/reverse queries. | It is an in-memory read model, not a canonical store. Planned/retired pages are excluded. |
+| Revision adapter | Page-based `revision_role`, `revision_of` and `revision_support` are validated by ProjectIndex; aid→lesson and lesson→aid indexes are derived. CI invokes `audit_revision_coverage.py`. | Non-page revision aids are unsupported. Coverage states are authored assessments, not learner-validation results. |
+| Concept coverage | `project_coverage.py` builds a concept-centred matrix with explicit evidence and state counts; `report_project_index.py` renders Markdown or JSON with snapshot provenance and units. | Build, computation, source and Practice dimensions are currently `not_registered` in this matrix because complete canonical concept mappings do not exist. This does not mean that no isolated cross-graph paths exist. |
+| Evidence projection | `ProjectIndex.build(root, include_evidence=True)` opts into source/extraction, computational and route-focus evidence adapters. | The default index remains lightweight; evidence loading is opt-in. |
+| Cross-graph query | `cross_graph_query.py --concept ID` returns typed paths and explicit gaps for item-level source evidence, catalogue-only gaps, page-mediated and stage-mediated computation, Practice links and non-page resources. | Concept-centred only. It does not yet traverse history, Build milestone dependencies, source-local pedagogical graphs or structured decision records; it is not a reverse page-originating evidence query or recommendation engine. |
+| Validation | ProjectIndex, coverage and query behavior have synthetic regression tests; PR #1535 adds five real concept cases and explicit gap checks. | There is no complete cross-family validator or project-wide deterministic diagnostic suite. Existing owning validators remain authoritative. |
+
+The current coverage vocabulary includes `present`, `missing`, `not_applicable`, `not_registered`, `needs_review` and `not_assessed` (the latter for revision assessment). A distinct `stale` state is not yet implemented. The matrix does not currently model all five states for every dimension.
+
+**Counting boundary:** the report distinguishes published page records, unique topics, concepts, domains, stored page edges, route memberships and revision links. Do not add these counts together or interpret a missing matrix dimension as proof that no underlying record exists.
 
 ## 2. Architectural principles
 
@@ -83,45 +98,40 @@ The layer has five responsibilities, not five new services:
 
 The index is built from the current checkout and is not persisted as canonical data. A generated snapshot may be cached later, but it must include the source commit SHA, schema versions, build timestamp, input fingerprints and tool version. A stale snapshot must be detectable and never silently presented as current.
 
-## 5. Proposed Python API
+## 5. Python API: implemented core and proposed extensions
 
-Initial read-model module: `site/tools/project_index.py`. Keep the existing `ProjectIndex` as the shared in-memory adapter; add a separate facade only if a concrete API need emerges.
+The shared in-memory adapter is `site/tools/project_index.py`. Use its existing typed queries rather than adding a second facade.
 
-The API should be typed, documented, deterministic, and usable from tests, command-line commands and other repository scripts.
+Implemented default-index calls include:
 
-```python
+~~~python
 index = ProjectIndex.build(root=ROOT)
 
-# Inventory and aggregation
 index.stats()
-index.pages(destination="understand", language="fr")
-index.pages(type="concept-lesson", topic="attention")
-index.route("understand")
-index.route("build")
-index.concepts(domain="architectures-mechanisms")
-
-# Identity and associations
-index.page("en/scaled-dot-product-attention")
-index.concept("attention")
+index.select_pages(language="fr", destination="understand")
+index.select_concepts(domain="architectures-mechanisms")
 index.pages_for_concept("attention")
-index.concepts_for_page("en/scaled-dot-product-attention")
+index.concepts_for_page("en/attention")
+index.resources_for_page("en/attention")
+index.pages_for_resource("attention-module")
 index.resources_for_concept("attention")
-index.sources_for_concept("attention")  # explicit catalogue/extraction links only
+index.concepts_for_resource("attention-module")
+index.incoming_pages("en/attention")
+index.outgoing_pages("en/attention")
+index.route_stage("computation", language="en", role="core")
+index.revision_aids_for_lesson("en/queries-keys-values")
+index.lessons_for_revision_aid("en/revision-queries-keys-values")
+index.revision_support_for_lesson("en/queries-keys-values")
+~~~
 
-# Page relation queries
-index.incoming_pages("en/attention", relation="related")
-index.outgoing_pages("en/attention", relation="suggested_route")
-index.incoming("page:en/attention", relation_family="page")
-index.outgoing("concept:attention", relation_family="concept")
+The larger evidence projection is opt-in:
 
-# Coverage and impact
-index.concept_coverage()
-index.route_coverage("understand")
-index.page_impact("en/attention")
-index.audit()
-```
+~~~python
+index = ProjectIndex.build(root=ROOT, include_evidence=True)
+result = query_concept(index, "attention")
+~~~
 
-Exact signatures and return types must be decided against the real schemas during implementation. The example is an API design, not a claim that these functions already exist.
+Do not assume that convenience methods such as generic `incoming()`, `page_impact()`, `audit()`, `route_coverage()` or a unified `project_intelligence.py` CLI exist; they remain possible future interfaces, not current APIs.
 
 ### 5.1 Typed records and edge families
 
@@ -142,7 +152,7 @@ A query result should carry typed references rather than flatten every relations
 - `SourceEvidenceLink`: source/version, extraction item and locator where available;
 - `HistoricalRelation`: history-model-specific relation.
 
-Current read-model projection (PR #1394): `resources_by_id`, `page_resource_associations`, `concept_resource_associations`, `revision_status_by_page` and `revision_edges`. Revision edges remain separate from page graph edges. The revision adapter consumes the optional proposal documented in [revision-resource-contract.md](revision-resource-contract.md); no current page declares a revision object, and neither page nor resource validator has been changed. Reverse resource/revision lookup methods are the next implementation step.
+Current read-model projection: `resources_by_id`, page/resource and concept/resource associations, `revision_support_by_page`, page-based `revision_edges`, and derived `revision_aids_by_lesson` / `revision_lessons_by_aid`. Revision edges remain separate from ordinary page-graph edges. Page-based revision declarations are present and validated through ProjectIndex; the CI revision inventory exercises those checks. Non-page revision aids remain unsupported. The general page-metadata validator does not duplicate revision semantics.
 
 Cross-structure traversal composes these typed links. It does not materialize a replacement universal graph or reinterpret the edge types of one graph as another.
 
@@ -175,9 +185,9 @@ Build dictionaries and adjacency maps once per snapshot:
 | `resources_by_id` | resource ID | `ResourceRecord` |
 | `page_resource_associations` | page ID | explicit page→resource associations |
 | `concept_resource_associations` | concept ID | explicit resource↔concept associations |
-| `revision_status_by_page` | page ID | `not_assessed`, `assessed` or `not_applicable` |
-| `revision_edges` | source page ID | typed page→section/page/resource revision edges |
-| `resources_by_concept` | concept ID | reverse index planned in the next query slice |
+| `revision_support_by_page` | lesson page ID | explicit assessment status, evidence anchors and rationale |
+| `revision_edges` | revision-aid page ID | typed page-aid→eligible lesson relations |
+| `revision_aids_by_lesson` / `revision_lessons_by_aid` | lesson or aid page ID | derived reverse/forward indexes; no reciprocal duplicate authoring |
 | `pages_by_route_stage` | stage ID + language + role | ordered page IDs |
 | `page_incoming` / `page_outgoing` | page ID | typed page edges |
 | `concept_incoming` / `concept_outgoing` | concept ID | typed concept relations |
@@ -233,7 +243,7 @@ A concept coverage report should separate dimensions instead of collapsing them 
 | Practice | Explicit exercise/test/experiment mapping |
 | Bilingual parity | Expected FR/EN counterparts exist and satisfy page contracts |
 
-Use states such as `present`, `missing`, `not_applicable`, `not_registered` and `needs_review`. Do not interpret an absent association as a defect if no completeness contract exists. The report must identify which dimensions are fully enumerable today and which await an explicit mapping. The canonical metric IDs, units, source versions and state semantics are defined in [project-metric-registry.md](project-metric-registry.md).
+The current implementation uses `present`, `missing`, `not_applicable`, `not_registered` and `needs_review`; revision coverage additionally uses `not_assessed`. It does not yet implement a general `stale` state. Build, computation, source and Practice cells are explicitly `not_registered` in the current concept matrix because no complete canonical concept mapping exists for those dimensions. The opt-in cross-graph query may still return individual explicit paths; those paths must not be promoted into complete coverage. Do not interpret an absent association as a defect if no completeness contract exists. The canonical metric IDs, units, source versions and state semantics are defined in [project-metric-registry.md](project-metric-registry.md).
 
 ### 7.3 Page and entity impact analysis
 
@@ -297,27 +307,19 @@ Measure recommendation precision on a manually reviewed sample before treating s
 
 ## 9. Command-line interface and output contracts
 
-Proposed command family (names provisional):
+Current command-line entry points (the earlier unified command family below is not implemented):
 
-```bash
-# Global inventory and route counts
-uv run python site/tools/project_intelligence.py stats
-uv run python site/tools/project_intelligence.py routes
+~~~bash
+# Lightweight project counts and concept-centred coverage (Markdown by default)
+uv run python site/tools/report_project_index.py
+uv run python site/tools/report_project_index.py --format json
+uv run python site/tools/report_project_index.py --language fr --destination understand
 
-# Queries
-uv run python site/tools/project_intelligence.py pages --destination understand --language fr
-uv run python site/tools/project_intelligence.py concept attention
-uv run python site/tools/project_intelligence.py incoming page:en/attention
-uv run python site/tools/project_intelligence.py coverage concepts
+# Opt-in evidence paths and explicit gaps for one or more concepts
+uv run python site/tools/cross_graph_query.py --concept attention
+uv run python site/tools/cross_graph_query.py --concept attention --concept entropy
+~~~
 
-# Diagnostics and impact
-uv run python site/tools/project_intelligence.py audit
-uv run python site/tools/project_intelligence.py impact page:en/attention
-
-# Machine-readable output
-uv run python site/tools/project_intelligence.py stats --format json
-uv run python site/tools/project_intelligence.py coverage concepts --format csv
-```
 
 Output contracts:
 - stable JSON keys and explicit schema version;
@@ -327,7 +329,7 @@ Output contracts:
 - CSV only for flat tabular exports;
 - non-zero exit status for command failure or configured blocking diagnostics, not for every informational gap.
 
-The CLI should reuse the same API and result models as tests and other scripts. Avoid a second implementation hidden in argument handlers.
+`report_project_index.py` currently emits Markdown or JSON; `cross_graph_query.py` emits typed JSON paths/gaps. There is no CSV output or unified command dispatcher yet. Any future CLI should reuse the same API and result models as tests and other scripts.
 
 ## 10. Testing, CI and evidence
 
@@ -351,44 +353,48 @@ CI integration should be staged:
 
 Record Python version, platform, dependency versions, fixture sizes, repetitions, medians and peak memory for benchmarks. Do not claim scale readiness from a static complexity argument alone.
 
-## 11. Implementation roadmap
+## 11. Implementation roadmap — reconciled 2026-11-23
 
 ### Phase 0 — contract and inventory
-- Map every required metric to its canonical source and precise counting semantics.
-- Inventory existing readers, validators, tests and generated projections.
-- Identify already-covered checks to avoid duplication.
-- Establish representative fixtures and a baseline snapshot.
+- [x] Map the current read model to canonical owners and existing validators.
+- [x] Establish typed identity/edge families and count units for the implemented subset.
+- [x] Add synthetic fixtures and regression tests for index integrity.
+- [ ] Refresh the complete registry inventory and full-corpus evidence snapshot as the source corpus changes.
 
-**Exit:** query catalogue, ownership map and test plan reviewed.
+**Status:** implemented for the current ProjectIndex subset; broader ownership/metric inventory continues in the architecture backlog.
 
 ### Phase 1 — deterministic read model
-- Build typed adapters on existing readers.
-- Implement `ProjectIndex` and first-pass dictionaries/adjacency indexes.
-- Add page, concept, domain, resource and Understand route queries.
-- Add stats and reverse page lookups.
+- [x] Implement `ProjectIndex` with page, concept, domain, resource, route, page-edge and revision adapters.
+- [x] Add deterministic statistics and page/concept/resource/revision forward and reverse queries.
+- [x] Add a lightweight default index and opt-in evidence projection.
+- [x] Add synthetic tests and CI revision-inventory integration.
 
-**Exit:** required page/lesson/concept counts and page/concept reverse queries are reproducible and tested.
+**Status:** implemented for the current canonical owners; do not add a second index or duplicate validator.
 
 ### Phase 2 — Build and cross-structure coverage
-- Add Build milestones and explicit code/test evidence mappings.
-- Add source/extraction, computational graph and history adapters where canonical IDs permit.
-- Implement coverage matrices and entity impact reports.
+- [x] Add the concept-centred coverage matrix and Markdown/JSON report.
+- [x] Add opt-in source/extraction, computational and route-focus evidence adapters; test concept-centred paths and explicit gaps (PR #1535).
+- [ ] Define a canonical Build milestone/evidence crosswalk.
+- [ ] Define complete concept-to-computation, source-evidence and Practice mappings only where the owning model can justify them.
+- [ ] Add history traversal and broader entity-impact queries.
 
-**Exit:** reports distinguish complete, partial, unregistered and inapplicable dimensions.
+**Status:** partial. The matrix reports Build/computation/source/Practice as `not_registered`; isolated explicit paths do not imply complete coverage.
 
 ### Phase 3 — diagnostics and useful projections
-- Add deterministic cross-registry audits.
-- Add stable JSON/Markdown/CSV CLI outputs.
-- Publish CI artifacts and review false positives before enforcing new rules.
+- [x] Report structural bilingual association findings and explicit evidence gaps in the current query output.
+- [ ] Define cross-registry diagnostic rules and ownership so existing validators are reused rather than duplicated.
+- [ ] Add a general stale-state/freshness model and report provenance for all projections.
+- [ ] Decide which reports should be CI artifacts and review false positives before making any finding blocking.
+- [ ] Add a unified, stable CLI only if multiple consumers justify it.
 
-**Exit:** maintainers can inspect and reproduce project-wide findings without bespoke scripts.
+**Status:** not complete; current diagnostics are bounded to bilingual association findings and concept-centred evidence gaps.
 
 ### Phase 4 — explainable recommendations
-- Add candidate rules and human review states.
-- Evaluate against manually reviewed examples.
-- Introduce AI assistance only as a proposal generator with evidence paths.
+- [ ] Defer until deterministic diagnostics and coverage states are stable.
+- [ ] If justified, evaluate candidates against a manually reviewed sample and preserve counter-evidence.
+- [ ] Keep AI assistance proposal-only with exact IDs and evidence paths.
 
-**Exit:** recommendation precision and limitations are documented; no autonomous canonical mutations.
+**Status:** not started; no recommendation engine is implemented or currently required.
 
 ### Phase 5 — measured scale and incremental operation
 - Benchmark realistic and synthetic growth.
