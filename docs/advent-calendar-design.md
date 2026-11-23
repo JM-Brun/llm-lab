@@ -1,9 +1,13 @@
-# LLM Advent Calendar — project design
+# LLM Advent Calendar — original curriculum-summary design
 
-**Status:** bilingual landing page and first three guided days merged; editorial drafts remain learner-unvalidated; post-merge CI follow-up in progress  
-**Date:** 2026-11-23  
+> **Superseded on 2026-11-23.** This document records the first prototype direction: a short, progressive summary of the canonical LLM Lab curriculum. That direction has been rejected because it duplicates the main learning path and does not provide sufficient standalone value. Do not use it as the active editorial specification. The replacement is [the independent story-based editorial redesign](advent-calendar-editorial-redesign.md), which proposes 24 self-contained, approximately 10-minute readings with distinct mathematical, information-theoretic, and LLM research perspectives.
+
+**Historical status:** bilingual landing page and first three short-form prototype days were implemented; learner validation and visual acceptance were not completed.  
+**Original date:** 2026-11-23  
 **Owner:** LLM Lab editorial architecture  
-**Scope:** a 24-day, bilingual, progressive introduction to the concepts already taught by LLM Lab
+**Historical scope:** a 24-day, bilingual, progressive introduction to concepts already taught by LLM Lab.
+
+---
 
 ## 1. Purpose
 
