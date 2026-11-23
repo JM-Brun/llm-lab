@@ -197,3 +197,78 @@ def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
         full_label = html.escape(f"{index:02d} · {stage.title}", quote=True)
         assert f'aria-label="{full_label}"' in rendered
         assert f'href="#guided-stage-{stage.id}"' in rendered
+
+
+@pytest.mark.parametrize(
+    ("language", "section_title", "end_title", "expected_labels"),
+    [
+        (
+            "fr",
+            '        - section: "Comprendre les LLM"',
+            '        - section: "Réviser"',
+            {
+                "llm-overview": "Panorama LLM",
+                "text-data": "Texte et tokens",
+                "embedding-space": "Embeddings",
+                "positional-encoding": "Position des tokens",
+                "contextualized-representations": "Représentations contextualisées",
+                "transformer": "Transformer",
+                "queries-keys-values": "Requêtes, clés, valeurs",
+                "scaled-dot-product-attention": "Calcul de l’attention",
+                "causal-masking": "Masque causal",
+                "logits": "Logits",
+                "probabilites": "Probabilités",
+                "entropy": "Entropie",
+                "generation": "Génération",
+                "in-context-learning": "Apprentissage en contexte",
+                "context-engineering": "Ingénierie du contexte",
+                "vraisemblance": "Vraisemblance",
+                "cross-entropy": "Entropie croisée",
+                "loss": "Fonction de perte",
+                "gradients": "Gradients",
+                "training-loop": "Boucle d’entraînement",
+            },
+        ),
+        (
+            "en",
+            '        - section: "Understand LLMs"',
+            '        - section: "Review"',
+            {
+                "llm-overview": "LLM overview",
+                "text-data": "Text and tokens",
+                "embedding-space": "Embeddings",
+                "positional-encoding": "Token positions",
+                "contextualized-representations": "Contextualized representations",
+                "transformer": "Transformer",
+                "queries-keys-values": "Queries, keys, values",
+                "scaled-dot-product-attention": "Attention computation",
+                "causal-masking": "Causal mask",
+                "logits": "Logits",
+                "probabilities": "Probabilities",
+                "entropy": "Entropy",
+                "generation": "Generation",
+                "in-context-learning": "In-context learning",
+                "context-engineering": "Context engineering",
+                "likelihood": "Likelihood",
+                "cross-entropy": "Cross-entropy",
+                "loss": "Loss function",
+                "gradients": "Gradients",
+                "training-loop": "Training loop",
+            },
+        ),
+    ],
+)
+def test_main_sidebar_uses_compact_bilingual_labels(
+    language: str,
+    section_title: str,
+    end_title: str,
+    expected_labels: dict[str, str],
+) -> None:
+    config = (ROOT / "site/_quarto.yml").read_text(encoding="utf-8")
+    start = config.index(section_title)
+    end = config.index(end_title, start + len(section_title))
+    section = config[start:end]
+
+    for slug, label in expected_labels.items():
+        entry = f'            - text: "{label}"\n              href: {language}/{slug}.qmd'
+        assert entry in section
