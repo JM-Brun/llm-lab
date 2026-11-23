@@ -359,10 +359,10 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - href: fr/advent-calendar.qmd
-          text: "Calendrier de l’avent · 24 jours"
         - href: fr/learning-map.qmd
           text: "Parcours guidé et carte des ressources"
+        - href: fr/advent-calendar.qmd
+          text: "Calendrier de l’avent · 24 jours"
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
@@ -578,10 +578,10 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
-        - href: en/advent-calendar.qmd
-          text: "Advent calendar · 24 days"
         - href: en/learning-map.qmd
           text: "Guided route and resource map"
+        - href: en/advent-calendar.qmd
+          text: "Advent calendar · 24 days"
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
