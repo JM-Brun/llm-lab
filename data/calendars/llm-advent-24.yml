@@ -45,10 +45,10 @@ days:
     title: {fr: "Que prédit un LLM ?", en: "What does an LLM predict?"}
     question:
       fr: "Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?"
-      en: "What does a language model actually compute from a context?"
+      en: "What does a language model compute from a context before selecting a token?"
     outcome:
       fr: "Expliquer qu'un modèle autorégressif calcule une distribution conditionnelle sur le prochain token et distinguer ce calcul de la sélection opérée par le décodage."
-      en: "Explain that an autoregressive model assigns a conditional distribution to the next token."
+      en: "Explain that an autoregressive model computes a conditional distribution over the next token and distinguish this from decoding selection."
     concepts: [next-token-prediction, conditional-distribution]
     calendar_pages: [fr/advent-calendar/day-01, en/advent-calendar/day-01]
     lesson_pages: [fr/llm-overview, en/llm-overview]
