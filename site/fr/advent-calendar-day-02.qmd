@@ -59,9 +59,7 @@ Le second calcul ne repart donc pas du même contexte : le préfixe s'est allong
 
 <div class="advent-note">
   **Génération et cible observée.** L'exemple décrit la génération : le token suivant n'est pas encore connu et une règle de décodage en sélectionne un. Lorsqu'on évalue ou entraîne le modèle sur un texte déjà connu, le token cible est disponible dans les données. Il reste toutefois distinct du préfixe utilisé pour calculer la distribution : on évalue ensuite la probabilité que le modèle lui attribue. Le jour 19 reviendra sur cette situation.
-</div>
 
-<div class="advent-note">
   **Attention au vocabulaire.** Ici, « contexte » désigne uniquement l'entrée immédiate du modèle à une étape donnée. La conception d'un contexte applicatif — instructions, documents récupérés, mémoire ou historique de conversation — est un sujet plus large, traité dans la page sur [l'ingénierie du contexte](context-engineering.qmd).
 </div>
 
