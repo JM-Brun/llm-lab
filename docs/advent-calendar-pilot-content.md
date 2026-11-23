@@ -1,6 +1,6 @@
 # LLM Advent Calendar — content drafts and pilot
 
-**Status:** editorial drafts; days 01–03 implemented as bilingual QMD pages; not yet learner-tested  
+**Status:** days 01–03 merged as bilingual QMD pages; editorial drafts; not yet learner-tested  
 **Purpose:** develop the daily learning contract and prepare a deliberately varied three-day novice pilot  
 **Languages:** French and English  
 **Drafted days:** 01–09 (except 10–20), 21  
@@ -10,9 +10,9 @@ This document contains short calendar-sized explanations, not replacement lesson
 
 ## Implementation status
 
-The French and English versions of days 01–03 are implemented as reader-facing pages as `site/{fr,en}/advent-calendar-day-0N.qmd` files. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
+The French and English versions of days 01–03 are implemented as reader-facing pages: `site/fr/advent-calendar-day-01.qmd` through `site/fr/advent-calendar-day-03.qmd`, and the corresponding files under `site/en/`. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
 
-The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test or a complete visual review of the rendered site.
+The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test. A post-merge browser audit found a colour-contrast issue in the landing-page closing CTA; the explicit CSS correction is in progress and must be verified by a fresh CI screenshot/audit run.
 
 ## Pilot design principles
 
@@ -1042,3 +1042,13 @@ No learner test has been run yet. Results must be recorded before the pilot is d
 ## Reader-facing calendar implementation (2026-11-23)
 
 The calendar landing page and guided pages for days 01–03 are now implemented in French and English. These short pages are classified as orientation bridges and link onward to canonical lessons and their dedicated exercise pages. They are not the full content-validation pilot: the selected pilot remains days 03 (tokenization), 09 (Q/K/V), and 21 (cross-entropy), whose transfer questions are specified above. No novice-reader session has yet been conducted; implementation and automated browser checks do not substitute for that formative evaluation.
+
+
+## Post-merge review checklist
+
+- [ ] Regenerate and commit the bilingual learning-map artifacts from the canonical page metadata.
+- [ ] Rerun the full test suite; the post-merge run identified two stale generated-map-artifact failures (FR and EN).
+- [ ] Rerun the Quarto browser audit; verify the closing CTA contrast fix with axe and inspect fresh desktop/mobile captures.
+- [ ] Conduct a novice review of days 01–03 and record time-on-task, answerability of the self-check, transfer to a changed example, and usefulness of the canonical follow-up links.
+- [ ] Complete the planned content pilot on days 03, 09 (Q/K/V), and 21 (cross-entropy) before scaling the daily template.
+- [ ] Verify the full 24-day sequence, bilingual parity, source provenance, keyboard access, reduced motion, and all canonical lesson/exercise links before release.
