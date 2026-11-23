@@ -2654,6 +2654,10 @@ details.learning-resources[open] > summary { border-bottom: 0; }
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .75rem;
 }
+.guided-rail__title {
+  white-space: nowrap;
+  font-size: .9rem;
+}
 .guided-rail__stage.is-visited .guided-rail__number::after { content: " ✓"; color: var(--llm-brand-action); }
 .guided-rail__progress {
   display: flex;
