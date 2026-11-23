@@ -58,7 +58,7 @@ Pendant une génération, le token sélectionné est ajouté au préfixe. Il dev
 Le second calcul ne repart donc pas du même contexte : le préfixe s'est allongé. Les paramètres du modèle peuvent rester identiques ; c'est l'entrée conditionnante qui a changé.
 
 <div class="advent-note">
-  **Attention au vocabulaire.** Ici, « contexte » désigne uniquement l'entrée immédiate du modèle à une étape donnée. La conception d'un contexte applicatif — instructions, documents récupérés, mémoire ou historique de conversation — est un sujet plus large, traité ailleurs dans LLM Lab.
+  **Attention au vocabulaire.** Ici, « contexte » désigne uniquement l'entrée immédiate du modèle à une étape donnée. La conception d'un contexte applicatif — instructions, documents récupérés, mémoire ou historique de conversation — est un sujet plus large, traité dans la page sur [l'ingénierie du contexte](context-engineering.qmd).
 </div>
 
 ## À vous de vérifier
