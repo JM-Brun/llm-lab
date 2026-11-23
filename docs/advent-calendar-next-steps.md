@@ -1,7 +1,7 @@
 # Advent calendar — remaining work and session handoff
 
 **Last updated:** 2026-11-23  
-**Status:** editorial redesign documented and merged; implementation of the new experience has not started.  
+**Status:** editorial redesign merged; source inventory and transition audit completed; the Day 06 template/story pilot and prototype notice are in PR #1560. Quarto rendering, visual review and novice acceptance remain pending.  
 **Parent decision:** PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) — merged into `main`.
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
@@ -14,13 +14,17 @@ This document is an operational handoff for future sessions. It records what is 
 - [x] The new editorial contract, anti-duplication rules, proposed 24-story slate, source standards, rendering requirements, and pilot acceptance gates were documented.
 - [x] The former curriculum-summary design was marked historical/superseded.
 - [x] The former 24-day manifest was marked superseded and retained as historical material.
+- [x] Source-level inventory completed: the Quarto render list contains the landing page and only days 01–03 in each language; it does not contain 24 day-story pages.
+- [x] The current landing page has 24 cards: days 01–03 link to the old guided mini-lessons; days 04–24 link to canonical lessons and exercise pages rather than independent calendar stories.
+- [x] The old landing page uses the custom advent-calendar CSS and the former four-movement curriculum-summary design; it is explicitly labelled as a historical prototype in PR #1560.
+- [x] The canonical positional-encoding lesson already contains the sinusoidal formula and fixed-offset rotation derivation. The Day 06 story is refocused on Fourier feature mappings and spectral bias to avoid duplication.
 - [x] PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) was merged on 2026-11-23.
 
 ### Not completed
 
-- [ ] No new story pilot has been written or accepted.
-- [ ] No new Quarto article template has been implemented and visually validated.
-- [ ] The existing landing page and day pages have not yet been fully audited against the new direction.
+- [ ] Day 06 now has an FR/EN draft in PR #1560, but it has not been accepted; Days 17 and 23 have not been drafted.
+- [ ] A native Quarto story-template draft exists in PR #1560; it has not yet passed rendered visual validation.
+- [ ] Source-level audit is complete, but the published/rendered FR/EN pages have not yet received desktop/mobile visual review.
 - [ ] No new story-oriented manifest has been approved or created.
 - [ ] The 24 existing entries have not been migrated; they remain prototype/historical material.
 - [ ] No novice-reader review has been performed.
@@ -34,15 +38,14 @@ Work in the following order. Do not start all 24 articles in parallel.
 
 ### Phase A — inventory and transition audit
 
-- [ ] Inspect the current Quarto project configuration, navigation, calendar landing page, day-page sources, and existing styles.
-- [ ] Identify the exact source and rendered paths for the landing page and all 24 current entries. Record them in an inventory; do not infer paths from URL patterns.
-- [ ] Inspect the published/rendered pages in French and English, including the known formula, spacing, responsive-layout, and navigation defects.
-- [ ] Classify each existing page as: reusable source material, canonical lesson content that should remain in the main curriculum, obsolete duplicate, or content needing source verification.
-- [ ] Decide how the prototype is labelled and reached during transition. Avoid presenting the old pages as the new calendar.
-- [ ] Record the existing Quarto conventions and identify the simplest native Markdown/Quarto article pattern compatible with the project.
+- [x] Inspect the current Quarto project configuration, navigation, calendar landing page, day-page sources, and existing styles.
+- [x] Identify the exact source and rendered paths: the landing page exists in FR/EN; only days 01–03 have dedicated rendered pages in each language; days 04–24 are cards linking to canonical lesson/exercise pages, not calendar story pages.
+- [ ] Inspect the published/rendered pages in French and English, including formula, spacing, responsive-layout and navigation behavior. Source inspection is complete; visual inspection and screenshots remain pending.
+- [x] Classify existing content: days 01–03 are the old prototype mini-lessons; days 04–24 are canonical curriculum pointers; the old manifest is superseded historical input; canonical lessons remain in the main curriculum.
+- [x] Decide the transition label: the old landing page is explicitly marked as an archived prototype in PR #1560. Preserve its content until the replacement experience is accepted.
+- [x] Record the native Quarto article pattern in the reusable story template draft in PR #1560. Visual validation remains pending.
 
-**Deliverable:** a concise inventory and migration map, with no mass content rewrite.
-
+**Deliverable:** source-level inventory and migration boundary completed; no mass rewrite or new story manifest.
 ### Phase B — article template and rendering proof
 
 - [ ] Implement one minimal article template using native Quarto/Markdown and standard MathJax delimiters.
@@ -157,3 +160,13 @@ Append a dated entry here at the end of each substantial work session:
 - **Exact next action:**
 
 This log should record outcomes, not merely activity.
+
+## 7. Session completion log
+
+- **Date:** 2026-11-23
+- **Branch / PR:** calendar/day06-independent-story-pilot — PR #1560
+- **Files changed:** bilingual calendar landing pages, Quarto render list, bilingual Day 06 story drafts, reusable story template, Day 06 source dossier, original frequency-scale SVG, editorial redesign and this handoff.
+- **Work completed:** verified the old 24-card prototype structure; marked it as an archive; drafted a distinct Day 06 story focused on Fourier features and spectral bias rather than repeating the canonical positional-encoding derivation.
+- **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render, browser screenshot, NumPy execution or novice review has yet been performed.
+- **Open defects / decisions:** PR checks and visual rendering; verify the page metadata status=planned behavior; run FR/EN desktop/mobile and accessibility review; execute the numerical example; obtain novice feedback.
+- **Exact next action:** inspect the PR render and metadata checks, revise the Day 06 draft, then decide whether to proceed with Days 17 and 23. Do not create the story manifest yet.
