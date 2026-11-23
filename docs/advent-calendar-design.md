@@ -355,16 +355,16 @@ Do not publish the calendar as a finished learning product until:
 2. **Sequence review:** score candidate topics for importance, readiness, prerequisite fit, teachability in 5–8 minutes, activity potential, coverage, and complementarity. Record why each topic is included or deferred.
 3. **Three-day pilot:** author tokenization, Q/K/V, and cross-entropy entries; run a novice review and revise the content contract.
 
-   Adjacent editorial drafts for days 01–02 and 04–06 are now included in `docs/advent-calendar-pilot-content.md`. They help test continuity across the opening sequence, but they are not learner-validated and do not enlarge the selected three-day validation pilot (days 03, 09 and 21).
+   The reader-facing calendar now contains guided orientation pages for days 01–03. The selected content-validation pilot remains days 03, 09 and 21: these are three deliberately different concepts, not necessarily three consecutive doors. The adjacent drafts for days 04–06 remain in `docs/advent-calendar-pilot-content.md` to support continuity review.
 4. **Manifest and validation:** stabilize the YAML schema, then add a small validator to an existing build/test path.
 5. **Content production:** author the remaining entries and review bilingual parity.
-6. **Interface:** implement the 24-door view using the existing site design system and navigation.
+6. **Interface:** bilingual 24-door view implemented using the existing site design system and navigation; responsive and interaction review remains part of the release gate.
 7. **Release and maintenance:** publish the evergreen archive, check links and content yearly, and review whether the calendar remains aligned with the canonical concepts and routes.
 
 The calendar is successful if it helps a reader build and transfer a correct mental model of LLM computation—not merely if all 24 doors are opened.
 
 
-## 9. First reader-facing implementation
+## 11. First reader-facing implementation
 
 The calendar landing page is implemented in French and English at `site/fr/advent-calendar.qmd` and `site/en/advent-calendar.qmd`, with shared responsive styling in `site/styles/advent-calendar.css`. It presents all 24 days in four editorial acts. The first three doors receive a distinct visual treatment and open dedicated short-form learning pages; the remaining days continue to point to canonical LLM Lab lessons and their separate practice resources.
 
@@ -378,6 +378,6 @@ The first three daily pages are implemented in both languages:
 
 Each daily page contains one question, a concise explanation, a worked example or trace, one self-check with a disclosed answer, a takeaway, and links to the canonical lesson and exercise hub. The sequence follows the shared computation `context → f_θ(context) → logits → softmax → conditional distribution`; it does not imply that decoding selection is part of the model's probability calculation.
 
-The first three daily page IDs are also recorded in the YAML manifest and in the landing page's hidden page-map metadata. The manifest remains an editorial proposal and is **not yet consumed by Quarto or CI**. The bilingual landing pages and daily pages are currently maintained as QMD files. A later change should add a lightweight consistency validator or generator rather than introducing a second registry or a dedicated workflow.
+The first three daily page IDs are also recorded in the YAML manifest and in the landing page's hidden page-map metadata. The six daily pages are classified as `destination:orient`, `level:overview`, and `type:concept-bridge`: they are short guided introductions, not duplicate canonical lessons. This keeps them out of the Understand/Build revision-coverage inventory while retaining them in the bilingual learning-map data. The manifest remains an editorial proposal and is **not yet consumed by Quarto or CI**. The bilingual landing pages and daily pages are currently maintained as QMD files. A later change should add a lightweight consistency validator or generator rather than introducing a second registry or a dedicated workflow.
 
-**Validation status:** content and source links have been reviewed against the canonical lesson pages and the pilot drafts. The entries are editorially drafted, not yet tested with novice learners. A full Quarto render and visual review at desktop and mobile widths are still required before describing the first three days as release-ready.
+**Validation status:** the full Quarto render and local-link audit have passed on an earlier revision. CI now checks the calendar landing page and the three guided days in both languages at desktop and mobile widths, including the 24-door sequence, first-three-day targets, keyboard-operated self-checks, and canonical resource links. The final CI run and screenshot review are still required. The entries remain editorial drafts, not learner-validated content.
