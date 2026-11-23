@@ -17,11 +17,13 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space"]
   children: []
-related: []
+related: ["en/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:en", "status:published"]
 -->
 
 Cosine similarity must be interpreted within the geometry of [embedding space](embedding-space.qmd); it does not establish semantic proximity by itself. The [embedding-linearity hypothesis](embedding-linearity.qmd) addresses a different question: how are features represented and decoded?
+
+**Practice:** [Mathematical foundations exercises](exercises-foundations.qmd), including cosine calculation and interpretation.
 
 ## The question behind the default metric
 

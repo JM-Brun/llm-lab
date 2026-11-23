@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-foundations"
-scope: "Worked practice in probability, loss, gradients, tensor shapes, numerical stability, and perplexity."
+scope: "Worked practice in probability, loss, gradients, tensor shapes, numerical stability, perplexity, and representation geometry (cosine similarity and linear probes)."
 purpose: "Work through the mathematical foundations exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
   previous: null
@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/exercises"]
   children: []
-related: []
+related: ["en/mathematical-foundations", "en/language-modeling-math", "en/cosine-similarity", "en/embedding-linearity"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-foundations", "level:applied", "language:en", "status:published"]
 -->
 
@@ -32,9 +32,9 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-found
 4. Soft targets, entropy and KL divergence in [language-modeling mathematics](language-modeling-math.qmd).
 5. Batch, sequence and vocabulary axes; [tensors](tensors.qmd) is an optional shape reference.
 6. [Softmax and numerical stability](probabilities.qmd), exponentials and logarithms.
-7. [Negative log-likelihood](likelihood.qmd), token averaging and [perplexity](cross-entropy.qmd#connection-to-perplexity).
+7. [Negative log-likelihood](likelihood.qmd), token averaging and [perplexity](cross-entropy.qmd#connection-to-perplexity).\n8. [Cosine similarity](cosine-similarity.qmd), dot products, norms, and normalization.\n9. [Linearity in representations](embedding-linearity.qmd), decodability, probes, and interventions.
 
-**Current scope:** seven worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, and perplexity. Finite-difference gradient checking remains to be developed.
+**Current scope:** nine worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, perplexity, cosine similarity, and linear-probe interpretation. Finite-difference gradient checking remains to be developed.
 
 <a id="exercise-1-from-logits-to-loss"></a>
 
@@ -207,6 +207,56 @@ It is the exponential of mean NLL: it summarizes the model's average probabilist
 A comparison requires checking, among other things, the tokenizer and its segmentation, corpus and preprocessing, target alignment, ignored-position mask, reduction convention, and logarithm base. Perplexities computed with different tokenizations are generally not directly comparable.
 
 </details>
+
+<a id="exercise-8-cosine-similarity"></a>
+
+### Exercise — Cosine similarity: direction and magnitude {#ex-foundations-cosine-similarity}
+
+Let the non-zero vectors be $a=(1,2)$, $b=(2,4)$, $c=(-2,-4)$, and $d=(2,-1)$.
+
+1. Compute $\cos(a,b)$, $\cos(a,c)$, and $\cos(a,d)$.
+2. Which property explains why $\cos(a,2a)=1$?
+3. If two embeddings have cosine similarity 1, can we conclude that they are semantically equivalent?
+
+<details>
+<summary>Show the worked solution</summary>
+
+Use $\cos(u,v)=\frac{u\cdot v}{\lVert u\rVert\lVert v\rVert}$.
+
+- $a\cdot b=10$, $\lVert a\rVert=\sqrt{5}$, and $\lVert b\rVert=2\sqrt{5}$, so $\cos(a,b)=1$.
+- $a\cdot c=-10$ and $\lVert c\rVert=2\sqrt{5}$, so $\cos(a,c)=-1$.
+- $a\cdot d=2-2=0$, so $\cos(a,d)=0$.
+
+Multiplying a vector by a strictly positive scalar does not change its direction: $\cos(a,\lambda a)=1$ for $\lambda>0$. Cosine therefore ignores vector magnitude and measures angular alignment.
+
+A cosine of 1 establishes geometric alignment, not semantic equivalence, relevance to a query, or truth. Interpretation depends on the representation, training objective, and task; vector norms may also carry information that normalization removes.
+
+</details>
+
+**Success criterion:** correct calculations, positive-scale invariance, and an explicit distinction between geometric alignment and semantic equivalence.
+
+<a id="exercise-9-linear-probe-and-causal-use"></a>
+
+### Exercise — Does a linear probe prove that a feature is used? {#ex-foundations-linear-probe-causality}
+
+A linear probe trained on frozen activations from one layer predicts a property with 92% accuracy on a held-out test set.
+
+1. What conclusion does this experiment support?
+2. Which conclusion would go beyond the evidence?
+3. Propose a complementary experiment to test whether the network functionally uses this feature.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The result shows that the property is **linearly decodable** from the selected activations on the evaluated distribution. The probe extracts information that is accessible through a linear transformation.
+
+It does not show that the network uses this feature to produce its output, that the feature is represented uniquely, or that it is causally necessary. The probe may exploit a correlation or a proxy for the property even when the network's main computation does not rely on that signal.
+
+A complementary experiment can intervene on activations: identify a direction associated with the feature, suppress or amplify it, and measure the effect on model behaviour. Compare against a control direction, use matched examples, and measure collateral effects on other capabilities. A well-controlled intervention provides stronger functional evidence than a probe alone, without automatically establishing a universal causal claim.
+
+</details>
+
+**Success criterion:** distinguish decodability, functional use, and causal necessity; propose an intervention with controls and a measure of collateral effects.
 
 **Further work:** a later set can cover finite-difference gradient checking and how reduction conventions affect gradients.
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", "fr/mathematical-foundations"]
+related: ["fr/probabilites","fr/vraisemblance","fr/cross-entropy","fr/loss","fr/mathematical-foundations","fr/exercises-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -35,6 +35,8 @@ Cette page ne réintroduit ni la tokenisation, ni la distribution du prochain to
 - démontrer l'identité entre entropie croisée, entropie cible et divergence KL ;
 - préciser les hypothèses, la direction et les cas où les quantités deviennent infinies.
 :::
+
+**S'exercer :** [Exercices — Fondations mathématiques](exercises-foundations.qmd) pour les calculs de loss, les cibles souples et la divergence KL.
 
 ## 1. De la règle de chaîne à la factorisation autorégressive
 

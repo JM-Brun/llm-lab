@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-attention"
-scope: "Practice on Q/K/V, weighted aggregation, causal masking, and multi-head attention."
+scope: "Practice on Q/K/V, weighted aggregation, score scaling and variance, causal masking, and multi-head attention."
 purpose: "Work through the attention exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
   previous: null
@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/exercises"]
   children: []
-related: []
+related: ["en/attention-score-scaling"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-attention", "level:applied", "language:en", "status:published"]
 -->
 
@@ -24,11 +24,11 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 ## Attention {#attention}
 
-**Preparation:** the Q/K/V exercises use [Q/K/V projections](queries-keys-values.qmd), matrix shapes, and NumPy; [tensors](tensors.qmd) is an optional shape reference. Score, softmax, and aggregation exercises rely on [scaled dot-product attention](scaled-dot-product-attention.qmd). The Q/K/V and AT-A–AT-C exercises do not require prior study of causal masking; CA-A introduces and works through that invariant itself.
+**Preparation:** the Q/K/V exercises use [Q/K/V projections](queries-keys-values.qmd), matrix shapes, and NumPy; [tensors](tensors.qmd) is an optional shape reference. Score, softmax, and aggregation exercises rely on [scaled dot-product attention](scaled-dot-product-attention.qmd); the [attention-score scaling](attention-score-scaling.qmd) lesson develops the variance derivation used in AT-D. The Q/K/V and AT-A–AT-C exercises do not require prior study of causal masking; CA-A introduces and works through that invariant itself.
 
 **Q/K/V competencies assessed:** recognizing the roles, reconstructing projections, explaining how they are learned, predicting parameter-change effects, and transferring the reasoning to cross-attention. The existing weighted-sum task remains the aggregation calculation.
 
-**Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
+**Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. AT-D derives raw-score variance under explicit independence assumptions and explains the role of 1/√dₖ; it is independent of the multi-head sequence. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
 <a id="at-0-scores-to-output"></a>
 
@@ -523,6 +523,44 @@ G. Every model has as many query heads as key/value heads.
 **Success criterion:** correct predictions on all three interventions; distinguishing weights from content; slice-to-column correspondence in reassembly; the effect of $H$ on the scaling factor.
 
 </details>
+
+<a id="at-d-score-scaling-variance"></a>
+
+### Exercise AT-D — Why divide scores by √dₖ? {#ex-attention-score-scaling-variance}
+
+Assume that all components $q_i$ and $k_i$ are mutually independent, zero-mean, and have unit variance. Let $S=q^\top k=\sum_{i=1}^{d_k}q_i k_i$.
+
+1. Compute $\mathbb{E}[S]$.
+2. Show that $\operatorname{Var}(q_i k_i)=1$, then derive $\operatorname{Var}(S)$.
+3. For $d_k=64$, compare the standard deviation of $S$ with that of $S/\sqrt{d_k}$.
+4. Why does this result not guarantee a variance of exactly 1 in a trained network?
+
+<details>
+<summary>Show hints</summary>
+
+- Use independence between $q_i$ and $k_i$ to factor expectations.
+- Also use independence of the products $q_i k_i$ across dimensions when computing the variance of the sum.
+- Variance is divided by the square of the scaling factor.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+By independence and zero means, $\mathbb{E}[q_i k_i]=\mathbb{E}[q_i]\mathbb{E}[k_i]=0$, so $\mathbb{E}[S]=0$.
+
+Because $q_i$ and $k_i$ are independent, zero-mean, and have unit variance:
+$\operatorname{Var}(q_i k_i)=\mathbb{E}[q_i^2]\mathbb{E}[k_i^2]=1$.
+The products are independent across dimensions, so variances add:
+$\operatorname{Var}(S)=\sum_{i=1}^{d_k}1=d_k$.
+
+The raw standard deviation is therefore $\sqrt{d_k}$. For $d_k=64$, it is 8. After division by $\sqrt{d_k}=8$, the variance becomes $d_k/d_k=1$ and the standard deviation is 1.
+
+In a trained Transformer, projected components are not necessarily independent, zero-mean, or unit-variance. The factor $1/\sqrt{d_k}$ controls scale in the simplified model; it does not guarantee an empirical variance of exactly 1 for every layer, head, and input.
+
+</details>
+
+**Success criterion:** derive the variance under the stated assumptions, calculate the scaling effect, and distinguish the theoretical result from its scope in a trained network.
 
 **Further work:** exercises on multi-head causal masking, normalization invariants and MQA/GQA variants will complete this collection.
 
