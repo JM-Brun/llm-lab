@@ -28,7 +28,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
   <div class="advent-hero-copy">
     <p class="advent-eyebrow">LLM LAB · 24-DAY EDITION</p>
     <h1>One LLM, <em>from the first input to the final gradient.</em></h1>
-    <p class="advent-lede">Open a door, follow a question, test an idea. Across 24 short steps, reconstruct the computation that connects a context to a prediction — then to generation, scoring, and learning.</p>
+    <p class="advent-lede">Open a door, follow a question, test an idea. Across 24 short steps, reconstruct how a context becomes a predictive distribution, then explore its three distinct uses: generation, scoring, and learning.</p>
     <div class="advent-hero-actions">
       <a class="advent-button" href="#day-01">Start the journey <span aria-hidden="true">→</span></a>
       <a class="advent-text-link" href="learning-map.qmd">Explore the concept map</a>
