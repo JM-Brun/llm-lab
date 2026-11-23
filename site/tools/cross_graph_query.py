@@ -348,8 +348,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
                 paths.append(
                     EvidencePath(
                         path_id=(
-                            f"computation-edge-via-page:{concept_id}:"
-                            f"{page_id}:{edge.edge_id}"
+                            f"computation-edge-via-page:{concept_id}:{page_id}:{edge.edge_id}"
                         ),
                         kind="computation-edge-via-page",
                         concept_id=concept_id,
@@ -393,9 +392,7 @@ def query_concept(index: ProjectIndex, concept_id: str) -> CrossGraphQueryResult
             if reference.reference_type == "concept" and reference.reference_id == concept_id
         ]
         node_refs = [
-            reference
-            for reference in group.references
-            if reference.reference_type == "node"
+            reference for reference in group.references if reference.reference_type == "node"
         ]
         if not concept_refs or not node_refs:
             continue
