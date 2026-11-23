@@ -15,8 +15,8 @@ id: "fr/advent-calendar"
 scope: "Page d’accueil du calendrier pédagogique de 24 jours consacré au mécanisme central d’un LLM autorégressif."
 purpose: "Présenter les 24 journées, leur progression en quatre mouvements et les ressources canoniques associées."
 suggested_route:
-  previous: "fr/index"
-  next: "fr/llm-overview"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/index"]
   children: []
