@@ -47,7 +47,7 @@ The shorter text `hello world` lets you follow the entire sequence. The quotes m
 | `"hello"` | `31373` |
 | `" world"` | `995` |
 
-The space before `world` is part of the second token. Across the two examples, spaces and punctuation affect the split. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks the IDs and illustrates table lookup using synthetic vectors.
+The space before `world` is part of the second token. Across the two examples, spaces and punctuation affect the split. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks the IDs, prints the full decomposition of both prefixes, and illustrates table lookup using synthetic vectors.
 :::
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
@@ -62,6 +62,8 @@ Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below
 | `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
 
 The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
+
+The split difference comes from pre-tokenization rules, not from vocabulary quality: `cl100k_base` splits the space from the number that follows and groups digits into chunks of at most three, hence the tokens reduced here to a single space (`␠`). GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` inserts no start-of-sequence token by default, while some libraries, for example `transformers` with GPT-2, prepend one; check this behavior before comparing your own traces.
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
@@ -83,7 +85,7 @@ The **token** is the unit produced by the split. The **ID** is its reference num
 
 ## Why the split matters {#what-tokenization-changes-and-what-it-does-not-tell-us}
 
-- **Capacity.** How much text fits in an 8,000-token window depends on the split. The more tokens a passage uses, the less room there is for history, instructions, retrieved documents, tool descriptions, or the answer. How the budget is counted depends on the model and API. [Context engineering](context-engineering.qmd).
+- **Capacity.** How much text fits in a given context window (for example 8,000 tokens) depends on the split. The more tokens a passage uses, the less room there is for history, instructions, retrieved documents, tool descriptions, or the answer. How the budget is counted depends on the model and API. [Context engineering](context-engineering.qmd).
 - **Compute.** A longer sequence adds positions to process. The effect on time and cost depends on the architecture, hardware, and service. [Inference complexity](llm-computational-complexity.qmd).
 - **Languages.** Two translations of the same passage can use different numbers of tokens. A fixed context budget or, depending on the protocol, a fixed training budget can therefore cover different amounts of text across languages. Measure the efficiency of the split by language and text type, then evaluate quality separately on the target tasks. [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
@@ -113,6 +115,8 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 ### Encoding the prefix and continuation
 
 The film replies name aqueducts, sanitation, roads, and irrigation. Several members of the group speak in turn. To trace a single-speaker continuation, use “They built roads between distant towns.” Encode the prefix and this continuation separately with the tokenizer being studied to compare the splits. The continuation is absent from the context the model uses at the first generation step.
+
+**Success criterion:** each ID list decodes exactly to its source text, the prefix and continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
 
 ### From Unicode text to contextual representations
 

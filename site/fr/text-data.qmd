@@ -38,7 +38,7 @@ Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabu
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
 
 ::: {#tokenizer-output}
-Préfixe exact à copier (apostrophe droite) : `C'est une bonne situation, ça, scribe ?`. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
+Préfixe exact à copier (apostrophe droite `'`, U+0027, et non apostrophe typographique `’`, U+2019) : Les deux caractères ne s’encodent pas avec les mêmes octets en UTF-8 et le découpage peut s’en trouver modifié. `C'est une bonne situation, ça, scribe ?`. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
 
 Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
 
@@ -47,7 +47,7 @@ Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les
 | `"hello"` | `31373` |
 | `" world"` | `995` |
 
-L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, les espaces et la ponctuation comptent dans le découpage. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les IDs et illustre la lecture de la table avec des vecteurs synthétiques.
+L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, les espaces et la ponctuation comptent dans le découpage. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les IDs, affiche la décomposition complète des deux préfixes et illustre la lecture de la table avec des vecteurs synthétiques.
 :::
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
@@ -62,6 +62,8 @@ Gardons le texte `2 + 2 = 4` fixe et changeons de tokenizer. Dans les fragments 
 | `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
 
 La [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace) reproduit le tableau avec `tiktoken==0.14.0` et vérifie que chaque liste d’IDs se décode en texte d’origine.
+
+La différence de découpage vient des règles de pré-tokenisation, pas de la qualité des vocabulaires : celle de `cl100k_base` sépare l’espace du nombre qui suit et regroupe les nombres par tranches d’au plus trois chiffres, d’où les tokens réduits à une seule espace (`␠`). Le BPE byte-level de GPT-2 fusionne directement l’espace avec l’opérateur ou le chiffre suivant. Ces listes ne contiennent aucun token spécial : `tiktoken` n’insère pas de token de début de séquence par défaut, alors que certaines bibliothèques, par exemple `transformers` avec GPT-2, préfixent un tel token ; vérifiez ce comportement avant de comparer vos propres traces.
 
 ::: {.callout-tip title="Token, ID et plongement" #revision-summary}
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
@@ -83,7 +85,7 @@ Le **token** est l'unité issue du découpage. L'**ID** est son numéro de réf�
 
 ## Pourquoi le découpage compte {#ce-que-la-tokenisation-change-et-ce-quelle-ne-dit-pas}
 
-- **Capacité.** Une fenêtre de 8 000 tokens admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
+- **Capacité.** Une fenêtre de contexte donnée (par exemple 8 000 tokens) admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
 - **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
 - **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
@@ -113,6 +115,8 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 ### Encoder le préfixe et la continuation
 
 La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s'appuie au premier pas de génération.
+
+**Critère de réussite :** chaque liste d’IDs se décode exactement en son texte d’origine, le préfixe et la continuation sont encodés séparément sans fusion au point de jonction, et la décomposition affichée par la trace confirme le découpage du préfixe.
 
 ### Du texte Unicode aux représentations contextualisées
 
