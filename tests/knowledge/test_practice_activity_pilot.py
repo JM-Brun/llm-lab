@@ -74,7 +74,7 @@ def test_qkv_activity_anchors_are_stable_and_bilingual() -> None:
     assert french_topic == english_topic == "exercise-attention"
     assert french_anchors == english_anchors
     assert len(french_anchors) == len(set(french_anchors))
-    assert QKV_ACTIVITY_ANCHORS <= set(french_anchors)
+    assert set(french_anchors) >= QKV_ACTIVITY_ANCHORS
 
 
 def test_qkv_lesson_links_only_to_its_dedicated_practice_hub() -> None:
