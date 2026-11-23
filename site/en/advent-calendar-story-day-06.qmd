@@ -86,7 +86,7 @@ $$
 ].
 $$
 
-Each frequency $b_j$ provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
+Each frequency $b_j$, measured in cycles per unit of $x$, provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
 
 We can think of the frequency choice as a choice of resolution:
 
