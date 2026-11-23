@@ -443,6 +443,13 @@ def load_cross_graph_evidence_projection(
                     relation=relation,
                     target=str(node_id),
                 )
+        if not isinstance(source_node_id, str) or not isinstance(target_node_id, str):
+            raise ProjectIndexIntegrityError(
+                source="data/computational-graph.yml",
+                record_id=str(edge.get("id", position)),
+                relation="endpoints",
+                target=f"{source_node_id!r} -> {target_node_id!r}",
+            )
         if not isinstance(relation_type, str) or not relation_type:
             raise ProjectIndexIntegrityError(
                 source="data/computational-graph.yml",
@@ -467,7 +474,9 @@ def load_cross_graph_evidence_projection(
         if not isinstance(stage, dict):
             raise ValueError("Every guided-route stage must be a mapping")
         stage_id = stage.get("id")
-        stage_pages_data = stage.get("pages") or {}
+        if not isinstance(stage_id, str) or not stage_id.strip():
+            raise ValueError("data/guided-route.yml: every stage needs a non-empty string ID")
+        stage_pages_data = stage.get("pages") or {};
         if not isinstance(stage_pages_data, dict):
             raise ProjectIndexIntegrityError(
                 source="data/guided-route.yml",
