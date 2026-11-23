@@ -1,10 +1,10 @@
 # Revision-resource relationship contract
 
-**Status:** proposed canonical contract; not yet an implemented metadata schema.  
-**Date:** 2026-11-19  
+**Status:** partially implemented for page-based aids through ProjectIndex; unified page-metadata validation and non-page revision aids remain open.  
+**Date:** 2026-11-23  
 **Scope:** explicit links from revision aids to the published Understand/Build lessons they support, plus a separate assessment of each lesson's revision coverage.
 
-This document reconciles the competing designs discussed in [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). It supersedes the earlier page-owned `revision.resources` sketch. No page metadata, resource registry, validator, graph or generated output is migrated by this proposal.
+This document reconciles the competing designs discussed in [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). It supersedes the earlier page-owned `revision.resources` sketch. Current `main` already contains page-based `revision_role`, `revision_of` and `revision_support` handling in `ProjectIndex`, plus a derived revision inventory. This document now distinguishes that implemented subset from the still-proposed complete contract. No non-page revision-aid kind or broad metadata migration is authorized.
 
 ## 1. Design requirements
 
@@ -113,9 +113,9 @@ Evidence should point to a section anchor, page-aid ID or resource ID and state 
 
 Do not infer assessment from a “one-minute” callout, a Practice page, a generic related edge or an aid title. Sufficiency is an editorial judgement made page by page.
 
-## 5. Proposed validation constraints
+## 5. Validation contract and current enforcement
 
-These are requirements for future validator behavior, not current implementation behavior.
+The contract below describes the required behavior. The page-based subset is already enforced by `ProjectIndex._load_revision_relations`; it is not yet implemented in `check_page_metadata.py`. Non-page revision aids are not supported by the current resource registry validator.
 
 ### 5.1 Aid structure
 
@@ -144,49 +144,73 @@ These are requirements for future validator behavior, not current implementation
 - `missing` and `not_applicable` require a non-empty rationale.
 - Link integrity and editorial sufficiency must be reported separately.
 
-## 6. Compatibility audit against current code
-
-This records the inspected `main` implementation as of 2026-11-19.
+## 6. Compatibility audit against current main — 2026-11-23
 
 ### 6.1 Page metadata validator
 
-`site/tools/check_page_metadata.py` parses page-map YAML and returns a normalized dictionary containing only currently recognized fields. It validates route, hierarchy and `related` targets, publication status, reciprocity, cycles, tags, language/topic parity and render-list coverage.
+`site/tools/check_page_metadata.py` validates page identity, controlled tags, route/hierarchy/related links, reciprocity, cycles, bilingual topic parity and render-list coverage. It contains no handling for `revision_role`, `revision_of` or `revision_support`.
 
-It does **not** currently validate or return `revision_role`, `revision_of` or `revision_support`. The page-map parser does not reject every unknown key, so these fields could be silently ignored downstream. The proposed relation and assessment are therefore not implemented or safely validated.
+The page-map parser does not reject every unknown key. Therefore the revision fields are not validated by this validator itself. Do not describe the page metadata validator as enforcing the revision contract.
 
-### 6.2 Published page index
+### 6.2 Published page index and ProjectIndex
 
-`site/tools/page_index.py` stores the raw page-map mapping on `PublishedPage.metadata`. It already preserves additional page-map keys when loading published pages. It does not need a new dataclass field merely to transport the revision fields; the normalized metadata validator and downstream projections still need explicit support.
+`site/tools/page_index.py` preserves the raw page-map mapping on `PublishedPage.metadata`.
+
+`site/tools/project_index.py` now implements a page-based revision adapter:
+
+- Allowed roles: `synthesis`, `flashcards`, `revision_sheet`.
+- `revision_of` must be a non-empty list of unique page IDs.
+- A revision aid cannot also be an Understand/Build lesson.
+- Every target must resolve to a published Understand or Build page.
+- Aid and lesson languages must match, except for the explicitly supported `mul` and `shared` cases.
+- Lesson assessments validate the controlled status vocabulary, structured evidence, aid-to-lesson consistency, explicit section anchors and required rationales.
+- `not_assessed` is distinct from `missing`; `integrated_sufficient` requires anchor evidence and `companion_sufficient` requires a linked aid.
+
+The index derives both directions: aid → lesson and lesson → aids. It does not author reciprocal duplicate declarations.
 
 ### 6.3 Non-page resource validator
 
-`site/tools/check_resource_registry.py` has a strict field allow-list and currently accepts only `kind: implementation`. It validates BCP 47 language, lifecycle status, locations, page references, concepts and optional provenance. It does not accept a revision-aid kind or revision relationships. The existing `referenced_by` field records pages that reference an implementation resource; it is not aid → lesson ownership.
+`site/tools/check_resource_registry.py` currently accepts only `kind: implementation`. It validates resource identity, language, lifecycle, location, page references, concept associations and optional provenance.
 
-A distinct revision-aid kind is technically possible, but its required fields and lifecycle semantics must be based on the inventory of actual non-page aids before changing this validator.
+No non-page revision-aid kind or resource → lesson revision relationship is implemented. The existing `referenced_by` field records pages that reference an implementation resource; it is not a revision-aid ownership relation. Keep implementation resources unchanged.
 
 ### 6.4 Revision inventory generator
 
-`site/tools/audit_revision_coverage.py` currently projects Understand and Build pages, concept links and implementation-resource references. It assigns `synthesis_status: not_assessed` to every lesson and does not inspect Practice/Deepen pages or non-page files as candidate aids. It therefore cannot calculate incoming revision aids or evidence-backed support status.
+`site/tools/audit_revision_coverage.py` now consumes `ProjectIndex` revision assessments and reverse aid links. It reports the revision status for each Understand/Build lesson and the explicit page-based aids attached to it. It no longer assigns every lesson an unconditional `not_assessed` without inspecting page-aid declarations.
 
-### 6.5 Identity boundaries
+The migration inventory in PR [#1550](https://github.com/JM-Brun/llm-lab/pull/1550) records **50 typed revision-aid links across 40 pages** in its affected page neighborhood. This is a structural relation count, not a claim that every lesson has sufficient revision support.
 
-- `data/concepts.yml` associates concepts with published page IDs; keep this unchanged.
-- `data/resources.yml` remains the canonical registry for non-page resources; do not create a parallel revision registry unless the artifact inventory demonstrates that the existing registry cannot represent the required distinction.
-- Generic `related`, `parents`, `children` and `suggested_route` edges retain their existing meanings.
+The generator does not discover non-page files as revision aids. Implementation-resource associations remain a separate field.
 
-**Compatibility conclusion:** the aid → lesson relation respects existing identity boundaries, and `page_index` already transports raw metadata. However, the current page validator, resource validator and inventory generator do not implement or enforce the contract. Do not write these fields into production metadata until validators and projections are updated.
+### 6.5 Existing regression tests
 
-## 7. Migration and implementation order
+`tests/knowledge/test_project_index.py` covers page-aid bidirectional queries and assessment, eligible published targets, duplicate targets, language mismatches, page-aid evidence consistency, and explicit heading anchors.
 
-1. Inventory existing aids across published Quarto pages and non-page files. Record identity, language, role, lifecycle, candidate source lessons and whether the artifact is genuinely learner-facing. Do not create new aids during this inventory.
-2. Confirm the resource-kind representation for concrete non-page aids. Keep implementation resources unchanged.
-3. Add validator tests first: page aid → lesson, non-page aid → lesson, multiple sources, bilingual pairs, unknown/unpublished/ineligible targets, self-link, duplicate, wrong language, draft/retired lifecycle, and malformed assessment evidence.
-4. Extend `check_page_metadata.py` to validate and preserve page-aid fields and lesson assessments; validate references against published page descriptors.
-5. Extend `check_resource_registry.py` only for non-page kinds justified by the inventory, validating target IDs, language and lifecycle.
-6. Extend the inventory generator to inspect all published pages and eligible non-page resources, then derive lesson → aids reverse links. Keep implementation resources in a separate field.
-7. Keep assessment status independent from relation existence; publish explicit unknown/unassessed counts.
-8. Migrate only reviewed lessons and aids in bounded, auditable batches. Do not rewrite the 62-page historical inventory snapshot wholesale.
-9. Validate the learner-facing revision index only after relation and assessment projections are deterministic and tested.
+These tests establish the ProjectIndex behavior. They do not establish that `check_page_metadata.py` independently validates the same fields or that non-page revision aids are supported.
+
+### 6.6 Compatibility conclusion
+
+The page-based revision relation is **partially implemented and exercised through ProjectIndex**. The contract is not wholly unimplemented, but it is also not a complete, unified metadata schema:
+
+- page-based relationships and lesson assessments are parsed and validated by ProjectIndex;
+- the owning page metadata validator does not validate these fields;
+- the non-page resource registry does not support revision-aid resources;
+- the revision inventory projects page-based aids and assessments but not non-page aids;
+- the reader-facing peer Review route remains a separate projection owned by [#1541](https://github.com/JM-Brun/llm-lab/issues/1541).
+
+Do not create a second revision registry. Reconcile the existing adapter, validator and contract before expanding the model.
+
+## 7. Updated implementation order
+
+1. **Preserve the existing page-based implementation.** Do not remove or rewrite the current `revision_role`, `revision_of` and `revision_support` metadata.
+2. **Choose one validation boundary.** Either make the page metadata validation pipeline call the shared ProjectIndex revision checks, or extract a small shared validator consumed by both paths. Avoid maintaining two independent implementations of the same rules.
+3. **Add integration tests for the chosen validation boundary.** Verify that the normal CI/page-metadata command rejects malformed roles, duplicate/unknown/unpublished/ineligible targets, language mismatches and invalid assessment evidence.
+4. **Retain and extend the existing revision inventory.** Keep aid links, assessment state and implementation-resource associations separate; report unknown/unassessed counts explicitly.
+5. **Inventory non-page candidates before extending resources.** Confirm whether `docs/revision-sheets/` or any other artifact is genuinely learner-facing and needs a stable non-page identity. Do not add a resource kind merely for architectural symmetry.
+6. **Only if justified, extend `check_resource_registry.py`.** Define the minimal non-page aid fields, target semantics, language and lifecycle behavior; preserve the implementation-resource contract.
+7. **Keep sufficiency independent from link integrity.** A typed aid link is not proof that the aid is pedagogically sufficient.
+8. **Migrate in reviewed batches.** Preserve all existing content and rationale; do not rewrite the historical inventory snapshot wholesale.
+9. **Complete the peer Review route separately under #1541.** Derive it from `guided-route.yml`, `lesson_contracts` and typed revision-aid relations; keep Practice exercises outside the Review route.
 
 ## 8. Decisions still open
 
