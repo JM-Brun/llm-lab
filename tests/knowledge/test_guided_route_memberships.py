@@ -143,7 +143,7 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
         (
             "fr",
             [
-                "Vue d’ensemble",
+                "Vue d\u2019ensemble",
                 "Tokeniser",
                 "Représenter",
                 "Contextualiser",
@@ -211,7 +211,7 @@ def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
                 "contextualized-representations": "États contextualisés",
                 "transformer": "Transformer",
                 "queries-keys-values": "Requêtes, clés, valeurs",
-                "scaled-dot-product-attention": "Calcul de l’attention",
+                "scaled-dot-product-attention": "Calcul de l\u2019attention",
                 "causal-masking": "Masque causal",
                 "logits": "Logits",
                 "probabilites": "Probabilités",
@@ -223,7 +223,7 @@ def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
                 "cross-entropy": "Entropie croisée",
                 "loss": "Fonction de perte",
                 "gradients": "Gradients",
-                "training-loop": "Boucle d’entraînement",
+                "training-loop": "Boucle d\u2019entraînement",
             },
         ),
         (
