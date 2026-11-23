@@ -34,8 +34,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 **Preparation:** a first pass through [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) is enough.
 
-Place these items in causal order, th
-en write one sentence describing what each arrow does:
+Place these items in causal order, then write one sentence describing what each arrow does:
 
 - token IDs
 - contextualized hidden states
@@ -75,8 +74,7 @@ The tokenizer maps text to discrete vocabulary entries. The IDs index the embedd
 
 ### Calculate lookup and trace tensor shapes {#ex-text-data-embedding-lookup}
 
-**Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tenso
-rs](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
+**Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
 
 **Stage 1 — Perform an embedding lookup.** Use the synthetic matrix from the canonical lesson:
 
@@ -138,8 +136,7 @@ The shape is $(L,d)=(3,2)$: three token positions and two features per token. Re
 | Embedding table $E$ | $(5,2)$ | vocabulary entries × features |
 | Token IDs | $(2,3)$ | batch × sequence |
 | Lookup result | ? | batch × sequence × features |
-| One sequence after lookup | ? | sequenc
-e × features |
+| One sequence after lookup | ? | sequence × features |
 
 Then explain why the vocabulary size $V$ does not appear as an axis in the lookup result.
 
@@ -191,8 +188,7 @@ $$
 \text{embeddings}: (B,L,d)=(2,3,2).
 $$
 
-Lookup preserves the batch and sequence-position axes and adds the feature 
-axis. It does not mix information across positions. A width-preserving block commonly returns hidden states of shape $(2,3,2)$, although exact conventions depend on the architecture and implementation.
+Lookup preserves the batch and sequence-position axes and adds the feature axis. It does not mix information across positions. A width-preserving block commonly returns hidden states of shape $(2,3,2)$, although exact conventions depend on the architecture and implementation.
 
 **Common errors:**
 
@@ -236,6 +232,7 @@ for prefix, expected_count, expected_id, expected_bytes in prefix_cases:
     assert prefix_ids[-1] == expected_id
     assert encoding.decode_single_token_bytes(prefix_ids[-1]) == expected_bytes
 
+
 # Full decomposition of the French prefix, to compare with the lesson table.
 fr_prefix_ids = encoding.encode("C'est une bonne situation, ça, scribe ?")
 fr_fragments = [encoding.decode_single_token_bytes(i).decode("utf-8") for i in fr_prefix_ids]
@@ -249,8 +246,7 @@ for fragment, fragment_id in zip(fr_fragments, fr_prefix_ids):
 # Comparison with fixed input: some tokens here contain only a space.
 fixed_text = "2 + 2 = 4"
 comparisons = (
-    ("gpt2", [17, 1343, 362
-, 796, 604], [b"2", b" +", b" 2", b" =", b" 4"]),
+    ("gpt2", [17, 1343, 362, 796, 604], [b"2", b" +", b" 2", b" =", b" 4"]),
     (
         "cl100k_base",
         [17, 489, 220, 17, 284, 220, 19],
@@ -288,8 +284,7 @@ Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P
 
 ### Diagnose identity, position and context {#ex-text-data-representation-context}
 
-**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after the representation-pipeline exercise and the lookup exercise. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calcul
-ate a toy numerical example.
+**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after the representation-pipeline exercise and the lookup exercise. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calculate a toy numerical example.
 
 **Stage 1 — Classify claims.** For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to "this model", decide whether the information given is sufficient to determine its behavior.
 
@@ -317,8 +312,7 @@ E. RoPE is applied to query/key representations inside attention, rather than be
 - **D — Architecture-dependent / not decidable from the information given:** learned absolute position embeddings are one possible design, but the exercise does not specify which positional mechanism this model uses. A possible design must not become a universal claim.
 - **E — Valid as a description of RoPE:** it acts on query/key vectors within attention; other positional mechanisms exist.
 
-**Common error:** the decisive distinction separates a property of the tokenizer, a property of a fixed lookup table, and a property of the complete network computation. The third does not f
-ollow from the first two.
+**Common error:** the decisive distinction separates a property of the tokenizer, a property of a fixed lookup table, and a property of the complete network computation. The third does not follow from the first two.
 
 </details>
 
@@ -343,8 +337,7 @@ For each situation, predict whether the initial embedding selected by lookup, th
 <summary>Show the worked solution</summary>
 
 1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
-2. The initial lookup row remains the same for the same ID and fixed table. Because the token is held at the same position, 
-the position index and position-dependent operation are fixed: an absolute position vector is identical, and RoPE applies the same position-indexed rotation, although the query/key content being rotated can differ. The resulting position-aware query/key representations can therefore differ because their content differs. Contextualized states can differ because the preceding (visible) context differs; in a causal decoder, tokens to the right cannot affect this position.
+2. The initial lookup row remains the same for the same ID and fixed table. Because the token is held at the same position, the position index and position-dependent operation are fixed: an absolute position vector is identical, and RoPE applies the same position-indexed rotation, although the query/key content being rotated can differ. The resulting position-aware query/key representations can therefore differ because their content differs. Contextualized states can differ because the preceding (visible) context differs; in a causal decoder, tokens to the right cannot affect this position.
 3. A different ID generally selects a different row. If its position is unchanged, the positional operation itself need not change: an absolute scheme adds the same position vector, while RoPE applies the same position-dependent rotation to the newly computed query/key vectors. The resulting position-aware representations can nevertheless change because their content inputs changed. Contextualized states may change at that position and at other positions that depend on it.
 
 These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
@@ -363,8 +356,7 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 Use two short phrases with the same target and different preceding context: A = [good, situation] and B = [bad, situation]. These are simplified pedagogical units, **not a tokenization claimed for any real tokenizer**. The synthetic embedding table contains:
 $$
-E[\text{good}]=(0.1,0.2),\quad E[\text{bad}]=(0.9,-0.4),\quad E[\te
-xt{situation}]=(0.5,0.5).
+E[\text{good}]=(0.1,0.2),\quad E[\text{bad}]=(0.9,-0.4),\quad E[\text{situation}]=(0.5,0.5).
 $$
 The shared target “situation” is at position 1 in both windows. Add the same positional vector $P_1=(0.02,0.05)$; the preceding context words are at position 0 and use $P_0=(0.01,0.00)$. To isolate the effect of the preceding context, define a **fixed illustrative** aggregation:
 $$
@@ -407,8 +399,7 @@ print("distance:", np.linalg.norm(h_A - h_B))
 
 ### Build windows and align targets {#ex-text-data-training-windows}
 
-**Preparation:** the “sliding windows and stride” section of [from tokenized corpus to
- training examples](training-examples.qmd), after the representation-pipeline exercise and the lookup exercise. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
+**Preparation:** the “sliding windows and stride” section of [from tokenized corpus to training examples](training-examples.qmd), after the representation-pipeline exercise and the lookup exercise. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
 
 Consider the token-ID stream:
 
@@ -476,8 +467,7 @@ The next start after $a=2$ would be $a=4$.
 </details>
 
 <details>
-<summary>Show the worked solution</summary
->
+<summary>Show the worked solution</summary>
 
 At $a=4$, the input would be $[2,7,5]$, but its target would have to be $[7,5,\,?]$: the final successor does not exist in the supplied stream. The reference implementation drops this window; it invents neither an end token nor padding.
 
@@ -511,8 +501,7 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 
 </details>
 
-**Success criterion:** the pairs are exact, the
- corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
+**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
 
 **Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
 
@@ -569,8 +558,7 @@ The first merge is therefore `o + w → ow`, with four occurrences. It is strict
 
 **Stage 2 — Apply the merge and recount.**
 
-Replace every non-overlapping occurrence of `o · w` with `ow`
-, then recount the pairs. What is the next merge?
+Replace every non-overlapping occurrence of `o · w` with `ow`, then recount the pairs. What is the next merge?
 
 <details>
 <summary>Show hints</summary>
@@ -619,8 +607,7 @@ At encoding time, the tokenizer reuses the merge order learned from the corpus. 
 - Counting non-adjacent pairs or continuing to use frequencies from before a merge.
 - Merging only one occurrence when all non-overlapping occurrences of the selected pair must be replaced under the stated convention.
 - Recounting frequencies on `lowest` at encoding time, as if the tokenizer were retrained for every request.
-- Presenting this character-level example as a description of every byte-leve
-l BPE tokenizer.
+- Presenting this character-level example as a description of every byte-level BPE tokenizer.
 
 </details>
 
@@ -653,8 +640,7 @@ For each protocol:
 
 - A window contains both inputs **and** targets: inspect source tokens, not only dataset rows.
 - Different document identifiers do not guarantee independent content.
-- Temporal-continuation evaluation does not m
-easure the same kind of generalization as evaluation on entirely unseen documents.
+- Temporal-continuation evaluation does not measure the same kind of generalization as evaluation on entirely unseen documents.
 
 </details>
 
@@ -678,8 +664,7 @@ In a conventional held-out experiment, a BPE tokenizer is fitted on train + vali
 <details>
 <summary>Show the worked solution</summary>
 
-Yes: the BPE vocabulary and merge order were fitted using validation text. For a conventional hel
-d-out experiment, fit the tokenizer on train only, freeze it, then encode train, validation, and test with that same revision. This prevents statistics or lexical units from held-out text influencing tokenizer fitting. Validation remains excluded from model-weight optimization. Other conventions exist in large-scale pretraining pipelines; in that case, describe the data-construction protocol precisely and do not claim the same held-out setup.
+Yes: the BPE vocabulary and merge order were fitted using validation text. For a conventional held-out experiment, fit the tokenizer on train only, freeze it, then encode train, validation, and test with that same revision. This prevents statistics or lexical units from held-out text influencing tokenizer fitting. Validation remains excluded from model-weight optimization. Other conventions exist in large-scale pretraining pipelines; in that case, describe the data-construction protocol precisely and do not claim the same held-out setup.
 
 </details>
 
@@ -689,6 +674,4 @@ d-out experiment, fit the tokenizer on train only, freeze it, then encode train,
 
 [← Back to the exercise catalogue](exercises.qmd)
 
-**Language:** [Français](../
-
-... [Content truncated]
+**Language:** [Français](../fr/exercises-text-data.qmd) · [English](exercises-text-data.qmd)
