@@ -361,8 +361,6 @@ website:
         - index.qmd
         - href: fr/learning-map.qmd
           text: "Parcours guidé et carte des ressources"
-        - href: fr/advent-calendar.qmd
-          text: "Prototype archivé · 24 jours"
         - section: "Comprendre les LLM"
           contents:
             - text: "Panorama LLM"
@@ -608,8 +606,6 @@ website:
         - en/index.qmd
         - href: en/learning-map.qmd
           text: "Guided route and resource map"
-        - href: en/advent-calendar.qmd
-          text: "Archived prototype · 24 days"
         - section: "Understand LLMs"
           contents:
             - text: "LLM overview"
