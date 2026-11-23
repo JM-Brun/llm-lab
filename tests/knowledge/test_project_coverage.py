@@ -312,4 +312,3 @@ def test_unregistered_source_coverage_explains_existing_opt_in_adapter() -> None
     message = COVERAGE["UNREGISTERED_DIMENSIONS"]["sources"].casefold()
     assert "opt-in source adapter exists" in message
     assert "concept-to-source/item coverage is not registered" in message
-}
