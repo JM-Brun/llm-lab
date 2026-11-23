@@ -30,7 +30,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 <a id="ex-representation-pipeline"></a>
 
-### Reconstruire la chaîne des représentations {#ex-text-data-representation-pipeline}
+### Reconstr
+uire la chaîne des représentations {#ex-text-data-representation-pipeline}
 
 **Préparation :** une première lecture de [texte et données](text-data.qmd) et de l'[espace des embeddings](embedding-space.qmd) suffit.
 
@@ -64,7 +65,8 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 
 - « Le tokenizer produit les embeddings » : il produit des unités de tokens et des IDs ; la table du modèle fournit les vecteurs.
 - « L'ID est une coordonnée » : c'est un indice discret du vocabulaire ; la distance arithmétique entre IDs n'a pas d'interprétation sémantique générale.
-- « Tous les modèles ajoutent un vecteur de position juste après le lookup » : les mécanismes positionnels diffèrent selon l'architecture.
+- « Tous les modèles ajoutent un vecteur de position jus
+te après le lookup » : les mécanismes positionnels diffèrent selon l'architecture.
 
 **Critère de réussite :** ordre correct ; distinction entre token, ID, vecteur initial et état contextualisé ; absence de généralisation abusive sur le traitement positionnel.
 
@@ -123,7 +125,8 @@ La forme est $(L,d)=(3,2)$ : trois positions de tokens et deux caractéristiques
 
 **Erreurs fréquentes :**
 
-- Sélectionner des colonnes au lieu des lignes confond dimension d'embedding et indice de vocabulaire.
+- Sélectionner des colonnes au lieu des lignes con
+fond dimension d'embedding et indice de vocabulaire.
 - Additionner ou moyenner les lignes sélectionnées change l'opération : un lookup renvoie une ligne par ID.
 - « L'ID 4 est à une unité de l'ID 3 » confond étiquettes discrètes et coordonnées géométriques.
 
@@ -158,7 +161,8 @@ Le résultat du lookup a pour forme $(2,3,2)$ ; une séquence a pour forme $(3,2
 
 **Erreurs fréquentes :**
 
-- $(2,3,5,2)$ conserverait à tort toute la table du vocabulaire comme axe supplémentaire.
+- $(2,3,5,2)$ conserverait à tort toute la tabl
+e du vocabulaire comme axe supplémentaire.
 - $(2,3,5)$ confond la taille du vocabulaire et la largeur des embeddings.
 - $(2,2,3)$ échange les axes séquence et caractéristiques.
 
@@ -202,7 +206,8 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 Cette trace complète l'exercice sur le lookup avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
 
-Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
+Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du 
+projet.
 
 ```python
 import numpy as np
@@ -232,6 +237,16 @@ for prefix, expected_count, expected_id, expected_bytes in prefix_cases:
     assert prefix_ids[-1] == expected_id
     assert encoding.decode_single_token_bytes(prefix_ids[-1]) == expected_bytes
 
+# Décomposition complète du préfixe français, à comparer au tableau de la leçon.
+fr_prefix_ids = encoding.encode("C'est une bonne situation, ça, scribe ?")
+fr_fragments = [encoding.decode_single_token_bytes(i).decode("utf-8") for i in fr_prefix_ids]
+assert encoding.decode(fr_prefix_ids) == "C'est une bonne situation, ça, scribe ?"
+assert len(fr_prefix_ids) == 15
+assert fr_fragments[-1] == " ?"
+print("Préfixe français :")
+for fragment, fragment_id in zip(fr_fragments, fr_prefix_ids):
+    print(f"  {fragment!r} -> {fragment_id}")
+
 # Comparaison à entrée fixe : certains tokens contiennent ici uniquement un espace.
 fixed_text = "2 + 2 = 4"
 comparisons = (
@@ -258,7 +273,8 @@ X = E[token_ids]
 assert X.shape == (2, 2)
 assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
 
-# Vecteurs positionnels illustratifs, pas les paramètres réels de GPT-2.
+# Vecteurs positionnels illustratifs, pas les paramè
+tres réels de GPT-2.
 P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
 Z = X + P
 assert Z.shape == (2, 2)
@@ -280,7 +296,8 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 A. Le même ID sélectionne la même ligne d'embedding initial à chaque occurrence.
 B. Deux IDs consécutifs doivent avoir des embeddings similaires.
 C. Un même ID doit produire le même état caché contextualisé dans toutes les phrases.
-D. Ce modèle ajoute un vecteur positionnel absolu appris à chaque embedding de token avant son premier bloc Transformer.
+D. Ce modèle ajoute un vecteur positionnel absolu appris à chaque embedding 
+de token avant son premier bloc Transformer.
 E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'est pas un vecteur ajouté universellement par le lookup.
 
 <details>
@@ -308,7 +325,8 @@ E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'es
 **Étape 2 — Prédire ce qui change et ce qui reste invariant.** Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soit fixe. Considérez le même ID $t$ dans trois situations :
 
 1. Il apparaît deux fois dans la même séquence d'entrée.
-2. Il apparaît à la même position dans la séquence dans deux séquences différentes, avec un contexte précédent (visible) différent ; dans un modèle décodeur causal, les tokens situés à droite sont masqués et ne peuvent pas influer sur cette position.
+2. Il apparaît à la même position dans la séquence dans deux séquences différentes, avec un contexte précédent (visible) différent ; dans un modèle décodeur causal, les tokens situés à droite sont masqués et ne peuvent pas i
+nfluer sur cette position.
 3. Il est remplacé par un autre ID $u$, tous les autres emplacements restant inchangés.
 
 Pour chaque situation, prévoyez si l'embedding initial sélectionné par lookup, l'opération ou la représentation dépendant de la position (information positionnelle ajoutée au flux de tokens avant le premier bloc ou appliquée à l'intérieur de l'attention) et l'état caché contextualisé peuvent changer. Précisez les réserves liées à l'architecture ; ne supposez pas qu'un changement à une position laisse nécessairement inchangés tous les états ultérieurs.
@@ -326,7 +344,8 @@ Pour chaque situation, prévoyez si l'embedding initial sélectionné par lookup
 <summary>Afficher le corrigé détaillé</summary>
 
 1. Le même ID sélectionne la même ligne d'embedding initial. Si l'architecture ajoute des embeddings positionnels absolus appris avant le premier bloc, la représentation d'entrée peut différer selon la position. Avec un mécanisme comme RoPE, l'embedding du token n'est pas modifié par un vecteur positionnel ; les effets de position interviennent plus tard, dans l'attention. Les états contextualisés peuvent différer en raison de la position et du contexte.
-2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Comme le token reste à la même position, l'indice de position et l'opération dépendant de la position restent fixes : le vecteur de position absolue est identique, et RoPE applique la même rotation indexée par la position, même si le contenu des vecteurs requête/clé soumis à cette rotation peut différer. Les représentations requête/clé tenant compte de la position peuvent donc différer puisque leur contenu change. Les états contextualisés peuvent différer parce que le contexte précédent (visible) change ; dans un décodeur causal, les tokens situés à droite ne peuvent pas influer sur cette position.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Comme le token reste à la même position, l'indice de position et l'opération dépendant de la position restent fixes : le vecteur de position absolue est identique, et RoPE applique la même rotation indexée par la position, même si le contenu des vecteurs requête/clé soumis à cette rotation peut différer. Les représentati
+ons requête/clé tenant compte de la position peuvent donc différer puisque leur contenu change. Les états contextualisés peuvent différer parce que le contexte précédent (visible) change ; dans un décodeur causal, les tokens situés à droite ne peuvent pas influer sur cette position.
 3. Un ID différent sélectionne généralement une autre ligne. Si sa position reste inchangée, l'opération positionnelle elle-même n'a pas besoin de changer : un mécanisme absolu ajoute le même vecteur de position, tandis que RoPE applique la même rotation dépendant de la position aux nouveaux vecteurs requête/clé calculés. Les représentations résultantes peuvent néanmoins changer puisque leur contenu d'entrée a changé. Les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
 
 Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
@@ -343,7 +362,8 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 **Étape 3 — Calcul numérique contrôlé (agrégation jouet, pas une couche d'attention).**
 
-On reprend les formulations du dialogue d'Otis : « bonne situation » et « bonne ou mauvaise situation ». Pour isoler le mécanisme, on construit deux fenêtres lexicales simplifiées : A = [bonne, situation], B = [mauvaise, situation]. Dans la seconde, le connecteur « ou » est volontairement omis pour isoler le contraste. Il s'agit d'unités pédagogiques, **pas d'une segmentation attribuée à un tokenizer réel**. La table synthétique contient :
+On reprend les formulations du dialogue d'Otis : « bonne situation » et « bonne ou mauvaise situation ». Pour isoler le mécanisme, on construit deux fenêtres lexicales simplifiées : A = [bonne, situation], B = [mauvaise, situation]. Dans la seconde, le connecteur « ou » est volontairement omis pour isoler le contraste. Il s'agit d'unités pédagogiques, **pa
+s d'une segmentation attribuée à un tokenizer réel**. La table synthétique contient :
 $$
 E[\text{bonne}]=(0.1,0.2),\quad E[\text{mauvaise}]=(0.9,-0.4),\quad E[\text{situation}]=(0.5,0.5).
 $$
@@ -380,7 +400,8 @@ assert np.allclose(h_B, [0.676, 0.170])
 print("distance:", np.linalg.norm(h_A - h_B))
 ~~~
 
-**Limite :** cette moyenne pondérée à coefficients fixes n'est **pas** l'auto-attention d'un Transformer. Elle ne calcule ni projections Q/K/V, ni scores dépendant du contenu, ni softmax, ni connexions résiduelles, normalisation ou MLP. C'est un exercice d'isolation d'une dépendance, pas une simulation fidèle d'un bloc.
+**Limite :** cette moyenne pondérée à coefficients fixes n'est **pas** l'auto-attention d'un Transformer. Elle ne calcule ni projections Q/K/V, ni scores dépendant du contenu, ni softmax, ni connexions résiduelles, normalisation ou MLP. C'est un exercice d'isolation d'une dépendance, pas une simulation fidèle d'un b
+loc.
 
 </details>
 
@@ -447,7 +468,8 @@ Le début suivant après $a=2$ serait $a=4$.
    lorsque $N\geq L+1$.
 
 <details>
-<summary>Afficher les indices</summary>
+<
+summary>Afficher les indices</summary>
 
 - Une entrée de longueur $L$ consomme $L$ tokens, mais sa cible décalée consomme le successeur du dernier token d'entrée.
 - Il faut donc au moins $L+1$ tokens source pour un exemple complet.
@@ -479,7 +501,8 @@ Une implémentation fautive construit les cibles en recopiant exactement les ent
 
 La forme $(n_{\text{fenêtres}},L)$ ne vérifie que la structure des tableaux, pas leur alignement sémantique. Si les cibles sont identiques aux entrées, le modèle est entraîné à reproduire le token déjà présent à chaque position au lieu de prédire son successeur.
 
-Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i)$ est égale au token source situé immédiatement après l'entrée correspondante. Pour les positions internes, on peut aussi vérifier l'invariant selon lequel les cibles sauf la dernière colonne sont égales aux entrées à partir de la deuxième colonne ; la dernière position doit être comparée au token suivant dans le flux source. Les tests de **sliding_input_target_pairs** couvrent déjà ces invariants.
+Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i)$ est égale au token source situé immédiatement après l'entrée correspondante. Pour les positions internes, on peut aussi vérifier l'invariant selon lequel les cibles sauf la dernière colonne sont égales aux entrées à partir de la deuxième colonne ; la dernière position doit être comparée au token suivant dans le
+ flux source. Les tests de **sliding_input_target_pairs** couvrent déjà ces invariants.
 
 **Erreurs fréquentes :**
 
@@ -518,7 +541,8 @@ Le corpus d'apprentissage contient les occurrences suivantes :
 <summary>Afficher les indices</summary>
 
 - Une paire est comptée une fois par occurrence où elle apparaît ; les répétitions du même mot contribuent donc plusieurs fois.
-- Le marqueur `</w>` est une unité et peut former une paire avec le dernier caractère.
+- Le marqueur `</w>
+` est une unité et peut former une paire avec le dernier caractère.
 - Ne comptez pas seulement les paires distinctes : comptez leurs occurrences.
 
 </details>
@@ -579,7 +603,8 @@ Le corpus devient :
 
 **Étape 3 — Transférer les règles à un texte inédit.**
 
-Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des caractères `l · o · w · e · s · t · </w>`, appliquez dans l'ordre les deux fusions apprises. Donnez la segmentation finale et expliquez pourquoi il ne faut pas recompter les fréquences sur ce nouveau mot.
+Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des caractères `l · o · w · e · s · t · </w>`, appliquez dans l'ordre les deux fusions apprises. Donnez la segmentation finale et expliquez pourquoi
+ il ne faut pas recompter les fréquences sur ce nouveau mot.
 
 <details>
 <summary>Afficher le corrigé détaillé</summary>
@@ -608,7 +633,8 @@ On applique d'abord `o + w → ow`, puis `l + ow → low`. La segmentation obten
 
 **Préparation :** [Préparer un corpus pour le préentraînement](corpus-preparation.qmd), notamment les sections sur la déduplication, le choix des partitions et l'ajustement du tokenizer ; [fenêtres et stride](training-examples.qmd). Cet exercice distingue la fuite d'évaluation d'un protocole de continuation temporelle explicitement choisi.
 
-On veut mesurer la capacité d'un modèle à prédire des tokens dans des données qui n'ont pas influencé son apprentissage. Pour chaque protocole ci-dessous, identifiez les dépendances possibles entre entraînement et validation, puis proposez la correction minimale.
+On veut mesurer la capacité d'un modèle à prédire des tokens dans des données qui n'ont pas influencé son apprentissage. Pour chaque protocole ci-dessous, identifiez les dépendances possibles entre entraînement et validation, puis
+ proposez la correction minimale.
 
 **Étape 1 — Diagnostiquer trois protocoles.**
 
@@ -616,51 +642,6 @@ On veut mesurer la capacité d'un modèle à prédire des tokens dans des donné
 
 **B. Découpage par document sans déduplication.** Les documents sont répartis entre train et validation, mais une copie quasi identique d'un document d'entraînement est présente dans validation sous un autre identifiant.
 
-**C. Découpage temporel d'un document.** Pour simuler la prédiction de la suite d'un flux connu, les tokens antérieurs à une coupure sont utilisés pour l'entraînement et les tokens postérieurs pour la validation. Les fenêtres de validation peuvent utiliser le préfixe antérieur comme contexte, mais aucune cible de validation ne participe à l'entraînement.
+**C. Découpage temporel d'un document.** Pour simuler la prédiction de la suite d'un flux connu, les tokens antérieurs à une coupure sont utilisés pour l'entraînement et les tokens postérieurs pour la validation. Les fenêtres de validation peuvent utiliser le p
 
-Pour chaque protocole :
-
-1. La séparation garantit-elle l'indépendance recherchée ?
-2. Quelle information peut être partagée ou réutilisée entre partitions ?
-3. Quelle modification faut-il apporter, ou quelle hypothèse faut-il expliciter ?
-
-<details>
-<summary>Afficher les indices</summary>
-
-- Une fenêtre contient des entrées **et** des cibles : regardez les tokens source, pas seulement les lignes du jeu de données.
-- Des identifiants de documents différents ne garantissent pas des contenus indépendants.
-- Une évaluation de continuation temporelle ne mesure pas la même généralisation qu'une évaluation sur des documents entièrement inconnus.
-
-</details>
-
-<details>
-<summary>Afficher le corrigé détaillé</summary>
-
-- **A — Fuite probable.** Deux fenêtres voisines partagent des tokens de contexte et peuvent aussi réutiliser des tokens comme cibles et comme entrées dans des partitions différentes. Le découpage aléatoire des fenêtres ne sépare donc pas les unités sources. Il faut d'abord définir et séparer les unités indépendantes (documents, groupes ou périodes), puis construire les fenêtres à l'intérieur de chaque partition. Si le protocole autorise explicitement une continuation à partir d'un préfixe connu, il faut la traiter comme le cas C, avec une coupure et des cibles strictement définies.
-- **B — Fuite probable.** La séparation par identifiant ne détecte pas les quasi-doublons. Il faut regrouper les copies et variantes suffisamment proches avant ou après le split, selon une méthode documentée, puis auditer les recouvrements entre partitions. Le seuil et l'unité de déduplication doivent être adaptés au corpus ; supprimer toute répétition n'est pas automatiquement souhaitable.
-- **C — Pas nécessairement une fuite.** C'est un protocole valide de prédiction de continuation si l'objectif opérationnel est bien de prédire la suite d'un flux dont le préfixe est disponible. Le contexte antérieur peut être fourni à la validation, mais les cibles postérieures à la coupure doivent rester exclues de l'entraînement et aucune fenêtre d'entraînement ne doit consommer des tokens postérieurs. Ce protocole ne permet pas de prétendre mesurer la généralisation à des documents indépendants.
-
-</details>
-
-**Étape 2 — Vérifier l'ajustement du tokenizer.**
-
-Dans une expérience held-out classique, un tokenizer BPE est appris sur train + validation, puis le modèle est entraîné uniquement sur les tokens de train. La validation n'est jamais utilisée pour calculer la loss pendant l'entraînement.
-
-1. La validation a-t-elle influencé le protocole d'apprentissage ?
-2. Quelle est la correction attendue si l'objectif est de mesurer la généralisation à des données non vues ?
-3. Pourquoi faut-il figer la version du tokenizer avant d'encoder validation et test ?
-
-<details>
-<summary>Afficher le corrigé détaillé</summary>
-
-Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de textes de validation. Pour une expérience held-out classique, il faut ajuster le tokenizer sur train uniquement, le figer, puis encoder train, validation et test avec cette même révision. Cela évite que les statistiques ou unités lexicales des textes réservés influencent l'ajustement du tokenizer. La validation reste exclue de l'optimisation des poids du modèle. D'autres conventions existent dans des pipelines de préentraînement à grande échelle ; il faut alors décrire précisément la constitution des données et ne pas revendiquer le même protocole held-out.
-
-</details>
-
-**Critère de réussite :** distinguer chevauchement de fenêtres, doublons documentaires et continuation temporelle ; identifier l'unité pertinente de séparation ; expliquer pourquoi l'ajustement du tokenizer peut lui aussi contaminer une évaluation held-out.
-
----
-
-[← Retour au catalogue des exercices](exercises.qmd)
-
-**Langue :** [Français](exercises-text-data.qmd) · [English](../en/exercises-text-data.qmd)
+... [Content truncated]
