@@ -32,6 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:next-token-predic
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Première journée sur vingt-quatre"><span style="width: 4.1667%"></span></div>
   <p class="advent-day-kicker">LE POINT DE DÉPART · 6 MINUTES</p>
+  <h1 class="advent-day-title">Que prédit un LLM ?</h1>
   <p class="advent-day-lead">Avant de parler d'attention, d'embeddings ou d'entraînement, commençons par la question qui donne son objectif au modèle : <strong>que cherche-t-il à prédire ?</strong></p>
 </div>
 
