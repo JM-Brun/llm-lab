@@ -1,7 +1,7 @@
 # LLM Advent Calendar — project design
 
-**Status:** 24-day editorial proposal; bilingual landing page and first three guided days implemented; learner validation pending  
-**Date:** 2026-11-22  
+**Status:** bilingual landing page and first three guided days merged; editorial drafts remain learner-unvalidated; post-merge CI follow-up in progress  
+**Date:** 2026-11-23  
 **Owner:** LLM Lab editorial architecture  
 **Scope:** a 24-day, bilingual, progressive introduction to the concepts already taught by LLM Lab
 
@@ -381,3 +381,38 @@ Each daily page contains one question, a concise explanation, a worked example o
 The first three daily page IDs are also recorded in the YAML manifest and in the landing page's hidden page-map metadata. The six daily pages are classified as `destination:orient`, `level:overview`, and `type:concept-bridge`: they are short guided introductions, not duplicate canonical lessons. This keeps them out of the Understand/Build revision-coverage inventory while retaining them in the bilingual learning-map data. The manifest remains an editorial proposal and is **not yet consumed by Quarto or CI**. The bilingual landing pages and daily pages are currently maintained as QMD files. A later change should add a lightweight consistency validator or generator rather than introducing a second registry or a dedicated workflow.
 
 **Validation status:** the full Quarto render and local-link audit have passed on an earlier revision. CI now checks the calendar landing page and the three guided days in both languages at desktop and mobile widths, including the 24-door sequence, first-three-day targets, keyboard-operated self-checks, and canonical resource links. The final CI run and screenshot review are still required. The entries remain editorial drafts, not learner-validated content.
+
+
+## 12. Post-merge review and remaining work (2026-11-23)
+
+The landing page and six bilingual daily pages (days 01–03) were merged through PR [#1539](https://github.com/JM-Brun/llm-lab/pull/1539). The implementation is present on `main`; this does **not** mean the calendar is release-ready.
+
+### Confirmed in the post-merge CI run
+
+- Python quality and domain checks passed.
+- Secret scanning passed.
+- The test suite reported **802 passed, 1 skipped, 2 failed**. Both failures are the freshness checks for `site/includes/generated-map-data-fr.qmd` and `site/includes/generated-map-data-en.qmd`. The generator named by the test is `site/tools/build_learning_map.py`; the tracked generated fragments must be refreshed from the canonical page metadata and concept registry, then committed.
+- The Quarto browser audit rendered the site but failed its accessibility gate on the closing CTA's colour contrast in both languages. The CTA now has an explicit light background and dark foreground in `site/styles/advent-calendar.css`; the browser audit must be rerun to verify the computed contrast.
+- An earlier screenshot artifact captured an intermediate revision in which nested HTML was displayed literally. The source was subsequently corrected and merged. Do not use those earlier screenshots as evidence of the final rendering; generate a fresh artifact from the current branch.
+
+### Work completed after merge
+
+- Added an explicit high-contrast surface and foreground to the closing CTA, including hover and keyboard-focus states.
+- Corrected the pilot document's daily-page paths to the flat Quarto paths actually used by the site.
+- Added this post-merge validation record so the release gate distinguishes completed implementation from pending verification.
+
+### Remaining tasks, in priority order
+
+1. **Regenerate learning-map artifacts.** Run `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py` from the repository root. Review the resulting diff; it should update the generated FR/EN map payloads without hand-editing JSON or duplicating metadata. Commit all intended generated outputs together.
+2. **Rerun CI and browser audit.** Require the two map freshness tests to pass, then confirm the CTA passes axe colour-contrast checks in FR/EN and that the final hero/outro render as styled HTML. Keep the new screenshots and audit report as the evidence for the final revision.
+3. **Review the daily pages at learner level.** Test days 01–03 with at least one novice reader. Record actual time-on-task, whether the active check is answerable without guessing, whether the learner can transfer the idea to a changed example, and whether the canonical follow-up is discoverable. The 5–8 minute duration remains a hypothesis until measured.
+4. **Complete the content pilot.** Review the planned contrast set: tokenization (day 03), Q/K/V (day 09), and cross-entropy (day 21). Check scientific precision, exercise alignment, and bilingual parity before scaling the short-form template.
+5. **Audit the full 24-day sequence.** Verify each daily question against canonical concept IDs and computational nodes; check that the three branches of the conditional distribution (generation, observed-target scoring/evaluation, and training) are not collapsed into a false linear pipeline. Check the Q/K/V placement inside the Transformer block.
+6. **Release readiness.** Check all 24 links and anchors, mobile and desktop layouts, keyboard navigation, screen-reader names, reduced-motion behavior, colour contrast, source provenance, and annual archive/navigation behavior. Only then describe the calendar as a validated learning product.
+
+### Scope and maintenance decisions
+
+- Keep the manifest editorial and lightweight. Do not add a second concept registry or a dedicated workflow per calendar concept.
+- Keep exercises on their dedicated Practice & Experiment pages; daily lessons should link to them rather than accumulating question banks.
+- Keep all 24 doors accessible after December 24. The calendar is an evergreen archive, not a date-locked event.
+- Revisit the calendar once per edition: verify canonical links, translations, concept IDs, and the accuracy of the 24-day sequence.
