@@ -143,7 +143,7 @@ This is a first contract increment, not proof that every current relation edge i
 
 ## Edge-level review
 
-The original manual review of the first 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records intended readings and scope limitations, but it predates the current 124-edge registry. Treat it as historical evidence, not proof that every current edge has been reviewed. Refresh the edge-level review against current main, explicitly classify new/changed edges, and retain the non-exhaustive nature of conceptual relations. Rendered FR/EN graph UX, touch/screen-reader behavior and learner comprehension remain distinct validation tasks.
+The edge-level review is documented in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It covers 66 retained assertions, while the current registry has 124; 58 current assertions remain outside that historical review. Refresh the review against current main, explicitly classify new/changed edges, and retain the non-exhaustive nature of conceptual relations. Rendered FR/EN graph UX, touch/screen-reader behavior and learner comprehension remain distinct validation tasks.
 
 
 ## Cross-graph interoperability: remaining contract
