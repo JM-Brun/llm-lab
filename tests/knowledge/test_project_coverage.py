@@ -185,7 +185,10 @@ def test_optional_deepen_page_counts_for_route_but_not_revision(tmp_path: Path) 
         revision_support={
             "status": "companion_sufficient",
             "evidence": [
-                {"aid": "en/summary", "note": "Worked example."},
+                {
+                    "aid": "en/summary",
+                    "note": "Worked example.",
+                },
             ],
         },
     )
@@ -306,6 +309,6 @@ def test_matrix_evidence_paths_are_repository_relative_and_deterministic() -> No
 
 
 def test_unregistered_source_coverage_explains_existing_opt_in_adapter() -> None:
-    message = COVERAGE["UNREGISTERED_DIMENSIONS"]["sources"]
-    assert "opt-in source adapter exists" in message.lower()
+    message = COVERAGE["UNREGISTERED_DIMENSIONS"]["sources"].casefold()
+    assert "opt-in source adapter exists" in message
     assert "concept-to-source/item coverage is not registered" in message

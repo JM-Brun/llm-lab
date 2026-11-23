@@ -34,7 +34,7 @@ The layer must make each result explainable and reproducible: users should be ab
 | Cross-graph query | `cross_graph_query.py --concept ID` returns typed paths and explicit gaps for item-level source evidence, catalogue-only gaps, page-mediated and stage-mediated computation, Practice links and non-page resources. | Concept-centred only. It does not yet traverse history, Build milestone dependencies, source-local pedagogical graphs or structured decision records; it is not a reverse page-originating evidence query or recommendation engine. |
 | Validation | ProjectIndex, coverage and query behavior have synthetic regression tests; PR #1535 adds five real concept cases and explicit gap checks. | There is no complete cross-family validator or project-wide deterministic diagnostic suite. Existing owning validators remain authoritative. |
 
-The current coverage vocabulary includes `present`, `missing`, `not_applicable`, `not_registered`, `needs_review` and `not_assessed` (the latter for revision assessment). A distinct `stale` state is not yet implemented. The matrix does not currently model all five states for every dimension.
+The current coverage vocabulary includes `present`, `missing`, `not_applicable`, `not_registered`, `needs_review` and `not_assessed` (the latter for revision assessment). A distinct `stale` state is not yet implemented. The matrix does not currently model all six states for every dimension.
 
 **Counting boundary:** the report distinguishes published page records, unique topics, concepts, domains, stored page edges, route memberships and revision links. Do not add these counts together or interpret a missing matrix dimension as proof that no underlying record exists.
 
@@ -120,7 +120,6 @@ index.incoming_pages("en/queries-keys-values")
 index.outgoing_pages("en/queries-keys-values")
 index.route_stage("computation", language="en", role="core")
 index.revision_aids_for_lesson("en/queries-keys-values")
-index.lessons_for_revision_aid("en/revision-queries-keys-values")
 index.revision_support_for_lesson("en/queries-keys-values")
 ~~~
 
@@ -299,8 +298,8 @@ uv run python site/tools/report_project_index.py --format json
 uv run python site/tools/report_project_index.py --language fr --destination understand
 
 # Opt-in evidence paths and explicit gaps for one or more concepts
-uv run python site/tools/cross_graph_query.py --concept attention
-uv run python site/tools/cross_graph_query.py --concept attention --concept entropy
+uv run python site/tools/cross_graph_query.py --concept self-attention
+uv run python site/tools/cross_graph_query.py --concept self-attention --concept token-embedding
 ~~~
 
 
@@ -334,8 +333,7 @@ Record Python version, platform, dependency versions, fixture sizes, repetitions
 - [x] Map the current read model to canonical owners and existing validators.
 - [x] Establish typed identity/edge families and count units for the implemented subset.
 - [x] Add synthetic fixtures and regression tests for index integrity.
-- [x] Reconcile the current source catalogue and extraction counts with #1306 (142 sources, 100 files, 520 atomic items) and the current revision inventory (46 Understand + 16 Build pages).
-- [ ] Refresh the full-corpus locator-quality audit for all 100 extraction files; this is distinct from the already validated item count.
+- [ ] Refresh the complete registry inventory and full-corpus evidence snapshot as the source corpus changes.
 
 **Status:** implemented for the current ProjectIndex subset; broader ownership/metric inventory continues in the architecture backlog.
 

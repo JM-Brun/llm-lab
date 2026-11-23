@@ -1,7 +1,7 @@
 # Concept relation edge review
 
 **Date:** 2026-11-05  
-**Status:** source-semantic registry review complete (66 relations); rendered graph usability, browser/accessibility, and learner validation remain open  
+**Status:** source-semantic review covers 66 retained assertions; current registry has 124 assertions, leaving 58 outside this review. Rendered graph usability, browser/accessibility, and learner validation remain open  
 **Canonical data:** [`data/concepts.yml`](../data/concepts.yml)  
 **Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [merged validator PR #520](https://github.com/JM-Brun/llm-lab/pull/520)
 
