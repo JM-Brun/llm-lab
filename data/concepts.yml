@@ -1009,13 +1009,13 @@ relations:
 
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
   - {from: active-inference, type: contrasts-with, to: aixi}
-  - {from: predictive-compression, type: applies-to, to: conditional-distribution}
+  - {from: conditional-distribution, type: contributes-to, to: predictive-compression}
   - {from: predictive-compression, type: contributes-to, to: entropy-coding}
   - {from: arithmetic-coding, type: part-of, to: entropy-coding}
   - {from: model-compression, type: contrasts-with, to: predictive-compression}
   - {from: pruning, type: part-of, to: model-compression}
   - {from: quantization, type: part-of, to: model-compression}
-  - {from: knowledge-distillation, type: part-of, to: model-compression}
+  - {from: knowledge-distillation, type: contributes-to, to: model-compression}
   - {from: surprisal, type: contributes-to, to: predictive-compression}
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
@@ -1023,7 +1023,7 @@ relations:
   - {from: fine-tuning, type: part-of, to: post-training}
   - {from: context-injection, type: contrasts-with, to: fine-tuning}
   - {from: context-injection, type: contributes-to, to: in-context-learning}
-  - {from: document-retrieval, type: contrasts-with, to: in-context-learning}
+  
   - {from: policy-gradient, type: part-of, to: post-training}
   - {from: score-function, type: part-of, to: policy-gradient}
   - from: score-function
@@ -1156,25 +1156,15 @@ relations:
   - {from: coarse-to-fine-generation, type: part-of, to: next-concept-modeling}
   - {from: multiscale-residual-vector-quantization, type: part-of, to: next-concept-modeling}
 
-  - {from: positive-pair-distribution, type: part-of, to: joint-embedding-predictive-architecture}
+  - {from: positive-pair-distribution, type: contributes-to, to: joint-embedding-predictive-architecture}
   - {from: positive-pair-distribution, type: constrains, to: training-objective}
   - {from: joint-embedding-predictive-architecture, type: contrasts-with, to: next-token-prediction}
   - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}
   - {from: laplacian-eigenmaps, type: applies-to, to: positive-pair-distribution}
-  - {from: laplacian-eigenmaps, type: contributes-to, to: platonic-representation-hypothesis}
-  - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}
-  - from: entropy
-    type: prerequisite
-    to: cross-entropy
-    rationale:
-      fr: "L'entropie de la cible est le terme de référence dans la décomposition de l'entropie croisée."
-      en: "Target entropy is the reference term in the cross-entropy decomposition."
-  - from: cross-entropy
-    type: prerequisite
-    to: knowledge-distillation
-    rationale:
-      fr: "La distillation par cibles souples compare la distribution de l'étudiant à celle de l'enseignant au moyen d'un objectif de cross-entropie ou de KL."
-      en: "Soft-target distillation compares the student's distribution with the teacher's using a cross-entropy or KL objective."
+  
+  
+
+
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
 
