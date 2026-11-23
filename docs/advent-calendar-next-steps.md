@@ -201,3 +201,15 @@ This log should record outcomes, not merely activity.
 - **Validation performed and results:** PR-only Quarto render and browser audit run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295) passed. Both pages returned HTTP 200 at desktop (1440 px) and mobile (390 px); MathJax rendered 2/2 expressions per page; the SVG loaded with its language-specific fig-alt; no horizontal overflow, console errors or page errors; desktop Axe reported zero violations in both languages. Final CI run [#45221807466](https://github.com/JM-Brun/llm-lab/actions/runs/45221807466) passed (812 tests, 1 skipped); Python quality/domain checks passed. Final Quarto run [#45221806910](https://github.com/JM-Brun/llm-lab/actions/runs/45221806910) passed, including full-site rendering, learning-map controls, knowledge-graph export, history timeline parity, local-link checks and browser review. Secret scanning [#45221807289](https://github.com/JM-Brun/llm-lab/actions/runs/45221807289) passed.
 - **Open defects / decisions:** the literal escaped newline before the Pilgrim and Hills bibliography entry in both language versions has been corrected; the latest PR preview is running. A novice read-through, actual reading-time observation and final editorial acceptance are still required.
 - **Exact next action:** re-run the PR preview after the bibliography correction; then conduct the novice review using [day-01-novice-review.md](advent-calendar-pilots/day-01-novice-review.md), revise if needed, and accept Day 01 before beginning Day 02.
+
+
+## 11. Session completion log — pedagogical refinement
+
+- **Date:** 2026-11-23
+- **Branch / PR:** `calendar/day01-zipfs-law` — PR #1565
+- **Files changed:** French and English Day 01 stories; French and English original rank-frequency SVGs; source dossier; novice-reader protocol.
+- **Work completed:** added a small fictional count table in each language to make the construction of rank explicit before introducing Zipf's approximation; clarified that rank is corpus- and convention-dependent; updated the novice protocol to test whether a reader can explain why a form has rank 1; localized the French figure itself rather than leaving English axis labels in the French article.
+- **Scientific boundary:** the count table is explicitly a constructed illustration, not an empirical corpus and not a fitted Zipf distribution. The separate (f(r)=C/r^\alpha) example remains the idealized model used for the arithmetic and log-log derivation.
+- **Validation:** source edits committed; fresh Quarto, CI and secret-scanning checks are required for this new head. The previous browser preview does not validate these changes.
+- **Open work:** inspect the new FR/EN render, especially the SVG labels and formula rendering; obtain novice feedback; record actual reading time; decide editorial acceptance.
+- **Exact next action:** validate the latest PR head and inspect the bilingual preview before requesting the novice read-through. Do not start Day 02.
