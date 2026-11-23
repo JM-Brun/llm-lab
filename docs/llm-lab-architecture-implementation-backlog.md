@@ -225,7 +225,7 @@ The architecture program is not complete merely because graph families have name
 
 ### Active pull requests
 
-- **PR #1564 — registry inventory / Project Intelligence reconciliation:** replacement PR on the current main base. It carries the seven intended inventory/Project Intelligence files without stale calendar changes from the previous branch. Fresh CI/Quarto/secret checks must pass before merge.
+- **PR #1566 — registry inventory / Project Intelligence reconciliation:** replacement PR on the current main base. It carries the seven intended inventory/Project Intelligence files without stale calendar changes from the previous branch. Fresh CI/Quarto/secret checks must pass before merge.
 - **PR #1558 — Q/K/V practice pilot:** merged as `4f0302a`. Python quality, test suite, Quarto/browser audit and secret scanning passed on the final head. Learner review and the full 45-pair audit remain separate gates.
 - **PR #1560 — Day 06 story/template pilot:** merged. PR #1562 then strengthened the spectral-bias treatment; PR #1563 corrected mathematical notation and source definitions. All three leave Day 06 planned/source-only and outside the render list; publication review is not complete.
 - **PR #1553 — ecosystem architecture:** merged. **Issue #575** is closed; residual reader-facing computational-spine review remains in #584.
@@ -236,7 +236,7 @@ The standard CI workflow skips the opt-in full-corpus extraction locator invento
 
 ### Merge and migration guardrails
 
-- Do not merge PR #1564 solely because structural tests pass; respect its remaining review gates. PR #1558 is merged after all required checks passed.
+- Do not merge PR #1566 solely because structural tests pass; respect its remaining review gates. PR #1558 is merged after all required checks passed.
 - Do not bulk-migrate page metadata or create a universal graph/registry.
 - Keep source membership, revision sufficiency, scientific evidence and learner outcomes as distinct assertions.
 - Update this dated handoff when CI/PR states change; the specialist issues remain the source of truth for their detailed acceptance criteria.
