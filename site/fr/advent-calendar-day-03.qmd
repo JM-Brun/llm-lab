@@ -77,7 +77,7 @@ Non. Les deux segmentations sont différentes, même si elles partent de la mêm
 
 ## Ce que cette étape ne fait pas encore
 
-La tokenisation produit des unités discrètes. Elle ne suffit pas à donner au modèle les identifiants entiers qu'il consomme. Cette association entre token et *token ID* est l'objet du **jour 4**. L'utilisation de ces identifiants pour sélectionner des vecteurs dans une matrice d'embeddings viendra ensuite.
+La tokenisation produit des unités discrètes. Elle ne suffit pas à donner au modèle les identifiants entiers qu'il consomme. Cette association entre token et *token ID* est l'objet du **jour 4**. Le **jour 5** montrera comment l'identifiant sélectionne un vecteur dans la matrice d'embeddings ; le **jour 6** introduira l'information positionnelle, avant le passage aux représentations contextualisées du **jour 7**.
 
 ## À retenir
 
