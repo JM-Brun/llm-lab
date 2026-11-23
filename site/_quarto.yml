@@ -366,48 +366,50 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - section: "Comment le modèle calcule sa prédiction"
-              href: fr/text-data.qmd
-              contents:
-                - section: "Des identifiants aux représentations"
-                  href: fr/embedding-space.qmd
-                  contents:
-                    - fr/positional-encoding.qmd
-                    - fr/contextualized-representations.qmd
-                - section: "Transformer les représentations"
-                  contents:
-                    - fr/transformer.qmd
-                    - fr/queries-keys-values.qmd
-                    - fr/scaled-dot-product-attention.qmd
-                    - fr/causal-masking.qmd
-                - section: "Des scores aux probabilités"
-                  contents:
-                    - fr/logits.qmd
-                    - fr/probabilites.qmd
-                    - fr/entropy.qmd
-
-            - section: "Génération et contexte"
-              contents:
-                - fr/generation.qmd
-                - fr/in-context-learning.qmd
-                - fr/context-engineering.qmd
-            - section: "Scoring des tokens observés"
-              contents:
-                - fr/vraisemblance.qmd
-                - fr/cross-entropy.qmd
-                - fr/synthese-entropie.qmd
-                - fr/revision-information-theory.qmd
-                - fr/experience-information-theory.qmd
-            - section: "Loss et gradients"
-              contents:
-                - fr/loss.qmd
-                - fr/gradients.qmd
-                - fr/training-loop.qmd
-                - fr/post-training.qmd
-            - section: "Architectures Transformer et limites des LLM"
-              contents:
-                - fr/transformer-architectures.qmd
-                - fr/llm-limits.qmd
+            - fr/text-data.qmd
+            - fr/embedding-space.qmd
+            - fr/positional-encoding.qmd
+            - fr/contextualized-representations.qmd
+            - fr/transformer.qmd
+            - fr/queries-keys-values.qmd
+            - fr/scaled-dot-product-attention.qmd
+            - fr/causal-masking.qmd
+            - fr/logits.qmd
+            - fr/probabilites.qmd
+            - fr/entropy.qmd
+            - fr/generation.qmd
+            - fr/in-context-learning.qmd
+            - fr/context-engineering.qmd
+            - fr/vraisemblance.qmd
+            - fr/cross-entropy.qmd
+            - fr/loss.qmd
+            - fr/gradients.qmd
+            - fr/training-loop.qmd
+        - section: "Réviser"
+          contents:
+            - fr/review-path.qmd
+            - fr/revision-llm-overview.qmd
+            - fr/revision-text-data.qmd
+            - fr/revision-embedding-space.qmd
+            - fr/revision-positional-encoding.qmd
+            - fr/revision-contextualized-representations.qmd
+            - fr/revision-transformer.qmd
+            - fr/revision-queries-keys-values.qmd
+            - fr/revision-scaled-dot-product-attention.qmd
+            - fr/revision-causal-masking.qmd
+            - fr/revision-logits.qmd
+            - fr/revision-probabilites.qmd
+            - fr/revision-entropy.qmd
+            - fr/revision-inference-generation.qmd
+            - fr/revision-in-context-learning.qmd
+            - fr/revision-context-engineering.qmd
+            - fr/revision-vraisemblance.qmd
+            - fr/revision-cross-entropy.qmd
+            - fr/revision-loss.qmd
+            - fr/revision-gradients.qmd
+            - fr/revision-training-loop.qmd
+            - fr/synthese-entropie.qmd
+            - fr/revision-information-theory.qmd
         - section: "Construire un petit GPT"
           contents:
             - text: "Vue d’ensemble du parcours"
@@ -521,6 +523,9 @@ website:
                     - fr/exercises/emergence.qmd
                     - fr/exercises/llm-evolution.qmd
                     - fr/exercises/jepa-platonic-representation.qmd
+            - section: "Théorie de l'information"
+              contents:
+                - fr/experience-information-theory.qmd
 
             - fr/transformer-explainer.qmd
             - fr/evaluation-experimentale.qmd
@@ -533,6 +538,7 @@ website:
                 - fr/contextualized-representations-advanced.qmd
                 - fr/queries-keys-values-advanced.qmd
                 - fr/cross-attention.qmd
+                - fr/transformer-architectures.qmd
                 - fr/multimodal-architectures.qmd
                 - fr/rope.qmd
                 - fr/sinusoidal-positional-encoding.qmd
@@ -555,6 +561,7 @@ website:
                 - fr/mathematical-foundations.qmd
                 - fr/universal-artificial-intelligence.qmd
                 - fr/score-centering.qmd
+                - fr/post-training.qmd
             - section: "Inférence et efficacité"
               contents:
                 - fr/decoding-strategies.qmd
@@ -566,6 +573,7 @@ website:
               contents:
                 - fr/scaling-laws.qmd
                 - fr/emergence.qmd
+                - fr/llm-limits.qmd
                 - fr/llm-evolution.qmd
                 - fr/jepa-platonic-representation.qmd
         - section: "Glossaire et histoire"
@@ -585,48 +593,50 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - section: "How the model computes a prediction"
-              href: en/text-data.qmd
-              contents:
-                - section: "From IDs to representations"
-                  href: en/embedding-space.qmd
-                  contents:
-                    - en/positional-encoding.qmd
-                    - en/contextualized-representations.qmd
-                - section: "Transforming representations"
-                  contents:
-                    - en/transformer.qmd
-                    - en/queries-keys-values.qmd
-                    - en/scaled-dot-product-attention.qmd
-                    - en/causal-masking.qmd
-                - section: "From scores to probabilities"
-                  contents:
-                    - en/logits.qmd
-                    - en/probabilities.qmd
-                    - en/entropy.qmd
-
-            - section: "Generation and context"
-              contents:
-                - en/generation.qmd
-                - en/in-context-learning.qmd
-                - en/context-engineering.qmd
-            - section: "Observed-target scoring"
-              contents:
-                - en/likelihood.qmd
-                - en/cross-entropy.qmd
-                - en/entropy-synthesis.qmd
-                - en/revision-information-theory.qmd
-                - en/experience-information-theory.qmd
-            - section: "Loss and gradients"
-              contents:
-                - en/loss.qmd
-                - en/gradients.qmd
-                - en/training-loop.qmd
-                - en/post-training.qmd
-            - section: "Transformer architectures and LLM limitations"
-              contents:
-                - en/transformer-architectures.qmd
-                - en/llm-limits.qmd
+            - en/text-data.qmd
+            - en/embedding-space.qmd
+            - en/positional-encoding.qmd
+            - en/contextualized-representations.qmd
+            - en/transformer.qmd
+            - en/queries-keys-values.qmd
+            - en/scaled-dot-product-attention.qmd
+            - en/causal-masking.qmd
+            - en/logits.qmd
+            - en/probabilities.qmd
+            - en/entropy.qmd
+            - en/generation.qmd
+            - en/in-context-learning.qmd
+            - en/context-engineering.qmd
+            - en/likelihood.qmd
+            - en/cross-entropy.qmd
+            - en/loss.qmd
+            - en/gradients.qmd
+            - en/training-loop.qmd
+        - section: "Review"
+          contents:
+            - en/review-path.qmd
+            - en/revision-llm-overview.qmd
+            - en/revision-text-data.qmd
+            - en/revision-embedding-space.qmd
+            - en/revision-positional-encoding.qmd
+            - en/revision-contextualized-representations.qmd
+            - en/revision-transformer.qmd
+            - en/revision-queries-keys-values.qmd
+            - en/revision-scaled-dot-product-attention.qmd
+            - en/revision-causal-masking.qmd
+            - en/revision-logits.qmd
+            - en/revision-probabilites.qmd
+            - en/revision-entropy.qmd
+            - en/revision-inference-generation.qmd
+            - en/revision-in-context-learning.qmd
+            - en/revision-context-engineering.qmd
+            - en/revision-vraisemblance.qmd
+            - en/revision-cross-entropy.qmd
+            - en/revision-loss.qmd
+            - en/revision-gradients.qmd
+            - en/revision-training-loop.qmd
+            - en/entropy-synthesis.qmd
+            - en/revision-information-theory.qmd
         - section: "Build a small GPT"
           contents:
             - text: "Path overview"
@@ -740,6 +750,9 @@ website:
                     - en/exercises/emergence.qmd
                     - en/exercises/llm-evolution.qmd
                     - en/exercises/jepa-platonic-representation.qmd
+            - section: "Information theory"
+              contents:
+                - en/experience-information-theory.qmd
 
             - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
@@ -752,6 +765,7 @@ website:
                 - en/contextualized-representations-advanced.qmd
                 - en/queries-keys-values-advanced.qmd
                 - en/cross-attention.qmd
+                - en/transformer-architectures.qmd
                 - en/multimodal-architectures.qmd
                 - en/rope.qmd
                 - en/sinusoidal-positional-encoding.qmd
@@ -774,6 +788,7 @@ website:
                 - en/mathematical-foundations.qmd
                 - en/universal-artificial-intelligence.qmd
                 - en/score-centering.qmd
+                - en/post-training.qmd
             - section: "Inference and efficiency"
               contents:
                 - en/decoding-strategies.qmd
@@ -785,6 +800,7 @@ website:
               contents:
                 - en/scaling-laws.qmd
                 - en/emergence.qmd
+                - en/llm-limits.qmd
                 - en/llm-evolution.qmd
                 - en/jepa-platonic-representation.qmd
         - section: "Glossary and history"
