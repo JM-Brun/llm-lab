@@ -93,7 +93,7 @@ All values are mathematical consequences of the toy model, not corpus measuremen
 ## Scope and non-claims
 
 - The word “the” is an English hook; the French story uses “de” as its natural counterpart. Neither is claimed to be the most frequent word in every corpus.
-- The draft distinguishes lexical word types/tokens from model tokenizer tokens, explicitly disambiguating the two meanings of *token*. 
+- The draft distinguishes lexical word types/tokens from model tokenizer tokens, explicitly disambiguating the two meanings of *token*.
 - The story does not claim that Zipf's law is exact, universal, or a complete causal explanation.
 - The draft does not infer a model's tokenization strategy or rare-word capability from a lexical rank-frequency curve.
 - The synthetic plot is illustrative, not fitted to a corpus.
