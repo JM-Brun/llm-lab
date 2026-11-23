@@ -76,6 +76,8 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 ### P0 — Verify the shared knowledge foundation
 
 - [ ] Inventory every concept, domain, page, resource and source registry, including ID counts and references. **Partial baseline now exists:** #1550 covers page/resource closure and route membership; #1306 covers source/extraction/collection counts. The concept/domain relation review and historical/editorial registry reconciliation remain.
+- [ ] Re-run the full-corpus extraction locator inventory for the current 100 extraction files; refresh the atomic-item count and locator coverage. Keep the 42 catalogue IDs without extraction filenames distinct from explicit no-extraction dispositions.
+- [ ] Continue the 98 undecided source-collection decisions under #1306 using source-specific evidence; do not infer membership from tags or create empty extraction files.
 - [ ] Check concept IDs, bilingual labels/definitions, aliases, domain membership and page associations.
 - [ ] Review every concept relation's direction, family, inverse/symmetry, transitivity, acyclicity and rationale against its actual meaning.
 - [ ] Verify page IDs and FR/EN counterparts; identify orphan pages, duplicate identities and broken references.
