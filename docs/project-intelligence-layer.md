@@ -334,7 +334,8 @@ Record Python version, platform, dependency versions, fixture sizes, repetitions
 - [x] Map the current read model to canonical owners and existing validators.
 - [x] Establish typed identity/edge families and count units for the implemented subset.
 - [x] Add synthetic fixtures and regression tests for index integrity.
-- [ ] Refresh the complete registry inventory and full-corpus evidence snapshot as the source corpus changes.
+- [x] Reconcile the current source catalogue and extraction counts with #1306 (142 sources, 100 files, 520 atomic items) and the current revision inventory (46 Understand + 16 Build pages).
+- [ ] Refresh the full-corpus locator-quality audit for all 100 extraction files; this is distinct from the already validated item count.
 
 **Status:** implemented for the current ProjectIndex subset; broader ownership/metric inventory continues in the architecture backlog.
 
