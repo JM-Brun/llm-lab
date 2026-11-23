@@ -16,7 +16,7 @@ summary: "Une première lecture du calcul prédictif : à partir d'un préfixe, 
 scope: "Introduit la prédiction du prochain token et distingue le calcul d'une distribution de la sélection opérée par le décodage."
 purpose: "Expliquer ce qu'un modèle autorégressif calcule à une étape donnée, sans confondre probabilité, choix et vérité."
 suggested_route:
-  previous: "fr/advent-calendar"
+  previous: null
   next: "fr/advent-calendar-day-02"
 hierarchy:
   parents: ["fr/advent-calendar"]
