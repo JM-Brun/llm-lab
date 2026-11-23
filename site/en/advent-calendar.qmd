@@ -262,11 +262,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 :::
 ::::
 
-<div class="advent-outro">
-  <div>
-    <p class="advent-kicker">AFTER THE 24 DAYS</p>
-    <h2>The calendar gives you the thread. Now reconstruct the mechanism.</h2>
-    <p>Revisit concepts in the <a href="learning-map.qmd">resource map</a>, test them with the <a href="exercises.qmd">exercise catalogue</a>, then follow the <a href="build-path.qmd">small-GPT build path</a>.</p>
-  </div>
-  <a class="advent-button advent-button-light" href="llm-overview.qmd">Return to the overview <span aria-hidden="true">→</span></a>
-</div>
+:::: {.advent-outro}
+::: {.advent-outro-copy}
+<p class="advent-kicker">AFTER THE 24 DAYS</p>
+
+## The calendar gives you the thread. Now reconstruct the mechanism.
+
+Revisit concepts in the [resource map](learning-map.qmd), test them with the [exercise catalogue](exercises.qmd), then follow the [small-GPT build path](build-path.qmd).
+:::
+
+[Return to the overview →](llm-overview.qmd){.advent-button .advent-button-light}
+::::
