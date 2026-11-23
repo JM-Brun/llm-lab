@@ -60,7 +60,18 @@ def test_qkv_activity_anchors_are_stable_and_bilingual() -> None:
 
     french_anchors = _heading_anchors(french)
     english_anchors = _heading_anchors(english)
+    french_topic = next(
+        tag.split(":", maxsplit=1)[1]
+        for tag in _page_map(french)["tags"]
+        if tag.startswith("topic:")
+    )
+    english_topic = next(
+        tag.split(":", maxsplit=1)[1]
+        for tag in _page_map(english)["tags"]
+        if tag.startswith("topic:")
+    )
 
+    assert french_topic == english_topic == "exercise-attention"
     assert french_anchors == english_anchors
     assert len(french_anchors) == len(set(french_anchors))
     assert QKV_ACTIVITY_ANCHORS <= set(french_anchors)
