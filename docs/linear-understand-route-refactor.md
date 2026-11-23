@@ -257,6 +257,30 @@ uv run --with-requirements docs/requirements-history-validation.txt \
 
 Capture the source commit and inventory schema version with each artifact. Compare stable IDs and typed edges before and after each migration batch; aggregate counts alone are insufficient.
 
+### 6.2 Generated baseline (2026-11-23, schema v5)
+
+The CI artifact generated from commit `b90b37e5fa6a2bcf2ab9280764602f8a17b5b558` provides the initial migration baseline:
+
+| Measure | Result |
+|---|---:|
+| Core lesson memberships | 40 (20 FR, 20 EN) |
+| Optional route memberships | 56 across 54 unique pages (27 FR, 27 EN) |
+| Published Understand pages | 46 (23 per language) |
+| Published Build pages | 16 (8 per language) |
+| Understand topics with exact FR/EN parity | 23 |
+| Page-graph edges incident to Understand/Build pages | 760 |
+| Direct associated page records outside those destinations | 184 |
+| Typed revision-aid links to Understand pages | 50 across 40 pages |
+| Associated non-page resources | 5 |
+| Associated concept IDs in the direct page neighborhood | 102 |
+| Missing associated page/resource IDs | 0 / 0 |
+
+All 46 Understand pages and 16 Build pages have `integrated_sufficient` revision-support assessments. Forty Understand pages have explicit revision-aid links. The 50 links include shared aids, so link count and page count are not interchangeable.
+
+**Important count distinction:** the older `understand_route.optional` field counts only optional pages whose editorial destination is `understand` (six bilingual page records). It is not the total optional curriculum. The full route projection now counts optional memberships across all destinations: 56 memberships over 54 unique optional pages. Many optional pages are correctly classified under Deepen and are included through the route-membership projection and direct associated-page closure.
+
+The 760 page-graph edges are directed metadata records, not 760 independent semantic relations: reciprocal `parents/children` and `previous/next` declarations are explicit. The inventory keeps these edges separate from typed revision-aid relations, concept IDs and non-page resource records. The zero missing-ID counts confirm that the current direct neighborhood resolves against the published page and resource registries.
+
 ## 7. Migration sequence
 
 Perform the refactor in small, reversible stages.
