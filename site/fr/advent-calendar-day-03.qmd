@@ -1,7 +1,7 @@
 ---
 title: "Jour 3 — Comment le texte devient-il des tokens ?"
 description: "Comprendre la segmentation d'une chaîne de caractères en une séquence ordonnée de tokens."
-keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:token-segmentation", "level:core", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
@@ -17,12 +17,12 @@ scope: "Explique la segmentation en tokens sans traiter encore leur encodage en 
 purpose: "Faire comprendre qu'un token n'est pas nécessairement un mot et que le découpage dépend du tokenizer."
 suggested_route:
   previous: "fr/advent-calendar-day-02"
-  next: "fr/text-data"
+  next: null
 hierarchy:
   parents: ["fr/advent-calendar"]
   children: []
 related: ["fr/text-data", "fr/tokenization-strategies"]
-tags: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:understand", "topic:token-segmentation", "level:core", "language:fr", "status:published"]
 -->
 
 <div class="advent-day-shell">
