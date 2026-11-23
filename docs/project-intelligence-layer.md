@@ -137,20 +137,10 @@ Do not assume that convenience methods such as generic `incoming()`, `page_impac
 
 A query result should carry typed references rather than flatten every relationship into a generic edge. At minimum, distinguish:
 
-- `PageRouteEdge`: suggested previous/next navigation;
-- `PageHierarchyEdge`: reciprocal parent/child hierarchy;
-- `RelatedPageEdge`: non-hierarchical page association;
-- `ConceptRelation`: typed concept-to-concept semantic relation;
-- `ConceptDomainMembership`: classification association;
-- `ConceptPageAssociation`: explicit concept-to-page association;
-- `ResourceRecord`: a first-class non-page record from `data/resources.yml`;
-- `ResourcePageAssociation` and `ResourceConceptAssociation`;
-- `RevisionEdge`: a source page, revision role and typed target (`section`, `page` or `resource`);
-- `GuidedRouteMembership`: stage, language and core/optional role;
-- `BuildMilestoneEvidence`: explicit page/code/test/evidence mapping;
-- `ComputationalEdge`: typed computation relation;
-- `SourceEvidenceLink`: source/version, extraction item and locator where available;
-- `HistoricalRelation`: history-model-specific relation.
+- **Implemented page/read-model records:** `PublishedPage`, `PageEdge` (family + relation), `RouteMembership`, `ResourceRecord`, `PageResourceAssociation`, `ConceptResourceAssociation`, `RevisionEdge` (page-based aid→lesson + role), and lesson-level revision-support assessments.
+- **Implemented opt-in evidence records:** `SourceEvidenceRecord`, `ExtractionItemRecord`, `ComputationalNodeRecord`, `ComputationalEdgeRecord`, `RouteFocusGroup` and `RouteFocusReference`.
+- **Implemented query output records:** `EvidencePathStep`, `EvidencePathLink`, `EvidencePath` and `EvidenceGap`, preserving source paths, statuses, locators, confidence, assumptions and limitations where supplied.
+- **Target, not yet implemented as ProjectIndex families:** `BuildMilestoneEvidence`, historical relations, and a generic cross-family edge dispatcher. These remain owned by their canonical source models and must not be simulated by flattening them into `PageEdge`.
 
 Current read-model projection: `resources_by_id`, page/resource and concept/resource associations, `revision_support_by_page`, page-based `revision_edges`, and derived `revision_aids_by_lesson` / `revision_lessons_by_aid`. Revision edges remain separate from ordinary page-graph edges. Page-based revision declarations are present and validated through ProjectIndex; the CI revision inventory exercises those checks. Non-page revision aids remain unsupported. The general page-metadata validator does not duplicate revision semantics.
 
@@ -158,7 +148,7 @@ Cross-structure traversal composes these typed links. It does not materialize a 
 
 ### 5.2 Forward and reverse lookup
 
-Provide generic `incoming(ref, family, type)` and `outgoing(ref, family, type)` only as dispatchers over typed family-specific indexes. Keep explicit convenience methods such as `incoming_pages` for discoverability.
+Implemented methods are family-specific: `incoming_pages`, `outgoing_pages`, resource/concept forward and reverse lookups, `route_stage`, `revision_aids_for_lesson` and `lessons_for_revision_aid`. Generic `incoming(ref, family, type)` / `outgoing(ref, family, type)` dispatchers are a future interface, not current methods.
 
 Every returned edge should include:
 - family and relation type;
@@ -175,23 +165,20 @@ Build dictionaries and adjacency maps once per snapshot:
 
 | Index | Key | Value |
 |---|---|---|
-| `pages_by_id` | page ID | page record |
-| `pages_by_tag` | namespace/value | set of page IDs |
-| `pages_by_type` / `pages_by_destination` | controlled value | set of page IDs |
-| `pages_by_topic` / `pages_by_domain` | ID | set of page IDs |
-| `concepts_by_id` | concept ID | concept record |
-| `pages_by_concept` | concept ID | set of page IDs |
-| `concepts_by_page` | page ID | set of concept IDs |
+| `pages_by_id` | page ID | `PublishedPage` |
+| `pages_by_tag` | tag dimension + value | set of published page IDs |
+| `concepts_by_id` / `domains_by_id` | canonical ID | canonical YAML record |
+| `pages_by_concept` / `concepts_by_page` | concept or page ID | explicit concept↔page associations |
+| `pages_by_domain` | domain ID | published page IDs with that primary domain |
+| `concepts_by_domain` / `concepts_by_importance` | domain or importance | canonical concept IDs |
+| `pages_incoming` / `pages_outgoing` | page ID | typed `PageEdge` records |
+| `route_pages` | stage ID + language + role | ordered page IDs |
 | `resources_by_id` | resource ID | `ResourceRecord` |
-| `page_resource_associations` | page ID | explicit page→resource associations |
-| `concept_resource_associations` | concept ID | explicit resource↔concept associations |
-| `revision_support_by_page` | lesson page ID | explicit assessment status, evidence anchors and rationale |
-| `revision_edges` | revision-aid page ID | typed page-aid→eligible lesson relations |
-| `revision_aids_by_lesson` / `revision_lessons_by_aid` | lesson or aid page ID | derived reverse/forward indexes; no reciprocal duplicate authoring |
-| `pages_by_route_stage` | stage ID + language + role | ordered page IDs |
-| `page_incoming` / `page_outgoing` | page ID | typed page edges |
-| `concept_incoming` / `concept_outgoing` | concept ID | typed concept relations |
-| `computational_adjacency` | node ID | typed computational edges |
+| `page_resource_associations` / `concept_resource_associations` | page or concept ID | explicit non-page resource associations |
+| `revision_support_by_page` | lesson page ID | status, evidence anchors and rationale |
+| `revision_edges` | aid page ID | typed page-aid→lesson relation |
+| `revision_aids_by_lesson` / `revision_lessons_by_aid` | lesson or aid page ID | derived forward/reverse indexes |
+| `evidence_projection` (opt-in) | source, item, computation or route-focus ID | evidence records and explicit association indexes |
 
 For (V) entities and (E) explicit relations, index construction should be approximately (O(V+E)) after source parsing. A direct lookup should be expected (O(1)) average; retrieving a neighborhood should be (O(k)) in the number of returned edges; a filtered aggregation should iterate the smallest relevant candidate set where practical.
 
@@ -213,19 +200,11 @@ Invalidation must follow explicit references and affected neighborhoods. Full re
 
 ### 7.1 Inventory and counts
 
-Required first-class dimensions:
+Current `report_project_index.py` reports ProjectIndex counts with explicit units: published page records, topics, bilingual topics, concepts, domains, page edges, route memberships, unique route pages, revision edges, revision-support status counts, page tags, concepts by importance and concepts by domain. It supports page-selection filters for language, destination, type, topic and domain.
 
-- pages by publication status, language, destination, type, level, topic and domain;
-- Understand route stages, ordered core pages and optional pages, by language;
-- Build milestones, prerequisites, referenced pages and evidence status;
-- concepts by domain and importance;
-- concept relations by type/family;
-- resources by kind/status/language;
-- source and extraction counts, with catalogue-to-extraction reconciliation;
-- computational nodes/edges by kind, branch and relation type;
-- experiments/tests/code artifacts only where an explicit registry or reviewed mapping defines their role.
+The opt-in `cross_graph_query.py` reports concept-centred source/extraction, computation, route-focus, Practice and non-page-resource paths plus explicit evidence gaps. It is not a global source/extraction inventory or a full project coverage report.
 
-Each report should include the filter, counting unit, exclusions and snapshot commit.
+Not yet reported by a single current PIL command: Build milestone dependencies/evidence, complete source/extraction totals and locator coverage, complete computation/Practice concept coverage, history, decision records and entity-impact projections. Each report must continue to expose filters, counting unit, exclusions and snapshot commit.
 
 ### 7.2 Coverage matrix
 
@@ -247,7 +226,9 @@ The current implementation uses `present`, `missing`, `not_applicable`, `not_reg
 
 ### 7.3 Page and entity impact analysis
 
-For a page or concept, return direct incoming/outgoing links and bounded typed paths to related structures. An impact report should distinguish:
+**Current:** direct page incoming/outgoing lookups and concept-centred typed evidence paths are implemented. A general page-originating impact report and bounded multi-family impact traversal are not.
+
+**Target:** an impact report should distinguish:
 - direct references;
 - route membership;
 - concept associations;
@@ -261,7 +242,9 @@ Impact analysis is a review aid, not a claim that every transitive neighbor must
 
 ### 8.1 Deterministic rules
 
-Start with auditable rules:
+Implemented diagnostics are currently bounded to structural bilingual association findings from `bilingual_association_findings()` and explicit `EvidenceGap` records from `cross_graph_query.py` (for example, missing item-level evidence or no authored Practice path). Owning validators remain authoritative for dangling IDs, duplicate IDs and controlled vocabularies.
+
+The following broader rules remain candidates for future, owned audits:
 - dangling page/concept/resource/source references;
 - duplicate IDs and invalid controlled values (normally caught by owning validators);
 - inconsistent FR/EN page structure or missing expected counterpart;
@@ -307,7 +290,7 @@ Measure recommendation precision on a manually reviewed sample before treating s
 
 ## 9. Command-line interface and output contracts
 
-Current command-line entry points (the earlier unified command family below is not implemented):
+Current command-line entry points (there is no unified `project_intelligence.py` command family):
 
 ~~~bash
 # Lightweight project counts and concept-centred coverage (Markdown by default)
@@ -321,35 +304,27 @@ uv run python site/tools/cross_graph_query.py --concept attention --concept entr
 ~~~
 
 
-Output contracts:
-- stable JSON keys and explicit schema version;
-- deterministic ordering (IDs, then canonical order where order is pedagogically meaningful);
-- no timestamps in deterministic content unless supplied as snapshot metadata;
-- Markdown summary for human review;
-- CSV only for flat tabular exports;
-- non-zero exit status for command failure or configured blocking diagnostics, not for every informational gap.
+Current output contracts:
+- `report_project_index.py` emits a versioned JSON report or Markdown summary; JSON includes checkout commit, whether `site/` or `data/` inputs are modified, inputs, exclusions, units, counts, page selection, coverage-state counts and bilingual review findings.
+- `cross_graph_query.py` emits deterministic JSON records for typed paths and explicit gaps; it currently has no separate top-level schema-version field.
+- CSV output, a shared CLI dispatcher and a generalized blocking-diagnostic exit contract are not implemented.
 
 `report_project_index.py` currently emits Markdown or JSON; `cross_graph_query.py` emits typed JSON paths/gaps. There is no CSV output or unified command dispatcher yet. Any future CLI should reuse the same API and result models as tests and other scripts.
 
 ## 10. Testing, CI and evidence
 
-Required tests:
-1. Synthetic fixtures for each entity and edge family, including bilingual pairs, shared pages and optional route membership.
-2. Forward/reverse symmetry for each directed relation family and the documented single-storage behavior for symmetric relations.
-3. Counting semantics: unique pages vs route memberships vs logical topics vs concepts.
-4. No false inference from matching tags, headings, titles, page order, citations or shared domains.
-5. Dangling references and intentionally optional/missing associations.
-6. Deterministic output across repeated builds and filesystem enumeration order.
-7. Impact analysis with bounded traversal and cycle-safe behavior.
-8. Cache invalidation equivalence to a full rebuild if/when caching is added.
-9. CLI JSON/Markdown/CSV schema and exit codes.
-10. Scale fixtures at increasing page/concept/relation/source counts, with separate timing and memory measurements.
+Existing tests cover ProjectIndex integrity and forward/reverse page/resource/revision lookups, concept coverage states and explicit cross-graph evidence paths/gaps. PR #1535 adds five real concept cases with explicit gap checks.
 
-CI integration should be staged:
-- first run focused unit tests and read-only CLI smoke tests;
-- then add non-blocking report artifacts to CI;
-- only promote diagnostics to blocking checks after false-positive review and explicit ownership;
-- retain all current canonical validators and full-corpus integrity checks.
+Remaining test targets:
+1. Complete route-stage query/count semantics and bilingual logical-topic counts.
+2. Full source/extraction locator inventory and computation/Practice mapping coverage.
+3. Build milestone/evidence crosswalk and historical/decision traversal if those owners become machine-readable.
+4. Deterministic general diagnostics, false-positive review and stale/freshness semantics.
+5. Unified CLI schema/exit codes only if multiple consumers justify it.
+6. Scale fixtures at increasing page/concept/relation/source counts, with separate timing and memory measurements.
+7. Cache invalidation equivalence to a full rebuild only if caching is introduced.
+
+Current CI runs the repository test suite and the revision-coverage audit that exercises ProjectIndex against actual pages. The coverage report and opt-in cross-graph query are not yet published as regular CI artifacts. Keep diagnostics non-blocking until false positives and ownership are reviewed; retain all existing canonical validators and full-corpus integrity checks.
 
 Record Python version, platform, dependency versions, fixture sizes, repetitions, medians and peak memory for benchmarks. Do not claim scale readiness from a static complexity argument alone.
 
@@ -418,17 +393,19 @@ Record Python version, platform, dependency versions, fixture sizes, repetitions
 
 ## 13. Initial acceptance criteria
 
-The first implementation slice is complete only when it can:
+## 13. Current acceptance state
 
-1. Report published page counts by language, destination, type and status.
-2. Report canonical Understand stages and core/optional page counts separately.
-3. Report Build milestones and lesson counts from their actual canonical owner, without guessing from page tags.
-4. Report unique concept counts and concept counts by domain/importance.
-5. Return all explicitly associated pages for a concept and all concepts explicitly associated with a page.
-6. Return incoming and outgoing page relations by relation type.
-7. Distinguish page records, logical bilingual topics, route memberships, concepts and relation counts.
-8. Produce deterministic machine-readable output with source commit and counting semantics.
-9. Demonstrate through tests that tags, headings, co-occurrence and navigation order are not silently promoted to semantic relations.
-10. Document which coverage dimensions are currently queryable and which require a separate explicit mapping.
+| Capability | State | Evidence / remaining boundary |
+|---|---|---|
+| Published page inventory, page filters and tag counts | Implemented | ProjectIndex stats and report_project_index.py; planned/retired pages are excluded. |
+| Understand stages and core/optional memberships | Partial | Route memberships are indexed and counted; a dedicated grouped route report is not yet exposed. |
+| Build milestones and implementation evidence | Not registered | No canonical machine-readable Build crosswalk; do not infer from page tags. |
+| Concepts, domains and importance counts | Implemented | ProjectIndex stats and concept coverage matrix. |
+| Concept↔page and page relation lookups | Implemented | Forward/reverse methods and typed PageEdge families. |
+| Page/resource/revision lookups | Implemented | Explicit IDs and derived reverse indexes; revision support is page-based only. |
+| Source/computation/route-focus/Practice evidence paths | Partial | Opt-in concept-centred cross_graph_query; it reports gaps and does not establish complete dimension coverage. |
+| Counting units and snapshot provenance | Implemented for report_project_index | Report JSON includes units, source commit and modified-input flag; cross-graph JSON still needs a top-level schema version. |
+| No false inference from tags, titles, co-occurrence or order | Tested for implemented query paths | Keep the rule in any new adapter and add a regression case for each new relation family. |
+| Complete diagnostics, history/decision traversal and recommendations | Not implemented | Remain deferred under #1233 and the Project Intelligence backlog.
 
 This design complements [issue #1233](https://github.com/JM-Brun/llm-lab/issues/1233): the PIL provides a general, reusable project inventory/query foundation, while #1233 owns evidence-aware cross-domain discovery, typed bridges and decision traceability. The implementation should coordinate with #1233 and related graph/source issues rather than duplicate their work.
