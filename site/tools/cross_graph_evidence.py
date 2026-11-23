@@ -218,15 +218,11 @@ def load_cross_graph_evidence_projection(
     extraction_items_by_id: dict[str, ExtractionItemRecord] = {}
     extraction_items_by_concept: dict[str, list[str]] = defaultdict(list)
     extraction_root = root / "data" / "extractions"
-    extraction_paths = sorted(
-        (*extraction_root.glob("*.yml"), *extraction_root.glob("*.yaml"))
-    )
+    extraction_paths = sorted((*extraction_root.glob("*.yml"), *extraction_root.glob("*.yaml")))
     for extraction_path in extraction_paths:
         extraction_data = load_yaml(extraction_path)
         if not isinstance(extraction_data, dict):
-            raise ValueError(
-                f"{extraction_path.relative_to(root).as_posix()}: expected a mapping"
-            )
+            raise ValueError(f"{extraction_path.relative_to(root).as_posix()}: expected a mapping")
         source_id = extraction_data.get("source_id")
         if not isinstance(source_id, str) or source_id not in sources_by_id:
             raise ProjectIndexIntegrityError(
@@ -480,9 +476,7 @@ def load_cross_graph_evidence_projection(
                 target=type(stage_pages_data).__name__,
             )
         stage_pages = [
-            page_id
-            for language in ("fr", "en")
-            for page_id in stage_pages_data.get(language, [])
+            page_id for language in ("fr", "en") for page_id in stage_pages_data.get(language, [])
         ]
         focus_map = stage.get("conceptual_focus") or {}
         if not isinstance(focus_map, dict):
@@ -530,9 +524,7 @@ def load_cross_graph_evidence_projection(
                             relation=f"conceptual_focus.{role}",
                             target=raw_reference,
                         )
-                    references.append(
-                        RouteFocusReference(role, reference_type, reference_id)
-                    )
+                    references.append(RouteFocusReference(role, reference_type, reference_id))
             if not references:
                 continue
             for page_id in matching_pages:
@@ -577,5 +569,3 @@ def load_cross_graph_evidence_projection(
         },
         unresolved_route_focus=tuple(sorted(unresolved_route_focus)),
     )
-
-
