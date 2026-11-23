@@ -687,17 +687,13 @@ def test_advanced_lessons_link_to_topic_exercise_collections() -> None:
     # Both directions are authored so readers can navigate from either page.
     for lesson_id, practice_id, path, target in expected:
         assert any(
-            edge.source == lesson_id
-            and edge.target == practice_id
-            and edge.family == "related"
+            edge.source == lesson_id and edge.target == practice_id and edge.family == "related"
             for edge in index.page_edges
         )
         source = (ROOT / path).read_text(encoding="utf-8")
         assert target in source
         assert any(
-            edge.source == practice_id
-            and edge.target == lesson_id
-            and edge.family == "related"
+            edge.source == practice_id and edge.target == lesson_id and edge.family == "related"
             for edge in index.page_edges
         )
 
