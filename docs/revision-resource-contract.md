@@ -178,7 +178,7 @@ No non-page revision-aid kind or resource → lesson revision relationship is im
 
 `site/tools/audit_revision_coverage.py` now consumes `ProjectIndex` revision assessments and reverse aid links. It reports the revision status for each Understand/Build lesson and the explicit page-based aids attached to it. It no longer assigns every lesson an unconditional `not_assessed` without inspecting page-aid declarations.
 
-The migration inventory in PR [#1550](https://github.com/JM-Brun/llm-lab/pull/1550) records **50 typed revision-aid links across 40 pages** in its affected page neighborhood. This is a structural relation count, not a claim that every lesson has sufficient revision support.
+The latest CI revision-coverage artifact on 2026-11-23 inventories **46 Understand pages and 16 Build pages**. All 62 currently declare `integrated_sufficient` with explicit section evidence. The inventory records **50 typed page-aid links across 40 pages**: 6 Understand pages have no page aid but declare integrated support, and all 16 Build pages use integrated support without a page-based aid. PR #1550's affected page/resource closure contains 184 associated page records and zero unresolved associated page/resource IDs. These are authored coverage states and structural integrity results, not independent proof of learner comprehension or pedagogical quality.
 
 The generator does not discover non-page files as revision aids. Implementation-resource associations remain a separate field.
 
@@ -195,7 +195,7 @@ The page-based revision relation is **implemented and exercised through ProjectI
 - page-based relationships and lesson assessments are parsed and validated by ProjectIndex;
 - `check_page_metadata.py` does not validate these fields; the CI-invoked ProjectIndex revision audit is the semantic validation boundary, avoiding duplicate validators;
 - the non-page resource registry does not support revision-aid resources;
-- the revision inventory projects page-based aids and assessments but not non-page aids;
+- the revision inventory projects page-based aids and assessments but not non-page aids; the current all-integrated-sufficient statuses are recorded editorial judgements, not learner-validation evidence;
 - the reader-facing peer Review route remains a separate projection owned by [#1541](https://github.com/JM-Brun/llm-lab/issues/1541).
 
 Do not create a second revision registry. Reconcile the existing adapter, validator and contract before expanding the model.
