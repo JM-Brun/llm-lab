@@ -36,23 +36,23 @@ Une idée consiste à transformer cette coordonnée en plusieurs caractéristiqu
 
 ## Une même coordonnée, plusieurs échelles
 
-Considérons une coordonnée normalisée (x in [0,1]) et la fonction :
+Considérons une coordonnée normalisée $x \in [0,1]$ et la fonction :
 
 $$
 f(x)=\sin(16\pi x).
 $$
 
-Cette fonction effectue huit oscillations sur l’intervalle ([0,1]). Quelques valeurs suffisent à le voir :
+Cette fonction effectue huit oscillations sur l’intervalle [0,1]. Quelques valeurs suffisent à le voir :
 
-| (x) | (16\pi x) | (f(x)) |
+| $x$ | $16\pi x$ | $f(x)$ |
 |---:|---:|---:|
-| (0) | (0) | (0) |
-| (1/32) | (\pi/2) | (1) |
-| (1/16) | (\pi) | (0) |
-| (3/32) | (3\pi/2) | (-1) |
-| (1/8) | (2\pi) | (0) |
+| 0 | 0 | 0 |
+| $1/32$ | $\pi/2$ | 1 |
+| $1/16$ | $\pi$ | 0 |
+| $3/32$ | $3\pi/2$ | -1 |
+| $1/8$ | $2\pi$ | 0 |
 
-Une lecture linéaire du seul nombre (x) ne peut pas reproduire exactement cette oscillation. En revanche, si l’entrée contient déjà la caractéristique (\sin(16\pi x)), une simple lecture linéaire peut retrouver (f(x)) exactement : il suffit de lui donner un poids égal à 1 sur cette coordonnée.
+Une lecture linéaire du seul nombre (x) ne peut pas reproduire exactement cette oscillation. En revanche, si l’entrée contient déjà la caractéristique $\sin(16\pi x)$, une simple lecture linéaire peut retrouver (f(x)) exactement : il suffit de lui donner un poids égal à 1 sur cette coordonnée.
 
 Ce petit exemple ne prouve pas qu’un réseau non linéaire serait incapable d’apprendre cette fonction à partir de (x). Il montre autre chose : **la représentation choisie détermine quelles variations sont directement accessibles à une lecture donnée**.
 
@@ -128,16 +128,16 @@ $$
 g(x)=\sin(2\pi x)+0{,}2\sin(16\pi x).
 $$
 
-On dispose d’abord d’une lecture linéaire alimentée uniquement par les caractéristiques (\sin(2\pi x)) et (\cos(2\pi x)).
+On dispose d’abord d’une lecture linéaire alimentée uniquement par les caractéristiques (\sin(2\pi x)) et $\cos(2\pi x)$.
 
-**Question :** cette représentation suffit-elle pour reconstruire exactement (g) ? Quelle caractéristique faut-il ajouter pour rendre les deux composantes directement accessibles ?
+**Question :** cette représentation suffit-elle pour reconstruire exactement $g$ ? Quelle caractéristique faut-il ajouter pour rendre les deux composantes directement accessibles ?
 
 <details>
 <summary>Voir la solution</summary>
 
-Non. La banque initiale donne accès à la fréquence d’un cycle sur l’intervalle, mais pas directement à celle de huit cycles. Il faut ajouter au minimum la caractéristique (\sin(16\pi x)). Une banque symétrique peut ajouter la paire (\sin(16\pi x),\cos(16\pi x)).
+Non. La banque initiale donne accès à la fréquence d’un cycle sur l’intervalle, mais pas directement à celle de huit cycles. Il faut ajouter au minimum la caractéristique $\sin(16\pi x)$. Une banque symétrique peut ajouter la paire $\sin(16\pi x),\cos(16\pi x)$.
 
-Une lecture linéaire peut alors reconstruire le signal en combinant la première composante avec un poids de 1 et la seconde avec un poids de 0,2. Cela démontre une propriété de cette représentation et de cette lecture linéaire ; cela ne signifie pas qu’un MLP sans ces caractéristiques serait incapable d’apprendre (g).
+Une lecture linéaire peut alors reconstruire le signal en combinant la première composante avec un poids de 1 et la seconde avec un poids de 0,2. Cela démontre une propriété de cette représentation et de cette lecture linéaire ; cela ne signifie pas qu’un MLP sans ces caractéristiques serait incapable d’apprendre $g$.
 
 </details>
 
