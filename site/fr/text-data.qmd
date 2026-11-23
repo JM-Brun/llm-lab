@@ -32,14 +32,13 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 ::: {.chapter-lead}
 Dans le panorama, le modèle prédit le prochain token à partir du préfixe « C'est une bonne situation, ça, scribe ? ». Sous quelle forme reçoit-il cette question ?
 
-Un **tokenizer**
- découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
+Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
 :::
 
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
 
 ::: {#tokenizer-output}
-Préfixe exact à copier (apostrophe droite `'`, U+0027, et non apostrophe typographique `’`, U+2019) : `C'est une bonne situation, ça, scribe ?`. Les deux caractères ne s’encodent pas avec les mêmes octets en UTF-8 et le découpage peut s’en trouver modifié. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
+Préfixe exact à copier (apostrophe droite `'`, U+0027, et non apostrophe typographique `’`, U+2019) : Les deux caractères ne s’encodent pas avec les mêmes octets en UTF-8 et le découpage peut s’en trouver modifié. `C'est une bonne situation, ça, scribe ?`. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
 
 Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
 
@@ -66,8 +65,7 @@ La [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace) reproduit l
 
 La différence de découpage vient des règles de pré-tokenisation, pas de la qualité des vocabulaires : celle de `cl100k_base` sépare l’espace du nombre qui suit et regroupe les nombres par tranches d’au plus trois chiffres, d’où les tokens réduits à une seule espace (`␠`). Le BPE byte-level de GPT-2 fusionne directement l’espace avec l’opérateur ou le chiffre suivant. Ces listes ne contiennent aucun token spécial : `tiktoken` n’insère pas de token de début de séquence par défaut, alors que certaines bibliothèques, par exemple `transformers` avec GPT-2, préfixent un tel token ; vérifiez ce comportement avant de comparer vos propres traces.
 
-::: {.callout-tip title="To
-ken, ID et plongement" #revision-summary}
+::: {.callout-tip title="Token, ID et plongement" #revision-summary}
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
 :::
 
@@ -87,10 +85,9 @@ Le **token** est l'unité issue du découpage. L'**ID** est son numéro de réf�
 
 ## Pourquoi le découpage compte {#ce-que-la-tokenisation-change-et-ce-quelle-ne-dit-pas}
 
-- **Capacité.** Une fenêtre de contexte donnée (par exemple 8\u202F000 tokens) admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
+- **Capacité.** Une fenêtre de contexte donnée (par exemple 8 000 tokens) admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
 - **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
-- **Langues.** Deux traductions d'un même passage peuvent consommer des nombres
- de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+- **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
 [Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
@@ -117,7 +114,7 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 
 ### Encoder le préfixe et la continuation
 
-La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s’appuie au premier pas de génération.
+La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s'appuie au premier pas de génération.
 
 **Critère de réussite :** chaque liste d’IDs se décode exactement en son texte d’origine, le préfixe et la continuation sont encodés séparément sans fusion au point de jonction, et la décomposition affichée par la trace confirme le découpage du préfixe.
 
@@ -127,8 +124,7 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 flowchart TB
     A["Texte source"] --> B["Prétraitement éventuel"]
     B --> C["Tokeniseur"]
-    C --> D["Tok
-ens"]
+    C --> D["Tokens"]
     D --> E["IDs entiers"]
     E --> F["Lookup dans la table d'embeddings"]
     F --> G["Embeddings des tokens"]
@@ -146,8 +142,7 @@ Le schéma regroupe le traitement positionnel et le Transformer. Certaines archi
 
 ### Deux usages, deux parcours {#deux-usages-deux-parcours}
 
-Le tokenizer associé au modèle code le prompt à l'inférence et le corpus utilisé pour l'entraîner. À l'inférence, le tokenizer est déjà fixé. En pré-entraînement, la [préparation du corpus](corpus-preparation.qmd) traite le choix des sources, la provenance, le filtrage, la déduplication, le partitionnement et l'ajustement du tokenizer avant de le fixer. La normalisation et la pré-tokenisation, lorsqu'elles sont utilisées, opèrent sur le texte dans le tokenizer. Les [exemples d'entraînement](training-examples.qmd) montrent comment transformer le flux d'IDs en fenêtres d'entrée, en cibles décalées et
- en masques, et comment regrouper plusieurs séquences dans une fenêtre (*packing*).
+Le tokenizer associé au modèle code le prompt à l'inférence et le corpus utilisé pour l'entraîner. À l'inférence, le tokenizer est déjà fixé. En pré-entraînement, la [préparation du corpus](corpus-preparation.qmd) traite le choix des sources, la provenance, le filtrage, la déduplication, le partitionnement et l'ajustement du tokenizer avant de le fixer. La normalisation et la pré-tokenisation, lorsqu'elles sont utilisées, opèrent sur le texte dans le tokenizer. Les [exemples d'entraînement](training-examples.qmd) montrent comment transformer le flux d'IDs en fenêtres d'entrée, en cibles décalées et en masques, et comment regrouper plusieurs séquences dans une fenêtre (*packing*).
 
 ### Choisir un approfondissement {#frontières-entre-les-pages}
 
