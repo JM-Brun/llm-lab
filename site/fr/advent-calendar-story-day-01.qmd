@@ -76,7 +76,7 @@ Prenons un exemple volontairement artificiel. Si le mot de rang 1 apparaît 1 00
 
 Ces nombres ne sont pas des mesures d'un corpus français. Ils illustrent seulement la conséquence arithmétique de l'approximation avec \(C=1000\) et \(\alpha=1\).
 
-![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency width=95%}
+![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency fig-alt="Sur des axes logarithmiques, la courbe synthétique f(r)=1000/r descend de 1 000 occurrences au rang 1 à 1 occurrence au rang 1 000 ; sa pente vaut −1." width=95%}
 
 *Exemple synthétique : sur des axes logarithmiques, la relation \(f(r)=C/r\) devient une droite de pente \(-1\). Une vraie distribution de corpus n'est pas tenue de suivre exactement cette droite.*
 
@@ -100,7 +100,7 @@ La loi porte le nom de George Kingsley Zipf, qui a popularisé cette régularit�
 
 Cependant, il serait excessif d'en conclure que toute distribution lexicale suit exactement une loi de puissance d'exposant 1. Les distributions observées présentent des écarts, notamment aux extrémités du classement. D'autres modèles peuvent mieux décrire certains corpus.
 
-Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences réduit cette corrélation. Cela ne règle toutefois pas tous les biais d'estimation : des travaux ultérieurs montrent que les estimateurs de l'exposant peuvent rester biaisés, notamment lorsque les rangs empiriques sont incertains dans la traîne rare.
+Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Un mot surestimé par hasard gagne en fréquence mesurée et remonte dans le classement : ses deux coordonnées sont donc liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences réduit cette corrélation. Cela ne règle toutefois pas tous les biais d'estimation : des travaux ultérieurs montrent que les estimateurs de l'exposant peuvent rester biaisés, notamment lorsque les rangs empiriques sont incertains dans la traîne rare.
 
 La loi de Zipf est donc une **approximation descriptive utile**, pas une explication universelle de l'origine du langage ni un mécanisme causal démontré. Plusieurs facteurs linguistiques et statistiques peuvent contribuer à la forme observée.
 
@@ -146,3 +146,7 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 - [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — approximation rang-fréquence, limites des ajustements simples et piège d'estimation sur le même corpus.
 - [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.\n- [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
+
+::: {.language-switch}
+**Langue :** [Français](advent-calendar-story-day-01.qmd) · [English](../en/advent-calendar-story-day-01.qmd)
+:::
