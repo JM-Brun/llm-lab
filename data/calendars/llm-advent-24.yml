@@ -50,6 +50,7 @@ days:
       fr: "Expliquer qu'un modèle autorégressif attribue une distribution conditionnelle au prochain token."
       en: "Explain that an autoregressive model assigns a conditional distribution to the next token."
     concepts: [next-token-prediction, conditional-distribution]
+    calendar_pages: [fr/advent-calendar/day-01, en/advent-calendar/day-01]
     lesson_pages: [fr/llm-overview, en/llm-overview]
     computational_nodes: [raw-text-context, forward-computation, logits, vocabulary-softmax, next-token-distribution]
     practice_pages: [fr/llm-overview-exercises, en/llm-overview-exercises]
@@ -67,6 +68,7 @@ days:
       fr: "Distinguer le préfixe effectivement fourni au modèle de la suite qu'il doit prédire."
       en: "Distinguish the prefix supplied to the model from the continuation it must predict."
     concepts: []
+    calendar_pages: [fr/advent-calendar/day-02, en/advent-calendar/day-02]
     lesson_pages: [fr/llm-overview, en/llm-overview]
     practice_pages: [fr/llm-overview-exercises, en/llm-overview-exercises]
     computational_nodes: [raw-text-context, token-context]
@@ -84,6 +86,7 @@ days:
       fr: "Suivre un exemple de texte jusqu'à sa segmentation en tokens."
       en: "Trace a text example through token segmentation."
     concepts: [token]
+    calendar_pages: [fr/advent-calendar/day-03, en/advent-calendar/day-03]
     lesson_pages: [fr/text-data, en/text-data]
     computational_nodes: [tokenization, tokens]
     practice_pages: [fr/text-data-exercises, en/text-data-exercises]
