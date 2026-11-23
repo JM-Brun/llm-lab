@@ -1,0 +1,85 @@
+---
+title: "Day 2 — What information does the model have?"
+description: "Distinguish the prefix supplied to the model from the next token it must predict."
+keywords: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:en", "status:published"]
+lang: en
+toc: false
+page-layout: custom
+css: ../../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/advent-calendar/day-02"
+summary: "A distinction between the prefix currently available to the model and the continuation that remains to be predicted."
+scope: "Defines the immediate context as the token prefix supplied at a given step; excludes application-level context design."
+purpose: "Trace how the prefix is updated when a selected token is fed back during generation."
+suggested_route:
+  previous: "en/advent-calendar/day-01"
+  next: "en/advent-calendar/day-03"
+hierarchy:
+  parents: ["en/advent-calendar"]
+  children: []
+related: ["en/llm-overview", "en/generation", "en/context-engineering"]
+tags: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:en", "status:published"]
+-->
+
+<div class="advent-day-shell">
+  <nav class="advent-day-topnav" aria-label="Calendar navigation">
+    <a href="../advent-calendar.qmd">← Back to all 24 days</a>
+    <span>DAY 02 <span aria-hidden="true">/</span> 24</span>
+  </nav>
+  <div class="advent-day-progress" role="img" aria-label="Day two of twenty-four"><span style="width: 8.3333%"></span></div>
+  <p class="advent-day-kicker">THE CONTEXT · 5 MINUTES</p>
+  <p class="advent-day-lead">Yesterday, we saw that the model computes a distribution for the next token. But that distribution depends on a precise input: <strong>the prefix available to the model at that moment</strong>.</p>
+</div>
+
+## The question
+
+Which information can condition the next prediction?
+
+## The core idea
+
+At a given step, the model's **immediate context** is the token prefix actually supplied to it. The next token to predict comes after that prefix; it is not part of the context yet.
+
+During generation, the selected token is appended to the prefix. It then becomes available at the next step. The model computes a new distribution conditioned on this extended context.
+
+## Follow an example
+
+<ol class="advent-prefix-steps">
+  <li><span class="advent-step-label">Supplied prefix</span><strong>The cat</strong><small>This text is the current context.</small></li>
+  <li><span class="advent-step-label">Prediction</span><strong>A distribution for the next token</strong><small>The model does not yet know which continuation will be selected.</small></li>
+  <li><span class="advent-step-label">Illustrative selection</span><strong>sleeps</strong><small>Suppose the decoding rule selects this token.</small></li>
+  <li><span class="advent-step-label">New prefix</span><strong>The cat sleeps</strong><small>“sleeps” is now part of the context for the next step.</small></li>
+</ol>
+
+The second computation therefore does not start from the same context: the prefix has grown. The model parameters can remain unchanged; the conditioning input has changed.
+
+<div class="advent-note">
+  **A terminology note.** Here, “context” means only the model's immediate input at a given step. Designing an application context — instructions, retrieved documents, memory, or conversation history — is a broader topic covered elsewhere in LLM Lab.
+</div>
+
+## Check yourself
+
+The supplied prefix is now “The cat sleeps”. Is “sleeps” still the next token to predict?
+
+<details class="advent-answer">
+<summary>Show the answer</summary>
+
+No. “sleeps” is already part of the supplied prefix. The model computes a distribution for the token that follows “The cat sleeps”.
+
+</details>
+
+## Takeaway
+
+The context is the prefix available at the time of computation. A future token is not part of it until it has been supplied or fed back into the sequence.
+
+<div class="advent-day-resources">
+  <a href="../llm-overview.qmd"><strong>Canonical lesson</strong><span>Overview: context and generation</span></a>
+  <a href="../exercises/llm-overview.qmd"><strong>Practise</strong><span>Trace the steps of next-token prediction</span></a>
+</div>
+
+<nav class="advent-day-next" aria-label="Calendar navigation">
+  <a href="day-01.qmd">← Day 1</a>
+  <a href="day-03.qmd">Day 3 · Tokenization →</a>
+</nav>
