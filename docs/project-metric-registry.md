@@ -2,13 +2,13 @@
 
 **Status:** canonical measurement contract, v2 (2026-11-20).\
 **Scope:** deterministic structural metrics and coverage semantics for the Project Intelligence Layer (PIL).  
-**Authority:** this document is the canonical registry of PIL metric definitions. It does not replace or duplicate the canonical data files. Definitions are established; computation and the coverage matrix are separate implementation work.
+**Authority:** this document is the canonical registry of PIL metric definitions. It does not replace or duplicate the canonical data files. The concept-centred coverage matrix and ProjectIndex report are implemented for the currently enumerable dimensions; source/computation record adapters are opt-in; complete Build, Practice and concept-to-source/computation coverage mappings remain unregistered.
 
 ## 1. Purpose and boundaries
 
 This registry defines what a count or coverage statement means before a report computes it. It is a structural inventory, not a learner-outcome KPI catalogue. It must not be conflated with [Project KPIs](project-kpis.md), whose outcomes often require learner data, experiments or human review.
 
-The registry is documentation-first. A future Python catalogue may encode these definitions for execution, but it must not become a second source of truth. Canonical records remain in existing page metadata and registries.
+The registry remains documentation-first. A subset of these definitions is already computed by `project_coverage.py` and `report_project_index.py`, with opt-in source/computation records loaded by ProjectIndex. Keep implementation aligned with this registry, but do not create a second executable source of truth. Canonical records remain in existing page metadata and registries.
 
 ## 2. Mandatory metric definition
 
@@ -100,22 +100,24 @@ The current resource schema admits implementation resources. referenced_by is no
 | ID | Metric and definition | Unit | Canonical source/version | Implementation |
 |---|---|---|---|---|
 | PIL-REV-001 | Inventoried pages grouped by assessment state emitted by the revision inventory | page record | audit_revision_coverage.py output schema v1; page-map v1 | human_review |
-| PIL-REV-002 | Validated source-page to typed-target declarations grouped by role and target type | directed revision edge | Proposed revision contract; not an approved schema | not_registered |
-| PIL-REV-003 | Pages explicitly assessed as having revision support | page record | Future approved contract + revision inventory | not_registered |
+| PIL-REV-002 | Validated revision-aid page → eligible lesson page declarations grouped by controlled role | directed page association | Page-map v1 `revision_role`/`revision_of`; ProjectIndex revision adapter; CI revision inventory | available |
+| PIL-REV-003 | Published Understand/Build lesson pages grouped by explicit revision-support assessment and section evidence | page record | Page-map v1 `revision_support`; ProjectIndex; `audit_revision_coverage.py` output schema v1 | human_review |
 
-The inventory's not_assessed value is an audit placeholder, not a claim that a page lacks a recap, self-check or companion resource. Until the contract and validator are approved, PIL-REV-002/003 must not be reported as zero-coverage findings. The page validator does not currently validate a revision field.
+The inventory's `not_assessed` value is an assessment state, not a claim that a page lacks a recap, self-check or companion resource. The page-based relation contract is implemented and checked by ProjectIndex through the CI-invoked revision inventory; `check_page_metadata.py` does not duplicate those semantic checks. The latest CI snapshot inventories 46 Understand and 16 Build pages; all 62 currently declare `integrated_sufficient` with section evidence. This is an authored editorial assessment, not independent learner validation. Non-page revision aids remain unsupported.
 
 ### 4.6 Sources, computation, practice and Build
 
 | ID | Metric and definition | Unit | Canonical source/version | Implementation |
 |---|---|---|---|---|
-| PIL-SOURCE-001 | Unique source IDs | source record | data/sources.yml, schema_version 1 | adapter_pending |
-| PIL-SOURCE-002 | Extraction records and extraction item IDs, counted separately | record or item | data/extractions/; schema to be verified per family | adapter_pending |
-| PIL-COMP-001 | Unique computational node IDs | node | data/computational-graph.yml, schema_version 1 | adapter_pending |
-| PIL-COMP-002 | Stored typed directed computational edges | edge | Same computational graph | adapter_pending |
+| PIL-SOURCE-001 | Unique source IDs loaded by the opt-in evidence projection | source record | data/sources.yml, schema_version 1; opt-in `cross_graph_evidence.py` | available |
+| PIL-SOURCE-002 | Extraction records and extraction item IDs loaded by the opt-in evidence projection, counted separately | record or item | data/extractions/; opt-in `cross_graph_evidence.py` | available |
+| PIL-COMP-001 | Unique computational node IDs loaded by the opt-in evidence projection | node | data/computational-graph.yml, schema_version 1; opt-in `cross_graph_evidence.py` | available |
+| PIL-COMP-002 | Stored typed directed computational edges loaded by the opt-in evidence projection | edge | Same computational graph and adapter | available |
 | PIL-PRACTICE-001 | Reviewed typed page/concept-to-exercise, test or experiment associations only | association | No complete canonical crosswalk established | not_registered |
 | PIL-BUILD-001 | Unique Build milestone IDs in an approved machine-readable registry | milestone | docs/learning-path.md is narrative, not a validated milestone registry | not_registered |
 | PIL-BUILD-002 | Explicit milestone-to-page and milestone-to-code/test evidence associations | association | No complete machine-readable crosswalk established | not_registered |
+
+The source/computation inventory metrics are available through the opt-in evidence projection, not the default ProjectIndex report. The latest source-coverage report counts 520 atomic items across 100 extraction files (#1306); a current full-corpus locator-quality audit is still required. This does not change the separate concept-coverage dimensions, which remain `not_registered` until complete reviewed concept bridges exist.
 
 File presence, filename similarity, imports, test proximity and textual mentions do not create practice or Build associations.
 
@@ -129,10 +131,10 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | teaching_pages | Explicit page IDs in concepts[].resources resolved to published pages | concepts.yml v2 + page-map v1 | available |
 | understand | Associated page has explicit core/optional membership in guided route | Concept/page associations + route schema v1 | available |
 | build | Reviewed milestone/page/evidence association | No machine-readable milestone crosswalk | not_registered |
-| computation | Explicit concept-to-computational-node bridge | No canonical bridge established | not_registered |
+| computation | Explicit concept-to-computational-node bridge | Computational node/edge inventory adapter exists; no complete canonical concept bridge | not_registered |
 | resources | Explicit first-class resource association | resources.yml v1 + ProjectIndex | available |
 | revision_support | Editorial assessments of associated Understand/Build lessons and their explicit section anchors or companion aids | Page-map v1 through the ProjectIndex revision adapter | human_review |
-| sources | Explicit concept IDs in source/extraction records with valid lineage | sources.yml and extraction manifests; adapter pending | not_registered |
+| sources | Complete explicit concept-to-source/item evidence mapping with valid lineage | sources.yml and extraction manifests; opt-in evidence adapter exists but no complete coverage crosswalk | not_registered |
 | practice | Explicit reviewed exercise/test/experiment mapping | No complete canonical mapping | not_registered |
 | bilingual_parity | Explicit concept links to both published counterparts of every associated localized page topic | concepts.yml v2 + page-map v1 pairing by `topic` | available |
 
@@ -143,7 +145,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | present | Positive explicit evidence exists and resolves |
 | missing | An expected association is absent; only when an approved completeness/eligibility rule defines the expectation and the source is exhaustive |
 | not_applicable | Dimension does not apply, supported by a documented rule or reviewed decision |
-| not_registered | No canonical mapping or adapter exists to determine this dimension |
+| not_registered | No complete canonical mapping or coverage crosswalk exists to determine this dimension; partial inventory adapters may still exist |
 | needs_review | Evidence is ambiguous, incomplete or requires editorial judgment |
 | not_assessed | An assessment has not been performed; never use as a synonym for missing |
 
@@ -151,7 +153,9 @@ Each cell must include evidence IDs/paths and the rule assigning its state. pres
 
 ### 5.2 Revision-support scope
 
-The revision adapter supplies assessments for published Understand and Build lessons. An optional Deepen page contributes to Understand route membership and stays outside revision assessment. An explicit `not_applicable` lesson assessment retains its rationale in the evidence and is excluded from the aggregation.
+The revision adapter supplies assessments for published Understand and Build lessons. The latest CI inventory contains 46 Understand and 16 Build pages; all 62 currently declare `integrated_sufficient` with explicit section evidence. Six Understand pages have no page-based revision aid but declare integrated support; all 16 Build pages rely on integrated support without page-based aids. An optional Deepen page contributes to Understand route membership and stays outside revision assessment. An explicit `not_applicable` lesson assessment retains its rationale in the evidence and is excluded from the aggregation.
+
+These statuses are authored coverage judgements. They establish that the model has been assessed and that evidence anchors exist; they do not prove that learners can retrieve the knowledge or that the support is pedagogically sufficient.
 
 | Applicable lesson assessments for one concept | Matrix state |
 |---|---|
