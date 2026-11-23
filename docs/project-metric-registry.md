@@ -8,7 +8,7 @@
 
 This registry defines what a count or coverage statement means before a report computes it. It is a structural inventory, not a learner-outcome KPI catalogue. It must not be conflated with [Project KPIs](project-kpis.md), whose outcomes often require learner data, experiments or human review.
 
-The registry is documentation-first. A future Python catalogue may encode these definitions for execution, but it must not become a second source of truth. Canonical records remain in existing page metadata and registries.
+The registry remains documentation-first. A subset of these definitions is already computed by `project_coverage.py` and `report_project_index.py`, with opt-in source/computation records loaded by ProjectIndex. Keep implementation aligned with this registry, but do not create a second executable source of truth. Canonical records remain in existing page metadata and registries.
 
 ## 2. Mandatory metric definition
 
