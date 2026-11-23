@@ -391,19 +391,20 @@ The landing page and six bilingual daily pages (days 01–03) were merged throug
 
 - Python quality and domain checks passed.
 - Secret scanning passed.
-- The test suite reported **802 passed, 1 skipped, 2 failed**. Both failures are the freshness checks for `site/includes/generated-map-data-fr.qmd` and `site/includes/generated-map-data-en.qmd`. The generator named by the test is `site/tools/build_learning_map.py`; the tracked generated fragments must be refreshed from the canonical page metadata and concept registry, then committed.
+- The test suite reported **802 passed, 1 skipped, 2 failed**. Both failures were freshness checks for `site/includes/generated-map-data-fr.qmd` and `site/includes/generated-map-data-en.qmd`. Both files have since been regenerated with the canonical `site/tools/build_learning_map.py` generator and committed; the full suite must be rerun to verify the failures are resolved.
 - The Quarto browser audit rendered the site but failed its accessibility gate on the closing CTA's colour contrast in both languages. The CTA now has an explicit light background and dark foreground in `site/styles/advent-calendar.css`; the browser audit must be rerun to verify the computed contrast.
 - An earlier screenshot artifact captured an intermediate revision in which nested HTML was displayed literally. The source was subsequently corrected and merged. Do not use those earlier screenshots as evidence of the final rendering; generate a fresh artifact from the current branch.
 
 ### Work completed after merge
 
 - Added an explicit high-contrast surface and foreground to the closing CTA, including hover and keyboard-focus states.
+- Regenerated and committed the French and English learning-map payloads with the repository's canonical generator. The temporary regeneration workflow used to obtain the generated artifacts has been removed; no permanent per-calendar workflow was introduced.
 - Corrected the pilot document's daily-page paths to the flat Quarto paths actually used by the site.
 - Added this post-merge validation record so the release gate distinguishes completed implementation from pending verification.
 
 ### Remaining tasks, in priority order
 
-1. **Regenerate learning-map artifacts.** Run `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py` from the repository root. Review the resulting diff; it should update the generated FR/EN map payloads without hand-editing JSON or duplicating metadata. Commit all intended generated outputs together.
+1. ~~**Regenerate learning-map artifacts.**~~ Done with `site/tools/build_learning_map.py`; the generated FR/EN map payloads were committed from canonical sources, not hand-edited.
 2. **Rerun CI and browser audit.** Require the two map freshness tests to pass, then confirm the CTA passes axe colour-contrast checks in FR/EN and that the final hero/outro render as styled HTML. Keep the new screenshots and audit report as the evidence for the final revision.
 3. **Review the daily pages at learner level.** Test days 01–03 with at least one novice reader. Record actual time-on-task, whether the active check is answerable without guessing, whether the learner can transfer the idea to a changed example, and whether the canonical follow-up is discoverable. The 5–8 minute duration remains a hypothesis until measured.
 4. **Complete the content pilot.** Review the planned contrast set: tokenization (day 03), Q/K/V (day 09), and cross-entropy (day 21). Check scientific precision, exercise alignment, and bilingual parity before scaling the short-form template.
