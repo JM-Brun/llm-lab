@@ -227,3 +227,88 @@ Cross-entropy is defined directly for target distribution `q` and predicted dist
 ### Registry coverage boundary
 
 The historical edge review above covered 66 retained relation assertions at its recorded state. The current registry had 125 assertions immediately before this targeted removal and has 124 afterward. Therefore, 66 reviewed assertions must not be presented as a complete review of the current registry; 58 current assertions remain outside that historical review. This targeted correction does not claim to audit those other assertions.
+
+## Complete review of the 58 assertions added after the 66-edge baseline — 2026-11-23
+
+The 2026-11-22 issue reconciliation identified 58 current assertions outside the earlier 66-edge semantic review. I compared all 58 with their bilingual endpoint definitions, the 12 relation-type definitions, the existing graph contract, and the relevant source reviews. This is a semantic fit review of the selected concept graph; it does not claim that every relation is an execution dependency or a prerequisite.
+
+| # | Current pre-review assertion | Decision | Semantic assessment |
+|---:|---|---|---|
+| 1 | `free-energy-principle → contributes-to → active-inference` | Accept, scoped | The Free Energy Principle provides a theoretical framing for active inference. Active inference is a specific perception–action framework, not a synonym for the whole FEP. |
+| 2 | `active-inference → contrasts-with → aixi` | Accept, scoped | Both are formal agent frameworks, but they use different foundations and objectives. “Contrasts with” marks a useful distinction, not mutual exclusivity or opposition. |
+| 3 | `predictive-compression → applies-to → conditional-distribution` | Correct direction and type | The conditional distribution supplies probabilities used by predictive coding. Replace with `conditional-distribution → contributes-to → predictive-compression`; the original direction treated the distribution as a context to which the coding method applies. |
+| 4 | `predictive-compression → contributes-to → entropy-coding` | Accept | Predictive probabilities determine symbol code lengths and can feed an entropy coder. |
+| 5 | `arithmetic-coding → part-of → entropy-coding` | Accept | Arithmetic coding is a member of the entropy-coding family. |
+| 6 | `model-compression → contrasts-with → predictive-compression` | Accept, scoped | The concepts distinguish compression of model representation/execution from compression of data sequences. They are not opposites and can be used together. |
+| 7 | `pruning → part-of → model-compression` | Accept | Removing weights or structures is a recognized model-compression method. Actual storage/latency gains depend on sparsity structure and hardware. |
+| 8 | `quantization → part-of → model-compression` | Accept | Reduced numerical precision is a model-compression technique; quality and speed trade-offs depend on the implementation. |
+| 9 | `knowledge-distillation → part-of → model-compression` | Weaken relation | Distillation can support compression when a smaller student replaces a larger teacher, but distillation is not inherently compression. Replace `part-of` with `contributes-to` to avoid making the narrower use case universal. |
+| 10 | `surprisal → contributes-to → predictive-compression` | Accept | Ideal code length is proportional to surprisal, `-log p(x)`, under the chosen logarithm base and coding assumptions. |
+| 11 | `document-retrieval → contributes-to → retrieval-augmented-generation` | Accept | Retrieval supplies external documents/passages made available to the generative model. |
+| 12 | `retrieval-augmented-generation → contributes-to → context-engineering` | Accept, scoped | RAG is one way to select and supply external context; it is not the whole context-engineering practice. |
+| 13 | `persistent-memory → contributes-to → context-engineering` | Accept, scoped | Persistent information can be selected and incorporated into a later model context; storage alone is not context engineering. |
+| 14 | `fine-tuning → part-of → post-training` | Accept | Fine-tuning a pretrained model is one family of post-training procedures. |
+| 15 | `context-injection → contrasts-with → fine-tuning` | Accept, scoped | This distinguishes changing the input context from changing model parameters. The techniques can coexist in one system and are not opposites. |
+| 16 | `context-injection → contributes-to → in-context-learning` | Accept | Supplying selected information in the prompt can provide the context on which in-context adaptation operates. |
+| 17 | `document-retrieval → contrasts-with → in-context-learning` | Remove | Retrieval is an information-acquisition mechanism; in-context learning is a model behaviour. Retrieval can supply examples/context for in-context learning, so the two are compatible rather than a meaningful contrast. |
+| 18 | `policy-gradient → part-of → post-training` | Accept, scoped | Policy-gradient methods are used in some post-training procedures, especially reinforcement-learning-based adaptation; they do not characterize all post-training. |
+| 19 | `score-function → part-of → policy-gradient` | Accept | The gradient of log policy probability is a central term in policy-gradient estimators. It is distinct from an attention compatibility score. |
+| 20 | `off-policy-reinforcement-learning → part-of → post-training` | Accept, scoped | Off-policy RL can be used for post-training from trajectories generated by a behaviour policy. This is one procedure, not a property of all post-training. |
+| 21 | `training-inference-mismatch → constrains → policy-gradient` | Accept, scoped | A mismatch between rollout and trainer distributions can affect the validity/stability of policy-gradient updates. It is a regime-dependent constraint, not a definition of policy gradient. |
+| 22 | `score-centering → applies-to → off-policy-reinforcement-learning` | Accept | The reviewed method is an additive score correction for specified off-policy mismatch settings. Its assumptions and compatible correction families remain explicit in the source review. |
+| 23 | `attention-score → contrasts-with → score-centering` | Accept | The relation prevents a naming collision: an attention compatibility score is not the gradient of a policy log-probability. |
+| 24 | `importance-sampling → contrasts-with → score-centering` | Accept, scoped | Importance sampling uses multiplicative probability-ratio weights; score centering subtracts an additive sampler-expected score. They are distinct but can be composed in compatible configurations, so this is not an exclusivity claim. |
+| 25 | `importance-sampling → applies-to → off-policy-reinforcement-learning` | Accept | Importance sampling corrects expectations when samples come from a behaviour distribution different from the target distribution, subject to support and variance conditions. |
+| 26 | `chat-template → contributes-to → instruction-tuning` | Accept, scoped | A chat template serializes roles, boundaries and control markers for instruction examples. It supports the data/model interface but is not required by every instruction-tuning setup. |
+| 27 | `dataset-curation → contributes-to → pretraining` | Accept | Selection, filtering, structuring and documentation of a corpus contribute to pretraining data quality and composition. |
+| 28 | `dataset-curation → contributes-to → post-training` | Accept | Post-training datasets also require task- and objective-specific curation. |
+| 29 | `group-relative-policy-optimization → part-of → post-training` | Accept, scoped | GRPO is one policy-optimization method used in some post-training pipelines; the edge does not imply that all post-training uses GRPO. |
+| 30 | `policy-gradient → part-of → group-relative-policy-optimization` | Accept | GRPO is a policy-optimization method whose update uses policy log-probability gradients weighted by group-relative advantages. |
+| 31 | `context-engineering → contributes-to → in-context-learning` | Accept, scoped | Selecting and structuring relevant context can support in-context learning; it does not guarantee that the model will use that context effectively. |
+| 32 | `attention-mask → constrains → self-attention` | Accept | An attention mask controls which key positions may contribute to each query position. |
+| 33 | `padding-mask → constrains → self-attention` | Accept | A padding mask prevents inadmissible padding positions from contributing as context. |
+| 34 | `document-boundary-mask → constrains → self-attention` | Accept, scoped | This applies to packed sequences where tokens from different documents must not attend across document boundaries. |
+| 35 | `loss-mask → constrains → training-objective` | Accept | A loss mask selects target positions contributing to the objective; it does not determine attention visibility. |
+| 36 | `attention-mask → contrasts-with → loss-mask` | Accept | This is an important distinction between context admissibility and target-loss inclusion. The masks are not mutually exclusive and may both be used in one batch. |
+| 37 | `autoregressive-generation → contrasts-with → next-concept-modeling` | Accept, scoped | The concepts distinguish incremental next-token generation from hierarchical coarse-to-fine non-autoregressive generation. This does not imply that all systems must choose one family exclusively. |
+| 38 | `hierarchical-discrete-codes → part-of → next-concept-modeling` | Accept | Hierarchical discrete codes are the representation predicted level by level in the NCM definition. |
+| 39 | `coarse-to-fine-generation → part-of → next-concept-modeling` | Accept | NCM predicts successive levels from coarse to fine, with parallelism within a level. |
+| 40 | `multiscale-residual-vector-quantization → part-of → next-concept-modeling` | Accept, scoped | This is the tokenization/representation construction used by the described NCM formulation; do not generalize it to every possible hierarchical-code generator. |
+| 41 | `positive-pair-distribution → part-of → joint-embedding-predictive-architecture` | Weaken relation | The pair distribution shapes the JEPA learning signal; it is not a structural component of the architecture. Replace `part-of` with `contributes-to`. The separate constraint on the training objective remains. |
+| 42 | `positive-pair-distribution → constrains → training-objective` | Accept | The declared positive-pair relation determines which observations the objective treats as related and therefore constrains the learned geometry. |
+| 43 | `joint-embedding-predictive-architecture → contrasts-with → next-token-prediction` | Accept, scoped | JEPA predicts related-observation embeddings; next-token prediction predicts a token distribution. This distinguishes objectives, not mutually exclusive model families. |
+| 44 | `platonic-representation-hypothesis → evaluated-by → held-out-evaluation` | Accept, scoped | The hypothesis requires held-out cross-modal representation/alignment tests. Ordinary next-token loss alone would not test the stated hypothesis. |
+| 45 | `laplacian-eigenmaps → applies-to → positive-pair-distribution` | Accept, scoped | The method applies to the weighted graph induced by the pair distribution, not to an abstract probability table without that graph construction. |
+| 46 | `laplacian-eigenmaps → contributes-to → platonic-representation-hypothesis` | Remove | Laplacian eigenmaps can be an analysis tool for graph geometry, but it does not contribute to the hypothesis itself. The pair-distribution/graph relation already captures the useful mathematical bridge. |
+| 47 | `joint-embedding-predictive-architecture → represented-by → laplacian-eigenmaps` | Remove | A manifold-learning method does not represent the JEPA architecture. The paper's spectral result is conditional on a specific second-order anti-collapse setup; it is not a general identity between JEPA and Laplacian eigenmaps. |
+| 48 | `attention-weight → contrasts-with → mutual-information` | Accept | Attention weights are normalized compatibility coefficients; mutual information is defined from a joint probability distribution. They are not interchangeable quantities. |
+| 49 | `mutual-information → contrasts-with → v-information` | Accept, scoped | V-information is a predictor-family-relative, potentially directional usable-information measure; unrestricted families recover Shannon mutual information. The relation marks a distinction, not a contradiction. |
+| 50 | `kolmogorov-complexity → contributes-to → algorithmic-probability` | Accept, scoped | The coding theorem relates algorithmic probability to shortest-description complexity; neither quantity is generally computable exactly. |
+| 51 | `algorithmic-probability → contributes-to → solomonoff-induction` | Accept | Solomonoff induction uses a universal algorithmic mixture for sequential prediction under formal computability assumptions. |
+| 52 | `solomonoff-induction → contributes-to → aixi` | Accept, scoped | AIXI uses a universal mixture over chronological environments together with sequential decision theory. It is related to, but not simply identical with, Solomonoff prediction. |
+| 53 | `sequential-decision-theory → contributes-to → aixi` | Accept | AIXI combines prediction over environments with reward-maximizing sequential action selection. |
+| 54 | `aixi-tl → approximates → aixi` | Accept, scoped | AIXI(t,l) is a computable resource-bounded construction over candidate policies; the exact bounds and optimality qualifications in the source review must accompany this shorthand. |
+| 55 | `resource-bounded-computation → constrains → aixi-tl` | Accept | Explicit time/program-length bounds are central to the computable construction. |
+| 56 | `score-function → prerequisite → score-centering` | Accept | The learner must understand the policy score being centered. The existing bilingual rationale states this dependency and the relation is pedagogical, not an execution edge. |
+| 57 | `entropy → prerequisite → cross-entropy` | Remove | Cross-entropy is defined directly from target and predicted distributions. Entropy appears in the decomposition `H(q,p)=H(q)+D_KL(q||p)`, but is not required to define or calculate cross-entropy. Preserve the decomposition as optional mathematical depth. |
+| 58 | `cross-entropy → prerequisite → knowledge-distillation` | Remove | The rationale itself says soft-target distillation can use cross-entropy or KL; cross-entropy is therefore not a necessary prerequisite for the broader knowledge-distillation concept. Keep the relation discoverable through resources, not a false learning dependency. |
+
+### Corrections applied to the canonical registry
+
+- Reversed and retyped predictive-compression input: `conditional-distribution → contributes-to → predictive-compression`.
+- Weakened knowledge distillation → model compression from `part-of` to `contributes-to`; this captures its conditional use with a smaller student.
+- Weakened positive-pair distribution → JEPA from `part-of` to `contributes-to`; the distribution shapes the learning signal rather than being an architectural component.
+- Removed the document-retrieval / in-context-learning contrast, two overextended Laplacian-eigenmaps / PRH assertions, and the two unsupported entropy/cross-entropy prerequisite assertions.
+
+The five removals reduce the current registry from 124 to **119 typed edges**. The three retyped/reversed relations preserve their edge count. Together with the 66 previously reviewed current assertions, this completes the semantic review of all **119 retained edges**. No new relation type, graph, registry, route, or renderer is introduced.
+
+### Evidence and remaining gates
+
+The review uses the existing bilingual endpoint definitions and relation semantics, with focused technical support from:
+- [JEPA / Platonic Representation source review](../source-reviews/platonic-representation-jepa-2026-11.md)
+- [AIXI and algorithmic-computability source review](../source-reviews/aixi-kolmogorov-computability-2026-11.md)
+- [Predictive V-information source review](../source-reviews/predictive-v-information-xu-2020.md)
+- [Score-centering source review](../source-reviews/score-centering-2026-11.md)
+- [Information-theory source review](../source-reviews/information-theory-wayland-zhang-2026-11.md)
+
+This closes the **source-semantic edge audit**. It does not close rendered FR/EN graph inspection, touch/keyboard/screen-reader evidence, or an independent learner task. Those remain human validation gates coordinated with #584 and #337. The registry remains a selected conceptual map, not a complete execution DAG.
