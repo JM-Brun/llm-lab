@@ -1,7 +1,9 @@
 # LLM Lab Advent Calendar — editorial redesign
 
-**Status:** approved editorial direction; implementation and pilot validation in progress  
-**Date:** 2026-11-23  
+**Status:** approved editorial direction; chronological production started with Day 01  
+**Date:** 2026-11-23
+
+> **Production-order decision (2026-11-23):** draft, review and validate the stories in calendar order (Day 01, then Day 02, and so on). The earlier proposal to prepare non-adjacent pilots (Days 06, 17 and 23) is superseded as a production strategy. The stories remain independent for readers: chronological authoring does not create prerequisite dependencies.  
 **Scope:** 24 independent, approximately 10-minute readings for December 1–24  
 **Languages:** French and English  
 **Audience:** curious readers, from mathematically literate beginners to LLM practitioners
@@ -174,58 +176,37 @@ For research phenomena (double descent, scaling laws, representation analogies),
 - proposed explanations;
 - open questions and limits to generalization.
 
-## 7. Pilot before writing all 24
+## 7. Chronological production with per-day validation
 
-Do not draft all 24 entries at once. Test three deliberately different stories:
+Produce the new edition in calendar order: Day 01, then Day 02, continuing through Day 24. Do not skip ahead to later stories during normal content production.
 
-- **Pilot A — Day 06: What does a sine wave have to do with word order?**  
-  Tests mathematical explanation, signal-processing connection, equations, and a visual.
+This is a production and quality-control rule, **not a prerequisite sequence for readers**. Each story must remain understandable on its own, without requiring the previous day or a canonical lesson.
 
-**Anti-duplication guardrail:** the canonical positional-encoding lesson already presents the Transformer sinusoidal formula and derives the fixed-offset rotation property. Day 06 must therefore focus on Fourier feature mappings, frequency scales and spectral bias, using positional encoding as one application. Do not repeat the canonical rotation derivation or turn the story into a catalogue of positional methods.
-- **Pilot B — Day 17: Cross-entropy as a code length.**  
-  Tests an information-theoretic story, derivation, worked example, and a challenge.
-- **Pilot C — Day 23: What if the model could look things up?**  
-  Tests an independent system-level story with a concrete retrieval example.
+For every day, follow the same controlled cycle:
 
-These pilots are intentionally not adjacent and do not form a prerequisite sequence.
+1. Confirm the day's question, distinct editorial angle and boundary against the main curriculum.
+2. Prepare a source dossier before drafting: primary sources, claim-to-source mapping, caveats, excluded claims and visual provenance.
+3. Draft the French and English versions together, preserving conceptual parity rather than translating mechanically.
+4. Include a worked example and a meaningful challenge with a solution.
+5. Review mathematical/scientific correctness and the anti-duplication boundary.
+6. Render both languages and inspect equations, figures, tables, links and responsive layout.
+7. Run accessibility checks and obtain a novice read-through; record actual reading time and points of confusion.
+8. Revise and accept the day before starting the next day.
 
-For each pilot, measure:
-- whether a reader can explain the central idea without opening the main curriculum;
-- whether the story is genuinely different from its canonical lesson;
-- actual reading time;
-- mathematical correctness and source quality;
-- whether the example and challenge are independently solvable;
-- FR/EN parity;
-- desktop/mobile rendering and accessibility;
-- usefulness of the optional canonical link.
+A day passes only if it is a complete independent reading, adds a distinct perspective, has a complete source dossier, renders correctly in both languages, and passes the novice and accessibility reviews. If it fails, revise that day; do not work around the failure by moving on to later days.
 
-Ask at least one reader unfamiliar with the relevant canonical lesson to review each pilot. Record confusion and revision decisions rather than relying on a general “looks good”.
-
-### Acceptance criteria before scaling
-
-A pilot passes only if:
-
-1. It is a complete ~10-minute reading without prerequisite links.
-2. It adds a distinct intellectual perspective not already supplied by the main path.
-3. It contains a worked example and a meaningful challenge.
-4. Its equations, terminology, and claims pass scientific review.
-5. Its source dossier is complete.
-6. FR and EN render cleanly on desktop and mobile.
-7. The page is accessible and all links resolve.
-8. A novice reader can state the central takeaway after reading.
-
-If a pilot fails the anti-duplication test, replace its angle or topic. Do not force it through by shortening or paraphrasing the canonical lesson.
+The previous non-adjacent pilot proposal (Days 06, 17 and 23) was useful for considering topic diversity, but is no longer the production plan. Day 06 is retained as reference material for comparison, not as a template to copy. Days 17 and 23 will be reached in their chronological turn.
 
 ## 8. Migration and implementation plan
 
 1. **Freeze the current day pages as prototype material.** Do not extend their short-form template.
 2. Keep the current 24-day curriculum-summary manifest as historical/prototype input; mark it superseded once the new manifest is approved. Do not silently reinterpret its entries.
 3. Approve the new editorial promise and story slate.
-4. Build one article template using standard Quarto rendering and validate it with the three pilots.
-5. Add a new story-oriented manifest only after the pilot slate passes. It should reference concepts and optional lessons but not own canonical definitions or prerequisite edges.
+4. Build one article template using standard Quarto rendering and validate it with Day 01.
+5. Add a new story-oriented manifest once the initial template and Day 01 pass review. It should reference concepts and optional lessons but not own canonical definitions or prerequisite edges.
 6. Replace the calendar landing page's curriculum-like four acts with thematic shelves that communicate independent reading.
-7. Publish pilot entries only after content, source, visual, and novice-review gates pass.
-8. Expand in small batches, reviewing each batch rather than generating all 24 pages at once.
+7. Produce and validate Days 01–24 in chronological order, applying the per-day acceptance gate before proceeding.
+8. Publish only accepted stories; keep drafts out of the public calendar until their content, source, visual, accessibility and novice-review gates pass.
 
 The old pages should not be deleted until the new experience is ready. Their useful content can be mined for source leads or linked back to canonical lessons, but duplicated short explanations should not be carried over automatically.
 
