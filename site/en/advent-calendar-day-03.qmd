@@ -16,7 +16,7 @@ summary: "A first exploration of tokenization: a tokenizer segments a character 
 scope: "Explains token segmentation without yet covering their encoding as integer IDs or their use in embeddings."
 purpose: "Explain that a token is not necessarily a word and that segmentation depends on the tokenizer."
 suggested_route:
-  previous: "en/advent-calendar/day-02"
+  previous: "en/advent-calendar-day-02"
   next: "en/text-data"
 hierarchy:
   parents: ["en/advent-calendar"]
