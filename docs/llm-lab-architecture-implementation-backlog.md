@@ -194,11 +194,11 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 ## 4. Recommended execution sequence
 
 1. Merge the current inventory reconciliation after review; keep the verified registry snapshot current.
-2. Close the page-based revision validation decision; finish only the remaining contract/route gaps, deferring non-page aids unless a real artifact requires them.
-3. Complete the Q/K/V Practice pilot (PR #1558), then continue the bilingual 45-pair audit in bounded batches.
+2. Finish the reader-facing Review gaps in #1541: justify optional revision stops, complete the visual-recall/flashcard inventory, and pass rendered desktop/mobile/keyboard and learner review. The page-based revision validation boundary is already settled; non-page aids remain deferred.
+3. Complete the Q/K/V Practice pilot (PR #1558), including the targeted browser check for its nested hub and a learner review of the eight activities; then continue the bilingual 45-pair audit in bounded batches.
 4. Use #1233 to formalize the smallest cross-graph bridge/validation contract; reuse the closed scientific pilot #1237 and existing #512/#416 work.
 5. Render and scientifically/visually/novice-validate Day 06; only then consider Days 17 and 23 and a minimal edition model.
-6. Extend Project Intelligence from the implemented state vocabulary and concept-centred evidence query to owned cross-registry diagnostics, a stale/freshness model and complete coverage mappings; keep recommendations deferred.
+6. Extend Project Intelligence from the implemented state vocabulary and concept-centred evidence query to owned cross-registry diagnostics, a stale/freshness model and complete coverage mappings; keep recommendations deferred. Refresh the current 100-file extraction item/locator inventory before making scale or provenance-completeness claims.
 7. Add new resource kinds and reader-facing views only when pilots show a concrete benefit.
 
 Do not launch all workstreams in parallel. Avoid broad metadata migrations before inventories and validators exist.
