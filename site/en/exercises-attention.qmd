@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/exercises"]
   children: []
-related: ["en/attention-score-scaling"]
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/attention-score-scaling", "en/cross-attention", "en/transformer-block-walkthrough"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-attention", "level:applied", "language:en", "status:published"]
 -->
 
