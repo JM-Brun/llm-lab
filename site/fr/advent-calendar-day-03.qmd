@@ -16,7 +16,7 @@ summary: "Une première exploration de la tokenisation : le tokenizer segmente u
 scope: "Explique la segmentation en tokens sans traiter encore leur encodage en identifiants entiers ni leur projection en embeddings."
 purpose: "Faire comprendre qu'un token n'est pas nécessairement un mot et que le découpage dépend du tokenizer."
 suggested_route:
-  previous: "fr/advent-calendar/day-02"
+  previous: "fr/advent-calendar-day-02"
   next: "fr/text-data"
 hierarchy:
   parents: ["fr/advent-calendar"]
