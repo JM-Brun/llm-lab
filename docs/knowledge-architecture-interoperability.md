@@ -1,6 +1,6 @@
 # Knowledge architecture interoperability
 
-**Status:** proposal / local design note — 2026-11-05  
+**Status:** implemented concept-relation contract; broader cross-graph bridge model remains in progress — reconciled 2026-11-23  
 **Cross-repository reference:** [Wiki Knowledge architecture contract](https://github.com/JM-Brun/wiki-knowledge/blob/main/docs/architecture/cross-repository-knowledge-architecture.md)
 
 ## Purpose and boundary
@@ -63,9 +63,11 @@ This mapping is conceptual; it does not claim every row is implemented end-to-en
 
 Do not duplicate existing issues:
 
-- **P0:** #416 relation semantics; #130/#415/#225 separation and correspondence of curriculum, navigation, graph and implementation path.
-- **P1:** #458 and source-catalogue work — verify claim-level provenance through extraction → concept/page → synthesis; add a compact mapping/validation checklist if a concrete gap remains.
-- **P2:** join the two-way transfer pilots defined in the cross-repository contract; record failures and maintenance cost before considering shared code.
+- **Concept relation contract:** #416's schema/validator work is implemented. The current main inventory contains 12 relation types and 114 typed concept edges (see the current registry and `docs/audits/concept-relation-edge-review.md`). The contract constrains learning dependencies to explicitly justified `prerequisite` edges. Remaining work is the updated edge-level scientific review as the registry evolves, plus manual rendered, touch and screen-reader validation and consumer audit; do not reopen schema design without a concrete failing case.
+- **Cross-graph bridges:** #1233 owns the broader typed bridge contract and evidence/decision traversal. It must reuse canonical identities and specialized relation semantics; it is not a universal graph or a second registry. #512 owns claim provenance/interoperability, #1211 source provenance reconciliation, and #1306 explicit collection membership.
+- **Curriculum/navigation separation:** #130/#415/#225 and the canonical route owner remain authoritative. Concept relations must not generate or reorder the guided route.
+- **Source-to-synthesis provenance:** #458 and source-catalogue work own verification of claim-level provenance through extraction → concept/page → synthesis; add a compact mapping/validation checklist only for a demonstrated gap.
+- **Cross-repository transfer:** use the two-way pilots defined in the cross-repository contract; record failures and maintenance cost before considering shared code.
 - Coordinate content ownership with #355.
 
 ## Non-goals
@@ -84,18 +86,9 @@ Before implementation, inspect #416, #415, #130, #225, #355, #458 and the active
 
 ## Initial audit of the current canonical relation registry (2026-11-05)
 
-Inspected `data/concepts.yml` on the default branch. The registry currently declares ten relation types: `represented-by`, `prerequisite`, `part-of`, `constrains`, `contributes-to`, `applies-to`, `mapped-by`, `produces`, `normalized-by`, and `evaluated-by` (all currently declare `direction: directed`). The records provide bilingual labels and descriptions, which is a useful base.
+Historical snapshot (2026-11-05): the registry then declared ten relation types and 26 edges. This section records the original gap analysis; it is not a description of current main. The contract and validator work described below were subsequently implemented, and the current inventory is 12 relation types / 114 typed edges (2026-11-23).
 
-The current contract does **not** yet encode:
-- permitted source/target object kinds or concept/domain constraints;
-- inverse relation or symmetry policy;
-- transitivity policy (including an explicit default of non-transitive);
-- cardinality or cycle constraints where applicable;
-- evidence/provenance expectations for asserting a relation;
-- whether a relation is semantic, structural, functional, evidential, or pedagogical;
-- whether it may be used to infer a learning dependency or only to explain a mechanism.
-
-This is a schema/documentation gap, not proof that current edges are factually wrong. It must be resolved by reviewing actual edges and intended usage, not by adding theoretical metadata mechanically.
+The initial schema did not encode the above properties. The implemented contract now declares family, direction, transitivity, acyclicity, learning-dependency eligibility and inverse policy, with bilingual rationale required for learning-dependency edges. Concept endpoints remain the only supported endpoint kind; fine-grained domain/range restrictions are intentionally deferred because concepts are multi-domain. The remaining gap is not the absence of a relation schema: it is keeping the 114-edge scientific review current and validating the semantics of bridges between distinct graph families.
 
 ### Concrete review cases
 
@@ -117,12 +110,12 @@ This is a schema/documentation gap, not proof that current edges are factually w
 - [ ] Keep the registry as the single source of truth; render labels/legend from metadata, not duplicated code.
 - [ ] Confirm that the learner-facing graph, guided route, and curriculum sequence remain distinct projections.
 
-The initial audit is deliberately bounded to the registry. It does not claim the renderer, all relation consumers, or the complete pedagogical effect have been tested.
+The initial audit was deliberately bounded to the registry. Later browser reviews cover rendered FR/EN graph behavior, but touch/screen-reader validation, all consumer paths and learner comprehension remain separate acceptance items.
 
 
-## Relation contract implemented on the interoperability branch (2026-11-05)
+## Relation contract implemented in main (initial implementation 2026-11-05; reconciled 2026-11-23)
 
-The first implementation increment extends the existing generic `site/tools/check_concept_registry.py` validator and its shared test module. It does not add a second workflow or per-concept CI.
+The implementation extends the existing generic `site/tools/check_concept_registry.py` validator and its shared test module. It does not add a second workflow or per-concept CI. The contract is now part of the canonical registry; this is no longer merely an interoperability-branch proposal.
 
 Each relation type now declares:
 
@@ -135,7 +128,7 @@ Each relation type now declares:
 
 Every edge of a relation type marked `learning_dependency: true` must include a bilingual `rationale` mapping with non-empty `fr` and `en` values. This prevents a graph edge from silently becoming a curriculum dependency without an explicit pedagogical justification and keeps the public data contract bilingual.
 
-The current registry's ten relation types have been annotated. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
+The initial ten relation types were annotated. The current main registry has since grown to 12 controlled relation types and 114 typed concept edges; re-run the edge inventory and review whenever the registry changes. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
 
 ### Domain/range boundary
 
@@ -143,15 +136,39 @@ At present, every edge has canonical concepts as both endpoints. The validator c
 
 ### Validation coverage
 
-The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; the existing `tests/knowledge/test_concept_registry.py` now covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations, and mandatory rationale. The PR must pass the existing generic CI and Quarto render workflows before merge.
+The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; `tests/knowledge/test_concept_registry.py` covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations and mandatory rationale. This validator remains the single semantic schema boundary; it is not a replacement for edge-level scientific review or rendered learner validation.
 
 This is a first contract increment, not proof that every current relation edge is semantically correct or that the rendered graph is pedagogically effective. The remaining manual review of the current edge inventory stays in #416.
 
 
 ## Edge-level review
 
-The initial manual review of all 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records the intended reading and scope limitations for every edge. The review found no immediate direction reversal, but several high-level relations are explicitly not exhaustive computational data-flow claims. Rendered FR/EN graph UX and learner comprehension remain unverified.
+The original manual review of the first 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records intended readings and scope limitations, but it predates the current 114-edge registry. Treat it as historical evidence, not proof that every current edge has been reviewed. Refresh the edge-level review against current main, explicitly classify new/changed edges, and retain the non-exhaustive nature of conceptual relations. Rendered FR/EN graph UX, touch/screen-reader behavior and learner comprehension remain distinct validation tasks.
 
+
+## Cross-graph interoperability: remaining contract
+
+The concept graph's relation schema is not a substitute for cross-graph bridges. Keep the following relation families distinct:
+
+| Bridge family | Canonical owners | Required interpretation |
+|---|---|---|
+| Concept ↔ page | `data/concepts.yml` and page-map metadata | A page explains or applies a concept; not proof that every page claim is supported. |
+| Concept ↔ computation | `data/concepts.yml` and `data/computational-graph.yml` | Explicit explanatory/implementation bridge; never merge concept and operation IDs. |
+| Source/extraction ↔ concept/page | `data/sources.yml`, `data/extractions/` and canonical page/concept registries | Preserve source version, extraction item and locator where available; distinguish evidence, interpretation and editorial integration. |
+| Build ↔ computation/resource/page | Build path, computational graph and `data/resources.yml` | Implementation evidence, not an Understand prerequisite. |
+| Historical event ↔ source/concept | `data/history-pilot.yml` and source/concept registries | Chronological association is not causal influence. |
+| Practice activity ↔ lesson/concept | Dedicated Practice pages and explicit page/anchor identities | Page-level links do not imply every activity covers every lesson or concept. |
+| Editorial story ↔ concept/source/page | Story source and dossier | Editorial order is not a learning dependency; a story remains independently readable. |
+
+#1233 owns the integrated cross-graph contract, exact endpoint identity, evidence expectations and bounded traversal tests. The current `ProjectIndex` and `cross_graph_query.py` provide a partial, read-only concept-centred query projection; they do not yet validate every bridge family, traverse historical/decision records, or provide complete Build/Practice/source coverage. Do not introduce a generic edge dispatcher or a new graph store merely to make the families look uniform.
+
+**Remaining acceptance criteria:**
+- [ ] Define source/target identity, relation direction, semantic family and evidence requirements for each bridge that has a real use case.
+- [ ] Reuse existing validators and add only cross-family checks that no owning validator currently performs.
+- [ ] Test at least five traversals from #1233 with explicit expected paths and explicit gaps.
+- [ ] Verify that no route/prerequisite is inferred from generic semantic, computational, source or editorial edges.
+- [ ] Include negative tests for tag overlap, shared citations, filename similarity, page order and source-local node names.
+- [ ] Keep output read-only and evidence-bearing; no automatic canonical mutation.
 
 ### Projection preservation
 
