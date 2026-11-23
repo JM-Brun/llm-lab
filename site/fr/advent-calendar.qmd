@@ -1,6 +1,6 @@
 ---
 title: "Le calendrier de l’avent des LLM"
-subtitle: "24 petites explorations pour comprendre comment un modèle de langage transforme un contexte en prédictions, puis apprend de ses erreurs."
+subtitle: "24 explorations pour reconstruire le calcul d'un LLM : du contexte à la distribution prédictive, puis à la génération, au scoring et à l'apprentissage."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
@@ -52,65 +52,70 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">LE PRINCIPE</p>
-  <p><strong>Une question précise par jour.</strong> Chaque case renvoie vers une leçon de LLM Lab et, lorsqu’elle existe, vers une page d’exercices dédiée. Le calendrier donne un fil conducteur ; les pages canoniques restent la référence pour les explications, les démonstrations et les approfondissements.</p>
+  <p><strong>Une question précise par jour.</strong> Les trois premières cases proposent une courte leçon guidée directement dans le calendrier. Les 21 suivantes ouvrent progressivement le parcours vers les ressources canoniques. Les explications longues et les exercices restent sur leurs pages dédiées.</p>
 </div>
 
 ## Les 24 cases
 
 ::: {.advent-act-heading}
 <span class="advent-act-number">01 — 07</span>
-<div><h3>Du contexte aux représentations</h3><p>Comment un texte devient-il une entrée numérique que le modèle peut traiter ?</p></div>
+<div><h3>Du contexte aux représentations</h3><p>Comment un texte devient-il une entrée que le modèle peut traiter ?</p></div>
+:::
+
+<p class="advent-opening-note"><strong>Commencez ici.</strong> Les trois premières journées sont développées : une explication courte, un exemple guidé, une question de vérification et un lien vers la leçon de référence.</p>
+
+::: {.advent-grid advent-grid-opening}
+::: {.advent-card advent-card-featured #jour-01}
+<div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · disponible</span></div>
+<p class="advent-card-kicker">LE POINT DE DÉPART</p>
+<h4>Que prédit un LLM ?</h4>
+<p>Que calcule le modèle à partir d'un préfixe, avant de sélectionner un token ?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-01.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
+:::
+::: {.advent-card advent-card-featured #jour-02}
+<div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · disponible</span></div>
+<p class="advent-card-kicker">LE CONTEXTE</p>
+<h4>De quoi le modèle dispose-t-il ?</h4>
+<p>Quel préfixe conditionne la prédiction, et quand la suite le rejoint-elle ?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-02.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
+:::
+::: {.advent-card advent-card-featured #jour-03}
+<div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · disponible</span></div>
+<p class="advent-card-kicker">DÉCOUPER LE TEXTE</p>
+<h4>Comment le texte devient-il des tokens ?</h4>
+<p>Comment un tokenizer segmente-t-il une chaîne en unités ordonnées ?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-03.qmd">Ouvrir la case <span>→</span></a><a href="text-data.qmd">Leçon de référence</a></div>
+:::
 :::
 
 ::: {.advent-grid}
-::: {.advent-card #jour-01}
-<div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min</span></div>
-<p class="advent-card-kicker">LE POINT DE DÉPART</p>
-<h4>Que prédit un LLM ?</h4>
-<p>Que calcule réellement un modèle de langage à partir d’un contexte ?</p>
-<div class="advent-card-links"><a href="llm-overview.qmd">Lire la leçon <span>→</span></a><a href="exercises/llm-overview.qmd">S’exercer</a></div>
-:::
-::: {.advent-card #jour-02}
-<div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min</span></div>
-<p class="advent-card-kicker">LE CONTEXTE</p>
-<h4>De quoi le modèle dispose-t-il ?</h4>
-<p>Quelles informations peuvent conditionner la prochaine prédiction ?</p>
-<div class="advent-card-links"><a href="llm-overview.qmd">Lire la leçon <span>→</span></a><a href="exercises/llm-overview.qmd">S’exercer</a></div>
-:::
-::: {.advent-card #jour-03}
-<div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min</span></div>
-<p class="advent-card-kicker">DÉCOUPER LE TEXTE</p>
-<h4>Comment le texte devient-il des tokens ?</h4>
-<p>Comment un tokenizer transforme-t-il une chaîne de caractères en unités discrètes ?</p>
-<div class="advent-card-links"><a href="text-data.qmd">Lire la leçon <span>→</span></a><a href="exercises/text-data.qmd">S’exercer</a></div>
-:::
 ::: {.advent-card #jour-04}
 <div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">IDENTIFIER</p>
 <h4>Du token à son identifiant</h4>
-<p>Comment le modèle retrouve-t-il l’identifiant associé à chaque token ?</p>
-<div class="advent-card-links"><a href="text-data.qmd">Lire la leçon <span>→</span></a><a href="exercises/text-data.qmd">S’exercer</a></div>
+<p>Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?</p>
+<div class="advent-card-links"><a href="text-data.qmd">Lire la leçon <span>→</span></a><a href="exercises/text-data.qmd">S'exercer</a></div>
 :::
 ::: {.advent-card #jour-05}
 <div class="advent-card-top"><span class="advent-number">05</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">VECTORISER</p>
 <h4>Un identifiant devient un vecteur</h4>
 <p>Comment un identifiant discret sélectionne-t-il une représentation numérique ?</p>
-<div class="advent-card-links"><a href="embedding-space.qmd">Lire la leçon <span>→</span></a><a href="exercises/embedding-space.qmd">S’exercer</a></div>
+<div class="advent-card-links"><a href="embedding-space.qmd">Lire la leçon <span>→</span></a><a href="exercises/embedding-space.qmd">S'exercer</a></div>
 :::
 ::: {.advent-card #jour-06}
 <div class="advent-card-top"><span class="advent-number">06</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">ORDONNER</p>
 <h4>Pourquoi la position compte-t-elle ?</h4>
-<p>Pourquoi les représentations doivent-elles tenir compte de l’ordre des tokens ?</p>
-<div class="advent-card-links"><a href="positional-encoding.qmd">Lire la leçon <span>→</span></a><a href="exercises/positional-encoding.qmd">S’exercer</a></div>
+<p>Pourquoi les représentations doivent-elles tenir compte de l'ordre des tokens ?</p>
+<div class="advent-card-links"><a href="positional-encoding.qmd">Lire la leçon <span>→</span></a><a href="exercises/positional-encoding.qmd">S'exercer</a></div>
 :::
 ::: {.advent-card #jour-07}
 <div class="advent-card-top"><span class="advent-number">07</span><span class="advent-time">6 min</span></div>
 <p class="advent-card-kicker">CONTEXTUALISER</p>
 <h4>Un token, plusieurs représentations</h4>
 <p>Pourquoi deux occurrences du même token peuvent-elles avoir des représentations différentes ?</p>
-<div class="advent-card-links"><a href="contextualized-representations.qmd">Lire la leçon <span>→</span></a><a href="exercises/contextualized-representations.qmd">S’exercer</a></div>
+<div class="advent-card-links"><a href="contextualized-representations.qmd">Lire la leçon <span>→</span></a><a href="exercises/contextualized-representations.qmd">S'exercer</a></div>
 :::
 :::
 
