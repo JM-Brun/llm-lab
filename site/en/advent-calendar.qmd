@@ -74,28 +74,28 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">THE CONTEXT</p>
 <h4>What information does the model have?</h4>
-<p>Distinguish the prefix supplied to the model from the continuation it must predict.</p>
+<p>Which information can condition the next prediction?</p>
 <div class="advent-card-links"><a href="llm-overview.qmd">Read the lesson <span>→</span></a><a href="exercises/llm-overview.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-03}
 <div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min</span></div>
 <p class="advent-card-kicker">BREAKING DOWN TEXT</p>
 <h4>How does text become tokens?</h4>
-<p>Follow a character string as it is segmented into discrete units.</p>
+<p>How does a tokenizer turn a character string into discrete units?</p>
 <div class="advent-card-links"><a href="text-data.qmd">Read the lesson <span>→</span></a><a href="exercises/text-data.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-04}
 <div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">IDENTIFIERS</p>
 <h4>From token to token ID</h4>
-<p>Distinguish a readable token, its vocabulary entry, and its integer ID.</p>
+<p>How does the model retrieve the ID associated with each token?</p>
 <div class="advent-card-links"><a href="text-data.qmd">Read the lesson <span>→</span></a><a href="exercises/text-data.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-05}
 <div class="advent-card-top"><span class="advent-number">05</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">VECTORS</p>
 <h4>An ID becomes a vector</h4>
-<p>Understand how the embedding matrix provides a numerical representation.</p>
+<p>How does a discrete ID select a numerical representation?</p>
 <div class="advent-card-links"><a href="embedding-space.qmd">Read the lesson <span>→</span></a><a href="exercises/embedding-space.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-06}
@@ -124,35 +124,35 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <div class="advent-card-top"><span class="advent-number">08</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">ARCHITECTURE</p>
 <h4>What does a Transformer block do?</h4>
-<p>Locate attention, the MLP, residual connections, and normalization.</p>
+<p>Which major operations transform a block's input states?</p>
 <div class="advent-card-links"><a href="transformer.qmd">Read the lesson <span>→</span></a><a href="exercises/transformer.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-09}
 <div class="advent-card-top"><span class="advent-number">09</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">THREE PROJECTIONS</p>
 <h4>The three roles of Q, K, and V</h4>
-<p>Distinguish Query, Key, and Value, then predict the effect of changing V.</p>
+<p>What information do the Query, Key, and Value projections carry?</p>
 <div class="advent-card-links"><a href="queries-keys-values.qmd">Read the lesson <span>→</span></a><a href="exercises/queries-keys-values.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-10}
 <div class="advent-card-top"><span class="advent-number">10</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">ATTENTION</p>
 <h4>How does attention work?</h4>
-<p>Follow scores, scaling, softmax, and value aggregation.</p>
+<p>How do scores become weights that aggregate values?</p>
 <div class="advent-card-links"><a href="scaled-dot-product-attention.qmd">Read the lesson <span>→</span></a><a href="exercises/scaled-dot-product-attention.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-11}
 <div class="advent-card-top"><span class="advent-number">11</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">CAUSALITY</p>
 <h4>Preventing access to future tokens</h4>
-<p>Understand how causal masking blocks access to future tokens.</p>
+<p>How does a causal model prevent a position from using future tokens?</p>
 <div class="advent-card-links"><a href="causal-masking.qmd">Read the lesson <span>→</span></a><a href="exercises/causal-masking.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-12}
 <div class="advent-card-top"><span class="advent-number">12</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">STATE UPDATES</p>
 <h4>Beyond attention</h4>
-<p>Describe the roles of the MLP, residual connections, and normalization.</p>
+<p>How do the other block operations transform hidden states?</p>
 <div class="advent-card-links"><a href="transformer.qmd">Read the lesson <span>→</span></a><a href="transformer-block-walkthrough.qmd">See the code</a><a href="exercises/transformer-block-walkthrough.qmd">Practise</a></div>
 :::
 :::
@@ -167,42 +167,42 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <div class="advent-card-top"><span class="advent-number">13</span><span class="advent-time">6 min</span></div>
 <p class="advent-card-kicker">OUTPUT SCORES</p>
 <h4>Logits: scores before probabilities</h4>
-<p>Interpret logits as unnormalized scores over the vocabulary.</p>
+<p>What does the output projection produce before normalization?</p>
 <div class="advent-card-links"><a href="logits.qmd">Read the lesson <span>→</span></a><a href="exercises/logits.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-14}
 <div class="advent-card-top"><span class="advent-number">14</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">PROBABILITIES</p>
 <h4>From scores to a distribution</h4>
-<p>Turn logits into conditional probabilities using softmax.</p>
+<p>How do logits become a conditional distribution over the next token?</p>
 <div class="advent-card-links"><a href="probabilities.qmd">Read the lesson <span>→</span></a><a href="exercises/probabilities.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-15}
 <div class="advent-card-top"><span class="advent-number">15</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">UNCERTAINTY</p>
 <h4>What does entropy measure?</h4>
-<p>Compute the entropy of a small distribution and distinguish it from calibration.</p>
+<p>What does the shape of a distribution tell us about its uncertainty?</p>
 <div class="advent-card-links"><a href="entropy.qmd">Read the lesson <span>→</span></a><a href="exercises/entropy.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-16}
 <div class="advent-card-top"><span class="advent-number">16</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">DECODING</p>
 <h4>Selecting the next token</h4>
-<p>Compare greedy decoding, temperature, and sampling.</p>
+<p>How does a decoding policy turn a distribution into a selection?</p>
 <div class="advent-card-links"><a href="generation.qmd">Read the lesson <span>→</span></a><a href="decoding-strategies.qmd">Deepen</a></div>
 :::
 ::: {.advent-card #day-17}
 <div class="advent-card-top"><span class="advent-number">17</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">AUTOREGRESSIVE LOOP</p>
 <h4>A prediction becomes the next context</h4>
-<p>Trace token-by-token generation with fixed parameters.</p>
+<p>How does generation produce a sequence one token at a time?</p>
 <div class="advent-card-links"><a href="generation.qmd">Read the lesson <span>→</span></a><a href="exercises/generation.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-18}
 <div class="advent-card-top"><span class="advent-number">18</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">EFFICIENT INFERENCE</p>
 <h4>Prefill, decode, and the KV cache</h4>
-<p>Distinguish initial context processing from incremental decoding.</p>
+<p>Why does inference distinguish initial context processing from token-by-token generation?</p>
 <div class="advent-card-links"><a href="generation.qmd">Read the lesson <span>→</span></a><a href="exercises/generation.qmd">Practise</a></div>
 :::
 :::
@@ -217,42 +217,42 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <div class="advent-card-top"><span class="advent-number">19</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">OBSERVED TARGET</p>
 <h4>Predicting with a known target</h4>
-<p>Distinguish the observed prefix, target token, and teacher forcing.</p>
+<p>How do we evaluate next-token predictions when the correct sequence is known?</p>
 <div class="advent-card-links"><a href="likelihood.qmd">Read the lesson <span>→</span></a><a href="training-examples.qmd">See training examples</a><a href="exercises/training-examples.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-20}
 <div class="advent-card-top"><span class="advent-number">20</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">LIKELIHOOD</p>
 <h4>What probability does a sequence receive?</h4>
-<p>Connect conditional probabilities, sequence likelihood, and log-likelihood.</p>
+<p>How do the conditional probabilities of observed tokens combine?</p>
 <div class="advent-card-links"><a href="likelihood.qmd">Read the lesson <span>→</span></a><a href="exercises/likelihood.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-21}
 <div class="advent-card-top"><span class="advent-number">21</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">PROBABILISTIC COST</p>
 <h4>From probability to cost</h4>
-<p>Connect negative log-likelihood, per-token NLL, and cross-entropy for a one-hot target.</p>
+<p>How do we measure the probabilistic cost assigned to an observed target?</p>
 <div class="advent-card-links"><a href="cross-entropy.qmd">Read the lesson <span>→</span></a><a href="exercises/cross-entropy.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-22}
 <div class="advent-card-top"><span class="advent-number">22</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">TRAINING OBJECTIVE</p>
 <h4>From token costs to a loss</h4>
-<p>Understand masking, reduction, and aggregation over valid tokens.</p>
+<p>How are costs at valid positions aggregated into a training objective?</p>
 <div class="advent-card-links"><a href="loss.qmd">Read the lesson <span>→</span></a><a href="exercises/loss.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-23}
 <div class="advent-card-top"><span class="advent-number">23</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">DIFFERENTIATION</p>
 <h4>How do we obtain gradients?</h4>
-<p>Interpret derivatives of the loss with respect to the model parameters.</p>
+<p>How does the loss reveal the objective's sensitivity to the parameters?</p>
 <div class="advent-card-links"><a href="gradients.qmd">Read the lesson <span>→</span></a><a href="exercises/gradients.qmd">Practise</a></div>
 :::
 ::: {.advent-card #day-24}
 <div class="advent-card-top"><span class="advent-number">24</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">UPDATES & EVALUATION</p>
 <h4>Update parameters or evaluate the model?</h4>
-<p>Distinguish optimizer updates from evaluation with fixed parameters.</p>
+<p>What changes the parameters, and what only measures the model?</p>
 <div class="advent-card-links"><a href="training-loop.qmd">Read the lesson <span>→</span></a><a href="experimental-evaluation.qmd">Evaluate a model</a></div>
 :::
 :::
