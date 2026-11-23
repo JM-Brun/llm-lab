@@ -95,7 +95,7 @@ Code execution, mathematical review, bilingual rendering and learner testing rem
 - [x] A dedicated FR/EN Q/K/V practice hub exists.
 - [x] The hub links back to its lesson and directly to the shared extended collection.
 - [x] The main Q/K/V lesson has one link to its dedicated hub and no direct links to the shared collection.
-- [ ] A regression test locks bilingual anchor parity and the lesson → hub → collection navigation boundary.
+- [x] A regression test locks bilingual anchor parity and the lesson → hub → collection navigation boundary.
 - [x] The extended Q/K/V activity anchors are identical across languages.
 - [x] The collection's page-level lesson relationships reflect its declared scope.
 - [x] Questions for recall remain distinct from multi-step practice.
