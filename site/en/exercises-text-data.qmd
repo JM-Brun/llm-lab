@@ -235,10 +235,10 @@ for prefix, expected_count, expected_id, expected_bytes in prefix_cases:
 
 # Full decomposition of the French prefix, to compare with the lesson table.
 fr_prefix_ids = encoding.encode("C'est une bonne situation, ça, scribe ?")
-fr_fragments = [encoding.decode_single_token_bytes(i).decode("utf-8") for i in fr_prefix_ids]
+fr_fragments = [encoding.decode_single_token_bytes(i) for i in fr_prefix_ids]
 assert encoding.decode(fr_prefix_ids) == "C'est une bonne situation, ça, scribe ?"
 assert len(fr_prefix_ids) == 15
-assert fr_fragments[-1] == " ?"
+assert fr_fragments[-1] == b" ?"
 print("French prefix:")
 for fragment, fragment_id in zip(fr_fragments, fr_prefix_ids):
     print(f"  {fragment!r} -> {fragment_id}")
