@@ -39,11 +39,11 @@ project:
     - images/generation-prefill-decode-fr-mobile.svg
   render:
     - index.qmd
-    - fr/advent-calendar.qmd
     - fr/learning-map.qmd
     - en/index.qmd
-    - en/advent-calendar.qmd
     - en/learning-map.qmd
+    - fr/advent-calendar.qmd
+    - en/advent-calendar.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
     - fr/unicode-text.qmd
