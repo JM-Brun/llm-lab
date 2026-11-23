@@ -78,6 +78,35 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     assert by_id["en/training-examples"]["revision_support"]["status"] == "integrated_sufficient"
 
 
+
+def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> None:
+    pages = [
+        page("fr/lesson", "fr", "understand", "lesson"),
+        page("fr/review", "fr", "practice", "lesson-review"),
+        page("fr/deep-dive", "fr", "deepen", "lesson-deep-dive"),
+    ]
+    pages[0]["route"] = {"previous": "fr/previous", "next": "fr/next"}
+    edges = [
+        {"source": "fr/lesson", "target": "fr/next", "family": "suggested_route", "relation": "next"},
+        {"source": "fr/review", "target": "fr/lesson", "family": "revision_of", "relation": "synthesis"},
+        {"source": "fr/deep-dive", "target": "fr/lesson", "family": "related", "relation": "related"},
+        {"source": "fr/unrelated", "target": "fr/other", "family": "related", "relation": "related"},
+    ]
+
+    inventory = AUDIT["build_revision_inventory"](
+        pages, [], [], route_memberships={}, page_edges=edges
+    )
+    lesson = next(item for item in inventory["pages"] if item["id"] == "fr/lesson")
+
+    assert lesson["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
+    assert inventory["affected_page_edges"] == edges[:3]
+    assert all(
+        edge["source"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
+        or edge["target"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
+        for edge in inventory["affected_page_edges"]
+    )
+
+
 def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
     pages = [page("fr/unlisted", "fr", "understand", "unlisted")]
     inventory = AUDIT["build_revision_inventory"](pages, [], [], route_memberships={})
