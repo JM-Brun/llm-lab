@@ -91,12 +91,10 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
     assert _page_paths(understand["contents"]) == expected_understand
     assert _page_paths(review["contents"]) == expected_review
     assert all(
-        isinstance(item, dict) and set(item) == {"text", "href"}
-        for item in understand["contents"]
+        isinstance(item, dict) and set(item) == {"text", "href"} for item in understand["contents"]
     )
     assert all(
-        isinstance(item, dict) and set(item) == {"text", "href"}
-        for item in review["contents"]
+        isinstance(item, dict) and set(item) == {"text", "href"} for item in review["contents"]
     )
     assert len(core_page_ids) == 20
     assert len(review_page_ids) == 20
