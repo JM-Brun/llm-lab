@@ -93,9 +93,9 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
     assert all(
         isinstance(item, dict) and set(item) == {"text", "href"} for item in understand["contents"]
     )
-    assert all(
-        isinstance(item, dict) and set(item) == {"text", "href"} for item in review["contents"]
-    )
+    # Review entries intentionally retain their canonical path-only labels;
+    # unlike the main learning path, they are not part of the compact-label pass.
+    assert all(isinstance(item, str) for item in review["contents"])
     assert len(core_page_ids) == 20
     assert len(review_page_ids) == 20
 
