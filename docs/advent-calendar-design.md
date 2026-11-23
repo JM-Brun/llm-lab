@@ -1,6 +1,6 @@
 # LLM Advent Calendar — project design
 
-**Status:** design proposal; not a published learning route  
+**Status:** 24-day editorial proposal; bilingual landing page and first three guided days implemented; learner validation pending  
 **Date:** 2026-11-22  
 **Owner:** LLM Lab editorial architecture  
 **Scope:** a 24-day, bilingual, progressive introduction to the concepts already taught by LLM Lab
