@@ -1037,3 +1037,8 @@ Revise an entry if readers repeatedly:
 - cannot identify the appropriate canonical lesson or exercise page.
 
 No learner test has been run yet. Results must be recorded before the pilot is described as validated.
+
+
+## Reader-facing calendar implementation (2026-11-23)
+
+The calendar landing page and guided pages for days 01–03 are now implemented in French and English. These short pages are classified as orientation bridges and link onward to canonical lessons and their dedicated exercise pages. They are not the full content-validation pilot: the selected pilot remains days 03 (tokenization), 09 (Q/K/V), and 21 (cross-entropy), whose transfer questions are specified above. No novice-reader session has yet been conducted; implementation and automated browser checks do not substitute for that formative evaluation.
