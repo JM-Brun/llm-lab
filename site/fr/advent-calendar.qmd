@@ -69,7 +69,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · disponible</span></div>
 <p class="advent-card-kicker">LE POINT DE DÉPART</p>
 <h4>Que prédit un LLM ?</h4>
-<p>Que calcule le modèle à partir d'un préfixe, avant de sélectionner un token ?</p>
+<p>Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?</p>
 <div class="advent-card-links"><a href="advent-calendar/day-01.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
 :::
 ::: {.advent-card advent-card-featured #jour-02}
