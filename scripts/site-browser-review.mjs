@@ -735,7 +735,7 @@ async function runCase(testCase, caseIndex) {
           link.hash === "#attention" && link.visible
         );
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
-          /check the essential idea|vérifier l'idée essentielle/i.test(heading.textContent)
+          /check the essential idea|vérifier l['’]idée essentielle/i.test(heading.textContent)
         );
         return { lessonLink, collectionLink, selfCheckHeading };
       }, { lessonSlug });
