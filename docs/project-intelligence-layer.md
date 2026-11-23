@@ -34,7 +34,7 @@ The layer must make each result explainable and reproducible: users should be ab
 | Cross-graph query | `cross_graph_query.py --concept ID` returns typed paths and explicit gaps for item-level source evidence, catalogue-only gaps, page-mediated and stage-mediated computation, Practice links and non-page resources. | Concept-centred only. It does not yet traverse history, Build milestone dependencies, source-local pedagogical graphs or structured decision records; it is not a reverse page-originating evidence query or recommendation engine. |
 | Validation | ProjectIndex, coverage and query behavior have synthetic regression tests; PR #1535 adds five real concept cases and explicit gap checks. | There is no complete cross-family validator or project-wide deterministic diagnostic suite. Existing owning validators remain authoritative. |
 
-The current coverage vocabulary includes `present`, `missing`, `not_applicable`, `not_registered`, `needs_review` and `not_assessed` (the latter for revision assessment). A distinct `stale` state is not yet implemented. The matrix does not currently model all five states for every dimension.
+The current coverage vocabulary includes `present`, `missing`, `not_applicable`, `not_registered`, `needs_review` and `not_assessed` (the latter for revision assessment). A distinct `stale` state is not yet implemented. The matrix does not currently model all six states for every dimension.
 
 **Counting boundary:** the report distinguishes published page records, unique topics, concepts, domains, stored page edges, route memberships and revision links. Do not add these counts together or interpret a missing matrix dimension as proof that no underlying record exists.
 
