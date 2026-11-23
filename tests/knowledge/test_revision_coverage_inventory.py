@@ -93,8 +93,18 @@ def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> No
             "relation": "next",
         },
         {"source": "fr/review", "target": "fr/lesson", "family": "related", "relation": "related"},
-        {"source": "fr/deep-dive", "target": "fr/lesson", "family": "related", "relation": "related"},
-        {"source": "fr/unrelated", "target": "fr/other", "family": "related", "relation": "related"},
+        {
+            "source": "fr/deep-dive",
+            "target": "fr/lesson",
+            "family": "related",
+            "relation": "related",
+        },
+        {
+            "source": "fr/unrelated",
+            "target": "fr/other",
+            "family": "related",
+            "relation": "related",
+        },
     ]
 
     inventory = AUDIT["build_revision_inventory"](
