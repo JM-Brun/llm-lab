@@ -22,7 +22,7 @@ This document is an operational handoff for future sessions. It records what is 
 
 ### Not completed
 
-- [ ] Day 06 now has an FR/EN draft in PR #1560, but it has not been accepted; Days 17 and 23 have not been drafted.
+- [ ] An earlier Day 06 FR/EN draft exists in PR #1560 but remains parked and unaccepted; it will be reviewed when chronological production reaches Day 06. No later-day story is an active target.
 - [ ] A native Quarto story-template draft exists in PR #1560; it has not yet passed rendered visual validation.
 - [ ] Source-level audit is complete, but the published/rendered FR/EN pages have not yet received desktop/mobile visual review.
 - [ ] No new story-oriented manifest has been approved or created.
@@ -81,7 +81,7 @@ After Day 01 is accepted, continue with Day 02, then Day 03, following the appro
 
 ### Phase E — collection architecture and landing page
 
-- [ ] Only after the pilots pass, design a new story manifest. It should describe story metadata, language variants, themes, sources, and optional canonical links.
+- [ ] Only after a small chronological set of stories has passed acceptance and its metadata needs are understood, design a new story manifest. It should describe story metadata, language variants, themes, sources, and optional canonical links.
 - [ ] Do not create a parallel concept ontology, prerequisite graph, or second guided curriculum.
 - [ ] Rework the calendar landing page as a collection of thematic shelves. The shelves are browsing groupings, not a sequence or prerequisite structure.
 - [ ] Make independence explicit: any day can be read first; previous/next links are browsing aids only.
@@ -122,7 +122,7 @@ For empirical topics (for example double descent and scaling laws), explicitly d
 Do not do these before the relevant decision gate:
 
 - Rewrite all 24 pages in one batch.
-- Create a new manifest or generator before the three pilots establish the necessary metadata.
+- Create a new manifest or generator before the first chronological stories establish the necessary metadata.
 - Build custom interactive widgets or bespoke diagrams for every article.
 - Add prerequisite edges between days.
 - Change the main LLM Lab curriculum to accommodate the calendar.
