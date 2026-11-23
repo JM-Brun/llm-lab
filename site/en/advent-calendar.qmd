@@ -19,7 +19,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["en/index"]
-  children: ["en/advent-calendar/day-01", "en/advent-calendar/day-02", "en/advent-calendar/day-03"]
+  children: ["en/advent-calendar-day-01", "en/advent-calendar-day-02", "en/advent-calendar-day-03"]
 related: ["en/learning-map", "en/exercises", "en/llm-overview", "en/training-loop"]
 tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 -->
@@ -70,21 +70,21 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p class="advent-card-kicker">THE STARTING POINT</p>
 <h4>What does an LLM predict?</h4>
 <p>What does the model compute from a prefix before selecting a token?</p>
-<div class="advent-card-links"><a href="advent-calendar/day-01.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
+<div class="advent-card-links"><a href="advent-calendar-day-01.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
 :::
 ::: {.advent-card advent-card-featured #day-02}
 <div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · ready</span></div>
 <p class="advent-card-kicker">THE CONTEXT</p>
 <h4>What information does the model have?</h4>
 <p>Which prefix conditions the prediction, and when does the continuation join it?</p>
-<div class="advent-card-links"><a href="advent-calendar/day-02.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
+<div class="advent-card-links"><a href="advent-calendar-day-02.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
 :::
 ::: {.advent-card advent-card-featured #day-03}
 <div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · ready</span></div>
 <p class="advent-card-kicker">BREAKING DOWN TEXT</p>
 <h4>How does text become tokens?</h4>
 <p>How does a tokenizer segment a string into an ordered sequence of units?</p>
-<div class="advent-card-links"><a href="advent-calendar/day-03.qmd">Open the door <span>→</span></a><a href="text-data.qmd">Canonical lesson</a></div>
+<div class="advent-card-links"><a href="advent-calendar-day-03.qmd">Open the door <span>→</span></a><a href="text-data.qmd">Canonical lesson</a></div>
 :::
 :::
 
