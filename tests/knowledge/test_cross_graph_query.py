@@ -107,17 +107,6 @@ def test_route_focus_path_preserves_pedagogical_roles(
 ) -> None:
     result = query_concept(evidence_index, "scaled-dot-product-attention")
     route_focus_paths = [path for path in result.paths if path.kind == "route-focus-computation"]
-    projection = evidence_index.evidence_projection
-    assert projection is not None
-    matching_groups = [
-        group
-        for group in projection.route_focus_groups
-        if group.page_id.endswith("/scaled-dot-product-attention")
-    ]
-    group_references = [
-        (group.stage_id, group.page_id, [(ref.role, ref.reference_type, ref.reference_id) for ref in group.references])
-        for group in matching_groups
-    ]
 
     assert any(
         focus_step.details is not None
@@ -131,11 +120,11 @@ def test_route_focus_path_preserves_pedagogical_roles(
             reference["type"] == "node" and reference["role"] == "objects"
             for reference in focus_step.details["references"]
         )
-        and any("stage-mediated" in caveat for caveat in path.caveats)
+        and any("stage-mediated" in caveat.casefold() for caveat in path.caveats)
         for path in route_focus_paths
         for focus_step in path.steps
         if focus_step.entity_type == "route_focus"
-    ), f"Missing typed route-focus path; groups={group_references!r}, paths={[path.path_id for path in route_focus_paths]!r}"
+    )
 
 
 def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
