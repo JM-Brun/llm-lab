@@ -88,7 +88,7 @@ def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> No
     pages[0]["route"] = {"previous": "fr/previous", "next": "fr/next"}
     edges = [
         {"source": "fr/lesson", "target": "fr/next", "family": "suggested_route", "relation": "next"},
-        {"source": "fr/review", "target": "fr/lesson", "family": "revision_of", "relation": "synthesis"},
+        {"source": "fr/review", "target": "fr/lesson", "family": "related", "relation": "related"},
         {"source": "fr/deep-dive", "target": "fr/lesson", "family": "related", "relation": "related"},
         {"source": "fr/unrelated", "target": "fr/other", "family": "related", "relation": "related"},
     ]
