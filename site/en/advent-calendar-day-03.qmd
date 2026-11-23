@@ -77,7 +77,7 @@ No. The two segmentations differ, even though they start from the same string. T
 
 ## What this step does not do yet
 
-Tokenization produces discrete units. It does not by itself provide the integer IDs consumed by the model. Mapping each token to a *token ID* is the subject of **day 4**. Using those IDs to select vectors from an embedding matrix comes next.
+Tokenization produces discrete units. It does not by itself provide the integer IDs consumed by the model. Mapping each token to a *token ID* is the subject of **day 4**. **Day 5** will show how an ID selects a vector from the embedding matrix; **day 6** introduces positional information, before the transition to contextualized representations on **day 7**.
 
 ## Takeaway
 
