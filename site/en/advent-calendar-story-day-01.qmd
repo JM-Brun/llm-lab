@@ -2,7 +2,7 @@
 title: "Why does the word “the” appear everywhere?"
 subtitle: "A simple statistical law behind a highly uneven distribution of words"
 description-meta: "Discover Zipf's law, long-tailed distributions and what they do — and do not — imply for language data."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
 ---
@@ -21,7 +21,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/text-data", "en/tokenization-strategies"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 -->
 
 *Independent story · about 10 minutes · Day 1 — draft for review*
