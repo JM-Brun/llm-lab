@@ -100,12 +100,17 @@ All values are mathematical consequences of the toy model, not corpus measuremen
 
 ## Visual provenance
 
-The file site/images/advent-zipf-rank-frequency.svg is an original vector diagram generated for this story. It plots the synthetic relation \(f(r)=1000/r\) on log-log axes. No external image is reused.
+The file site/images/advent-zipf-rank-frequency.svg is an original vector diagram generated for this story. It plots the synthetic relation \(f(r)=1000/r\) on log-log axes. No external image is reused. The Quarto figure caption and its fig-alt screen-reader description are authored separately.
 
-## Review still required
+## Validation completed and remaining review
 
-- Verify the exact canonical lesson paths in both languages (the metadata references now use the canonical `tokenization-strategies` page IDs).
-- Render both QMD versions and inspect math, figure, caption and responsive layout.
-- Confirm Quarto's relative image path for the new story location.
-- Obtain a novice read-through and record actual reading time.
-- Review the strength and placement of the LLM-training implication.
+- [x] Canonical lesson paths and page-map relation IDs verified in both languages.
+- [x] Controlled domain and bilingual metadata validated by the repository checks.
+- [x] Both QMD pages rendered by Quarto; the two displayed mathematical expressions rendered through MathJax in each language.
+- [x] Original SVG loaded in FR/EN; fig-alt is present and describes the plotted relation independently of the visible caption.
+- [x] Desktop (1440 px) and mobile (390 px) browser review passed with no horizontal overflow, console errors or page errors.
+- [x] Desktop Axe checks reported zero violations for both language versions.
+- [x] Relative image path, local links and page-aware language-switch links verified.
+- [ ] Obtain a novice read-through and record actual reading time.
+- [ ] Review with a novice whether the LLM-training implication and challenge are clear and appropriately qualified.
+- [ ] Record explicit editorial acceptance before drafting Day 02.
