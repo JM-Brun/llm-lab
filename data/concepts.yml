@@ -1165,6 +1165,7 @@ relations:
   
 
 
+  - {from: cross-entropy, type: contributes-to, to: knowledge-distillation}
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
 
