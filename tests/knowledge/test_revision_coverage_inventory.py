@@ -301,7 +301,10 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
         [lesson, *related_pages],
         concepts,
         resources,
-        route_memberships={},
+        route_memberships={
+            "fr/lesson": [{"stage_id": "computation", "role": "core"}],
+            "fr/deep-dive": [{"stage_id": "computation", "role": "optional"}],
+        },
         revision_aids_by_lesson={"fr/lesson": [{"id": "fr/review", "role": "synthesis"}]},
         page_edges=edges,
     )
@@ -324,12 +327,24 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
     }
     assert inventory["associated_resources"] == resources
     assert inventory["associated_concept_ids"] == ["self-attention"]
+    assert inventory["counts"]["guided_route"] == {
+        "membership_total": 2,
+        "membership_by_role": {"core": 1, "optional": 1},
+        "unique_pages_by_role": {"core": 1, "optional": 1},
+        "membership_by_language": {"fr": {"core": 1, "optional": 1}},
+        "unique_pages_by_language_and_role": {
+            "fr": {"core": 1, "optional": 1}
+        },
+        "membership_by_stage": {"computation": {"core": 1, "optional": 1}},
+    }
     assert inventory["missing_associated_page_ids"] == []
     assert inventory["missing_associated_resource_ids"] == []
 
     report = AUDIT["render_markdown"](inventory)
     assert "Suggested previous / next" in report
     assert "| fr/review | related | related | fr/lesson |" in report
+    assert "Core lesson memberships: **1** across **1** unique pages" in report
+    assert "Optional memberships: **1** across **1** unique pages" in report
     assert "Associated page records: **3**" in report
     assert "Associated non-page resources: **1**" in report
 
