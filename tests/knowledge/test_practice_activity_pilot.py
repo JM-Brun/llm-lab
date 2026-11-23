@@ -71,11 +71,7 @@ def test_qkv_lesson_links_only_to_its_dedicated_practice_hub() -> None:
         lesson = _source(language, "queries-keys-values.qmd")
         targets = _markdown_targets(lesson)
 
-        hub_links = [
-            target
-            for target in targets
-            if target.endswith("exercises/queries-keys-values.qmd")
-        ]
+        hub_links = [target for target in targets if target.endswith("exercises/queries-keys-values.qmd")]
         shared_collection_links = [
             target for target in targets if "exercises-attention.qmd" in target
         ]
@@ -108,10 +104,5 @@ def test_qkv_practice_hub_is_the_boundary_to_the_shared_collection() -> None:
         }
         assert expected_collection_neighborhood <= set(collection["related"])
 
-        hub_targets = _markdown_targets(
-            _source(language, "exercises/queries-keys-values.qmd")
-        )
-        assert any(
-            "exercises-attention.qmd#attention" in target
-            for target in hub_targets
-        )
+        hub_targets = _markdown_targets(_source(language, "exercises/queries-keys-values.qmd"))
+        assert any("exercises-attention.qmd#attention" in target for target in hub_targets)
