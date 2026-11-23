@@ -59,9 +59,7 @@ The second computation therefore does not start from the same context: the prefi
 
 <div class="advent-note">
   **Generation and observed targets.** The example describes generation: the next token is not yet known, and a decoding rule selects one. When a model is scored or trained on an existing text, the target token is available in the data. It is still distinct from the prefix used to compute the distribution: we then evaluate the probability the model assigns to that target. Day 19 returns to this setting.
-</div>
 
-<div class="advent-note">
   **A terminology note.** Here, “context” means only the model's immediate input at a given step. Designing an application context — instructions, retrieved documents, memory, or conversation history — is a broader topic covered in the [context engineering](context-engineering.qmd) lesson.
 </div>
 
