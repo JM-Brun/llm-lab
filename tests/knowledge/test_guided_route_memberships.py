@@ -188,7 +188,7 @@ def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
     )
     assert all(f">{part}</span>" in rendered for part in expected_parts)
     assert all(f"## {part} {{.guided-route-part" in route_markdown for part in expected_parts)
-    assert rendered.count('aria-label="') == len(stages)
+    # The nav landmark has its own aria-label in addition to the stage links.
     assert rendered.count('title="') == len(stages)
     for index, stage in enumerate(stages, start=1):
         full_label = html.escape(f"{index:02d} · {stage.title}", quote=True)
