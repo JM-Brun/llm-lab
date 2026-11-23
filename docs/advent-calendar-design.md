@@ -372,9 +372,9 @@ The first three daily pages are implemented in both languages:
 
 | Day | Daily page | Learning boundary |
 |---:|---|---|
-| 01 | `advent-calendar/day-01.qmd` | Conditional next-token distribution; distinguish prediction from decoding selection |
-| 02 | `advent-calendar/day-02.qmd` | Immediate supplied prefix; distinguish context from continuation and from application-level context design |
-| 03 | `advent-calendar/day-03.qmd` | Text segmentation into ordered tokens; token IDs and embedding lookup remain for days 4 and 5 |
+| 01 | `advent-calendar-day-01.qmd` | Conditional next-token distribution; distinguish prediction from decoding selection |
+| 02 | `advent-calendar-day-02.qmd` | Immediate supplied prefix; distinguish context from continuation and from application-level context design |
+| 03 | `advent-calendar-day-03.qmd` | Text segmentation into ordered tokens; token IDs and embedding lookup remain for days 4 and 5 |
 
 Each daily page contains one question, a concise explanation, a worked example or trace, one self-check with a disclosed answer, a takeaway, and links to the canonical lesson and exercise hub. The sequence follows the shared computation `context → f_θ(context) → logits → softmax → conditional distribution`; it does not imply that decoding selection is part of the model's probability calculation.
 
