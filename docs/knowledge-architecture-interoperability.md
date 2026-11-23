@@ -63,7 +63,7 @@ This mapping is conceptual; it does not claim every row is implemented end-to-en
 
 Do not duplicate existing issues:
 
-- **Concept relation contract:** #416's schema/validator work is implemented. The current main inventory contains 12 relation types and 114 typed concept edges (see the current registry and `docs/audits/concept-relation-edge-review.md`). The contract constrains learning dependencies to explicitly justified `prerequisite` edges. Remaining work is the updated edge-level scientific review as the registry evolves, plus manual rendered, touch and screen-reader validation and consumer audit; do not reopen schema design without a concrete failing case.
+- **Concept relation contract:** #416's schema/validator work is implemented. The current main inventory contains 12 relation types and 124 typed concept edges (see the current registry and `docs/audits/concept-relation-edge-review.md`). The contract constrains learning dependencies to explicitly justified `prerequisite` edges. Remaining work is the updated edge-level scientific review as the registry evolves, plus manual rendered, touch and screen-reader validation and consumer audit; do not reopen schema design without a concrete failing case.
 - **Cross-graph bridges:** #1233 owns the broader typed bridge contract and evidence/decision traversal. It must reuse canonical identities and specialized relation semantics; it is not a universal graph or a second registry. #512 owns claim provenance/interoperability, #1211 source provenance reconciliation, and #1306 explicit collection membership.
 - **Curriculum/navigation separation:** #130/#415/#225 and the canonical route owner remain authoritative. Concept relations must not generate or reorder the guided route.
 - **Source-to-synthesis provenance:** #458 and source-catalogue work own verification of claim-level provenance through extraction → concept/page → synthesis; add a compact mapping/validation checklist only for a demonstrated gap.
@@ -128,7 +128,7 @@ Each relation type now declares:
 
 Every edge of a relation type marked `learning_dependency: true` must include a bilingual `rationale` mapping with non-empty `fr` and `en` values. This prevents a graph edge from silently becoming a curriculum dependency without an explicit pedagogical justification and keeps the public data contract bilingual.
 
-The initial ten relation types were annotated. The current main registry has since grown to 12 controlled relation types and 114 typed concept edges; re-run the edge inventory and review whenever the registry changes. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
+The initial ten relation types were annotated. The current main registry has since grown to 12 controlled relation types and 124 typed concept edges; re-run the edge inventory and review whenever the registry changes. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
 
 ### Domain/range boundary
 
@@ -143,7 +143,7 @@ This is a first contract increment, not proof that every current relation edge i
 
 ## Edge-level review
 
-The original manual review of the first 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records intended readings and scope limitations, but it predates the current 114-edge registry. Treat it as historical evidence, not proof that every current edge has been reviewed. Refresh the edge-level review against current main, explicitly classify new/changed edges, and retain the non-exhaustive nature of conceptual relations. Rendered FR/EN graph UX, touch/screen-reader behavior and learner comprehension remain distinct validation tasks.
+The original manual review of the first 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records intended readings and scope limitations, but it predates the current 124-edge registry. Treat it as historical evidence, not proof that every current edge has been reviewed. Refresh the edge-level review against current main, explicitly classify new/changed edges, and retain the non-exhaustive nature of conceptual relations. Rendered FR/EN graph UX, touch/screen-reader behavior and learner comprehension remain distinct validation tasks.
 
 
 ## Cross-graph interoperability: remaining contract
