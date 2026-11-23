@@ -390,7 +390,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             f"- Associated non-page resources: **{len(inventory['associated_resources'])}**",
             f"- Associated concept IDs: **{len(inventory['associated_concept_ids'])}**",
             f"- Missing associated page IDs: **{len(inventory['missing_associated_page_ids'])}**",
-            f"- Missing associated resource IDs: **{len(inventory['missing_associated_resource_ids'])}**",
+            f"- Missing associated resource IDs: "
+            f"**{len(inventory['missing_associated_resource_ids'])}**",
         ]
     )
     lines.append("")
