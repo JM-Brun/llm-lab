@@ -212,7 +212,7 @@ Do not create a second revision registry. Reconcile the existing adapter, valida
 8. **Migrate in reviewed batches.** Preserve all existing content and rationale; do not rewrite the historical inventory snapshot wholesale.
 9. **Complete the peer Review route separately under #1541.** Derive it from `guided-route.yml`, `lesson_contracts` and typed revision-aid relations; keep Practice exercises outside the Review route.
 
-## 8. Decisions still open
+## 8. Remaining scope and deferred decisions
 
 - The current role vocabulary is `synthesis`, `flashcards`, and `revision_sheet`. Short recall prompts embedded in a lesson are not a separate aid role; they are assessed as integrated support through `revision_support` and explicit section evidence.
 - Inspect `docs/revision-sheets/` only if a real reader-facing use case requires a non-page aid identity; otherwise keep non-page revision aids deferred.
@@ -220,4 +220,4 @@ Do not create a second revision registry. Reconcile the existing adapter, valida
 - Keep `shared`/multilingual exceptions explicit and evidence-based; do not broaden them by default.
 - No further page-based migration is authorized until the current inventory and learner-facing Review gaps are reconciled.
 
-Until these decisions are closed, this remains a proposed contract. No metadata, registry, validator, graph or generated output should be changed on the assumption that these fields already work.
+The page-based aid→lesson and lesson-assessment contract is implemented and exercised through ProjectIndex in CI; it is not merely a proposal. The remaining limitation is explicit: non-page revision aids are unsupported and deferred, and the reader-facing Review route still has its own optional-coverage and learner-validation gates. Do not add a non-page resource kind or launch a further page-based migration without a concrete learner-facing need and a reviewed compatibility plan.
