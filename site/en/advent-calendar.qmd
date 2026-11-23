@@ -1,6 +1,6 @@
 ---
-title: "Archived prototype — 2026 LLM Advent Calendar"
-subtitle: "Archive of the first format: three guided mini-lessons and twenty-one links to the canonical learning route."
+title: "The 2026 LLM Advent Calendar"
+subtitle: "24 explorations to reconstruct an LLM's computation: from context to predictive distribution, then to generation, scoring, and learning."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
@@ -12,8 +12,8 @@ css: ../styles/advent-calendar.css
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/advent-calendar"
-scope: "Archive of the initial 24-door progressive calendar prototype, with three mini-lessons and twenty-one links to the canonical route."
-purpose: "Preserve and contextualize the first calendar version while a new collection of independent scientific stories is prepared."
+scope: "Landing page for a 24-day learning calendar about the central mechanism of an autoregressive language model."
+purpose: "Present the 24 days, their four-part progression, and links to canonical resources."
 suggested_route:
   previous: null
   next: null
