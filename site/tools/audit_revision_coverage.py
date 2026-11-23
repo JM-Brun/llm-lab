@@ -42,6 +42,7 @@ def build_revision_inventory(
     route_memberships: dict[str, list[dict[str, Any]]] | None = None,
     revision_support_by_page: dict[str, dict[str, Any]] | None = None,
     revision_aids_by_lesson: dict[str, list[dict[str, Any]]] | None = None,
+    page_edges: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """Project all published destination pages and their explicit relations."""
     concept_ids_by_page: dict[str, list[str]] = defaultdict(list)
@@ -125,8 +126,11 @@ def build_revision_inventory(
                 "type": page.get("type"),
                 "title": page.get("title"),
                 "href": page.get("href"),
+                "scope": page.get("scope"),
+                "purpose": page.get("purpose"),
                 "route_memberships": memberships,
                 "route_status": route_status,
+                "suggested_route": page.get("route", {}),
                 "parents": sorted(page.get("parents", [])),
                 "children": sorted(page.get("children", [])),
                 "related": sorted(page.get("related", [])),
@@ -189,8 +193,18 @@ def build_revision_inventory(
                 }
             )
 
+    affected_page_ids = {record["id"] for record in records}
+    affected_page_edges = [
+        edge
+        for edge in (page_edges or [])
+        if edge.get("source") in affected_page_ids or edge.get("target") in affected_page_ids
+    ]
+    affected_page_edges.sort(
+        key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
+    )
+
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -208,6 +222,7 @@ def build_revision_inventory(
         "missing_topic_pages": missing_topic_pages,
         "unexpected_languages": unexpected_languages,
         "pages": records,
+        "affected_page_edges": affected_page_edges,
     }
 
 
@@ -317,6 +332,15 @@ def main() -> int:
         registry_entries(ROOT / "data/resources.yml", "resources"),
         revision_support_by_page=project_index.revision_support_by_page,
         revision_aids_by_lesson=revision_aids_by_lesson,
+        page_edges=[
+            {
+                "source": edge.source,
+                "target": edge.target,
+                "family": edge.family,
+                "relation": edge.relation,
+            }
+            for edge in project_index.page_edges
+        ],
     )
     payload = json.dumps(inventory, ensure_ascii=False, indent=2) + "\n"
     if args.json:
