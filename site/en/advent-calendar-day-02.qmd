@@ -16,8 +16,8 @@ summary: "A distinction between the prefix currently available to the model and 
 scope: "Defines the immediate context as the token prefix supplied at a given step; excludes application-level context design."
 purpose: "Trace how the prefix is updated when a selected token is fed back during generation."
 suggested_route:
-  previous: "en/advent-calendar/day-01"
-  next: "en/advent-calendar/day-03"
+  previous: "en/advent-calendar-day-01"
+  next: "en/advent-calendar-day-03"
 hierarchy:
   parents: ["en/advent-calendar"]
   children: []
