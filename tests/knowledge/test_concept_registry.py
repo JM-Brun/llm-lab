@@ -456,3 +456,41 @@ def test_kl_divergence_is_not_a_prerequisite_for_cross_entropy() -> None:
     # prerequisite edge in the concept graph.
     assert "fr/language-modeling-math" in concepts["cross-entropy"]["resources"]
     assert "en/language-modeling-math" in concepts["cross-entropy"]["resources"]
+
+
+def test_2026_concept_relation_review_corrections_are_preserved() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    edges = {(item["from"], item["type"], item["to"]) for item in data["relations"]}
+
+    # Predictive compression consumes conditional probabilities; distillation
+    # and positive-pair structure contribute to broader methods without being
+    # universal structural components.
+    assert ("conditional-distribution", "contributes-to", "predictive-compression") in edges
+    assert ("predictive-compression", "applies-to", "conditional-distribution") not in edges
+    assert ("knowledge-distillation", "contributes-to", "model-compression") in edges
+    assert ("knowledge-distillation", "part-of", "model-compression") not in edges
+    assert (
+        "positive-pair-distribution",
+        "contributes-to",
+        "joint-embedding-predictive-architecture",
+    ) in edges
+    assert (
+        "positive-pair-distribution",
+        "part-of",
+        "joint-embedding-predictive-architecture",
+    ) not in edges
+
+    # Retrieval can supply context for in-context learning; entropy and
+    # cross-entropy are useful mathematical connections, not prerequisites.
+    removed = {
+        ("document-retrieval", "contrasts-with", "in-context-learning"),
+        ("laplacian-eigenmaps", "contributes-to", "platonic-representation-hypothesis"),
+        ("joint-embedding-predictive-architecture", "represented-by", "laplacian-eigenmaps"),
+        ("entropy", "prerequisite", "cross-entropy"),
+        ("cross-entropy", "prerequisite", "knowledge-distillation"),
+    }
+    assert edges.isdisjoint(removed)
+    assert ("entropy", "prerequisite", "cross-entropy") not in edges
+    assert ("score-function", "prerequisite", "score-centering") in edges
+    assert len(edges) == 119
