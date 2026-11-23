@@ -1083,20 +1083,20 @@ ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
     (
         "discover",
         "orientation",
-        "Découvrir le système",
-        "Discover the system",
+        "Le modèle",
+        "The model",
     ),
     (
         "prediction",
         "text-input",
-        "Comprendre une prédiction",
-        "Understand how a prediction is computed",
+        "Prédire un token",
+        "Predict a token",
     ),
     (
         "usages",
         "inference",
-        "Contexte, usages de la prédiction et apprentissage",
-        "Context, prediction uses, and training",
+        "Utiliser et entraîner",
+        "Use and train",
     ),
 )
 ROUTE_PART_BY_FIRST_STAGE: dict[str, tuple[str, str, str]] = {
