@@ -74,6 +74,9 @@ Historical source for Zipf's popularization and broader framing. The draft does 
 
 ## Numerical example verification
 
+The new rank-construction example is deliberately a separate, fictional count table (de: 12, et: 7, chat: 4, chien: 3, luciole: 1 in French; the: 12, and: 7, cat: 4, dog: 3, firefly: 1 in English). It teaches that rank is obtained by sorting observed counts; it is not presented as an empirical corpus or as a fitted Zipf distribution.
+
+
 For the deliberately synthetic model \(f(r)=C/r\) with \(C=1000\):
 
 - rank 1: 1000
