@@ -495,3 +495,18 @@ def test_2026_concept_relation_review_corrections_are_preserved() -> None:
     assert ("cross-entropy", "contributes-to", "knowledge-distillation") in edges
     assert ("score-function", "prerequisite", "score-centering") in edges
     assert len(edges) == 120
+
+    relation_by_key = {
+        (item["from"], item["type"], item["to"]): item
+        for item in data["relations"]
+    }
+    scoped_edges = {
+        ("conditional-distribution", "contributes-to", "predictive-compression"),
+        ("knowledge-distillation", "contributes-to", "model-compression"),
+        ("positive-pair-distribution", "contributes-to", "joint-embedding-predictive-architecture"),
+        ("cross-entropy", "contributes-to", "knowledge-distillation"),
+    }
+    for edge in scoped_edges:
+        rationale = relation_by_key[edge]["rationale"]
+        assert set(rationale) == {"fr", "en"}
+        assert all(value.strip() for value in rationale.values())
