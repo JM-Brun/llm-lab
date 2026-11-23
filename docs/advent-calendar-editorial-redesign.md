@@ -225,5 +225,5 @@ The old pages should not be deleted until the new experience is ready. Their use
 - Review and approve this new editorial direction.
 - Audit the existing calendar landing page and current day pages for rendering defects; keep the old experience clearly marked as a prototype during transition.
 - Build and visually test the article template before migrating content.
-- Prepare source dossiers and draft the three non-adjacent pilots.
-- Run a novice review and record the results before committing to the full 24-day slate.
+- Continue with Day 01 only: complete its scientific, editorial, bilingual, rendered, accessibility and novice-review gates.
+- Draft Day 02 only after Day 01 is accepted, then continue in numerical order; retain the same per-day acceptance gate throughout.
