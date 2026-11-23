@@ -33,7 +33,7 @@ Editorial constraint:
 https://proceedings.mlr.press/v97/rahaman19a.html
 
 Supports:
-- Fourier analysis reveals a learning bias toward low-frequency functions in the deep networks studied;
+- Fourier analysis reveals a learning bias toward low-frequency functions in the deep ReLU networks studied;
 - the bias appears as frequency-dependent learning speed: lower-frequency components are learned earlier;
 - the paper also studies the interaction between spectral bias and data-manifold geometry.
 
