@@ -207,9 +207,9 @@ The calendar unit is a short entry point, not a replacement for the canonical pa
 - Support keyboard navigation, visible focus, screen readers, reduced motion, sufficient contrast, and meaningful image alternatives.
 - Preserve the site's FR/EN switch; do not create parallel language-specific calendar implementations.
 
-### No premature interface implementation
+### Prototype versus release
 
-Do not build the visual calendar before the 24-day selection and three-day content pilot are reviewed. The content model and rendered reader experience should be validated first.
+The current bilingual 24-door interface is a reader-facing prototype: it exposes the full sequence, but only days 01–03 have dedicated guided pages. Its purpose is to test the editorial structure, visual hierarchy, and navigation while the content pilot is still pending. Do not describe the calendar as a validated learning product or scale the short-form page template to all 24 days until the selected content pilot and formative reader review have been completed.
 
 ## 7. Data and implementation architecture
 
