@@ -223,3 +223,17 @@ details.advent-answer[open] summary { margin-bottom: .7rem; }
   .advent-prefix-steps, .advent-day-resources { grid-template-columns: minmax(0, 1fr); }
   .advent-day-next { align-items: start; flex-direction: column; }
 }
+
+/* The closing CTA is outside the dark outro container by design; give it an
+   explicit high-contrast surface instead of relying on inherited link colors. */
+.advent-button.advent-button-light {
+  background-color: #e4edac;
+  border-color: #e4edac;
+  color: #142c28 !important;
+}
+.advent-button.advent-button-light:hover,
+.advent-button.advent-button-light:focus-visible {
+  background-color: #fffdf4;
+  border-color: #fffdf4;
+  color: #142c28 !important;
+}
