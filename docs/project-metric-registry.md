@@ -143,7 +143,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | present | Positive explicit evidence exists and resolves |
 | missing | An expected association is absent; only when an approved completeness/eligibility rule defines the expectation and the source is exhaustive |
 | not_applicable | Dimension does not apply, supported by a documented rule or reviewed decision |
-| not_registered | No canonical mapping or adapter exists to determine this dimension |
+| not_registered | No complete canonical mapping or coverage crosswalk exists to determine this dimension; partial inventory adapters may still exist |
 | needs_review | Evidence is ambiguous, incomplete or requires editorial judgment |
 | not_assessed | An assessment has not been performed; never use as a synonym for missing |
 
