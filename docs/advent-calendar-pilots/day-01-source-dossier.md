@@ -110,7 +110,10 @@ The file site/images/advent-zipf-rank-frequency.svg is an original vector diagra
 - [x] Original SVG loaded in FR/EN; fig-alt is present and describes the plotted relation independently of the visible caption.
 - [x] Desktop (1440 px) and mobile (390 px) browser review passed with no horizontal overflow, console errors or page errors.
 - [x] Desktop Axe checks reported zero violations for both language versions.
+- [x] Full repository CI, full-site Quarto build, learning-map/graph/timeline checks, local links and secret scanning passed on the restored planned state.
 - [x] Relative image path, local links and page-aware language-switch links verified.
-- [ ] Obtain a novice read-through and record actual reading time.
+- [ ] Obtain a novice read-through and record actual reading time using [the Day 01 review protocol](day-01-novice-review.md).
 - [ ] Review with a novice whether the LLM-training implication and challenge are clear and appropriately qualified.
 - [ ] Record explicit editorial acceptance before drafting Day 02.
+
+**Post-preview source correction:** a literal escaped newline before the Pilgrim and Hills (2021) bibliography item was found in both QMD files during a final source review. It has been replaced by a real Markdown line break. Re-run the PR preview after this correction before closing technical review.
