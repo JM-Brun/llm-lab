@@ -6,9 +6,9 @@ import runpy
 from pathlib import Path
 from typing import Any
 
-import pytest
-
 from strict_yaml import load_yaml
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
