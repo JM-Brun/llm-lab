@@ -13,6 +13,7 @@ id: "en/advent-calendar-story-day-06"
 summary: "Shows why transforming a coordinate into multiple sinusoidal features makes different variation scales explicit."
 scope: "Explains multi-frequency sinusoidal representations and spectral bias, using Transformer positional encoding as one application."
 purpose: "Distinguish a raw coordinate, a bank of frequency features, and a network's ability to use those features."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: null
   next: null
