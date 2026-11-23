@@ -10,7 +10,7 @@ This document contains short calendar-sized explanations, not replacement lesson
 
 ## Implementation status
 
-The French and English versions of days 01–03 are implemented as reader-facing pages under `site/{fr,en}/advent-calendar/`. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
+The French and English versions of days 01–03 are implemented as reader-facing pages as `site/{fr,en}/advent-calendar-day-0N.qmd` files. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
 
 The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test or a complete visual review of the rendered site.
 
