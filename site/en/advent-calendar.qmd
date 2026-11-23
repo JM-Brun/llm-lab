@@ -57,14 +57,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 ## The 24 doors
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">01 — 07</span>
 <div><h3>From context to representations</h3><p>How does text become an input the model can process?</p></div>
-:::
+::::
 
 <p class="advent-opening-note"><strong>Start here.</strong> The first three days are fully guided: a short explanation, a worked example, a self-check, and a link to the canonical lesson.</p>
 
-::: {.advent-grid .advent-grid-opening}
+:::: {.advent-grid .advent-grid-opening}
 ::: {.advent-card .advent-card-featured #day-01}
 <div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · ready</span></div>
 <p class="advent-card-kicker">THE STARTING POINT</p>
@@ -86,9 +86,9 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>How does a tokenizer segment a string into an ordered sequence of units?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-03.qmd">Open the door <span>→</span></a><a href="text-data.qmd">Canonical lesson</a></div>
 :::
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #day-04}
 <div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">IDENTIFIERS</p>
@@ -117,14 +117,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Why can two occurrences of the same token have different representations?</p>
 <div class="advent-card-links"><a href="contextualized-representations.qmd">Read the lesson <span>→</span></a><a href="exercises/contextualized-representations.qmd">Practise</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">08 — 12</span>
 <div><h3>Transformer computation</h3><p>How are hidden states transformed inside the blocks?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #day-08}
 <div class="advent-card-top"><span class="advent-number">08</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">ARCHITECTURE</p>
@@ -160,14 +160,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>How do the other block operations transform hidden states?</p>
 <div class="advent-card-links"><a href="transformer.qmd">Read the lesson <span>→</span></a><a href="transformer-block-walkthrough.qmd">See the code</a><a href="exercises/transformer-block-walkthrough.qmd">Practise</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">13 — 18</span>
 <div><h3>Prediction and generation</h3><p>How do hidden states become a distribution, then a selected token?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #day-13}
 <div class="advent-card-top"><span class="advent-number">13</span><span class="advent-time">6 min</span></div>
 <p class="advent-card-kicker">OUTPUT SCORES</p>
@@ -210,14 +210,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Why does inference distinguish initial context processing from token-by-token generation?</p>
 <div class="advent-card-links"><a href="generation.qmd">Read the lesson <span>→</span></a><a href="exercises/generation.qmd">Practise</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">19 — 24</span>
 <div><h3>Scoring and learning</h3><p>What changes when the target is observed, and how do model parameters learn?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #day-19}
 <div class="advent-card-top"><span class="advent-number">19</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">OBSERVED TARGET</p>
@@ -260,7 +260,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>What changes the parameters, and what only measures the model?</p>
 <div class="advent-card-links"><a href="training-loop.qmd">Read the lesson <span>→</span></a><a href="experimental-evaluation.qmd">Evaluate a model</a></div>
 :::
-:::
+::::
 
 <div class="advent-outro">
   <div>
