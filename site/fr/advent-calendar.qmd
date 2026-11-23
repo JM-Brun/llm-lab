@@ -262,11 +262,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 :::
 ::::
 
-<div class="advent-outro">
-  <div>
-    <p class="advent-kicker">APRÈS LES 24 JOURS</p>
-    <h2>Le calendrier donne le fil. À vous de reconstruire le mécanisme.</h2>
-    <p>Reprenez les notions dans la <a href="learning-map.qmd">carte des ressources</a>, vérifiez-les avec le <a href="exercises.qmd">catalogue d’exercices</a>, puis suivez le <a href="build-path.qmd">parcours de construction d’un petit GPT</a>.</p>
-  </div>
-  <a class="advent-button advent-button-light" href="llm-overview.qmd">Revoir le panorama <span aria-hidden="true">→</span></a>
-</div>
+:::: {.advent-outro}
+::: {.advent-outro-copy}
+<p class="advent-kicker">APRÈS LES 24 JOURS</p>
+
+## Le calendrier donne le fil. À vous de reconstruire le mécanisme.
+
+Reprenez les notions dans la [carte des ressources](learning-map.qmd), vérifiez-les avec le [catalogue d’exercices](exercises.qmd), puis suivez le [parcours de construction d’un petit GPT](build-path.qmd).
+:::
+
+[Revoir le panorama →](llm-overview.qmd){.advent-button .advent-button-light}
+::::
