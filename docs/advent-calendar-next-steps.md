@@ -48,14 +48,14 @@ Work in the following order. Do not start all 24 articles in parallel.
 **Deliverable:** source-level inventory and migration boundary completed; no mass rewrite or new story manifest.
 ### Phase B — article template and rendering proof
 
-- [ ] Implement one minimal article template using native Quarto/Markdown and standard MathJax delimiters.
-- [ ] Keep the layout restrained: readable article width, existing typography and forest-green palette, compact metadata, clear headings, captions, sources, challenge/solution, and optional further reading.
-- [ ] Avoid custom nested HTML/CSS wrappers and bespoke layout systems unless a demonstrated rendering requirement justifies them.
-- [ ] Validate the template with representative content containing equations, lists, a figure with caption/alt text, a table or its mobile-friendly alternative, and a solution disclosure.
-- [ ] Render FR and EN; inspect desktop and mobile widths; verify keyboard navigation, focus visibility, contrast, link destinations, and overflow.
+- [x] Implement a reusable story template using native Quarto/Markdown and standard MathJax delimiters in docs/templates/advent-story-template.qmd.
+- [x] Keep the new article pages on the site's standard typography and layout; use clear headings, a worked example, a figure with alternative text, sources, a challenge/solution and optional further reading.
+- [x] Avoid custom nested HTML/CSS wrappers and bespoke layout systems.
+- [x] Validate the source structure with representative content containing equations, lists, a figure, a table and a solution disclosure.
+- [ ] Render FR and EN; inspect desktop and mobile widths; verify keyboard navigation, focus visibility, contrast, link destinations and overflow.
 - [ ] Capture review screenshots and record defects and fixes.
 
-**Deliverable:** one reusable article pattern whose rendered output—not just source or CI status—has passed review.
+**Deliverable:** the source template and representative bilingual content exist. The rendered output has not yet passed review; the PR-only preview must be inspected before publication.
 
 ### Phase C — Pilot A: Day 06, Fourier features and multi-scale coordinates
 
