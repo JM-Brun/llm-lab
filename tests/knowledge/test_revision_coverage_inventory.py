@@ -302,9 +302,7 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
         concepts,
         resources,
         route_memberships={},
-        revision_aids_by_lesson={
-            "fr/lesson": [{"id": "fr/review", "role": "synthesis"}]
-        },
+        revision_aids_by_lesson={"fr/lesson": [{"id": "fr/review", "role": "synthesis"}]},
         page_edges=edges,
     )
     record = inventory["pages"][0]
@@ -319,9 +317,11 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
     assert record["covered_stages"] == ["computation"]
     assert record["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
     assert inventory["affected_page_edges"] == expected_edges
-    assert {
-        page["id"] for page in inventory["associated_page_records"]
-    } == {"fr/review", "fr/deep-dive", "fr/next"}
+    assert {page["id"] for page in inventory["associated_page_records"]} == {
+        "fr/review",
+        "fr/deep-dive",
+        "fr/next",
+    }
     assert inventory["associated_resources"] == resources
     assert inventory["associated_concept_ids"] == ["self-attention"]
     assert inventory["missing_associated_page_ids"] == []
