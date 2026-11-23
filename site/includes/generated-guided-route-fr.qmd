@@ -14,7 +14,7 @@
   <p class="guided-rail__progress" data-guided-rail-progress hidden data-reset-label="Effacer la progression consultée">Progression consultée · stockée uniquement dans ce navigateur</p>
 </nav>
 
-## Découvrir le système {.guided-route-part #guided-part-discover}
+## Le modèle {.guided-route-part #guided-part-discover}
 
 :::: {.guided-route-grid}
 
@@ -39,7 +39,7 @@ Situer le contexte et les paramètres du modèle. Suivre deux tours de générat
 
 ::::
 
-## Comprendre une prédiction {.guided-route-part #guided-part-prediction}
+## Prédire un token {.guided-route-part #guided-part-prediction}
 
 :::: {.guided-route-grid}
 
@@ -122,7 +122,7 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 
 ::::
 
-## Contexte, usages de la prédiction et apprentissage {.guided-route-part #guided-part-usages}
+## Utiliser et entraîner {.guided-route-part #guided-part-usages}
 
 :::: {.guided-route-grid}
 
