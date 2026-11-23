@@ -17,7 +17,7 @@ scope: "Introduit la prédiction du prochain token et distingue le calcul d'une 
 purpose: "Expliquer ce qu'un modèle autorégressif calcule à une étape donnée, sans confondre probabilité, choix et vérité."
 suggested_route:
   previous: "fr/advent-calendar"
-  next: "fr/advent-calendar/day-02"
+  next: "fr/advent-calendar-day-02"
 hierarchy:
   parents: ["fr/advent-calendar"]
   children: []
