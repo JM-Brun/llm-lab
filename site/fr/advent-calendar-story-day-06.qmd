@@ -52,13 +52,13 @@ Cette fonction effectue huit oscillations sur l’intervalle [0,1]. Quelques val
 | $3/32$ | $3\pi/2$ | -1 |
 | $1/8$ | $2\pi$ | 0 |
 
-Une lecture linéaire du seul nombre (x) ne peut pas reproduire exactement cette oscillation. En revanche, si l’entrée contient déjà la caractéristique $\sin(16\pi x)$, une simple lecture linéaire peut retrouver (f(x)) exactement : il suffit de lui donner un poids égal à 1 sur cette coordonnée.
+Une lecture linéaire du seul nombre $x$ ne peut pas reproduire exactement cette oscillation. En revanche, si l’entrée contient déjà la caractéristique $\sin(16\pi x)$, une simple lecture linéaire peut retrouver $f(x)$ exactement : il suffit de lui donner un poids égal à 1 sur cette coordonnée.
 
-Ce petit exemple ne prouve pas qu’un réseau non linéaire serait incapable d’apprendre cette fonction à partir de (x). Il montre autre chose : **la représentation choisie détermine quelles variations sont directement accessibles à une lecture donnée**.
+Ce petit exemple ne prouve pas qu’un réseau non linéaire serait incapable d’apprendre cette fonction à partir de $x$. Il montre autre chose : **la représentation choisie détermine quelles variations sont directement accessibles à une lecture donnée**.
 
 ![Deux fréquences appliquées au même intervalle : une oscillation lente et huit oscillations rapides.](../images/advent-frequency-scales.svg){#fig-advent-frequency-scales width=95%}
 
-*La coordonnée (x) parcourt le même intervalle dans les deux panneaux. Seule la fréquence change.*
+*La coordonnée $x$ parcourt le même intervalle dans les deux panneaux. Seule la fréquence change.*
 
 ## Le biais spectral : représenter n’est pas apprendre
 
@@ -86,7 +86,7 @@ $$
 ].
 $$
 
-Chaque fréquence (b_j) fournit une paire de coordonnées. Les basses fréquences changent lentement lorsque (x) varie ; les hautes fréquences changent plus rapidement. La représentation donne donc au modèle plusieurs « horloges » qui ne battent pas au même rythme.
+Chaque fréquence $b_j$ fournit une paire de coordonnées. Les basses fréquences changent lentement lorsque $x$ varie ; les hautes fréquences changent plus rapidement. La représentation donne donc au modèle plusieurs « horloges » qui ne battent pas au même rythme.
 
 On peut voir le choix de ces fréquences comme un choix de résolution :
 
@@ -128,7 +128,7 @@ $$
 g(x)=\sin(2\pi x)+0{,}2\sin(16\pi x).
 $$
 
-On dispose d’abord d’une lecture linéaire alimentée uniquement par les caractéristiques (\sin(2\pi x)) et $\cos(2\pi x)$.
+On dispose d’abord d’une lecture linéaire alimentée uniquement par les caractéristiques $\sin(2\pi x)$ et $\cos(2\pi x)$.
 
 **Question :** cette représentation suffit-elle pour reconstruire exactement $g$ ? Quelle caractéristique faut-il ajouter pour rendre les deux composantes directement accessibles ?
 
