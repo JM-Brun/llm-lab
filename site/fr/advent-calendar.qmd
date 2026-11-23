@@ -19,7 +19,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/index"]
-  children: []
+  children: ["fr/advent-calendar/day-01", "fr/advent-calendar/day-02", "fr/advent-calendar/day-03"]
 related: ["fr/learning-map", "fr/exercises", "fr/llm-overview", "fr/training-loop"]
 tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 -->
