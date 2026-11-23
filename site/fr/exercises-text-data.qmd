@@ -239,7 +239,7 @@ fr_fragments = [encoding.decode_single_token_bytes(i).decode("utf-8") for i in f
 assert encoding.decode(fr_prefix_ids) == "C'est une bonne situation, ça, scribe ?"
 assert len(fr_prefix_ids) == 15
 assert fr_fragments[-1] == " ?"
-print("Préfixe français :")
+print("French prefix:")
 for fragment, fragment_id in zip(fr_fragments, fr_prefix_ids):
     print(f"  {fragment!r} -> {fragment_id}")
 
