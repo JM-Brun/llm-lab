@@ -39,8 +39,10 @@ project:
     - images/generation-prefill-decode-fr-mobile.svg
   render:
     - index.qmd
+    - fr/advent-calendar.qmd
     - fr/learning-map.qmd
     - en/index.qmd
+    - en/advent-calendar.qmd
     - en/learning-map.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
@@ -351,6 +353,8 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
+        - href: fr/advent-calendar.qmd
+          text: "Calendrier de l’avent · 24 jours"
         - href: fr/learning-map.qmd
           text: "Parcours guidé et carte des ressources"
         - section: "Comprendre les LLM"
@@ -568,6 +572,8 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
+        - href: en/advent-calendar.qmd
+          text: "Advent calendar · 24 days"
         - href: en/learning-map.qmd
           text: "Guided route and resource map"
         - section: "Understand LLMs"
