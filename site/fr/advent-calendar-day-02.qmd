@@ -1,7 +1,7 @@
 ---
 title: "Jour 2 — De quoi le modèle dispose-t-il ?"
 description: "Distinguer le préfixe fourni au modèle du prochain token qu'il doit prédire."
-keywords: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:orient", "topic:context-and-prefix", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
@@ -22,7 +22,7 @@ hierarchy:
   parents: ["fr/advent-calendar"]
   children: []
 related: ["fr/llm-overview", "fr/generation", "fr/context-engineering"]
-tags: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:fr", "status:published"]
+tags: ["type:concept-bridge", "destination:orient", "topic:context-and-prefix", "level:overview", "language:fr", "status:published"]
 -->
 
 <div class="advent-day-shell">
