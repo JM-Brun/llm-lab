@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/queries-keys-values"]
+related: ["en/queries-keys-values", "en/exercises-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-exercises", "level:applied", "language:en", "status:published"]
 -->
 
@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-e
 
 ## Check the essential idea
 
-[Extended exercises on Q/K/V and attention](../exercises.qmd#attention).
+[Extended exercises on Q/K/V and attention](../exercises-attention.qmd#attention).
 
 **Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
 
