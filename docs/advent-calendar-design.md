@@ -362,3 +362,22 @@ Do not publish the calendar as a finished learning product until:
 7. **Release and maintenance:** publish the evergreen archive, check links and content yearly, and review whether the calendar remains aligned with the canonical concepts and routes.
 
 The calendar is successful if it helps a reader build and transfer a correct mental model of LLM computation—not merely if all 24 doors are opened.
+
+
+## 9. First reader-facing implementation
+
+The calendar landing page is implemented in French and English at `site/fr/advent-calendar.qmd` and `site/en/advent-calendar.qmd`, with shared responsive styling in `site/styles/advent-calendar.css`. It presents all 24 days in four editorial acts. The first three doors receive a distinct visual treatment and open dedicated short-form learning pages; the remaining days continue to point to canonical LLM Lab lessons and their separate practice resources.
+
+The first three daily pages are implemented in both languages:
+
+| Day | Daily page | Learning boundary |
+|---:|---|---|
+| 01 | `advent-calendar/day-01.qmd` | Conditional next-token distribution; distinguish prediction from decoding selection |
+| 02 | `advent-calendar/day-02.qmd` | Immediate supplied prefix; distinguish context from continuation and from application-level context design |
+| 03 | `advent-calendar/day-03.qmd` | Text segmentation into ordered tokens; token IDs and embedding lookup remain for days 4 and 5 |
+
+Each daily page contains one question, a concise explanation, a worked example or trace, one self-check with a disclosed answer, a takeaway, and links to the canonical lesson and exercise hub. The sequence follows the shared computation `context → f_θ(context) → logits → softmax → conditional distribution`; it does not imply that decoding selection is part of the model's probability calculation.
+
+The first three daily page IDs are also recorded in the YAML manifest and in the landing page's hidden page-map metadata. The manifest remains an editorial proposal and is **not yet consumed by Quarto or CI**. The bilingual landing pages and daily pages are currently maintained as QMD files. A later change should add a lightweight consistency validator or generator rather than introducing a second registry or a dedicated workflow.
+
+**Validation status:** content and source links have been reviewed against the canonical lesson pages and the pilot drafts. The entries are editorially drafted, not yet tested with novice learners. A full Quarto render and visual review at desktop and mobile widths are still required before describing the first three days as release-ready.
