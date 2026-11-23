@@ -144,7 +144,7 @@ Language does not use all its words at the same frequency. Zipf's law provides a
 ### Sources
 
 - [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — rank-frequency approximation, limits of simple fits and the same-sample estimation pitfall.
-- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.\n- [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
+- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.- [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — historical book that popularized the law in language study.
 
 ::: {.language-switch}
