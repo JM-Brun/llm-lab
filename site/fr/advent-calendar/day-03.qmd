@@ -1,0 +1,93 @@
+---
+title: "Jour 3 — Comment le texte devient-il des tokens ?"
+description: "Comprendre la segmentation d'une chaîne de caractères en une séquence ordonnée de tokens."
+keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:fr", "status:published"]
+lang: fr
+sidebar: fr
+toc: false
+page-layout: custom
+css: ../../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/advent-calendar/day-03"
+summary: "Une première exploration de la tokenisation : le tokenizer segmente une chaîne de caractères en une séquence ordonnée de tokens."
+scope: "Explique la segmentation en tokens sans traiter encore leur encodage en identifiants entiers ni leur projection en embeddings."
+purpose: "Faire comprendre qu'un token n'est pas nécessairement un mot et que le découpage dépend du tokenizer."
+suggested_route:
+  previous: "fr/advent-calendar/day-02"
+  next: "fr/advent-calendar/day-04"
+hierarchy:
+  parents: ["fr/advent-calendar"]
+  children: []
+related: ["fr/text-data", "fr/tokenization-strategies"]
+tags: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:fr", "status:published"]
+-->
+
+<div class="advent-day-shell">
+  <nav class="advent-day-topnav" aria-label="Navigation du calendrier">
+    <a href="../advent-calendar.qmd">← Retour aux 24 cases</a>
+    <span>JOUR 03 <span aria-hidden="true">/</span> 24</span>
+  </nav>
+  <div class="advent-day-progress" role="img" aria-label="Troisième journée sur vingt-quatre"><span style="width: 12.5%"></span></div>
+  <p class="advent-day-kicker">DÉCOUPER LE TEXTE · 6 MINUTES</p>
+  <p class="advent-day-lead">Le modèle ne manipule pas directement les phrases comme nous les lisons. Avant de calculer, le texte doit être découpé en unités discrètes : les <strong>tokens</strong>.</p>
+</div>
+
+## La question
+
+Comment un tokenizer transforme-t-il une chaîne de caractères en unités discrètes ?
+
+## L'idée essentielle
+
+Un **tokenizer** applique des règles de segmentation à une chaîne de caractères et produit une séquence ordonnée de *tokens*. Un token est une unité du vocabulaire du tokenizer. Selon sa méthode et son vocabulaire, il peut correspondre à un mot entier, à une partie de mot, à un caractère ou à une séquence d'octets.
+
+Un token n'est donc pas nécessairement un mot lisible. La segmentation dépend du tokenizer utilisé : deux tokenizers peuvent découper différemment une même chaîne.
+
+## Un exemple de segmentation
+
+Avec un tokenizer jouet, la chaîne « chat suit le chat » pourrait devenir :
+
+<div class="advent-tokenization-example" aria-label="Le texte chat suit le chat est segmenté en quatre tokens">
+  <div class="advent-tokenization-source">« chat suit le chat »</div>
+  <span aria-hidden="true">↓</span>
+  <div class="advent-tokenization-tokens"><code>chat</code><code>suit</code><code>le</code><code>chat</code></div>
+  <p>Une séquence ordonnée de quatre tokens</p>
+</div>
+
+Un autre tokenizer pourrait découper certains mots en sous-unités. Par exemple, sur une chaîne plus courte, l'un pourrait produire `chat | suit`, tandis qu'un autre produirait `cha | t | suit`. Les deux segmentations représentent la même chaîne de départ, mais elles ne donnent pas la même séquence de tokens.
+
+## À vous de vérifier
+
+Deux tokenizers segmentent la même chaîne différemment :
+
+- le premier produit `["chat", "suit"]` ;
+- le second produit `["cha", "t", "suit"]`.
+
+Ont-ils nécessairement produit la même séquence de tokens ?
+
+<details class="advent-answer">
+<summary>Afficher la réponse</summary>
+
+Non. Les deux segmentations sont différentes, même si elles partent de la même chaîne. Le découpage dépend du tokenizer et de son vocabulaire ; il faut connaître le tokenizer utilisé pour interpréter la séquence.
+
+</details>
+
+## Ce que cette étape ne fait pas encore
+
+La tokenisation produit des unités discrètes. Elle ne suffit pas à donner au modèle les identifiants entiers qu'il consomme. Cette association entre token et *token ID* est l'objet du **jour 4**. L'utilisation de ces identifiants pour sélectionner des vecteurs dans une matrice d'embeddings viendra ensuite.
+
+## À retenir
+
+La tokenisation transforme une chaîne de caractères en une séquence ordonnée d'unités discrètes. Un token n'est pas nécessairement un mot, et sa segmentation dépend du tokenizer.
+
+<div class="advent-day-resources">
+  <a href="../text-data.qmd"><strong>Leçon de référence</strong><span>Du texte aux tokens</span></a>
+  <a href="../exercises/text-data.qmd"><strong>S'exercer</strong><span>Questions et exercices sur les données textuelles</span></a>
+</div>
+
+<nav class="advent-day-next" aria-label="Navigation entre les journées">
+  <a href="day-02.qmd">← Jour 2</a>
+  <span>La suite : du token à son identifiant, au jour 4.</span>
+</nav>
