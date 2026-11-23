@@ -243,6 +243,66 @@ def test_unexpected_language_values_are_reported() -> None:
     assert inventory["unexpected_languages"] == [{"id": "shared/page", "language": "shared"}]
 
 
+
+def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
+    lesson = page("fr/lesson", "fr", "understand", "lesson")
+    lesson.update(
+        {
+            "scope": "Explains the lesson scope.",
+            "purpose": "States the learning outcome.",
+            "domain": "architectures-mechanisms",
+            "covered_stages": ["computation"],
+            "route": {"previous": "fr/previous", "next": "fr/next"},
+        }
+    )
+    edges = [
+        {
+            "source": "fr/lesson",
+            "target": "fr/next",
+            "family": "suggested_route",
+            "relation": "next",
+        },
+        {
+            "source": "fr/review",
+            "target": "fr/lesson",
+            "family": "related",
+            "relation": "related",
+        },
+        {
+            "source": "fr/deep-dive",
+            "target": "fr/lesson",
+            "family": "hierarchy",
+            "relation": "child",
+        },
+        {
+            "source": "fr/unrelated",
+            "target": "fr/other",
+            "family": "related",
+            "relation": "related",
+        },
+    ]
+
+    inventory = AUDIT["build_revision_inventory"](
+        [lesson], [], [], route_memberships={}, page_edges=edges
+    )
+    record = inventory["pages"][0]
+    expected_edges = sorted(
+        edges[:3],
+        key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"]),
+    )
+
+    assert record["scope"] == "Explains the lesson scope."
+    assert record["purpose"] == "States the learning outcome."
+    assert record["domain"] == "architectures-mechanisms"
+    assert record["covered_stages"] == ["computation"]
+    assert record["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
+    assert inventory["affected_page_edges"] == expected_edges
+
+    report = AUDIT["render_markdown"](inventory)
+    assert "Suggested previous / next" in report
+    assert "| fr/review | related | related | fr/lesson |" in report
+
+
 def test_optional_deepen_pages_are_excluded_from_understand_build_coverage() -> None:
     pages = [
         page("fr/core", "fr", "understand", "core-topic"),
