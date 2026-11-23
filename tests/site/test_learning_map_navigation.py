@@ -1,7 +1,6 @@
 """Regression tests for Quarto sidebar-to-resource-map navigation projection."""
 
 import html
-from typing import Any
 
 import pytest
 from build_learning_map import (
