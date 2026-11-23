@@ -117,7 +117,7 @@ The inventory's `not_assessed` value is an assessment state, not a claim that a 
 | PIL-BUILD-001 | Unique Build milestone IDs in an approved machine-readable registry | milestone | docs/learning-path.md is narrative, not a validated milestone registry | not_registered |
 | PIL-BUILD-002 | Explicit milestone-to-page and milestone-to-code/test evidence associations | association | No complete machine-readable crosswalk established | not_registered |
 
-The source/computation inventory metrics are available through the opt-in evidence projection, not the default ProjectIndex report. The 520-item count across the current 100-file corpus is validated by #1306; a full-corpus locator-quality audit remains pending. This does not change the separate concept-coverage dimensions, which remain `not_registered` until complete reviewed concept bridges exist.
+The source/computation inventory metrics are available through the opt-in evidence projection, not the default ProjectIndex report. The latest source-coverage report counts 520 atomic items across 100 extraction files (#1306); a current full-corpus locator-quality audit is still required. This does not change the separate concept-coverage dimensions, which remain `not_registered` until complete reviewed concept bridges exist.
 
 File presence, filename similarity, imports, test proximity and textual mentions do not create practice or Build associations.
 
