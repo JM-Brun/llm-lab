@@ -31,6 +31,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:tokenization", "l
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Day three of twenty-four"><span style="width: 12.5%"></span></div>
   <p class="advent-day-kicker">BREAKING UP TEXT · 6 MINUTES</p>
+  <h1 class="advent-day-title">How does text become tokens?</h1>
   <p class="advent-day-lead">The model does not manipulate sentences exactly as we read them. Before computation, text must be split into discrete units: <strong>tokens</strong>.</p>
 </div>
 
@@ -55,14 +56,14 @@ With a toy tokenizer, the string “cat follows the cat” might become:
   <p>An ordered sequence of four tokens</p>
 </div>
 
-Another tokenizer might split some words into subword units. For a shorter string, one might produce `chat | follows`, while another produces `cha | t | follows`. The two segmentations represent the same original string, but they do not produce the same token sequence.
+Another tokenizer might split some words into subword units. For a shorter string, one might produce `cat | follows`, while another produces `ca | t | follows`. The two segmentations represent the same original string, but they do not produce the same token sequence.
 
 ## Check yourself
 
 Two tokenizers segment the same string differently:
 
-- the first produces `["chat", "follows"]`;
-- the second produces `["cha", "t", "follows"]`.
+- the first produces `["cat", "follows"]`;
+- the second produces `["ca", "t", "follows"]`.
 
 Have they necessarily produced the same token sequence?
 
