@@ -67,7 +67,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 - [x] Link the ecosystem architecture and backlog from docs/information-architecture.md and README.
 - [x] Reconcile README claims about the advent calendar with the merged 2026 editorial redesign: README now describes the independent-story direction and explicitly says implementation/migration remain.
 - [x] Reconcile the calendar row in docs/information-architecture.md with the superseded old manifest and the independent-story model.
-- [x] Update the architecture validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence.
+- [x] Update the architecture validator matrix with Review, Project Intelligence, Practice PR #1558 and calendar PRs #1551/#1560/#1562/#1563 evidence.
 - [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
 - [x] Define and use a clear status vocabulary: implemented and validated, implemented with validation incomplete, documented/proposed, deferred, superseded and not assessed.
 
