@@ -13,14 +13,14 @@ id: "fr/advent-calendar-story-day-01"
 summary: "Explore la distribution très inégale des fréquences de mots et l'approximation de Zipf par rang."
 scope: "Explique la loi rang-fréquence, les distributions à longue traîne, leurs limites empiriques et une conséquence pour les corpus d'entraînement."
 purpose: "Interpréter un rang et une fréquence, calculer une approximation de Zipf et éviter de prendre une droite log-log pour une loi universelle."
-domain: "statistics"
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: []
   children: []
-related: ["fr/text-data", "fr/tokenization"]
+related: ["fr/text-data", "fr/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
 -->
 
@@ -39,7 +39,7 @@ Comment décrire cette inégalité avec une formule simple ? Et que nous apprend
 Commençons par distinguer deux objets :
 
 - Un **type** est une forme lexicale distincte dans le comptage choisi : par exemple le mot « maison ».
-- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».
+- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».\n\nDans ce passage, *token* désigne donc une occurrence lexicale. Dans un LLM, le mot *token* désigne plutôt une unité produite par le tokenizer (mot entier ou sous-mot). Les deux usages sont liés, mais ne sont pas interchangeables.
 
 Dans un corpus, on compte les occurrences de chaque type, puis on classe les types du plus fréquent au moins fréquent. Le rang \(r=1\) désigne le type le plus fréquent, \(r=2\) le deuxième, etc. La fréquence \(f(r)\) est son nombre d'occurrences — ou sa fréquence relative, si l'on divise par le nombre total de tokens.
 
@@ -98,7 +98,7 @@ La loi porte le nom de George Kingsley Zipf, qui a popularisé cette régularit�
 
 Cependant, il serait excessif d'en conclure que toute distribution lexicale suit exactement une loi de puissance d'exposant 1. Les distributions observées présentent des écarts, notamment aux extrémités du classement. D'autres modèles peuvent mieux décrire certains corpus.
 
-Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences permet de mieux examiner cet effet.
+Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences réduit cette corrélation. Cela ne règle toutefois pas tous les biais d'estimation : des travaux ultérieurs montrent que les estimateurs de l'exposant peuvent rester biaisés, notamment lorsque les rangs empiriques sont incertains dans la traîne rare.
 
 La loi de Zipf est donc une **approximation descriptive utile**, pas une explication universelle de l'origine du langage ni un mécanisme causal démontré. Plusieurs facteurs linguistiques et statistiques peuvent contribuer à la forme observée.
 
@@ -142,5 +142,5 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 ### Sources
 
 - [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — approximation rang-fréquence, limites des ajustements simples et piège d'estimation sur le même corpus.
-- [PLOS ONE (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — discussion des facteurs syntaxiques et sémantiques susceptibles de contribuer aux distributions observées.
+- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.\n- [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
