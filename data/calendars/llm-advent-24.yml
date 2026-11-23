@@ -1,10 +1,12 @@
 schema_version: 1
 
-# Editorial proposal only. This file is not yet consumed by the site or CI.
+# SUPERSEDED 2026-11-23: this curriculum-summary proposal is retained as historical input only.
+# The active editorial direction is documented in docs/advent-calendar-editorial-redesign.md.
+# Do not use this manifest to generate or extend calendar pages.
 # Concept IDs, computational-node IDs, and page IDs refer to canonical LLM Lab registries and pages.
 calendar:
   id: llm-advent-24
-  status: proposed
+  status: superseded
   year: 2026
   duration_days: 24
   event_window: "2026-12-01/2026-12-24"
