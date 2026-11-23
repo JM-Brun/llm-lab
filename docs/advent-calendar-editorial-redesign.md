@@ -1,6 +1,6 @@
 # LLM Lab Advent Calendar — editorial redesign
 
-**Status:** proposed editorial direction; replaces the curriculum-summary concept  
+**Status:** approved editorial direction; implementation and pilot validation in progress  
 **Date:** 2026-11-23  
 **Scope:** 24 independent, approximately 10-minute readings for December 1–24  
 **Languages:** French and English  
