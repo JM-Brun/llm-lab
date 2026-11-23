@@ -39,7 +39,9 @@ Can we describe this inequality with a simple formula? And what does it tell us 
 First, distinguish two objects:
 
 - A **type** is a distinct lexical form under the chosen counting convention: for example, the word “house”.
-- A **token** is an occurrence of that form in the text. The sentence “the house near the house” contains two occurrences of “house”.\n\nHere, *token* means a lexical occurrence. In an LLM, *token* usually means a unit produced by the tokenizer (a whole word or a subword). The two uses are related, but they are not interchangeable.
+- A **token** is an occurrence of that form in the text. The sentence “the house near the house” contains two occurrences of “house”.
+
+Here, *token* means a lexical occurrence. In an LLM, *token* usually means a unit produced by the tokenizer (a whole word or a subword). The two uses are related, but they are not interchangeable.
 
 In a corpus, we count the occurrences of each type and sort the types from most frequent to least frequent. Rank \(r=1\) denotes the most frequent type, \(r=2\) the second, and so on. The frequency \(f(r)\) is its occurrence count — or its relative frequency if we divide by the total number of tokens.
 
