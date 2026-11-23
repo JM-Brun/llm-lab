@@ -38,7 +38,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:next-token-predic
 
 ## La question
 
-Que prédit exactement un modèle de langage autorégressif ?
+Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?
 
 ## L'idée essentielle
 
