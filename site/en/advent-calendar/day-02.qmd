@@ -3,6 +3,7 @@ title: "Day 2 — What information does the model have?"
 description: "Distinguish the prefix supplied to the model from the next token it must predict."
 keywords: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:en", "status:published"]
 lang: en
+sidebar: en
 toc: false
 page-layout: custom
 css: ../../styles/advent-calendar.css
