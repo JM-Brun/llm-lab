@@ -34,9 +34,12 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 <div class="hero-actions">
 [Comprendre le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
 [Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
-[Découvrir le calendrier · 24 jours](fr/advent-calendar.qmd){.btn .btn-outline-primary}
 </div>
 ::::
+
+::: {.callout-tip}
+**Un parcours complémentaire en 24 jours.** [Découvrir le calendrier de l’avent des LLM](fr/advent-calendar.qmd) pour explorer progressivement le passage du premier token à l’apprentissage des paramètres.
+:::
 
 ## Par où commencer ?
 
