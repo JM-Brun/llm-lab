@@ -50,12 +50,16 @@ Pendant une génération, le token sélectionné est ajouté au préfixe. Il dev
 
 <ol class="advent-prefix-steps">
   <li><span class="advent-step-label">Préfixe fourni</span><strong>Le chat</strong><small>Ce texte constitue le contexte actuel.</small></li>
-  <li><span class="advent-step-label">Prédiction</span><strong>Une distribution pour le token suivant</strong><small>Le modèle ne connaît pas encore la continuation qui sera sélectionnée.</small></li>
+  <li><span class="advent-step-label">Prédiction</span><strong>Une distribution pour le token suivant</strong><small>À ce stade, aucun token n'a encore été sélectionné.</small></li>
   <li><span class="advent-step-label">Sélection illustrative</span><strong>dort</strong><small>Supposons que la règle de décodage retienne ce token.</small></li>
   <li><span class="advent-step-label">Nouveau préfixe</span><strong>Le chat dort</strong><small>« dort » fait maintenant partie du contexte de l'étape suivante.</small></li>
 </ol>
 
 Le second calcul ne repart donc pas du même contexte : le préfixe s'est allongé. Les paramètres du modèle peuvent rester identiques ; c'est l'entrée conditionnante qui a changé.
+
+<div class="advent-note">
+  **Génération et cible observée.** L'exemple décrit la génération : le token suivant n'est pas encore connu et une règle de décodage en sélectionne un. Lorsqu'on évalue ou entraîne le modèle sur un texte déjà connu, le token cible est disponible dans les données. Il reste toutefois distinct du préfixe utilisé pour calculer la distribution : on évalue ensuite la probabilité que le modèle lui attribue. Le jour 19 reviendra sur cette situation.
+</div>
 
 <div class="advent-note">
   **Attention au vocabulaire.** Ici, « contexte » désigne uniquement l'entrée immédiate du modèle à une étape donnée. La conception d'un contexte applicatif — instructions, documents récupérés, mémoire ou historique de conversation — est un sujet plus large, traité dans la page sur [l'ingénierie du contexte](context-engineering.qmd).
@@ -74,7 +78,7 @@ Non. « dort » appartient déjà au préfixe fourni. Le modèle calcule une dis
 
 ## À retenir
 
-Le contexte est le préfixe disponible au moment du calcul. Un token futur n'en fait pas partie avant d'avoir été fourni ou réinjecté dans la séquence.
+Le contexte est le préfixe disponible au moment du calcul. En génération, le token sélectionné rejoint ce préfixe à l'étape suivante. En scoring ou en apprentissage, une cible peut être connue à l'avance sans pour autant faire partie de l'entrée utilisée pour calculer sa probabilité.
 
 <div class="advent-day-resources">
   <a href="llm-overview.qmd"><strong>Leçon de référence</strong><span>Panorama : contexte et génération</span></a>
