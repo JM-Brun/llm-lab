@@ -1009,13 +1009,23 @@ relations:
 
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
   - {from: active-inference, type: contrasts-with, to: aixi}
-  - {from: conditional-distribution, type: contributes-to, to: predictive-compression}
+  - from: conditional-distribution
+    type: contributes-to
+    to: predictive-compression
+    rationale:
+      fr: "Les probabilités conditionnelles déterminent les longueurs de code utilisées par le codage prédictif."
+      en: "Conditional probabilities determine the code lengths used by predictive coding."
   - {from: predictive-compression, type: contributes-to, to: entropy-coding}
   - {from: arithmetic-coding, type: part-of, to: entropy-coding}
   - {from: model-compression, type: contrasts-with, to: predictive-compression}
   - {from: pruning, type: part-of, to: model-compression}
   - {from: quantization, type: part-of, to: model-compression}
-  - {from: knowledge-distillation, type: contributes-to, to: model-compression}
+  - from: knowledge-distillation
+    type: contributes-to
+    to: model-compression
+    rationale:
+      fr: "La distillation contribue à la compression lorsque l'étudiant est plus petit ou moins coûteux que l'enseignant."
+      en: "Distillation contributes to compression when the student is smaller or cheaper than the teacher."
   - {from: surprisal, type: contributes-to, to: predictive-compression}
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
@@ -1156,7 +1166,12 @@ relations:
   - {from: coarse-to-fine-generation, type: part-of, to: next-concept-modeling}
   - {from: multiscale-residual-vector-quantization, type: part-of, to: next-concept-modeling}
 
-  - {from: positive-pair-distribution, type: contributes-to, to: joint-embedding-predictive-architecture}
+  - from: positive-pair-distribution
+    type: contributes-to
+    to: joint-embedding-predictive-architecture
+    rationale:
+      fr: "La distribution des paires positives définit quelles observations sont considérées comme liées dans le signal d'apprentissage."
+      en: "The positive-pair distribution defines which observations are treated as related in the learning signal."
   - {from: positive-pair-distribution, type: constrains, to: training-objective}
   - {from: joint-embedding-predictive-architecture, type: contrasts-with, to: next-token-prediction}
   - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}
@@ -1165,7 +1180,12 @@ relations:
   
 
 
-  - {from: cross-entropy, type: contributes-to, to: knowledge-distillation}
+  - from: cross-entropy
+    type: contributes-to
+    to: knowledge-distillation
+    rationale:
+      fr: "La cross-entropie est un objectif possible de distillation par cibles souples, sans être nécessaire à toutes les variantes."
+      en: "Cross-entropy is one possible soft-target distillation objective, but it is not required by every variant."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
 
