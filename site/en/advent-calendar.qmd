@@ -61,6 +61,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <span class="advent-act-number">01 — 07</span>
 <div><h3>From context to representations</h3><p>How does text become a numerical input the model can process?</p></div>
 </div>
+:::
 
 ::: {.advent-grid}
 ::: {.advent-card #day-01}
@@ -118,6 +119,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <span class="advent-act-number">08 — 12</span>
 <div><h3>Transformer computation</h3><p>How are hidden states transformed inside the blocks?</p></div>
 </div>
+:::
 
 ::: {.advent-grid}
 ::: {.advent-card #day-08}
@@ -161,6 +163,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <span class="advent-act-number">13 — 18</span>
 <div><h3>Prediction and generation</h3><p>How do hidden states become a distribution, then a selected token?</p></div>
 </div>
+:::
 
 ::: {.advent-grid}
 ::: {.advent-card #day-13}
@@ -211,6 +214,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <span class="advent-act-number">19 — 24</span>
 <div><h3>Scoring and learning</h3><p>What changes when the target is observed, and how do model parameters learn?</p></div>
 </div>
+:::
 
 ::: {.advent-grid}
 ::: {.advent-card #day-19}
