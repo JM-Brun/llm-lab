@@ -281,8 +281,31 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
         },
     ]
 
+    related_pages = [
+        page("fr/review", "fr", "practice", "review"),
+        page("fr/deep-dive", "fr", "deepen", "deep-dive"),
+        page("fr/next", "fr", "deepen", "next"),
+        page("fr/unrelated", "fr", "deepen", "unrelated"),
+        page("fr/other", "fr", "deepen", "other"),
+    ]
+    concepts = [{"id": "self-attention", "resources": ["fr/lesson"]}]
+    resources = [
+        {
+            "id": "attention-module",
+            "kind": "code",
+            "title": "Attention module",
+            "referenced_by": ["fr/lesson"],
+        }
+    ]
     inventory = AUDIT["build_revision_inventory"](
-        [lesson], [], [], route_memberships={}, page_edges=edges
+        [lesson, *related_pages],
+        concepts,
+        resources,
+        route_memberships={},
+        revision_aids_by_lesson={
+            "fr/lesson": [{"id": "fr/review", "role": "synthesis"}]
+        },
+        page_edges=edges,
     )
     record = inventory["pages"][0]
     expected_edges = sorted(
@@ -296,10 +319,19 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
     assert record["covered_stages"] == ["computation"]
     assert record["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
     assert inventory["affected_page_edges"] == expected_edges
+    assert {
+        page["id"] for page in inventory["associated_page_records"]
+    } == {"fr/review", "fr/deep-dive", "fr/next"}
+    assert inventory["associated_resources"] == resources
+    assert inventory["associated_concept_ids"] == ["self-attention"]
+    assert inventory["missing_associated_page_ids"] == []
+    assert inventory["missing_associated_resource_ids"] == []
 
     report = AUDIT["render_markdown"](inventory)
     assert "Suggested previous / next" in report
     assert "| fr/review | related | related | fr/lesson |" in report
+    assert "Associated page records: **3**" in report
+    assert "Associated non-page resources: **1**" in report
 
 
 def test_optional_deepen_pages_are_excluded_from_understand_build_coverage() -> None:
