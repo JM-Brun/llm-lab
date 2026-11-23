@@ -1,0 +1,109 @@
+---
+title: "Day 1 — What does an LLM predict?"
+description: "Understand the conditional distribution computed by an autoregressive model before any token is selected."
+keywords: ["type:concept-lesson", "destination:understand", "topic:next-token-prediction", "level:core", "language:en", "status:published"]
+lang: en
+sidebar: en
+toc: false
+page-layout: custom
+css: ../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/advent-calendar-day-01"
+summary: "A first look at predictive computation: given a prefix, the model assigns a conditional distribution to possible next tokens."
+scope: "Introduces next-token prediction and distinguishes computing a distribution from the selection performed by decoding."
+purpose: "Explain what an autoregressive model computes at a given step without conflating probability, choice, and truth."
+suggested_route:
+  previous: "en/advent-calendar"
+  next: "en/advent-calendar/day-02"
+hierarchy:
+  parents: ["en/advent-calendar"]
+  children: []
+related: ["en/llm-overview", "en/probabilities", "en/generation"]
+tags: ["type:concept-lesson", "destination:understand", "topic:next-token-prediction", "level:core", "language:en", "status:published"]
+-->
+
+<div class="advent-day-shell">
+  <nav class="advent-day-topnav" aria-label="Calendar navigation">
+    <a href="advent-calendar.qmd">← Back to all 24 days</a>
+    <span>DAY 01 <span aria-hidden="true">/</span> 24</span>
+  </nav>
+  <div class="advent-day-progress" role="img" aria-label="Day one of twenty-four"><span style="width: 4.1667%"></span></div>
+  <p class="advent-day-kicker">THE STARTING POINT · 6 MINUTES</p>
+  <h1 class="advent-day-title">What does an LLM predict?</h1>
+  <p class="advent-day-lead">Before attention, embeddings, or training, start with the question that defines the model's objective: <strong>what is it trying to predict?</strong></p>
+</div>
+
+## The question
+
+What does an autoregressive language model compute from a prefix before selecting a token?
+
+## The core idea
+
+Given a supplied prefix, the model computes scores called **logits**, then a probability distribution over possible next tokens.
+
+We can summarize this computation as:
+
+\[
+p_\theta(\cdot \mid x_{<t})
+= \operatorname{softmax}\!\left(f_\theta(x_{<t})\right)
+\]
+
+- `x_{<t}` denotes the prefix available before step `t`.
+- `f_theta` represents the model computation with parameters `theta`, up to the logits.
+- Softmax turns these scores into a distribution over the vocabulary.
+
+**The predictive output is a distribution, not yet a selected token.**
+
+## A worked example
+
+After the prefix “The cat”, imagine the following toy distribution:
+
+| Candidate token | Probability |
+|---|---:|
+| “sleeps” | 0.55 |
+| “eats” | 0.25 |
+| “runs” | 0.15 |
+| Other | 0.05 |
+| **Total** | **1.00** |
+
+These values are illustrative; they are not output measured from a real model. They show that the model assigns a conditional probability of 0.55 to “sleeps”, without requiring that continuation.
+
+<div class="advent-mini-flow" aria-label="From context to selection">
+  <div><span>Input</span><strong>“The cat”</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>Model computation</span><strong>Logits then softmax</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>Output</span><strong>A distribution</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>Afterwards</span><strong>Decoding</strong></div>
+</div>
+
+**Decoding** happens after this computation: it applies a selection rule, such as choosing the most likely token or sampling from the distribution. Predicting a distribution and selecting a token are distinct operations.
+
+## Check yourself
+
+The distribution assigns 0.55 to “sleeps”. What can we conclude?
+
+<details class="advent-answer">
+<summary>Show the answer</summary>
+
+The model assigned a conditional probability of 0.55 to “sleeps” for the given prefix. We cannot conclude that this token has already been generated, that it will necessarily be selected, or that the continuation is true.
+
+</details>
+
+## Takeaway
+
+At each autoregressive step, the model computes a conditional distribution over the next token. Generation then adds a selection rule; it should not be confused with computing the distribution.
+
+<div class="advent-day-resources">
+  <a href="llm-overview.qmd"><strong>Canonical lesson</strong><span>Overview: what is an LLM?</span></a>
+  <a href="exercises/llm-overview.qmd"><strong>Practise</strong><span>Questions and exercises on the LLM overview</span></a>
+</div>
+
+<nav class="advent-day-next" aria-label="Calendar navigation">
+  <span>Tomorrow: identify the prefix actually available to the model.</span>
+  <a href="advent-calendar-day-02.qmd">Day 2 · Context →</a>
+</nav>
