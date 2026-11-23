@@ -1,7 +1,7 @@
 ---
 title: "Jour 1 — Que prédit un LLM ?"
 description: "Comprendre la distribution conditionnelle que calcule un modèle autorégressif avant toute sélection de token."
-keywords: ["type:concept-lesson", "destination:understand", "topic:next-token-prediction", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
@@ -22,7 +22,7 @@ hierarchy:
   parents: ["fr/advent-calendar"]
   children: []
 related: ["fr/llm-overview", "fr/probabilites", "fr/generation"]
-tags: ["type:concept-lesson", "destination:understand", "topic:next-token-prediction", "level:core", "language:fr", "status:published"]
+tags: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:published"]
 -->
 
 <div class="advent-day-shell">
