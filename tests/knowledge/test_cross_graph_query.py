@@ -110,23 +110,27 @@ def test_route_focus_path_preserves_pedagogical_roles(
     evidence_index: ProjectIndex,
 ) -> None:
     result = query_concept(evidence_index, "scaled-dot-product-attention")
-    path = next(path for path in result.paths if path.kind == "route-focus-computation")
-    focus_step = next(step for step in path.steps if step.entity_type == "route_focus")
-    assert focus_step.details is not None
-    references = focus_step.details["references"]
+    route_focus_paths = [
+        path for path in result.paths if path.kind == "route-focus-computation"
+    ]
 
     assert any(
-        reference["type"] == "concept"
-        and reference["id"] == "scaled-dot-product-attention"
-        and reference["role"] == "objects"
-        for reference in references
+        focus_step.details is not None
+        and any(
+            reference["type"] == "concept"
+            and reference["id"] == "scaled-dot-product-attention"
+            and reference["role"] == "objects"
+            for reference in focus_step.details["references"]
+        )
+        and any(
+            reference["type"] == "node" and reference["role"] == "objects"
+            for reference in focus_step.details["references"]
+        )
+        and any("stage-mediated" in caveat for caveat in path.caveats)
+        for path in route_focus_paths
+        for focus_step in path.steps
+        if focus_step.entity_type == "route_focus"
     )
-    assert any(
-        reference["type"] == "node"
-        and reference["role"] == "objects"
-        for reference in references
-    )
-    assert any("stage-mediated" in caveat for caveat in path.caveats)
 
 
 def test_source_level_and_candidate_links_are_not_promoted_to_item_evidence(
