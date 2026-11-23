@@ -52,7 +52,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">LE PRINCIPE</p>
-  <p><strong>Une question précise par jour.</strong> Les trois premières cases proposent une courte leçon guidée directement dans le calendrier. Les 21 suivantes ouvrent progressivement le parcours vers les ressources canoniques. Les explications longues et les exercices restent sur leurs pages dédiées.</p>
+  <p><strong>Une question précise par jour.</strong> Les trois premières cases proposent une courte leçon guidée directement dans le calendrier. Les 21 suivantes ouvrent progressivement le parcours vers les ressources canoniques. Les explications longues et les exercices restent sur leurs pages dédiées. Les 24 cases restent accessibles après le 24 décembre : l’édition 2026 devient une archive pédagogique, sans verrouillage par date.</p>
 </div>
 
 ## Les 24 cases
