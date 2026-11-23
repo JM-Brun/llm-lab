@@ -69,7 +69,7 @@ We need to distinguish two questions:
 
 These properties are not equivalent. Networks may represent a wide range of functions while learning some frequency components earlier than others.
 
-Rahaman and co-authors studied this phenomenon using Fourier analysis. In the networks and settings they examined, low-frequency components are generally learned before high-frequency components. They call this **spectral bias**. It does not mean that fine details cannot be represented; it means that learning speed can depend on frequency.
+Rahaman and co-authors studied this phenomenon using Fourier analysis, notably in deep networks with ReLU activations. In the architectures and settings they examined, low-frequency components are generally learned before high-frequency components. They call this **spectral bias**. It does not mean that fine details cannot be represented; it means that learning speed can depend on frequency.
 
 The *Fourier features* introduced by Tancik and co-authors address a related difficulty in MLPs that learn functions from low-dimensional coordinates. Their mapping makes selected frequencies more accessible and changes the network's effective frequency behaviour. In the tasks they study, it can therefore make high-frequency details easier to learn.
 
@@ -86,7 +86,7 @@ $$
 ].
 $$
 
-Each frequency $b_j$ provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
+Each frequency $b_j$, measured in cycles per unit of $x$, provides a pair of coordinates. Low frequencies change slowly as $x$ varies; high frequencies change more quickly. The representation therefore gives the model several “clocks” that do not tick at the same rate.
 
 We can think of the frequency choice as a choice of resolution:
 

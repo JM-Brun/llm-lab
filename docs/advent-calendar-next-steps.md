@@ -175,9 +175,9 @@ This log should record outcomes, not merely activity.
 ## 8. Session completion log
 
 - **Date:** 2026-11-23
-- **Branch / PR:** `calendar/day06-spectral-bias-revision` — revision in progress
+- **Branch / PR:** `calendar/day06-spectral-bias-revision` — PR #1562 merged; follow-up math-render correction in PR #1563
 - **Files changed:** French and English Day 06 drafts; Day 06 source dossier; this handoff.
-- **Work completed:** strengthened the distinction between expressivity and learning dynamics; added a qualified account of spectral bias grounded in Rahaman et al. (2019); clarified the frequency-bandwidth trade-off from Tancik et al. (2020); replaced the recall-style challenge with a two-frequency transfer example; aligned the source dossier with the revised claims.
-- **Validation performed and results:** primary-source abstracts and paper descriptions checked; numerical examples and the linear-readout argument checked analytically. No Quarto render, screenshot review, accessibility audit or novice review was performed in this session.
+- **Work completed:** strengthened the distinction between expressivity and learning dynamics; added a qualified account of spectral bias grounded in Rahaman et al. (2019); clarified the frequency-bandwidth trade-off from Tancik et al. (2020); replaced the recall-style challenge with a two-frequency transfer example; defined frequency units and the ReLU scope; repaired FR math delimiters and dossier display equations; aligned the source dossier with the revised claims.
+- **Validation performed and results:** primary-source abstracts and paper descriptions checked; numerical examples and the linear-readout argument checked analytically; QMD math delimiters and dossier display blocks inspected at source level. No Quarto render, screenshot review, accessibility audit or novice review was performed in this session.
 - **Open defects / decisions:** the draft still needs word-count/timing validation with readers, rendered FR/EN desktop/mobile review, SVG verification, and scientific/editorial acceptance. It remains `status:planned` and outside the render list.
 - **Exact next action:** run the repository's Quarto and metadata checks on the revision branch; if they pass, inspect rendered FR/EN previews at desktop and mobile widths before deciding whether to publish Pilot A. Do not start Pilots B and C until this gate passes.

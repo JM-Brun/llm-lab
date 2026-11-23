@@ -33,7 +33,7 @@ Editorial constraint:
 https://proceedings.mlr.press/v97/rahaman19a.html
 
 Supports:
-- Fourier analysis reveals a learning bias toward low-frequency functions in the deep networks studied;
+- Fourier analysis reveals a learning bias toward low-frequency functions in the deep ReLU networks studied;
 - the bias appears as frequency-dependent learning speed: lower-frequency components are learned earlier;
 - the paper also studies the interaction between spectral bias and data-manifold geometry.
 
@@ -65,7 +65,7 @@ Editorial constraint:
 |---|---|---|
 | A scalar coordinate can be mapped to several sinusoidal features | Tancik et al.; elementary construction | Present the one-dimensional map as a simplified example, not the exact full paper implementation |
 | Explicit frequency features make selected oscillations directly available to a linear readout | Direct derivation in the article | State the limitation applies to a linear readout over the stated feature bank, not to every nonlinear MLP |
-| Deep networks in the studied settings tend to learn lower frequencies earlier | Rahaman et al. | Describe frequency-dependent learning speed and qualify architecture/problem scope |
+| Deep ReLU networks in the studied settings tend to learn lower frequencies earlier | Rahaman et al. | Describe frequency-dependent learning speed and qualify architecture/problem scope |
 | Fourier features can mitigate spectral bias in the studied coordinate-based MLP settings | Tancik et al. | Use “can help” and preserve the paper's task/domain scope |
 | Transformer positional encoding uses fixed sinusoidal frequencies added to token embeddings | Vaswani et al. | Do not call it a Fourier transform of the sentence |
 | The original sinusoidal design may help with longer positions | Vaswani et al. | Say “the authors hypothesized/motivated”; do not claim guaranteed extrapolation |
@@ -74,9 +74,9 @@ Editorial constraint:
 
 Use:
 
-$
-f(x)=\\sin(16\\pi x), \\qquad x\\in[0,1].
-$
+$$
+f(x)=\sin(16\pi x), \qquad x\in[0,1].
+$$
 
 This has eight cycles on [0,1]. The exact values are:
 
@@ -90,11 +90,11 @@ This has eight cycles on [0,1]. The exact values are:
 
 The revised transfer challenge uses:
 
-$
-g(x)=\\sin(2\\pi x)+0.2\\sin(16\\pi x).
-$
+$$
+g(x)=\sin(2\pi x)+0.2\sin(16\pi x).
+$$
 
-A linear readout with only the pair $\\sin(2\\pi x),\\cos(2\\pi x)$ cannot represent the eight-cycle component. Adding $\\sin(16\\pi x)$ makes both components directly accessible. This remains a statement about the specified feature bank and linear readout, not a general impossibility result for nonlinear networks.
+A linear readout with only the pair $\sin(2\pi x),\cos(2\pi x)$ cannot represent the eight-cycle component. Adding $\sin(16\pi x)$ makes both components directly accessible. This remains a statement about the specified feature bank and linear readout, not a general impossibility result for nonlinear networks.
 
 ## Visual provenance
 
