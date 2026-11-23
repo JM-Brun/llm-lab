@@ -34,40 +34,21 @@ from build_learning_map import (
         ),
     ],
 )
-def test_linked_sidebar_section_entry_is_projected_once(
-    language: str,
-    section_title: str,
-    entry_page: str,
-    child_pages: list[str],
-) -> None:
-    """A section href is its entry lesson, not an invisible or duplicated page."""
-    pages = [{"id": page_id} for page_id in [entry_page, *child_pages]]
+def test_flat_sidebar_entries_are_projected_once(language: str) -> None:
+    """Flat Understand navigation keeps each former section entry exactly once."""
+    pages = load_pages()
     navigation = load_navigation(language, pages)
+    understand_title = "Comprendre les LLM" if language == "fr" else "Understand LLMs"
+    understand = next(area for area in navigation if area["title"] == understand_title)
 
-    def find_section(sections: list[dict[str, Any]]) -> dict[str, Any] | None:
-        for section in sections:
-            if section["title"] == section_title:
-                return section
-            found = find_section(section.get("sections", []))
-            if found is not None:
-                return found
-        return None
-
-    def count_page(sections: list[dict[str, Any]], page_id: str) -> int:
-        return sum(
-            section["pages"].count(page_id) + count_page(section.get("sections", []), page_id)
-            for section in sections
-        )
-
-    found = None
-    for area in navigation:
-        found = find_section(area["sections"])
-        if found is not None:
-            break
-
-    assert found is not None
-    assert found["pages"] == [entry_page, *child_pages]
-    assert sum(count_page(area["sections"], entry_page) for area in navigation) == 1
+    expected_pages = [
+        f"{language}/embedding-space",
+        f"{language}/positional-encoding",
+        f"{language}/contextualized-representations",
+    ]
+    assert all(page_id in understand["pages"] for page_id in expected_pages)
+    assert all(understand["pages"].count(page_id) == 1 for page_id in expected_pages)
+    assert understand["sections"] == []
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
