@@ -207,9 +207,15 @@ The calendar unit is a short entry point, not a replacement for the canonical pa
 - Support keyboard navigation, visible focus, screen readers, reduced motion, sufficient contrast, and meaningful image alternatives.
 - Preserve the site's FR/EN switch; do not create parallel language-specific calendar implementations.
 
-### No premature interface implementation
+### First reader-facing implementation
 
-Do not build the visual calendar before the 24-day selection and three-day content pilot are reviewed. The content model and rendered reader experience should be validated first.
+The bilingual landing page is now implemented in `site/fr/advent-calendar.qmd` and `site/en/advent-calendar.qmd`, with shared responsive styling in `site/styles/advent-calendar.css`. It presents all 24 days in four editorial acts, exposes the daily question and estimated duration, and links to canonical lessons and available practice/deepening resources.
+
+This is deliberately an **index page**, not a second daily-content system: the long-form explanation and exercises remain on their canonical pages. All 24 cards are visible and usable; there are no date-based locks, progress requirements, or artificial completion states. The page is linked from both homepages and both language sidebars.
+
+The visual direction adapts the Society Lab reference (forest-green hero, warm paper cards, restrained lime accents, serif display headings) while retaining LLM Lab's green identity and Quarto navigation.
+
+The current QMD card content is a manually maintained projection of `data/calendars/llm-advent-24.yml`. This is a known synchronization gap, not a second source of truth: the next technical step is a generator or validator that derives/checks titles, order, durations, and resource links from the manifest. Do not add a separate workflow solely for this calendar.
 
 ## 7. Data and implementation architecture
 
