@@ -39,7 +39,9 @@ Comment décrire cette inégalité avec une formule simple ? Et que nous apprend
 Commençons par distinguer deux objets :
 
 - Un **type** est une forme lexicale distincte dans le comptage choisi : par exemple le mot « maison ».
-- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».\n\nDans ce passage, *token* désigne donc une occurrence lexicale. Dans un LLM, le mot *token* désigne plutôt une unité produite par le tokenizer (mot entier ou sous-mot). Les deux usages sont liés, mais ne sont pas interchangeables.
+- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».
+
+Dans ce passage, *token* désigne donc une occurrence lexicale. Dans un LLM, le mot *token* désigne plutôt une unité produite par le tokenizer (mot entier ou sous-mot). Les deux usages sont liés, mais ne sont pas interchangeables.
 
 Dans un corpus, on compte les occurrences de chaque type, puis on classe les types du plus fréquent au moins fréquent. Le rang \(r=1\) désigne le type le plus fréquent, \(r=2\) le deuxième, etc. La fréquence \(f(r)\) est son nombre d'occurrences — ou sa fréquence relative, si l'on divise par le nombre total de tokens.
 
