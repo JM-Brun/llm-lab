@@ -90,5 +90,5 @@ Tokenization turns a character string into an ordered sequence of discrete units
 
 <nav class="advent-day-next" aria-label="Calendar navigation">
   <a href="advent-calendar-day-02.qmd">← Day 2</a>
-  <span>Next: from tokens to their IDs, on day 4.</span>
+  <a href="advent-calendar.qmd#day-04">Day 4 · From token to token ID →</a>
 </nav>
