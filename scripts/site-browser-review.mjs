@@ -9,6 +9,15 @@ const BASE = (process.env.SITE_BROWSER_BASE_URL || "https://jm-brun.github.io/ll
 const OUT = "artifacts/site-browser-review";
 fs.mkdirSync(OUT, { recursive: true });
 
+// Keep the exact renderer-produced map payloads with the browser audit so stale
+// tracked artifacts can be diagnosed from the same build that tests the site.
+for (const language of ["fr", "en"]) {
+  fs.copyFileSync(
+    `site/includes/generated-map-data-${language}.qmd`,
+    path.join(OUT, `generated-map-data-${language}.qmd`),
+  );
+}
+
 // The published site currently exposes only the light Quarto theme.
 // Do not label prefers-color-scheme emulation as dark-theme coverage.
 const visualCases = [
