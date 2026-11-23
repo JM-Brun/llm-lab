@@ -476,7 +476,7 @@ def load_cross_graph_evidence_projection(
         stage_id = stage.get("id")
         if not isinstance(stage_id, str) or not stage_id.strip():
             raise ValueError("data/guided-route.yml: every stage needs a non-empty string ID")
-        stage_pages_data = stage.get("pages") or {};
+        stage_pages_data = stage.get("pages") or {}
         if not isinstance(stage_pages_data, dict):
             raise ProjectIndexIntegrityError(
                 source="data/guided-route.yml",
