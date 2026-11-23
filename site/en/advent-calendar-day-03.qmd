@@ -1,0 +1,94 @@
+---
+title: "Day 3 — How does text become tokens?"
+description: "Understand how a character string is segmented into an ordered sequence of tokens."
+keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:en", "status:published"]
+lang: en
+sidebar: en
+toc: false
+page-layout: custom
+css: ../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/advent-calendar-day-03"
+summary: "A first exploration of tokenization: a tokenizer segments a character string into an ordered sequence of tokens."
+scope: "Explains token segmentation without yet covering their encoding as integer IDs or their use in embeddings."
+purpose: "Explain that a token is not necessarily a word and that segmentation depends on the tokenizer."
+suggested_route:
+  previous: "en/advent-calendar/day-02"
+  next: "en/text-data"
+hierarchy:
+  parents: ["en/advent-calendar"]
+  children: []
+related: ["en/text-data", "en/tokenization-strategies"]
+tags: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:en", "status:published"]
+-->
+
+<div class="advent-day-shell">
+  <nav class="advent-day-topnav" aria-label="Calendar navigation">
+    <a href="advent-calendar.qmd">← Back to all 24 days</a>
+    <span>DAY 03 <span aria-hidden="true">/</span> 24</span>
+  </nav>
+  <div class="advent-day-progress" role="img" aria-label="Day three of twenty-four"><span style="width: 12.5%"></span></div>
+  <p class="advent-day-kicker">BREAKING UP TEXT · 6 MINUTES</p>
+  <h1 class="advent-day-title">How does text become tokens?</h1>
+  <p class="advent-day-lead">The model does not manipulate sentences exactly as we read them. Before computation, text must be split into discrete units: <strong>tokens</strong>.</p>
+</div>
+
+## The question
+
+How does a tokenizer turn a character string into discrete units?
+
+## The core idea
+
+A **tokenizer** applies segmentation rules to a character string and produces an ordered sequence of *tokens*. A token is a unit in the tokenizer's vocabulary. Depending on its method and vocabulary, it may correspond to a whole word, part of a word, a character, or a sequence of bytes.
+
+A token should therefore not be assumed to be a readable word. Segmentation depends on the tokenizer: two tokenizers may split the same string differently.
+
+## A segmentation example
+
+With a toy tokenizer, the string “cat follows the cat” might become:
+
+<div class="advent-tokenization-example" aria-label="The text cat follows the cat is segmented into four tokens">
+  <div class="advent-tokenization-source">“cat follows the cat”</div>
+  <span aria-hidden="true">↓</span>
+  <div class="advent-tokenization-tokens"><code>cat</code><code>follows</code><code>the</code><code>cat</code></div>
+  <p>An ordered sequence of four tokens</p>
+</div>
+
+Another tokenizer might split some words into subword units. For a shorter string, one might produce `cat | follows`, while another produces `ca | t | follows`. The two segmentations represent the same original string, but they do not produce the same token sequence.
+
+## Check yourself
+
+Two tokenizers segment the same string differently:
+
+- the first produces `["cat", "follows"]`;
+- the second produces `["ca", "t", "follows"]`.
+
+Have they necessarily produced the same token sequence?
+
+<details class="advent-answer">
+<summary>Show the answer</summary>
+
+No. The two segmentations differ, even though they start from the same string. The split depends on the tokenizer and its vocabulary; we need to know which tokenizer was used to interpret the sequence.
+
+</details>
+
+## What this step does not do yet
+
+Tokenization produces discrete units. It does not by itself provide the integer IDs consumed by the model. Mapping each token to a *token ID* is the subject of **day 4**. Using those IDs to select vectors from an embedding matrix comes next.
+
+## Takeaway
+
+Tokenization turns a character string into an ordered sequence of discrete units. A token is not necessarily a word, and segmentation depends on the tokenizer.
+
+<div class="advent-day-resources">
+  <a href="text-data.qmd"><strong>Canonical lesson</strong><span>From text to tokens</span></a>
+  <a href="exercises/text-data.qmd"><strong>Practise</strong><span>Questions and exercises on text data</span></a>
+</div>
+
+<nav class="advent-day-next" aria-label="Calendar navigation">
+  <a href="advent-calendar-day-02.qmd">← Day 2</a>
+  <span>Next: from tokens to their IDs, on day 4.</span>
+</nav>
