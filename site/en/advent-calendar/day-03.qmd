@@ -3,6 +3,7 @@ title: "Day 3 — How does text become tokens?"
 description: "Understand how a character string is segmented into an ordered sequence of tokens."
 keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization", "level:core", "language:en", "status:published"]
 lang: en
+sidebar: en
 toc: false
 page-layout: custom
 css: ../../styles/advent-calendar.css
