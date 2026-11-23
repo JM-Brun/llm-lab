@@ -38,7 +38,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:next-token-predic
 
 ## The question
 
-What exactly does an autoregressive language model predict?
+What does an autoregressive language model compute from a prefix before selecting a token?
 
 ## The core idea
 
