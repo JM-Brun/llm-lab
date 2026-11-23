@@ -322,7 +322,7 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
             "- JSON inventory preserves all page-graph edges incident to Understand/Build pages,",
-            "  including suggested-route, hierarchy and related edges; revision edges remain separate.",
+            "  including route, hierarchy and related links; revision-aid edges are separate.",
             "- not_assessed means no editorial revision-support assessment is recorded;",
             "  it does not mean a page lacks a synthesis or revision aid.",
             "- Revision-aid links and revision-support assessments are independent:",
