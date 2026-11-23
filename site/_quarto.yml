@@ -373,7 +373,7 @@ website:
               href: fr/embedding-space.qmd
             - text: "Position des tokens"
               href: fr/positional-encoding.qmd
-            - text: "Représentations contextualisées"
+            - text: "États contextualisés"
               href: fr/contextualized-representations.qmd
             - text: "Transformer"
               href: fr/transformer.qmd
@@ -620,7 +620,7 @@ website:
               href: en/embedding-space.qmd
             - text: "Token positions"
               href: en/positional-encoding.qmd
-            - text: "Contextualized representations"
+            - text: "Contextualized states"
               href: en/contextualized-representations.qmd
             - text: "Transformer"
               href: en/transformer.qmd
