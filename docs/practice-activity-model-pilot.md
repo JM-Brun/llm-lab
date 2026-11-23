@@ -31,7 +31,7 @@ The Q/K/V part of the Attention collection contains eight activities. Their expl
 
 The same collection continues with CA-A for causal masking, AT-A–AT-C for multi-head attention, and AT-D for score variance. These remain separate activities with their own anchors and learning targets.
 
-The per-lesson Q/K/V hub contains one concise self-check. It does not duplicate the extended calculations; it directs the learner to the Attention collection.
+The per-lesson Q/K/V hub contains one concise self-check. It does not duplicate the extended calculations; it directs the learner to the Attention collection. The main lesson exposes one link to this dedicated hub and no direct links to the shared collection.
 
 ## 3. Minimal identity and relationship model
 
@@ -94,6 +94,8 @@ Code execution, mathematical review, bilingual rendering and learner testing rem
 
 - [x] A dedicated FR/EN Q/K/V practice hub exists.
 - [x] The hub links back to its lesson and directly to the shared extended collection.
+- [x] The main Q/K/V lesson has one link to its dedicated hub and no direct links to the shared collection.
+- [ ] A regression test locks bilingual anchor parity and the lesson → hub → collection navigation boundary.
 - [x] The extended Q/K/V activity anchors are identical across languages.
 - [x] The collection's page-level lesson relationships reflect its declared scope.
 - [x] Questions for recall remain distinct from multi-step practice.
