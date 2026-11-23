@@ -73,11 +73,7 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
     understand = _section(sidebar, understand_title)
     review = _section(sidebar, review_title)
 
-    pages = [
-        page
-        for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     core_page_ids = [page.id for stage in stages for page in stage.pages]
     document = GENERATOR["GuidedRouteDocument"].model_validate(
