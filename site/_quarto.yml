@@ -37,18 +37,21 @@ project:
     - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
+    - images/advent-frequency-scales.svg
   render:
     - index.qmd
     - fr/advent-calendar.qmd
     - fr/advent-calendar-day-01.qmd
     - fr/advent-calendar-day-02.qmd
     - fr/advent-calendar-day-03.qmd
+    - fr/advent-calendar-story-day-06.qmd
     - fr/learning-map.qmd
     - en/index.qmd
     - en/advent-calendar.qmd
     - en/advent-calendar-day-01.qmd
     - en/advent-calendar-day-02.qmd
     - en/advent-calendar-day-03.qmd
+    - en/advent-calendar-story-day-06.qmd
     - en/learning-map.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
