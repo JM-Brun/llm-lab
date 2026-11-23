@@ -85,7 +85,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 **Acceptance:** registry inventory report, referential-integrity checks and reviewed exception list; no taxonomy migration without evidence.
 
-### P1 — Complete the revision system
+### P1 — Finalize the page-based revision model
 
 - [x] Reconcile docs/revision-resource-contract.md with the page-map metadata and the CI-invoked ProjectIndex revision inventory; explicitly document that non-page aids are not supported.
 - [x] Confirm the canonical declaration location for page-based aids: page-map metadata; keep page IDs separate from resource IDs. Non-page revision aids remain deferred until a real learner-facing artifact is identified.
@@ -96,7 +96,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 - [x] Preserve the editorial boundary: detailed calculations, coding and experiments belong in Practice; Review prompts are for retrieval/reconstruction. Full page-level compliance remains audited under #1512/#1541.
 - [x] Add page-based regression tests for many-to-many links, invalid/unpublished/ineligible targets, duplicate targets, bilingual pairing, assessment evidence and derived reverse indexes.
 
-**Acceptance:** one enforced contract, inventory report and tests; every published relation resolves to a real lesson/aide and every coverage judgement has evidence.
+**Acceptance (page-based scope):** one enforced contract, CI inventory report and regression tests; every published relation resolves to a real lesson/aide; all 62 Understand/Build pages have an explicit coverage assessment with section evidence. Non-page revision aids remain deferred until a real artifact requires them. Review-route completeness and learner validation remain under #1541.
 
 ### P1 — Formalize Practice & Experiment
 
