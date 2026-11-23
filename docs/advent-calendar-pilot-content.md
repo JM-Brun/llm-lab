@@ -3,7 +3,7 @@
 **Status:** editorial drafts; not yet learner-tested  
 **Purpose:** develop the daily learning contract and prepare a deliberately varied three-day novice pilot  
 **Languages:** French and English  
-**Drafted days:** 01–06 (except 07), 09, 21  
+**Drafted days:** 01–09 (except 10–20), 21  
 **Pilot candidates:** 03 (tokenization), 09 (Q/K/V), 21 (cross-entropy)
 
 This document contains short calendar-sized explanations, not replacement lessons. The linked LLM Lab pages remain authoritative for full explanations, figures, mathematical details, and extended exercises. The examples below are deliberately bounded to what those pages and their exercise hubs support.
@@ -34,7 +34,7 @@ Que prédit exactement un modèle de langage autorégressif ?
 
 **Réponse courte**
 
-À partir d'un préfixe déjà fourni, le modèle calcule des scores (logits), puis une distribution de probabilité sur les tokens possibles à l'étape suivante. Cette distribution dépend du préfixe : si le contexte change, la distribution peut changer.
+À partir d'un préfixe déjà fourni, le modèle calcule des logits ; la fonction softmax les transforme en une distribution de probabilité sur les tokens possibles à l'étape suivante. Cette distribution dépend du préfixe : si le contexte change, la distribution peut changer.
 
 Le modèle ne choisit pas nécessairement un token à cette étape. La sélection intervient ensuite, selon une politique de décodage (par exemple, prendre le token le plus probable ou échantillonner). Il faut donc distinguer **prédire une distribution** et **sélectionner un token**.
 
@@ -47,9 +47,9 @@ Après le préfixe « Le chat », imaginons la distribution jouet suivante :
 | « dort » | 0,55 |
 | « mange » | 0,25 |
 | « court » | 0,15 |
-| Autres | 0,05 |
+| Autres tokens (masse agrégée) | 0,05 |
 
-Ces nombres sont illustratifs, pas une sortie mesurée d'un modèle réel. Le modèle attribue 0,55 à « dort », mais il ne s'agit pas encore d'une certitude ni d'un choix obligatoire.
+Ces nombres sont illustratifs, pas une sortie mesurée d'un modèle réel. La ligne « Autres tokens » regroupe la masse de probabilité de tous les tokens non affichés. Le modèle attribue 0,55 à « dort », mais il ne s'agit pas encore d'une certitude ni d'un choix obligatoire.
 
 **À vous de vérifier**
 
@@ -77,7 +77,7 @@ What exactly does an autoregressive language model predict?
 
 **Short answer**
 
-Given a supplied prefix, the model computes scores (logits) and then a probability distribution over possible next tokens. This distribution is conditional on the prefix: changing the context can change the distribution.
+Given a supplied prefix, the model computes logits; softmax transforms them into a probability distribution over possible next tokens. This distribution is conditional on the prefix: changing the context can change the distribution.
 
 The model does not necessarily select a token at this stage. Selection happens afterward, according to a decoding policy (for example, choosing the most likely token or sampling). We must therefore distinguish **predicting a distribution** from **selecting a token**.
 
@@ -90,9 +90,9 @@ After the prefix “The cat”, imagine the following toy distribution:
 | “sleeps” | 0.55 |
 | “eats” | 0.25 |
 | “runs” | 0.15 |
-| Other | 0.05 |
+| Other tokens (aggregated mass) | 0.05 |
 
-These values are illustrative, not measured output from a real model. The model assigns 0.55 to “sleeps”, but that is neither certainty nor a mandatory choice.
+These values are illustrative, not measured output from a real model. The “Other tokens” row aggregates the probability mass of all tokens not shown. The model assigns 0.55 to “sleeps”, but that is neither certainty nor a mandatory choice.
 
 **Check yourself**
 
@@ -129,7 +129,7 @@ Quelles informations peuvent conditionner la prochaine prédiction ?
 
 **Réponse courte**
 
-À une étape donnée, le **contexte du modèle** est le préfixe de tokens qui lui est effectivement fourni. Le prochain token à prédire se trouve après ce préfixe : il n'en fait pas encore partie.
+À une étape donnée, le **contexte du modèle** est le préfixe de tokens effectivement disponible pour lui, dans sa fenêtre de contexte. Le prochain token à prédire se trouve après ce préfixe : il n'en fait pas encore partie.
 
 Pendant une génération, le token sélectionné est ajouté au préfixe. Il devient alors une information disponible pour l'étape suivante. Le contexte est donc différent d'un texte futur que le modèle n'a pas encore reçu.
 
@@ -170,7 +170,7 @@ Which information can condition the next prediction?
 
 **Short answer**
 
-At a given step, the model's **context** is the prefix of tokens actually supplied to it. The next token to predict comes after that prefix; it is not part of the context yet.
+At a given step, the model's **context** is the prefix of tokens actually available to it within its context window. The next token to predict comes after that prefix; it is not part of the context yet.
 
 During generation, the selected token is appended to the prefix. It then becomes available information for the next step. The context is therefore different from future text that the model has not received.
 
@@ -421,7 +421,7 @@ Supposons une petite table jouet de dimension d = 3 :
 | 2 | [0.4, -0.1, 0.7] |
 | 3 | [-0.2, 0.5, 0.2] |
 
-L'ID 2 sélectionne le vecteur [0.4, -0.1, 0.7]. Pour une séquence de trois IDs, le lookup produit une matrice de forme 3 × d ; avec un batch, la forme usuelle devient B × T × d.
+L'ID 2 sélectionne le vecteur [0.4, -0.1, 0.7]. Pour une séquence de trois IDs, le lookup produit une matrice de forme 3 × d ; pour un batch de séquences mises à la même longueur (par exemple par padding), la forme usuelle est B × T × d.
 
 Ces valeurs sont fictives. Dans un modèle entraîné, les lignes de la matrice sont des paramètres appris.
 
@@ -466,7 +466,7 @@ Suppose we have a small toy table with dimension d = 3:
 | 2 | [0.4, -0.1, 0.7] |
 | 3 | [-0.2, 0.5, 0.2] |
 
-ID 2 selects the vector [0.4, -0.1, 0.7]. For a sequence of three IDs, lookup produces a matrix of shape 3 × d; with a batch, the usual shape is B × T × d.
+ID 2 selects the vector [0.4, -0.1, 0.7]. For a sequence of three IDs, lookup produces a matrix of shape 3 × d; for a batch padded to a common length, the usual shape is B × T × d.
 
 These values are fictional. In a trained model, the matrix rows are learned parameters.
 
@@ -574,6 +574,184 @@ Token identity and position are distinct kinds of information. The Transformer n
 
 **Understand more:** [Positional encoding](../site/en/positional-encoding.qmd)  
 **Practice:** [Exercises — Positional encoding](../site/en/exercises/positional-encoding.qmd)
+
+---
+
+## Day 07 — Why can the same token have different representations?
+
+**Act:** Context and representations  
+**Activity:** conceptual check  
+**Target duration:** 6 minutes  
+**Canonical references:** `contextualized-representation`, `token-embedding`; computational nodes `initial-hidden-states`, `transformer-block-input`, `contextualized-hidden-states`
+
+### Français
+
+**Question**
+
+Deux occurrences du même token doivent-elles avoir le même état caché ?
+
+**Réponse courte**
+
+Avec un tokenizer, un vocabulaire et une matrice d'embeddings fixes, le même token ID sélectionne la même ligne `E[i]` lors du lookup initial. Mais cette égalité ne se propage pas automatiquement dans le réseau : l'information positionnelle et les tokens accessibles contribuent aux calculs des blocs Transformer. Les états cachés contextualisés peuvent donc différer selon la position et le contexte.
+
+**Exemple guidé**
+
+Considérons deux emplois de « vol » :
+
+- « Le pilote prépare le vol » — un trajet aérien.
+- « Le voleur prépare le vol » — un larcin.
+
+Dans cette illustration simplifiée où chaque mot est un token, « vol » apparaît à la même position dans les deux exemples, mais les préfixes diffèrent. Supposons que le tokenizer lui attribue le même ID dans les deux cas. Le lookup initial `E[i]` est alors le même. En revanche, les préfixes accessibles diffèrent ; les blocs Transformer peuvent donc construire des états cachés différents. L'exemple suppose explicitement un token unique : un mot visible peut en réalité être découpé en plusieurs tokens.
+
+**À vous de vérifier**
+
+À poids fixes, deux occurrences ont le même ID et une même position, mais des préfixes accessibles différents. Leur état caché doit-il être identique ? Dans un GPT causal, un token strictement situé après la position courante peut-il modifier l'état calculé à cette position ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non : le lookup initial est identique, mais le contexte accessible peut conduire à des états contextualisés différents. Et non : le masque causal empêche une position de dépendre des tokens futurs.
+
+</details>
+
+**À retenir**
+
+Même ID → même embedding initial ; le contexte accessible et la position contribuent ensuite à la représentation contextualisée. Dans un décodeur causal, cette dépendance reste limitée au préfixe autorisé.
+
+**Pour aller plus loin :** [Représentations contextualisées](../site/fr/contextualized-representations.qmd)  
+**S'exercer :** [Exercices — représentations contextualisées](../site/fr/exercises/contextualized-representations.qmd)
+
+### English
+
+**Question**
+
+Must two occurrences of the same token have the same hidden state?
+
+**Short answer**
+
+With a fixed tokenizer, vocabulary, and embedding matrix, the same token ID selects the same row `E[i]` during the initial lookup. That equality does not automatically persist through the network: positional information and the tokens accessible to the position contribute to Transformer-block computations. Contextualized hidden states can therefore differ with position and context.
+
+**Guided example**
+
+Consider the two uses of “bat”:
+
+- “The player saw a bat” — sports equipment.
+- “The cave contained a bat” — an animal.
+
+In this word-level toy segmentation, “bat” appears at the same position in both examples, but the prefixes differ. Assume the tokenizer assigns it the same ID in both cases. The initial lookup `E[i]` is then the same. The accessible prefixes differ, however, so Transformer blocks may construct different hidden states. This example explicitly assumes one token; a visible word may in practice be split into several tokens.
+
+**Check yourself**
+
+With fixed weights, two occurrences have the same ID and the same position, but different accessible prefixes. Must their hidden states be identical? In a causal GPT, can a token strictly after the current position change the state computed at that position?
+
+<details>
+<summary>Show the answer</summary>
+
+No: the initial lookup is identical, but the accessible context can lead to different contextualized states. And no: the causal mask prevents a position from depending on future tokens.
+
+</details>
+
+**Takeaway**
+
+Same ID → same initial embedding; accessible context and position then contribute to the contextualized representation. In a causal decoder, this dependency is restricted to the permitted prefix.
+
+**Learn more:** [Contextualized representations](../site/en/contextualized-representations.qmd)  
+**Practice:** [Exercises — contextualized representations](../site/en/exercises/contextualized-representations.qmd)
+
+---
+
+## Day 08 — What does a Transformer block do?
+
+**Act:** Transformer computation  
+**Activity:** trace  
+**Target duration:** 7 minutes  
+**Canonical references:** `self-attention`, `multi-head-attention`; computational nodes `transformer-block-input`, `block-update`
+
+### Français
+
+**Question**
+
+Quelles grandes opérations transforment les états d'entrée d'un bloc Transformer ?
+
+**Réponse courte**
+
+Dans le GPT de référence étudié ici, un bloc Transformer est une unité de calcul répétée dans une pile. Il combine deux sous-couches principales :
+
+| Élément | Rôle |
+|---|---|
+| Auto-attention | Combine des informations entre les positions autorisées. |
+| MLP (réseau feed-forward) | Transforme chaque position indépendamment, avec des poids partagés entre positions. |
+| Connexions résiduelles | Réinjectent l'état précédent et l'actualisation produite par une sous-couche dans le flux résiduel. |
+| Normalisation | Stabilise l'échelle des activations ; son placement dépend de la variante d'architecture. |
+
+Dans le GPT étudié ici, l'auto-attention est multi-tête : plusieurs têtes fonctionnent en parallèle, puis leurs sorties sont combinées. Leur rôle sera étudié plus tard.
+
+**Exemple guidé**
+
+Suivez les états d'entrée d'un bloc : l'auto-attention permet à chaque position de combiner des informations provenant des positions autorisées ; la MLP transforme ensuite l'état de chaque position. Les connexions résiduelles et la normalisation accompagnent ces sous-couches. Les états de sortie deviennent l'entrée du bloc suivant.
+
+Cette description est une carte fonctionnelle, pas un ordre d'exécution universel : le placement précis des normalisations et des additions résiduelles varie selon les architectures. Après la pile de blocs, la normalisation finale et la tête de sortie produisent les logits. La softmax et le décodage viennent ensuite, hors des blocs.
+
+**À vous de vérifier**
+
+Quelle sous-couche combine des informations entre positions, et laquelle transforme chaque position séparément ? Le bloc choisit-il lui-même le prochain token ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+L'auto-attention combine des informations entre positions autorisées ; la MLP transforme chaque position indépendamment. Le bloc ne choisit pas de token : il produit des états cachés qui alimentent le bloc suivant ou, après la pile, la tête de sortie.
+
+</details>
+
+**À retenir**
+
+Un bloc Transformer ne se réduit pas à l'attention : il associe attention, MLP, connexions résiduelles et normalisation. La pile transforme les représentations ; la prédiction du prochain token intervient à sa sortie.
+
+**Pour aller plus loin :** [Architecture Transformer](../site/fr/transformer.qmd)  
+**S'exercer :** [Exercices — Transformer](../site/fr/exercises/transformer.qmd)
+
+### English
+
+**Question**
+
+Which major operations transform a Transformer's input states inside one block?
+
+**Short answer**
+
+In the reference GPT studied here, a Transformer block is a repeated computation unit in a stack. It combines two main sublayers:
+
+| Component | Role |
+|---|---|
+| Self-attention | Combines information across permitted positions. |
+| MLP (feed-forward network) | Transforms each position independently, using weights shared across positions. |
+| Residual connections | Carry the previous state and the sublayer update into the residual stream. |
+| Normalization | Stabilizes activation scale; its placement depends on the architecture variant. |
+
+In the GPT studied here, self-attention is multi-head: several heads operate in parallel and their outputs are combined. Their role is examined later.
+
+**Guided example**
+
+Trace a block's input states: self-attention lets each position combine information from permitted positions; the MLP then transforms each position's state. Residual connections and normalization accompany these sublayers. The output states become the input to the next block.
+
+This is a functional map, not a universal execution order: the exact placement of normalization and residual additions varies across architectures. After the stack of blocks, the final normalization and output head produce logits. Softmax and decoding come next, outside the blocks.
+
+**Check your understanding**
+
+Which sublayer combines information across positions, and which transforms each position independently? Does the block itself choose the next token?
+
+<details>
+<summary>Show the answer</summary>
+
+Self-attention combines information across permitted positions; the MLP transforms each position independently. The block does not choose a token: it produces hidden states that feed the next block or, after the stack, the output head.
+
+</details>
+
+**Takeaway**
+
+A Transformer block is not just attention: it combines attention, an MLP, residual connections, and normalization. The stack transforms representations; next-token prediction happens at its output.
+
+**Learn more:** [Transformer architecture](../site/en/transformer.qmd)  
+**Practice:** [Exercises — Transformer](../site/en/exercises/transformer.qmd)
 
 ---
 
