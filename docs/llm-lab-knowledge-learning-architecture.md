@@ -194,7 +194,7 @@ The Project Intelligence Layer should query canonical systems through read-only 
 
 Useful diagnostics include concepts in Understand without a reviewed revision aid; lessons with no linked practice activity; concepts used by Build modules but lacking a suitable conceptual explanation; computational nodes with no mapped concept/page or implementation evidence; Deepen topics disconnected from the shared concept foundation; calendar stories that duplicate a canonical lesson without adding a distinct perspective; source claims not traceable to a synthesis or project artifact; bilingual parity gaps; stale, orphaned or multiply-owned resources.
 
-A coverage matrix is a diagnostic projection, not an editorial quality score. Distinguish at least present, absent, not assessed, not applicable and stale. Do not infer quality or sufficiency from a non-empty link.
+A coverage matrix is a diagnostic projection, not an editorial quality score. The current concept matrix uses `present`, `missing`, `not_applicable`, `not_registered` and `needs_review`; revision coverage additionally uses `not_assessed`. A general `stale` state is not implemented, and `absent` is not a synonym for `not_registered`. Do not infer quality or sufficiency from a non-empty link.
 
 ## 9. Existing implementation map
 
@@ -242,7 +242,7 @@ The canonical owner and its validator must be explicit. A cross-graph adapter ma
 - cross_graph_query.py currently supports concept-centred paths for item-level source evidence, catalogue-only gaps, page-mediated computation, stage-mediated route-focus computation, Practice links and non-page resources.
 - The query layer preserves exact locators, source scan/integration status, extraction disposition, confidence, assumptions and limitations. It explicitly reports missing locators and unpromoted candidate destinations.
 - The current query layer does not yet traverse historical events, Build milestone dependencies, source-local pedagogical graphs or structured decision records; it is not a page-originating reverse evidence query or a general recommendation engine.
-- The concept coverage matrix and `report_project_index.py` remain separate from the opt-in evidence-path query. Their current implementation does not yet integrate all evidence paths or distinguish all five coverage states consistently; a missing matrix dimension must not be interpreted as proof that no underlying records exist.
+- The concept coverage matrix and `report_project_index.py` remain separate from the opt-in evidence-path query. The matrix has an explicit state vocabulary but does not integrate every evidence path or every coverage dimension; `stale` is not yet modelled. Build/computation/source/Practice remain `not_registered` until complete canonical concept mappings exist. A missing matrix dimension must not be interpreted as proof that no underlying records exist.
 
 ### CI and validation orchestration
 
