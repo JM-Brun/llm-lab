@@ -90,5 +90,5 @@ La tokenisation transforme une chaîne de caractères en une séquence ordonnée
 
 <nav class="advent-day-next" aria-label="Navigation entre les journées">
   <a href="advent-calendar-day-02.qmd">← Jour 2</a>
-  <span>La suite : du token à son identifiant, au jour 4.</span>
+  <a href="advent-calendar.qmd#jour-04">Jour 4 · Du token à son identifiant →</a>
 </nav>
