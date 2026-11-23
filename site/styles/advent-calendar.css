@@ -109,3 +109,113 @@ main h2 { margin: 2.5rem auto 1.3rem; width: min(90%, 76rem); color: #142c28; fo
   .advent-card { padding: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) { .advent-card { transition: none; } .advent-card:hover { transform: none; } }
+
+
+/* Opening sequence: three guided doors, then the remaining calendar grid. */
+.advent-opening-note {
+  width: min(90%, 76rem);
+  margin: -.1rem auto 1rem;
+  padding: .8rem 1rem;
+  border-left: 3px solid #8a9e55;
+  background: #edf2e5;
+  color: #304b40;
+  font-size: .88rem;
+}
+.advent-grid-opening { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.advent-card-featured {
+  min-height: 16rem;
+  padding: 1.25rem 1.3rem 1.1rem;
+  border-color: #b7c8a9;
+  background: linear-gradient(155deg, #fffefa 0%, #f3f6e9 100%);
+}
+.advent-card-featured .advent-number { font-size: 2.8rem; }
+.advent-card-featured h4 { max-width: 17ch; font-size: clamp(1.55rem, 2.2vw, 1.9rem); }
+.advent-card-featured .advent-card-links { margin-top: auto; }
+.advent-card-featured .advent-card-links a:first-child {
+  padding: .42rem .7rem;
+  border-radius: 2rem;
+  background: #123c33;
+  color: #fffdf4;
+}
+.advent-card-featured .advent-card-links a:first-child:hover { background: #1d5948; text-decoration: none; }
+.advent-card-featured .advent-time { background: #e4edac; color: #123c33; }
+
+/* Focused daily pages */
+.advent-day-shell {
+  width: min(90%, 66rem);
+  margin: 1.4rem auto 2rem;
+  color: #243b38;
+}
+.advent-day-topnav, .advent-day-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: #52685e;
+  font-size: .82rem;
+}
+.advent-day-topnav a, .advent-day-next a { color: #136653; font-weight: 700; text-decoration: none; }
+.advent-day-topnav a:hover, .advent-day-next a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.advent-day-topnav > span { font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.advent-day-progress { height: .3rem; margin: 1rem 0 1.5rem; overflow: hidden; border-radius: 1rem; background: #e6ebe2; }
+.advent-day-progress span { display: block; height: 100%; border-radius: inherit; background: #71915b; }
+.advent-day-kicker { margin: 0 0 .45rem; color: #547a61; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.advent-day-title { max-width: 19ch; margin: 0 0 .9rem; color: #142c28; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 400; line-height: .98; }
+.advent-day-lead { max-width: 67ch; margin: 0; color: #455d54; font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.65; }
+.advent-day-shell + h2 { width: min(90%, 66rem); margin: 2.2rem auto .8rem; }
+.advent-day-shell ~ h2, .advent-day-shell ~ p, .advent-day-shell ~ table, .advent-day-shell ~ ol, .advent-day-shell ~ ul, .advent-day-shell ~ .advent-mini-flow, .advent-day-shell ~ .advent-prefix-steps, .advent-day-shell ~ .advent-note, .advent-day-shell ~ .advent-tokenization-example, .advent-day-shell ~ .advent-day-resources, .advent-day-shell ~ .advent-day-next, .advent-day-shell ~ details {
+  width: min(90%, 66rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+.advent-mini-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: .55rem;
+  margin-top: 1.3rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #d4ddd4;
+  border-radius: .85rem;
+  background: #f5f7ef;
+}
+.advent-mini-flow > div { display: grid; gap: .3rem; min-width: 0; text-align: center; }
+.advent-mini-flow > div span { color: #64816d; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.advent-mini-flow > div strong { color: #173d32; font-size: .9rem; }
+.advent-mini-flow > b { color: #8a9e55; }
+.advent-prefix-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; padding: 0; list-style: none; counter-reset: prefix-step; }
+.advent-prefix-steps li { display: flex; min-width: 0; flex-direction: column; gap: .45rem; padding: .9rem; border: 1px solid #d4ddd4; border-radius: .75rem; background: #fffefa; counter-increment: prefix-step; }
+.advent-prefix-steps li::before { content: "0" counter(prefix-step); color: #136653; font-family: "Instrument Serif", Georgia, serif; font-size: 1.6rem; }
+.advent-step-label { color: #64816d; font-size: .67rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.advent-prefix-steps strong { color: #173d32; font-size: .95rem; }
+.advent-prefix-steps small { color: #52685e; line-height: 1.45; }
+.advent-note { margin-top: 1.4rem; margin-bottom: 1.4rem; padding: 1rem 1.2rem; border-left: 3px solid #8a9e55; background: #edf2e5; color: #304b40; }
+.advent-tokenization-example { display: grid; justify-items: center; gap: .65rem; margin-top: 1.3rem; margin-bottom: 1.4rem; padding: 1.4rem; border: 1px solid #d4ddd4; border-radius: .85rem; background: #f5f7ef; }
+.advent-tokenization-source { color: #52685e; font-size: 1.05rem; }
+.advent-tokenization-example > span { color: #8a9e55; font-size: 1.5rem; }
+.advent-tokenization-tokens { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.advent-tokenization-tokens code { padding: .55rem .8rem; border: 1px solid #b7c8a9; border-radius: .5rem; background: #fffefa; color: #173d32; font-size: 1rem; }
+.advent-tokenization-example p { margin: 0; color: #64816d; font-size: .78rem; }
+details.advent-answer { margin-top: 1rem; margin-bottom: 1.5rem; padding: .8rem 1rem; border: 1px solid #cbd8c5; border-radius: .7rem; background: #f7f8f2; }
+details.advent-answer summary { color: #136653; cursor: pointer; font-weight: 750; }
+details.advent-answer[open] summary { margin-bottom: .7rem; }
+.advent-day-resources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin-top: 2rem; margin-bottom: 2rem; }
+.advent-day-resources a { display: grid; gap: .25rem; padding: 1rem; border: 1px solid #cbd8c5; border-radius: .75rem; background: #f5f7ef; color: #173d32; text-decoration: none; }
+.advent-day-resources a:hover { border-color: #47735e; background: #edf2e5; }
+.advent-day-resources a strong { font-size: .9rem; }
+.advent-day-resources a span { color: #52685e; font-size: .8rem; }
+.advent-day-next { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #d4ddd4; }
+@media (max-width: 800px) {
+  .advent-grid-opening { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .advent-prefix-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .advent-grid-opening { grid-template-columns: minmax(0, 1fr); }
+  .advent-card-featured { min-height: 0; }
+  .advent-day-shell { width: 92%; }
+  .advent-mini-flow { grid-template-columns: minmax(0, 1fr); }
+  .advent-mini-flow > b { transform: rotate(90deg); }
+  .advent-prefix-steps, .advent-day-resources { grid-template-columns: minmax(0, 1fr); }
+  .advent-day-next { align-items: start; flex-direction: column; }
+}
