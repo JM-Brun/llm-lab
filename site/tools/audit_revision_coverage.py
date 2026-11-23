@@ -124,6 +124,8 @@ def build_revision_inventory(
                 "topic": page.get("topic"),
                 "level": page.get("level"),
                 "type": page.get("type"),
+                "domain": page.get("domain"),
+                "covered_stages": page.get("covered_stages", []),
                 "title": page.get("title"),
                 "href": page.get("href"),
                 "scope": page.get("scope"),
