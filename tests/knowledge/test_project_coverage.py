@@ -303,3 +303,9 @@ def test_matrix_evidence_paths_are_repository_relative_and_deterministic() -> No
     assert first["state_counts"]["computation"] == {"not_registered": first["row_count"]}
     assert first["state_counts"]["sources"] == {"not_registered": first["row_count"]}
     assert first["state_counts"]["practice"] == {"not_registered": first["row_count"]}
+
+
+def test_unregistered_source_coverage_explains_existing_opt_in_adapter() -> None:
+    message = COVERAGE["UNREGISTERED_DIMENSIONS"]["sources"]
+    assert "opt-in source adapter exists" in message
+    assert "concept-to-source/item coverage is not registered" in message
