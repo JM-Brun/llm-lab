@@ -496,10 +496,7 @@ def test_2026_concept_relation_review_corrections_are_preserved() -> None:
     assert ("score-function", "prerequisite", "score-centering") in edges
     assert len(edges) == 120
 
-    relation_by_key = {
-        (item["from"], item["type"], item["to"]): item
-        for item in data["relations"]
-    }
+    relation_by_key = {(item["from"], item["type"], item["to"]): item for item in data["relations"]}
     scoped_edges = {
         ("conditional-distribution", "contributes-to", "predictive-compression"),
         ("knowledge-distillation", "contributes-to", "model-compression"),
