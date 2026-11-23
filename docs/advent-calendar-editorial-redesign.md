@@ -1,6 +1,6 @@
 # LLM Lab Advent Calendar — editorial redesign
 
-**Status:** proposed editorial direction; replaces the curriculum-summary concept  
+**Status:** approved editorial direction; implementation and pilot validation in progress  
 **Date:** 2026-11-23  
 **Scope:** 24 independent, approximately 10-minute readings for December 1–24  
 **Languages:** French and English  
@@ -180,6 +180,8 @@ Do not draft all 24 entries at once. Test three deliberately different stories:
 
 - **Pilot A — Day 06: What does a sine wave have to do with word order?**  
   Tests mathematical explanation, signal-processing connection, equations, and a visual.
+
+**Anti-duplication guardrail:** the canonical positional-encoding lesson already presents the Transformer sinusoidal formula and derives the fixed-offset rotation property. Day 06 must therefore focus on Fourier feature mappings, frequency scales and spectral bias, using positional encoding as one application. Do not repeat the canonical rotation derivation or turn the story into a catalogue of positional methods.
 - **Pilot B — Day 17: Cross-entropy as a code length.**  
   Tests an information-theoretic story, derivation, worked example, and a challenge.
 - **Pilot C — Day 23: What if the model could look things up?**  

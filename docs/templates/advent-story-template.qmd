@@ -1,0 +1,89 @@
+# Reusable Quarto story template
+
+Use this as a starting point for an independent scientific story. It is not a rigid page layout and should not become a second curriculum.
+
+~~~yaml
+---
+title: "Story question?"
+subtitle: "One-sentence intellectual promise"
+description-meta: "What the reader will understand after this story."
+keywords: ["type:deep-dive", "destination:deepen", "topic:story-topic-id", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+~~~
+
+~~~html
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/story-stable-id"
+summary: "One-sentence summary."
+scope: "The precise question and boundary of this story."
+purpose: "What the reader should be able to explain afterwards."
+domain: "replace-with-controlled-domain-id"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/optional-canonical-page"]
+tags: ["type:deep-dive", "destination:deepen", "topic:story-topic-id", "level:overview", "language:fr", "status:planned"]
+-->
+~~~
+
+*Independent story · about 10 minutes*
+
+## Start with a concrete question
+
+A hook, a puzzle, a counterexample or a surprising observation. State one central question. Do not assume that the reader has opened a canonical lesson or a previous day.
+
+## Build the idea
+
+Explain the mechanism in a few connected steps. Define every symbol before using it. Separate assumptions, mathematical results, empirical observations and hypotheses.
+
+## Work through one example
+
+Use a small numerical or symbolic example that the reader can verify by hand. State what the example demonstrates and what it does not demonstrate.
+
+## Add one visual when it materially helps
+
+Prefer a clear, accessible diagram or plot with a descriptive alternative text and a caption. Do not add a decorative visual merely to satisfy a template.
+
+## Identify a limitation or counterexample
+
+Show where the intuition fails, which assumptions matter, or what the method does not guarantee.
+
+## Challenge the reader
+
+Ask one meaningful question that requires transfer or reasoning, not only recall.
+
+<details>
+<summary>Show the solution</summary>
+
+Explain the reasoning, including the assumptions and the common incorrect answer.
+
+</details>
+
+## Optional connection to the canonical curriculum
+
+Link to the relevant lesson as further reading, never as a prerequisite for understanding this story.
+
+### Sources
+
+List primary/authoritative sources and specify which claims they support. Record provenance and licensing for any reused visual.
+
+---
+
+## Author review checklist
+
+- [ ] One central question and one distinct intellectual angle.
+- [ ] Understandable without prerequisite days or canonical lessons.
+- [ ] Approximately 10 minutes, checked with a reader.
+- [ ] One worked example and one meaningful challenge with solution.
+- [ ] Mathematical/scientific claims and assumptions checked.
+- [ ] Source dossier completed.
+- [ ] FR/EN parity across ideas, equations, caveats and examples.
+- [ ] Native Quarto rendering inspected on desktop and mobile.
+- [ ] Keyboard, contrast, alternative text and link checks passed.
+- [ ] No new prerequisite edges or parallel concept registry.

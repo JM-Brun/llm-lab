@@ -1,0 +1,130 @@
+---
+title: "Quel rapport entre une sinusoïde et l’ordre des mots ?"
+subtitle: "Une coordonnée devient une représentation à plusieurs échelles"
+description-meta: "Une histoire autonome sur les Fourier features, les fréquences et le biais spectral, avec le codage positionnel du Transformer comme application."
+keywords: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/advent-calendar-story-day-06"
+summary: "Montre pourquoi transformer une coordonnée en plusieurs caractéristiques sinusoïdales rend explicites différentes échelles de variation."
+scope: "Explique les représentations sinusoïdales multi-fréquences et le biais spectral, avec le codage positionnel du Transformer comme application."
+purpose: "Distinguer une coordonnée brute, une banque de caractéristiques fréquentielles et la capacité d’un réseau à exploiter ces caractéristiques."
+domain: "mathematical-tools-geometry"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/positional-encoding"]
+tags: ["type:deep-dive", "destination:deepen", "topic:advent-story-sine-wave", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Histoire indépendante · environ 10 minutes · Pilote A — brouillon pour relecture*
+
+## Une position est un nombre. Est-ce déjà une représentation ?
+
+Un token occupe une position dans une séquence : 0, 1, 2, 3… Cette coordonnée dit **où** il se trouve. Mais elle ne dit pas encore au réseau comment comparer cette position à d’autres, ni à quelles échelles une variation doit être remarquée.
+
+Le problème dépasse le langage. En apprentissage automatique, on donne souvent à un réseau une coordonnée numérique — un temps, une position, un point dans l’espace — puis on lui demande de représenter une fonction qui varie avec cette coordonnée. Une variation lente et une oscillation rapide ne sont pas également faciles à apprendre à partir du seul nombre brut.
+
+Une idée consiste à transformer cette coordonnée en plusieurs caractéristiques sinusoïdales. C’est le principe général des *Fourier features* : rendre disponibles, dans la représentation d’entrée, des variations à différentes fréquences.
+
+## Une même coordonnée, plusieurs échelles
+
+Considérons une coordonnée normalisée $x \in [0,1]$ et la fonction :
+
+$$
+f(x)=\sin(16\pi x).
+$$
+
+Cette fonction effectue huit oscillations sur l’intervalle $[0,1]$. Quelques valeurs suffisent à le voir :
+
+| $x$ | $16\pi x$ | $f(x)$ |
+|---:|---:|---:|
+| $0$ | $0$ | $0$ |
+| $1/32$ | $\pi/2$ | $1$ |
+| $1/16$ | $\pi$ | $0$ |
+| $3/32$ | $3\pi/2$ | $-1$ |
+| $1/8$ | $2\pi$ | $0$ |
+
+Une lecture linéaire du seul nombre $x$ ne peut pas reproduire exactement cette oscillation. En revanche, si l’entrée contient déjà la caractéristique $\sin(16\pi x)$, une simple lecture linéaire peut retrouver $f(x)$ exactement : il suffit de lui donner un poids égal à 1 sur cette coordonnée.
+
+Ce petit exemple ne prouve pas qu’un réseau non linéaire serait incapable d’apprendre cette fonction à partir de $x$. Il montre autre chose : **la représentation choisie détermine quelles variations sont immédiatement accessibles**.
+
+![Deux fréquences appliquées au même intervalle : une oscillation lente et huit oscillations rapides.](../images/advent-frequency-scales.svg){#fig-advent-frequency-scales width=95%}
+
+*La coordonnée $x$ parcourt le même intervalle dans les deux panneaux. Seule la fréquence change.*
+
+## Le principe des caractéristiques de Fourier
+
+Une banque simple de caractéristiques sinusoïdales peut s’écrire :
+
+$$
+\gamma(x)=
+[
+\sin(2\pi b_1x),\cos(2\pi b_1x),
+\dots,
+\sin(2\pi b_mx),\cos(2\pi b_mx)
+].
+$$
+
+Chaque fréquence $b_j$ fournit une paire de coordonnées. Les basses fréquences changent lentement lorsque $x$ varie ; les hautes fréquences changent plus rapidement. La représentation donne donc au modèle plusieurs « horloges » qui ne battent pas au même rythme.
+
+Dans leurs travaux sur les *Fourier features*, Tancik et ses coauteurs étudient ce type de transformation pour des réseaux qui reçoivent des coordonnées de faible dimension. Leur résultat central est que le choix de ces caractéristiques modifie les fréquences auxquelles le réseau apprend facilement : elles peuvent atténuer le biais spectral des MLP et rendre accessibles des variations plus rapides dans les problèmes étudiés.
+
+Le point important n’est pas que les sinusoïdes rendent automatiquement un modèle intelligent. Elles déplacent une partie du travail : au lieu de demander au réseau de reconstruire seul une base oscillatoire à partir de coordonnées brutes, on lui fournit explicitement des composantes à plusieurs fréquences.
+
+## Pourquoi cela apparaît-il dans un Transformer ?
+
+Une position de token est elle aussi une coordonnée. Dans le Transformer original, Vaswani et ses coauteurs ajoutent aux embeddings des paires de sinus et de cosinus dont les fréquences suivent une progression géométrique. Les paires ne varient donc pas toutes à la même vitesse : certaines changent rapidement avec la position, d’autres beaucoup plus lentement.
+
+C’est une parenté d’idée avec les *Fourier features* : transformer une coordonnée en un vecteur qui expose plusieurs échelles de variation. Mais les deux constructions ne sont pas identiques :
+
+- le Transformer original utilise une banque déterministe de fréquences fixées par une formule ;
+- les *Fourier features* étudiées par Tancik et ses coauteurs utilisent une transformation de coordonnées dont les fréquences sont échantillonnées selon une distribution ;
+- dans le Transformer, le vecteur positionnel est ajouté à l’embedding du token ; il ne remplace ni le contenu lexical ni le calcul de l’attention.
+
+La sinusoïde ne signifie donc pas que le texte serait périodique. Elle fournit un système de coordonnées pour les positions. Le modèle combine ensuite ce signal avec le contenu des tokens et apprend, au cours de l’entraînement, quelles informations exploiter.
+
+La propriété algébrique qui relie un décalage fixe à une transformation linéaire de chaque paire est importante, mais elle est déjà dérivée dans la [leçon canonique sur l’encodage positionnel](positional-encoding.qmd). Ici, l’angle est différent : comprendre pourquoi une banque de fréquences peut être une représentation utile d’une coordonnée.
+
+## Ce que cette idée ne garantit pas
+
+Trois précautions évitent de tirer des conclusions trop fortes.
+
+1. **Ce n’est pas une transformée de Fourier du texte.** On ne décompose pas une phrase en fréquences ; on transforme une coordonnée de position en caractéristiques.
+2. **Une banque finie ne couvre pas toutes les variations possibles.** Les fréquences choisies définissent les échelles directement accessibles ; elles ne garantissent pas que toute fonction sera bien représentée.
+3. **Une représentation n’est pas une capacité acquise.** Le modèle doit encore apprendre à utiliser les caractéristiques. Les auteurs du Transformer présentent l’extrapolation à des séquences plus longues comme une motivation possible, pas comme une garantie universelle.
+
+Le rapprochement avec les *Fourier features* est donc un outil de compréhension : dans les deux cas, on rend explicites plusieurs échelles fréquentielles. Il ne faut pas confondre les objectifs, les distributions de fréquences ou les propriétés théoriques des deux méthodes.
+
+## À vous de jouer
+
+On donne à un modèle les deux caractéristiques $\sin(2\pi x)$ et $\cos(2\pi x)$, puis on utilise une lecture linéaire.
+
+**Question :** cette lecture peut-elle représenter exactement $\sin(16\pi x)$ pour tout $x \in [0,1]$ ? Que faudrait-il ajouter pour le permettre directement ?
+
+<details>
+<summary>Voir la solution</summary>
+
+Non. Une combinaison linéaire de $\sin(2\pi x)$ et $\cos(2\pi x)$ reste une sinusoïde de fréquence fondamentale 1 cycle sur l’intervalle. Elle ne peut pas produire exactement les huit oscillations de $\sin(16\pi x)$.
+
+Il suffit d’ajouter la caractéristique $\sin(16\pi x)$ (ou la paire $\sin(16\pi x),\cos(16\pi x)$) pour rendre cette composante directement accessible à la lecture linéaire.
+
+La conclusion concerne cette lecture linéaire et cette banque de caractéristiques. Un MLP non linéaire peut construire des harmoniques à partir d’autres entrées, mais la difficulté d’apprentissage dépend alors de l’architecture, des données et de l’optimisation.
+
+</details>
+
+## Pour aller plus loin
+
+La [leçon sur l’encodage positionnel](positional-encoding.qmd) explique la formule exacte du Transformer, son ajout aux embeddings et la propriété de décalage relatif. Cette histoire en donne une autre lecture, à partir des représentations fréquentielles.
+
+### Sources
+
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), section 3.5 — encodages positionnels sinusoïdaux et motivation liée aux positions relatives.
+- [Tancik et al. (2020), *Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains*](https://proceedings.neurips.cc/paper/2020/hash/55053683268957697aa39fba6f231c68-Abstract.html) — caractéristiques de Fourier, biais spectral et apprentissage de fonctions à haute fréquence.
