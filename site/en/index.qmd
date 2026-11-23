@@ -33,7 +33,6 @@ Large language models (LLMs) are a family of neural models trained on large amou
 <div class="hero-actions">
 [Understand how LLMs work](llm-overview.qmd){.btn .btn-primary}
 [Explore the concept map](learning-map.qmd){.btn .btn-outline-primary}
-[Explore the 24-day advent calendar](advent-calendar.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
