@@ -1,6 +1,6 @@
 ---
-title: "Prototype archivé — calendrier de l’avent 2026 des LLM"
-subtitle: "Archive du premier format : trois mini-leçons et vingt-et-un renvois vers le parcours canonique."
+title: "Le calendrier de l’avent 2026 des LLM"
+subtitle: "24 explorations pour reconstruire le calcul d'un LLM : du contexte à la distribution prédictive, puis à la génération, au scoring et à l'apprentissage."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
@@ -12,8 +12,8 @@ css: ../styles/advent-calendar.css
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/advent-calendar"
-scope: "Archive du prototype initial de calendrier progressif en 24 cases, dont trois mini-leçons et vingt-et-un renvois au parcours canonique."
-purpose: "Conserver et contextualiser la première version du calendrier pendant la préparation d’une nouvelle collection d’histoires scientifiques indépendantes."
+scope: "Page d’accueil du calendrier pédagogique de 24 jours consacré au mécanisme central d’un LLM autorégressif."
+purpose: "Présenter les 24 journées, leur progression en quatre mouvements et les ressources canoniques associées."
 suggested_route:
   previous: null
   next: null
