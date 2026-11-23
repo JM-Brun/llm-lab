@@ -5,13 +5,14 @@ schema_version: 1
 calendar:
   id: llm-advent-24
   status: proposed
+  year: 2026
   duration_days: 24
-  event_window: "December 1–24"
+  event_window: "2026-12-01/2026-12-24"
   evergreen: true
   languages: [fr, en]
   title:
-    fr: "24 jours pour comprendre les LLM"
-    en: "24 days to understand LLMs"
+    fr: "Calendrier de l’avent 2026 — comprendre les LLM en 24 jours"
+    en: "2026 Advent Calendar — understand LLMs in 24 days"
   description:
     fr: "Un parcours court et progressif, construit à partir des ressources canoniques de LLM Lab."
     en: "A short, progressive learning experience built from LLM Lab's canonical resources."
