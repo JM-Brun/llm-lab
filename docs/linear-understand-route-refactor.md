@@ -148,20 +148,11 @@ They should not be represented as additional nested page levels. A reader should
 
 ## 5. Content refactor and knowledge preservation
 
-Flattening navigation alone will not make the course coherent. The twenty core lessons need a coordinated editorial review.
+Flattening navigation alone will not make the course coherent. The twenty core lessons need a coordinated editorial review, but their page-level inventory must be derived from the existing metadata model rather than transcribed into a new table.
 
-For each lesson, record before editing:
+The generated inventory should resolve the canonical lesson ID and stage, FR/EN page identity, scope and purpose, prerequisites and route memberships, current page-graph relations, concept associations, non-page implementation resources, revision destination/aids and the explicit revision-support assessment. It should also retain the current source paths and rendered destinations.
 
-- canonical lesson ID and stage;
-- current FR/EN source paths;
-- primary synthesis/review destination;
-- prerequisite references and learning outcome;
-- estimated reading time, including equations, diagrams and code;
-- current headings, figures, equations, examples, caveats, callouts, links and citations;
-- material that belongs in the main explanation;
-- material that can move to the review page;
-- material that belongs in Deepen or Practice;
-- proposed destination for every moved item.
+Only the **content-block classification** requires editorial inspection: headings, figures, equations, examples, caveats, callouts, links and citations, plus the proposed destination of any moved block. Record this as a temporary migration decision/evidence, not as a second maintained page registry.
 
 Classify each content block into four categories:
 
@@ -213,23 +204,72 @@ Keep the existing revision-resource metadata/typed relationships as the source f
 
 A generated linear sequence is a projection of the canonical route. The main route, review route, sidebar and route view of the learning map are all projections, not separate sources of truth.
 
-The computational graph, knowledge graph, page hierarchy and pedagogical route remain distinct:
-- computational graph: operations and data flow of the model;
-- knowledge graph: concepts and typed semantic relations;
-- page metadata graph: page containment and related resources;
-- pedagogical route: the learner-facing sequence.
+The models remain distinct and have different change policies:
 
-Do not flatten or rewrite these models merely because the reader-facing navigation becomes linear.
+- **Computational graph:** operations and data flow of the model. It is outside this navigation refactor.
+- **Concept graph:** language-independent concept IDs, definitions, domains and typed semantic relations in `data/concepts.yml`. Preserve this registry and its relations unchanged.
+- **Page/resource graph:** published page identities and editorial metadata (`LLM-LAB-PAGE-MAP v1`), page relations, bilingual topic associations, non-page resources and typed revision-aid relations. This is the model whose edges and projections may change.
+- **Pedagogical route:** the learner-facing sequence and stage membership in `data/guided-route.yml`. Preserve the conceptual meaning of its stages, lesson contracts, prerequisites and transitions while changing how the route is projected to navigation.
+
+The page graph must not absorb concept semantics. In particular:
+- `hierarchy.parents/children` means genuine page-level containment/decomposition, not “comes before”;
+- `suggested_route.previous/next` means a recommended reading transition, not a formal prerequisite;
+- `related` preserves useful cross-links that are neither containment nor route order;
+- `revision_of` is a typed revision-aid-to-lesson relation and remains distinct from ordinary page links;
+- `concepts[].resources` contains page IDs, while `data/resources.yml` contains first-class non-page resources.
+
+A flat reader-facing course therefore does not require flattening the concept graph, computational graph, or the semantics of the page graph. Only page relations that genuinely encode obsolete navigation groupings should be revised, with incoming/outgoing links reconciled and all concept associations preserved.
+
+### 6.1 Existing executable inventory and its coverage
+
+The repository already has the required foundations:
+
+| Existing source/tool | Canonical information it provides |
+|---|---|
+| `LLM-LAB-PAGE-MAP v1` in published Quarto pages | Stable page ID, scope, purpose, tags, suggested route, hierarchy, related links, domain and revision metadata |
+| `site/tools/page_index.py` | Deterministic index of authored published pages; not a second registry |
+| `site/tools/project_index.py` / `ProjectIndex` | Read-only joined projection of page edges, route memberships, concept-to-page links, domains, non-page resources, revision edges and support assessments |
+| `data/guided-route.yml` | Ordered stages, core/optional membership, conceptual focus, transitions and lesson contracts |
+| `data/concepts.yml` | Canonical concepts and their page-resource associations; unchanged by this refactor |
+| `data/resources.yml` | First-class non-page resources and their page/concept associations |
+| `site/tools/audit_revision_coverage.py` | Deterministic bilingual Understand/Build page inventory, route status, concept/resource counts, revision aids and revision-support status |
+| `site/tools/audit_page_metadata.py` and `check_page_metadata.py` | Page-graph topology diagnostics and structural validation |
+
+The revision inventory is a page/resource-level inventory, not a semantic inventory of every paragraph, figure or equation. The latter is inspected only for the bounded content-migration batch; it must not become a parallel hand-maintained catalogue.
+
+The existing `audit_revision_coverage.py` projection is being extended in this refactor to include:
+- the explicit `suggested_route.previous/next` values on each affected page;
+- all page-graph edges incident to an Understand/Build page, retaining source, target, family and direction;
+- the existing route memberships, hierarchy/related links, concept IDs, implementation-resource IDs, typed revision aids and independent support assessment.
+
+This closes a practical gap in the current human-readable inventory without adding a new registry or replacing `ProjectIndex`. Revision-aid edges remain separately typed and must not be mixed into ordinary page-graph edges.
+
+Run from the repository root:
+
+```bash
+uv run --with-requirements docs/requirements-history-validation.txt \
+  python site/tools/audit_revision_coverage.py \
+  --json /tmp/understand-build-inventory.json \
+  --markdown /tmp/understand-build-inventory.md
+
+uv run --with-requirements docs/requirements-history-validation.txt \
+  python site/tools/audit_page_metadata.py
+```
+
+For a migration comparison, capture the generated baseline before edits and regenerate it after each batch. Compare stable IDs and typed edges, not only aggregate counts. A page may legitimately change its `destination`, `hierarchy` or `suggested_route`; every such change must have an explicit rationale and preserve useful incoming/outgoing connections. Concept IDs and concept relations are invariant.
 
 ## 7. Migration sequence
 
 Perform the refactor in small, reversible stages.
 
-### Lot A — Baseline and inventory
-1. Freeze the current canonical route and record the exact twenty lesson IDs in generated audit output.
-2. Build a bilingual inventory of all content blocks and destinations, including anchors, figures, equations, sources and revision resources.
-3. Identify stale documentation that still describes eight stages or older lesson memberships.
-4. Record current sidebar nesting and rendered previous/next behavior.
+### Lot A — Baseline from the existing metadata model
+1. Run the existing deterministic page/revision inventory and page-metadata audits on the same commit. Do not hand-build a second inventory.
+2. Use `ProjectIndex.build(root)` as the read-only joined projection of published page metadata, page edges, guided-route memberships, concept associations, non-page resources and typed revision relations. It composes canonical inputs; it is not another registry.
+3. Use `site/tools/audit_revision_coverage.py` for the bilingual Understand/Build page inventory and revision-support report. Its JSON output is the migration baseline; its Markdown output is the human-readable coverage view.
+4. Preserve the distinction between page-level facts and body-level editorial inspection. The inventory identifies page roles, routes, concepts and associated resources; a focused bilingual lesson review classifies the actual figures, equations, citations, anchors and content blocks before moving them.
+5. Compare the current page graph with the intended reader-facing projection. Report all incoming and outgoing edges incident to affected pages, including `suggested_route`, `hierarchy` and `related`; keep typed revision edges and concept associations separately identifiable.
+6. Record the source commit and tool/schema versions with the generated output. Historical snapshots are evidence for their recorded commit, not a substitute for rerunning the current source.
+7. Identify stale documentation that still describes eight stages or older lesson memberships, then record current sidebar nesting and rendered previous/next behavior.
 
 ### Lot B — Navigation projection
 1. Generate the flat twenty-lesson sequence from the canonical route.
