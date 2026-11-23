@@ -99,7 +99,9 @@ def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> No
     lesson = next(item for item in inventory["pages"] if item["id"] == "fr/lesson")
 
     assert lesson["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
-    assert inventory["affected_page_edges"] == edges[:3]
+    assert inventory["affected_page_edges"] == sorted(
+        edges[:3], key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
+    )
     assert all(
         edge["source"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
         or edge["target"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
