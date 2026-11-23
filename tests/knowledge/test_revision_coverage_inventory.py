@@ -78,7 +78,6 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     assert by_id["en/training-examples"]["revision_support"]["status"] == "integrated_sufficient"
 
 
-
 def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> None:
     pages = [
         page("fr/lesson", "fr", "understand", "lesson"),
@@ -87,7 +86,12 @@ def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> No
     ]
     pages[0]["route"] = {"previous": "fr/previous", "next": "fr/next"}
     edges = [
-        {"source": "fr/lesson", "target": "fr/next", "family": "suggested_route", "relation": "next"},
+        {
+            "source": "fr/lesson",
+            "target": "fr/next",
+            "family": "suggested_route",
+            "relation": "next",
+        },
         {"source": "fr/review", "target": "fr/lesson", "family": "related", "relation": "related"},
         {"source": "fr/deep-dive", "target": "fr/lesson", "family": "related", "relation": "related"},
         {"source": "fr/unrelated", "target": "fr/other", "family": "related", "relation": "related"},
@@ -99,9 +103,11 @@ def test_inventory_preserves_suggested_route_and_all_incident_page_edges() -> No
     lesson = next(item for item in inventory["pages"] if item["id"] == "fr/lesson")
 
     assert lesson["suggested_route"] == {"previous": "fr/previous", "next": "fr/next"}
-    assert inventory["affected_page_edges"] == sorted(
-        edges[:3], key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
+    expected_edges = sorted(
+        edges[:3],
+        key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"]),
     )
+    assert inventory["affected_page_edges"] == expected_edges
     assert all(
         edge["source"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
         or edge["target"] in {"fr/lesson", "fr/review", "fr/deep-dive"}
