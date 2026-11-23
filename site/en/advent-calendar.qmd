@@ -1,6 +1,6 @@
 ---
-title: "The 2026 LLM Advent Calendar"
-subtitle: "24 explorations to reconstruct an LLM's computation: from context to predictive distribution, then to generation, scoring, and learning."
+title: "Archived prototype — 2026 LLM Advent Calendar"
+subtitle: "Archive of the first format: three guided mini-lessons and twenty-one links to the canonical learning route."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
@@ -12,8 +12,8 @@ css: ../styles/advent-calendar.css
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/advent-calendar"
-scope: "Landing page for a 24-day learning calendar about the central mechanism of an autoregressive language model."
-purpose: "Present the 24 days, their four-part progression, and links to canonical resources."
+scope: "Archive of the initial 24-door progressive calendar prototype, with three mini-lessons and twenty-one links to the canonical route."
+purpose: "Preserve and contextualize the first calendar version while a new collection of independent scientific stories is prepared."
 suggested_route:
   previous: null
   next: null
@@ -24,11 +24,15 @@ related: ["en/learning-map", "en/exercises", "en/llm-overview", "en/training-loo
 tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 -->
 
+::: {.callout-note}
+**Historical prototype — not the new edition.** This page preserves the first 2026 format: three guided mini-lessons and twenty-one links to resources in the main learning route. It does not contain twenty-four independent scientific stories. The redesigned editorial format is being prepared; the first three days remain available as an archive.
+:::
+
 <div class="advent-hero">
 <div class="advent-hero-copy">
-<p class="advent-eyebrow">LLM LAB · 2026 EDITION</p>
+<p class="advent-eyebrow">LLM LAB · INITIAL PROTOTYPE</p>
 <h1>One LLM, <em>from the first input to the final gradient.</em></h1>
-<p class="advent-lede">Open a door, follow a question, test an idea. Across 24 short steps, reconstruct how a context becomes a predictive distribution, then explore its three distinct uses: generation, scoring, and learning.</p>
+<p class="advent-lede">This first version offered three guided mini-lessons and twenty-one links to the canonical learning route. It is preserved as a transition archive while the new independent-story format is prepared.</p>
 <div class="advent-hero-actions">
 <a class="advent-button" href="#day-01">Start the journey <span aria-hidden="true">→</span></a>
 <a class="advent-text-link" href="learning-map.qmd">Explore the concept map</a>
@@ -52,7 +56,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">THE IDEA</p>
-  <p><strong>One precise question each day.</strong> The first three doors contain short guided lessons directly in the calendar. The remaining 21 progressively open the route to canonical resources. Full explanations and exercises remain on their dedicated pages. All 24 doors stay accessible after December 24: the 2026 edition becomes a learning archive, with no date-based locks.</p>
+  <p><strong>This prototype is not the new edition.</strong> Doors 01–03 contain the initial mini-lessons; doors 04–24 point to lessons and exercises in the main learning route. Canonical content remains on its dedicated pages. This archive stays accessible without date-based locks.</p>
 </div>
 
 ## The 24 doors
