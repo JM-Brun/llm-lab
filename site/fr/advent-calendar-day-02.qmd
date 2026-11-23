@@ -1,0 +1,87 @@
+---
+title: "Jour 2 — De quoi le modèle dispose-t-il ?"
+description: "Distinguer le préfixe fourni au modèle du prochain token qu'il doit prédire."
+keywords: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:fr", "status:published"]
+lang: fr
+sidebar: fr
+toc: false
+page-layout: custom
+css: ../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/advent-calendar-day-02"
+summary: "Une distinction entre le préfixe effectivement disponible au modèle et la continuation qui reste à prédire."
+scope: "Définit le contexte immédiat comme le préfixe de tokens fourni à une étape donnée ; exclut la conception applicative du contexte."
+purpose: "Suivre la mise à jour du préfixe lorsqu'un token sélectionné est réinjecté pendant la génération."
+suggested_route:
+  previous: "fr/advent-calendar/day-01"
+  next: "fr/advent-calendar/day-03"
+hierarchy:
+  parents: ["fr/advent-calendar"]
+  children: []
+related: ["fr/llm-overview", "fr/generation", "fr/context-engineering"]
+tags: ["type:concept-bridge", "destination:understand", "topic:context-and-prefix", "level:core", "language:fr", "status:published"]
+-->
+
+<div class="advent-day-shell">
+  <nav class="advent-day-topnav" aria-label="Navigation du calendrier">
+    <a href="advent-calendar.qmd">← Retour aux 24 cases</a>
+    <span>JOUR 02 <span aria-hidden="true">/</span> 24</span>
+  </nav>
+  <div class="advent-day-progress" role="img" aria-label="Deuxième journée sur vingt-quatre"><span style="width: 8.3333%"></span></div>
+  <p class="advent-day-kicker">LE CONTEXTE · 5 MINUTES</p>
+  <h1 class="advent-day-title">De quoi le modèle dispose-t-il ?</h1>
+  <p class="advent-day-lead">Hier, nous avons vu que le modèle calcule une distribution pour le prochain token. Mais cette distribution dépend d'une entrée précise : <strong>le préfixe dont le modèle dispose à cet instant</strong>.</p>
+</div>
+
+## La question
+
+Quelles informations peuvent conditionner la prochaine prédiction ?
+
+## L'idée essentielle
+
+À une étape donnée, le **contexte immédiat** du modèle est le préfixe de tokens qui lui a effectivement été fourni. Le prochain token à prédire vient après ce préfixe : il n'en fait pas encore partie.
+
+Pendant une génération, le token sélectionné est ajouté au préfixe. Il devient alors disponible pour l'étape suivante. Le modèle calcule une nouvelle distribution, conditionnée par ce contexte enrichi.
+
+## Suivons un exemple
+
+<ol class="advent-prefix-steps">
+  <li><span class="advent-step-label">Préfixe fourni</span><strong>Le chat</strong><small>Ce texte constitue le contexte actuel.</small></li>
+  <li><span class="advent-step-label">Prédiction</span><strong>Une distribution pour le token suivant</strong><small>Le modèle ne connaît pas encore la continuation qui sera sélectionnée.</small></li>
+  <li><span class="advent-step-label">Sélection illustrative</span><strong>dort</strong><small>Supposons que la règle de décodage retienne ce token.</small></li>
+  <li><span class="advent-step-label">Nouveau préfixe</span><strong>Le chat dort</strong><small>« dort » fait maintenant partie du contexte de l'étape suivante.</small></li>
+</ol>
+
+Le second calcul ne repart donc pas du même contexte : le préfixe s'est allongé. Les paramètres du modèle peuvent rester identiques ; c'est l'entrée conditionnante qui a changé.
+
+<div class="advent-note">
+  **Attention au vocabulaire.** Ici, « contexte » désigne uniquement l'entrée immédiate du modèle à une étape donnée. La conception d'un contexte applicatif — instructions, documents récupérés, mémoire ou historique de conversation — est un sujet plus large, traité ailleurs dans LLM Lab.
+</div>
+
+## À vous de vérifier
+
+Le préfixe fourni au modèle est maintenant « Le chat dort ». Le token « dort » est-il encore le prochain token à prédire ?
+
+<details class="advent-answer">
+<summary>Afficher la réponse</summary>
+
+Non. « dort » appartient déjà au préfixe fourni. Le modèle calcule une distribution pour le token qui vient après « Le chat dort ».
+
+</details>
+
+## À retenir
+
+Le contexte est le préfixe disponible au moment du calcul. Un token futur n'en fait pas partie avant d'avoir été fourni ou réinjecté dans la séquence.
+
+<div class="advent-day-resources">
+  <a href="llm-overview.qmd"><strong>Leçon de référence</strong><span>Panorama : contexte et génération</span></a>
+  <a href="exercises/llm-overview.qmd"><strong>S'exercer</strong><span>Tracer les étapes de la prédiction</span></a>
+</div>
+
+<nav class="advent-day-next" aria-label="Navigation entre les journées">
+  <a href="advent-calendar-day-01.qmd">← Jour 1</a>
+  <a href="advent-calendar-day-03.qmd">Jour 3 · La tokenisation →</a>
+</nav>
