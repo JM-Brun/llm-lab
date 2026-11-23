@@ -57,22 +57,23 @@ Work in the following order. Do not start all 24 articles in parallel.
 
 **Deliverable:** one reusable article pattern whose rendered output—not just source or CI status—has passed review.
 
-### Phase C — Pilot A: Day 06, sinusoidal position encodings and Fourier ideas
+### Phase C — Pilot A: Day 06, Fourier features and multi-scale coordinates
 
-This is the first article to write. It tests whether a mathematical story can be self-contained without turning into another Transformer lesson.
+This pilot uses positional encoding as one application of a broader representation idea. The canonical positional-encoding lesson already derives the Transformer formula and fixed-offset rotation identity; Day 06 must not repeat that material.
 
-- [ ] Create a source dossier for the pilot. Start with the original *Attention Is All You Need* paper and verify the exact positional-encoding equations and the authors' stated motivation.
-- [ ] Explain the connection to multiple sinusoidal frequencies and relative phase in accessible terms.
-- [ ] Derive the two-dimensional rotation identity for a fixed positional offset, defining every symbol and stating the assumptions.
-- [ ] Include one small numerical or geometric worked example that a reader can follow without implementing a Transformer.
-- [ ] Include a challenge and worked solution.
-- [ ] Explain the limits: distinguish the authors' motivation/hypothesis about relative positions and extrapolation from a general guarantee; do not imply that sinusoidal encodings solve every length-generalization problem.
-- [ ] Make the story useful even if the reader has never opened the canonical positional-encoding lesson.
-- [ ] Add at most one optional link to the canonical lesson, after the story is complete.
-- [ ] Produce FR and EN versions with equivalent mathematical content and terminology.
-- [ ] Run scientific review, independent novice review, and the complete visual/accessibility checks.
+- [x] Create a source dossier using the original Transformer paper and Tancik et al.'s Fourier-feature paper, with claim-level boundaries and explicit non-claims.
+- [x] Refocus the story on sinusoidal feature maps, multiple frequency scales and spectral bias in coordinate-based networks.
+- [x] Include a small numerical example with exact values for an eight-cycle sinusoid over [0, 1].
+- [x] Include a challenge and worked solution about which frequency components a linear readout can represent.
+- [x] Explain the limits: distinguish fixed Transformer frequencies from random Fourier features; do not call positional encoding a Fourier transform of text; do not claim guaranteed length extrapolation.
+- [x] Keep the story self-contained and add only one optional link to the canonical positional-encoding lesson.
+- [x] Draft FR and EN versions with equivalent equations, examples, caveats and terminology.
+- [x] Add one original SVG comparing one and eight oscillations over the same interval.
+- [ ] Run page-metadata validation and render both pages through Quarto.
+- [ ] Verify the numerical table and SVG in the rendered output; inspect formulas, figure caption, spacing and mobile layout.
+- [ ] Complete scientific review, independent novice review, keyboard/accessibility checks and desktop/mobile visual acceptance.
 
-**Pilot A acceptance:** all criteria in section 7 of the editorial redesign document pass. If the angle duplicates the canonical lesson, change the angle or replace the pilot; do not merely shorten the canonical explanation.
+**Pilot A acceptance:** all criteria in section 7 of the editorial redesign document must pass. The PR draft is not publication approval. If review finds overlap with the canonical lesson, change the angle rather than shorten or duplicate the canonical explanation.
 
 ### Phase D — Pilots B and C
 
@@ -167,6 +168,6 @@ This log should record outcomes, not merely activity.
 - **Branch / PR:** calendar/day06-independent-story-pilot — PR #1560
 - **Files changed:** bilingual calendar landing pages, Quarto render list, bilingual Day 06 story drafts, reusable story template, Day 06 source dossier, original frequency-scale SVG, editorial redesign and this handoff.
 - **Work completed:** verified the old 24-card prototype structure; marked it as an archive; drafted a distinct Day 06 story focused on Fourier features and spectral bias rather than repeating the canonical positional-encoding derivation.
-- **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render, browser screenshot, NumPy execution or novice review has yet been performed.
-- **Open defects / decisions:** PR checks and visual rendering; verify the page metadata status=planned behavior; run FR/EN desktop/mobile and accessibility review; execute the numerical example; obtain novice feedback.
+- **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render, browser screenshot, numerical-table verification or novice review has yet been performed.
+- **Open defects / decisions:** PR checks and visual rendering; verify the page metadata status=planned behavior; run FR/EN desktop/mobile and accessibility review; verify the numerical table and SVG in the rendered pages; obtain novice feedback.
 - **Exact next action:** inspect the PR render and metadata checks, revise the Day 06 draft, then decide whether to proceed with Days 17 and 23. Do not create the story manifest yet.
