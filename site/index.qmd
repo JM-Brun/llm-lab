@@ -14,7 +14,7 @@ scope: "Point d’entrée du site et choix des parcours."
 purpose: "Orienter le lecteur vers la compréhension, la construction, l’approfondissement ou la pratique."
 suggested_route:
   previous: null
-  next: "fr/llm-overview"
+  next: "fr/learning-map"
 hierarchy:
   parents: []
   children: ["fr/llm-overview", "fr/build-path", "fr/advent-calendar", "fr/transformer", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
