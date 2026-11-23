@@ -31,6 +31,7 @@ tags: ["type:concept-bridge", "destination:understand", "topic:context-and-prefi
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Day two of twenty-four"><span style="width: 8.3333%"></span></div>
   <p class="advent-day-kicker">THE CONTEXT · 5 MINUTES</p>
+  <h1 class="advent-day-title">What information does the model have?</h1>
   <p class="advent-day-lead">Yesterday, we saw that the model computes a distribution for the next token. But that distribution depends on a precise input: <strong>the prefix available to the model at that moment</strong>.</p>
 </div>
 
