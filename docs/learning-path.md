@@ -6,6 +6,10 @@
 
 This plan defines two paths with different completion evidence, not one sequence of paired theory-and-code modules. A Theory lesson is complete when its explanation, assumptions, examples, sources and conceptual checks are sound; a Build milestone is complete when its implementation, tests, expected outputs and limitations are evidenced. Neither path claims learner mastery merely because its materials exist. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
 
+## Proposed simplification of the Understand route
+
+The current nested Understand navigation is being reviewed for a simpler reader-facing progression: one flat sequence of core lessons, one corresponding revision page per lesson, and the existing conceptual stages retained as orientation labels rather than nested navigation levels. The proposal preserves the canonical knowledge and computational models and keeps Build, Deepen, Practice & experiment, and Reference distinct. See the [linear route refactor analysis](linear-understand-route-refactor.md) for the repository audit, proposed architecture, migration sequence, and acceptance criteria.
+
 ## Reader-facing short overview
 
 For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the nine-stage route below remains canonical in `data/guided-route.yml`.
