@@ -308,4 +308,4 @@ def test_matrix_evidence_paths_are_repository_relative_and_deterministic() -> No
 def test_unregistered_source_coverage_explains_existing_opt_in_adapter() -> None:
     message = COVERAGE["UNREGISTERED_DIMENSIONS"]["sources"]
     assert "opt-in source adapter exists" in message
-    assert "complete concept-to-source/item mapping is not registered" in message
+    assert "concept-to-source/item coverage is not registered" in message
