@@ -25,29 +25,29 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 -->
 
 <div class="advent-hero">
-  <div class="advent-hero-copy">
-    <p class="advent-eyebrow">LLM LAB · ÉDITION 2026</p>
-    <h1>Un LLM, <em>de la première entrée au dernier gradient.</em></h1>
-    <p class="advent-lede">Ouvrez une case, suivez une question, testez une idée. En 24 étapes courtes, reconstruisez le calcul qui relie un contexte à une distribution prédictive, puis découvrez ses trois usages distincts : génération, scoring et apprentissage.</p>
-    <div class="advent-hero-actions">
-      <a class="advent-button" href="#jour-01">Commencer le parcours <span aria-hidden="true">→</span></a>
-      <a class="advent-text-link" href="learning-map.qmd">Explorer la carte des notions</a>
-    </div>
-    <div class="advent-facts" aria-label="Format du calendrier">
-      <span><strong>1–24</strong> décembre 2026</span>
-      <span><strong>4</strong> mouvements</span>
-      <span><strong>5–8</strong> minutes par jour</span>
-    </div>
-  </div>
-  <div class="advent-hero-art" aria-hidden="true">
-    <span class="advent-orbit advent-orbit-one"></span>
-    <span class="advent-orbit advent-orbit-two"></span>
-    <span class="advent-art-token token-one">xₜ</span>
-    <span class="advent-art-token token-two">Q</span>
-    <span class="advent-art-token token-three">pθ</span>
-    <span class="advent-art-token token-four">∇θ</span>
-    <span class="advent-art-core">LLM</span>
-  </div>
+<div class="advent-hero-copy">
+<p class="advent-eyebrow">LLM LAB · ÉDITION 2026</p>
+<h1>Un LLM, <em>de la première entrée au dernier gradient.</em></h1>
+<p class="advent-lede">Ouvrez une case, suivez une question, testez une idée. En 24 étapes courtes, reconstruisez le calcul qui relie un contexte à une distribution prédictive, puis découvrez ses trois usages distincts : génération, scoring et apprentissage.</p>
+<div class="advent-hero-actions">
+<a class="advent-button" href="#jour-01">Commencer le parcours <span aria-hidden="true">→</span></a>
+<a class="advent-text-link" href="learning-map.qmd">Explorer la carte des notions</a>
+</div>
+<div class="advent-facts" aria-label="Format du calendrier">
+<span><strong>1–24</strong> décembre 2026</span>
+<span><strong>4</strong> mouvements</span>
+<span><strong>5–8</strong> minutes par jour</span>
+</div>
+</div>
+<div class="advent-hero-art" aria-hidden="true">
+<span class="advent-orbit advent-orbit-one"></span>
+<span class="advent-orbit advent-orbit-two"></span>
+<span class="advent-art-token token-one">xₜ</span>
+<span class="advent-art-token token-two">Q</span>
+<span class="advent-art-token token-three">pθ</span>
+<span class="advent-art-token token-four">∇θ</span>
+<span class="advent-art-core">LLM</span>
+</div>
 </div>
 
 <div class="advent-intro">
