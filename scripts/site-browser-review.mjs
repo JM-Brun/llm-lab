@@ -9,6 +9,15 @@ const BASE = (process.env.SITE_BROWSER_BASE_URL || "https://jm-brun.github.io/ll
 const OUT = "artifacts/site-browser-review";
 fs.mkdirSync(OUT, { recursive: true });
 
+// Keep the exact renderer-produced map payloads with the browser audit so stale
+// tracked artifacts can be diagnosed from the same build that tests the site.
+for (const language of ["fr", "en"]) {
+  fs.copyFileSync(
+    `site/includes/generated-map-data-${language}.qmd`,
+    path.join(OUT, `generated-map-data-${language}.qmd`),
+  );
+}
+
 // The published site currently exposes only the light Quarto theme.
 // Do not label prefers-color-scheme emulation as dark-theme coverage.
 const visualCases = [
@@ -31,6 +40,16 @@ const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "index.html", kind: "homepage",
   })),
+  // The Advent calendar and its first three guided days are reviewed directly
+  // whenever their source pages change; they are not part of the core route matrix.
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "advent-calendar.html", kind: "advent-calendar",
+  })),
+  ...visualCases.flatMap(testCase =>
+    ["advent-calendar-day-01.html", "advent-calendar-day-02.html", "advent-calendar-day-03.html"].map(page => ({
+      ...testCase, page, kind: "advent-day",
+    }))
+  ),
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
@@ -363,6 +382,53 @@ async function runCase(testCase, caseIndex) {
     );
 
     item.title = await page.title();
+
+    if (pagePath === "advent-calendar.html") {
+      const cards = page.locator(".advent-card");
+      const dayNumbers = await page.locator(".advent-card .advent-number").allTextContents();
+      const openingCards = page.locator(".advent-grid-opening .advent-card");
+      const openingTargets = await openingCards.locator(".advent-card-links a[href]").evaluateAll(
+        links => links.map(link => new URL(link.href).pathname.split("/").pop())
+      );
+      if (await cards.count() !== 24 ||
+          dayNumbers.map(value => Number(value.trim())).join(",") !==
+            Array.from({ length: 24 }, (_, index) => index + 1).join(",") ||
+          await openingCards.count() !== 3) {
+        throw new Error("The Advent calendar must render exactly 24 ordered doors and three guided opening days.");
+      }
+      for (const day of ["01", "02", "03"]) {
+        if (!openingTargets.includes(`advent-calendar-day-${day}.html`)) {
+          throw new Error(`The opening day ${day} must link to its dedicated guided page.`);
+        }
+      }
+      if (await cards.evaluateAll(items => items.some(card =>
+        !card.querySelector("a[href]") || card.querySelector('[aria-disabled="true"]')
+      ))) {
+        throw new Error("Every calendar door must remain accessible without date-based locking.");
+      }
+      item.adventCalendar = { doors: 24, openingDays: 3, ordered: true, dateLocks: false };
+    }
+
+    if (/^advent-calendar-day-0[1-3]\.html$/.test(pagePath)) {
+      const answer = page.locator("details.advent-answer");
+      const summary = answer.locator(":scope > summary");
+      if (await answer.count() !== 1 || !(await summary.innerText()).trim()) {
+        throw new Error("Each guided day must provide one named, keyboard-operable self-check.");
+      }
+      await summary.focus();
+      await summary.press("Enter");
+      if (!await answer.evaluate(element => element.open)) {
+        throw new Error("The guided-day self-check must open from the keyboard.");
+      }
+      await summary.press("Space");
+      if (await answer.evaluate(element => element.open)) {
+        throw new Error("The guided-day self-check must close from the keyboard.");
+      }
+      if (await page.locator(".advent-day-resources a[href]").count() < 2) {
+        throw new Error("Each guided day must link to its canonical lesson and dedicated practice page.");
+      }
+      item.adventDay = { selfCheck: "keyboard", canonicalResources: true };
+    }
 
     if (["probabilites.html", "probabilities.html"].includes(pagePath)) {
       const explorer = page.locator("[data-temperature-explorer]");

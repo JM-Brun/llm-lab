@@ -1,0 +1,275 @@
+---
+title: "Le calendrier de l’avent 2026 des LLM"
+subtitle: "24 explorations pour reconstruire le calcul d'un LLM : du contexte à la distribution prédictive, puis à la génération, au scoring et à l'apprentissage."
+keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
+lang: fr
+sidebar: fr
+toc: false
+page-layout: custom
+css: ../styles/advent-calendar.css
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/advent-calendar"
+scope: "Page d’accueil du calendrier pédagogique de 24 jours consacré au mécanisme central d’un LLM autorégressif."
+purpose: "Présenter les 24 journées, leur progression en quatre mouvements et les ressources canoniques associées."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/index"]
+  children: ["fr/advent-calendar-day-01", "fr/advent-calendar-day-02", "fr/advent-calendar-day-03"]
+related: ["fr/learning-map", "fr/exercises", "fr/llm-overview", "fr/training-loop"]
+tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
+-->
+
+<div class="advent-hero">
+<div class="advent-hero-copy">
+<p class="advent-eyebrow">LLM LAB · ÉDITION 2026</p>
+<h1>Un LLM, <em>de la première entrée au dernier gradient.</em></h1>
+<p class="advent-lede">Ouvrez une case, suivez une question, testez une idée. En 24 étapes courtes, reconstruisez le calcul qui relie un contexte à une distribution prédictive, puis découvrez ses trois usages distincts : génération, scoring et apprentissage.</p>
+<div class="advent-hero-actions">
+<a class="advent-button" href="#jour-01">Commencer le parcours <span aria-hidden="true">→</span></a>
+<a class="advent-text-link" href="learning-map.qmd">Explorer la carte des notions</a>
+</div>
+<div class="advent-facts" aria-label="Format du calendrier">
+<span><strong>1–24</strong> décembre 2026</span>
+<span><strong>4</strong> mouvements</span>
+<span><strong>5–8</strong> minutes par jour</span>
+</div>
+</div>
+<div class="advent-hero-art" aria-hidden="true">
+<span class="advent-orbit advent-orbit-one"></span>
+<span class="advent-orbit advent-orbit-two"></span>
+<span class="advent-art-token token-one">xₜ</span>
+<span class="advent-art-token token-two">Q</span>
+<span class="advent-art-token token-three">pθ</span>
+<span class="advent-art-token token-four">∇θ</span>
+<span class="advent-art-core">LLM</span>
+</div>
+</div>
+
+<div class="advent-intro">
+  <p class="advent-kicker">LE PRINCIPE</p>
+  <p><strong>Une question précise par jour.</strong> Les trois premières cases proposent une courte leçon guidée directement dans le calendrier. Les 21 suivantes ouvrent progressivement le parcours vers les ressources canoniques. Les explications longues et les exercices restent sur leurs pages dédiées. Les 24 cases restent accessibles après le 24 décembre : l’édition 2026 devient une archive pédagogique, sans verrouillage par date.</p>
+</div>
+
+## Les 24 cases
+
+:::: {.advent-act-heading}
+<span class="advent-act-number">01 — 07</span>
+<div><h3>Du contexte aux représentations</h3><p>Comment un texte devient-il une entrée que le modèle peut traiter ?</p></div>
+::::
+
+<p class="advent-opening-note"><strong>Commencez ici.</strong> Les trois premières journées sont développées : une explication courte, un exemple guidé, une question de vérification et un lien vers la leçon de référence.</p>
+
+:::: {.advent-grid .advent-grid-opening}
+::: {.advent-card .advent-card-featured #jour-01}
+<div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · disponible</span></div>
+<p class="advent-card-kicker">LE POINT DE DÉPART</p>
+<h4>Que prédit un LLM ?</h4>
+<p>Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?</p>
+<div class="advent-card-links"><a href="advent-calendar-day-01.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
+:::
+::: {.advent-card .advent-card-featured #jour-02}
+<div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · disponible</span></div>
+<p class="advent-card-kicker">LE CONTEXTE</p>
+<h4>De quoi le modèle dispose-t-il ?</h4>
+<p>Quel préfixe conditionne la prédiction, et quand la suite le rejoint-elle ?</p>
+<div class="advent-card-links"><a href="advent-calendar-day-02.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
+:::
+::: {.advent-card .advent-card-featured #jour-03}
+<div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · disponible</span></div>
+<p class="advent-card-kicker">DÉCOUPER LE TEXTE</p>
+<h4>Comment le texte devient-il des tokens ?</h4>
+<p>Comment un tokenizer segmente-t-il une chaîne en unités ordonnées ?</p>
+<div class="advent-card-links"><a href="advent-calendar-day-03.qmd">Ouvrir la case <span>→</span></a><a href="text-data.qmd">Leçon de référence</a></div>
+:::
+::::
+
+:::: {.advent-grid}
+::: {.advent-card #jour-04}
+<div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
+<p class="advent-card-kicker">IDENTIFIER</p>
+<h4>Du token à son identifiant</h4>
+<p>Comment le modèle retrouve-t-il l'identifiant associé à chaque token ?</p>
+<div class="advent-card-links"><a href="text-data.qmd">Lire la leçon <span>→</span></a><a href="exercises/text-data.qmd">S'exercer</a></div>
+:::
+::: {.advent-card #jour-05}
+<div class="advent-card-top"><span class="advent-number">05</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">VECTORISER</p>
+<h4>Un identifiant devient un vecteur</h4>
+<p>Comment un identifiant discret sélectionne-t-il une représentation numérique ?</p>
+<div class="advent-card-links"><a href="embedding-space.qmd">Lire la leçon <span>→</span></a><a href="exercises/embedding-space.qmd">S'exercer</a></div>
+:::
+::: {.advent-card #jour-06}
+<div class="advent-card-top"><span class="advent-number">06</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">ORDONNER</p>
+<h4>Pourquoi la position compte-t-elle ?</h4>
+<p>Pourquoi les représentations doivent-elles tenir compte de l'ordre des tokens ?</p>
+<div class="advent-card-links"><a href="positional-encoding.qmd">Lire la leçon <span>→</span></a><a href="exercises/positional-encoding.qmd">S'exercer</a></div>
+:::
+::: {.advent-card #jour-07}
+<div class="advent-card-top"><span class="advent-number">07</span><span class="advent-time">6 min</span></div>
+<p class="advent-card-kicker">CONTEXTUALISER</p>
+<h4>Un token, plusieurs représentations</h4>
+<p>Pourquoi deux occurrences du même token peuvent-elles avoir des représentations différentes ?</p>
+<div class="advent-card-links"><a href="contextualized-representations.qmd">Lire la leçon <span>→</span></a><a href="exercises/contextualized-representations.qmd">S'exercer</a></div>
+:::
+::::
+
+:::: {.advent-act-heading}
+<span class="advent-act-number">08 — 12</span>
+<div><h3>Le calcul du Transformer</h3><p>Comment les états sont-ils transformés à l’intérieur des blocs ?</p></div>
+::::
+
+:::: {.advent-grid}
+::: {.advent-card #jour-08}
+<div class="advent-card-top"><span class="advent-number">08</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">ARCHITECTURE</p>
+<h4>Que fait un bloc Transformer ?</h4>
+<p>Quelles grandes opérations transforment les états d’entrée d’un bloc ?</p>
+<div class="advent-card-links"><a href="transformer.qmd">Lire la leçon <span>→</span></a><a href="exercises/transformer.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-09}
+<div class="advent-card-top"><span class="advent-number">09</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">TROIS PROJECTIONS</p>
+<h4>Les trois rôles de Q, K et V</h4>
+<p>Quelles informations portent les projections Query, Key et Value ?</p>
+<div class="advent-card-links"><a href="queries-keys-values.qmd">Lire la leçon <span>→</span></a><a href="exercises/queries-keys-values.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-10}
+<div class="advent-card-top"><span class="advent-number">10</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">ATTENTION</p>
+<h4>Comment fonctionne l’attention ?</h4>
+<p>Comment les scores deviennent-ils des poids qui agrègent les valeurs ?</p>
+<div class="advent-card-links"><a href="scaled-dot-product-attention.qmd">Lire la leçon <span>→</span></a><a href="exercises/scaled-dot-product-attention.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-11}
+<div class="advent-card-top"><span class="advent-number">11</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">CAUSALITÉ</p>
+<h4>Empêcher le regard vers le futur</h4>
+<p>Comment un modèle causal empêche-t-il une position d’utiliser les tokens futurs ?</p>
+<div class="advent-card-links"><a href="causal-masking.qmd">Lire la leçon <span>→</span></a><a href="exercises/causal-masking.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-12}
+<div class="advent-card-top"><span class="advent-number">12</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">MISE À JOUR DES ÉTATS</p>
+<h4>Au-delà de l’attention</h4>
+<p>Comment les autres opérations du bloc transforment-elles les états ?</p>
+<div class="advent-card-links"><a href="transformer.qmd">Lire la leçon <span>→</span></a><a href="transformer-block-walkthrough.qmd">Voir le code</a><a href="exercises/transformer-block-walkthrough.qmd">S’exercer</a></div>
+:::
+::::
+
+:::: {.advent-act-heading}
+<span class="advent-act-number">13 — 18</span>
+<div><h3>Prédiction et génération</h3><p>Comment les états deviennent-ils une distribution, puis un token choisi ?</p></div>
+::::
+
+:::: {.advent-grid}
+::: {.advent-card #jour-13}
+<div class="advent-card-top"><span class="advent-number">13</span><span class="advent-time">6 min</span></div>
+<p class="advent-card-kicker">SCORES DE SORTIE</p>
+<h4>Les logits : des scores avant les probabilités</h4>
+<p>Que produit la projection de sortie avant la normalisation ?</p>
+<div class="advent-card-links"><a href="logits.qmd">Lire la leçon <span>→</span></a><a href="exercises/logits.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-14}
+<div class="advent-card-top"><span class="advent-number">14</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">PROBABILITÉS</p>
+<h4>Des scores à une distribution</h4>
+<p>Comment les logits deviennent-ils une distribution conditionnelle sur le prochain token ?</p>
+<div class="advent-card-links"><a href="probabilites.qmd">Lire la leçon <span>→</span></a><a href="exercises/probabilites.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-15}
+<div class="advent-card-top"><span class="advent-number">15</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">INCERTITUDE</p>
+<h4>Que mesure l’entropie ?</h4>
+<p>Que nous apprend la forme d’une distribution sur son incertitude ?</p>
+<div class="advent-card-links"><a href="entropy.qmd">Lire la leçon <span>→</span></a><a href="exercises/entropy.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-16}
+<div class="advent-card-top"><span class="advent-number">16</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">DÉCODAGE</p>
+<h4>Choisir le prochain token</h4>
+<p>Comment une politique de décodage transforme-t-elle une distribution en choix ?</p>
+<div class="advent-card-links"><a href="generation.qmd">Lire la leçon <span>→</span></a><a href="decoding-strategies.qmd">Approfondir</a></div>
+:::
+::: {.advent-card #jour-17}
+<div class="advent-card-top"><span class="advent-number">17</span><span class="advent-time">7 min</span></div>
+<p class="advent-card-kicker">BOUCLE AUTORÉGRESSIVE</p>
+<h4>Une prédiction devient le contexte suivant</h4>
+<p>Comment la génération produit-elle une séquence token après token ?</p>
+<div class="advent-card-links"><a href="generation.qmd">Lire la leçon <span>→</span></a><a href="exercises/generation.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-18}
+<div class="advent-card-top"><span class="advent-number">18</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">INFÉRENCE EFFICACE</p>
+<h4>Prefill, decode et cache KV</h4>
+<p>Pourquoi l’inférence distingue-t-elle le traitement initial du contexte et la génération token par token ?</p>
+<div class="advent-card-links"><a href="generation.qmd">Lire la leçon <span>→</span></a><a href="exercises/generation.qmd">S’exercer</a></div>
+:::
+::::
+
+:::: {.advent-act-heading}
+<span class="advent-act-number">19 — 24</span>
+<div><h3>Scoring et apprentissage</h3><p>Que change la présence d’une cible observée, et comment les paramètres apprennent-ils ?</p></div>
+::::
+
+:::: {.advent-grid}
+::: {.advent-card #jour-19}
+<div class="advent-card-top"><span class="advent-number">19</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">CIBLE OBSERVÉE</p>
+<h4>Prédire avec une cible connue</h4>
+<p>Comment évaluer la prédiction du prochain token lorsque la séquence correcte est connue ?</p>
+<div class="advent-card-links"><a href="vraisemblance.qmd">Lire la leçon <span>→</span></a><a href="training-examples.qmd">Voir les exemples</a><a href="exercises/training-examples.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-20}
+<div class="advent-card-top"><span class="advent-number">20</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">VRAISEMBLANCE</p>
+<h4>Quelle probabilité pour une séquence ?</h4>
+<p>Comment les probabilités conditionnelles des tokens observés se combinent-elles ?</p>
+<div class="advent-card-links"><a href="vraisemblance.qmd">Lire la leçon <span>→</span></a><a href="exercises/vraisemblance.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-21}
+<div class="advent-card-top"><span class="advent-number">21</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">COÛT PROBABILISTE</p>
+<h4>De la probabilité au coût</h4>
+<p>Comment mesurer le coût probabiliste attribué à une cible observée ?</p>
+<div class="advent-card-links"><a href="cross-entropy.qmd">Lire la leçon <span>→</span></a><a href="exercises/cross-entropy.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-22}
+<div class="advent-card-top"><span class="advent-number">22</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">OBJECTIF D’APPRENTISSAGE</p>
+<h4>Des coûts par token à la loss</h4>
+<p>Comment agréger les coûts des positions valides en un objectif d’entraînement ?</p>
+<div class="advent-card-links"><a href="loss.qmd">Lire la leçon <span>→</span></a><a href="exercises/loss.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-23}
+<div class="advent-card-top"><span class="advent-number">23</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">DIFFÉRENTIATION</p>
+<h4>Comment obtenir les gradients ?</h4>
+<p>Comment la loss indique-t-elle la sensibilité de l’objectif aux paramètres ?</p>
+<div class="advent-card-links"><a href="gradients.qmd">Lire la leçon <span>→</span></a><a href="exercises/gradients.qmd">S’exercer</a></div>
+:::
+::: {.advent-card #jour-24}
+<div class="advent-card-top"><span class="advent-number">24</span><span class="advent-time">8 min</span></div>
+<p class="advent-card-kicker">MISE À JOUR & ÉVALUATION</p>
+<h4>Modifier les paramètres ou mesurer le modèle ?</h4>
+<p>Qu’est-ce qui modifie les paramètres, et qu’est-ce qui ne fait que mesurer le modèle ?</p>
+<div class="advent-card-links"><a href="training-loop.qmd">Lire la leçon <span>→</span></a><a href="evaluation-experimentale.qmd">Évaluer un modèle</a></div>
+:::
+::::
+
+:::: {.advent-outro}
+::: {.advent-outro-copy}
+<p class="advent-kicker">APRÈS LES 24 JOURS</p>
+
+## Le calendrier donne le fil. À vous de reconstruire le mécanisme.
+
+Reprenez les notions dans la [carte des ressources](learning-map.qmd), vérifiez-les avec le [catalogue d’exercices](exercises.qmd), puis suivez le [parcours de construction d’un petit GPT](build-path.qmd).
+:::
+
+[Revoir le panorama →](llm-overview.qmd){.advent-button .advent-button-light}
+::::
