@@ -25,7 +25,7 @@ stages:
     pages:
       fr: [fr/llm-overview]
       en: [en/llm-overview]
-    compact_title: {fr: "Prédiction et boucle (aperçu)", en: "Prediction and loop (preview)"}
+    compact_title: {fr: "Vue d’ensemble", en: "Overview"}
     conceptual_focus:
       llm-overview:
         visit: preview
@@ -207,7 +207,7 @@ stages:
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
-    compact_title: {fr: "Projeter et normaliser", en: "Project and normalize"}
+    compact_title: {fr: "Prédire", en: "Predict"}
     conceptual_focus:
       logits:
         mobilizes: ["node:final-hidden-states"]
@@ -260,7 +260,7 @@ stages:
     pages:
       fr: [fr/generation]
       en: [en/generation]
-    compact_title: {fr: "Générer (reprise)", en: "Generate (revisit)"}
+    compact_title: {fr: "Générer", en: "Generate"}
     prediction_use:
       phase: output
       context: {fr: "S’allonge à chaque token réinjecté", en: "Grows with each token fed back"}
@@ -309,7 +309,7 @@ stages:
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
-    compact_title: {fr: "Concevoir le contexte", en: "Design the context"}
+    compact_title: {fr: "Adapter le contexte", en: "Shape context"}
     prediction_use:
       phase: input
       context: {fr: "Assemblé pour chaque appel", en: "Assembled for each call"}

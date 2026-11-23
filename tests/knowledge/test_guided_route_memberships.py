@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import runpy
 from pathlib import Path
 from typing import Any
@@ -134,3 +135,137 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
     assert memberships["en/core"][0].role == "core"
     assert memberships["en/optional"][0].role == "optional"
     assert "en/unassigned" not in memberships
+
+
+@pytest.mark.parametrize(
+    ("language", "expected_labels", "expected_parts"),
+    [
+        (
+            "fr",
+            [
+                "Vue d\u2019ensemble",
+                "Tokeniser",
+                "Représenter",
+                "Contextualiser",
+                "Prédire",
+                "Générer",
+                "Adapter le contexte",
+                "Scorer",
+                "Entraîner",
+            ],
+            ["Le modèle", "Prédire un token", "Utiliser et entraîner"],
+        ),
+        (
+            "en",
+            [
+                "Overview",
+                "Tokenize",
+                "Represent",
+                "Contextualize",
+                "Predict",
+                "Generate",
+                "Shape context",
+                "Score",
+                "Train",
+            ],
+            ["The model", "Predict a token", "Use and train"],
+        ),
+    ],
+)
+def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
+    language: str,
+    expected_labels: list[str],
+    expected_parts: list[str],
+) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    rendered = GENERATOR["render_guided_rail"](stages, language)
+    route_markdown = GENERATOR["render_guided_route_markdown"](stages, language)
+
+    assert [stage.compact_title for stage in stages] == expected_labels
+    assert all(
+        f'<span class="guided-rail__title">{label}</span>' in rendered for label in expected_labels
+    )
+    assert all(f">{part}</span>" in rendered for part in expected_parts)
+    assert all(f"## {part} {{.guided-route-part" in route_markdown for part in expected_parts)
+    # The nav landmark has its own aria-label in addition to the stage links.
+    assert rendered.count('title="') == len(stages)
+    for index, stage in enumerate(stages, start=1):
+        full_label = html.escape(f"{index:02d} · {stage.title}", quote=True)
+        assert f'aria-label="{full_label}"' in rendered
+        assert f'href="#guided-stage-{stage.id}"' in rendered
+
+
+@pytest.mark.parametrize(
+    ("language", "section_title", "end_title", "expected_labels"),
+    [
+        (
+            "fr",
+            '        - section: "Comprendre les LLM"',
+            '        - section: "Réviser"',
+            {
+                "llm-overview": "Panorama LLM",
+                "text-data": "Texte et tokens",
+                "embedding-space": "Embeddings",
+                "positional-encoding": "Position des tokens",
+                "contextualized-representations": "États contextualisés",
+                "transformer": "Transformer",
+                "queries-keys-values": "Requêtes, clés, valeurs",
+                "scaled-dot-product-attention": "Calcul de l\u2019attention",
+                "causal-masking": "Masque causal",
+                "logits": "Logits",
+                "probabilites": "Probabilités",
+                "entropy": "Entropie",
+                "generation": "Génération",
+                "in-context-learning": "Apprentissage en contexte",
+                "context-engineering": "Ingénierie du contexte",
+                "vraisemblance": "Vraisemblance",
+                "cross-entropy": "Entropie croisée",
+                "loss": "Fonction de perte",
+                "gradients": "Gradients",
+                "training-loop": "Boucle d\u2019entraînement",
+            },
+        ),
+        (
+            "en",
+            '        - section: "Understand LLMs"',
+            '        - section: "Review"',
+            {
+                "llm-overview": "LLM overview",
+                "text-data": "Text and tokens",
+                "embedding-space": "Embeddings",
+                "positional-encoding": "Token positions",
+                "contextualized-representations": "Contextualized states",
+                "transformer": "Transformer",
+                "queries-keys-values": "Queries, keys, values",
+                "scaled-dot-product-attention": "Attention computation",
+                "causal-masking": "Causal mask",
+                "logits": "Logits",
+                "probabilities": "Probabilities",
+                "entropy": "Entropy",
+                "generation": "Generation",
+                "in-context-learning": "In-context learning",
+                "context-engineering": "Context engineering",
+                "likelihood": "Likelihood",
+                "cross-entropy": "Cross-entropy",
+                "loss": "Loss function",
+                "gradients": "Gradients",
+                "training-loop": "Training loop",
+            },
+        ),
+    ],
+)
+def test_main_sidebar_uses_compact_bilingual_labels(
+    language: str,
+    section_title: str,
+    end_title: str,
+    expected_labels: dict[str, str],
+) -> None:
+    config = (ROOT / "site/_quarto.yml").read_text(encoding="utf-8")
+    start = config.index(section_title)
+    end = config.index(end_title, start + len(section_title))
+    section = config[start:end]
+
+    for slug, label in expected_labels.items():
+        entry = f'            - text: "{label}"\n              href: {language}/{slug}.qmd'
+        assert entry in section

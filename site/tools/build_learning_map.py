@@ -1083,20 +1083,20 @@ ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
     (
         "discover",
         "orientation",
-        "Découvrir le système",
-        "Discover the system",
+        "Le modèle",
+        "The model",
     ),
     (
         "prediction",
         "text-input",
-        "Comprendre une prédiction",
-        "Understand how a prediction is computed",
+        "Prédire un token",
+        "Predict a token",
     ),
     (
         "usages",
         "inference",
-        "Contexte, usages de la prédiction et apprentissage",
-        "Context, prediction uses, and training",
+        "Utiliser et entraîner",
+        "Use and train",
     ),
 )
 ROUTE_PART_BY_FIRST_STAGE: dict[str, tuple[str, str, str]] = {
@@ -1161,11 +1161,15 @@ def render_guided_rail(stages: list[ResolvedGuidedRouteStage], language: str) ->
                 f'  <span class="guided-rail__part" data-part="{part_id}">'
                 f"{escape(part_title)}</span>"
             )
+        compact_title = stage.compact_title or stage.title
+        full_label = f"{index:02d} · {stage.title}"
         lines.append(
             f'  <a class="guided-rail__stage" href="#guided-stage-{escape(stage.id)}" '
+            f'title="{escape(stage.title, quote=True)}" '
+            f'aria-label="{escape(full_label, quote=True)}" '
             f'data-stage-id="{escape(stage.id)}" data-stage-index="{index}">'
             f'<span class="guided-rail__number">{index:02d}</span>'
-            f'<span class="guided-rail__title">{escape(stage.title)}</span></a>'
+            f'<span class="guided-rail__title">{escape(compact_title)}</span></a>'
         )
     lines.extend(
         [

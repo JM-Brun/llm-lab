@@ -365,26 +365,46 @@ website:
           text: "Prototype archivé · 24 jours"
         - section: "Comprendre les LLM"
           contents:
-            - fr/llm-overview.qmd
-            - fr/text-data.qmd
-            - fr/embedding-space.qmd
-            - fr/positional-encoding.qmd
-            - fr/contextualized-representations.qmd
-            - fr/transformer.qmd
-            - fr/queries-keys-values.qmd
-            - fr/scaled-dot-product-attention.qmd
-            - fr/causal-masking.qmd
-            - fr/logits.qmd
-            - fr/probabilites.qmd
-            - fr/entropy.qmd
-            - fr/generation.qmd
-            - fr/in-context-learning.qmd
-            - fr/context-engineering.qmd
-            - fr/vraisemblance.qmd
-            - fr/cross-entropy.qmd
-            - fr/loss.qmd
-            - fr/gradients.qmd
-            - fr/training-loop.qmd
+            - text: "Panorama LLM"
+              href: fr/llm-overview.qmd
+            - text: "Texte et tokens"
+              href: fr/text-data.qmd
+            - text: "Embeddings"
+              href: fr/embedding-space.qmd
+            - text: "Position des tokens"
+              href: fr/positional-encoding.qmd
+            - text: "États contextualisés"
+              href: fr/contextualized-representations.qmd
+            - text: "Transformer"
+              href: fr/transformer.qmd
+            - text: "Requêtes, clés, valeurs"
+              href: fr/queries-keys-values.qmd
+            - text: "Calcul de l’attention"
+              href: fr/scaled-dot-product-attention.qmd
+            - text: "Masque causal"
+              href: fr/causal-masking.qmd
+            - text: "Logits"
+              href: fr/logits.qmd
+            - text: "Probabilités"
+              href: fr/probabilites.qmd
+            - text: "Entropie"
+              href: fr/entropy.qmd
+            - text: "Génération"
+              href: fr/generation.qmd
+            - text: "Apprentissage en contexte"
+              href: fr/in-context-learning.qmd
+            - text: "Ingénierie du contexte"
+              href: fr/context-engineering.qmd
+            - text: "Vraisemblance"
+              href: fr/vraisemblance.qmd
+            - text: "Entropie croisée"
+              href: fr/cross-entropy.qmd
+            - text: "Fonction de perte"
+              href: fr/loss.qmd
+            - text: "Gradients"
+              href: fr/gradients.qmd
+            - text: "Boucle d’entraînement"
+              href: fr/training-loop.qmd
         - section: "Réviser"
           contents:
             - fr/review-path.qmd
@@ -592,26 +612,46 @@ website:
           text: "Archived prototype · 24 days"
         - section: "Understand LLMs"
           contents:
-            - en/llm-overview.qmd
-            - en/text-data.qmd
-            - en/embedding-space.qmd
-            - en/positional-encoding.qmd
-            - en/contextualized-representations.qmd
-            - en/transformer.qmd
-            - en/queries-keys-values.qmd
-            - en/scaled-dot-product-attention.qmd
-            - en/causal-masking.qmd
-            - en/logits.qmd
-            - en/probabilities.qmd
-            - en/entropy.qmd
-            - en/generation.qmd
-            - en/in-context-learning.qmd
-            - en/context-engineering.qmd
-            - en/likelihood.qmd
-            - en/cross-entropy.qmd
-            - en/loss.qmd
-            - en/gradients.qmd
-            - en/training-loop.qmd
+            - text: "LLM overview"
+              href: en/llm-overview.qmd
+            - text: "Text and tokens"
+              href: en/text-data.qmd
+            - text: "Embeddings"
+              href: en/embedding-space.qmd
+            - text: "Token positions"
+              href: en/positional-encoding.qmd
+            - text: "Contextualized states"
+              href: en/contextualized-representations.qmd
+            - text: "Transformer"
+              href: en/transformer.qmd
+            - text: "Queries, keys, values"
+              href: en/queries-keys-values.qmd
+            - text: "Attention computation"
+              href: en/scaled-dot-product-attention.qmd
+            - text: "Causal mask"
+              href: en/causal-masking.qmd
+            - text: "Logits"
+              href: en/logits.qmd
+            - text: "Probabilities"
+              href: en/probabilities.qmd
+            - text: "Entropy"
+              href: en/entropy.qmd
+            - text: "Generation"
+              href: en/generation.qmd
+            - text: "In-context learning"
+              href: en/in-context-learning.qmd
+            - text: "Context engineering"
+              href: en/context-engineering.qmd
+            - text: "Likelihood"
+              href: en/likelihood.qmd
+            - text: "Cross-entropy"
+              href: en/cross-entropy.qmd
+            - text: "Loss function"
+              href: en/loss.qmd
+            - text: "Gradients"
+              href: en/gradients.qmd
+            - text: "Training loop"
+              href: en/training-loop.qmd
         - section: "Review"
           contents:
             - en/review-path.qmd
