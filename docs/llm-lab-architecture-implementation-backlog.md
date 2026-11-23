@@ -217,3 +217,24 @@ At the beginning of a future implementation session:
 ## 6. Definition of done for the architecture program
 
 The architecture program is not complete merely because graph families have names or concepts have tags. It is complete when canonical owners and stable IDs are documented and validated; specialized models have explicit semantics and useful consumers; cross-system references are resolvable and tested; generated projections are deterministic and accessible; unknown/unassessed states are represented honestly; bilingual content and provenance remain intact; pilots demonstrate pedagogical value without excessive maintenance burden; and the site remains self-contained and understandable without its internal metadata.
+
+
+## 5. Current handoff — 2026-11-23
+
+### Active pull requests
+
+- **PR #1561 — registry inventory / Project Intelligence reconciliation:** open. It updates this backlog, the ecosystem architecture matrix, revision contract, Project Intelligence design and metric registry; it also corrects the source-coverage diagnostic wording and adds a regression test. Python quality passed on the latest observed head; the test suite and Quarto/browser workflow were still running at handoff. Do not merge until fresh checks complete and the inventory is reviewed.
+- **PR #1558 — Q/K/V practice pilot:** open. Python quality, test suite and secret scanning passed on the previous validated head. The targeted browser harness now discovers changed nested practice-companion pages and checks links, self-check and keyboard disclosure. The first run exposed a French typographic-apostrophe false negative; the matcher was corrected and the fresh Quarto/browser run was still running at handoff. Learner review and the full 45-pair audit remain separate gates.
+- **PR #1560 — Day 06 story/template pilot:** merged. The bilingual source drafts and template remain planned/source-only and outside the render list; publication review is not complete.
+- **PR #1553 — ecosystem architecture:** merged. **Issue #575** is closed; residual reader-facing computational-spine review remains in #584.
+
+### Deferred validation commands
+
+The standard CI workflow skips the opt-in full-corpus extraction locator inventory and concept-registry scale benchmark. The current 100-file extraction corpus therefore has no refreshed atomic-item/locator count. Run the full-corpus inventory deliberately before updating the historical 489-item figure or making provenance-completeness claims.
+
+### Merge and migration guardrails
+
+- Do not merge PR #1561 or #1558 solely because the structural tests pass; respect their remaining review gates.
+- Do not bulk-migrate page metadata or create a universal graph/registry.
+- Keep source membership, revision sufficiency, scientific evidence and learner outcomes as distinct assertions.
+- Update this dated handoff when CI/PR states change; the specialist issues remain the source of truth for their detailed acceptance criteria.
