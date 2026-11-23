@@ -137,7 +137,7 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 ## Pour aller plus loin
 
 - La leçon sur les [données textuelles](text-data.qmd) présente les représentations et unités manipulées dans le pipeline du LLM.
-- La leçon sur la [tokenisation](tokenization.qmd) explique comment une chaîne est découpée en tokens. Elle traite d'une autre question que le comptage lexical de cette histoire.
+- La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens. Elle traite d'une autre question que le comptage lexical de cette histoire.
 
 ### Sources
 
