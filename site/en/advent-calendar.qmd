@@ -1,5 +1,5 @@
 ---
-title: "The LLM Advent Calendar"
+title: "The 2026 LLM Advent Calendar"
 subtitle: "24 explorations to reconstruct an LLM's computation: from context to predictive distribution, then to generation, scoring, and learning."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 lang: en
@@ -26,7 +26,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-hero">
   <div class="advent-hero-copy">
-    <p class="advent-eyebrow">LLM LAB · 24-DAY EDITION</p>
+    <p class="advent-eyebrow">LLM LAB · 2026 EDITION</p>
     <h1>One LLM, <em>from the first input to the final gradient.</em></h1>
     <p class="advent-lede">Open a door, follow a question, test an idea. Across 24 short steps, reconstruct how a context becomes a predictive distribution, then explore its three distinct uses: generation, scoring, and learning.</p>
     <div class="advent-hero-actions">
@@ -34,7 +34,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
       <a class="advent-text-link" href="learning-map.qmd">Explore the concept map</a>
     </div>
     <div class="advent-facts" aria-label="Calendar format">
-      <span><strong>24</strong> days</span>
+      <span><strong>Dec 1–24</strong> 2026</span>
       <span><strong>4</strong> movements</span>
       <span><strong>5–8</strong> minutes a day</span>
     </div>
