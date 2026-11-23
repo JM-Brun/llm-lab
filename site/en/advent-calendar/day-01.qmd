@@ -31,6 +31,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:next-token-predic
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Day one of twenty-four"><span style="width: 4.1667%"></span></div>
   <p class="advent-day-kicker">THE STARTING POINT · 6 MINUTES</p>
+  <h1 class="advent-day-title">What does an LLM predict?</h1>
   <p class="advent-day-lead">Before attention, embeddings, or training, start with the question that defines the model's objective: <strong>what is it trying to predict?</strong></p>
 </div>
 
