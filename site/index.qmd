@@ -17,7 +17,7 @@ suggested_route:
   next: "fr/llm-overview"
 hierarchy:
   parents: []
-  children: ["fr/llm-overview", "fr/build-path", "fr/transformer", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
+  children: ["fr/llm-overview", "fr/build-path", "fr/advent-calendar", "fr/transformer", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
 related: []
 tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
 -->
@@ -34,6 +34,7 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 <div class="hero-actions">
 [Comprendre le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
 [Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
+[Découvrir le calendrier · 24 jours](fr/advent-calendar.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
