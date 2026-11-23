@@ -50,12 +50,16 @@ During generation, the selected token is appended to the prefix. It then becomes
 
 <ol class="advent-prefix-steps">
   <li><span class="advent-step-label">Supplied prefix</span><strong>The cat</strong><small>This text is the current context.</small></li>
-  <li><span class="advent-step-label">Prediction</span><strong>A distribution for the next token</strong><small>The model does not yet know which continuation will be selected.</small></li>
+  <li><span class="advent-step-label">Prediction</span><strong>A distribution for the next token</strong><small>No token has been selected yet at this point.</small></li>
   <li><span class="advent-step-label">Illustrative selection</span><strong>sleeps</strong><small>Suppose the decoding rule selects this token.</small></li>
   <li><span class="advent-step-label">New prefix</span><strong>The cat sleeps</strong><small>“sleeps” is now part of the context for the next step.</small></li>
 </ol>
 
 The second computation therefore does not start from the same context: the prefix has grown. The model parameters can remain unchanged; the conditioning input has changed.
+
+<div class="advent-note">
+  **Generation and observed targets.** The example describes generation: the next token is not yet known, and a decoding rule selects one. When a model is scored or trained on an existing text, the target token is available in the data. It is still distinct from the prefix used to compute the distribution: we then evaluate the probability the model assigns to that target. Day 19 returns to this setting.
+</div>
 
 <div class="advent-note">
   **A terminology note.** Here, “context” means only the model's immediate input at a given step. Designing an application context — instructions, retrieved documents, memory, or conversation history — is a broader topic covered in the [context engineering](context-engineering.qmd) lesson.
@@ -74,7 +78,7 @@ No. “sleeps” is already part of the supplied prefix. The model computes a di
 
 ## Takeaway
 
-The context is the prefix available at the time of computation. A future token is not part of it until it has been supplied or fed back into the sequence.
+The context is the prefix available at the time of computation. During generation, the selected token joins that prefix at the next step. In scoring or training, a target can be known in advance without being part of the input used to compute its probability.
 
 <div class="advent-day-resources">
   <a href="llm-overview.qmd"><strong>Canonical lesson</strong><span>Overview: context and generation</span></a>
