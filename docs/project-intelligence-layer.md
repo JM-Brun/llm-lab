@@ -372,12 +372,12 @@ Record Python version, platform, dependency versions, fixture sizes, repetitions
 **Status:** not started; no recommendation engine is implemented or currently required.
 
 ### Phase 5 — measured scale and incremental operation
-- Benchmark realistic and synthetic growth.
-- Profile parse, index, query and export costs separately.
-- Add incremental caching only where measurements justify it.
-- Keep full rebuild as reference and fallback.
+- [ ] Benchmark realistic and synthetic growth after the full-corpus source inventory is refreshed.
+- [ ] Profile parse, index, query and export costs separately.
+- [ ] Add incremental caching only where measurements justify it.
+- [x] Keep full deterministic rebuild as the current reference behavior; no cache is implemented.
 
-**Exit:** scale claims are supported by reproducible benchmarks and cache/full-rebuild equivalence tests.
+**Status:** not started beyond the full-rebuild baseline. Do not claim scale readiness from static complexity alone.
 
 ## 12. Non-goals and safeguards
 
