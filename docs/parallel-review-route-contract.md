@@ -176,3 +176,78 @@ These responsibilities must coordinate through existing canonical registries; no
 - [ ] FR/EN route structure and destinations are validated.
 - [ ] Automated tests fail on missing, duplicated, reordered or incorrectly promoted core/optional memberships.
 - [ ] No parallel curriculum registry or mass-generated low-value revision content is introduced.
+
+## 11. Lesson size and editorial rhythm
+
+The curriculum is made of **lessons**, not arbitrarily long topic pages. Except for orientation/overview pages, a core lesson should normally represent **10–15 minutes of focused reading**. This is a target band, not a quota: conceptual completeness and a coherent learning outcome take precedence over an exact word count.
+
+### 11.1 Estimate reading time honestly
+
+Reading time must account for more than prose word count. The editorial audit should record:
+- prose and explanatory text;
+- equations and mathematical derivations;
+- diagrams that require interpretation;
+- code walkthroughs or worked examples;
+- optional/revealed material, counted separately from the main reading path.
+
+Use a consistent estimation method and expose the estimate as editorial metadata or audit output, not as a prominent decorative badge. Do not count hidden details, exercises, references or optional deep dives as mandatory reading. Flag lessons substantially outside the target band for editorial review.
+
+### 11.2 Split by conceptual boundary, not by length alone
+
+When a lesson is too long, split it only where each resulting lesson can have:
+- one clear question or problem;
+- one coherent conceptual scope;
+- a meaningful learning outcome;
+- prerequisites available earlier in the canonical route;
+- a complete explanation without requiring the reader to consult its revision page.
+
+Do not split a derivation, mechanism or causal explanation merely to hit a duration. Conversely, do not combine independent concepts just to reduce page count. Update the single canonical route and lesson contracts when a split or merge is justified; never maintain a parallel list of lesson fragments.
+
+### 11.3 Shared lesson template
+
+Core lessons should use a stable visual and pedagogical pattern:
+
+1. **Compact opening:** route breadcrumb/progress, one central question or key idea, and the lesson objective. Avoid stacking several metadata banners.
+2. **Main explanation:** a continuous narrative, with consistent heading hierarchy; definitions, notation, equations and diagrams appear where they are needed in the argument.
+3. **One integrated example or interpretation:** selected to make the mechanism operational, not as a detached decorative aside.
+4. **Short conclusion:** the result established and the transition to the next lesson.
+5. **Quiet navigation:** a link to the corresponding review page and the next canonical lesson.
+
+The template is a rhythm, not a rigid checklist. A section may be omitted when it adds no value; it must not be filled with generic boilerplate.
+
+### 11.4 Keep the main route readable
+
+The main lesson should prioritize the explanatory argument. As a default, keep only:
+- at the opening: the route context and one concise statement of the central idea/objective;
+- at the end: one concise takeaway or transition, plus the review-page link.
+
+Avoid interrupting the argument with repeated callouts, editorial notes, multiple analogies, resource boxes, long caveats, exercise lists, recap panels and optional digressions. Move these to the corresponding review page or to an explicitly optional deep-dive page when they are not needed to follow the core explanation.
+
+**Do not remove scientific qualifications that change the meaning of a claim.** A limitation, assumption, distinction or warning required to interpret an equation, diagram or conclusion correctly stays adjacent to that explanation. Only extended discussion, secondary examples and supplementary remarks move out of the main flow.
+
+### 11.5 One review companion per lesson
+
+Each core lesson has a corresponding review destination. The review companion is the consolidation workspace for that lesson and may contain, where available and explicitly linked:
+- a compact conceptual skeleton / reconstruction outline;
+- the synthesis sheet and key equations;
+- definitions and essential distinctions;
+- flashcards and active-recall prompts;
+- short comprehension questions with answers or feedback;
+- remarks, caveats, alternative intuitions and common confusions;
+- links to relevant exercises, experiments and optional deep dives.
+
+These elements are not all required to exist before a lesson can be published. Missing formats must be reported honestly; do not fabricate flashcard coverage or duplicate content to fill a template. A review page must remain understandable as a revision artifact, but it does not replace the complete explanation in the main lesson.
+
+Questions that test recall or conceptual discrimination belong in review. Multi-step problem solving, calculation practice, coding tasks and experiments remain in **Practice & experiment** and are linked rather than copied into the review page.
+
+### 11.6 Migration protocol
+
+Refactor incrementally by canonical stage:
+1. measure all core lessons using the same reading-time method;
+2. classify each interruption/box as essential-to-understand, useful-to-revise, optional-deepening or practice;
+3. select one representative lesson and its revision companion as the template pilot;
+4. compare the two pages for completeness, flow, visual rhythm and bilingual parity;
+5. only then migrate the remaining lessons in bounded stage-sized batches.
+
+No bulk deletion or movement is acceptable without checking that the explanation remains complete and that the moved material has a valid destination. Preserve source citations and provenance during moves.
+
