@@ -240,3 +240,93 @@ These are existing audit owners; do not create duplicate issues or a parallel ro
 - [ ] Treat G8 end-to-end training (autograd through GPT weights, optimizer, train/validation loop, checkpointing) and G9 reproducible evaluation as future implementation work, subject to the existing prerequisite-knowledge gate.
 - [ ] Do not let these implementation gaps block source-level conceptual audits or reader-navigation improvements.
 
+## 8. Current hand-off — 2026-11-23 (supersedes historical pending lists above)
+
+This section reconciles the original 2026-11-07 checklist with merged work and current specialist issues. It is the current execution reference. Earlier unchecked boxes are historical snapshots; do not restart them without checking the owner issue and evidence below.
+
+### 8.1 What is complete
+
+| Area | Current evidence | Status |
+|---|---|---|
+| Shared conditional-prediction model and sibling branches | `docs/canonical-computational-spine.md`; parent #575 closed; PR #577 and subsequent integration PRs merged | Complete |
+| Computational registry and generated views | `data/computational-graph.yml`; existing renderer and bilingual semantic fallback | Integrated; no parallel registry required |
+| Curriculum topology and bilingual route | `docs/learning-path.md`, `data/guided-route.yml`; nine route stages and distinct Theory / Build paths | Integrated |
+| Reader-facing Understand / Review navigation | PR #1549 merged: flat bilingual projections follow the canonical 20-lesson route; optional resources remain in Deepen | Integrated at source level |
+| Shared-core lesson review | PR #800 merged: bounded source review of the 18 core-route pages, plus targeted generation/gradient and missing-summary corrections | Source review integrated |
+| Three-slice computational route audit | PR #827 merged: text/representations, Transformer/attention, and prediction/operational branches | Source synthesis integrated |
+| Q/K/V diagram refinement and browser evidence | PRs #1030 and #1032 merged; bilingual SVGs and documented 4-case Chromium evidence | Partial rendered evidence; deployed/manual checks remain with #483 |
+| Overview SVG runtime defect | PR #634 and its follow-up browser evidence | Resolved |
+| Route, metadata and Build crosswalk corrections | PRs #598, #600, #625, #645, #646 and later merged follow-ups | Integrated within their documented scope |
+
+The current route has nine stages: orientation, text-input, representations, computation, prediction, inference, context-use, scoring and training. The route is a pedagogical projection, not a computational execution order. The flat Understand and Review sidebars are reader-facing projections; they do not replace the canonical route, concept graph or computational graph.
+
+The recent ecosystem architecture (PR #1553) explicitly treats the computational graph as one specialized graph family. The registry/contract maturity inventory is separately owned by #1554. Neither warrants a second computational registry or re-opening #575.
+
+### 8.2 Remaining work, with ownership
+
+Only the items below remain relevant to this hand-off. They are deliberately assigned to existing issues.
+
+#### A. Manual screen-reader and breadcrumb review — #584
+
+**Status: not performed; requires a real assistive-technology session.**
+
+Run one coordinated session in French and English using the protocol already recorded in the #584 issue comments (2026-11-09, 2026-11-12 and 2026-11-14). Cover representative surfaces:
+
+- LLM overview: headings, landmarks, persistent-spine diagram and its semantic text alternative.
+- Generation: native breadcrumb ancestry, route context and transition links.
+- Q/K/V: heading/reading order, equations, tables, disclosures, links and visual alternatives.
+- Concept browser: filter/selection controls, selected state and text relation list.
+- Exercise hub: native disclosures, anchors and answer/correction sections.
+
+For each language, record OS, browser/version, screen reader/version, page, action, actual announcement, expected announcement and result. Test keyboard-only operation as part of the same session. Separate reproducible defects from user preference and browser/AT limitations. Do not infer success from Axe, DOM inspection, screenshots or a successful build.
+
+**Exit:** a dated FR/EN evidence record is attached to #584; reproducible defects are transferred to #337, #416 or #329 as appropriate. Do not close #584 before the evidence is recorded.
+
+#### B. Q/K/V deployed-page and asset-provenance gate — #483
+
+**Status: open; distinct from the general screen-reader session above.**
+
+Use #483 as the owner for:
+- deployed EN/FR Q/K/V page verification at desktop and mobile widths;
+- current SVG clipping/legibility, equations, disclosures, cross-links, language switch and exposed SVG title/description;
+- manual keyboard, touch and assistive-technology observations specific to the Q/K/V page;
+- the remaining Medium/DEV/Codefinity asset provenance and rights decisions.
+
+Existing PR-local Chromium evidence is useful but does not establish deployed-site behavior, touch usability or screen-reader exposure. Third-party figures remain link-only unless the exact asset and reuse terms are verified. Do not repeat the already completed source scans or diagram comparison without a concrete new question.
+
+**Exit:** #483 records deployed rendered evidence and a disposition for every source-media item (verified rights or explicit link-only/deferred). The independent learner pilot must remain gated until this is met.
+
+#### C. Independent learner pilot — #447
+
+**Status: not started; requires an independent participant.**
+
+After #483's gate passes, run the existing 15–20 minute protocol with a volunteer who has not studied these lessons. Use the existing Q/K/V role, V-only counterfactual, optional dot-product/cosine transfer and causal-mask probes. Record task, language, viewport, uncoached prediction, explanation after interaction and uncertainty. Keep personal participant details out of the public repository.
+
+One participant supplies formative evidence only; it does not establish general learning effectiveness. Do not simulate participant answers or treat model-generated reasoning as learner evidence.
+
+#### D. Related audits that remain separately owned
+
+- **#337 — published curriculum/resource-map navigation:** rendered crosswalk and navigation review in FR/EN, desktop/mobile. Do not duplicate its checks in #584.
+- **#416 — typed concept graph:** current registry is 12 relation types / 124 edges; extend the existing semantic review from 66 reviewed assertions to the remaining 58, then complete manual rendered, touch, keyboard and screen-reader validation. This is concept-graph work, not a change to the computational graph.
+- **#329 — exercise hub:** owns relevant exercise-hub rendered/interaction defects, if found during the coordinated session.
+- **#78 — Build implementation:** end-to-end tokenizer/corpus pipeline, modularity, GPT-weight autograd, optimizer/train-validation loop, checkpointing and reproducible evaluation remain implementation gaps. They are not prerequisites for closing the conceptual spine.
+- **#1554 — canonical registry maturity inventory:** owns the cross-registry maturity and interoperability inventory. Keep this as an architecture-level workstream, not a duplicate task list in this document.
+
+### 8.3 Do not do
+
+- Do not reopen #575 or redesign the shared predictive model absent a reproducible conceptual defect.
+- Do not create a second concept/computational registry, route, graph renderer, per-page workflow or generic validation framework.
+- Do not rerun already successful source/browser audits merely to refresh counts; require a changed page, a new deployed state or a reproducible regression.
+- Do not mark manual screen-reader, touch or learner checks complete from automated browser evidence.
+- Do not conflate generation, observed-target scoring, held-out evaluation and training into one execution loop.
+- Do not treat Build implementation gaps as failures of the conceptual model.
+
+### 8.4 Next-session sequence
+
+1. Complete and record the coordinated FR/EN screen-reader + native-breadcrumb session for #584.
+2. Finish the Q/K/V deployed-page and provenance gate in #483; transfer only reproducible defects.
+3. Run the independent learner pilot #447 after #483 is accepted.
+4. Continue #337, #416 and #78 only under their existing ownership and priorities.
+5. Update this hand-off only when evidence or issue ownership changes; otherwise keep detailed findings in the specialist issue.
+
+**Current conclusion:** the computational architecture, curriculum model, route projections and bounded source audits are integrated. The remaining work is evidence collection that cannot be truthfully completed from repository inspection alone (assistive technology, deployed/manual interaction and an independent learner), plus the separately owned implementation and graph-review backlogs.
