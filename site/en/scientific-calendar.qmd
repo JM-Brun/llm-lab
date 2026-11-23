@@ -48,38 +48,38 @@ From word frequencies to the information carried by a message, these stories exp
 1. **Why does the word “the” appear everywhere?** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
 2. **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
 3. **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
-4. **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
-5. **Cross-entropy as a code length** — The cost of describing data with an imperfect probabilistic model.
-6. **Why add log-probabilities instead of multiplying probabilities?** — Likelihood, long sequences, and numerical stability.
+13. **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
+17. **Cross-entropy as a code length** — The cost of describing data with an imperfect probabilistic model.
+18. **Why add log-probabilities instead of multiplying probabilities?** — Likelihood, long sequences, and numerical stability.
 
 ## Geometry, signals, and representations
 
 From vectors to frequencies, these stories connect machine-learning representations with ideas from geometry and signal processing.
 
-7. **Can meaning have a direction?** — The geometry of vector representations, famous analogies, and the limits of their interpretation.
-8. **The same word, two different worlds** — Polysemy and representation changes across contexts.
-9. **What does a sine wave have to do with word order?** — Frequencies, phases, and positional encodings through the lens of signal processing.
+4. **Can meaning have a direction?** — The geometry of vector representations, famous analogies, and the limits of their interpretation.
+5. **The same word, two different worlds** — Polysemy and representation changes across contexts.
+6. **What does a sine wave have to do with word order?** — Frequencies, phases, and positional encodings through the lens of signal processing.
 
 ## Mechanisms, computation, and optimization
 
 These stories begin with concrete computational problems: retrieving information, stabilizing activations, transmitting a learning signal, or choosing an update step.
 
-10. **Attention as a learned retrieval system** — A view of Q, K, and V inspired by information-retrieval systems.
-11. **Why divide by the square root of the dimension?** — Dot-product variance and the scaling of attention scores.
-12. **Softmax and the physics of a crowd** — Temperature, Boltzmann distributions, and probability concentration.
-13. **The triangular wall: preventing information leaks** — Causality, information access, and preventing leakage between past and future.
-14. **Why do deep networks keep residual connections?** — Identity paths, signal preservation, and gradient intuition.
-15. **Normalization: changing coordinates to make learning easier** — Mean, variance, LayerNorm, RMSNorm, and conditioning.
-16. **The chain rule: how does an error reach an early layer?** — Deriving backpropagation on a small network.
-17. **The learning-rate cliff** — Optimization geometry, curvature, and the trade-off between progress and instability.
+7. **Attention as a learned retrieval system** — A view of Q, K, and V inspired by information-retrieval systems.
+8. **Why divide by the square root of the dimension?** — Dot-product variance and the scaling of attention scores.
+9. **Softmax and the physics of a crowd** — Temperature, Boltzmann distributions, and probability concentration.
+10. **The triangular wall: preventing information leaks** — Causality, information access, and preventing leakage between past and future.
+11. **Why do deep networks keep residual connections?** — Identity paths, signal preservation, and gradient intuition.
+12. **Normalization: changing coordinates to make learning easier** — Mean, variance, LayerNorm, RMSNorm, and conditioning.
+19. **The chain rule: how does an error reach an early layer?** — Deriving backpropagation on a small network.
+20. **The learning-rate cliff** — Optimization geometry, curvature, and the trade-off between progress and instability.
 
 ## Research, generalization, and systems
 
 From large-scale empirical phenomena to system-design choices, these stories ask what experiments really allow us to conclude.
 
-18. **Does temperature really make answers more creative?** — What flattening a distribution changes, and what it does not guarantee.
-19. **Top-k and top-p: where should the probability tail end?** — Two truncation policies compared on a constructed distribution.
-20. **Why can the most likely token produce a worse sentence?** — Local choices, sequence search, and decoding trade-offs.
+14. **Does temperature really make answers more creative?** — What flattening a distribution changes, and what it does not guarantee.
+15. **Top-k and top-p: where should the probability tail end?** — Two truncation policies compared on a constructed distribution.
+16. **Why can the most likely token produce a worse sentence?** — Local choices, sequence search, and decoding trade-offs.
 21. **When a model gets worse before it gets better** — Double descent and the limits of simple intuitions about generalization.
 22. **Do larger models become predictable?** — Scaling laws, extrapolation, and uncertainty in empirical relationships.
 23. **What if the model could look things up?** — External retrieval, memory, and retrieval-augmented generation.
