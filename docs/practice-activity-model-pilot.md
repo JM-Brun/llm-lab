@@ -1,6 +1,6 @@
 # Practice activity model pilot: Q/K/V and attention
 
-**Status:** bounded pilot based on existing bilingual pages; no activity registry introduced.  
+**Status:** technical pilot merged and automated validation passed in PR #1558; NumPy execution verification and learner review remain open. No activity registry introduced.  
 **Date:** 2026-11-23  
 **Scope:** test whether LLM Lab can identify, relate and maintain practical activities using page-local anchors and existing page metadata.
 
@@ -100,6 +100,6 @@ Code execution, mathematical review, bilingual rendering and learner testing rem
 - [x] The collection's page-level lesson relationships reflect its declared scope.
 - [x] Questions for recall remain distinct from multi-step practice.
 - [x] No new global activity registry or graph is introduced.
-- [ ] The updated pages pass the repository metadata checks and bilingual Quarto render.
+- [x] The updated pages pass repository metadata checks, the bilingual Quarto render, the targeted browser audit and the full-site browser workflow (PR #1558).
 - [ ] The NumPy example is executed in a controlled environment and its expected output is verified.
 - [ ] A learner review checks whether the activity progression makes the intended transfer explicit.
