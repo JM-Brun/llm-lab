@@ -231,6 +231,32 @@ The canonical learner-facing sequence is projected from `guided-route.yml` and r
 
 Do not flatten or delete page relations merely because the reader-facing sidebar becomes linear. Review each affected edge according to its own semantics and preserve all useful incoming/outgoing links.
 
+### 6.1 Generated migration inventory
+
+The existing `site/tools/audit_revision_coverage.py` is extended rather than replaced. Its machine-readable output combines:
+- every published Understand/Build page record and its route membership;
+- all incoming and outgoing page-graph edges incident to those pages, with relation family and direction;
+- the direct associated-page closure, including revision aids and pages in Deepen, Practice, Build or Reference;
+- full records from `data/resources.yml` for non-page resources associated with the affected pages or their direct page neighbors;
+- concept IDs associated with the same page neighborhood;
+- missing associated page/resource IDs, which must remain empty in a valid migration baseline.
+
+The inventory distinguishes the affected page set from its external associated pages. It does not recursively crawl the whole website or duplicate the concept/resource registries: it records the direct, typed neighborhood needed to plan and validate a page refactor. The JSON output is the machine-readable migration ledger; the Markdown output summarizes the coverage and edge topology.
+
+Run it from the repository root:
+
+```bash
+uv run --with-requirements docs/requirements-history-validation.txt \
+  python site/tools/audit_revision_coverage.py \
+  --json /tmp/understand-build-inventory.json \
+  --markdown /tmp/understand-build-inventory.md
+
+uv run --with-requirements docs/requirements-history-validation.txt \
+  python site/tools/audit_page_metadata.py
+```
+
+Capture the source commit and inventory schema version with each artifact. Compare stable IDs and typed edges before and after each migration batch; aggregate counts alone are insufficient.
+
 ## 7. Migration sequence
 
 Perform the refactor in small, reversible stages.
