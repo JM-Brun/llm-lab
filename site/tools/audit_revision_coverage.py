@@ -254,10 +254,10 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             [
                 "",
                 (
-                    "| Language | Page | Topic | Route | Revision support | Revision aids | "
-                    "Concepts | Implementation resources |"
+                    "| Language | Page | Topic | Route | Suggested previous / next | "
+                    "Revision support | Revision aids | Concepts | Implementation resources |"
                 ),
-                "|---|---|---|---|---|---:|---:|---:|",
+                "|---|---|---|---|---|---|---:|---:|---:|",
             ]
         )
         for page in inventory["pages"]:
@@ -266,6 +266,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             lines.append(
                 f"| {page['language']} | [{page['title']}]({page['href']}) "
                 f"({page['id']}) | {page['topic']} | {page['route_status']} | "
+                f"{page['suggested_route'].get('previous') or '—'} / "
+                f"{page['suggested_route'].get('next') or '—'} | "
                 f"{page['revision_support']['status']} | {len(page['revision_aids'])} | "
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
             )
@@ -282,6 +284,19 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             status = "balanced" if item["balanced"] else "mismatch"
             lines.append(f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |")
         lines.append("")
+    lines.extend(
+        [
+            "## Page-graph edges incident to Understand/Build pages",
+            "",
+            "| Source | Family | Relation | Target |",
+            "|---|---|---|---|",
+        ]
+    )
+    for edge in inventory["affected_page_edges"]:
+        lines.append(
+            f"| {edge['source']} | {edge['family']} | {edge['relation']} | {edge['target']} |"
+        )
+    lines.append("")
     lines.extend(
         [
             "## Metadata diagnostics",
@@ -304,6 +319,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "- Build is inventoried from the published destination tag;",
             "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
+            "- The JSON inventory preserves every page-graph edge incident to an Understand/Build page,",
+            "  including suggested-route, hierarchy and related relations; revision edges remain typed separately.",
             "- not_assessed means no editorial revision-support assessment is recorded;",
             "  it does not mean a page lacks a synthesis or revision aid.",
             "- Revision-aid links and revision-support assessments are independent:",
