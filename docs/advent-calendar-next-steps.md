@@ -20,16 +20,16 @@ This document is an operational handoff for future sessions. It records what is 
 - [x] The canonical positional-encoding lesson already contains the sinusoidal formula and fixed-offset rotation derivation. The Day 06 story is refocused on Fourier feature mappings and spectral bias to avoid duplication.
 - [x] PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) was merged on 2026-11-23.
 - [x] Day 01 rendered successfully in a PR-only Quarto preview; FR/EN desktop and mobile browser review passed. MathJax, local links, image loading, keyboard focus and desktop Axe checks were verified.
+- [x] Day 01 source-level, metadata, link, FR/EN desktop/mobile and accessibility checks are complete; its missing figure alt text and language-switch mapping were corrected during review.
 
 ### Not completed
 
 - [ ] An earlier Day 06 FR/EN draft exists in PR #1560 but remains parked and unaccepted; it will be reviewed when chronological production reaches Day 06. No later-day story is an active target.
 - [ ] A native Quarto story-template draft exists in PR #1560. Day 01 validates its standard article layout; broader template reuse remains to be assessed as later days are produced.
-- [x] Day 01 source-level, Quarto-render, link, FR/EN desktop/mobile and accessibility checks are complete.
 - [ ] No new story-oriented manifest has been approved or created.
 - [ ] The 24 existing entries have not been migrated; they remain prototype/historical material.
 - [ ] No novice-reader review has been performed.
-- [x] Day 01 has FR/EN desktop/mobile visual evidence; novice-reader acceptance is still pending.
+- [ ] No final editorial acceptance has been recorded for Day 01.
 
 **Important:** merging #1551 means the editorial decision is recorded. It does not mean the calendar implementation is complete or ready to publish.
 
@@ -195,8 +195,8 @@ This log should record outcomes, not merely activity.
 
 - **Date:** 2026-11-23
 - **Branch / PR:** `calendar/day01-zipfs-law` — PR #1565
-- **Files changed:** bilingual Day 01 stories, Day 01 source dossier, original Zipf SVG, and this handoff document.
-- **Work completed:** corrected page-map domain and canonical relation IDs; distinguished lexical occurrences from tokenizer units; corrected the attribution of *Unzipping Zipf's law* to Sander Lestrade (2017); added Pilgrim and Hills (2021) to qualify the limitations of corpus splitting and residual estimator bias; restricted the synthetic plot to integer occurrence counts; updated the production handoff to make Day 01 the sole active target.
-- **Validation performed and results:** reviewed repository metadata rules and controlled domain registry; checked canonical target IDs against configured pages; verified the 2014 and 2017 source attributions and the 2021 estimator caveat against the papers. Quarto and browser workflows were skipped because the PR is still a draft; no rendered preview, screenshots, accessibility audit or novice review has been completed.
-- **Open defects / decisions:** rendered preview and page metadata validation remain pending; review the new source note's wording and the SVG in actual page context; obtain novice feedback and acceptance.
-- **Exact next action:** validate and accept Day 01 before beginning Day 02.
+- **Files changed:** bilingual Day 01 stories, source dossier, original SVG, bilingual language-switch mapping, generic browser-review support for newly rendered pages, editorial/handoff documentation.
+- **Work completed:** corrected page-map domain and canonical relation IDs; disambiguated lexical occurrences from tokenizer tokens; corrected the 2017 source attribution to Sander Lestrade; added Pilgrim and Hills (2021) on residual estimator bias; constrained the synthetic figure to integer counts; added descriptive figure alt text and local FR/EN links; added the slug to the global language-switch mapping; made the browser audit cover newly added pages only when they are included in Quarto rendering; restored Day 01 to planned status and removed it from the render list after preview.
+- **Validation performed and results:** PR-only Quarto render and browser audit run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295) passed. Both pages returned HTTP 200 at desktop (1440 px) and mobile (390 px); MathJax rendered 2/2 expressions per page; the SVG loaded with its language-specific fig-alt; no horizontal overflow, console errors or page errors; desktop Axe reported zero violations in both languages. Page metadata and topology checks passed while the pages were temporarily published for preview. The final CI run is checking the restored planned/out-of-render-list state.
+- **Open defects / decisions:** no technical rendering or accessibility defect remains known. A novice read-through, actual reading-time observation and final editorial acceptance are still required.
+- **Exact next action:** obtain novice feedback, revise if needed, and accept Day 01 before beginning Day 02.
