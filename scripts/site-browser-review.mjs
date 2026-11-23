@@ -400,7 +400,7 @@ async function runCase(testCase, caseIndex) {
       item.adventCalendar = { doors: 24, openingDays: 3, ordered: true, dateLocks: false };
     }
 
-    if (/^advent-calendar-day-0[1-3]\\.html$/.test(pagePath)) {
+    if (/^advent-calendar-day-0[1-3]\.html$/.test(pagePath)) {
       const answer = page.locator("details.advent-answer");
       const summary = answer.locator(":scope > summary");
       if (await answer.count() !== 1 || !(await summary.innerText()).trim()) {
