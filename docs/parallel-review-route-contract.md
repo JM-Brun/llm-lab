@@ -1,6 +1,6 @@
 # Parallel learning and review routes
 
-**Status:** architectural contract and implementation plan  
+**Status:** core bilingual Review route implemented; optional revision formats and complete visual-recall coverage remain partial.  
 **Date:** 2026-11-23  
 **Canonical route source:** `data/guided-route.yml`  
 **Current reader-facing projections:** `site/<lang>/learning-map.qmd` and `site/<lang>/review-path.qmd`
@@ -106,25 +106,33 @@ The learning route should in turn expose a clear route switch to the review rout
 
 The route switch must remain discreet enough not to compete with the lesson content, but visible at the entry points and at useful transition points.
 
-## 6. Current implementation: what exists and what is missing
+## 6. Current implementation and remaining gaps — 2026-11-23
 
-The repository already has important foundations:
+### 6.1 Implemented core route
 
-- `data/guided-route.yml` defines the ordered stages and their core/optional pages.
-- `lesson_contracts` maps the 20 core lesson IDs to synthesis destinations and records prerequisites.
-- `build_learning_map.py` resolves the bilingual route and renders generated lesson contracts.
-- `site/fr/review-path.qmd` and `site/en/review-path.qmd` include the generated lesson-contract plan.
-- `tests/knowledge/test_lesson_contracts.py` verifies core lesson coverage, synthesis links, objective rendering, language parity and selected prerequisite constraints.
+The core learning/review projections are now implemented and tested:
 
-However, the current review page is still titled and introduced as a **plan of the route and sheets**. It presents stage-grouped lesson contracts, but it is not yet validated as a full peer route. In particular:
+- `data/guided-route.yml` remains the single owner of the nine stages, core/optional memberships, transitions and conceptual focus.
+- `lesson_contracts` maps the 20 core lesson IDs to their primary synthesis destinations and records prerequisites, scope and outcomes.
+- `build_learning_map.py` resolves the bilingual route and renders the stage-grouped review plan.
+- `site/fr/review-path.qmd` and `site/en/review-path.qmd` expose that generated plan and link back to the learning route.
+- PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549) makes the Understand and Review sidebars flat, peer projections: 20 core lessons in canonical order, followed by the review index, 20 primary synthesis pages and two shared cross-lesson review aids.
+- The same PR moves optional route companions out of the core Understand sidebar and keeps them discoverable in Deepen. The numerical information-theory experiment remains in Practice.
+- `tests/knowledge/test_lesson_contracts.py` checks core lesson coverage, synthesis links, objectives, prerequisites, stage grouping and FR/EN parity.
+- `tests/knowledge/test_flat_curriculum_sidebar.py` derives both sidebar sequences from the canonical route and lesson contracts, then asserts exact order, one-level navigation, optional-page placement and Practice separation.
+- `ProjectIndex` validates the current page-based `revision_role`, `revision_of` and `revision_support` metadata and derives both aid→lesson and lesson→aid queries. See the updated [revision-resource contract](revision-resource-contract.md).
 
-- the route-level equivalence invariant is not asserted as one explicit contract;
-- optional page membership is not yet projected as optional revision destinations;
-- the three visual recall links on the review page are manually curated and not attached through a complete card/deck coverage model;
-- the review entry point and route switch need a deliberate peer-navigation treatment;
-- tests do not yet state in one place that both projections have exactly the same stage topology and core lesson order.
+The core route therefore no longer needs a second curriculum registry or a manually maintained list of synthesis pages.
 
-This is a gap in the projection and its validation, not a reason to create another curriculum registry.
+### 6.2 Remaining gaps
+
+1. **Optional revision support:** optional learning pages remain optional and discoverable in Deepen. They are not currently projected as optional stops in the Review sidebar. Add an optional revision link only where a genuine aid is explicitly registered; do not create aids merely to mirror page counts.
+2. **Visual recall and flashcards:** the review index currently links three manually curated visual-recall sections. This is not a complete flashcard/deck inventory and must not be presented as one.
+3. **Learner-facing wording:** the review index still uses the title “Plan du parcours et fiches de révision” / “Learning path plan and review sheets”. Consider a concise title that makes the peer-route role clearer, but preserve its current function and avoid adding another navigation level.
+4. **Rendered validation:** structural tests and successful rendering do not replace a visual and keyboard review of the Review sidebar, route switch, stage disclosures and synthesis pages at desktop and mobile widths.
+5. **Pedagogical sufficiency:** the existence of a synthesis page or typed revision edge does not establish that the aid is sufficiently complete, accurate or effective. Keep editorial quality review separate from link integrity.
+
+The core route is implemented; these remaining points concern optional coverage, presentation and learner validation, not missing core curriculum identities.
 
 ## 7. Validation requirements
 
@@ -166,16 +174,17 @@ These responsibilities must coordinate through existing canonical registries; no
 
 ## 10. Acceptance criteria
 
-- [ ] The learning and review routes are explicitly presented as peer routes through the same curriculum.
-- [ ] Both are generated from the same canonical stage and lesson model.
-- [ ] Every core lesson has one primary revision destination in each language.
-- [ ] Stage order, lesson order, objectives, prerequisites and outcomes are structurally equivalent.
-- [ ] Optional material remains optional in both routes.
-- [ ] Flashcards and visual-recall aids are attached to relevant lesson stops through explicit relationships.
-- [ ] Exercises remain a separate Practice & experiment experience.
-- [ ] FR/EN route structure and destinations are validated.
-- [ ] Automated tests fail on missing, duplicated, reordered or incorrectly promoted core/optional memberships.
-- [ ] No parallel curriculum registry or mass-generated low-value revision content is introduced.
+- [x] The learning and review routes are presented as peer routes through the same curriculum.
+- [x] Both core routes are generated from the same canonical stage and lesson model.
+- [x] Every core lesson has one primary revision destination in each language.
+- [x] Core stage order, lesson order, objectives, prerequisites and outcomes are structurally checked.
+- [x] Optional learning pages remain outside the core route and are discoverable in Deepen; optional revision stops are not fabricated.
+- [ ] Flashcards and visual-recall aids have a complete, explicit coverage inventory. The current three visual-recall links are only a manually curated subset.
+- [x] Exercises remain a separate Practice & experiment experience.
+- [x] FR/EN core route structure and destinations are validated.
+- [x] Automated tests protect core order, exact review destinations, optional-page placement and Practice separation.
+- [x] No parallel curriculum registry or mass-generated low-value revision content is introduced.
+- [ ] Desktop/mobile rendered review, keyboard navigation and learner-level validation are recorded.
 
 ## 11. Lesson size and editorial rhythm
 
