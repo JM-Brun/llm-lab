@@ -332,9 +332,7 @@ def test_inventory_preserves_page_metadata_and_incident_graph_edges() -> None:
         "membership_by_role": {"core": 1, "optional": 1},
         "unique_pages_by_role": {"core": 1, "optional": 1},
         "membership_by_language": {"fr": {"core": 1, "optional": 1}},
-        "unique_pages_by_language_and_role": {
-            "fr": {"core": 1, "optional": 1}
-        },
+        "unique_pages_by_language_and_role": {"fr": {"core": 1, "optional": 1}},
         "membership_by_stage": {"computation": {"core": 1, "optional": 1}},
     }
     assert inventory["missing_associated_page_ids"] == []
