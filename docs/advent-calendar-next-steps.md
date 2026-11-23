@@ -166,8 +166,8 @@ This log should record outcomes, not merely activity.
 
 - **Date:** 2026-11-23
 - **Branch / PR:** calendar/day06-independent-story-pilot — PR #1560
-- **Files changed:** bilingual calendar landing pages, Quarto render list, bilingual Day 06 story drafts, reusable story template, Day 06 source dossier, original frequency-scale SVG, editorial redesign and this handoff.
+- **Files changed:** bilingual calendar landing pages, Quarto render list, bilingual Day 06 story drafts, language-switch mapping, reusable story template, Day 06 source dossier, original frequency-scale SVG, editorial redesign and this handoff.
 - **Work completed:** verified the old 24-card prototype structure; marked it as an archive; drafted a distinct Day 06 story focused on Fourier features and spectral bias rather than repeating the canonical positional-encoding derivation.
-- **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render of the Day 06 draft, browser screenshot, numerical-table verification or novice review has yet been performed.
+- **Validation performed and results:** source paths and bilingual canonical lesson content inspected; primary references checked. No Quarto render of the Day 06 draft, browser screenshot, numerical-table verification or novice review has yet been performed. The first CI run also exposed the explicit language-switch mapping requirement for planned source pages; the bilingual mapping entry is now included.
 - **Open defects / decisions:** PR checks and visual rendering; verify the page metadata and the PR-only published preview status; run FR/EN desktop/mobile and accessibility review; verify the numerical table and SVG in the rendered pages; obtain novice feedback.
 - **Exact next action:** inspect the PR render and metadata checks, revise the Day 06 draft, then decide whether to proceed with Days 17 and 23. Do not create the story manifest yet.
