@@ -137,7 +137,7 @@ Language does not use all its words at the same frequency. Zipf's law provides a
 ## Go further
 
 - The [text-data lesson](text-data.qmd) introduces the representations and units handled by the LLM pipeline.
-- The [tokenization lesson](tokenization.qmd) explains how a string is split into tokens. It addresses a different question from the lexical counting in this story.
+- The [tokenization lesson](tokenization-strategies.qmd) explains how a string is split into tokens. It addresses a different question from the lexical counting in this story.
 
 ### Sources
 
