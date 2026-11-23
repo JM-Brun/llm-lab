@@ -32,8 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 ::: {.chapter-lead}
 In the overview, the model predicts the next token from the prefix “What have the Romans ever done for us?” In what form does it receive that question?
 
-A **tokenizer** splits text into units called **tokens**. Its **vocabulary** ma
-ps each token to an integer identifier (ID). The model receives those IDs in text order.
+A **tokenizer** splits text into units called **tokens**. Its **vocabulary** maps each token to an integer identifier (ID). The model receives those IDs in text order.
 :::
 
 ## From the prefix to token IDs {#the-path-from-text-to-model}
@@ -67,8 +66,7 @@ The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces
 The split difference comes from pre-tokenization rules, not from vocabulary quality: `cl100k_base` splits the space from the number that follows and groups digits into chunks of at most three, hence the tokens reduced here to a single space (`␠`). GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` inserts no start-of-sequence token by default, while some libraries, for example `transformers` with GPT-2, prepend one; check this behavior before comparing your own traces.
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
-The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the 
-corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
+The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="From text to model representations">
@@ -89,8 +87,7 @@ corresponding row. A table with $V$ rows holds a vector with $d$ components per 
 
 - **Capacity.** How much text fits in a given context window (for example 8,000 tokens) depends on the split. The more tokens a passage uses, the less room there is for history, instructions, retrieved documents, tool descriptions, or the answer. How the budget is counted depends on the model and API. [Context engineering](context-engineering.qmd).
 - **Compute.** A longer sequence adds positions to process. The effect on time and cost depends on the architecture, hardware, and service. [Inference complexity](llm-computational-complexity.qmd).
-- **Languages.** Two translations of the same passage can use different numbers of tokens. A fixed context budget or, depending on the protocol, a fixed training budget can therefore cover different amounts of text across languages. Measure the efficiency of the split by language and text type, then evaluate quality separately on the target tasks. [Tokenizer design and evaluation](tokenizer-design-eval
-uation.qmd).
+- **Languages.** Two translations of the same passage can use different numbers of tokens. A fixed context budget or, depending on the protocol, a fixed training budget can therefore cover different amounts of text across languages. Measure the efficiency of the split by language and text type, then evaluate quality separately on the target tasks. [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
 [Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
@@ -119,7 +116,7 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 The film replies name aqueducts, sanitation, roads, and irrigation. Several members of the group speak in turn. To trace a single-speaker continuation, use “They built roads between distant towns.” Encode the prefix and this continuation separately with the tokenizer being studied to compare the splits. The continuation is absent from the context the model uses at the first generation step.
 
-**Success criterion:** each ID list decodes exactly to its source text, the prefix and the continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
+**Success criterion:** each ID list decodes exactly to its source text, the prefix and continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
 
 ### From Unicode text to contextual representations
 
@@ -136,8 +133,7 @@ flowchart TB
     classDef default color:#14532D;
 ```
 
-[Uni
-code source text](unicode-text.qmd) can contain spaces, punctuation, numbers, code, or multiple languages. Depending on the tokenizer, the text can be normalized or split into preliminary pieces. Tokenizers differ in their base units, rules, vocabulary, and special tokens. Modern subword tokenizers often learn their vocabulary. These choices affect which inputs a tokenizer can encode. Tokens are units of computation and their boundaries can fall inside a word. [Tokenization strategies](tokenization-strategies.qmd) compares these choices and the BPE, WordPiece, and unigram algorithms.
+[Unicode source text](unicode-text.qmd) can contain spaces, punctuation, numbers, code, or multiple languages. Depending on the tokenizer, the text can be normalized or split into preliminary pieces. Tokenizers differ in their base units, rules, vocabulary, and special tokens. Modern subword tokenizers often learn their vocabulary. These choices affect which inputs a tokenizer can encode. Tokens are units of computation and their boundaries can fall inside a word. [Tokenization strategies](tokenization-strategies.qmd) compares these choices and the BPE, WordPiece, and unigram algorithms.
 
 The diagram groups positional handling with the Transformer. Some architectures add learned absolute position vectors to token embeddings. With [RoPE](positional-encoding.qmd), attention rotates the query and key vectors. These mechanisms act at different points in the sequence of operations that produces [contextual representations](contextualized-representations.qmd).
 
@@ -153,8 +149,7 @@ The tokenizer paired with the model encodes the prompt at inference and the corp
 - [Unicode, UTF-8, and normalization](unicode-text.qmd) traces the string to its bytes.
 - [Tokenization strategies](tokenization-strategies.qmd) compares segmentation options.
 - [Embedding space](embedding-space.qmd) covers table lookup and vector geometry.
-- [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications handle lo
-ng interactions.
+- [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications handle long interactions.
 
 :::
 
