@@ -291,16 +291,16 @@ The 2026-11-22 issue reconciliation identified 58 current assertions outside the
 | 55 | `resource-bounded-computation → constrains → aixi-tl` | Accept | Explicit time/program-length bounds are central to the computable construction. |
 | 56 | `score-function → prerequisite → score-centering` | Accept | The learner must understand the policy score being centered. The existing bilingual rationale states this dependency and the relation is pedagogical, not an execution edge. |
 | 57 | `entropy → prerequisite → cross-entropy` | Remove | Cross-entropy is defined directly from target and predicted distributions. Entropy appears in the decomposition `H(q,p)=H(q)+D_KL(q||p)`, but is not required to define or calculate cross-entropy. Preserve the decomposition as optional mathematical depth. |
-| 58 | `cross-entropy → prerequisite → knowledge-distillation` | Remove | The rationale itself says soft-target distillation can use cross-entropy or KL; cross-entropy is therefore not a necessary prerequisite for the broader knowledge-distillation concept. Keep the relation discoverable through resources, not a false learning dependency. |
+| 58 | `cross-entropy → prerequisite → knowledge-distillation` | Weaken relation | Cross-entropy is one possible soft-target distillation objective, but the rationale also allows KL and other formulations. Retype to `cross-entropy → contributes-to → knowledge-distillation`: preserve the useful connection without imposing a false universal learning prerequisite. |
 
 ### Corrections applied to the canonical registry
 
 - Reversed and retyped predictive-compression input: `conditional-distribution → contributes-to → predictive-compression`.
 - Weakened knowledge distillation → model compression from `part-of` to `contributes-to`; this captures its conditional use with a smaller student.
 - Weakened positive-pair distribution → JEPA from `part-of` to `contributes-to`; the distribution shapes the learning signal rather than being an architectural component.
-- Removed the document-retrieval / in-context-learning contrast, two overextended Laplacian-eigenmaps / PRH assertions, and the two unsupported entropy/cross-entropy prerequisite assertions.
+- Removed the document-retrieval / in-context-learning contrast, two overextended Laplacian-eigenmaps / PRH assertions, and the unsupported entropy → prerequisite → cross-entropy assertion; cross-entropy's optional role in distillation is retained as a non-pedagogical contribution.
 
-The five removals reduce the current registry from 124 to **119 typed edges**. The three retyped/reversed relations preserve their edge count. Together with the 66 previously reviewed current assertions, this completes the semantic review of all **119 retained edges**. No new relation type, graph, registry, route, or renderer is introduced.
+The four removals reduce the current registry from 124 to **120 typed edges**. Four retyped/reversed relations preserve their edge count. Together with the 66 previously reviewed current assertions, this completes the semantic review of all **120 retained edges**. No new relation type, graph, registry, route, or renderer is introduced.
 
 ### Evidence and remaining gates
 
