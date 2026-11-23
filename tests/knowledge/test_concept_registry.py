@@ -488,9 +488,10 @@ def test_2026_concept_relation_review_corrections_are_preserved() -> None:
         ("laplacian-eigenmaps", "contributes-to", "platonic-representation-hypothesis"),
         ("joint-embedding-predictive-architecture", "represented-by", "laplacian-eigenmaps"),
         ("entropy", "prerequisite", "cross-entropy"),
-        ("cross-entropy", "prerequisite", "knowledge-distillation"),
     }
     assert edges.isdisjoint(removed)
     assert ("entropy", "prerequisite", "cross-entropy") not in edges
+    assert ("cross-entropy", "prerequisite", "knowledge-distillation") not in edges
+    assert ("cross-entropy", "contributes-to", "knowledge-distillation") in edges
     assert ("score-function", "prerequisite", "score-centering") in edges
-    assert len(edges) == 119
+    assert len(edges) == 120
