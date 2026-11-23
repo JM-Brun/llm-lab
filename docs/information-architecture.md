@@ -236,3 +236,10 @@ The standards profile documents the graph-export and rendered-output checks; use
 
 
 The proposed **LLM Advent Calendar** is an editorial projection, not a fourth knowledge graph or another curriculum source. Its design and comparative references live in [advent-calendar-design.md](advent-calendar-design.md); the candidate day sequence and canonical references live in `data/calendars/llm-advent-24.yml`. The manifest is intentionally not consumed by the site or CI until the sequence, daily content contract, and pilot have been reviewed. It may order a learner's experience, but it must not export day order as concept prerequisites or duplicate scientific definitions.
+
+
+## 10. Ecosystem-level architecture and implementation backlog
+
+The system inventory above describes canonical ownership at the file/schema level. For the higher-level product architecture—Understand, Review, Practice & Experiment, Build, Deepen and independent editorial collections—see [LLM Lab knowledge and learning ecosystem architecture](llm-lab-knowledge-learning-architecture.md). It explains the shared knowledge foundation, specialized models, graph families, cross-cutting classifications, interoperability rules and project-wide diagnostics.
+
+The [architecture implementation backlog](llm-lab-architecture-implementation-backlog.md) records the remaining work, audit confidence, priorities and acceptance criteria. These documents synthesize rather than supersede this contract or the specialized schemas. In particular, they do not authorize a second concept registry, a universal graph schema, or a broad migration without an inventory and compatibility plan.
