@@ -298,8 +298,8 @@ uv run python site/tools/report_project_index.py --format json
 uv run python site/tools/report_project_index.py --language fr --destination understand
 
 # Opt-in evidence paths and explicit gaps for one or more concepts
-uv run python site/tools/cross_graph_query.py --concept attention
-uv run python site/tools/cross_graph_query.py --concept attention --concept entropy
+uv run python site/tools/cross_graph_query.py --concept self-attention
+uv run python site/tools/cross_graph_query.py --concept self-attention --concept token-embedding
 ~~~
 
 
