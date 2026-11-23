@@ -17,7 +17,7 @@ scope: "Introduces next-token prediction and distinguishes computing a distribut
 purpose: "Explain what an autoregressive model computes at a given step without conflating probability, choice, and truth."
 suggested_route:
   previous: "en/advent-calendar"
-  next: "en/advent-calendar/day-02"
+  next: "en/advent-calendar-day-02"
 hierarchy:
   parents: ["en/advent-calendar"]
   children: []
