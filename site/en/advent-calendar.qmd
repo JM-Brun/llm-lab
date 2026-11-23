@@ -64,22 +64,22 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <p class="advent-opening-note"><strong>Start here.</strong> The first three days are fully guided: a short explanation, a worked example, a self-check, and a link to the canonical lesson.</p>
 
-::: {.advent-grid advent-grid-opening}
-::: {.advent-card advent-card-featured #day-01}
+::: {.advent-grid .advent-grid-opening}
+::: {.advent-card .advent-card-featured #day-01}
 <div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · ready</span></div>
 <p class="advent-card-kicker">THE STARTING POINT</p>
 <h4>What does an LLM predict?</h4>
 <p>What does the model compute from a prefix before selecting a token?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-01.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
 :::
-::: {.advent-card advent-card-featured #day-02}
+::: {.advent-card .advent-card-featured #day-02}
 <div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · ready</span></div>
 <p class="advent-card-kicker">THE CONTEXT</p>
 <h4>What information does the model have?</h4>
 <p>Which prefix conditions the prediction, and when does the continuation join it?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-02.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
 :::
-::: {.advent-card advent-card-featured #day-03}
+::: {.advent-card .advent-card-featured #day-03}
 <div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · ready</span></div>
 <p class="advent-card-kicker">BREAKING DOWN TEXT</p>
 <h4>How does text become tokens?</h4>
