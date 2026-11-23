@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import runpy
 from pathlib import Path
 from typing import Any
@@ -185,10 +186,14 @@ def test_guided_rail_uses_compact_labels_and_preserves_full_accessible_titles(
     rendered = GENERATOR["render_guided_rail"](stages, language)
 
     assert [stage.compact_title for stage in stages] == expected_labels
-    assert all(f"<span class=\"guided-rail__title\">{label}</span>" in rendered for label in expected_labels)
+    assert all(
+        f'<span class="guided-rail__title">{label}</span>' in rendered
+        for label in expected_labels
+    )
     assert all(f">{part}</span>" in rendered for part in expected_parts)
     assert rendered.count('aria-label="') == len(stages)
     assert rendered.count('title="') == len(stages)
     for index, stage in enumerate(stages, start=1):
-        assert f'aria-label="{index:02d} · {stage.title.replace("&", "&amp;").replace(chr(34), "&quot;")}"' in rendered
+        full_label = html.escape(f"{index:02d} · {stage.title}", quote=True)
+        assert f'aria-label="{full_label}"' in rendered
         assert f'href="#guided-stage-{stage.id}"' in rendered
