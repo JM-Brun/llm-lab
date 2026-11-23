@@ -51,8 +51,8 @@ p_\theta(\cdot \mid x_{<t})
 = \operatorname{softmax}\!\left(f_\theta(x_{<t})\right)
 \]
 
-- (x_{<t}) désigne le préfixe disponible avant l'étape (t).
-- (f_\theta) représente le calcul du modèle avec ses paramètres (	heta), jusqu'aux logits.
+- `x_{<t}` désigne le préfixe disponible avant l'étape `t`.
+- `f_theta` représente le calcul du modèle avec ses paramètres `theta`, jusqu'aux logits.
 - Le softmax transforme ces scores en une distribution sur le vocabulaire.
 
 **La sortie prédictive est donc une distribution, pas encore un token choisi.**
