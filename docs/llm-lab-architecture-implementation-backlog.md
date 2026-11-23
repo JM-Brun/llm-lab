@@ -67,7 +67,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 - [x] Reconcile the calendar row in docs/information-architecture.md with the superseded old manifest and the independent-story model.
 - [x] Update the architecture validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence.
 - [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
-- [ ] Keep a clear status vocabulary: implemented, partially implemented, proposed, deferred, superseded and not assessed.
+- [x] Define and use a clear status vocabulary: implemented and validated, implemented with validation incomplete, documented/proposed, deferred, superseded and not assessed.
 
 **Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model.
 
@@ -85,13 +85,13 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 ### P1 — Complete the revision system
 
-- [ ] Reconcile docs/revision-resource-contract.md with metadata actually used by revision pages.
+- [x] Reconcile docs/revision-resource-contract.md with the page-map metadata and the CI-invoked ProjectIndex revision inventory; explicitly document that non-page aids are not supported.
 - [x] Confirm the canonical declaration location for page-based aids: page-map metadata; keep page IDs separate from resource IDs. Non-page revision aids remain deferred until a real learner-facing artifact is identified.
 - [x] Keep the CI-invoked ProjectIndex revision audit as the single semantic validation boundary. `check_page_metadata.py` remains focused on general page-map structure; do not duplicate revision checks without a second demonstrated consumer.
 - [x] Generate reverse lesson-to-aids indexes rather than authoring both directions: ProjectIndex builds aid→lesson and lesson→aid indexes and exposes both query directions. Reader-facing completeness remains under #1541.
 - [x] Keep link existence separate from coverage sufficiency; preserve not_assessed as a valid state in ProjectIndex and the revision inventory.
 - [ ] Audit Understand and Build lessons for revision coverage without automatically declaring every lesson deficient.
-- [ ] Keep detailed questions/exercises in Practice; revision questions should have a clear retrieval/reconstruction purpose.
+- [x] Preserve the editorial boundary: detailed calculations, coding and experiments belong in Practice; Review prompts are for retrieval/reconstruction. Full page-level compliance remains audited under #1512/#1541.
 - [x] Add page-based regression tests for many-to-many links, invalid/unpublished/ineligible targets, duplicate targets, bilingual pairing, assessment evidence and derived reverse indexes.
 
 **Acceptance:** one enforced contract, inventory report and tests; every published relation resolves to a real lesson/aide and every coverage judgement has evidence.
@@ -111,13 +111,13 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 ### P1 — Define cross-graph interoperability
 
-- [ ] Inventory graph families and current owners: semantic, page, pedagogical, revision, practice, build, computational, source/provenance, editorial and historical.
+- [x] Inventory graph families and current owners in the architecture matrix: semantic, page, pedagogical, revision, practice, build, computational, source/provenance, editorial and historical. Remaining work is relation-contract completeness, not naming the families.
 - [ ] For each relation family, document source/target kinds, direction, purpose, inverse/symmetry, transitivity, cycle policy, evidence and learning-order eligibility.
 - [ ] Define shared ID resolution without imposing a universal node/edge schema that erases domain semantics.
 - [x] Add a documented read-only graph-family/validator inventory in the architecture matrix; continue to update it as contracts evolve.
 - [x] Add a bounded opt-in adapter and typed query paths over existing source/extraction, computational, route-focus, page and resource associations (PR #1535); preserve explicit gaps and relation provenance. Broader coverage of all graph families and validators remains open.
-- [ ] Preserve the computational spine's distinction between the shared predictive distribution and generation/scoring/training branches.
-- [ ] Verify the conceptual/computational distinction inside Transformer blocks: Q/K/V are projections of block input states, not a stage after final contextualized representations.
+- [x] Preserve the computational spine's distinction between the shared predictive distribution and generation/scoring/training branches (canonical model and projections are integrated under #575/#584).
+- [x] Record the conceptual/computational distinction inside Transformer blocks: Q/K/V are projections of each block's input states, not a stage after final contextualized representations.
 - [ ] Test that pedagogical routes are not silently generated from generic semantic or computational edges.
 
 **Acceptance:** graph inventory and cross-reference validator; tests demonstrate that one concept can be referenced by several graph families without conflating edge semantics.
