@@ -17,23 +17,7 @@ from build_learning_map import (
 )
 
 
-@pytest.mark.parametrize(
-    ("language", "section_title", "entry_page", "child_pages"),
-    [
-        (
-            "fr",
-            "Des identifiants aux représentations",
-            "fr/embedding-space",
-            ["fr/positional-encoding", "fr/contextualized-representations"],
-        ),
-        (
-            "en",
-            "From IDs to representations",
-            "en/embedding-space",
-            ["en/positional-encoding", "en/contextualized-representations"],
-        ),
-    ],
-)
+@pytest.mark.parametrize("language", ["fr", "en"])
 def test_flat_sidebar_entries_are_projected_once(language: str) -> None:
     """Flat Understand navigation keeps each former section entry exactly once."""
     pages = load_pages()
