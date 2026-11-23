@@ -86,9 +86,9 @@ Before implementation, inspect #416, #415, #130, #225, #355, #458 and the active
 
 ## Initial audit of the current canonical relation registry (2026-11-05)
 
-Historical snapshot (2026-11-05): the registry then declared ten relation types and 26 edges. This section records the original gap analysis; it is not a description of current main. The contract and validator work described below were subsequently implemented, and the current inventory is 12 relation types / 114 typed edges (2026-11-23).
+Historical snapshot (2026-11-05): the registry then declared ten relation types and 26 edges. This section records the original gap analysis; it is not a description of current main. The contract and validator work described below were subsequently implemented, and the current inventory is 12 relation types / 124 typed edges (2026-11-23).
 
-The initial schema did not encode the above properties. The implemented contract now declares family, direction, transitivity, acyclicity, learning-dependency eligibility and inverse policy, with bilingual rationale required for learning-dependency edges. Concept endpoints remain the only supported endpoint kind; fine-grained domain/range restrictions are intentionally deferred because concepts are multi-domain. The remaining gap is not the absence of a relation schema: it is keeping the 114-edge scientific review current and validating the semantics of bridges between distinct graph families.
+The initial schema did not encode the above properties. The implemented contract now declares family, direction, transitivity, acyclicity, learning-dependency eligibility and inverse policy, with bilingual rationale required for learning-dependency edges. Concept endpoints remain the only supported endpoint kind; fine-grained domain/range restrictions are intentionally deferred because concepts are multi-domain. The remaining gap is not the absence of a relation schema: it is keeping the 124-edge scientific review current and validating the semantics of bridges between distinct graph families.
 
 ### Concrete review cases
 
