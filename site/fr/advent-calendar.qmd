@@ -1,6 +1,6 @@
 ---
-title: "Le calendrier de l’avent 2026 des LLM"
-subtitle: "24 explorations pour reconstruire le calcul d'un LLM : du contexte à la distribution prédictive, puis à la génération, au scoring et à l'apprentissage."
+title: "Prototype archivé — calendrier de l’avent 2026 des LLM"
+subtitle: "Archive du premier format : trois mini-leçons et vingt-et-un renvois vers le parcours canonique."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
@@ -12,8 +12,8 @@ css: ../styles/advent-calendar.css
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/advent-calendar"
-scope: "Page d’accueil du calendrier pédagogique de 24 jours consacré au mécanisme central d’un LLM autorégressif."
-purpose: "Présenter les 24 journées, leur progression en quatre mouvements et les ressources canoniques associées."
+scope: "Archive du prototype initial de calendrier progressif en 24 cases, dont trois mini-leçons et vingt-et-un renvois au parcours canonique."
+purpose: "Conserver et contextualiser la première version du calendrier pendant la préparation d’une nouvelle collection d’histoires scientifiques indépendantes."
 suggested_route:
   previous: null
   next: null
@@ -24,11 +24,15 @@ related: ["fr/learning-map", "fr/exercises", "fr/llm-overview", "fr/training-loo
 tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 -->
 
+::: {.callout-note}
+**Prototype historique — ne pas confondre avec la nouvelle édition.** Cette page conserve le premier format 2026 : trois mini-leçons guidées et vingt-et-un renvois vers les ressources du parcours principal. Elle ne contient pas vingt-quatre histoires scientifiques indépendantes. Le nouveau format éditorial est en préparation ; les trois premières journées restent consultables comme archive.
+:::
+
 <div class="advent-hero">
 <div class="advent-hero-copy">
-<p class="advent-eyebrow">LLM LAB · ÉDITION 2026</p>
+<p class="advent-eyebrow">LLM LAB · PROTOTYPE INITIAL</p>
 <h1>Un LLM, <em>de la première entrée au dernier gradient.</em></h1>
-<p class="advent-lede">Ouvrez une case, suivez une question, testez une idée. En 24 étapes courtes, reconstruisez le calcul qui relie un contexte à une distribution prédictive, puis découvrez ses trois usages distincts : génération, scoring et apprentissage.</p>
+<p class="advent-lede">Cette première version proposait trois mini-leçons et vingt-et-un renvois vers le parcours canonique. Elle est conservée comme archive de transition ; le nouveau format d’histoires scientifiques indépendantes est en préparation.</p>
 <div class="advent-hero-actions">
 <a class="advent-button" href="#jour-01">Commencer le parcours <span aria-hidden="true">→</span></a>
 <a class="advent-text-link" href="learning-map.qmd">Explorer la carte des notions</a>
@@ -52,7 +56,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">LE PRINCIPE</p>
-  <p><strong>Une question précise par jour.</strong> Les trois premières cases proposent une courte leçon guidée directement dans le calendrier. Les 21 suivantes ouvrent progressivement le parcours vers les ressources canoniques. Les explications longues et les exercices restent sur leurs pages dédiées. Les 24 cases restent accessibles après le 24 décembre : l’édition 2026 devient une archive pédagogique, sans verrouillage par date.</p>
+  <p><strong>Ce prototype n’est pas la nouvelle édition.</strong> Les cases 01–03 contiennent les mini-leçons initiales ; les cases 04–24 renvoient vers des leçons et exercices du parcours principal. Les contenus canoniques restent sur leurs pages dédiées. Cette archive reste accessible sans verrouillage par date.</p>
 </div>
 
 ## Les 24 cases
