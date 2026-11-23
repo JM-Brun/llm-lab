@@ -205,8 +205,86 @@ def build_revision_inventory(
         key=lambda edge: (edge["source"], edge["family"], edge["relation"], edge["target"])
     )
 
+    associated_page_roles: dict[str, set[str]] = defaultdict(set)
+    for lesson_page_id, aids in revision_aids_by_lesson.items():
+        if lesson_page_id not in affected_page_ids:
+            continue
+        for aid in aids:
+            associated_page_roles[aid["id"]].add(aid["role"])
+
+    associated_page_ids = {
+        page_id
+        for edge in affected_page_edges
+        for page_id in (edge["source"], edge["target"])
+        if page_id not in affected_page_ids
+    }
+    associated_page_ids.update(associated_page_roles)
+    associated_page_records: list[dict[str, Any]] = []
+    missing_associated_page_ids: list[str] = []
+    page_fields = (
+        "id",
+        "language",
+        "destination",
+        "topic",
+        "level",
+        "type",
+        "domain",
+        "title",
+        "href",
+        "scope",
+        "purpose",
+        "covered_stages",
+        "route",
+        "parents",
+        "children",
+        "related",
+    )
+    for page_id in sorted(associated_page_ids):
+        page = page_by_id.get(page_id)
+        if page is None:
+            missing_associated_page_ids.append(page_id)
+            continue
+        associated_page_records.append(
+            {
+                **{field: page.get(field) for field in page_fields if field in page},
+                "route_memberships": route_memberships.get(page_id, []),
+                "concept_ids": sorted(concept_ids_by_page.get(page_id, [])),
+                "implementation_resource_ids": sorted(
+                    implementation_ids_by_page.get(page_id, [])
+                ),
+                "revision_roles": sorted(associated_page_roles.get(page_id, set())),
+            }
+        )
+
+    associated_page_scope = affected_page_ids | {
+        page["id"] for page in associated_page_records
+    }
+    associated_resource_ids = sorted(
+        {
+            resource_id
+            for page_id in associated_page_scope
+            for resource_id in implementation_ids_by_page.get(page_id, [])
+        }
+    )
+    resource_by_id = {resource["id"]: resource for resource in resources}
+    associated_resources = [
+        resource_by_id[resource_id]
+        for resource_id in associated_resource_ids
+        if resource_id in resource_by_id
+    ]
+    missing_associated_resource_ids = sorted(
+        set(associated_resource_ids) - set(resource_by_id)
+    )
+    associated_concept_ids = sorted(
+        {
+            concept_id
+            for page_id in associated_page_scope
+            for concept_id in concept_ids_by_page.get(page_id, [])
+        }
+    )
+
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -225,6 +303,11 @@ def build_revision_inventory(
         "unexpected_languages": unexpected_languages,
         "pages": records,
         "affected_page_edges": affected_page_edges,
+        "associated_page_records": associated_page_records,
+        "associated_resources": associated_resources,
+        "associated_concept_ids": associated_concept_ids,
+        "missing_associated_page_ids": missing_associated_page_ids,
+        "missing_associated_resource_ids": missing_associated_resource_ids,
     }
 
 
@@ -298,6 +381,18 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         lines.append(
             f"| {edge['source']} | {edge['family']} | {edge['relation']} | {edge['target']} |"
         )
+    lines.extend(
+        [
+            "",
+            "## Direct resource closure",
+            "",
+            f"- Associated page records: **{len(inventory['associated_page_records'])}**",
+            f"- Associated non-page resources: **{len(inventory['associated_resources'])}**",
+            f"- Associated concept IDs: **{len(inventory['associated_concept_ids'])}**",
+            f"- Missing associated page IDs: **{len(inventory['missing_associated_page_ids'])}**",
+            f"- Missing associated resource IDs: **{len(inventory['missing_associated_resource_ids'])}**",
+        ]
+    )
     lines.append("")
     lines.extend(
         [
