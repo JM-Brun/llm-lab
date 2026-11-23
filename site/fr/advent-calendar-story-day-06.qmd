@@ -69,7 +69,7 @@ Il faut distinguer deux questions :
 
 Ces deux propriétés ne sont pas équivalentes. Des réseaux peuvent représenter des fonctions très variées, tout en apprenant certaines composantes fréquentielles plus tôt que d’autres.
 
-Rahaman et ses coauteurs ont étudié ce phénomène à l’aide de l’analyse de Fourier. Dans les réseaux et conditions qu’ils examinent, les composantes de basse fréquence sont généralement apprises avant les composantes de haute fréquence. C’est ce qu’ils appellent le **biais spectral**. Il ne s’agit pas d’une impossibilité de représenter les détails fins : c’est une différence de vitesse d’apprentissage, dépendante du modèle et du problème.
+Rahaman et ses coauteurs ont étudié ce phénomène à l’aide de l’analyse de Fourier, notamment dans des réseaux profonds à activation ReLU. Dans les architectures et conditions qu’ils examinent, les composantes de basse fréquence sont généralement apprises avant les composantes de haute fréquence. C’est ce qu’ils appellent le **biais spectral**. Il ne s’agit pas d’une impossibilité de représenter les détails fins : c’est une différence de vitesse d’apprentissage, dépendante du modèle et du problème.
 
 Les *Fourier features* de Tancik et ses coauteurs répondent à une difficulté proche dans les MLP qui apprennent des fonctions à partir de coordonnées de faible dimension. Leur transformation rend certaines fréquences plus accessibles et modifie le comportement fréquentiel effectif du réseau. Dans les tâches étudiées, elle peut ainsi faciliter l’apprentissage de détails à haute fréquence.
 
