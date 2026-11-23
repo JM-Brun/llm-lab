@@ -123,6 +123,16 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  const changedCompanions = changedFiles
+    .map(file => file.match(/^site\/(en|fr)\/exercises\/([a-z0-9-]+)\.qmd$/))
+    .filter(Boolean);
+  for (const [, language, slug] of changedCompanions) {
+    const page = `exercises/${slug}.html`;
+    changedPages.add(page);
+    cases.push(...visualCases.filter(testCase => testCase.lang === language).map(testCase => ({
+      ...testCase, page, kind: "practice-companion",
+    })));
+  }
   // Q/K/V matrix diagrams are shared by the bilingual page; an SVG-only
   // change still needs a rendered browser screenshot of that page.
   if (changedFiles.some(file => /^site\/images\/queries-keys-values(?:-en)?\.svg$/.test(file))) {
@@ -702,6 +712,57 @@ async function runCase(testCase, caseIndex) {
         throw new Error(`missing exercise collection links: ${item.exerciseHub.missingCollectionPages.join(", ")}`);
       }
     }
+    if (kind === "practice-companion") {
+      const lessonSlug = pagePath.split("/").pop().replace(/\.html$/, "");
+      item.practiceCompanion = await page.evaluate(({ lessonSlug }) => {
+        const links = [...document.querySelectorAll("main a[href]")].map(link => {
+          const target = new URL(link.href);
+          const rect = link.getBoundingClientRect();
+          const style = getComputedStyle(link);
+          return {
+            path: target.pathname,
+            hash: target.hash,
+            text: link.textContent.trim().replace(/\s+/g, " "),
+            visible: rect.width > 0 && rect.height > 0 &&
+              style.display !== "none" && style.visibility !== "hidden",
+          };
+        });
+        const lessonLink = links.find(link =>
+          link.path.endsWith(`/${lessonSlug}.html`) && link.visible
+        );
+        const collectionLink = links.find(link =>
+          link.path.endsWith("/exercises-attention.html") &&
+          link.hash === "#attention" && link.visible
+        );
+        const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
+          /check the essential idea|vérifier l'idée essentielle/i.test(heading.textContent)
+        );
+        return { lessonLink, collectionLink, selfCheckHeading };
+      }, { lessonSlug });
+      if (!item.practiceCompanion.lessonLink) {
+        throw new Error("practice companion must expose a visible return link to its matching lesson");
+      }
+      if (!item.practiceCompanion.collectionLink) {
+        throw new Error("practice companion must expose a visible link to its extended exercise collection");
+      }
+      if (!item.practiceCompanion.selfCheckHeading) {
+        throw new Error("practice companion must expose its learner-facing self-check section");
+      }
+      const details = page.locator("main details");
+      const detailsCount = await details.count();
+      const summariesCount = await details.locator("summary").count();
+      const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
+      if (detailsCount !== 1 || summariesCount !== 1 || openDetailsAtLoad !== 0) {
+        throw new Error("practice companion must expose one native, initially collapsed worked-answer disclosure");
+      }
+      const summary = details.locator("summary").first();
+      await summary.focus();
+      await page.keyboard.press("Enter");
+      await page.waitForFunction(() => document.querySelector("main details")?.open === true);
+      await page.keyboard.press("Space");
+      await page.waitForFunction(() => document.querySelector("main details")?.open === false);
+      item.practiceCompanion.nativeDisclosureKeyboard = true;
+    }
     if (kind === "exercise-collection") {
       const sourcePath = new URL(`../site/${lang}/${pagePath.replace(/\.html$/, ".qmd")}`, import.meta.url);
       const source = fs.readFileSync(sourcePath, "utf8");
@@ -936,7 +997,8 @@ async function runCase(testCase, caseIndex) {
     const capturePage = kind !== "route-context" || label === "desktop" ||
       ["text-data.html", "embedding-space.html", "positional-encoding.html", "tensors.html"].includes(pagePath);
     if (capturePage) {
-      const screenshot = path.join(OUT, `${pagePath.replace(".html", "")}-${lang}-${label}-${theme}.png`);
+      const safePageName = pagePath.replace(/[^a-z0-9-]+/gi, "-").replace(/^-|-$/g, "");
+      const screenshot = path.join(OUT, `${safePageName}-${lang}-${label}-${theme}.png`);
       await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
       item.screenshot = screenshot;
     }
