@@ -13,14 +13,14 @@ id: "en/advent-calendar-story-day-01"
 summary: "Explores the highly uneven distribution of word frequencies and the rank-frequency approximation known as Zipf's law."
 scope: "Explains the rank-frequency relation, long tails, empirical limitations and one implication for language-training corpora."
 purpose: "Interpret rank and frequency, calculate a Zipf approximation and avoid treating a log-log straight line as a universal law."
-domain: "statistics"
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: []
   children: []
-related: ["en/text-data", "en/tokenization"]
+related: ["en/text-data", "en/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
 -->
 
@@ -39,7 +39,7 @@ Can we describe this inequality with a simple formula? And what does it tell us 
 First, distinguish two objects:
 
 - A **type** is a distinct lexical form under the chosen counting convention: for example, the word “house”.
-- A **token** is an occurrence of that form in the text. The sentence “the house near the house” contains two occurrences of “house”.
+- A **token** is an occurrence of that form in the text. The sentence “the house near the house” contains two occurrences of “house”.\n\nHere, *token* means a lexical occurrence. In an LLM, *token* usually means a unit produced by the tokenizer (a whole word or a subword). The two uses are related, but they are not interchangeable.
 
 In a corpus, we count the occurrences of each type and sort the types from most frequent to least frequent. Rank \(r=1\) denotes the most frequent type, \(r=2\) the second, and so on. The frequency \(f(r)\) is its occurrence count — or its relative frequency if we divide by the total number of tokens.
 
@@ -98,7 +98,7 @@ The law is named after George Kingsley Zipf, who popularized this regularity in 
 
 However, it would be too strong to conclude that every lexical distribution follows an exact power law with exponent 1. Observed distributions show deviations, particularly at the ends of the ranking. Other models may describe some corpora better.
 
-Steven Piantadosi highlights an important statistical pitfall: if rank and frequency are estimated from the same sample, their errors are related. The traditional rank-frequency plot can then make the regularity look more convincing than it is, especially for rare words. Separating the data used to estimate ranks from those used to estimate frequencies helps examine this effect.
+Steven Piantadosi highlights an important statistical pitfall: if rank and frequency are estimated from the same sample, their errors are related. The traditional rank-frequency plot can then make the regularity look more convincing than it is, especially for rare words. Separating the data used to estimate ranks from the data used to estimate frequencies reduces this correlation. It does not, however, remove every estimation bias: later work shows that exponent estimators can remain biased, particularly when empirical ranks in the rare-word tail are uncertain.
 
 Zipf's law is therefore a **useful descriptive approximation**, not a universal explanation of the origin of language or a demonstrated causal mechanism. Several linguistic and statistical factors may contribute to the observed shape.
 
@@ -142,5 +142,5 @@ Language does not use all its words at the same frequency. Zipf's law provides a
 ### Sources
 
 - [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — rank-frequency approximation, limits of simple fits and the same-sample estimation pitfall.
-- [PLOS ONE (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — discussion of syntactic and semantic factors that may contribute to observed distributions.
+- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.\n- [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — historical book that popularized the law in language study.
