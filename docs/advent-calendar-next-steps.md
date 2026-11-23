@@ -1,7 +1,7 @@
 # Advent calendar — remaining work and session handoff
 
 **Last updated:** 2026-11-23  
-**Status:** editorial redesign merged; source inventory and transition audit completed; the Day 06 template/story pilot and prototype notice are in PR #1560. Quarto rendering, visual review and novice acceptance remain pending.  
+**Status:** Day 01 (Zipf's law) has bilingual drafts, an original SVG and a source dossier in PR #1565. The draft is still unrendered and awaiting scientific, editorial, visual and novice review. Production proceeds strictly from Day 01 to Day 02, then Day 03, etc.  
 **Parent decision:** PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) — merged into `main`.
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
@@ -57,34 +57,27 @@ Work in the following order. Do not start all 24 articles in parallel.
 
 **Deliverable:** the source template and representative bilingual content exist. The rendered output has not yet passed review; the PR-only preview must be inspected before publication.
 
-### Phase C — Pilot A: Day 06, Fourier features and multi-scale coordinates
+### Phase C — Chronological story production (current: Day 01)
 
-This pilot uses positional encoding as one application of a broader representation idea. The canonical positional-encoding lesson already derives the Transformer formula and fixed-offset rotation identity; Day 06 must not repeat that material.
+The production sequence is Day 01, Day 02, Day 03, and so on. The previously drafted Day 06 story is retained as an unaccepted draft; it is not the active production target and must not cause work to skip ahead.
 
-- [x] Create a source dossier using the original Transformer paper and Tancik et al.'s Fourier-feature paper, with claim-level boundaries and explicit non-claims.
-- [x] Refocus the story on sinusoidal feature maps, multiple frequency scales and spectral bias in coordinate-based networks.
-- [x] Include a small numerical example with exact values for an eight-cycle sinusoid over [0, 1].
-- [x] Include a challenge and worked solution about which frequency components a linear readout can represent.
-- [x] Explain the limits: distinguish fixed Transformer frequencies from random Fourier features; do not call positional encoding a Fourier transform of text; do not claim guaranteed length extrapolation.
-- [x] Keep the story self-contained and add only one optional link to the canonical positional-encoding lesson.
-- [x] Draft FR and EN versions with equivalent equations, examples, caveats and terminology.
-- [x] Add one original SVG comparing one and eight oscillations over the same interval.
-- [ ] Run page-metadata validation and render both pages through Quarto.
-- [ ] Verify the numerical table and SVG in the rendered output; inspect formulas, figure caption, spacing and mobile layout.
-- [ ] Complete scientific review, independent novice review, keyboard/accessibility checks and desktop/mobile visual acceptance.
+For each day:
+- [ ] Confirm the day's distinct editorial question and boundary against the main curriculum.
+- [ ] Prepare a source dossier and claim-to-source ledger before finalizing the story.
+- [ ] Draft French and English versions with equivalent reasoning, examples, equations and caveats.
+- [ ] Include a worked example, one limitation or counterexample, and a short challenge with a worked solution.
+- [ ] Check mathematical derivations and numerical values independently.
+- [ ] Render both language versions in Quarto and inspect desktop/mobile output.
+- [ ] Verify figure provenance, alt text, captions, internal/external links and keyboard accessibility.
+- [ ] Obtain a novice read-through and record observed reading time and points of confusion.
+- [ ] Record defects and fixes in the handoff document.
+- [ ] Do not start the next numbered day until the current day passes its acceptance gates.
 
-**Pilot A acceptance:** all criteria in section 7 of the editorial redesign document must pass. The PR draft is not publication approval. If review finds overlap with the canonical lesson, change the angle rather than shorten or duplicate the canonical explanation.
+**Current Day 01:** Zipf's rank-frequency relation and lexical frequency imbalance. PR #1565 contains the FR/EN drafts, source dossier and original SVG. Its review is incomplete; the PR remains a draft.
 
-### Phase D — Pilots B and C
+### Phase D — Next days after acceptance
 
-Only start these after the template has been validated and Pilot A has exposed any structural problems.
-
-- [ ] **Pilot B / Day 17 — Cross-entropy as a code length:** build the story around coding regret and the cost of using a mismatched probability model. Include a derivation, hand-worked example, challenge, limits of the coding analogy, and primary/authoritative sources.
-- [ ] **Pilot C / Day 23 — Retrieval as external memory:** build a concrete retrieval example that shows what is stored in parameters versus retrieved from an external collection. Distinguish retrieval, grounding, and generation; discuss failure modes and evaluation. Do not turn this into a generic RAG implementation tutorial.
-- [ ] For each pilot, complete FR/EN parity, scientific/source review, novice review, and rendered visual QA.
-- [ ] Compare the three pilots for actual reading time, distinctness from canonical lessons, usefulness, and template suitability.
-
-**Decision gate:** decide whether the format and editorial promise work across all three pilots before committing to the full collection.
+After Day 01 is accepted, continue with Day 02, then Day 03, following the approved story slate. Do not jump to the former non-adjacent pilots (Days 17 and 23) as a production shortcut. Reuse their proposed angles only when their calendar days are reached and the source review supports them.
 
 ### Phase E — collection architecture and landing page
 
@@ -138,15 +131,15 @@ Do not do these before the relevant decision gate:
 
 ## 5. Suggested next session
 
-Start with **Phase A**, not with drafting all 24 stories:
+Continue with **Day 01 only**:
 
-1. Inspect the merged state of the calendar-related files on `main`.
-2. Inventory the actual Quarto sources and rendered routes for the landing page and current day pages.
-3. Inspect the current published FR/EN experience and record concrete defects with paths/screenshots.
-4. Identify the smallest implementation path for a native Quarto article template.
-5. Then implement the template and write **Day 06** as the first full pilot.
+1. Resolve the remaining metadata, source-attribution and pedagogical issues in PR #1565.
+2. Run the repository metadata checks and render the FR/EN story pages without adding unaccepted content to the public render list.
+3. Inspect equations, figure geometry, caption, links, desktop/mobile layout and keyboard/accessibility behavior in the rendered preview.
+4. Obtain a novice read-through; record reading time and misunderstandings.
+5. Revise Day 01 and obtain explicit acceptance before drafting Day 02.
 
-If the current session cannot inspect the rendered site or run Quarto, record that limitation and leave visual acceptance pending. Do not claim that a page has passed visual review based only on source inspection or CI.
+If the rendered output or a novice review cannot be obtained, record that limitation and keep the day unaccepted. Source inspection or CI success alone is not visual or pedagogical acceptance.
 
 ## 6. Session completion log
 
@@ -190,7 +183,18 @@ This log should record outcomes, not merely activity.
 - **Editorial subject:** “Why does the word ‘the’ appear everywhere?” / “Pourquoi le mot « de » revient-il si souvent ?”
 - **Angle:** Zipf's rank-frequency regularity, long-tailed lexical frequencies, the limits of power-law claims, and a carefully qualified implication for language-model training data.
 - **Anti-duplication:** this is a statistical-linguistics story, not a tokenization lesson. It distinguishes lexical word types/tokens from tokenizer tokens and links to canonical pages only as optional further reading.
-- **Validation performed:** claim ledger prepared; arithmetic examples checked; source-level paths and math delimiters inspected. No Quarto render, screenshot review, novice test, or accessibility audit performed.
+- **Validation performed:** claim ledger prepared; arithmetic examples checked; canonical QMD paths and relative image path inspected; source-level metadata checked. No Quarto render, screenshot review, novice test, or accessibility audit performed.
+- **Corrections in progress:** page-map domains and related page IDs corrected; lexical-token terminology disambiguated from tokenizer tokens; the 2017 paper correctly attributed to Sander Lestrade; Pilgrim and Hills (2021) added to qualify residual estimator bias; SVG range revised so all displayed frequencies are integer occurrence counts.
 - **Status:** draft only; not added to the public calendar or render list.
 - **Production rule:** proceed chronologically by day number. Do not draft Day 02 until Day 01 has passed scientific, editorial, bilingual, rendered-layout, accessibility, and novice-review gates. Chronological production does not imply prerequisite reading; stories remain independently understandable.
-- **Next action:** render FR/EN Day 01 previews, verify the SVG and all links, then revise from the visual and novice review before opening Day 02.
+- **Next action:** complete metadata/source checks, obtain a Quarto-rendered FR/EN preview, verify the SVG and all links, then revise from visual and novice review before opening Day 02.
+
+## 10. Session completion log
+
+- **Date:** 2026-11-23
+- **Branch / PR:** `calendar/day01-zipfs-law` — PR #1565
+- **Files changed:** bilingual Day 01 stories, Day 01 source dossier, original Zipf SVG, and this handoff document.
+- **Work completed:** corrected page-map domain and canonical relation IDs; distinguished lexical occurrences from tokenizer units; corrected the attribution of *Unzipping Zipf's law* to Sander Lestrade (2017); added Pilgrim and Hills (2021) to qualify the limitations of corpus splitting and residual estimator bias; restricted the synthetic plot to integer occurrence counts; updated the production handoff to make Day 01 the sole active target.
+- **Validation performed and results:** reviewed repository metadata rules and controlled domain registry; checked canonical target IDs against configured pages; verified the 2014 and 2017 source attributions and the 2021 estimator caveat against the papers. Quarto and browser workflows were skipped because the PR is still a draft; no rendered preview, screenshots, accessibility audit or novice review has been completed.
+- **Open defects / decisions:** rendered preview and page metadata validation remain pending; review the new source note's wording and the SVG in actual page context; obtain novice feedback and acceptance.
+- **Exact next action:** validate and accept Day 01 before beginning Day 02.
