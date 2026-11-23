@@ -57,14 +57,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 ## Les 24 cases
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">01 — 07</span>
 <div><h3>Du contexte aux représentations</h3><p>Comment un texte devient-il une entrée que le modèle peut traiter ?</p></div>
-:::
+::::
 
 <p class="advent-opening-note"><strong>Commencez ici.</strong> Les trois premières journées sont développées : une explication courte, un exemple guidé, une question de vérification et un lien vers la leçon de référence.</p>
 
-::: {.advent-grid .advent-grid-opening}
+:::: {.advent-grid .advent-grid-opening}
 ::: {.advent-card .advent-card-featured #jour-01}
 <div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · disponible</span></div>
 <p class="advent-card-kicker">LE POINT DE DÉPART</p>
@@ -86,9 +86,9 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Comment un tokenizer segmente-t-il une chaîne en unités ordonnées ?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-03.qmd">Ouvrir la case <span>→</span></a><a href="text-data.qmd">Leçon de référence</a></div>
 :::
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #jour-04}
 <div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">IDENTIFIER</p>
@@ -117,14 +117,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Pourquoi deux occurrences du même token peuvent-elles avoir des représentations différentes ?</p>
 <div class="advent-card-links"><a href="contextualized-representations.qmd">Lire la leçon <span>→</span></a><a href="exercises/contextualized-representations.qmd">S'exercer</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">08 — 12</span>
 <div><h3>Le calcul du Transformer</h3><p>Comment les états sont-ils transformés à l’intérieur des blocs ?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #jour-08}
 <div class="advent-card-top"><span class="advent-number">08</span><span class="advent-time">7 min</span></div>
 <p class="advent-card-kicker">ARCHITECTURE</p>
@@ -160,14 +160,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Comment les autres opérations du bloc transforment-elles les états ?</p>
 <div class="advent-card-links"><a href="transformer.qmd">Lire la leçon <span>→</span></a><a href="transformer-block-walkthrough.qmd">Voir le code</a><a href="exercises/transformer-block-walkthrough.qmd">S’exercer</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">13 — 18</span>
 <div><h3>Prédiction et génération</h3><p>Comment les états deviennent-ils une distribution, puis un token choisi ?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #jour-13}
 <div class="advent-card-top"><span class="advent-number">13</span><span class="advent-time">6 min</span></div>
 <p class="advent-card-kicker">SCORES DE SORTIE</p>
@@ -210,14 +210,14 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Pourquoi l’inférence distingue-t-elle le traitement initial du contexte et la génération token par token ?</p>
 <div class="advent-card-links"><a href="generation.qmd">Lire la leçon <span>→</span></a><a href="exercises/generation.qmd">S’exercer</a></div>
 :::
-:::
+::::
 
-::: {.advent-act-heading}
+:::: {.advent-act-heading}
 <span class="advent-act-number">19 — 24</span>
 <div><h3>Scoring et apprentissage</h3><p>Que change la présence d’une cible observée, et comment les paramètres apprennent-ils ?</p></div>
-:::
+::::
 
-::: {.advent-grid}
+:::: {.advent-grid}
 ::: {.advent-card #jour-19}
 <div class="advent-card-top"><span class="advent-number">19</span><span class="advent-time">8 min</span></div>
 <p class="advent-card-kicker">CIBLE OBSERVÉE</p>
@@ -260,7 +260,7 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 <p>Qu’est-ce qui modifie les paramètres, et qu’est-ce qui ne fait que mesurer le modèle ?</p>
 <div class="advent-card-links"><a href="training-loop.qmd">Lire la leçon <span>→</span></a><a href="evaluation-experimentale.qmd">Évaluer un modèle</a></div>
 :::
-:::
+::::
 
 <div class="advent-outro">
   <div>
