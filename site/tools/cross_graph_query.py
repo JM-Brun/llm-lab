@@ -612,7 +612,7 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     index = ProjectIndex.build(args.root, include_evidence=True)
     results = [query_concept(index, concept_id) for concept_id in args.concept]
-    print(json.dumps([asdict(result) for result in results], ensure_ascii=False, indent=2))
+    print(json.dumps([asdict(result) for result in results], ensure_ascii=False, indent=2))  # noqa: T201
 
 
 if __name__ == "__main__":
