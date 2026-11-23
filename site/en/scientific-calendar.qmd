@@ -1,0 +1,102 @@
+---
+title: "The LLM Lab scientific calendar"
+subtitle: "24 independent stories exploring the ideas, experiments, and results that illuminate language models."
+keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
+lang: en
+sidebar: en
+toc: false
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/scientific-calendar"
+scope: "Landing page for a collection of 24 independent scientific stories about mathematics, statistics, computer science, and language models."
+purpose: "Present the editorial promise, thematic shelves, and 24 topics without creating pedagogical dependencies between days."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/index"]
+  children: []
+related: ["en/learning-map", "en/llm-overview", "en/exercises"]
+tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
+-->
+
+# 24 days, 24 ideas to explore
+
+A surprising statistical law. A decades-old question about information. A numerical trick that makes a calculation possible. An experiment that challenges our intuition about learning.
+
+The LLM Lab scientific calendar offers **24 self-contained stories**, to be read in any order. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
+
+::: {.callout-note}
+**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. Editorial production moves forward one day at a time; each story will be published after scientific, pedagogical, and technical review.
+:::
+
+## A collection, not a progression
+
+- **One distinctive question**: a phenomenon, paradox, design decision, or research finding.
+- **Visible reasoning**: concrete examples and, when useful, an explained mathematical derivation.
+- **Critical perspective**: assumptions, limitations, counterexamples, and a clear distinction between theoretical results and empirical observations.
+- **An experiment to take away**: a short calculation, prediction, or modification to extend the reading.
+
+Allow about **10 minutes per story**, excluding further reading. The thematic shelves below help you browse the collection; they do not prescribe a reading order.
+
+## Language, information, and probability
+
+From word frequencies to the information carried by a message, these stories explore statistical regularities in language and the tools used to measure them.
+
+1. **Why does the word “the” appear everywhere?** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
+2. **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
+3. **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
+4. **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
+5. **Cross-entropy as a code length** — The cost of describing data with an imperfect probabilistic model.
+6. **Why add log-probabilities instead of multiplying probabilities?** — Likelihood, long sequences, and numerical stability.
+
+## Geometry, signals, and representations
+
+From vectors to frequencies, these stories connect machine-learning representations with ideas from geometry and signal processing.
+
+7. **Can meaning have a direction?** — The geometry of vector representations, famous analogies, and the limits of their interpretation.
+8. **The same word, two different worlds** — Polysemy and representation changes across contexts.
+9. **What does a sine wave have to do with word order?** — Frequencies, phases, and positional encodings through the lens of signal processing.
+
+## Mechanisms, computation, and optimization
+
+These stories begin with concrete computational problems: retrieving information, stabilizing activations, transmitting a learning signal, or choosing an update step.
+
+10. **Attention as a learned retrieval system** — A view of Q, K, and V inspired by information-retrieval systems.
+11. **Why divide by the square root of the dimension?** — Dot-product variance and the scaling of attention scores.
+12. **Softmax and the physics of a crowd** — Temperature, Boltzmann distributions, and probability concentration.
+13. **The triangular wall: preventing information leaks** — Causality, information access, and preventing leakage between past and future.
+14. **Why do deep networks keep residual connections?** — Identity paths, signal preservation, and gradient intuition.
+15. **Normalization: changing coordinates to make learning easier** — Mean, variance, LayerNorm, RMSNorm, and conditioning.
+16. **The chain rule: how does an error reach an early layer?** — Deriving backpropagation on a small network.
+17. **The learning-rate cliff** — Optimization geometry, curvature, and the trade-off between progress and instability.
+
+## Research, generalization, and systems
+
+From large-scale empirical phenomena to system-design choices, these stories ask what experiments really allow us to conclude.
+
+18. **Does temperature really make answers more creative?** — What flattening a distribution changes, and what it does not guarantee.
+19. **Top-k and top-p: where should the probability tail end?** — Two truncation policies compared on a constructed distribution.
+20. **Why can the most likely token produce a worse sentence?** — Local choices, sequence search, and decoding trade-offs.
+21. **When a model gets worse before it gets better** — Double descent and the limits of simple intuitions about generalization.
+22. **Do larger models become predictable?** — Scaling laws, extrapolation, and uncertainty in empirical relationships.
+23. **What if the model could look things up?** — External retrieval, memory, and retrieval-augmented generation.
+24. **Making a model smaller without retraining everything** — Quantization, rounding error, and memory–quality trade-offs.
+
+## Where does the edition stand?
+
+The list above is a proposed editorial slate, not a claim that all 24 stories are already available. Each story is prepared and checked before publication; topics may change if a story proves repetitive, insufficiently sourced, or less valuable than an alternative.
+
+The first story, about Zipf's law, is undergoing editorial review. The remaining stories will be developed in day order, but that production order does not impose a reading order.
+
+## Explore further
+
+The calendar opens up new perspectives; LLM Lab's resources let you choose how deeply to explore:
+
+- [Browse the concept and resource map](learning-map.qmd) to navigate topics freely.
+- [Read the language-model overview](llm-overview.qmd) to place the main mechanisms in context.
+- [Practice and experiment](exercises.qmd) to work through concepts from the main learning path.
+
+These resources are optional extensions: none is required to read a calendar story.
