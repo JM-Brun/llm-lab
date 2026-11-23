@@ -65,7 +65,7 @@ Editorial constraint:
 |---|---|---|
 | A scalar coordinate can be mapped to several sinusoidal features | Tancik et al.; elementary construction | Present the one-dimensional map as a simplified example, not the exact full paper implementation |
 | Explicit frequency features make selected oscillations directly available to a linear readout | Direct derivation in the article | State the limitation applies to a linear readout over the stated feature bank, not to every nonlinear MLP |
-| Deep networks in the studied settings tend to learn lower frequencies earlier | Rahaman et al. | Describe frequency-dependent learning speed and qualify architecture/problem scope |
+| Deep ReLU networks in the studied settings tend to learn lower frequencies earlier | Rahaman et al. | Describe frequency-dependent learning speed and qualify architecture/problem scope |
 | Fourier features can mitigate spectral bias in the studied coordinate-based MLP settings | Tancik et al. | Use “can help” and preserve the paper's task/domain scope |
 | Transformer positional encoding uses fixed sinusoidal frequencies added to token embeddings | Vaswani et al. | Do not call it a Fourier transform of the sentence |
 | The original sinusoidal design may help with longer positions | Vaswani et al. | Say “the authors hypothesized/motivated”; do not claim guaranteed extrapolation |
