@@ -143,15 +143,17 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 ### P1 — Strengthen Project Intelligence
 
 - [x] Re-read current ProjectIndex, coverage matrix, query CLI, metric registry and recent PRs before extending them (2026-11-23 audit).
-- [x] Validate the read-only ProjectIndex and opt-in evidence adapter against real repository data; PR #1535 tests five real concepts and explicit gap behavior. Full matrix/report integration is still pending.
-- [ ] Define explicit coverage states: present, absent, not assessed, not applicable and stale.
-- [ ] Distinguish structural presence from pedagogical sufficiency and scientific quality.
+- [x] Validate the read-only ProjectIndex, concept coverage matrix and opt-in evidence adapter against real repository data; PR #1535 tests five real concepts and explicit gap behavior. Broad Build/computation/source/Practice coverage remains unregistered.
+- [x] Define current states for the implemented matrix: present, missing, not_applicable, not_registered, needs_review and (for revision only) not_assessed.
+- [ ] Define a distinct stale state only after source freshness and invalidation semantics are specified; do not use absent as a synonym for not_registered.
+- [x] Document that structural presence, authored revision sufficiency, source evidence and scientific quality are different claims; no current coverage state is independent learner/scientific validation.
 - [ ] Add explainable diagnostics for concept coverage across Understand, Review, Practice, Build and Deepen.
-- [ ] Integrate the existing opt-in evidence projection into a separate evidence-path report where useful; do not relabel source mappings as scientific support. The current concept matrix and `report_project_index.py` still use the lightweight index and report Build, computation, sources and Practice as unregistered.
+- [x] Implement a separate opt-in concept-centred evidence-path query in `cross_graph_query.py`; it preserves exact evidence and explicit gaps without changing the lightweight concept matrix. The matrix and `report_project_index.py` continue to mark Build, computation, sources and Practice as not_registered where complete concept mappings do not exist.
 - [ ] Add computation-to-concept/page/resource mapping diagnostics.
 - [ ] Add provenance completeness diagnostics from source → extraction/claim → concept/page/artifact.
 - [ ] Add editorial duplication/complementarity diagnostics for calendar stories.
-- [ ] Ensure every finding reports exact supporting records/relations and never infers a missing relation from tag overlap.
+- [x] Ensure current concept-centred evidence paths/gaps and bilingual association findings expose exact supporting records/relations; never infer a missing relation from tag overlap.
+- [ ] Extend that evidence contract to future cross-registry diagnostics before making any finding blocking.
 - [ ] Benchmark runtime and maintenance cost before scaling to larger corpora.
 
 **Acceptance:** reproducible report with evidence paths, explicit unknown states and tests; no automatic metadata mutation.
@@ -196,7 +198,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 3. Complete the Q/K/V Practice pilot (PR #1558), then continue the bilingual 45-pair audit in bounded batches.
 4. Use #1233 to formalize the smallest cross-graph bridge/validation contract; reuse the closed scientific pilot #1237 and existing #512/#416 work.
 5. Render and scientifically/visually/novice-validate Day 06; only then consider Days 17 and 23 and a minimal edition model.
-6. Extend Project Intelligence with explicit unknown states and evidence-backed diagnostics; do not build a general recommendation engine yet.
+6. Extend Project Intelligence from the implemented state vocabulary and concept-centred evidence query to owned cross-registry diagnostics, a stale/freshness model and complete coverage mappings; keep recommendations deferred.
 7. Add new resource kinds and reader-facing views only when pilots show a concrete benefit.
 
 Do not launch all workstreams in parallel. Avoid broad metadata migrations before inventories and validators exist.
