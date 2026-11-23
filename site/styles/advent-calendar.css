@@ -77,7 +77,7 @@ main h2 { margin: 2.5rem auto 1.3rem; width: min(90%, 76rem); color: #142c28; fo
 .advent-card-top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .85rem; }
 .advent-number { color: #136653; font-family: "Instrument Serif", Georgia, serif; font-size: 2.35rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .advent-time { padding: .2rem .45rem; border-radius: 2rem; background: #edf2e5; color: #455d54; font-size: .7rem; font-weight: 650; white-space: nowrap; }
-.advent-card-kicker { margin-bottom: .45rem; color: #64816d; font-size: .63rem; letter-spacing: .1em; }
+.advent-card-kicker { margin-bottom: .45rem; color: #52685e; font-size: .63rem; letter-spacing: .1em; }
 .advent-card h4 { margin: 0 0 .55rem; color: #142c28; font-family: "Instrument Serif", Georgia, serif; font-size: 1.48rem; font-weight: 400; line-height: 1.08; }
 .advent-card > p:not(.advent-card-kicker) { flex: 1; margin: 0 0 1rem; color: #455d54; font-size: .84rem; line-height: 1.5; }
 .advent-card-links { display: flex; flex-wrap: wrap; gap: .35rem .8rem; padding-top: .65rem; border-top: 1px solid #e7ebe3; }
@@ -181,22 +181,22 @@ main h2 { margin: 2.5rem auto 1.3rem; width: min(90%, 76rem); color: #142c28; fo
   background: #f5f7ef;
 }
 .advent-mini-flow > div { display: grid; gap: .3rem; min-width: 0; text-align: center; }
-.advent-mini-flow > div span { color: #64816d; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.advent-mini-flow > div span { color: #52685e; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .advent-mini-flow > div strong { color: #173d32; font-size: .9rem; }
-.advent-mini-flow > b { color: #8a9e55; }
+.advent-mini-flow > b { color: #547a61; }
 .advent-prefix-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; padding: 0; list-style: none; counter-reset: prefix-step; }
 .advent-prefix-steps li { display: flex; min-width: 0; flex-direction: column; gap: .45rem; padding: .9rem; border: 1px solid #d4ddd4; border-radius: .75rem; background: #fffefa; counter-increment: prefix-step; }
 .advent-prefix-steps li::before { content: "0" counter(prefix-step); color: #136653; font-family: "Instrument Serif", Georgia, serif; font-size: 1.6rem; }
-.advent-step-label { color: #64816d; font-size: .67rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.advent-step-label { color: #52685e; font-size: .67rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
 .advent-prefix-steps strong { color: #173d32; font-size: .95rem; }
 .advent-prefix-steps small { color: #52685e; line-height: 1.45; }
 .advent-note { margin-top: 1.4rem; margin-bottom: 1.4rem; padding: 1rem 1.2rem; border-left: 3px solid #8a9e55; background: #edf2e5; color: #304b40; }
 .advent-tokenization-example { display: grid; justify-items: center; gap: .65rem; margin-top: 1.3rem; margin-bottom: 1.4rem; padding: 1.4rem; border: 1px solid #d4ddd4; border-radius: .85rem; background: #f5f7ef; }
 .advent-tokenization-source { color: #52685e; font-size: 1.05rem; }
-.advent-tokenization-example > span { color: #8a9e55; font-size: 1.5rem; }
+.advent-tokenization-example > span { color: #547a61; font-size: 1.5rem; }
 .advent-tokenization-tokens { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
 .advent-tokenization-tokens code { padding: .55rem .8rem; border: 1px solid #b7c8a9; border-radius: .5rem; background: #fffefa; color: #173d32; font-size: 1rem; }
-.advent-tokenization-example p { margin: 0; color: #64816d; font-size: .78rem; }
+.advent-tokenization-example p { margin: 0; color: #52685e; font-size: .78rem; }
 details.advent-answer { margin-top: 1rem; margin-bottom: 1.5rem; padding: .8rem 1rem; border: 1px solid #cbd8c5; border-radius: .7rem; background: #f7f8f2; }
 details.advent-answer summary { color: #136653; cursor: pointer; font-weight: 750; }
 details.advent-answer[open] summary { margin-bottom: .7rem; }
