@@ -1,6 +1,6 @@
 ---
 title: "The LLM Advent Calendar"
-subtitle: "24 short explorations to understand how a language model turns context into predictions, then learns from its errors."
+subtitle: "24 explorations to reconstruct an LLM's computation: from context to predictive distribution, then to generation, scoring, and learning."
 keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
@@ -52,38 +52,43 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <div class="advent-intro">
   <p class="advent-kicker">THE IDEA</p>
-  <p><strong>One precise question each day.</strong> Every card links to an LLM Lab lesson and, where available, a dedicated exercise page. The calendar provides a guiding thread; canonical pages remain the reference for explanations, demonstrations, and deeper study.</p>
+  <p><strong>One precise question each day.</strong> The first three doors contain short guided lessons directly in the calendar. The remaining 21 progressively open the route to canonical resources. Full explanations and exercises remain on their dedicated pages.</p>
 </div>
 
 ## The 24 doors
 
 ::: {.advent-act-heading}
 <span class="advent-act-number">01 — 07</span>
-<div><h3>From context to representations</h3><p>How does text become a numerical input the model can process?</p></div>
+<div><h3>From context to representations</h3><p>How does text become an input the model can process?</p></div>
+:::
+
+<p class="advent-opening-note"><strong>Start here.</strong> The first three days are fully guided: a short explanation, a worked example, a self-check, and a link to the canonical lesson.</p>
+
+::: {.advent-grid advent-grid-opening}
+::: {.advent-card advent-card-featured #day-01}
+<div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · ready</span></div>
+<p class="advent-card-kicker">THE STARTING POINT</p>
+<h4>What does an LLM predict?</h4>
+<p>What does the model compute from a prefix before selecting a token?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-01.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
+:::
+::: {.advent-card advent-card-featured #day-02}
+<div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · ready</span></div>
+<p class="advent-card-kicker">THE CONTEXT</p>
+<h4>What information does the model have?</h4>
+<p>Which prefix conditions the prediction, and when does the continuation join it?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-02.qmd">Open the door <span>→</span></a><a href="llm-overview.qmd">Canonical lesson</a></div>
+:::
+::: {.advent-card advent-card-featured #day-03}
+<div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · ready</span></div>
+<p class="advent-card-kicker">BREAKING DOWN TEXT</p>
+<h4>How does text become tokens?</h4>
+<p>How does a tokenizer segment a string into an ordered sequence of units?</p>
+<div class="advent-card-links"><a href="advent-calendar/day-03.qmd">Open the door <span>→</span></a><a href="text-data.qmd">Canonical lesson</a></div>
+:::
 :::
 
 ::: {.advent-grid}
-::: {.advent-card #day-01}
-<div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min</span></div>
-<p class="advent-card-kicker">THE STARTING POINT</p>
-<h4>What does an LLM predict?</h4>
-<p>What does a language model actually compute from a context?</p>
-<div class="advent-card-links"><a href="llm-overview.qmd">Read the lesson <span>→</span></a><a href="exercises/llm-overview.qmd">Practise</a></div>
-:::
-::: {.advent-card #day-02}
-<div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min</span></div>
-<p class="advent-card-kicker">THE CONTEXT</p>
-<h4>What information does the model have?</h4>
-<p>Which information can condition the next prediction?</p>
-<div class="advent-card-links"><a href="llm-overview.qmd">Read the lesson <span>→</span></a><a href="exercises/llm-overview.qmd">Practise</a></div>
-:::
-::: {.advent-card #day-03}
-<div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min</span></div>
-<p class="advent-card-kicker">BREAKING DOWN TEXT</p>
-<h4>How does text become tokens?</h4>
-<p>How does a tokenizer turn a character string into discrete units?</p>
-<div class="advent-card-links"><a href="text-data.qmd">Read the lesson <span>→</span></a><a href="exercises/text-data.qmd">Practise</a></div>
-:::
 ::: {.advent-card #day-04}
 <div class="advent-card-top"><span class="advent-number">04</span><span class="advent-time">5 min</span></div>
 <p class="advent-card-kicker">IDENTIFIERS</p>
