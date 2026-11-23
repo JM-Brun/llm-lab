@@ -109,13 +109,15 @@ The inventory's `not_assessed` value is an assessment state, not a claim that a 
 
 | ID | Metric and definition | Unit | Canonical source/version | Implementation |
 |---|---|---|---|---|
-| PIL-SOURCE-001 | Unique source IDs loaded by the opt-in evidence projection | source record | data/sources.yml, schema_version 1; `cross_graph_evidence.py` | available (opt-in) |
-| PIL-SOURCE-002 | Extraction records and extraction item IDs loaded by the opt-in evidence projection, counted separately | record or item | data/extractions/; `cross_graph_evidence.py` | available (opt-in); full-corpus item/locator report still needs refresh |
-| PIL-COMP-001 | Unique computational node IDs loaded by the opt-in evidence projection | node | data/computational-graph.yml, schema_version 1; `cross_graph_evidence.py` | available (opt-in) |
-| PIL-COMP-002 | Stored typed directed computational edges loaded by the opt-in evidence projection | edge | Same computational graph and adapter | available (opt-in) |
+| PIL-SOURCE-001 | Unique source IDs loaded by the opt-in evidence projection | source record | data/sources.yml, schema_version 1; opt-in `cross_graph_evidence.py` | available |
+| PIL-SOURCE-002 | Extraction records and extraction item IDs loaded by the opt-in evidence projection, counted separately | record or item | data/extractions/; opt-in `cross_graph_evidence.py` | available |
+| PIL-COMP-001 | Unique computational node IDs loaded by the opt-in evidence projection | node | data/computational-graph.yml, schema_version 1; opt-in `cross_graph_evidence.py` | available |
+| PIL-COMP-002 | Stored typed directed computational edges loaded by the opt-in evidence projection | edge | Same computational graph and adapter | available |
 | PIL-PRACTICE-001 | Reviewed typed page/concept-to-exercise, test or experiment associations only | association | No complete canonical crosswalk established | not_registered |
 | PIL-BUILD-001 | Unique Build milestone IDs in an approved machine-readable registry | milestone | docs/learning-path.md is narrative, not a validated milestone registry | not_registered |
 | PIL-BUILD-002 | Explicit milestone-to-page and milestone-to-code/test evidence associations | association | No complete machine-readable crosswalk established | not_registered |
+
+The source/computation inventory metrics are available through the opt-in evidence projection, not the default ProjectIndex report. The current 100-file extraction corpus still needs a refreshed full-corpus atomic-item and locator inventory; this does not change the separate concept-coverage dimensions, which remain `not_registered` until complete reviewed concept bridges exist.
 
 File presence, filename similarity, imports, test proximity and textual mentions do not create practice or Build associations.
 
