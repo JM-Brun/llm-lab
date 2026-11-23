@@ -64,22 +64,22 @@ tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level
 
 <p class="advent-opening-note"><strong>Commencez ici.</strong> Les trois premières journées sont développées : une explication courte, un exemple guidé, une question de vérification et un lien vers la leçon de référence.</p>
 
-::: {.advent-grid advent-grid-opening}
-::: {.advent-card advent-card-featured #jour-01}
+::: {.advent-grid .advent-grid-opening}
+::: {.advent-card .advent-card-featured #jour-01}
 <div class="advent-card-top"><span class="advent-number">01</span><span class="advent-time">6 min · disponible</span></div>
 <p class="advent-card-kicker">LE POINT DE DÉPART</p>
 <h4>Que prédit un LLM ?</h4>
 <p>Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-01.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
 :::
-::: {.advent-card advent-card-featured #jour-02}
+::: {.advent-card .advent-card-featured #jour-02}
 <div class="advent-card-top"><span class="advent-number">02</span><span class="advent-time">5 min · disponible</span></div>
 <p class="advent-card-kicker">LE CONTEXTE</p>
 <h4>De quoi le modèle dispose-t-il ?</h4>
 <p>Quel préfixe conditionne la prédiction, et quand la suite le rejoint-elle ?</p>
 <div class="advent-card-links"><a href="advent-calendar-day-02.qmd">Ouvrir la case <span>→</span></a><a href="llm-overview.qmd">Leçon de référence</a></div>
 :::
-::: {.advent-card advent-card-featured #jour-03}
+::: {.advent-card .advent-card-featured #jour-03}
 <div class="advent-card-top"><span class="advent-number">03</span><span class="advent-time">6 min · disponible</span></div>
 <p class="advent-card-kicker">DÉCOUPER LE TEXTE</p>
 <h4>Comment le texte devient-il des tokens ?</h4>
