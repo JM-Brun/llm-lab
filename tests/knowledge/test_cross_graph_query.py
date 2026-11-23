@@ -9,7 +9,6 @@ import pytest
 from cross_graph_query import query_concept
 from project_index import ProjectIndex
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
