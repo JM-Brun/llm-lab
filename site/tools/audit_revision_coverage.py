@@ -272,9 +272,7 @@ def build_revision_inventory(
         for resource_id in associated_resource_ids
         if resource_id in resource_by_id
     ]
-    missing_associated_resource_ids = sorted(
-        set(associated_resource_ids) - set(resource_by_id)
-    )
+    missing_associated_resource_ids = sorted(set(associated_resource_ids) - set(resource_by_id))
     associated_concept_ids = sorted(
         {
             concept_id
