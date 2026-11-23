@@ -76,7 +76,7 @@ Consider a deliberately artificial example. If the word at rank 1 occurs 1,000 t
 
 These are not measurements from an English corpus. They illustrate only the arithmetic consequence of the approximation with \(C=1000\) and \(\alpha=1\).
 
-![Illustrative rank-frequency curve under Zipf's law with alpha equal to one.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency width=95%}
+![Illustrative rank-frequency curve under Zipf's law with alpha equal to one.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency fig-alt="On logarithmic axes, the synthetic curve f(r)=1000/r falls from 1,000 occurrences at rank 1 to 1 occurrence at rank 1,000; its slope is −1." width=95%}
 
 *Synthetic example: on logarithmic axes, the relation \(f(r)=C/r\) becomes a straight line with slope \(-1\). A real corpus distribution is not required to follow this line exactly.*
 
@@ -100,7 +100,7 @@ The law is named after George Kingsley Zipf, who popularized this regularity in 
 
 However, it would be too strong to conclude that every lexical distribution follows an exact power law with exponent 1. Observed distributions show deviations, particularly at the ends of the ranking. Other models may describe some corpora better.
 
-Steven Piantadosi highlights an important statistical pitfall: if rank and frequency are estimated from the same sample, their errors are related. The traditional rank-frequency plot can then make the regularity look more convincing than it is, especially for rare words. Separating the data used to estimate ranks from the data used to estimate frequencies reduces this correlation. It does not, however, remove every estimation bias: later work shows that exponent estimators can remain biased, particularly when empirical ranks in the rare-word tail are uncertain.
+Steven Piantadosi highlights an important statistical pitfall: if rank and frequency are estimated from the same sample, their errors are related. A word that is overcounted by chance has a higher measured frequency and moves up the ranking, so its two plotted coordinates are linked. The traditional rank-frequency plot can then make the regularity look more convincing than it is, especially for rare words. Separating the data used to estimate ranks from the data used to estimate frequencies reduces this correlation. It does not, however, remove every estimation bias: later work shows that exponent estimators can remain biased, particularly when empirical ranks in the rare-word tail are uncertain.
 
 Zipf's law is therefore a **useful descriptive approximation**, not a universal explanation of the origin of language or a demonstrated causal mechanism. Several linguistic and statistical factors may contribute to the observed shape.
 
@@ -146,3 +146,7 @@ Language does not use all its words at the same frequency. Zipf's law provides a
 - [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — rank-frequency approximation, limits of simple fits and the same-sample estimation pitfall.
 - [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.\n- [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — historical book that popularized the law in language study.
+
+::: {.language-switch}
+**Language:** [Français](../fr/advent-calendar-story-day-01.qmd) · [English](advent-calendar-story-day-01.qmd)
+:::
