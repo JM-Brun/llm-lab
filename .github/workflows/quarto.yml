@@ -460,3 +460,33 @@ jobs:
           path: artifacts/site-browser-review/
           if-no-files-found: warn
           retention-days: 30
+
+  # Temporary repair job: synchronize the tracked generated map artifacts with
+  # their canonical Quarto metadata inputs. Remove after the first successful run.
+  regenerate_calendar_map_artifacts:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/advent-calendar-generated-artifacts' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Regenerate canonical learning-map artifacts
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+      - name: Commit generated artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/includes/generated-* site/learning-map-data-*.json site/knowledge-graph.jsonld
+          if git diff --cached --quiet; then
+            echo "No generated artifacts changed."
+          else
+            git commit -m "build(calendar): regenerate canonical learning-map artifacts"
+            git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          fi
