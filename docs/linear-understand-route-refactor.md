@@ -236,12 +236,12 @@ Do not flatten or delete page relations merely because the reader-facing sidebar
 The existing `site/tools/audit_revision_coverage.py` is extended rather than replaced. Its machine-readable output combines:
 - every published Understand/Build page record and its route membership;
 - all incoming and outgoing page-graph edges incident to those pages, with relation family and direction;
-- the direct associated-page closure, including revision aids and pages in Deepen, Practice, Build or Reference;
+- the direct associated-page closure, including revision aids, all pages with canonical route membership (regardless of destination), and pages in Deepen, Practice, Build or Reference;
 - full records from `data/resources.yml` for non-page resources associated with the affected pages or their direct page neighbors;
 - concept IDs associated with the same page neighborhood;
 - missing associated page/resource IDs, which must remain empty in a valid migration baseline.
 
-The inventory distinguishes the affected page set from its external associated pages. It does not recursively crawl the whole website or duplicate the concept/resource registries: it records the direct, typed neighborhood needed to plan and validate a page refactor. The JSON output is the machine-readable migration ledger; the Markdown output summarizes the coverage and edge topology.
+The inventory distinguishes the affected page set from its external associated pages. It records the complete guided-route membership counts separately from the narrower `understand_route` destination counts, so optional pages in Deepen are not silently omitted. It does not recursively crawl the whole website or duplicate the concept/resource registries: it records the direct, typed neighborhood needed to plan and validate a page refactor. The JSON output is the machine-readable migration ledger; the Markdown output summarizes the coverage and edge topology.
 
 Run it from the repository root:
 
