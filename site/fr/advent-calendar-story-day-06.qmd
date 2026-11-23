@@ -13,6 +13,7 @@ id: "fr/advent-calendar-story-day-06"
 summary: "Montre pourquoi transformer une coordonnée en plusieurs caractéristiques sinusoïdales rend explicites différentes échelles de variation."
 scope: "Explique les représentations sinusoïdales multi-fréquences et le biais spectral, avec le codage positionnel du Transformer comme application."
 purpose: "Distinguer une coordonnée brute, une banque de caractéristiques fréquentielles et la capacité d’un réseau à exploiter ces caractéristiques."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: null
   next: null
