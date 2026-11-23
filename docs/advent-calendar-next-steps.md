@@ -181,3 +181,16 @@ This log should record outcomes, not merely activity.
 - **Validation performed and results:** primary-source abstracts and paper descriptions checked; numerical examples and the linear-readout argument checked analytically; QMD math delimiters and dossier display blocks inspected at source level. No Quarto render, screenshot review, accessibility audit or novice review was performed in this session.
 - **Open defects / decisions:** the draft still needs word-count/timing validation with readers, rendered FR/EN desktop/mobile review, SVG verification, and scientific/editorial acceptance. It remains `status:planned` and outside the render list.
 - **Exact next action:** run the repository's Quarto and metadata checks on the revision branch; if they pass, inspect rendered FR/EN previews at desktop and mobile widths before deciding whether to publish Pilot A. Do not start Pilots B and C until this gate passes.
+ 
+## 9. Chronological production decision — Day 01
+
+- **Date:** 2026-11-23
+- **Branch:** `calendar/day01-zipfs-law`
+- **Files added:** French and English Day 01 story drafts; Day 01 source dossier; original synthetic rank-frequency SVG.
+- **Editorial subject:** “Why does the word ‘the’ appear everywhere?” / “Pourquoi le mot « de » revient-il si souvent ?”
+- **Angle:** Zipf's rank-frequency regularity, long-tailed lexical frequencies, the limits of power-law claims, and a carefully qualified implication for language-model training data.
+- **Anti-duplication:** this is a statistical-linguistics story, not a tokenization lesson. It distinguishes lexical word types/tokens from tokenizer tokens and links to canonical pages only as optional further reading.
+- **Validation performed:** claim ledger prepared; arithmetic examples checked; source-level paths and math delimiters inspected. No Quarto render, screenshot review, novice test, or accessibility audit performed.
+- **Status:** draft only; not added to the public calendar or render list.
+- **Production rule:** proceed chronologically by day number. Do not draft Day 02 until Day 01 has passed scientific, editorial, bilingual, rendered-layout, accessibility, and novice-review gates. Chronological production does not imply prerequisite reading; stories remain independently understandable.
+- **Next action:** render FR/EN Day 01 previews, verify the SVG and all links, then revise from the visual and novice review before opening Day 02.
