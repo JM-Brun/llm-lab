@@ -16,8 +16,8 @@ summary: "Une distinction entre le préfixe effectivement disponible au modèle 
 scope: "Définit le contexte immédiat comme le préfixe de tokens fourni à une étape donnée ; exclut la conception applicative du contexte."
 purpose: "Suivre la mise à jour du préfixe lorsqu'un token sélectionné est réinjecté pendant la génération."
 suggested_route:
-  previous: "fr/advent-calendar/day-01"
-  next: "fr/advent-calendar/day-03"
+  previous: "fr/advent-calendar-day-01"
+  next: "fr/advent-calendar-day-03"
 hierarchy:
   parents: ["fr/advent-calendar"]
   children: []
