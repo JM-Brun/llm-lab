@@ -162,6 +162,45 @@ def build_revision_inventory(
             "revision_aid_links": sum(len(page["revision_aids"]) for page in subset),
         }
 
+    route_membership_by_role: Counter[str] = Counter()
+    route_membership_by_language: dict[str, Counter[str]] = defaultdict(Counter)
+    route_membership_by_stage: dict[str, Counter[str]] = defaultdict(Counter)
+    route_pages_by_role: dict[str, set[str]] = defaultdict(set)
+    route_pages_by_language_and_role: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    for page_id, memberships in route_memberships.items():
+        language = page_id.split("/", 1)[0]
+        for membership in memberships:
+            role = membership["role"]
+            stage_id = membership["stage_id"]
+            route_membership_by_role[role] += 1
+            route_membership_by_language[language][role] += 1
+            route_membership_by_stage[stage_id][role] += 1
+            route_pages_by_role[role].add(page_id)
+            route_pages_by_language_and_role[language][role].add(page_id)
+
+    guided_route_counts = {
+        "membership_total": sum(route_membership_by_role.values()),
+        "membership_by_role": dict(sorted(route_membership_by_role.items())),
+        "unique_pages_by_role": {
+            role: len(page_ids) for role, page_ids in sorted(route_pages_by_role.items())
+        },
+        "membership_by_language": {
+            language: dict(sorted(counts.items()))
+            for language, counts in sorted(route_membership_by_language.items())
+        },
+        "unique_pages_by_language_and_role": {
+            language: {role: len(page_ids) for role, page_ids in sorted(role_pages.items())}
+            for language, role_pages in sorted(route_pages_by_language_and_role.items())
+        },
+        "membership_by_stage": {
+            stage_id: dict(sorted(counts.items()))
+            for stage_id, counts in sorted(route_membership_by_stage.items())
+        },
+    }
+    counts["guided_route"] = guided_route_counts
+
     topic_language_counts: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
     missing_topic_pages: list[dict[str, str]] = []
     unexpected_languages: list[dict[str, str]] = []
@@ -219,6 +258,7 @@ def build_revision_inventory(
         if page_id not in affected_page_ids
     }
     associated_page_ids.update(associated_page_roles)
+    associated_page_ids.update(set(route_memberships) - affected_page_ids)
     associated_page_records: list[dict[str, Any]] = []
     missing_associated_page_ids: list[str] = []
     page_fields = (
@@ -278,7 +318,7 @@ def build_revision_inventory(
     )
 
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -363,8 +403,16 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             status = "balanced" if item["balanced"] else "mismatch"
             lines.append(f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |")
         lines.append("")
+    guided_route = inventory["counts"]["guided_route"]
     lines.extend(
         [
+            "## Guided-route membership coverage",
+            "",
+            f"- Core lesson memberships: **{guided_route['membership_by_role'].get('core', 0)}** "
+            f"across **{guided_route['unique_pages_by_role'].get('core', 0)}** unique pages",
+            f"- Optional memberships: **{guided_route['membership_by_role'].get('optional', 0)}** "
+            f"across **{guided_route['unique_pages_by_role'].get('optional', 0)}** unique pages",
+            "",
             "## Page-graph edges incident to Understand/Build pages",
             "",
             "| Source | Family | Relation | Target |",
