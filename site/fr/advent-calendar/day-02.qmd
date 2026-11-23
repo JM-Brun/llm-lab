@@ -32,6 +32,7 @@ tags: ["type:concept-bridge", "destination:understand", "topic:context-and-prefi
   </nav>
   <div class="advent-day-progress" role="img" aria-label="Deuxième journée sur vingt-quatre"><span style="width: 8.3333%"></span></div>
   <p class="advent-day-kicker">LE CONTEXTE · 5 MINUTES</p>
+  <h1 class="advent-day-title">De quoi le modèle dispose-t-il ?</h1>
   <p class="advent-day-lead">Hier, nous avons vu que le modèle calcule une distribution pour le prochain token. Mais cette distribution dépend d'une entrée précise : <strong>le préfixe dont le modèle dispose à cet instant</strong>.</p>
 </div>
 
