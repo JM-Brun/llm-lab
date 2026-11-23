@@ -12,7 +12,7 @@ This document contains short calendar-sized explanations, not replacement lesson
 
 The French and English versions of days 01–03 are implemented as reader-facing pages: `site/fr/advent-calendar-day-01.qmd` through `site/fr/advent-calendar-day-03.qmd`, and the corresponding files under `site/en/`. The drafts in this document remain the editorial basis for the short explanations and examples; the canonical lesson pages remain authoritative for extended treatment.
 
-The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test. A post-merge browser audit found a colour-contrast issue in the landing-page closing CTA; the explicit CSS correction is in progress and must be verified by a fresh CI screenshot/audit run.
+The landing-page cards open the corresponding daily page. Each daily page links onward to its canonical lesson and dedicated exercise hub. The manifest records the daily page IDs. The pages have not yet undergone a novice usability test. A post-merge browser audit found a colour-contrast issue in the landing-page closing CTA. An explicit CSS correction and regenerated bilingual learning-map payloads are now committed; both still require a fresh CI/browser-audit run.
 
 ## Pilot design principles
 
@@ -1046,8 +1046,8 @@ The calendar landing page and guided pages for days 01–03 are now implemented 
 
 ## Post-merge review checklist
 
-- [ ] Regenerate and commit the bilingual learning-map artifacts from the canonical page metadata.
-- [ ] Rerun the full test suite; the post-merge run identified two stale generated-map-artifact failures (FR and EN).
+- [x] Regenerate and commit the bilingual learning-map artifacts from the canonical page metadata.
+- [ ] Rerun the full test suite; the previous post-merge run identified two stale generated-map-artifact failures (FR and EN), now regenerated.
 - [ ] Rerun the Quarto browser audit; verify the closing CTA contrast fix with axe and inspect fresh desktop/mobile captures.
 - [ ] Conduct a novice review of days 01–03 and record time-on-task, answerability of the self-check, transfer to a changed example, and usefulness of the canonical follow-up links.
 - [ ] Complete the planned content pilot on days 03, 09 (Q/K/V), and 21 (cross-entropy) before scaling the daily template.
