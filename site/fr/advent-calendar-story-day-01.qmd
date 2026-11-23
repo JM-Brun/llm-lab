@@ -88,7 +88,7 @@ Prenons un exemple volontairement artificiel. Si le mot de rang 1 apparaît 1 00
 
 Ces nombres ne sont pas des mesures d'un corpus français. Ils illustrent seulement la conséquence arithmétique de l'approximation avec \(C=1000\) et \(\alpha=1\).
 
-![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency.svg){#fig-advent-zipf-rank-frequency fig-alt="Sur des axes logarithmiques, la courbe synthétique f(r)=1000/r descend de 1 000 occurrences au rang 1 à 1 occurrence au rang 1 000 ; sa pente vaut −1." width=95%}
+![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency-fr.svg){#fig-advent-zipf-rank-frequency fig-alt="Sur des axes logarithmiques, la courbe synthétique f(r)=1000/r descend de 1 000 occurrences au rang 1 à 1 occurrence au rang 1 000 ; sa pente vaut −1." width=95%}
 
 *Exemple synthétique : sur des axes logarithmiques, la relation \(f(r)=C/r\) devient une droite de pente \(-1\). Une vraie distribution de corpus n'est pas tenue de suivre exactement cette droite.*
 
