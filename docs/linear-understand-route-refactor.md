@@ -258,6 +258,31 @@ uv run --with-requirements docs/requirements-history-validation.txt \
 
 For a migration comparison, capture the generated baseline before edits and regenerate it after each batch. Compare stable IDs and typed edges, not only aggregate counts. A page may legitimately change its `destination`, `hierarchy` or `suggested_route`; every such change must have an explicit rationale and preserve useful incoming/outgoing connections. Concept IDs and concept relations are invariant.
 
+### 6.2 Generated baseline findings (2026-11-23)
+
+The CI-generated JSON/Markdown inventory was produced from commit `b42be75fd368f997fc781a26da500b778bead435` (inventory schema v3). It is a dated baseline, not a new source of truth.
+
+| Measure | Generated result |
+|---|---:|
+| Published Understand pages | 46 (23 FR, 23 EN) |
+| Core route memberships | 40 (20 per language) |
+| Optional route memberships | 6 (3 per language) |
+| Published Build pages | 16 (8 per language) |
+| Bilingual Understand topics | 23 exact one-to-one pairs |
+| Typed revision-aid links to Understand pages | 50 across 40 pages |
+| Understand pages assessed `integrated_sufficient` | 46 |
+| Build pages assessed `integrated_sufficient` | 16 |
+| Page-graph edges incident to Understand/Build pages | 760 |
+
+The 760 directed page-graph edges decompose into 104 suggested-route edges (52 `next`, 52 `previous`), 188 hierarchy edges (94 `parents`, 94 `children`) and 468 `related` edges. These are directed metadata records, not 760 independent semantic relationships: reciprocal parent/child and previous/next declarations are represented explicitly. The inventory also captures incoming links from pages outside Understand/Build, which must be preserved when page destinations or hierarchy change.
+
+Two distinctions matter for the refactor:
+
+1. **Revision support is not the same as a companion link.** All 46 Understand pages are assessed `integrated_sufficient`, but only 40 pages have explicit revision-aid links (50 links in total). The six optional pages therefore should not be reported as missing revision support merely because they have no companion aid.
+2. **The page `suggested_route` is not the canonical twenty-lesson course.** In both languages it currently contains several independent chains. The long chain from the site index through the overview, representations, Transformer, logits, entropy, scoring and training omits the three core lessons on generation, in-context learning and context engineering; those form a separate generation/context chain. Separate chains also exist for Build, corpus preparation and post-training. Its order therefore differs from the pedagogical stage order in `data/guided-route.yml`.
+
+Consequently, the new main/review navigation must be projected from `data/guided-route.yml`, not reconstructed from `suggested_route`, Quarto sidebar indentation or page hierarchy. Keep `suggested_route` as its own authored reading-transition relation until each edge has been reviewed. Likewise, retain genuine page containment and all useful `related` links even when the reader-facing sidebar becomes flat.
+
 ## 7. Migration sequence
 
 Perform the refactor in small, reversible stages.
