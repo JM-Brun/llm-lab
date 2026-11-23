@@ -2,7 +2,7 @@
 title: "Pourquoi le mot « de » revient-il si souvent ?"
 subtitle: "Une loi statistique simple derrière une distribution de mots très inégale"
 description-meta: "Découvrir la loi de Zipf, les distributions à longue traîne et ce qu'elles impliquent — avec prudence — pour les données de langage."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
 ---
@@ -21,7 +21,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/text-data", "fr/tokenization-strategies"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
 *Histoire indépendante · environ 10 minutes · Jour 1 — brouillon pour relecture*
