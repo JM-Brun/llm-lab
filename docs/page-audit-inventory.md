@@ -2,7 +2,7 @@
 
 **Status:** cumulative record of bounded, dated audits. It is neither a complete site-wide certification nor a live operational status board.  
 **Started:** 2026-10-28  
-**Latest entry in this file:** 2026-11-16. Later Raschka chapter and appendix audits are recorded in [the full curriculum plan](full-curriculum-plan.md).  
+**Latest entry in this file:** 2026-11-24. Later Raschka chapter and appendix audits are recorded in [the full curriculum plan](full-curriculum-plan.md).  
 **Scope:** selected bilingual pages, page groups, source contributions, scientific claims, implementation evidence, and rendered/visual observations. Each entry states its own scope and evidence boundary.  
 **Method:** [Reader experience and editorial method](reader-experience-and-editorial-method.md).
 
@@ -1697,3 +1697,26 @@ The transfer was checked against the prior bilingual probability and decoding pa
 ### Evidence boundary
 
 This is a source/metadata/link and exercise-ownership audit. It is not a new mathematical derivation review, a final rendered visual audit, a manual screen-reader test, or an independent learner study. The existing inventory entries for logits/probabilities/likelihood/cross-entropy/loss remain the source of prior mathematical-review evidence. Final-head CI, rendered-link/browser review for the small bilingual link correction, manual accessibility and learner validation remain separate checks.
+
+
+## 2026-11-24: gradient and training-loop audit — source, numerical trace and Practice boundary
+
+**Scope.** Bounded FR/EN source and executable-example audit of the final core training path: loss gradient → parameter gradient → optimizer update → repeated training and held-out validation. This completes the specific open example checks noted in the earlier mathematical-chain inventory. It does not certify a full Transformer backward pass, checkpointing, distributed training or the unfinished end-to-end Build milestone.
+
+| Page pair | Source and numerical evidence | Decision |
+|---|---|---|
+| \`gradients.qmd\` (FR/EN) | The one-hot cross-entropy derivative is consistently stated as \(p_i-\mathbb{1}[i=y]\); its components sum to zero. The batch-mean form correctly adds \(1/|\mathcal{M}|\) over valid target positions and zero derivative for ignored logits. The text distinguishes this local logit derivative from parameter gradients and explains the flattened-logit/Jacobian view used by backpropagation. | **Keep.** The conceptual progression from local logit gradient to parameter gradient and optimizer update is explicit. The caveat that an ignored logit's zero derivative does not necessarily cut every gradient path through a hidden representation is important and correctly scoped. |
+| Gradient worked example | For \(p=(0.6,0.2,0.1,0.1)\) and target class 0, \(g_z=(-0.4,0.2,0.1,0.1)\), whose sum is zero. With \(h=(1,-1)\) and \(\eta=0.1\), the updated logits are \(z-0.2g_z\), giving changes \((+0.08,-0.04,-0.02,-0.02)\). A fresh softmax gives target probability \(0.626075\), consistent with the page's \(0.626\). | **Numerically verified.** The FR example uses the localized target token “Vous”; the EN example uses “They”. The same probabilities and gradient are preserved. |
+| Finite-difference check | A central difference with \(\epsilon=10^{-6}\) on the four-logit cross-entropy example was compared with the analytical gradient using the repository's documented loss convention. Maximum absolute discrepancy: approximately \(2.34\times10^{-10}\). | **Targeted check passed.** This validates this deterministic example only; it is not a general \`gradcheck\` of the full GPT backward pass. |
+| Gradient Practice companion | FR/EN companions ask about the \(p-y\) derivative, interpretation of finite-difference disagreement and step-size choice. The applied exercise compares two distributions with equal target loss but different non-target probabilities, then computes distinct parameter updates and next-token probabilities. The worked values \(0.537\) and \(0.540\) were independently recomputed. | **Keep.** It tests transfer from equal scalar loss to different gradient vectors and updates, rather than repeating the lesson's derivation. |
+| \`training-loop.qmd\` (FR/EN) | The runnable example uses the maintained \`cross_entropy_from_logits\` and \`cross_entropy_gradient\` functions in \`src/llm_lab/foundations/losses.py\`. It trains a 12-state lookup table with full-batch SGD on 60 sampled transitions and measures 400 held-out transitions. | **Numerically verified.** The same code and seed reproduce the bilingual narrative. |
+| Training-loop numerical output | Under NumPy 2.3.5 and seed 0, training loss is 2.485 at step 0 and 1.147 at step 300. Validation loss is minimized at step 100 (2.006), then reaches 2.162 at step 300. This matches the rounded FR/EN claims (2.485 → 1.15; 2.01 minimum; 2.16 final). | **Keep with current qualification.** The code asserts the qualitative pattern, not exact values; the prose correctly says exact values depend on seed/library version. |
+| Training-loop Practice companion | FR/EN pages cover optimizer versus gradient, overfitting, validation versus test, one SGD step, and an end-to-end transfer through representations, generation, observed-target scoring, loss, gradients and validation. | **Keep.** The transfer task explicitly uses the generated prefix for generation and the observed prefix for scoring, preserving the distinction established in the earlier route audit. |
+
+### Pedagogical boundary and remaining checks
+
+- The training-loop code is inside a collapsed **Further exploration → Implementation** section. It is a deliberately small Markov lookup-table experiment, not a Transformer implementation; the page explicitly states that limitation and keeps the full from-scratch training milestone in Build. Retain this as an optional experiment for now rather than moving it and losing its explanatory role.
+- The optimizer section correctly distinguishes the gradient, optimizer and learning rate. Adam/AdamW are described as adaptive first-order methods; the second moment is not confused with a Hessian or Newton update.
+- The code measures validation with fixed parameters; it does not update on validation data. The page distinguishes validation-based selection from final test-set assessment.
+- The earlier visual inventory still identifies the training loop as a candidate for one compact visual using this same numerical example. That is a separate rendered-pedagogy decision; do not add a generic training diagram or duplicate the code trace.
+- Rendered desktop/mobile inspection, manual screen-reader review and independent learner comprehension remain separate evidence. This source/code pass does not claim any of them.
