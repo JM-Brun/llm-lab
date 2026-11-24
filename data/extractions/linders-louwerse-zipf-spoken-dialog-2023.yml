@@ -1,0 +1,153 @@
+schema_version: 1
+source_id: linders-louwerse-zipf-spoken-dialog-2023
+scan:
+  accessed_at: "2026-11-24"
+  retrieval_method: direct-publisher-html
+  author_text:
+    status: partial
+    coverage: "Publisher article: abstract, formula definitions, introduction, spoken-dialog motivation, linguistic-unit taxonomy, corpus selection and sampling methods, selected results, cognitive-effort hypothesis, discussion and data-availability statement."
+    notes: ["The paper's main design and conclusions were inspected; not every result table and reference was audited."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["Figure captions were available in article context; image assets were not separately retrieved."]
+  code_data:
+    status: partial
+    coverage: "Data availability statement and supplementary-information link inspected."
+    notes: ["Underlying corpora and supplementary PDF were not downloaded or reanalysed; article says distributable data are available upon request."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Publisher page, DOI, PubMed record and supplementary-information entry."
+    notes: ["Referenced corpora and full citation network were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "Authors, DOI, journal, volume, pages, online publication date and CC BY 4.0 licence."
+    notes: []
+  rights:
+    status: partial
+    coverage: "Publisher states CC BY 4.0 for the article."
+    notes: ["Third-party content and figures require individual credit-line checks."]
+  unresolved_questions:
+    - "Inspect supplementary material and detailed result tables before making numerical claims."
+    - "Obtain data and annotations if attempting reproduction; access is by request according to the article."
+items:
+  - id: linders-louwerse-zipf-spoken-dialog-2023:unit-generalization
+    kind: result
+    summary: "The study extends rank-frequency analysis beyond written monologue and word unigrams. It examines spoken dialogues and units at word, utterance, syntactic, pragmatic and nonverbal levels, reporting generally good Zipf-formula fits while showing that the exponent varies more across units and corpora than the fit statistic alone suggests."
+    locator: {type: section, value: "Abstract; Introduction; linguistic units; results and discussion", label: "Beyond written word unigrams"}
+    evidence:
+      kind: empirical-study
+      confidence: well-supported
+      scope: "The selected spoken-dialog corpora, linguistic units, languages and annotation levels in this study."
+      assumptions: ["The corpus selection and annotation schemes provide the operational units used in the analysis."]
+      limitations: ["This is one multi-corpus study; it does not establish identical exponents or mechanisms across all spoken communication."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Reported study design and results recorded; no independent corpus analysis."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Does Zipf's law apply only to written word counts?"
+      explanatory_lens: generalization across communication modes and linguistic units
+      teaching_form: [comparison, empirical-study, taxonomy]
+      abstraction_level: intermediate-to-advanced
+      prerequisites: ["word types and tokens", "spoken dialogue", "basic frequency distributions"]
+      distinctive_value: "Broadens the unit of analysis from word unigrams to syntactic, pragmatic, utterance and nonverbal units."
+      limitations: ["The exponent is not constant across the different units and corpora."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The published lesson focuses on lexical word frequencies and does not cover spoken dialogue or nonverbal units."}
+      complementarity: {level: high, rationale: "Adds an important boundary check against treating the familiar written-word example as the whole phenomenon."}
+      pedagogical_value: {level: moderate, rationale: "Useful for showing that the empirical pattern depends on the chosen linguistic unit."}
+      applicability: {level: moderate, rationale: "Best as a short optional perspective, not a prerequisite for LLM tokenization."}
+      redundancy: {level: low, rationale: "The current page explicitly scopes itself to lexical words and does not discuss spoken interaction."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed empirical study with multiple corpora, though data were not independently accessed."}
+    classification:
+      tags: [topic:spoken-dialog, topic:linguistic-units, method:corpus-analysis]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The goodness-of-fit exercise introduces spoken dialogue and multiple linguistic units as the study context."
+  - id: linders-louwerse-zipf-spoken-dialog-2023:fit-vs-exponent
+    kind: limitation
+    summary: "Across the studied units and dialog corpora, fit statistics are often similarly high, but the estimated exponent varies substantially between linguistic units and sometimes between corpora. A good fit statistic therefore does not mean that the same exponent or the same communicative process is present everywhere."
+    locator: {type: section, value: "Results and discussion, paragraphs comparing R-squared and alpha", label: "Variation in exponent across units"}
+    evidence:
+      kind: reported-empirical-result
+      confidence: well-supported
+      scope: "The reported corpus samples and unit-specific frequency distributions."
+      assumptions: ["The fitting procedure and sampled observations are those specified in the article."]
+      limitations: ["Detailed numeric estimates should be taken from the paper's tables; they are not reproduced in this extraction."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Qualitative result recorded; full result-table audit remains outstanding."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Does a high R-squared mean that every corpus follows the same Zipf law?"
+      explanatory_lens: goodness-of-fit versus parameter stability
+      teaching_form: [contrast, misconception-correction]
+      abstraction_level: intermediate
+      prerequisites: ["curve fitting", "exponent", "goodness of fit"]
+      distinctive_value: "Separates the visual/fit quality of a power-law approximation from the stability and interpretation of its exponent."
+      limitations: ["The extraction intentionally omits detailed numerical comparisons pending table-level audit."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current lesson mentions exponent variation but does not distinguish it from goodness-of-fit statistics."}
+      complementarity: {level: high, rationale: "Adds a statistical interpretation lesson that complements Piantadosi's residual analysis."}
+      pedagogical_value: {level: high, rationale: "Helps prevent over-reading a high R-squared or visually straight curve."}
+      applicability: {level: moderate, rationale: "Could inform a challenge about comparing fitted models across corpora."}
+      redundancy: {level: low, rationale: "The distinction is not explicitly taught in the current exercises."}
+      evidence_quality: {level: moderate, rationale: "The result is peer-reviewed, but the full tables and supplement remain to be checked."}
+    classification:
+      tags: [topic:statistical-estimation, topic:spoken-dialog]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new bilingual exercise explicitly distinguishes goodness of fit from exponent stability across units and corpora."
+  - id: linders-louwerse-zipf-spoken-dialog-2023:cognitive-effort-hypothesis
+    kind: assumption
+    summary: "The authors formulate a cognitive-effort hypothesis: when an external task consumes more cognitive resources, speakers may economize their linguistic contributions, predicting a steeper Zipf curve and a larger alpha. The article presents this as a hypothesis and examines it across dialogue conditions; it does not turn the principle of least effort into a universal law."
+    locator: {type: section, value: "The cognitive effort hypothesis, theoretical framework and discussion", label: "Cognitive effort hypothesis"}
+    evidence:
+      kind: author-proposed-hypothesis-and-empirical-test
+      confidence: context-dependent
+      scope: "The study's operationalized dialogue conditions and linguistic-unit measures."
+      assumptions: ["Alpha is interpreted as a proxy for the concentration/economy of linguistic contributions under the study's model."]
+      limitations: ["The authors state that the hypothesis is not yet precise enough to yield an exact mathematical prediction for all conditions."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Hypothesis and scope recorded; the empirical tests and detailed effect sizes require a separate table-level audit."
+      corroborating_sources: [zipf-human-behavior-least-effort-1949]
+    pedagogical_profile:
+      learner_question: "What does the principle of least effort predict about language use?"
+      explanatory_lens: cognitive-resource trade-off in communication
+      teaching_form: [hypothesis, model-comparison]
+      abstraction_level: advanced
+      prerequisites: ["Zipf exponent", "cognitive load", "communication"]
+      distinctive_value: "Connects the exponent to a testable cognitive hypothesis rather than presenting least effort as an obvious explanation."
+      limitations: ["The relationship is study-specific and should not be generalized beyond the tested conditions."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The Day 01 story intentionally avoids explaining the causal origin and contains no operational cognitive-effort hypothesis."}
+      complementarity: {level: high, rationale: "Adds an empirically investigated theoretical framing to contrast with Lestrade's syntax–semantics model."}
+      pedagogical_value: {level: moderate, rationale: "Useful for teaching how explanatory principles are operationalized and tested."}
+      applicability: {level: moderate, rationale: "Optional depth only; it is not necessary for the core Zipf concept."}
+      redundancy: {level: low, rationale: "No cognitive-load mechanism is currently presented."}
+      evidence_quality: {level: moderate, rationale: "The paper reports empirical tests, but full tables, supplementary material and data are not yet audited."}
+    classification:
+      tags: [topic:principle-of-least-effort, topic:cognitive-load, method:empirical-hypothesis]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The explanatory-model exercise asks learners to state and bound the cognitive-load prediction."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Phase A only. This source adds a complementary boundary check (spoken dialog and multiple linguistic units) and a testable cognitive-effort hypothesis. Keep it optional; it does not justify changing the core lexical-frequency lesson or the tokenizer sequence."

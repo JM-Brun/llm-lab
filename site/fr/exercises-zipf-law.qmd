@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-zipf-law"
-summary: "Quatre exercices formatifs sur la loi de Zipf, la mise à l'échelle rang-fréquence, les unités lexicales et tokeniques, et l'interprétation empirique."
-scope: "Propose un entraînement approfondi et corrigé sur les calculs rang-fréquence, les graphiques log-log, les comptes dépendant du tokenizer et les limites des affirmations empiriques de loi de puissance."
+summary: "Sept exercices formatifs sur les calculs rang-fréquence, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et les explications proposées."
+scope: "Propose un entraînement approfondi et corrigé sur les calculs rang-fréquence, les graphiques log-log, les comptes dépendant du tokenizer, l'incertitude des rangs empiriques, la stabilité des exposants et la distinction entre description et mécanisme."
 purpose: "Calculer, interpréter et évaluer de manière critique les régularités rang-fréquence sans confondre statistiques lexicales, statistiques de tokens et explications causales."
 suggested_route:
   previous: null
@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-
 
 **Prérequis :** [la leçon sur la loi de Zipf](advent-calendar-story-day-01.qmd), [texte et données](text-data.qmd) et [stratégies de tokenisation](tokenization-strategies.qmd).
 
-**Périmètre :** quatre exercices formatifs couvrent les calculs rang-fréquence, l'interprétation log-log, les unités lexicales et tokeniques, ainsi que les limites des affirmations empiriques.
+**Périmètre :** sept exercices couvrent les calculs rang-fréquence, l'interprétation log-log, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et la comparaison d'explications.
 
 ### Calculer une fréquence à partir du rang {#ex-zipf-rank-frequency}
 
@@ -130,11 +130,101 @@ Un graphique rang-fréquence semble approximativement linéaire sur des axes log
 
 </details>
 
+
+### Rang empirique et rang probabiliste {#ex-zipf-empirical-probability-rank}
+
+Un vocabulaire comporte cinq formes lexicales. Les probabilités réelles (inconnues dans une étude ordinaire) et les comptes observés dans un échantillon de 100 occurrences sont ici fournis pour construire un exemple contrôlé :
+
+| Forme | Probabilité sous-jacente | Compte observé |
+|---|---:|---:|
+| A | 0,40 | 34 |
+| B | 0,30 | 38 |
+| C | 0,15 | 15 |
+| D | 0,10 | 9 |
+| E | 0,05 | 4 |
+
+1. Classez les formes selon leur probabilité sous-jacente.
+2. Classez-les selon leur compte observé.
+3. Le fait que B arrive en tête dans l'échantillon prouve-t-il que sa probabilité réelle est supérieure à celle de A ?
+4. Pourquoi cette différence importe-t-elle lorsqu'un estimateur traite les rangs observés comme s'ils étaient les rangs des probabilités sous-jacentes ?
+
+5. Un estimateur plus complexe réduit le biais sur des données synthétiques générées par une loi de Zipf, mais donne des résultats variables sur des livres réels. Peut-on en conclure qu'il est meilleur pour tous les corpus ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Classement sous-jacent : A, B, C, D, E.
+2. Classement empirique : B, A, C, D, E.
+3. Non. L'échantillonnage a produit une inversion entre A et B. Un classement observé est une statistique aléatoire, pas la révélation exacte de l'ordre des probabilités.
+4. Les rangs empiriques sont eux-mêmes estimés à partir des fréquences. Les confondre avec les rangs probabilistes revient à traiter comme connu un ordre qui est incertain. Les estimateurs fondés sur cette hypothèse peuvent être biaisés, notamment dans la longue traîne.
+
+5. Non. Un estimateur peut être performant lorsque les données suivent le modèle génératif supposé, sans être fiable lorsque ce modèle décrit mal les données réelles. Il faut distinguer le biais de l'estimateur sous un modèle donné et l'inadéquation du modèle lui-même.
+
+Cet exemple est construit pour l'exercice ; il ne provient pas d'un corpus réel.
+
+</details>
+
+### Un bon ajustement implique-t-il un exposant universel ? {#ex-zipf-fit-vs-exponent}
+
+Une étude de dialogues oraux rapporte que plusieurs unités linguistiques (mots, bigrammes, catégories syntaxiques, énoncés et actes de dialogue) présentent souvent un ajustement satisfaisant à une formule de Zipf. Elle observe néanmoins des variations de l'exposant $\alpha$ selon les unités et les corpus.
+
+1. Que mesure qualitativement la qualité d'ajustement, par exemple $R^2$ ?
+2. Que décrit l'exposant $\alpha$ dans $f(r)=C/r^\alpha$ ?
+3. Pourquoi des valeurs de $R^2$ comparables ne suffisent-elles pas à conclure que toutes les unités suivent la même distribution avec le même exposant ?
+4. Pourquoi faut-il éviter d'en déduire un mécanisme cognitif unique ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. $R^2$ quantifie, dans le cadre de l'ajustement choisi, la part de variation décrite par le modèle. Il ne mesure pas à lui seul la validité causale du modèle.
+2. $\alpha$ détermine la pente en coordonnées log-log et la vitesse à laquelle la fréquence décroît avec le rang.
+3. Deux distributions peuvent être approximativement bien décrites par une même famille de courbes tout en ayant des exposants différents. La qualité d'ajustement et la valeur du paramètre sont deux informations distinctes.
+4. L'ajustement décrit une régularité statistique. L'unité linguistique, le corpus et le protocole influencent les paramètres ; un mécanisme causal exige des prédictions et des tests indépendants.
+
+L'étude de Linders et Louwerse (2023) porte sur les corpus et unités qu'ils ont sélectionnés ; elle ne démontre pas une invariance universelle.
+
+</details>
+
+### Comparer une régularité et ses explications {#ex-zipf-explanatory-models}
+
+Deux travaux proposent des pistes explicatives différentes :
+
+- Lestrade (2017) étudie l'interaction entre la taille des classes syntaxiques et la spécificité/réutilisabilité sémantique.
+- Linders et Louwerse (2023) formulent une hypothèse selon laquelle une charge cognitive plus élevée pourrait conduire à des contributions linguistiques plus économes et à un exposant $\alpha$ plus élevé.
+
+1. Ces propositions sont-elles la loi descriptive elle-même ou des hypothèses sur son origine ?
+2. Quelle prédiction expérimentale découle de l'hypothèse de charge cognitive ?
+3. Pourquoi le modèle de Lestrade compare-t-il la syntaxe seule, la sémantique seule et leur combinaison ?
+4. Quelles preuves supplémentaires seraient nécessaires avant de présenter l'une de ces propositions comme une explication générale ?
+
+5. Que signifie, dans l'hypothèse sémantique, le compromis entre spécificité et réutilisabilité ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Ce sont des propositions explicatives. La loi rang-fréquence décrit une régularité observée ; ces travaux cherchent des mécanismes susceptibles de la produire.
+2. À unité et protocole comparables, une condition imposant une charge cognitive plus élevée devrait, selon l'hypothèse, conduire à un $\alpha$ plus élevé. Il faut contrôler les différences de corpus, de taille d'échantillon et de tâche.
+3. Cette comparaison permet de tester si chaque ingrédient suffit isolément ou si l'interaction est nécessaire dans le modèle étudié. L'auteur rapporte que les deux ingrédients combinés sont nécessaires dans son cadre.
+4. Il faudrait des prédictions discriminantes, des mesures indépendantes des variables invoquées, des réplications sur d'autres corpus et tâches, et une comparaison avec des explications concurrentes. Reproduire une courbe ne suffit pas.
+
+5. Un terme trop général distingue mal les référents ; un terme trop spécifique ne s'applique qu'à peu de situations. Le modèle propose qu'un équilibre entre pouvoir discriminant et réutilisation contribue à la fréquence. C'est une hypothèse du modèle, pas une loi universelle.
+
+Ces deux travaux proposent des cadres différents ; ils ne constituent pas une explication consensuelle unique.
+
+</details>
+
 ## Pour aller plus loin
 
 - [Revenir à la leçon sur la loi de Zipf](advent-calendar-story-day-01.qmd).
 - [Comparer avec les données textuelles](text-data.qmd) et [les stratégies de tokenisation](tokenization-strategies.qmd).
 - [Approfondir les probabilités et l'information](deepen.qmd).
+
+### Sources mobilisées dans les exercices
+
+- [Piantadosi (2014)](https://doi.org/10.3758/s13423-014-0585-6) — erreurs corrélées et structure résiduelle.
+- [Pilgrim & Hills (2021)](https://doi.org/10.1038/s41598-021-96214-w) — rang empirique, rang probabiliste et biais des estimateurs.
+- [Linders & Louwerse (2023)](https://doi.org/10.3758/s13423-022-02142-9) — unités linguistiques et variation de l'exposant.
+- [Lestrade (2017)](https://doi.org/10.1371/journal.pone.0181987) — modèle syntaxe–sémantique proposé.
 
 ::: {.language-switch}
 **Langue :** [Français](exercises-zipf-law.qmd#zipf-law) · [English](../en/exercises-zipf-law.qmd#zipf-law)

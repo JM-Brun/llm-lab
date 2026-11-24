@@ -35,8 +35,8 @@ days:
     page_status: in-progress
     lesson_scope: "Loi de Zipf, distributions rang-fréquence, longue traîne, corpus et limites empiriques."
     practice_page:
-      fr: "fr/exercises/zipf-law"
-      en: "en/exercises/zipf-law"
+      fr: "fr/zipf-law-exercises"
+      en: "en/zipf-law-exercises"
     experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
   - day: 2
     id: information-and-surprisal

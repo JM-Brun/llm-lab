@@ -14,3 +14,7 @@ collections:
     title: "Visual learning tools: Embedding Atlas and Neuronpedia"
     dossier_path: docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md
     status: active
+  - id: zipf-law
+    title: "Zipf's law and lexical frequency"
+    dossier_path: docs/source-reviews/zipf-law-learning-resources-2026-11.md
+    status: active

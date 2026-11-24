@@ -1,0 +1,145 @@
+schema_version: 1
+source_id: pilgrim-hills-bias-zipf-estimators-2021
+scan:
+  accessed_at: "2026-11-24"
+  retrieval_method: direct-publisher-html
+  author_text:
+    status: partial
+    coverage: "Scientific Reports article abstract, empirical-rank/probability-rank distinction, likelihood formulation, estimator-bias argument, ABC methods, book-analysis section and conclusion."
+    notes: ["The full HTML was available; extraction focuses on the estimator issue and its implications for natural-language data."]
+  figures_media:
+    status: partial
+    coverage: "Figures 1, 2, 5–8 were inspected through captions and surrounding text."
+    notes: ["Original figure assets were not separately retrieved and visually inspected."]
+  code_data:
+    status: partial
+    coverage: "Linked code/data repository and Project Gutenberg data workflow identified."
+    notes: ["Repository contents, scripts, raw data and supplementary PDF were not downloaded or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Publisher page, supplementary-information link and linked public code repository reference."
+    notes: ["The linked repository and underlying books were not independently audited."]
+  metadata:
+    status: partial
+    coverage: "Authors, journal, volume, article number, DOI, publication date and CC BY 4.0 rights statement."
+    notes: []
+  rights:
+    status: partial
+    coverage: "Article-level CC BY 4.0 licence confirmed."
+    notes: ["Third-party figures/assets require their own credit-line review before reuse."]
+  unresolved_questions:
+    - "Inspect the supplementary information and linked code repository; determine whether the ABC methods can be reproduced."
+    - "Assess the paper's estimator comparison against later work not covered by this pass."
+items:
+  - id: pilgrim-hills-bias-zipf-estimators-2021:empirical-rank-vs-probability-rank
+    kind: definition
+    summary: "The paper distinguishes an event's empirical rank in a finite sample from its rank in the unknown underlying probability distribution. They need not match: sampling noise can reorder events, so the nth most frequent observed word is not necessarily the nth most probable word."
+    locator: {type: section, value: "Introduction, Eqs. 1–2 and discussion of Fig. 2", label: "Empirical and probability ranks"}
+    evidence:
+      kind: formal-distinction-and-simulation
+      confidence: established
+      scope: "Finite-sample rank-frequency data generated from an unordered vocabulary of events."
+      assumptions: ["The underlying event probabilities are not known a priori."]
+      limitations: ["The paper studies the statistical estimation problem; it does not deny the empirical usefulness of rank-frequency plots."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Primary article distinction recorded; independent implementation review not performed."
+      corroborating_sources: [piantadosi-zipf-word-frequency-2014]
+    pedagogical_profile:
+      learner_question: "Why is the observed rank not the same as the true probability rank?"
+      explanatory_lens: sampling and order-statistic uncertainty
+      teaching_form: [definition, contrast, simulation]
+      abstraction_level: advanced
+      prerequisites: ["sampling", "probability", "empirical frequency"]
+      distinctive_value: "Names the hidden variable mismatch that makes naive rank-frequency likelihood fitting problematic."
+      limitations: ["The full likelihood derivation is too technical for the introductory lesson."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current Day 01 lesson mentions correlated errors but does not explicitly distinguish empirical and latent probability ranks."}
+      complementarity: {level: high, rationale: "Adds a sharper statistical explanation that extends Piantadosi's split-sample warning."}
+      pedagogical_value: {level: high, rationale: "Helps learners understand why a rank is itself estimated and uncertain."}
+      applicability: {level: high, rationale: "Strong basis for an advanced exercise or optional note on estimation."}
+      redundancy: {level: low, rationale: "The distinction is not currently explicit in the published lesson."}
+      evidence_quality: {level: high, rationale: "The paper formalizes the distinction and demonstrates it with simulation."}
+    classification:
+      tags: [topic:statistical-estimation, method:rank-frequency]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new bilingual exercise provides a synthetic sample where empirical and underlying probability ranks reverse, then asks why this matters for estimation."
+  - id: pilgrim-hills-bias-zipf-estimators-2021:maximum-likelihood-bias
+    kind: limitation
+    summary: "The paper argues that common maximum-likelihood estimators for power laws can be biased when applied to rank-frequency data because their likelihood assumes an a priori ordering, whereas lexical ranks are inferred from the same observed frequencies. The authors derive a likelihood that accounts for possible rank permutations, but its computation scales factorially and is intractable for realistic vocabularies."
+    locator: {type: section, value: "Abstract; Introduction; Model, Eqs. 3–6", label: "Likelihood and rank-estimation bias"}
+    evidence:
+      kind: mathematical-derivation-and-simulation
+      confidence: well-supported
+      scope: "The estimator setup and simulated rank-frequency data studied in the paper."
+      assumptions: ["The event set and sampling model are specified as in the paper."]
+      limitations: ["The exact likelihood's intractability is discussed for the paper's general model; the paper explores approximations rather than a universally exact practical estimator."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Mathematical argument recorded from the paper; no independent derivation or code audit."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Why is estimating the Zipf exponent statistically harder than drawing a straight line?"
+      explanatory_lens: mismatch between assumed and observed ranking process
+      teaching_form: [formal-distinction, derivation, limitation]
+      abstraction_level: advanced
+      prerequisites: ["maximum likelihood", "permutations", "sampling models"]
+      distinctive_value: "Shows that fitting an exponent is not just a regression problem because ranks are data-derived."
+      limitations: ["Detailed likelihood derivation is beyond the introductory audience."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "No current lesson explains the likelihood assumption behind common exponent estimators."}
+      complementarity: {level: high, rationale: "Adds a rigorous estimation perspective beyond the visual warning in Piantadosi."}
+      pedagogical_value: {level: moderate, rationale: "Most valuable for mathematically prepared readers and careful experimental design."}
+      applicability: {level: moderate, rationale: "Optional Deepen note or an advanced exercise, not core story content."}
+      redundancy: {level: low, rationale: "This estimator derivation is absent from the current page."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed derivation and controlled simulation, with explicit assumptions."}
+    classification:
+      tags: [topic:statistical-estimation, method:maximum-likelihood]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new empirical-rank exercise connects uncertain observed ranks to bias when estimators treat them as known probability ranks."
+  - id: pilgrim-hills-bias-zipf-estimators-2021:abc-not-a-universal-fix
+    kind: limitation
+    summary: "Approximate Bayesian computation reduces estimator bias on synthetic data generated from idealized Zipf distributions, but the authors find that results remain problematic for natural-language corpora because the assumed simple power-law data-generating model is itself inadequate. Different ABC variants also yield different estimates on books."
+    locator: {type: section, value: "Abstract; ABC results; Analysis of books; Discussion", label: "ABC results and model mismatch"}
+    evidence:
+      kind: reported-simulation-and-empirical-analysis
+      confidence: well-supported
+      scope: "Simulations from idealized power laws and the book samples analyzed from Project Gutenberg."
+      assumptions: ["The ABC comparison uses the simulated generative models and summary statistics specified in the paper."]
+      limitations: ["The study does not establish a universally best estimator; the authors emphasize model dependence and arbitrary choices."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Reported result and caveat recorded; scripts and raw data not independently reproduced."
+      corroborating_sources: [piantadosi-zipf-word-frequency-2014]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current lesson warns about estimation but does not discuss residual model dependence."}
+      complementarity: {level: high, rationale: "Shows why even a more sophisticated estimator cannot repair a misspecified generative model."}
+      pedagogical_value: {level: high, rationale: "Teaches the distinction between estimator bias under a model and model misspecification for natural language."}
+      applicability: {level: high, rationale: "Useful in an advanced exercise about what can and cannot be concluded from an estimated exponent."}
+      redundancy: {level: low, rationale: "The current exercise set does not yet distinguish estimator quality from generative-model adequacy."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed simulation and book-analysis results with explicit caveats."}
+    classification:
+      tags: [topic:statistical-estimation, topic:model-misspecification, method:approximate-bayesian-computation]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new empirical-rank exercise adds a question distinguishing estimator performance on synthetic Zipf data from model misspecification on natural-language books."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Phase A only. The most useful addition is the distinction between empirical rank and latent probability rank, followed by the warning that improved estimators still depend on the assumed generative model. These points could support advanced practice without expanding the introductory story."

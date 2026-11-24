@@ -1,0 +1,145 @@
+schema_version: 1
+source_id: lestrade-unzipping-zipfs-law-2017
+scan:
+  accessed_at: "2026-11-24"
+  retrieval_method: direct-publisher-html
+  author_text:
+    status: partial
+    coverage: "PLOS article abstract, introduction, syntax-only argument, semantic-specificity argument, model outline, conclusion, data-availability statement and supporting-information inventory."
+    notes: ["The full article was available, but this pass focused on the core proposed mechanism and its stated limitations."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["Figure and table captions were inspected in page context; original image assets were not opened."]
+  code_data:
+    status: partial
+    coverage: "Supporting-information inventory identifies R scripts, data files, alternative models and a derivation supplement."
+    notes: ["Supporting files and code were not downloaded or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Publisher page, supporting-information list and named corpus/data sources."
+    notes: ["External corpora and cited papers were not independently audited."]
+  metadata:
+    status: partial
+    coverage: "Author, DOI, journal, publication date, open-access status, CC BY licence and data-availability statement."
+    notes: []
+  rights:
+    status: partial
+    coverage: "Article-level CC BY 4.0 licence confirmed."
+    notes: ["No figure-specific reuse decision was made; third-party credit lines must be checked before reuse."]
+  unresolved_questions:
+    - "Download and inspect S1–S3 files and S1–S2 text, then determine whether the computational model can be reproduced."
+    - "Inspect figures and tables at full resolution before considering any visual reuse."
+items:
+  - id: lestrade-unzipping-zipfs-law-2017:syntax-class-size
+    kind: mechanism
+    summary: "The proposed syntactic contribution begins from word classes with very different vocabulary sizes but roughly comparable aggregate use: a small closed class can therefore have high average frequency per type, while a much larger open class spreads comparable use across many more types. In the paper's simulation, syntax/class-size differences alone produce frequency bands but do not align them into a natural-language-like Zipf distribution."
+    locator: {type: section, value: "Materials and methods, Syntax; Table 1 and Fig. 2 discussion", label: "Syntax and word-class size"}
+    evidence:
+      kind: model-description-and-corpus-analysis
+      confidence: context-dependent
+      scope: "The paper's Dutch, English and Hungarian word-class comparison and syntax-only simulation."
+      assumptions: ["The reported class-size and frequency relationships are representative of the selected corpora and annotation schemes."]
+      limitations: ["This is one component of the author's proposed explanation; syntax alone is explicitly insufficient in the model."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Primary research claim recorded; underlying corpus annotations and simulation not independently reproduced."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Why are function words often much more frequent than individual nouns?"
+      explanatory_lens: distribution of usage across linguistic classes of unequal size
+      teaching_form: [mechanism, comparison, simulation]
+      abstraction_level: intermediate
+      prerequisites: ["word classes", "frequency counts"]
+      distinctive_value: "Makes the aggregate frequency versus number-of-types distinction visible."
+      limitations: ["A class-size account alone does not generate the full observed distribution."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current Day 01 lesson describes the outcome but does not explain the proposed role of syntactic class sizes."}
+      complementarity: {level: high, rationale: "Adds a mechanism-level perspective distinct from the descriptive rank-frequency curve."}
+      pedagogical_value: {level: moderate, rationale: "Could help learners reason about why grammatical and lexical words occupy different frequency regimes."}
+      applicability: {level: moderate, rationale: "Potential optional model-comparison section; avoid adding causal complexity to the 10-minute core."}
+      redundancy: {level: low, rationale: "The syntactic class-size mechanism is not in the existing lesson."}
+      evidence_quality: {level: moderate, rationale: "Peer-reviewed model and cross-corpus analysis, but code/data have not been independently checked."}
+    classification:
+      tags: [topic:word-frequency, topic:syntactic-classes, method:computational-model]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new explanatory-model exercise names the syntactic class-size contribution and asks why it is compared with other ingredients."
+  - id: lestrade-unzipping-zipfs-law-2017:semantic-specificity-reusability
+    kind: mechanism
+    summary: "The semantic component proposes that words become reusable when they are specific enough to distinguish a referent in context but general enough to apply across multiple referents. The paper uses lexical taxonomy depth as an initial proxy and then a computational representation of semantic dimensions; neither extreme generality nor extreme specificity is predicted to maximize frequency."
+    locator: {type: section, value: "Materials and methods, Semantics; Fig. 3 and following model description", label: "Semantic specificity"}
+    evidence:
+      kind: model-description-and-corpus-analysis
+      confidence: context-dependent
+      scope: "The WordNet/Brown-corpus analysis and the paper's simulated semantic lexicon."
+      assumptions: ["Taxonomy depth is treated as an initial proxy for semantic specificity; the later simulation operationalizes semantics differently."]
+      limitations: ["The semantic representation is not equivalent to modern distributional word embeddings; the author explicitly distinguishes these approaches."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Model interpretation recorded; semantic operationalization and corpus analyses not independently replicated."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Why might neither very general nor very specific words be maximally frequent?"
+      explanatory_lens: trade-off between distinctiveness and reusability
+      teaching_form: [mental-model, example, model-description]
+      abstraction_level: intermediate
+      prerequisites: ["referent", "semantic category", "ambiguity"]
+      distinctive_value: "Offers a bounded semantic intuition: a word must distinguish enough without becoming unusably narrow."
+      limitations: ["The proposed account is not established as the unique or complete cause of Zipf's law."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "This explanatory trade-off is absent from the current introductory lesson."}
+      complementarity: {level: high, rationale: "It provides a semantic mechanism that can be contrasted with purely statistical explanations."}
+      pedagogical_value: {level: moderate, rationale: "May make the proposed mechanism intuitive, provided its status as a hypothesis remains explicit."}
+      applicability: {level: moderate, rationale: "Suitable for optional depth or a model-comparison exercise."}
+      redundancy: {level: low, rationale: "No comparable semantic specificity/reusability model appears in Day 01."}
+      evidence_quality: {level: moderate, rationale: "The source offers empirical proxies and a computational model, but no independent reproduction is included here."}
+    classification:
+      tags: [topic:semantics, topic:word-frequency, method:computational-model]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new explanatory-model exercise names the specificity/reusability trade-off as a proposed semantic contribution."
+  - id: lestrade-unzipping-zipfs-law-2017:joint-model-and-non-consensus
+    kind: limitation
+    summary: "The paper reports that its combined syntax-and-semantics model produces a near-Zipfian distribution while either ingredient alone does not. The author nevertheless states that the origins of Zipf's law remain elusive; the result is a proposed linguistically motivated account, not a settled explanation."
+    locator: {type: section, value: "Abstract and Conclusion", label: "Scope of the proposed explanation"}
+    evidence:
+      kind: author-stated-model-result-and-limitation
+      confidence: well-supported
+      scope: "The computational model and datasets reported in this PLOS ONE article."
+      assumptions: ["The model's operational definitions of syntax and semantics are accepted for the purpose of evaluating its internal result."]
+      limitations: ["The conclusion is bounded to this model and does not establish consensus or universal causality."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The article's own scope statement is captured; independent replication is outstanding."
+      corroborating_sources: [piantadosi-zipf-word-frequency-2014]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current lesson states that causal explanations are unsettled but does not name a concrete model."}
+      complementarity: {level: high, rationale: "Supplies a concrete hypothesis to contrast with the critical review's broader theory landscape."}
+      pedagogical_value: {level: moderate, rationale: "A worked example of how a mechanism can be proposed and tested without being treated as final."}
+      applicability: {level: high, rationale: "Could serve as an optional case study in scientific reasoning."}
+      redundancy: {level: low, rationale: "No specific syntax–semantics model is currently explained."}
+      evidence_quality: {level: moderate, rationale: "Peer-reviewed model, with supporting files identified but not executed."}
+    classification:
+      tags: [topic:zipfs-law, method:computational-model]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new explanatory-model exercise asks what the combined model claims and why it must not be presented as consensus."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Phase A only. Lestrade offers a complementary candidate mechanism (unequal syntactic class sizes plus semantic specificity/reusability) for optional depth. It should be contrasted with the critical review and not presented as an accepted causal explanation."
