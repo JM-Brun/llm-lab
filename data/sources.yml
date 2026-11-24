@@ -6869,3 +6869,242 @@ sources:
       pages: [fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/post-training, en/post-training, fr/scaling-laws, en/scaling-laws]
       concepts: [cross-entropy, next-token-prediction]
       audit_records: [docs/source-reviews/raschka-pretraining-not-plateauing-2026-11.md]
+
+  - id: piantadosi-zipf-word-frequency-2014
+    title: "Zipf's word frequency law in natural language: A critical review and future directions"
+    creators: ["Steven T. Piantadosi"]
+    source_type: paper
+    identifiers: {doi: "10.3758/s13423-014-0585-6", pmid: "24664880", pmcid: "PMC4176592"}
+    canonical_url: "https://doi.org/10.3758/s13423-014-0585-6"
+    publisher: "Psychonomic Bulletin & Review"
+    publication_date: "2014-03-25"
+    updated_date: null
+    language: en
+    version: "Published version; author-hosted PDF used for text inspection"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: link-only}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:zipfs-law, topic:word-frequency, topic:language-statistics, method:rank-frequency]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Author-hosted PDF: abstract, introduction, rank-frequency formalization, Zipf–Mandelbrot generalization, correlated-error critique, independent-split proposal, selected empirical-phenomena discussion, and conclusion"
+          - "Publisher/PMC bibliographic metadata and abstract"
+        limitations:
+          - "The complete paper was retrievable as PDF text, but this pass did not systematically audit every empirical subsection, reference, or all figure assets."
+          - "Figure assets were not separately retrieved and visually inspected; no figure reuse rights were established."
+          - "No independent replication or reanalysis of the underlying corpora was performed."
+          - "The independent-split proposal must be read alongside Pilgrim and Hills (2021), who identify residual rank-estimation bias."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/zipf-law-exercises, en/zipf-law-exercises]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md, docs/advent-calendar-pilots/day-01-source-dossier.md]
+  - id: lestrade-unzipping-zipfs-law-2017
+    title: "Unzipping Zipf's law"
+    creators: ["Sander Lestrade"]
+    source_type: paper
+    identifiers: {doi: "10.1371/journal.pone.0181987"}
+    canonical_url: "https://doi.org/10.1371/journal.pone.0181987"
+    publisher: "PLOS ONE"
+    publication_date: "2017-08-09"
+    updated_date: null
+    language: en
+    version: "Published open-access article"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: open}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:zipfs-law, topic:word-frequency, topic:language-statistics, method:computational-model]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, implementation, dataset, visualization]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "PLOS article: abstract, introduction, syntax-only model, semantic specificity discussion, data sources, and supporting-information inventory"
+          - "Publisher metadata, author, publication date, licence statement, and data-availability statement"
+        limitations:
+          - "All figures and tables are identified but their original assets were not retrieved and visually inspected."
+          - "Supporting scripts, datasets, alternative-model files and derivation supplements were not downloaded or executed."
+          - "The proposed syntax–semantics account is one model, not a settled consensus explanation."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md, docs/advent-calendar-pilots/day-01-source-dossier.md]
+  - id: pilgrim-hills-bias-zipf-estimators-2021
+    title: "Bias in Zipf's law estimators"
+    creators: ["Charlie Pilgrim", "Thomas T. Hills"]
+    source_type: paper
+    identifiers: {doi: "10.1038/s41598-021-96214-w"}
+    canonical_url: "https://doi.org/10.1038/s41598-021-96214-w"
+    publisher: "Scientific Reports"
+    publication_date: "2021-08-27"
+    updated_date: null
+    language: en
+    version: "Published open-access article"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: open}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:zipfs-law, topic:word-frequency, topic:statistical-estimation, method:maximum-likelihood, method:approximate-bayesian-computation]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, experiment, implementation, limitation]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Scientific Reports article: abstract, empirical-rank versus probability-rank distinction, likelihood formulation, estimator-bias argument, ABC methods, book-analysis discussion, and conclusion"
+          - "Publisher metadata, open-access CC BY 4.0 statement, supplementary-information link, and linked code/data repository reference"
+        limitations:
+          - "Supplementary information and linked code repository were not downloaded, audited or executed."
+          - "Figures were inspected through their captions and article context, not as separately retrieved full-resolution assets."
+          - "The article's critique is scoped to the rank-frequency estimation problem and its assumed generative models; it is not a general rejection of every power-law analysis."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/zipf-law-exercises, en/zipf-law-exercises]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md, docs/advent-calendar-pilots/day-01-source-dossier.md]
+  - id: linders-louwerse-zipf-spoken-dialog-2023
+    title: "Zipf's law revisited: Spoken dialog, linguistic units, parameters, and the principle of least effort"
+    creators: ["Guido M. Linders", "Max M. Louwerse"]
+    source_type: paper
+    identifiers: {doi: "10.3758/s13423-022-02142-9", pmid: "35840837", pmcid: "PMC9971120"}
+    canonical_url: "https://doi.org/10.3758/s13423-022-02142-9"
+    publisher: "Psychonomic Bulletin & Review"
+    publication_date: "2022-07-15"
+    updated_date: null
+    language: en
+    version: "Published version; volume 30 (2023), pages 77–101"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: open}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: link-only}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:zipfs-law, topic:spoken-dialog, topic:language-statistics, method:corpus-analysis]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, dataset, limitation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Publisher article: abstract, formula definitions, introduction, spoken-dialog motivation, linguistic-unit taxonomy, corpus and sampling methods, selected results, cognitive-effort hypothesis, discussion and data-availability statement"
+          - "Publisher supplementary-information link and CC BY 4.0 rights statement"
+        limitations:
+          - "Supplementary PDF was not downloaded or inspected."
+          - "Underlying dialog corpora and annotations were not independently obtained or reanalysed; data are available upon request according to the article."
+          - "Figures were not separately retrieved and visually inspected."
+          - "The cognitive-effort account is a hypothesis tested in the paper, not a universal causal law."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md]
+  - id: roda-wolfram-zipf-natural-languages-2024
+    title: "Zipf's Law for Natural Languages"
+    creators: ["Giovanna Roda"]
+    source_type: other
+    identifiers: {}
+    canonical_url: "https://demonstrations.wolfram.com/ZipfsLawForNaturalLanguages/"
+    publisher: "Wolfram Demonstrations Project"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Demonstration page accessed 2026-11-24; contributed 2024"
+    revision: null
+    licence: {identifier: null, url: "https://creativecommons.org/licenses/by-nc-sa/4.0/", status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:zipfs-law, topic:word-frequency, modality:interactive, method:log-log-visualization]
+      concept_ids: []
+    metadata:
+      technical_level: introductory
+      contribution_types: [visualization, pedagogy, experiment]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Wolfram Demonstrations page description, formula, controls, interaction model, contribution attribution, desktop note, and displayed CC BY-NC-SA licence label"
+        limitations:
+          - "The notebook/source code was not opened, executed or audited."
+          - "The demonstration is explicitly optimized for desktop; mobile usability was not evaluated."
+          - "The licence label does not establish a version-specific SPDX identifier or permission for reuse of any embedded assets."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/zipf-law-exercises, en/zipf-law-exercises]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md]
+  - id: zipf-human-behavior-least-effort-1949
+    title: "Human Behavior and the Principle of Least Effort: An Introduction to Human Ecology"
+    creators: ["George Kingsley Zipf"]
+    source_type: book
+    identifiers: {}
+    canonical_url: "https://books.google.com/books?id=1tx9AAAAIAAJ"
+    publisher: "Addison-Wesley Press"
+    publication_date: "1949-01-01"
+    updated_date: null
+    language: en
+    version: "1949 edition; bibliographic and table-of-contents metadata only"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: []
+      tags: [topic:zipfs-law, topic:principle-of-least-effort, topic:historical-context]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, historical-context]
+      audiences: [learner, researcher, educator]
+    scan_status: discovered
+    integration_status: not-reviewed
+    collections: [zipf-law]
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: discovered
+        inspected_scope:
+          - "Bibliographic records and table-of-contents metadata from Google Books, Open Library and library catalogues"
+        limitations:
+          - "The book's argument, relevant chapter text, figures and historical context have not been inspected; this record is a research lead only."
+    related:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
+      concepts: []
+      audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md]
