@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01", "fr/surprisal-information-content"]
 related: []
 tags:
   - "type:entry-point"
@@ -166,6 +166,7 @@ Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours d
 
 **Point d'entrée :** commencez par [la vraisemblance](vraisemblance.qmd) et [la loss](loss.qmd) ; les approfondissements relient ces objets sans les confondre.
 
+- [Information propre et surprisal](surprisal-information-content.qmd) — information d’un événement, surprisal conditionnel et règle de chaîne ; distinguer le score observé de l’entropie prédictive.
 - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
 - [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
 - [Centrage du score en RL hors politique](score-centering.qmd) — correction de la dérive du gradient lorsque les distributions du sampler et du trainer diffèrent.
