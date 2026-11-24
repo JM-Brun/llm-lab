@@ -129,6 +129,14 @@ $$
 
 The second quantity is infinite because $p$ assigns positive mass to a category to which $q$ assigns zero mass. In numerical computation, a stable log-softmax implementation helps avoid accidental underflow; it does not change this mathematical condition.
 
+A non-degenerate example makes the three terms in the identity explicit. Take $q=(0.5,0.5)$ and $p=(0.75,0.25)$:
+
+- $H(q)=-(0.5\\ln0.5+0.5\\ln0.5)\\approx0.693$ nats;
+- $H(q,p)=-(0.5\\ln0.75+0.5\\ln0.25)\\approx0.837$ nats;
+- $D_{\\mathrm{KL}}(q\\Vert p)=H(q,p)-H(q)\\approx0.144$ nats.
+
+Thus $0.837\\approx0.693+0.144$. With base-2 logarithms, the same quantities are measured in bits. This complements the one-hot example above: both categories contribute to cross-entropy for this target.
+
 The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
 
 ## 4. Why the logarithm? A justification under explicit assumptions
