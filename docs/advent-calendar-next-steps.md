@@ -3,7 +3,7 @@
 > **Mise à jour de migration — 24 novembre 2026.** La PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) est fusionnée et le rendu complet ainsi que le déploiement GitHub Pages post-fusion ont réussi. Les pages principales FR/EN pointent maintenant vers le calendrier scientifique. La PR de nettoyage remplace les huit anciennes pages du prototype par des redirections vers la nouvelle collection, retire leurs mini-leçons du graphe pédagogique et supprime le CSS spécifique devenu inutilisé. Les histoires indépendantes `advent-calendar-story-day-01` et `day-06` sont conservées. Cette mise à jour supersède les consignes de transition antérieures qui demandaient d'attendre le déploiement.
 
 **Last updated:** 2026-11-24  
-**Status:** PR #1593 exposes the bilingual Day 01 Zipf story as a public reading version and links it from both scientific-calendar landing pages. Publication is distinct from editorial acceptance: the non-specialist reader review, observed reading time, comprehension evidence and explicit accept/revise decision remain pending. PR #1594 adds the companion exercise pages; PR #1596 contains a Day 02 preview but must not advance to publication or merge before the Day 01 acceptance gate is satisfied. Production order is chronological; reader navigation remains non-linear.  
+**Status:** PR #1593 prepares the bilingual Day 01 Zipf story for public reading and links it from both scientific-calendar landing pages. Publication is distinct from editorial acceptance: the non-specialist reader review, observed reading time, comprehension evidence and explicit accept/revise decision remain pending. PR #1594 adds the companion exercise pages; PR #1596 contains a Day 02 preview but must not advance to publication or merge before the Day 01 acceptance gate is satisfied. Production order is chronological; reader navigation remains non-linear.  
 **Parent decision:** PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) — merged into `main`.
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
@@ -16,7 +16,7 @@ This document is an operational handoff for future sessions. It records what is 
 - [x] The former curriculum-summary design and manifest are marked historical/superseded.
 - [x] The bilingual scientific-calendar landing pages are the current calendar entry points.
 - [x] PR [#1565](https://github.com/JM-Brun/llm-lab/pull/1565) merged Day 01's French and English drafts, source dossier, original SVG, novice-review protocol and supporting language-switch/browser-review changes into `main`.
-- [x] Day 01's PR-only Quarto preview and FR/EN desktop/mobile browser review passed (run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295)); the pages remain `status:planned` and excluded from the public render list.
+- [x] Day 01's PR-only Quarto preview and FR/EN desktop/mobile browser review passed (run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295)); at that stage, the pages were `status:planned` and excluded from the public render list.
 - [x] PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) corrected the bilingual homepage page maps to point to the scientific calendar.
 - [x] PR [#1576](https://github.com/JM-Brun/llm-lab/pull/1576) retired the eight legacy prototype routes with redirects to the new calendar, retained no-JavaScript fallback links on old lesson routes, removed obsolete page-map entries and deleted the unused prototype CSS.
 - [x] The cleanup PR's secret scan and Python quality/domain checks passed. Its test-suite and Quarto render checks were still running at the last status inspection; verify the completed results before treating the migration as fully validated.
@@ -26,12 +26,12 @@ This document is an operational handoff for future sessions. It records what is 
 
 - [ ] No novice-reader review has been performed for Day 01.
 - [ ] No observed reading time, comprehension record or final editorial acceptance has been recorded for Day 01.
-- [x] Day 01 is published for public reading by PR #1593; final editorial acceptance remains pending.
+- [x] PR #1593 prepares Day 01 for public reading; the release is not live until the PR is merged and deployed. Final editorial acceptance remains pending.
 - [ ] Day 02 is not accepted for publication. A preview exists in stacked PR #1596; do not merge or publish it before the Day 01 acceptance gate.
 - [ ] The story-oriented manifest and thematic-shelf redesign remain deferred until a small set of accepted stories establishes their actual metadata needs.
 - [ ] The parked Day 06 draft remains unaccepted and must not cause the production sequence to skip ahead.
 
-**Current blocker:** Day 01 is publicly readable but not editorially accepted. A real non-specialist reader must complete [the review protocol](advent-calendar-pilots/day-01-novice-review.md). Record actual reading time, comprehension evidence and points of confusion; revise if needed and make an explicit accept/revise decision. Author self-review, source review and passing CI do not satisfy this gate. Keep the Day 02 preview in PR #1596 unmerged until this decision is recorded.
+**Current blocker:** Day 01's public-reading release is prepared in PR #1593 but is not live until merge and deployment; editorial acceptance remains pending. A real non-specialist reader must complete [the review protocol](advent-calendar-pilots/day-01-novice-review.md). Record actual reading time, comprehension evidence and points of confusion; revise if needed and make an explicit accept/revise decision. Author self-review, source review and passing CI do not satisfy this gate. Keep the Day 02 preview in PR #1596 unmerged until this decision is recorded.
 
 ## 2. Execution order
 
