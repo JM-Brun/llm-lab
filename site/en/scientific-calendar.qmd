@@ -45,8 +45,8 @@ Allow about **10 minutes per story**, excluding further reading. The thematic sh
 
 From word frequencies to the information carried by a message, these stories explore statistical regularities in language and the tools used to measure them.
 
-- **Day 01** — **Why does the word “the” appear everywhere?** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
-- **Day 02** — **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
+- **Day 01** — [**Why does the word “the” appear everywhere?**](advent-calendar-story-day-01.qmd) — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
+- **Day 02** — [**How many bits of surprise are in a sentence?**](surprisal-information-content.qmd) — Quantifying uncertainty and surprise with information theory.
 - **Day 03** — **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
 - **Day 13** — **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
 - **Day 17** — **Cross-entropy as a code length** — The cost of describing data with an imperfect probabilistic model.
