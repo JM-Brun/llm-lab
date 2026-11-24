@@ -117,6 +117,8 @@ Let $X_1$ and $X_2$ be independent uniform bits, and let $Y=X_1\oplus X_2$. The 
 
 This intuition is discussed by Xu et al. (ICLR 2020), [A Theory of Usable Information under Computational Constraints](https://openreview.net/forum?id=r1eBeyHFDH). A [complementary experiment on synthetic XOR-style tasks](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) illustrates the distinction; it is not an evaluation of a trained LLM.
 
+Unlike Shannon mutual information, predictive information depends on the predictor family and on the directed task from X to Y. It does not replace mutual information or mean that computation creates Shannon information: it quantifies what a specified predictor family can exploit.
+
 **Limitations:** this is an exact population-risk calculation on a small discrete example and a hand-specified finite family. No model is trained; it is neither a sample-based estimate, nor an architecture comparison, nor evidence that attention extracts more information than a bag-of-words model. A trained-model experiment would require train/test splits, a pre-specified model class and selection protocol, and an overfitting analysis.
 
 
@@ -145,6 +147,8 @@ h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
 \]
 
 For a first-order Markov chain, it is the conditional transition entropy \(H(X_t\mid X_{t-1})\). It can be much lower than marginal entropy \(H(X_t)\) when successive symbols are correlated.
+
+For a separate deterministic comparison of empirical marginal entropy H0, first-order conditional entropy H1, and the size of an actual zlib stream over three sequences, see the [complementary sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md). It uses a distinct protocol from the source-entropy simulation above.
 
 ## What this experiment does — and does not — show
 
