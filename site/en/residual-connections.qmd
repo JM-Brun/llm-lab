@@ -1,0 +1,83 @@
+---
+title: "Why do deep networks keep residual connections?"
+subtitle: "The identity path as a route for signals and gradients"
+description-meta: "A comparison of networks with and without identity paths to understand the role of residual transformations in optimization."
+keywords: ["type:deep-dive", "destination:deepen", "topic:residual-stream", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/residual-connections"
+summary: "Shows how a residual connection x + F(x) preserves an identity path and changes signal and gradient propagation, without guaranteeing stable learning by itself."
+scope: "Residual transformations x + F(x), identity path, Jacobian, and optimization intuition."
+purpose: "Decompose a residual transformation, interpret its Jacobian, and compare gradient paths with and without an identity connection."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/transformer-block-walkthrough", "en/gradients"]
+tags: ["type:deep-dive", "destination:deepen", "topic:residual-stream", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 11 · editorial skeleton*
+
+## Central question
+
+Shows how a residual connection x + F(x) preserves an identity path and changes signal and gradient propagation, without guaranteeing stable learning by itself.
+
+Residual transformations x + F(x), identity path, Jacobian, and optimization intuition.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Architecture comparison and Jacobian inspection
+
+When must every layer rebuild the whole representation?
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+Adding a correction instead of replacing the state
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Following signals and gradients
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+The identity path is not a universal guarantee
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
