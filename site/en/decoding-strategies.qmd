@@ -83,6 +83,16 @@ $$
 
 Temperature controls the spread of choices, not the model's intrinsic quality. A low temperature does not guarantee a truthful answer; a high temperature does not guarantee creativity. It can also affect probability calibration and sequence diversity.
 
+We reuse the base distribution from the [output probabilities lesson](probabilities.qmd) to isolate the effect of temperature without changing the logits.
+
+::: {.probability-example}
+| Candidate token | Logit | Exponential | Probability |
+|---|---:|---:|---:|
+| “They” | $\ln 6$ | 6 | 0.6 |
+| “Aqueducts” | $\ln 2$ | 2 | 0.2 |
+| “Nothing” | $0$ | 1 | 0.1 |
+| “Well” | $0$ | 1 | 0.1 |
+:::
 ### Explore the effect of temperature
 
 At temperature 1, “They” receives 60% in the course's illustrative example. Before moving to $\tau=0.5$, predict what will change: the probability distribution, the leading token, or both?
