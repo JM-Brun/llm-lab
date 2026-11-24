@@ -16,9 +16,9 @@ suggested_route:
   previous: "fr/loss"
   next: "fr/training-loop"
 hierarchy:
-  parents: ["fr/loss"]
+  parents: []
   children: []
-related: ["fr/gradients-exercises"]
+related: ["fr/loss", "fr/training-loop", "fr/gradients-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
