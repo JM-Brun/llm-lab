@@ -1,0 +1,83 @@
+---
+title: "Top-k et top-p : où couper la queue de probabilité ?"
+subtitle: "Deux règles de sélection, deux comportements selon la forme de la distribution"
+description-meta: "Une comparaison sur distributions construites pour comprendre la troncature top-k et le nucleus sampling top-p, y compris leurs cas limites."
+keywords: ["type:deep-dive", "destination:deepen", "topic:top-k-and-top-p", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/top-k-top-p-truncation"
+summary: "Compare top-k et top-p comme deux règles de troncature distinctes et montre comment leur sélection dépend de la forme de la distribution."
+scope: "Troncature top-k et nucleus sampling top-p, masse cumulée, cas limites et diversité."
+purpose: "Appliquer les deux règles à une distribution, expliquer leurs ensembles de candidats et identifier les cas où elles divergent."
+domain: "inference-generation"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/decoding-strategies", "fr/probabilites"]
+tags: ["type:deep-dive", "destination:deepen", "topic:top-k-and-top-p", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 15 · squelette éditorial*
+
+## Question centrale
+
+Compare top-k et top-p comme deux règles de troncature distinctes et montre comment leur sélection dépend de la forme de la distribution.
+
+Troncature top-k et nucleus sampling top-p, masse cumulée, cas limites et diversité.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Comparaison de décisions sur plusieurs distributions
+
+Une longue queue de candidats
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Garder k candidats ou une masse cumulée ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Comparer les ensembles retenus
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Cas limites et effets de bord
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
