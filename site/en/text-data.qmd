@@ -103,20 +103,16 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 [Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
 
+## Further exploration
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
 <summary>
-  <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Revisit the running example, the full pipeline, and the exercises.</span>
+  <span class="learning-resources__title">Further exploration</span>
+  <span class="learning-resources__description">Revisit the running example, the full pipeline, and the conceptual boundaries.</span>
 </summary>
 ::: {.learning-resources__content}
-
-### Encoding the prefix and continuation
-
-The film replies name aqueducts, sanitation, roads, and irrigation. Several members of the group speak in turn. To trace a single-speaker continuation, use “They built roads between distant towns.” Encode the prefix and this continuation separately with the tokenizer being studied to compare the splits. The continuation is absent from the context the model uses at the first generation step.
-
-**Success criterion:** each ID list decodes exactly to its source text, the prefix and continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
 
 ### From Unicode text to contextual representations
 
