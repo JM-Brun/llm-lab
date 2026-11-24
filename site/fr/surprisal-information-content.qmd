@@ -1,0 +1,206 @@
+---
+title: "Combien de bits contient la surprise d’un événement ?"
+subtitle: "Information propre, surprisal et probabilités conditionnelles"
+description-meta: "Comprendre pourquoi un événement rare porte davantage d'information au sens de Shannon, distinguer surprisal et entropie, et relier ces notions à la prédiction du prochain token."
+keywords: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:fr", "status:published"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/surprisal-information-content"
+summary: "Introduit l'information propre d'un événement et le surprisal, puis les relie à l'entropie, aux probabilités conditionnelles et à la prédiction autorégressive."
+scope: "Définit I(x)=-log p(x), explique l'additivité pour des événements indépendants et la règle de chaîne pour les séquences dépendantes, puis distingue le surprisal observé de l'entropie prédictive."
+purpose: "Calculer l'information propre d'un événement, interpréter ses unités et relier le surprisal d'un token observé au score probabiliste d'une séquence."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/deepen"]
+  children: []
+related: ["fr/entropy", "fr/vraisemblance", "fr/cross-entropy", "fr/language-modeling-math", "fr/experience-information-theory"]
+tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:fr", "status:published"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 2 · environ 10 minutes*
+
+Cette page est un aperçu en cours de rédaction. Sa validation scientifique et pédagogique reste à réaliser.
+
+## Une surprise n'est pas une émotion
+
+Imaginez deux événements :
+
+- un événement presque certain, auquel vous attribuez une probabilité de $0{,}99$ ;
+- un événement rare, auquel vous attribuez une probabilité de $1/100$.
+
+Le second vous surprend davantage si vous ne connaissez que cette distribution. Mais comment quantifier cette différence ? Peut-on dire qu'un événement porte « deux fois plus d'information » qu'un autre ?
+
+La théorie de l'information donne une réponse précise : l'information propre (*self-information*) d'un événement dépend de sa probabilité. Plus l'événement est improbable, plus son surprisal est élevé.
+
+Cette quantité ne mesure ni l'importance émotionnelle d'un événement, ni sa vérité, ni sa richesse sémantique. Elle mesure sa rareté relativement à une distribution probabiliste explicitement choisie.
+
+## Mesurer l'information propre d'un événement
+
+Pour un événement $x$ de probabilité $p(x)>0$, on définit son information propre par :
+
+$$
+I(x)=-\log_b p(x).
+$$
+
+La base $b$ fixe l'unité :
+
+- $b=2$ : bits ;
+- $b=e$ : nats ;
+- $b=10$ : hartleys.
+
+Avec des logarithmes en base 2 :
+
+| Probabilité de l'événement | Information propre |
+|---:|---:|
+| $1$ | $0$ bit |
+| $1/2$ | $1$ bit |
+| $1/4$ | $2$ bits |
+| $1/8$ | $3$ bits |
+| $1/16$ | $4$ bits |
+| $1/100$ | environ $6{,}64$ bits |
+
+Un événement certain apporte zéro bit d'information au sens de cette définition : il ne réduit aucune incertitude sur ce qui va se produire. Un événement de probabilité nulle a un surprisal infini dans le modèle idéal ; en pratique, cela signale souvent qu'un modèle attribue zéro probabilité à une observation qu'il doit pourtant prendre en compte.
+
+## Pourquoi utiliser un logarithme négatif ?
+
+La définition satisfait trois propriétés utiles.
+
+1. **Monotonie inverse :** si la probabilité diminue, l'information propre augmente.
+2. **Non-négativité :** pour $p(x)\in(0,1]$, on a $I(x)\geq 0$.
+3. **Additivité pour des événements indépendants :** si $X$ et $Y$ sont indépendants,
+
+$$
+\begin{aligned}
+I(x,y)
+&=-\log_2 p(x,y)\\
+&=-\log_2\bigl(p(x)p(y)\bigr)\\
+&=I(x)+I(y).
+\end{aligned}
+$$
+
+Cette additivité est une raison centrale du choix logarithmique : les probabilités se multiplient pour des événements indépendants, tandis que leurs informations propres s'additionnent.
+
+Attention : l'additivité simple ci-dessus suppose l'indépendance. Pour des événements dépendants, il faut utiliser des probabilités conditionnelles.
+
+## Des événements aux séquences : la règle de chaîne
+
+Pour deux événements quelconques :
+
+$$
+p(x,y)=p(x)\,p(y\mid x).
+$$
+
+Leur information propre conjointe devient :
+
+$$
+I(x,y)=I(x)+I(y\mid x),
+$$
+
+où $I(y\mid x)=-\log_2 p(y\mid x)$ est l'information apportée par $y$ une fois $x$ connu.
+
+La même relation s'étend à une séquence :
+
+$$
+p(x_1,\ldots,x_T)
+=\prod_{t=1}^{T}p(x_t\mid x_{<t}),
+$$
+
+puis, en prenant le logarithme négatif :
+
+$$
+I(x_1,\ldots,x_T)
+=\sum_{t=1}^{T}-\log_2 p(x_t\mid x_{<t}).
+$$
+
+L'information propre d'une séquence est donc la somme des surprisals conditionnels de ses éléments. Il ne faut pas remplacer ces probabilités conditionnelles par des probabilités marginales : le contexte change la prédiction.
+
+### Exemple : trois tokens observés
+
+Supposons qu'un modèle attribue successivement les probabilités conditionnelles suivantes aux tokens réellement observés :
+
+| Position | Probabilité du token observé | Surprisal |
+|---:|---:|---:|
+| 1 | $1/2$ | $1$ bit |
+| 2 | $1/4$ | $2$ bits |
+| 3 | $1/8$ | $3$ bits |
+
+La probabilité de la séquence observée est :
+
+$$
+p(x_1,x_2,x_3)=\frac12\times\frac14\times\frac18=\frac1{64}.
+$$
+
+Son surprisal total vaut donc :
+
+$$
+-\log_2(1/64)=6\text{ bits}=1+2+3.
+$$
+
+Les six bits décrivent le score de cette séquence sous le modèle considéré. Ils ne sont pas l'entropie de la distribution du modèle.
+
+## Surprisal observé et entropie prédictive : deux questions différentes
+
+Fixons un contexte $c$. Un modèle de langage produit une distribution sur les tokens possibles :
+
+$$
+p_\theta(v\mid c),\qquad v\in\mathcal V.
+$$
+
+Deux quantités doivent être distinguées.
+
+- **Surprisal du token observé :** si la cible réelle est $y$, alors $-\log p_\theta(y\mid c)$ mesure le score de cet événement particulier.
+- **Entropie prédictive :** $H(p_\theta(\cdot\mid c))$ moyenne le surprisal sur tous les tokens possibles selon la distribution prédite.
+
+$$
+H_b(X\mid c)
+=-\sum_{v\in\mathcal V}p_\theta(v\mid c)
+\log_b p_\theta(v\mid c).
+$$
+
+Le surprisal est une valeur associée à une issue observée. L'entropie est une espérance avant de savoir quelle issue sera observée. Une cible très improbable peut avoir un surprisal élevé même si la distribution entière a une entropie faible.
+
+Pour approfondir cette distinction, consultez la leçon [Entropie : incertitude sur le prochain token](entropy.qmd). La [vraisemblance](vraisemblance.qmd) formalise le score d'une séquence observée, et l'[entropie croisée](cross-entropy.qmd) relie une distribution cible à une distribution prédite.
+
+## Ce que le surprisal dit — et ne dit pas — sur un LLM
+
+Dans un modèle autorégressif, le surprisal conditionnel d'un token observé est une contribution locale à la log-vraisemblance négative de la séquence, dans la base logarithmique choisie. Additionner ces contributions donne le score de la séquence, sous réserve des conventions retenues pour les positions évaluées.
+
+Cette lecture est utile pour comprendre :
+
+- pourquoi un token fréquent dans un contexte donné reçoit souvent un surprisal plus faible ;
+- pourquoi une continuation inattendue sous le modèle reçoit un surprisal plus élevé ;
+- comment les scores locaux s'additionnent le long d'une séquence ;
+- pourquoi la tokenisation compte : le texte est découpé en unités différentes selon le tokenizer, et les surprisal « par token » ne sont pas directement comparables sans préciser cette unité.
+
+Mais le surprisal n'est pas une mesure directe de la qualité d'une réponse. Un énoncé faux mais fréquent sous le modèle peut avoir un surprisal faible ; une formulation vraie mais rare peut avoir un surprisal élevé. Il mesure l'adéquation probabiliste à une observation, pas sa véracité.
+
+## Expérimenter
+
+La page [Expérience — Entropie, KL et compression prédictive](experience-information-theory.qmd) permet de manipuler des distributions synthétiques et de vérifier les relations entre entropie, entropie croisée, divergence KL et longueurs de code.
+
+Pour aller plus loin dans la pratique, comparez le surprisal de plusieurs événements sous une même distribution, puis modifiez la distribution sans changer l'événement observé. Vous verrez que le surprisal dépend du modèle probabiliste choisi.
+
+## À retenir
+
+- L'information propre d'un événement est $I(x)=-\log p(x)$.
+- Une probabilité plus faible correspond à un surprisal plus élevé.
+- L'unité dépend de la base du logarithme : bits en base 2, nats en base $e$.
+- Le surprisal d'une séquence se décompose en somme de surprisals conditionnels.
+- Le surprisal observé n'est pas l'entropie prédictive.
+- Pour un LLM, ces quantités dépendent du contexte, du modèle et de l'unité de tokenisation.
+
+## Sources et prolongements
+
+- [Shannon (1948), *A Mathematical Theory of Communication*](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) — fondements de l'entropie, de l'incertitude et de la structure statistique des sources ; [version PDF](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- [Shannon (1948), partie II](https://doi.org/10.1002/j.1538-7305.1948.tb00917.x) — suite du cadre mathématique de la théorie de la communication.
+
+::: {.language-switch}
+**Langue :** [Français](surprisal-information-content.qmd) · [English](../en/surprisal-information-content.qmd)
+:::
