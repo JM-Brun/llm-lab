@@ -26,17 +26,17 @@ Enfin, il souhaiterait voir la même courbe en fonction des FLOPs d'entraînemen
 
 L'article de Jakub Pachocki décrit la perplexité comme une mesure de la qualité moyenne de prédiction du prochain token. OpenAI indique suivre une série sur un jeu de données interne de code, conservé sous un snapshot fixe. Le texte explique que la log-perplexité est suivie en pratique sous la forme de la cross-entropy moyenne.
 
-Pour une séquence évaluée (x_{1:T}), avec une convention de logarithme naturel :
+Pour une séquence évaluée \(x_{1:T}\), avec une convention de logarithme naturel :
 
-[
-operatorname{CE}_{mathrm{eval}}
-= -rac{1}{T}sum_{t=1}^{T}
-log p_	heta(x_tmid x_{<t}),
-qquad
-operatorname{PPL} = exp(operatorname{CE}_{mathrm{eval}}).
-]
+\[
+\operatorname{CE}_{\mathrm{eval}}
+= -\frac{1}{T}\sum_{t=1}^{T}
+\log p_\theta(x_t\mid x_{<t}),
+\qquad
+\operatorname{PPL} = \exp(\operatorname{CE}_{\mathrm{eval}}).
+\]
 
-Ainsi, (log(operatorname{PPL})=operatorname{CE}_{mathrm{eval}}). Avec des logarithmes en base 2, la perplexité correspondante est (2^{operatorname{CE}_{2}}). Il faut donc toujours préciser la base du logarithme et la convention utilisée.
+Ainsi, \(\log(\operatorname{PPL})=\operatorname{CE}_{\mathrm{eval}}\). Avec des logarithmes en base 2, la perplexité correspondante est \(2^{\operatorname{CE}_{2}}\). Il faut donc toujours préciser la base du logarithme et la convention utilisée.
 
 Une valeur plus faible signifie que le modèle attribue en moyenne une probabilité plus élevée aux tokens effectivement observés dans le corpus d'évaluation. Elle ne signifie pas, à elle seule, qu'il résout mieux toutes les tâches.
 
@@ -74,7 +74,7 @@ Le jeu d'évaluation mentionné est un corpus interne de code. La note d'OpenAI 
 
 La contribution n'est pas une nouvelle définition de la cross-entropy. Elle rend visible le passage entre trois niveaux souvent séparés :
 
-1. **Position/token :** (-log p_	heta(x_tmid x_{<t})).
+1. **Position/token :** \(-\log p_\theta(x_t\mid x_{<t})\).
 2. **Corpus d'évaluation :** moyenne de ces pénalités, soit la cross-entropy empirique.
 3. **Indicateur agrégé :** exponentielle de la cross-entropy (perplexité), ou log-perplexité selon la convention.
 
