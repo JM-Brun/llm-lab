@@ -10,7 +10,7 @@
   - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.html)
   - [Masque causal](causal-masking.html)
   - [Logits : les scores avant normalisation](logits.html)
-  - [Probabilités de sortie : des logits aux tokens](probabilites.html)
+  - [Probabilités de sortie : des logits à une distribution](probabilites.html)
   - [Entropie : incertitude sur le prochain token](entropy.html)
   - [Générer du texte : l'inférence pas à pas](generation.html)
   - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
