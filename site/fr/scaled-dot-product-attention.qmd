@@ -180,17 +180,10 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
-  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+  <span class="learning-resources__description">Approfondir les choix d'implémentation et les optimisations du calcul d'attention.</span>
 </summary>
 
 ::: {.learning-resources__content}
-
-### Exercices
-
-
-
-Deux exercices prolongent ce calcul en demandant de [distinguer mélange pondéré et sélection](exercises-attention.qmd#ex-attention-weighted-mixture-vs-selection), puis de [calculer une attention multi-têtes à la main](exercises-attention.qmd#ex-attention-multihead-manual-calculation).
-
 
 ### Complément côté Build (facultatif)
 
