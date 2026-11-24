@@ -731,7 +731,16 @@ async function runCase(testCase, caseIndex) {
     }
     if (kind === "practice-companion") {
       const lessonSlug = pagePath.split("/").pop().replace(/\.html$/, "");
-      item.practiceCompanion = await page.evaluate(({ lessonSlug }) => {
+      // Some Practice pages are self-contained; require a collection link only when
+      // a shared collection is mapped or a matching published collection exists.
+      const collectionRequired = [
+        "probabilities",
+        "probabilites",
+        "scaled-dot-product-attention",
+      ].includes(lessonSlug) || fs.existsSync(
+        path.resolve("site/_site", lang, `exercises-${lessonSlug}.html`)
+      );
+      item.practiceCompanion = await page.evaluate(({ lessonSlug, collectionRequired }) => {
         const links = [...document.querySelectorAll("main a[href]")].map(link => {
           const target = new URL(link.href);
           const rect = link.getBoundingClientRect();
@@ -758,6 +767,10 @@ async function runCase(testCase, caseIndex) {
             { slug: "exercises-foundations", hash: "" },
             { slug: "exercises-generation", hash: "#ex-generation-temperature" },
           ],
+          // This topic-specific Practice page points to the shared Attention collection.
+          "scaled-dot-product-attention": [
+            { slug: "exercises-attention", hash: "#attention" },
+          ],
         };
         const expectedCollections = collectionTargets[lessonSlug] ?? [
           { slug: `exercises-${lessonSlug}`, hash: `#${lessonSlug}` },
@@ -768,15 +781,15 @@ async function runCase(testCase, caseIndex) {
           ) && link.visible
         );
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
-          /check the essential idea|vérifier l['’]idée essentielle/i.test(heading.textContent)
+          /check (?:the essential idea|your understanding)|vérifier (?:l['’]idée essentielle|sa compréhension)/i.test(heading.textContent)
         );
-        return { lessonLink, collectionLink, selfCheckHeading };
-      }, { lessonSlug });
+        return { lessonLink, collectionLink, collectionRequired, selfCheckHeading };
+      }, { lessonSlug, collectionRequired });
       if (!item.practiceCompanion.lessonLink) {
         throw new Error("practice companion must expose a visible return link to its matching lesson");
       }
-      if (!item.practiceCompanion.collectionLink) {
-        throw new Error("practice companion must expose a visible link to its extended exercise collection");
+      if (item.practiceCompanion.collectionRequired && !item.practiceCompanion.collectionLink) {
+        throw new Error("practice companion must expose a visible link to its declared extended exercise collection");
       }
       if (!item.practiceCompanion.selfCheckHeading) {
         throw new Error("practice companion must expose its learner-facing self-check section");
@@ -785,8 +798,8 @@ async function runCase(testCase, caseIndex) {
       const detailsCount = await details.count();
       const summariesCount = await details.locator("summary").count();
       const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
-      if (detailsCount !== 1 || summariesCount !== 1 || openDetailsAtLoad !== 0) {
-        throw new Error("practice companion must expose one native, initially collapsed worked-answer disclosure");
+      if (detailsCount < 1 || summariesCount !== detailsCount || openDetailsAtLoad !== 0) {
+        throw new Error("practice companion must expose one or more native, initially collapsed worked-answer disclosures");
       }
       const summary = details.locator("summary").first();
       await summary.focus();
