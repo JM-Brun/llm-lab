@@ -115,7 +115,7 @@ A core lesson may link to any of these where contextually useful. Such links do 
 
 ### 4.1 Quarto sidebar
 
-Replace the nested Understand sidebar tree in both languages with a single flat list of core lessons, in the exact order generated from the canonical route. Keep the Understand overview / learning-map entry visible as the route's entry point.
+The flat bilingual Understand and Review sidebars are implemented by PR #1549. Keep the Understand overview / learning-map entry visible as the route's entry point. The twenty lesson identities and order must remain aligned with `data/guided-route.yml`; the sidebars are projections, not a second curriculum source.
 
 Do not hand-maintain the twenty-link sequence in two sidebars. Generate or validate the flat list from the canonical route, or introduce a small generator that emits the Quarto sidebar fragment from `data/guided-route.yml`. If Quarto configuration cannot include generated fragments directly, use a generated file and a test that verifies exact parity with the canonical route.
 
@@ -366,10 +366,10 @@ Once the flat route is validated:
 
 ## 10. Acceptance criteria
 
-- [ ] The Understand route has one flat, canonical sequence of core lessons in FR and EN.
+- [x] The Understand route has one flat, canonical sequence of core lessons in FR and EN (PR #1549).
 - [ ] The sequence is generated from or strictly validated against `data/guided-route.yml`.
-- [ ] No nested page levels are needed to navigate the core course.
-- [ ] The overview explains the nine conceptual groups without making them navigation barriers.
+- [x] No nested page levels are needed to navigate the core course (PR #1549).
+- [x] The overview explains the nine conceptual groups without making them navigation barriers.
 - [ ] Each main lesson has exactly one corresponding review destination.
 - [ ] The review route is a complete peer traversal with the same lesson order.
 - [ ] The review page carries revision aids and supplementary content; the main page remains a self-contained explanation.
