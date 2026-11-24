@@ -10,7 +10,7 @@
   - [Scaled dot-product attention](scaled-dot-product-attention.html)
   - [Causal masking](causal-masking.html)
   - [Logits: scores before normalization](logits.html)
-  - [Output probabilities: from logits to tokens](probabilities.html)
+  - [Output probabilities: from logits to a distribution](probabilities.html)
   - [Entropy: uncertainty over the next token](entropy.html)
   - [Generating text: inference step by step](generation.html)
   - [In-context learning](in-context-learning.html)
