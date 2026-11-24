@@ -136,8 +136,8 @@ items:
       pages: []
       concepts: []
       route_ids: []
-    disposition: integrate
-    disposition_rationale: "The new empirical-rank exercise adds a question distinguishing estimator performance on synthetic Zipf data from model misspecification on natural-language books."
+    disposition: defer
+    disposition_rationale: "The ABC comparison and model-misspecification result require a later exercise that explicitly teaches estimator comparison and approximate Bayesian computation; the current synthetic example only isolates rank uncertainty."
 canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
