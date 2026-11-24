@@ -26,6 +26,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", 
 
 This page collects calculations and transfer questions associated with the lesson. Solutions are collapsed: first try to justify each answer, including the assumptions you use.
 
+[Browse the full exercise catalogue](../exercises.qmd) for the other lesson checks and topic collections.
+
 ## 1. Calculate a frequency from rank
 
 In a toy corpus, the word at rank 1 occurs 12,000 times. Assume Zipf's law with $\alpha=1$ is a reasonable approximation:
