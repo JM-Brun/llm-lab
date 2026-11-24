@@ -1672,3 +1672,28 @@ A bilingual refactor now separates the core predictive-distribution lesson from 
 The transfer was checked against the prior bilingual probability and decoding pages: the core page is shorter, while the decoding page gains the moved explanations and interactive material; the moved numerical examples, filters, comparison and implementation details remain represented. This is an ownership/sequence correction, not a deletion of those concepts.
 
 **Validation boundary:** source-level ownership, bilingual links, page metadata and generated map projections have been reconciled. Final-head Quarto/Chromium and Python CI results are tracked by PR #1584; no learner-outcome or manual screen-reader claim is made here.
+
+
+## 2026-11-24: route and Practice audit — predictive distribution → scoring → loss
+
+**Scope.** Bounded reader-continuity and exercise-ownership audit of the FR/EN path from the predictive distribution through observed-target scoring, cross-entropy and batch loss. This pass reuses the prior source-level mathematical audits recorded above; it does not re-derive or re-certify their equations. It checks page roles, transitions, bilingual destinations and the separation between Understand and Practice.
+
+| Page pair | Existing reader contract and Practice destination | Audit finding |
+|---|---|---|
+| `probabilities.qmd` / `probabilites.qmd` | Core Understand page for logits → softmax → conditional distribution; dedicated FR/EN Practice companions. Temperature and filtering are delegated to the existing Deepen/Generation owners. | **Keep.** The page owns the predictive distribution and does not absorb scoring or decoding policy. Its companion checks prefix dependence, normalization, calibration and truth, and links temperature work to the canonical decoding destination. |
+| `likelihood.qmd` / `vraisemblance.qmd` | Core scoring page; dedicated FR/EN Practice companions. The page states that the prefix and target are observed, parameters are fixed, and no generated token is fed back. | **Keep.** This is the correct reader-facing destination for the prediction → scoring transition. The exercise “Generate or score from the same prefix” makes the distinction operational: generation follows its own greedy prefix, while scoring follows the observed continuation. In the worked example, the observed continuation has likelihood 0.27 versus 0.24 for the greedy continuation; greedy selection is not sequence-level likelihood maximization. |
+| `cross-entropy.qmd` (FR/EN) | Core page for the local penalty; dedicated FR/EN Practice companions. It connects one-hot targets to token NLL and delegates soft-target/KL derivation to Deepen. | **Keep the ownership boundary.** The Practice companion contains concise checks on zero loss, masked-token denominators and the limits of perplexity. The actual soft-target/KL calculation already exists in the shared Foundations exercise (`ex-foundations-soft-targets-kl`); do not duplicate it here. |
+| `loss.qmd` (FR/EN) | Core page for aggregation, target masking and reduction; dedicated FR/EN Practice companions. | **Keep.** The page follows naturally after cross-entropy and leads to gradients. Its exercises cover visible inputs versus ignored targets and validation-loss comparison. |
+
+### Cross-page findings and decisions
+
+1. The conceptual path is coherent: predictive distribution → observed-target likelihood → local cross-entropy penalty → masked/reduced batch loss → gradients. The new prediction → scoring edge is explanatory and cross-cutting; it does not insert scoring into the linear inference sequence or make scoring a prerequisite for generation.
+2. The likelihood Practice exercise is a strong transfer task because it contrasts two prefixes and exposes why greedy decoding does not maximize sequence likelihood. Retain it as the principal exercise supporting the new transition.
+3. All four core lessons have dedicated bilingual Practice destinations. Their links return to the corresponding lesson, and their question banks remain outside the Understand pages.
+4. One bilingual link-parity gap was found: the French likelihood Practice page linked to both cross-entropy and loss, while the English page linked only to loss. **Corrected in the accompanying audit PR** by adding the cross-entropy link to the English page.
+5. The cross-entropy Practice page is intentionally concise. Do not add a second soft-target/KL calculation: the shared Foundations collection already owns that exercise and the cross-entropy lesson links to the relevant deeper treatment.
+6. The probability Practice page correctly delegates temperature and top-k/top-p exercises to the Generation collection rather than duplicating decoding-policy work.
+
+### Evidence boundary
+
+This is a source/metadata/link and exercise-ownership audit. It is not a new mathematical derivation review, a final rendered visual audit, a manual screen-reader test, or an independent learner study. The existing inventory entries for logits/probabilities/likelihood/cross-entropy/loss remain the source of prior mathematical-review evidence. Final-head CI, rendered-link/browser review for the small bilingual link correction, manual accessibility and learner validation remain separate checks.
