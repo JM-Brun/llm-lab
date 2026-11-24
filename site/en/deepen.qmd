@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01"]
 related: []
 tags:
   - "type:entry-point"
@@ -106,6 +106,7 @@ These resources are complementary, not interchangeable: visualizations build int
 
 - [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
 - [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
+- [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — rank-frequency distributions, long tails, empirical fitting, and limits of interpretation.
 
 The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
 
