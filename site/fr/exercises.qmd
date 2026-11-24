@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/evaluation-experimentale"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/exercises-foundations", "fr/exercises-text-data", "fr/exercises-attention", "fr/exercises-transformer", "fr/exercises-generation", "fr/evaluation-experimentale"]
+  children: ["fr/exercises-foundations","fr/exercises-text-data","fr/exercises-attention","fr/exercises-transformer","fr/exercises-generation","fr/evaluation-experimentale","fr/zipf-law-exercises"]
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
@@ -24,7 +24,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 47 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 48 pages d’exercices par leçon"}
 
 ### Comprendre
 
@@ -93,6 +93,10 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 - [Architectures hybrides](exercises/hybrid-llm-architectures.qmd)
 - [Architectures multimodales](exercises/multimodal-architectures.qmd)
 - [Next-Concept Modeling](exercises/next-concept-modeling.qmd)
+
+#### Langue, information et statistiques
+
+- [Loi de Zipf et fréquences lexicales](exercises/zipf-law.qmd)
 
 #### Texte et tokenisation
 
