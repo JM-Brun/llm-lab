@@ -114,22 +114,15 @@ Pour un batch, les logits ont souvent la forme $(B,T,V)$ et les labels $(B,T)$. 
 - **Pondération :** poids de classes, label smoothing ou pertes auxiliaires modifient l'objectif par rapport au cas one-hot non pondéré.
 - **Comparaison :** préciser le tokenizer, les positions incluses et la convention de moyenne avant de comparer deux valeurs.
 
-## Lien avec la perplexité
+## Perplexité
 
-Si $\bar{\ell}$ est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
-
-$$
-\operatorname{PPL}=\exp(\bar{\ell}).
-$$
-
-Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+Pour une cible one-hot, la cross-entropie moyenne sur les positions valides coïncide avec la NLL moyenne. La définition de la perplexité, son interprétation et les conditions nécessaires pour comparer des scores sont regroupées dans la page [Vraisemblance](vraisemblance.qmd).
 
 ## Idées reçues
 
 - **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
 
 - **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
-- **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
 
 
 
