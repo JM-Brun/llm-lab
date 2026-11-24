@@ -2,7 +2,7 @@
 title: "Pourquoi le mot « de » revient-il si souvent ?"
 subtitle: "Une loi statistique simple derrière une distribution de mots très inégale"
 description-meta: "Découvrir la loi de Zipf, les distributions à longue traîne et ce qu'elles impliquent — avec prudence — pour les données de langage."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
 ---
@@ -20,11 +20,13 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/text-data", "fr/tokenization-strategies"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:planned"]
+related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
-*Histoire indépendante · environ 10 minutes · Jour 1 — brouillon pour relecture*
+*Histoire indépendante · environ 10 minutes · Jour 01*
+
+Cette première version est publiée pour être lue et discutée. Les retours de lecteurs non spécialistes permettront d’en affiner encore la clarté.
 
 ## Pourquoi certains mots semblent-ils partout ?
 
@@ -159,6 +161,10 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 - [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.
 - [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
+
+## Revenir au calendrier
+
+[Retrouver les 24 idées et les prochaines histoires](scientific-calendar.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](advent-calendar-story-day-01.qmd) · [English](../en/advent-calendar-story-day-01.qmd)
