@@ -175,6 +175,8 @@ L'analogie peut aider à poser une question — quelles positions sont utiles au
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/scaled-dot-product-attention.qmd).
 
+## Approfondir
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
