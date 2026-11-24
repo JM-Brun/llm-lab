@@ -157,6 +157,19 @@ La suite devrait enrichir progressivement les pages d'exercices déjà créées 
 
 Pour un laboratoire reproductible, privilégier un notebook écrit dans le projet avec un corpus redistribuable et une politique de comptage documentée. La démonstration Wolfram est une référence d'interaction, pas une dépendance à intégrer.
 
+**Candidat de corpus retenu pour le pilote : ELTeC (European Literary Text Collection).** Les collections [ELTeC-fra](https://github.com/COST-ELTeC/ELTeC-fra) et [ELTeC-eng](https://github.com/COST-ELTeC/ELTeC-eng) proposent chacune 100 romans européens, principalement publiés entre 1840 et 1920. Les textes sont annoncés dans le domaine public ; le balisage TEI est fourni sous CC BY 4.0. Les versions archivées sont identifiables par DOI : [ELTeC-fra v1.0.1](https://doi.org/10.5281/zenodo.4662433) et [ELTeC-eng v1.0.1](https://doi.org/10.5281/zenodo.4662490). Cette paire est préférable à un corpus non documenté ou à une collection dont la licence est NC pour un laboratoire susceptible d'être réutilisé hors du projet.
+
+Ce choix reste un **corpus littéraire historique**, pas un échantillon représentatif du français ou de l'anglais contemporains. Le laboratoire devra donc :
+- épingler les versions et les DOI, sélectionner explicitement les documents et conserver leurs métadonnées ;
+- extraire le texte des éléments TEI sans compter les balises, notes éditoriales ou métadonnées comme des mots ;
+- expliciter la normalisation (Unicode, casse, apostrophes, ponctuation, mots composés) et conserver une variante de comptage sensible à la casse pour mesurer son effet ;
+- comparer les fréquences de formes lexicales et celles d'un tokenizer donné, sans assimiler les deux unités ;
+- tracer la courbe rang–fréquence et son équivalent log-log, en affichant les comptes et les rangs plutôt qu'une droite ajustée seule ;
+- séparer l'ajustement descriptif de l'estimation de l'exposant, puis mesurer la stabilité par rééchantillonnage de documents ;
+- comparer les résultats français et anglais séparément avant toute interprétation interlinguistique.
+
+Le premier jalon doit rester modeste : quelques romans par langue, un pipeline déterministe et des sorties vérifiables. L'extension aux 100 textes et l'analyse de robustesse viendront après validation du nettoyage et des conventions de comptage.
+
 ## 6. Position dans le modèle de connaissances
 
 - **Domaine principal conservé :** `probabilistic-foundations-training`, cohérent avec le classement de la leçon Day 01.
@@ -198,6 +211,8 @@ Pour un laboratoire reproductible, privilégier un notebook écrit dans le proje
 - Pilgrim, C., & Hills, T. T. (2021). [DOI](https://doi.org/10.1038/s41598-021-96214-w) · [Scientific Reports](https://www.nature.com/articles/s41598-021-96214-w)
 - Linders, G. M., & Louwerse, M. M. (2023). [DOI](https://doi.org/10.3758/s13423-022-02142-9) · [Publisher](https://link.springer.com/article/10.3758/s13423-022-02142-9)
 - Roda, G. (2024). [Wolfram Demonstrations](https://demonstrations.wolfram.com/ZipfsLawForNaturalLanguages/)
+- Schöch, C., & Burnard, L. (eds.). (2021). [French Novel Corpus (ELTeC-fra), v1.0.1](https://doi.org/10.5281/zenodo.4662433).
+- Burnard, L. (ed.). (2021). [English Novel Corpus (ELTeC-eng), v1.0.1](https://doi.org/10.5281/zenodo.4662490).
 - Zipf, G. K. (1949). [Google Books](https://books.google.com/books?id=1tx9AAAAIAAJ)
 
 ## 9. Index des extractions atomiques
