@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/entropy"]
   children: []
-related: ["fr/vraisemblance", "fr/loss", "fr/cross-entropy-exercises"]
+related: ["fr/vraisemblance", "fr/loss", "fr/language-modeling-math", "fr/cross-entropy-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -136,47 +136,9 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 {{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
 
-## Décomposition en entropie cible et divergence KL
+## Cibles souples et divergence KL
 
-:::: {.callout-note collapse="true" title="Dérivation, cibles souples et exemple numérique"}
-
-::: {.callout-note title="Prolongement : cibles souples et divergence KL"}
-Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)=-\sum_{i=1}^{V}q_i\log p_i$ ; le cas one-hot ci-dessus en est le cas particulier. La relation complète avec la divergence KL — $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, et donc l'équivalence entre minimiser l'entropie croisée et minimiser la divergence KL pour une cible fixe — est dérivée dans la page [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
-:::
-
-La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
-
-$$
-\begin{aligned}
-H(q,p)&=-\sum_x q(x)\ln p(x)\\
-&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
-+\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
-\end{aligned}
-$$
-
-Donc :
-
-$$
-\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$$
-
-La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
-
-### Exemple numérique en nats
-
-Prenons $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
-
-- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
-- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
-- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0{,}144$ nat.
-
-On retrouve bien $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits ; les implémentations usuelles de loss utilisent généralement le logarithme naturel et donc des nats.
-
-::: {.callout-note}
-**Cas particulier d'une cible one-hot.** Si $q$ place toute sa masse sur le token observé $y$, alors $H(q)=0$ et $D_{KL}(q\|p)=-\ln p(y)$. La cross-entropie se réduit donc exactement à la NLL du token. C'est le cas usuel de la supervision par token observé ; l'interprétation « rapprocher deux distributions » est particulièrement visible lorsque la cible est elle-même une distribution non dégénérée, par exemple en distillation.
-:::
-
-::::
+Le cas one-hot suffit pour calculer la pénalité d'un token observé. Pour une cible qui répartit sa masse sur plusieurs tokens, la relation $H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)$, ses hypothèses et ses cas limites sont développés dans l'approfondissement [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd). Cette dérivation n'est pas nécessaire pour calculer la NLL d'un token observé.
 
 ## Implémentations — NumPy, PyTorch et stabilité numérique
 
