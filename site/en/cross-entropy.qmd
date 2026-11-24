@@ -114,7 +114,7 @@ For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before 
 
 ## Perplexity
 
-For one-hot targets, mean cross-entropy over valid positions coincides with mean NLL. The definition and interpretation of perplexity, and the conditions required to compare scores, are consolidated in the [Likelihood](likelihood.qmd) lesson.
+For one-hot targets, mean cross-entropy computed over the same valid positions with the same reduction convention coincides with mean NLL. The definition and interpretation of perplexity, and the conditions required to compare scores, are consolidated in the [Likelihood](likelihood.qmd) lesson.
 
 ## Misconceptions
 
