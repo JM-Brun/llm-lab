@@ -6783,3 +6783,89 @@ sources:
     related:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       audit_records: [docs/interactive-explanatory-lesson-pattern.md]
+
+  - id: sebastian-raschka-pretraining-not-plateauing-2026
+    title: "Pre-training is (still) not plateauing"
+    creators: ["Sebastian Raschka"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://sebastianraschka.com/blog/2026/pretraining-is-still-not-plateauing.html"
+    aliases:
+      - "https://www.linkedin.com/posts/sebastianraschka_pre-training-is-still-not-plateauing-finally-share-7530419578179502080-e0tU/"
+    publisher: "Sebastian Raschka"
+    publication_date: "2026-11-22"
+    updated_date: null
+    language: en
+    version: "Author's public quick note; LinkedIn post cross-reference"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:pretraining, topic:perplexity, topic:cross-entropy, topic:next-token-prediction, method:held-out-evaluation]
+      concept_ids: [cross-entropy, next-token-prediction]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, historical-context]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete author-authored text exposed by the indexed public article result, reconciled with the supplied LinkedIn post URL"
+          - "Author's stated interpretation of the OpenAI base-model log-perplexity chart"
+          - "Linked primary source: OpenAI, Perplexity and Intelligence (2026-11-22)"
+        limitations:
+          - "Direct retrieval of the author's canonical article returned a cache miss; the complete text was available through indexed search content."
+          - "The chart image was not retrieved as original bytes or visually inspected; no numerical values were transcribed from it."
+          - "LinkedIn comments and discussion were not inspected."
+          - "No code, data or experiment was supplied or executed."
+          - "No licence or permission to reuse text or figures was established."
+    related:
+      pages: [fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/post-training, en/post-training, fr/scaling-laws, en/scaling-laws]
+      concepts: [cross-entropy, next-token-prediction]
+      audit_records: [docs/source-reviews/raschka-pretraining-not-plateauing-2026-11.md]
+
+  - id: openai-perplexity-and-intelligence-2026
+    title: "Perplexity and Intelligence"
+    creators: ["Jakub Pachocki"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://openai.com/index/perplexity-and-intelligence/"
+    publisher: "OpenAI"
+    publication_date: "2026-11-22"
+    updated_date: null
+    language: en
+    version: "Public article inspected 2026-11-24"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:pretraining, topic:perplexity, topic:cross-entropy, topic:next-token-prediction, method:held-out-evaluation]
+      concept_ids: [cross-entropy, next-token-prediction]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, experiment, historical-context]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-24"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete public article text, including the main argument and all five footnotes"
+          - "Definitions and caveats concerning perplexity, cross-entropy, held-out evaluation and cross-lab comparison"
+        limitations:
+          - "The opening chart was not retrieved as original image bytes or independently inspected; chart-specific numeric values were not transcribed."
+          - "The underlying internal code dataset and evaluation pipeline are not public in this source."
+          - "No independent replication or cross-lab comparison was performed."
+          - "No licence or permission to reuse the article's figure was established."
+    related:
+      pages: [fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/post-training, en/post-training, fr/scaling-laws, en/scaling-laws]
+      concepts: [cross-entropy, next-token-prediction]
+      audit_records: [docs/source-reviews/raschka-pretraining-not-plateauing-2026-11.md]
