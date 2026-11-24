@@ -159,3 +159,24 @@ Le travail sur le parcours principal pourra être considéré comme stabilisé l
 - la prochaine action concrète et son issue/PR propriétaire.
 
 Une PR fusionnée ne vaut pas preuve de validation lecteur. Une CI verte ne vaut pas preuve de compréhension pédagogique. Ces niveaux de preuve doivent rester séparés.
+
+
+## Progress snapshot — 2026-11-24
+
+This snapshot records only work completed after the execution plan was merged in PR #1607. It does not close a P1 item globally unless all of its pages and criteria have been checked.
+
+| Work item | Progress from the current audit | Remaining scope |
+|---|---|---|
+| P1.1 — Understand continuity | **Partial.** The path predictive distribution → observed-target likelihood → cross-entropy → batch loss → gradients → training loop has been checked in FR/EN. The new prediction → scoring transition has the correct likelihood destination; the likelihood Practice exercise explicitly contrasts generated and observed prefixes. Evidence: the 2026-11-24 route audit in docs/page-audit-inventory.md. | Continue with the other unverified stage boundaries; do not infer that the whole nine-stage route is closed. |
+| P1.2 — Understand / Build / Deepen / Practice boundaries | **Partial.** The inspected core lessons keep their questions in dedicated Practice companions. The training-loop code remains an optional, collapsed lookup-table experiment, clearly distinguished from the full GPT implementation in Build. | Continue the same check on the remaining core pages; retain optional code only where its role and scope are explicit. |
+| P1.3 — Lesson-to-Practice links | **Partial.** The probability, likelihood, cross-entropy, loss, gradients and training-loop lesson pairs expose dedicated FR/EN Practice destinations. The scaled-attention companion is handled separately by #1604. | Verify the remaining Understand pages and ensure old anchors remain valid after future migrations. |
+| P1.4 — FR/EN parity | **Partial.** The inspected route slice has matching objectives, exercises and destinations. A missing English likelihood → cross-entropy link was found and corrected in PR #1609. | Continue semantic parity checks beyond this slice; matching page counts alone are insufficient. |
+| P1.5 — Generated projections | **In progress.** #1604 and #1606 are being validated on their corrected heads; the map freshness tests and route-projection checks must pass before their changes are integrated. | Reconcile maps and generated route/context fragments again after both merges. |
+| P1.6 — Computational graph versus lessons | **Partial.** The direct prediction → scoring relation is now explicitly represented by #1606 as an explanatory transition, not a new prerequisite or serial stage. The inspected likelihood lesson preserves the observed-prefix/fixed-parameter semantics. | After #1606 merges, inspect the final graph and generated reader projections together; keep evaluation distinct from training. |
+| P1.7 — Transformer details | **Not revisited in this pass.** Existing Q/K/V, causal-mask, positional-encoding and tensor-shape audit records remain authoritative. | Reopen only if a concrete regression or unresolved item in the inventory requires it. |
+
+### Next bounded audit
+
+Continue from the inventory's remaining unverified reader-facing boundaries rather than reopening completed Q/K/V, attention, positional-encoding, likelihood, cross-entropy or gradient derivations. The next candidate is the context-use/inference boundary: inspect the existing context-engineering, generation and prefill/decode pages for ownership, prerequisites, Practice links and FR/EN parity. Do not add a diagram or a new route edge unless that inspection demonstrates a specific learner-facing ambiguity.
+
+**Evidence boundary:** the 2026-11-24 source and executable checks do not substitute for the final-head browser review of #1604/#1606, manual screen-reader/native-breadcrumb work, or the independent learner pilot owned by #447.
