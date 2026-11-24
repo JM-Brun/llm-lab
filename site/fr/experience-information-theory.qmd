@@ -117,6 +117,8 @@ Soient $X_1$ et $X_2$ deux bits indépendants et uniformes, et $Y=X_1\oplus X_2$
 
 Cette intuition est discutée par Xu et al. (ICLR 2020), [A Theory of Usable Information under Computational Constraints](https://openreview.net/forum?id=r1eBeyHFDH). Une [expérience complémentaire sur des tâches synthétiques de type XOR](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.fr.md) illustre cette différence ; elle ne constitue pas une évaluation d'un LLM entraîné.
 
+Contrairement à l'information mutuelle de Shannon, l'information prédictive dépend de la famille de prédicteurs et de la tâche orientée de X vers Y. Elle ne remplace pas l'information mutuelle et ne signifie pas qu'un calcul crée de l'information de Shannon : elle quantifie ce qu'une famille donnée peut exploiter.
+
 **Limites :** c'est un calcul de risque populationnel exact sur un petit exemple discret et une famille finie spécifiée à la main. Aucun modèle n'est entraîné ; il ne s'agit ni d'une estimation sur échantillon, ni d'une comparaison d'architectures, ni d'une preuve que l'attention extrait plus d'information qu'un modèle bag-of-words. Une expérience sur modèles entraînés exigerait des jeux d'entraînement/test, une classe et un protocole de sélection préenregistrés, ainsi qu'une analyse du surapprentissage.
 
 
@@ -145,6 +147,8 @@ h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
 \]
 
 Pour une chaîne de Markov du premier ordre, il se calcule avec l'entropie conditionnelle d'une transition, \(H(X_t\mid X_{t-1})\). Il peut être bien inférieur à l'entropie marginale \(H(X_t)\) lorsque les symboles successifs sont corrélés.
+
+Pour comparer, sur trois séquences déterministes, l'entropie marginale empirique H0, l'entropie conditionnelle d'ordre 1 H1 et la taille d'un vrai flux zlib, consultez l'[expérience complémentaire sur la compression de séquences](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.fr.md). Elle utilise un protocole distinct de la simulation d'entropie de source présentée ici.
 
 ## Ce que l'expérience démontre — et ne démontre pas
 
