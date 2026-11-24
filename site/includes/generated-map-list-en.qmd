@@ -66,6 +66,9 @@
     - [Transformer exercises](exercises-transformer.html)
   - Generation
     - [Generation exercises](exercises-generation.html)
+  - Deepen
+    - Language, information, and statistics
+      - [Zipf’s law exercises](exercises-zipf-law.html)
   - Information theory
     - [Experiment — Entropy, KL and predictive coding](experience-information-theory.html)
   - [Exercise catalogue](exercises.html)

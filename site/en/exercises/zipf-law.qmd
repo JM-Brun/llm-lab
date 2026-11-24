@@ -1,0 +1,50 @@
+---
+title: "Exercises — Zipf’s law"
+subtitle: "Self-check questions and a route to extended practice"
+description-meta: "Short self-check questions associated with the lesson on Zipf’s law and lexical frequencies."
+keywords: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/zipf-law-exercises"
+summary: "Short self-check questions accompanying the lesson on Zipf's law."
+scope: "Checks the central rank-frequency relation, the interpretation of log-log plots, and the distinction between lexical and token frequencies; points to the extended exercise collection."
+purpose: "Verify the essential idea before moving to the longer calculations and transfer exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/advent-calendar-story-day-01", "en/exercises-zipf-law", "en/text-data", "en/tokenization-strategies"]
+tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Zipf’s law and lexical frequencies](../advent-calendar-story-day-01.qmd)
+
+## Check the essential idea
+
+Try to answer these questions before opening the answers.
+
+1. If the most frequent word occurs 12,000 times and the exponent is $\alpha=1$, what frequency does the model predict at rank 4?
+2. Why does an approximately straight line on a log-log plot not prove an exact, universal Zipf law?
+3. Why should lexical word frequencies and token frequencies be analysed as distinct distributions?
+
+<details>
+<summary>Show the answers</summary>
+
+1. With $f(r)=C/r^\alpha$ and $C=12,000$, the predicted frequency at rank 4 is $3,000$.
+2. A straight-looking segment is compatible with a power law over the observed range. It does not establish an exact law, a universal exponent, or a causal mechanism.
+3. A tokenizer defines the units predicted by the model. One lexical word may be represented by one token or several sub-tokens, so the two frequency distributions need not coincide.
+
+</details>
+
+## Extended practice
+
+The [Zipf’s law exercise collection](../exercises-zipf-law.qmd#zipf-law) contains four worked exercises on rank-frequency calculations, log-log interpretation, lexical versus token frequencies, and empirical limitations.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/zipf-law.qmd) · [English](zipf-law.qmd)
+:::

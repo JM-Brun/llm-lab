@@ -15,7 +15,7 @@ suggested_route:
   next: "en/experimental-evaluation"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/exercises-foundations", "en/exercises-text-data", "en/exercises-attention", "en/exercises-transformer", "en/exercises-generation", "en/experimental-evaluation"]
+  children: ["en/exercises-foundations","en/exercises-text-data","en/exercises-attention","en/exercises-transformer","en/exercises-generation","en/experimental-evaluation","en/exercises-zipf-law"]
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 47 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 48 per-lesson practice pages"}
 
 ### Understand
 
@@ -94,6 +94,10 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 - [Multimodal architectures](exercises/multimodal-architectures.qmd)
 - [Next-Concept Modeling](exercises/next-concept-modeling.qmd)
 
+#### Language, information, and statistics
+
+- [Zipf's law and lexical frequencies](exercises/zipf-law.qmd)
+
 #### Text and tokenization
 
 - [Tokenization strategies](exercises/tokenization-strategies.qmd)
@@ -147,6 +151,7 @@ This catalogue is the entry point for **extended exercises**: calculations, mult
 | [Attention](exercises-attention.qmd) | [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd) | Weighted aggregation, score scaling and variance, Q/K/V projection calculations and interventions, CA-A on causal masking and prefix invariance, and AT-A–AT-C on multi-head attention and AT-D on score variance published. Advanced variants remain to be developed. |
 | [Transformer](exercises-transformer.qmd) | [Transformer overview](transformer.qmd) and [block walkthrough](transformer-block-walkthrough.qmd) | Three formative exercises TF-A–TF-C published: pre-LN shapes and normalization, parameter counting, and diagnosis/interventions. Architecture variants remain to be developed. |
 | [Generation](exercises-generation.qmd) | [Generation](generation.qmd), [logits](logits.qmd), and [probabilities](probabilities.qmd) | Seven formative exercises GE-A–GE-G published: distribution and selection, autoregressive loop, stopping, prefill/decode, KV cache, temperature, and top-k/top-p filters. |
+| [Zipf’s law](exercises-zipf-law.qmd#zipf-law) | [Zipf’s law lesson](advent-calendar-story-day-01.qmd), [text and data](text-data.qmd), and [tokenization strategies](tokenization-strategies.qmd) | Four formative exercises on rank-frequency calculations, log-log interpretation, lexical/token frequencies, and empirical limits. |
 
 ## Planned collections
 

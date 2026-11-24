@@ -1,0 +1,141 @@
+---
+title: "Exercices — Loi de Zipf"
+subtitle: "Entraînement approfondi, corrigés détaillés et transfert"
+description-meta: "Exercices approfondis sur les calculs rang-fréquence, l'ajustement log-log, les fréquences lexicales et les limites empiriques."
+keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-law", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises-zipf-law"
+summary: "Quatre exercices formatifs sur la loi de Zipf, la mise à l'échelle rang-fréquence, les unités lexicales et tokeniques, et l'interprétation empirique."
+scope: "Propose un entraînement approfondi et corrigé sur les calculs rang-fréquence, les graphiques log-log, les comptes dépendant du tokenizer et les limites des affirmations empiriques de loi de puissance."
+purpose: "Calculer, interpréter et évaluer de manière critique les régularités rang-fréquence sans confondre statistiques lexicales, statistiques de tokens et explications causales."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/exercises"]
+  children: []
+related: ["fr/advent-calendar-story-day-01", "fr/zipf-law-exercises"]
+tags: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-law", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour au catalogue des exercices](exercises.qmd) · [Retour aux auto-vérifications de la leçon](exercises/zipf-law.qmd)
+
+## Loi de Zipf {#zipf-law}
+
+**Prérequis :** [la leçon sur la loi de Zipf](advent-calendar-story-day-01.qmd), [texte et données](text-data.qmd) et [stratégies de tokenisation](tokenization-strategies.qmd).
+
+**Périmètre :** quatre exercices formatifs couvrent les calculs rang-fréquence, l'interprétation log-log, les unités lexicales et tokeniques, ainsi que les limites des affirmations empiriques.
+
+### Calculer une fréquence à partir du rang {#ex-zipf-rank-frequency}
+
+Dans un corpus jouet, le mot de rang 1 apparaît 12 000 fois. On suppose que la loi de Zipf avec $\alpha=1$ constitue une approximation acceptable :
+
+$$
+f(r)=\frac{C}{r^\alpha}.
+$$
+
+1. Quelle fréquence le modèle prédit-il pour le mot de rang 4 ?
+2. Quelle fréquence prédit-il pour le mot de rang 20 ?
+3. Quel rapport le modèle prévoit-il entre les fréquences des rangs 5 et 25 ?
+4. Ces valeurs sont-elles des garanties sur les fréquences observées dans un autre corpus ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Ici, $C=f(1)=12\,000$ et $\alpha=1$, donc $f(r)=12\,000/r$.
+
+1. Rang 4 : $12\,000/4=3\,000$ occurrences.
+2. Rang 20 : $12\,000/20=600$ occurrences.
+3. Le rang 25 est cinq fois plus élevé que le rang 5 ; sa fréquence est donc prédite cinq fois plus faible : $f(5)=2\,400$ et $f(25)=480$.
+4. Non. Ce sont des valeurs issues d'une approximation. La taille, le domaine, la période, les conventions de comptage et les écarts empiriques à la loi modifient les fréquences observées.
+
+</details>
+
+### Lire l'exposant sur un graphique log-log {#ex-zipf-log-log-exponent}
+
+On observe deux points synthétiques :
+
+| Rang $r$ | Fréquence $f(r)$ |
+|---:|---:|
+| 1 | 1 000 |
+| 10 | 100 |
+
+On suppose que ces deux points suivent exactement le modèle $f(r)=C/r^\alpha$.
+
+1. Déterminez $C$.
+2. Déterminez $\alpha$.
+3. Écrivez la relation après transformation logarithmique.
+4. Quelle pente obtient-on en représentant $\log f(r)$ en fonction de $\log r$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Au rang 1, $f(1)=C=1\,000$.
+
+Au rang 10 :
+
+$$
+100=\frac{1\,000}{10^\alpha}
+\quad\Longrightarrow\quad
+10^\alpha=10
+\quad\Longrightarrow\quad
+\alpha=1.
+$$
+
+En prenant le logarithme :
+
+$$
+\log f(r)=\log C-\alpha\log r.
+$$
+
+La pente est donc $-\alpha=-1$. L'ordonnée à l'origine dépend de $C$ et de la base du logarithme choisie.
+
+</details>
+
+### Fréquences lexicales et fréquences de tokens {#ex-zipf-lexical-token-frequencies}
+
+Un corpus contient le mot « unbelievable » 100 fois. Un premier tokenizer le représente comme un token unique ; un second tokenizer le découpe en plusieurs sous-tokens, par exemple « un », « believ » et « able ».
+
+1. Pourquoi le rang du mot « unbelievable » dans une étude lexicale n'est-il pas directement comparable au rang de chacun de ses sous-tokens ?
+2. Si un modèle prédit des tokens, quelle unité faut-il compter pour étudier la distribution des unités qu'il prédit ?
+3. Peut-on déduire la distribution des fréquences de tokens à partir de la seule distribution des fréquences des mots ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Un rang lexical porte sur une forme de mot comptée comme une unité. Les sous-tokens sont des unités définies par le tokenizer ; plusieurs occurrences du même mot peuvent contribuer aux fréquences de plusieurs sous-tokens.
+2. Il faut compter les unités effectivement produites par le tokenizer considéré, sur le corpus et avec les conventions de prétraitement explicités.
+3. Non. Le découpage dépend du vocabulaire et des règles du tokenizer. La distribution des fréquences de tokens n'est donc pas identique à celle des fréquences lexicales.
+
+</details>
+
+### Une droite log-log prouve-t-elle une loi de puissance ? {#ex-zipf-power-law-evidence}
+
+Un graphique rang-fréquence semble approximativement linéaire sur des axes logarithmiques. Un collègue conclut : « Nous avons prouvé que le langage suit exactement une loi de Zipf d'exposant 1. »
+
+1. Quelle partie de cette conclusion est excessive ?
+2. Pourquoi l'estimation des rangs et des fréquences sur le même échantillon peut-elle créer une dépendance entre les deux coordonnées ?
+3. Quelle précaution peut réduire ce problème sans éliminer tous les biais ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Une relation approximativement linéaire sur un graphique log-log est compatible avec une loi de puissance sur la plage observée ; elle ne prouve ni une loi exacte, ni un exposant universel égal à 1, ni un mécanisme causal.
+2. Une fluctuation qui augmente le compte observé d'un mot augmente sa fréquence mesurée et peut aussi le faire remonter dans le classement. Les coordonnées ne sont donc pas estimées indépendamment.
+3. Estimer les rangs et les fréquences sur des échantillons séparés réduit cette corrélation d'erreur. Cela ne supprime pas les autres biais, notamment ceux qui affectent l'estimation de l'exposant et la longue traîne.
+
+</details>
+
+## Pour aller plus loin
+
+- [Revenir à la leçon sur la loi de Zipf](advent-calendar-story-day-01.qmd).
+- [Comparer avec les données textuelles](text-data.qmd) et [les stratégies de tokenisation](tokenization-strategies.qmd).
+- [Approfondir les probabilités et l'information](deepen.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](exercises-zipf-law.qmd#zipf-law) · [English](../en/exercises-zipf-law.qmd#zipf-law)
+:::

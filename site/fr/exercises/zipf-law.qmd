@@ -1,0 +1,50 @@
+---
+title: "Exercices — Loi de Zipf"
+subtitle: "Questions de vérification et accès à l'entraînement approfondi"
+description-meta: "Questions courtes d'auto-vérification associées à la leçon sur la loi de Zipf et les fréquences lexicales."
+keywords: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/zipf-law-exercises"
+summary: "Courtes questions d'auto-vérification associées à la leçon sur la loi de Zipf."
+scope: "Vérifie la relation rang-fréquence, l'interprétation des graphiques log-log et la distinction entre fréquences lexicales et fréquences de tokens ; oriente vers la collection d'exercices approfondie."
+purpose: "Vérifier l'idée essentielle avant de passer aux calculs et questions de transfert plus développés."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/advent-calendar-story-day-01", "fr/exercises-zipf-law", "fr/text-data", "fr/tokenization-strategies"]
+tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : loi de Zipf et fréquences lexicales](../advent-calendar-story-day-01.qmd)
+
+## Vérifier l’idée essentielle
+
+Essayez de répondre à ces questions avant d'ouvrir les réponses.
+
+1. Si le mot le plus fréquent apparaît 12 000 fois et que l'exposant vaut $\alpha=1$, quelle fréquence le modèle prédit-il au rang 4 ?
+2. Pourquoi une droite approximative sur un graphique log-log ne prouve-t-elle pas une loi de Zipf exacte et universelle ?
+3. Pourquoi faut-il analyser séparément les fréquences lexicales et les fréquences de tokens ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Avec $f(r)=C/r^\alpha$ et $C=12\,000$, la fréquence prédite au rang 4 vaut $3\,000$.
+2. Un segment visuellement linéaire est compatible avec une loi de puissance sur la plage observée. Il n'établit ni une loi exacte, ni un exposant universel, ni un mécanisme causal.
+3. Le tokenizer définit les unités prédites par le modèle. Un mot lexical peut être représenté par un token ou plusieurs sous-tokens ; les deux distributions de fréquences ne coïncident donc pas nécessairement.
+
+</details>
+
+## Entraînement approfondi
+
+La [collection d'exercices sur la loi de Zipf](../exercises-zipf-law.qmd#zipf-law) contient quatre exercices corrigés sur les calculs rang-fréquence, l'interprétation log-log, les fréquences lexicales et tokeniques et les limites empiriques.
+
+::: {.language-switch}
+**Langue :** [Français](zipf-law.qmd) · [English](../../en/exercises/zipf-law.qmd)
+:::
