@@ -130,6 +130,7 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 - **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
 - **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
+- **« Une perplexité plus faible prouve une capacité générale supérieure. »** Non : elle mesure la prédiction moyenne sur un corpus donné, pas la réussite directe à toutes les tâches. Elle ne capture pas nécessairement les gains du post-entraînement ou du raisonnement, et son plancher informationnel reste inconnu. Les comparaisons entre laboratoires sont délicates si les corpus d'évaluation et les mélanges d'entraînement diffèrent. Voir [OpenAI — *Perplexity and Intelligence*](https://openai.com/index/perplexity-and-intelligence/) et [Raschka — *Pre-training is (still) not plateauing*](https://sebastianraschka.com/blog/2026/pretraining-is-still-not-plateauing.html).
 
 
 

@@ -1,0 +1,152 @@
+schema_version: 1
+source_id: openai-perplexity-and-intelligence-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Complete public article text and all five footnotes inspected directly on 2026-11-24."
+      - "The article's opening chart was not retrieved as original image bytes or independently inspected."
+    inferred_elements:
+      - "The teaching route is reconstructed from the argument's progression; the article is a research-position essay, not a formal lesson."
+      - "The author's proposed safety framework is recorded as a normative proposal, not an established standard."
+  source_graph:
+    nodes:
+      - {id: src-openai-predictive-compressor, kind: model, description: "A model trained to predict unseen data, interpreted as a predictive compressor.", locator: "Opening argument"}
+      - {id: src-openai-heldout-dataset, kind: dataset, description: "A fixed held-out internal code dataset used for the reported historical perplexity series.", locator: "Paragraph on the primary progress metric and footnote 3"}
+      - {id: src-openai-log-perplexity, kind: metric, description: "Average negative log probability of observed next tokens; lower values indicate better predictive fit.", locator: "Paragraph beginning 'The primary way we measure progress'"}
+      - {id: src-openai-capabilities, kind: claim, description: "The article associates historical reductions in log-perplexity with successive capability developments while acknowledging that the thresholds were not predictable a priori.", locator: "Capability examples and paragraph on emergent latent capabilities"}
+      - {id: src-openai-metric-limitations, kind: limitation, description: "Perplexity has cross-lab comparability, downstream-actionability, coverage and entropy-floor limitations.", locator: "Section 'Perplexity as a shared metric has challenges'"}
+      - {id: src-openai-safety-proposal, kind: proposal, description: "The author proposes shared development limits tied to perplexity and concrete monitoring milestones.", locator: "Paragraphs on common limits and shared framework"}
+    edges:
+      - {from: src-openai-predictive-compressor, type: evaluated-on, to: src-openai-heldout-dataset}
+      - {from: src-openai-heldout-dataset, type: scored-by, to: src-openai-log-perplexity}
+      - {from: src-openai-log-perplexity, type: associated-with, to: src-openai-capabilities}
+      - {from: src-openai-metric-limitations, type: qualifies, to: src-openai-log-perplexity}
+      - {from: src-openai-safety-proposal, type: uses-as-one-input, to: src-openai-log-perplexity}
+    interpretation: "The graph preserves the article's argument and qualifications. The association between metric progress and capabilities is not treated as a causal law."
+  learning_outcomes:
+    - {status: inferred, outcome: "Define perplexity through average next-token negative log-likelihood and explain why lower values indicate better prediction on the evaluated distribution.", basis: "Metric definition."}
+    - {status: inferred, outcome: "Explain why a fixed held-out dataset is needed for longitudinal comparison and why it does not automatically make cross-lab comparisons fair.", basis: "Dataset description and first listed limitation."}
+    - {status: inferred, outcome: "Identify why perplexity does not directly measure downstream task success or all post-training gains.", basis: "Listed metric limitations."}
+    - {status: inferred, outcome: "Separate the author's empirical observations from his proposed safety/pacing framework.", basis: "Argument and proposal sections."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional probability and negative log-likelihood.", basis: "Metric is explained through next-token prediction."}
+    - {status: inferred, topic: "Basic understanding of held-out evaluation and model training phases.", basis: "The article assumes evaluation and pre-training terminology."}
+  teaching_route:
+    - {order: 1, section: "Predictive compression as a view of pre-training", function: establish-measurement-target, moves: ["Frame pre-training as learning a predictor over a large corpus.", "Distinguish pre-training from later prompting and fine-tuning."]}
+    - {order: 2, section: "Historical held-out log-perplexity", function: present-empirical-trend, moves: ["Define next-token perplexity.", "Introduce a fixed internal code dataset.", "Relate lower values to predictive progress."]}
+    - {order: 3, section: "Capability interpretation", function: qualify-observed-association, moves: ["Give historical capability examples.", "Acknowledge that capability thresholds were not known in advance."]}
+    - {order: 4, section: "Limitations of perplexity", function: delimit-inference, moves: ["Discuss cross-lab dataset and mixture mismatch.", "Separate prediction quality from task metrics.", "Identify gains outside pre-training and the unknown entropy floor."]}
+    - {order: 5, section: "Shared safety and pacing proposal", function: extend-measurement-to-governance, moves: ["Propose shared metrics.", "Tie development limits to monitoring milestones."]}
+  pedagogical_strengths:
+    - "States the measurement target and its held-out-data basis explicitly."
+    - "Lists important failure modes of perplexity as a comparative or capability metric."
+    - "Separates the historical empirical series from a forward-looking governance proposal."
+  pedagogical_limits:
+    - "The internal evaluation corpus and pipeline are not public, limiting independent replication."
+    - "The chart is not independently inspected in this review."
+    - "Historical capability associations do not establish causal thresholds."
+    - "The proposed common limits and monitoring milestones are normative recommendations, not an adopted industry standard."
+  comparison:
+    dossier: docs/source-reviews/raschka-pretraining-not-plateauing-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, "Page-level suggested_route metadata", "Build route"]
+    decision: "Use as the primary source for the metric's reported evaluation context and caveats. Retain the capability and safety claims with their original qualifications; do not convert them into canonical causal relations."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: openai-perplexity-and-intelligence-2026:log-perplexity-as-cross-entropy
+    kind: definition
+    summary: "For the reported natural-log convention, log-perplexity is the mean negative log probability assigned to observed next tokens on an evaluation corpus; this is the token-level cross-entropy averaged over evaluated positions."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The mathematical relationship between cross-entropy and next-token NLL is already established in LLM Lab."}
+      complementarity: {level: high, rationale: "The source connects that objective to a longitudinal base-model evaluation series and an explicit held-out dataset."}
+      pedagogical_value: {level: high, rationale: "Makes the transition from a per-token loss to a corpus-level progress metric concrete."}
+      applicability: {level: high, rationale: "Use as an evidence-backed case study attached to the existing cross-entropy lesson."}
+      redundancy: {level: moderate, rationale: "The definition overlaps with existing loss material; the evaluation use case and caveats do not."}
+      evidence_quality: {level: high, rationale: "The article explicitly defines the metric and identifies its dataset; the underlying internal dataset remains unavailable."}
+    pedagogical_profile:
+      learner_question: "How does token-level cross-entropy become a model-level metric?"
+      explanatory_lens: "Average conditional negative log-likelihood over a held-out token sequence."
+      teaching_form: "Metric definition and evaluation case study."
+      abstraction_level: "Intermediate."
+      prerequisites: ["Conditional probability", "Cross-entropy", "Held-out evaluation"]
+      distinctive_value: "Connects a familiar training objective to a fixed evaluation series for base models."
+      limitations: ["The underlying dataset and pipeline are internal."]
+    locator: {type: section, value: "Paragraph beginning 'The primary way we measure progress' and footnotes 2–3", label: "Held-out log-perplexity"}
+    evidence:
+      kind: source-explanation
+      confidence: context-dependent
+      scope: "OpenAI's stated definition and use of log-perplexity on a fixed internal code dataset."
+      assumptions: ["The reported logarithm is natural, consistent with the article's log-perplexity/cross-entropy equivalence."]
+      limitations: ["Cross-lab comparisons require compatible datasets and data mixtures.", "The internal corpus is not available for independent replication."]
+    disposition: clarify
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop]
+  - id: openai-perplexity-and-intelligence-2026:perplexity-limitations
+    kind: limitation
+    summary: "OpenAI identifies four limitations: different labs use different datasets and data mixtures; perplexity is not a direct task-success metric; it omits improvements outside pre-training such as chain-of-thought reasoning; and the irreducible entropy floor is unknown."
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "These specific evaluation caveats are not assembled in the existing token-level cross-entropy lesson."}
+      complementarity: {level: high, rationale: "Adds a critical evaluation lens to the metric rather than treating lower loss as a universal capability ranking."}
+      pedagogical_value: {level: high, rationale: "Prevents learners from over-interpreting a single aggregate metric."}
+      applicability: {level: high, rationale: "A short caveat box or optional reading link can accompany the existing cross-entropy and evaluation material."}
+      redundancy: {level: low, rationale: "Existing lessons define the metric but do not provide this four-part limitation set."}
+      evidence_quality: {level: high, rationale: "The limitations are explicitly enumerated by the source; their broader empirical resolution is not established."}
+    pedagogical_profile:
+      learner_question: "What can a lower perplexity tell us, and what can it not tell us?"
+      explanatory_lens: "Measurement validity and construct coverage."
+      teaching_form: "Four-part limitations checklist."
+      abstraction_level: "Intermediate to advanced."
+      prerequisites: ["Perplexity", "Cross-entropy", "Evaluation datasets"]
+      distinctive_value: "Separates predictive fit, downstream task performance, post-training gains and irreducible uncertainty."
+      limitations: ["The source does not quantify the unknown entropy floor."]
+    locator: {type: section, value: "Section 'Perplexity as a shared metric has challenges'", label: "Limitations of perplexity"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "The author's explicit limitations for using perplexity as a shared metric."
+      assumptions: ["The limitations are presented as the author's assessment, not an exhaustive formal theorem."]
+      limitations: ["No cross-lab benchmark protocol is supplied."]
+    disposition: integrate-by-reference
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/cross-entropy, en/cross-entropy, fr/scaling-laws, en/scaling-laws]
+  - id: openai-perplexity-and-intelligence-2026:capability-association-not-causation
+    kind: limitation
+    summary: "The article associates historical log-perplexity improvements with capability milestones but explicitly states that the relevant thresholds were not predictable a priori; the examples do not establish a universal causal threshold from loss to capability."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The explicit warning against treating capability associations as predictable thresholds is useful beyond the metric definition."}
+      complementarity: {level: high, rationale: "It adds a careful reading of empirical trend charts and guards against causal overclaiming."}
+      pedagogical_value: {level: high, rationale: "Learners practice distinguishing correlation, retrospective interpretation and causal evidence."}
+      applicability: {level: moderate, rationale: "Retain in the source review and optional evaluation discussion; no canonical graph edge is warranted."}
+      redundancy: {level: low, rationale: "No equivalent caveat was found in the inspected cross-entropy lesson."}
+      evidence_quality: {level: high, rationale: "The source itself explicitly qualifies its historical interpretation."}
+    locator: {type: section, value: "Paragraphs describing GPT-2 through recent models and the following a-priori qualification", label: "Capabilities and log-perplexity"}
+    evidence:
+      kind: source-interpretation
+      confidence: context-dependent
+      scope: "The author's retrospective association between reported loss levels and capabilities."
+      assumptions: ["Historical examples are not treated as a predictive law."]
+      limitations: ["No controlled causal analysis is provided."]
+    disposition: clarify
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/cross-entropy, en/cross-entropy, fr/scaling-laws, en/scaling-laws]
+  - id: openai-perplexity-and-intelligence-2026:pretraining-compute-and-safety-proposal
+    kind: claim
+    summary: "The author expects continued pre-training investment and proposes common development limits based partly on perplexity and monitoring capability. These are forward-looking expectations and normative proposals, not measured outcomes or adopted standards."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Adds a current policy perspective on how predictive metrics might inform development pacing."}
+      complementarity: {level: moderate, rationale: "Connects measurement to governance but is outside the core computational learning path."}
+      pedagogical_value: {level: moderate, rationale: "Useful as an advanced discussion prompt about the limits of capability metrics and safety oversight."}
+      applicability: {level: moderate, rationale: "Keep in the source review as optional research context; do not add to the core learning route."}
+      redundancy: {level: low, rationale: "The project does not currently teach this particular governance proposal."}
+      evidence_quality: {level: moderate, rationale: "The proposal and expectations are clearly stated but are not empirical findings."}
+    locator: {type: section, value: "Paragraphs on future pre-training progress and common limits", label: "Future expectations and pacing proposal"}
+    evidence:
+      kind: source-interpretation
+      confidence: context-dependent
+      scope: "The author's expectations and proposed shared safety/pacing framework."
+      assumptions: ["Normative recommendations are distinguished from empirical measurements."]
+      limitations: ["No standard has been adopted by the industry in this source."]
+    disposition: defer
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/scaling-laws, en/scaling-laws]

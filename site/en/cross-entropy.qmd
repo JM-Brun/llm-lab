@@ -128,6 +128,7 @@ For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends 
 
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
+- **“Lower perplexity proves higher general capability.”** No: it measures average prediction quality on a particular corpus, not direct success on every task. It does not necessarily capture gains from post-training or reasoning, and its irreducible information floor is unknown. Cross-lab comparisons are difficult when evaluation corpora and training mixtures differ. See [OpenAI — *Perplexity and Intelligence*](https://openai.com/index/perplexity-and-intelligence/) and [Raschka — *Pre-training is (still) not plateauing*](https://sebastianraschka.com/blog/2026/pretraining-is-still-not-plateauing.html).
 
 
 
