@@ -1,0 +1,83 @@
+---
+title: "Why can the most likely token produce a worse sentence?"
+subtitle: "A local choice does not necessarily solve the global problem"
+description-meta: "A constructed counterexample distinguishing the best next token from the best sequence under a probabilistic score."
+keywords: ["type:deep-dive", "destination:deepen", "topic:local-choice-global-sequence", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/greedy-and-beam-search"
+summary: "Builds a probability tree where greedy choice loses to another sequence and explains the trade-offs of beam search."
+scope: "Greedy decoding, beam search, sequence scores, length bias, and trade-offs."
+purpose: "Calculate sequence scores, construct a counterexample to greedy choice, and explain what beam search explores without presenting it as universally optimal."
+domain: "inference-generation"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/decoding-strategies", "en/likelihood"]
+tags: ["type:deep-dive", "destination:deepen", "topic:local-choice-global-sequence", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 16 · editorial skeleton*
+
+## Central question
+
+Builds a probability tree where greedy choice loses to another sequence and explains the trade-offs of beam search.
+
+Greedy decoding, beam search, sequence scores, length bias, and trade-offs.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Counterexample on a sequence tree
+
+The best next token—is it really?
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+Building a probability tree
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Following greedy choice to the end
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+What beam search keeps and what it can miss
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
