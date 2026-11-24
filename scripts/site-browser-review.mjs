@@ -731,7 +731,14 @@ async function runCase(testCase, caseIndex) {
     }
     if (kind === "practice-companion") {
       const lessonSlug = pagePath.split("/").pop().replace(/\.html$/, "");
-      item.practiceCompanion = await page.evaluate(({ lessonSlug }) => {
+      const collectionRequired = [
+        "probabilities",
+        "probabilites",
+        "scaled-dot-product-attention",
+      ].includes(lessonSlug) || fs.existsSync(
+        path.resolve("site/_site", lang, `exercises-${lessonSlug}.html`)
+      );
+      item.practiceCompanion = await page.evaluate(({ lessonSlug, collectionRequired }) => {
         const links = [...document.querySelectorAll("main a[href]")].map(link => {
           const target = new URL(link.href);
           const rect = link.getBoundingClientRect();
@@ -774,13 +781,13 @@ async function runCase(testCase, caseIndex) {
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
           /check (?:the essential idea|your understanding)|vérifier (?:l['’]idée essentielle|sa compréhension)/i.test(heading.textContent)
         );
-        return { lessonLink, collectionLink, selfCheckHeading };
-      }, { lessonSlug });
+        return { lessonLink, collectionLink, collectionRequired, selfCheckHeading };
+      }, { lessonSlug, collectionRequired });
       if (!item.practiceCompanion.lessonLink) {
         throw new Error("practice companion must expose a visible return link to its matching lesson");
       }
-      if (!item.practiceCompanion.collectionLink) {
-        throw new Error("practice companion must expose a visible link to its extended exercise collection");
+      if (item.practiceCompanion.collectionRequired && !item.practiceCompanion.collectionLink) {
+        throw new Error("practice companion must expose a visible link to its declared extended exercise collection");
       }
       if (!item.practiceCompanion.selfCheckHeading) {
         throw new Error("practice companion must expose its learner-facing self-check section");
