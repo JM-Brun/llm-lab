@@ -200,7 +200,7 @@ Piantadosi's (2014) critical review argues that no available account straightfor
 4. Why does Piantadosi's review invite us to present these proposals as competing or complementary models rather than an established explanation?
 5. What further evidence would be needed before presenting either proposal as a general explanation?
 
-5. In the semantic hypothesis, what does the trade-off between specificity and reusability mean?
+6. In the semantic hypothesis, what does the trade-off between specificity and reusability mean?
 
 <details>
 <summary>Show the solution</summary>
@@ -211,7 +211,7 @@ Piantadosi's (2014) critical review argues that no available account straightfor
 4. Piantadosi notes that the observed regularities do not by themselves distinguish the proposed mechanisms and that no account convincingly covers all the facts reviewed. Lestrade's and Linders–Louwerse's proposals should therefore be presented as hypotheses with defined scope, not as a consensus.
 5. We would need discriminating predictions, independent measures of the proposed variables, replications across corpora and tasks, and comparisons with competing explanations. Reproducing a curve is not enough.
 
-5. A term that is too general poorly distinguishes referents; a term that is too specific applies to very few situations. The model proposes that a balance between discriminative power and reuse contributes to frequency. This is a hypothesis of the model, not a universal law.
+6. A term that is too general poorly distinguishes referents; a term that is too specific applies to very few situations. The model proposes that a balance between discriminative power and reuse contributes to frequency. This is a hypothesis of the model, not a universal law.
 
 These studies propose different frameworks; they do not establish one universally accepted explanation.
 
