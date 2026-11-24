@@ -42,6 +42,7 @@ project:
     - index.qmd
     - fr/scientific-calendar.qmd
     - fr/advent-calendar-story-day-01.qmd
+    - fr/surprisal-information-content.qmd
     - fr/advent-calendar.qmd
     - fr/advent-calendar-day-01.qmd
     - fr/advent-calendar-day-02.qmd
@@ -50,6 +51,7 @@ project:
     - en/index.qmd
     - en/scientific-calendar.qmd
     - en/advent-calendar-story-day-01.qmd
+    - en/surprisal-information-content.qmd
     - en/advent-calendar.qmd
     - en/advent-calendar-day-01.qmd
     - en/advent-calendar-day-02.qmd
@@ -587,6 +589,7 @@ website:
                 - fr/linearite-embeddings.qmd
             - section: "Formalisation probabiliste et chaîne de l’entraînement"
               contents:
+                - fr/surprisal-information-content.qmd
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
                 - fr/universal-artificial-intelligence.qmd
@@ -837,6 +840,7 @@ website:
                 - en/embedding-linearity.qmd
             - section: "Probabilistic formalization and the training chain"
               contents:
+                - en/surprisal-information-content.qmd
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
                 - en/universal-artificial-intelligence.qmd
