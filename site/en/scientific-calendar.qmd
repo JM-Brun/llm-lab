@@ -34,7 +34,7 @@ The LLM Lab scientific calendar offers **24 self-contained stories**, to be read
 
 ## First story available
 
-<article class="calendar-feature">
+::: {.callout-note}
 
 **Day 01 · Language, information, and probability**
 
@@ -46,7 +46,7 @@ An investigation of Zipf's law: why do a few words appear everywhere while a lon
 
 [Read Day 01 →](advent-calendar-story-day-01.qmd)
 
-</article>
+:::
 
 ## A collection, not a progression
 
