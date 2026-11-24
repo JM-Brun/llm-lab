@@ -138,7 +138,7 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 ## Cibles souples et divergence KL
 
-Le cas one-hot suffit pour calculer la pénalité d'un token observé. Pour une cible qui répartit sa masse sur plusieurs tokens, la relation $H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)$, ses hypothèses et ses cas limites sont développés dans l'approfondissement [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd). Cette dérivation n'est pas nécessaire pour calculer la NLL d'un token observé.
+Le cas one-hot suffit pour calculer la pénalité d'un token observé. Pour une cible qui répartit sa masse sur plusieurs tokens, la relation $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, ses hypothèses et ses cas limites sont développés dans l'approfondissement [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd). Cette dérivation n'est pas nécessaire pour calculer la NLL d'un token observé.
 
 ## Implémentations — NumPy, PyTorch et stabilité numérique
 
