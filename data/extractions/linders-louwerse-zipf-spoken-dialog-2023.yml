@@ -150,4 +150,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "Phase A only. This source adds a complementary boundary check (spoken dialog and multiple linguistic units) and a testable cognitive-effort hypothesis. Keep it optional; it does not justify changing the core lexical-frequency lesson or the tokenizer sequence."
+  decision_summary: "Phase B partial. The bilingual exercises use the paper to distinguish goodness of fit from exponent stability across linguistic units and corpora, and to formulate the cognitive-load hypothesis as a testable proposal. The paper's findings are scoped to its corpora and operationalizations; they are not presented as universal invariance or consensus. The shared concepts are registered centrally; no route edge is proposed."
