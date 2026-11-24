@@ -31,20 +31,20 @@ tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "l
 
 ## Open a door
 
-Published stories are available now. The other doors show their planned topic and editorial status; they become links only after publication and review.
+The first story is published; the second is available as an in-progress preview. The other doors show their planned topic and editorial status, and will become links as they are reviewed.
 
-<div class="advent-progress" role="status" aria-label="One story published out of twenty-four">
-  <div class="advent-progress__label"><strong>1 / 24</strong><span>story published</span><span class="advent-progress__note">All 24 doors remain accessible year-round.</span></div>
-  <div class="advent-progress__track" aria-hidden="true"><span style="width:4.1667%"></span></div>
+<div class="advent-progress" role="status" aria-label="Two stories accessible out of twenty-four: one published and one preview">
+  <div class="advent-progress__label"><strong>2 / 24</strong><span>accessible · 1 published, 1 preview</span><span class="advent-progress__note">All 24 doors remain accessible year-round.</span></div>
+  <div class="advent-progress__track" aria-hidden="true"><span style="width:8.3333%"></span></div>
 </div>
 
 <div class="advent-calendar-grid" aria-label="2026 Advent calendar, 24 doors in chronological order">
   <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Day 1, available : Why does the word “the” appear everywhere?">
   <span class="advent-door__top"><span>December 1</span><span class="advent-door__status">Available</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Why does the word “the” appear everywhere?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Zipf’s law · 10 min</span><strong>Open ↗</strong></span>
   </a>
-  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 2, in preparation : How many bits of surprise are in a sentence?">
-  <span class="advent-door__top"><span>December 2</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">02</span><span class="advent-door__title">How many bits of surprise are in a sentence?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Information theory</span></span>
-  </div>
+  <a class="advent-door advent-door--open advent-door--language" href="surprisal-information-content.qmd" aria-label="Day 2, preview available : How many bits of surprise does an event contain?">
+  <span class="advent-door__top"><span>December 2</span><span class="advent-door__status">Preview · review pending</span></span><span class="advent-door__number">02</span><span class="advent-door__title">How many bits of surprise does an event contain?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Self-information · Surprisal</span></span>
+  </a>
   <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 3, in preparation : The tokenizer as a compression engineer">
   <span class="advent-door__top"><span>December 3</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">03</span><span class="advent-door__title">The tokenizer as a compression engineer</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Tokenization · Compression</span></span>
   </div>
@@ -115,6 +115,7 @@ Published stories are available now. The other doors show their planned topic an
 
 <div class="advent-legend" aria-label="Door status legend">
   <span><i class="advent-legend__swatch advent-legend__swatch--open"></i> Published · active link</span>
+  <span><i class="advent-legend__swatch advent-legend__swatch--open"></i> Preview · active link, review pending</span>
   <span><i class="advent-legend__swatch advent-legend__swatch--planned"></i> In preparation · announced topic</span>
 </div>
 
@@ -131,9 +132,9 @@ Each story starts with a distinctive question, makes its reasoning visible, exam
 
 ## Edition status
 
-The calendar lists the 24 topics planned for the 2026 edition. **One story out of 24 is currently available**; the other 23 remain in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative.
+The calendar lists the 24 topics planned for the 2026 edition. **One story is published and a second is available as an in-progress preview**; the remaining 22 doors are in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative.
 
-The first story, about Zipf’s law, is published as a reading version open to feedback. It is the pilot for this model: one editorial door, one durable Deepen lesson, a dedicated exercise page, and links to related knowledge. Published pages will remain available year-round.
+The first story, about Zipf’s law, is published as a reading version open to feedback. The second, about self-information and surprisal, is available as a preview but has not completed scientific and pedagogical review. Each lesson remains a permanent Deepen page, with a dedicated practice resource and links to related knowledge.
 
 ## Explore further
 
