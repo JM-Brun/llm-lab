@@ -1720,3 +1720,29 @@ This is a source/metadata/link and exercise-ownership audit. It is not a new mat
 - The code measures validation with fixed parameters; it does not update on validation data. The page distinguishes validation-based selection from final test-set assessment.
 - The earlier visual inventory still identifies the training loop as a candidate for one compact visual using this same numerical example. That is a separate rendered-pedagogy decision; do not add a generic training diagram or duplicate the code trace.
 - Rendered desktop/mobile inspection, manual screen-reader review and independent learner comprehension remain separate evidence. This source/code pass does not claim any of them.
+
+
+## 2026-11-24: inference → context-use boundary audit
+
+**Scope.** Reader-facing route, page ownership and Practice-link audit for the transition from free-running inference to application-level context use. This pass reuses the existing generation, prefill/decode and context-engineering source/visual inventory entries; it does not repeat their mathematical or source reviews.
+
+| Page / stage | Existing contract | Audit finding |
+|---|---|---|
+| Generation — inference stage | One canonical FR/EN page owns the autoregressive loop, prompt prefill, iterative decode, token-selection decoding, feedback and stopping. Its Practice companion has self-check questions and links to the extended Generation collection. | **Keep.** The page explicitly separates prefill/decode from teacher forcing, and its Practice page asks learners to distinguish the two. No separate prefill lesson is needed. |
+| In-context learning — first page in context-use | Explains zero-shot/one-shot/few-shot adaptation from prompt examples while parameters remain fixed. It follows generation and leads to context engineering in both languages. | **Keep.** The route transition is pedagogically sound: the learner moves from how a continuation is generated to how demonstrations in the supplied prompt can affect that continuation without changing parameters. |
+| Context engineering — second page in context-use | Explains application-side selection, organization, updating and security of the context; distinguishes ICL, RAG, memory and model parameters. It follows ICL and closes the context-use stage. | **Keep.** The page's three-level comparison, neighboring-concept table, design example and eight operations already provide the needed distinctions. A system-boundary diagram remains a conditional visual candidate from the earlier visual inventory, not a missing definition or a reason to add another page. |
+| Generation Practice companion | Four self-check questions include prefill versus teacher forcing; extended Generation exercises cover the autoregressive loop, KV cache and selection. | **Keep.** This is the correct owner for inference mechanics and selection exercises. |
+| In-context-learning Practice companion | Dedicated FR/EN page with answered transfer questions and an experiment on few-shot generalization, irrelevant/reordered/contradictory examples and held-out cases. It links to the shared exercise space rather than a separate one-to-one collection page. | **Keep.** The companion is self-contained enough; do not create a redundant topic-specific exercise collection merely to satisfy a filename convention. |
+| Context-engineering Practice companion | Dedicated FR/EN applied page with design, evaluation, neighboring-concept and two-call context-tracing exercises. The final exercise explicitly separates information retained by the application, information sent on each call, and tokens fed back within a single generation. | **Keep.** The two-call exercise is a strong transfer task for distinguishing application context from model parameters and within-call autoregressive feedback. It does not need a second extended collection. |
+
+### Cross-boundary decisions
+
+1. The route order is coherent: generation → in-context learning → context engineering. The nine-stage route places generation in inference and the two context-use lessons in the following context-use stage; the pages' suggested-route metadata agrees in FR/EN.
+2. No new computational edge or prerequisite is justified. The stage transition is an application-level extension of inference, not a change to the model's forward computation.
+3. Keep the ownership distinction: ICL describes how prompt demonstrations affect behavior at fixed parameters; context engineering describes how the application chooses and assembles the context that reaches the model. RAG and external memory remain system-side mechanisms, not hidden model state.
+4. No new prefill/decode page is needed. The canonical generation lesson and its Practice companion already own those execution phases and explicitly distinguish them from teacher forcing.
+5. The browser-review contract should not require every Practice companion to link to a separate extended collection. Some companions (notably ICL and context engineering) are intentionally self-contained. PR #1604 generalizes the existing check: require the collection link only when a shared collection is explicitly mapped or a matching published collection exists; still require a visible return link, a learner-facing self-check section and native collapsed answer disclosures.
+
+### Evidence boundary
+
+This is a source, metadata, route and exercise-ownership audit. It is not a new review of the ICL mechanism, RAG implementation, generation math, rendered screenshots, screen-reader output or learner performance. The previously recorded visual inventory remains authoritative for the conditional context-engineering diagram and generation timeline.
