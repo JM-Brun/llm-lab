@@ -22,96 +22,125 @@ related: ["en/learning-map", "en/llm-overview", "en/exercises"]
 tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
 -->
 
-# 24 doors, 24 discoveries to explore
+<div class="advent-hero">
+  <p class="advent-hero__eyebrow">LLM LAB · 2026 EDITION</p>
+  <p class="advent-hero__statement">One question a day. <span>Twenty-four ways to look at LLMs differently.</span></p>
+  <p class="advent-hero__description">Open a door, follow an idea, put it to the test. From language regularities to architectural choices, each story is a self-contained investigation, with its reasoning, examples, and limitations.</p>
+  <div class="advent-hero__facts" aria-label="Edition at a glance"><span><strong>24</strong> stories</span><span><strong>4</strong> thematic shelves</span><span><strong>≈ 10 min</strong> per story</span></div>
+</div>
 
-A surprising statistical law. A decades-old question about information. A numerical trick that makes a calculation possible. An experiment that challenges our intuition about learning.
+## Open a door
 
-The 2026 Advent Calendar offers **24 independent doors**. Behind each one is a story-led, permanent lesson in the **Deepen** collection. Open the doors in any order: none assumes that you have read another. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
+Published stories are available now. The other doors show their planned topic and editorial status; they become links only after publication and review.
 
-::: {.callout-note}
-**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. The other 23 stories will be published progressively after scientific, pedagogical, and technical review.
-:::
+<div class="advent-progress" role="status" aria-label="One story published out of twenty-four">
+  <div class="advent-progress__label"><strong>1 / 24</strong><span>story published</span><span class="advent-progress__note">All 24 doors remain accessible year-round.</span></div>
+  <div class="advent-progress__track" aria-hidden="true"><span style="width:4.1667%"></span></div>
+</div>
 
-## First story available
+<div class="advent-calendar-grid" aria-label="2026 Advent calendar, 24 doors in chronological order">
+  <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Day 1, available : Why does the word “the” appear everywhere?">
+  <span class="advent-door__top"><span>December 1</span><span class="advent-door__status">Available</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Why does the word “the” appear everywhere?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Zipf’s law · 10 min</span><strong>Open ↗</strong></span>
+  </a>
+  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 2, in preparation : How many bits of surprise are in a sentence?">
+  <span class="advent-door__top"><span>December 2</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">02</span><span class="advent-door__title">How many bits of surprise are in a sentence?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Information theory</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 3, in preparation : The tokenizer as a compression engineer">
+  <span class="advent-door__top"><span>December 3</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">03</span><span class="advent-door__title">The tokenizer as a compression engineer</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Tokenization · Compression</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--geometry" aria-label="Day 4, in preparation : Can meaning have a direction?">
+  <span class="advent-door__top"><span>December 4</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">04</span><span class="advent-door__title">Can meaning have a direction?</span><span class="advent-door__bottom"><span class="advent-door__topic">Geometry & representations</span><span>Vector geometry</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--geometry" aria-label="Day 5, in preparation : The same word, two different worlds">
+  <span class="advent-door__top"><span>December 5</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">05</span><span class="advent-door__title">The same word, two different worlds</span><span class="advent-door__bottom"><span class="advent-door__topic">Geometry & representations</span><span>Polysemy · Context</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--geometry" aria-label="Day 6, in preparation : What does a sine wave have to do with word order?">
+  <span class="advent-door__top"><span>December 6</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">06</span><span class="advent-door__title">What does a sine wave have to do with word order?</span><span class="advent-door__bottom"><span class="advent-door__topic">Geometry & representations</span><span>Signals · Positional encoding</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 7, in preparation : Attention as a learned retrieval system">
+  <span class="advent-door__top"><span>December 7</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">07</span><span class="advent-door__title">Attention as a learned retrieval system</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Query · Key · Value</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 8, in preparation : Why divide by the square root of the dimension?">
+  <span class="advent-door__top"><span>December 8</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">08</span><span class="advent-door__title">Why divide by the square root of the dimension?</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Variance · Attention</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 9, in preparation : Softmax and the physics of a crowd">
+  <span class="advent-door__top"><span>December 9</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">09</span><span class="advent-door__title">Softmax and the physics of a crowd</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Temperature · Boltzmann</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 10, in preparation : The triangular wall: preventing information leaks">
+  <span class="advent-door__top"><span>December 10</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">10</span><span class="advent-door__title">The triangular wall: preventing information leaks</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Causality · Masking</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 11, in preparation : Why do deep networks keep residual connections?">
+  <span class="advent-door__top"><span>December 11</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">11</span><span class="advent-door__title">Why do deep networks keep residual connections?</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Residual stream · Gradients</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 12, in preparation : Normalization: changing coordinates to make learning easier">
+  <span class="advent-door__top"><span>December 12</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">12</span><span class="advent-door__title">Normalization: changing coordinates to make learning easier</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>LayerNorm · RMSNorm</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 13, in preparation : Perplexity: how surprised was the model?">
+  <span class="advent-door__top"><span>December 13</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">13</span><span class="advent-door__title">Perplexity: how surprised was the model?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Probabilistic metric</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 14, in preparation : Does temperature really make answers more creative?">
+  <span class="advent-door__top"><span>December 14</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">14</span><span class="advent-door__title">Does temperature really make answers more creative?</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Decoding · Entropy</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 15, in preparation : Top-k and top-p: where should the probability tail end?">
+  <span class="advent-door__top"><span>December 15</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">15</span><span class="advent-door__title">Top-k and top-p: where should the probability tail end?</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Sampling</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 16, in preparation : Why can the most likely token produce a worse sentence?">
+  <span class="advent-door__top"><span>December 16</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">16</span><span class="advent-door__title">Why can the most likely token produce a worse sentence?</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Sequence search</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 17, in preparation : Cross-entropy as a code length">
+  <span class="advent-door__top"><span>December 17</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">17</span><span class="advent-door__title">Cross-entropy as a code length</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Coding · Cross-entropy</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--language" aria-label="Day 18, in preparation : Why add log-probabilities instead of multiplying probabilities?">
+  <span class="advent-door__top"><span>December 18</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">18</span><span class="advent-door__title">Why add log-probabilities instead of multiplying probabilities?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Likelihood · Numerical stability</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 19, in preparation : The chain rule: how does an error reach an early layer?">
+  <span class="advent-door__top"><span>December 19</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">19</span><span class="advent-door__title">The chain rule: how does an error reach an early layer?</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Derivation · Backpropagation</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--mechanisms" aria-label="Day 20, in preparation : The learning-rate cliff">
+  <span class="advent-door__top"><span>December 20</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">20</span><span class="advent-door__title">The learning-rate cliff</span><span class="advent-door__bottom"><span class="advent-door__topic">Mechanisms & computation</span><span>Optimization · Stability</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 21, in preparation : When a model gets worse before it gets better">
+  <span class="advent-door__top"><span>December 21</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">21</span><span class="advent-door__title">When a model gets worse before it gets better</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Double descent</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 22, in preparation : Do larger models become predictable?">
+  <span class="advent-door__top"><span>December 22</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">22</span><span class="advent-door__title">Do larger models become predictable?</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Scaling laws</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 23, in preparation : What if the model could look things up?">
+  <span class="advent-door__top"><span>December 23</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">23</span><span class="advent-door__title">What if the model could look things up?</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>RAG · External memory</span></span>
+  </div>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Day 24, in preparation : Making a model smaller without retraining everything">
+  <span class="advent-door__top"><span>December 24</span><span class="advent-door__status">In preparation</span></span><span class="advent-door__number">24</span><span class="advent-door__title">Making a model smaller without retraining everything</span><span class="advent-door__bottom"><span class="advent-door__topic">Generalization & systems</span><span>Quantization · Precision</span></span>
+  </div>
+</div>
 
-::: {.callout-note}
-
-**Day 01 · Language, information, and probability**
-
-### [Why does the word “the” appear everywhere?](advent-calendar-story-day-01.qmd)
-
-An investigation of Zipf's law: why do a few words appear everywhere while a long tail of words remains rare? A compact formula, a worked example, a plot, and a critical look at the statistical limits of this regularity.
-
-*About 10 minutes · Open for feedback · Non-specialist review pending*
-
-[Read Day 01](advent-calendar-story-day-01.qmd).
-
-:::
+<div class="advent-legend" aria-label="Door status legend">
+  <span><i class="advent-legend__swatch advent-legend__swatch--open"></i> Published · active link</span>
+  <span><i class="advent-legend__swatch advent-legend__swatch--planned"></i> In preparation · announced topic</span>
+</div>
 
 ## A collection, not a progression
 
-- **One distinctive question**: a phenomenon, paradox, design decision, or research finding.
-- **Visible reasoning**: concrete examples and, when useful, an explained mathematical derivation.
-- **Critical perspective**: assumptions, limitations, counterexamples, and a clear distinction between theoretical results and empirical observations.
-- **An experiment to take away**: a short calculation, prediction, or modification to extend the reading.
+The subtle colour accents identify four thematic shelves; they do not prescribe a reading order. Each story can be opened independently.
 
-Allow about **10 minutes per story**, excluding further reading. The thematic shelves below help you browse the collection; they do not prescribe a reading order.
+- **Language, information, and probability**: lexical frequencies, information theory, tokenization, and probabilistic metrics.
+- **Geometry, signals, and representations**: vector spaces, polysemy, frequencies, and positional encodings.
+- **Mechanisms, computation, and optimization**: attention, causality, residual connections, normalization, and backpropagation.
+- **Research, generalization, and systems**: decoding, double descent, scaling laws, RAG, and quantization.
 
-## Language, information, and probability
+Each story starts with a distinctive question, makes its reasoning visible, examines its limits, and offers an experiment to take away. Allow about **10 minutes per story**, excluding further reading.
 
-From word frequencies to the information carried by a message, these stories explore statistical regularities in language and the tools used to measure them.
+## Edition status
 
-- **Day 01** — [**Why does the word “the” appear everywhere?**](advent-calendar-story-day-01.qmd) — **Available** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
-- **Day 02** — **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
-- **Day 03** — **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
-- **Day 13** — **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
-- **Day 17** — **Cross-entropy as a code length** — The cost of describing data with an imperfect probabilistic model.
-- **Day 18** — **Why add log-probabilities instead of multiplying probabilities?** — Likelihood, long sequences, and numerical stability.
+The calendar lists the 24 topics planned for the 2026 edition. **One story out of 24 is currently available**; the other 23 remain in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative.
 
-## Geometry, signals, and representations
-
-From vectors to frequencies, these stories connect machine-learning representations with ideas from geometry and signal processing.
-
-- **Day 04** — **Can meaning have a direction?** — The geometry of vector representations, famous analogies, and the limits of their interpretation.
-- **Day 05** — **The same word, two different worlds** — Polysemy and representation changes across contexts.
-- **Day 06** — **What does a sine wave have to do with word order?** — Frequencies, phases, and positional encodings through the lens of signal processing.
-
-## Mechanisms, computation, and optimization
-
-These stories begin with concrete computational problems: retrieving information, stabilizing activations, transmitting a learning signal, or choosing an update step.
-
-- **Day 07** — **Attention as a learned retrieval system** — A view of Q, K, and V inspired by information-retrieval systems.
-- **Day 08** — **Why divide by the square root of the dimension?** — Dot-product variance and the scaling of attention scores.
-- **Day 09** — **Softmax and the physics of a crowd** — Temperature, Boltzmann distributions, and probability concentration.
-- **Day 10** — **The triangular wall: preventing information leaks** — Causality, information access, and preventing leakage between past and future.
-- **Day 11** — **Why do deep networks keep residual connections?** — Identity paths, signal preservation, and gradient intuition.
-- **Day 12** — **Normalization: changing coordinates to make learning easier** — Mean, variance, LayerNorm, RMSNorm, and conditioning.
-- **Day 19** — **The chain rule: how does an error reach an early layer?** — Deriving backpropagation on a small network.
-- **Day 20** — **The learning-rate cliff** — Optimization geometry, curvature, and the trade-off between progress and instability.
-
-## Research, generalization, and systems
-
-From large-scale empirical phenomena to system-design choices, these stories ask what experiments really allow us to conclude.
-
-- **Day 14** — **Does temperature really make answers more creative?** — What flattening a distribution changes, and what it does not guarantee.
-- **Day 15** — **Top-k and top-p: where should the probability tail end?** — Two truncation policies compared on a constructed distribution.
-- **Day 16** — **Why can the most likely token produce a worse sentence?** — Local choices, sequence search, and decoding trade-offs.
-- **Day 21** — **When a model gets worse before it gets better** — Double descent and the limits of simple intuitions about generalization.
-- **Day 22** — **Do larger models become predictable?** — Scaling laws, extrapolation, and uncertainty in empirical relationships.
-- **Day 23** — **What if the model could look things up?** — External retrieval, memory, and retrieval-augmented generation.
-- **Day 24** — **Making a model smaller without retraining everything** — Quantization, rounding error, and memory–quality trade-offs.
-
-## Where does the edition stand?
-
-The list above presents the 24 doors planned for the 2026 edition. **One of the 24 stories is currently available**; the other 23 titles remain in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative. Published lessons remain available year-round in Deepen.
-
-Lesson 01, about Zipf's law, is published as a reading version open to feedback. Its non-specialist reader review is still pending; improvements from that review will be incorporated without blocking access to the text. It serves as the pilot for this model: one editorial door, one durable Deepen page, a dedicated exercise page, and links to related knowledge. The production order does not impose a reading order.
+The first story, about Zipf’s law, is published as a reading version open to feedback. It is the pilot for this model: one editorial door, one durable Deepen lesson, a dedicated exercise page, and links to related knowledge. Published pages will remain available year-round.
 
 ## Explore further
 
-The calendar opens up new perspectives; LLM Lab's resources let you choose how deeply to explore:
+Each door is a narrative entry point to a permanent Deepen lesson. The lesson page carries the full content; the calendar does not duplicate the articles.
 
 - [Browse the concept and resource map](learning-map.qmd) to navigate topics freely.
+- [Explore Deepen](deepen.qmd) to find permanent lessons by domain.
 - [Read the language-model overview](llm-overview.qmd) to place the main mechanisms in context.
 - [Practice and experiment](exercises.qmd) to work through concepts from the main learning path.
 
