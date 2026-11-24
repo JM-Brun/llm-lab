@@ -18,13 +18,15 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/transformer"]
+related: ["en/transformer", "en/transformer-history"]
 tags: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: GPT and Transformers: architecture and data flow](../transformer.qmd)
 
-## Check your understanding
+For extended practice, see the [Transformer exercise collection](../exercises-transformer.qmd#transformer), which brings together progressive problems, worked solutions, and transfer questions.
+
+## Check the essential idea
 
 This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](../generation.qmd).
 
@@ -42,6 +44,26 @@ This check focuses on the network computation, not on decoding, which is covered
 3. Normalization helps control activation scale and gradient flow. Its effect depends on placement: Xiong et al. (2020), for example, show that the original Post-LN design can have large gradients near the output at initialization, while the Pre-LN variant they study has better-behaved gradients. Do not conclude that every deep architecture fails without one particular normalization arrangement.
 4. `d_model` to `d_ff` (the MLP's intermediate dimension, often about 4 × `d_model`), a nonlinear activation on the intermediate representation, then back to `d_model`.
 5. For an unpadded prefix, decoding uses the logits at its last position. The causal mask limits their computation to tokens already known. During training, the model can compute logits at all positions in parallel. The loss uses those whose next token is a valid target.
+
+### Suggested answers
+
+## Read the original 2017 diagram {#read-the-original-transformer-diagram}
+
+Use the [guided reading of the original diagram](../transformer-history.qmd#historical-transformer-diagram). It helps to have studied [Q, K, and V projections](../queries-keys-values.qmd) and [causal masking](../causal-masking.qmd) first.
+
+1. **Locate:** where does information enter, which stacks are repeated, where do encoder and decoder streams separate, and where are output scores produced?
+2. **Explain:** where do Q, K and V come from for each attention operation? Which positions are allowed by the mask? Why is encoder–decoder attention not a third form of self-attention?
+3. **Compare:** what does Add & Norm mean? In what order are addition and normalization applied? Why does the historical post-LN diagram differ from the pre-LN block studied in the deep dive?
+4. **Transfer:** which boxes disappear in decoder-only GPT? Which remain in an adapted form? Why does causal masking change the permitted computation?
+5. **Reconstruct:** explain the path of a representation from input to logits, separating network computation, conversion to probabilities, and generation of the next token.
+
+
+
+1. **Locate:** the encoder receives embeddings and positional information, then repeats self-attention and a feed-forward network. The decoder receives shifted target-sequence embeddings, then repeats masked self-attention, encoder–decoder attention, and a feed-forward network. A linear projection and softmax produce the output distribution.
+2. **Explain:** in encoder or decoder self-attention, Q, K and V come from the same stream. In encoder–decoder attention, Q comes from the decoder while K and V come from encoder outputs: it connects two distinct streams. The decoder's causal mask allows previous and current positions, not future tokens.
+3. **Compare:** Add & Norm denotes residual addition followed by normalization in the original diagram (Post-LN). The pre-LN block in the deep dive places normalization before each sublayer; the two orders are not interchangeable.
+4. **Transfer:** decoder-only GPT has neither an encoder stack nor encoder–decoder attention. It retains causal self-attention, an MLP, residual connections and normalization, followed by a vocabulary projection.
+5. **Reconstruct:** input representations → repeated decoder blocks → projection to logits → softmax and distribution → token selection and context append. The last two operations belong to decoding, after the logits have been computed.
 
 </details>
 

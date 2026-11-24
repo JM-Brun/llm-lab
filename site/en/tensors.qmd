@@ -81,6 +81,20 @@ $$
 
 The batch and position axes are preserved; the final axis changes from $D$ to $D'$. This notation avoids confusing the output dimension with $H$, which denotes the number of attention heads below. Shape checks catch some errors but do not guarantee that axes have the intended meaning.
 
+### Architectural dimensions of a Transformer block
+
+A block's dimensions describe complementary design choices. They do not all denote axes of the same tensor. In the shape notation used above, $D$ denotes the hidden dimension; Transformer architecture descriptions often write this width as $d_{\mathrm{model}}$:
+
+- \(L\): depth, the number of stacked blocks;
+- \(d_{\mathrm{model}}\): model width, the residual-stream dimension and the dimension of representations passed between blocks;
+- \(H\): number of attention heads;
+- \(d_{\mathrm{head}}\) (also written \(d_h\)): dimension per head; in standard multi-head attention, concatenation typically gives \(H d_{\mathrm{head}}=d_{\mathrm{model}}\);
+- \(d_{\mathrm{ff}}\): intermediate MLP dimension, before projection back to \(d_{\mathrm{model}}\).
+
+**GPT-2 124M reference:** \(L=12\), \(d_{\mathrm{model}}=768\), \(H=12\), \(d_{\mathrm{head}}=64\), and \(d_{\mathrm{ff}}=3072=4d_{\mathrm{model}}\). These values describe this configuration, not a universal rule. Recent architectures may change the number of query and key/value heads, use gated MLPs, or choose different dimension ratios.
+
+The term *width* is sometimes used for a different internal dimension; always check the convention used by the model under discussion. In the project's reference configuration, the corresponding parameters are named `embedding_dim` for $d_{\mathrm{model}}$ and `mlp_hidden_dim` for $d_{\mathrm{ff}}$. For their definitions and parameter-level details, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd).
+
 ## Axes carry meaning
 
 A shape gives axis sizes, not semantics. Two tensors with shape $(B,T,D)$ can represent different objects.

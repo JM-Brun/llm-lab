@@ -18,13 +18,15 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/transformer-history"]
 tags: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : GPT et Transformer : architecture et flux des données](../transformer.qmd)
 
-## Vérifier sa compréhension
+Pour poursuivre avec des exercices plus approfondis, consultez la [collection d’exercices Transformer](../exercises-transformer.qmd#transformer), qui rassemble les problèmes progressifs, les corrigés détaillés et les questions de transfert.
+
+## Vérifier l’idée essentielle
 
 Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](../generation.qmd).
 
@@ -42,6 +44,26 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 3. La normalisation aide à contrôler l'échelle des activations et la propagation des gradients. Son effet dépend de son emplacement : Xiong et al. (2020) montrent notamment que le Post-LN original peut présenter des gradients élevés près de la sortie à l'initialisation, alors que le Pre-LN étudié donne des gradients mieux comportés. Il ne faut donc pas conclure que toute architecture profonde échoue sans une disposition unique de normalisation.
 4. `d_model` vers `d_ff` (la dimension intermédiaire du MLP, souvent environ 4 × `d_model`), activation non linéaire sur la représentation intermédiaire, puis retour vers `d_model`.
 5. Pour un préfixe sans padding, le décodage utilise les logits de sa dernière position. Le masque causal limite leur calcul aux tokens déjà connus. Pendant l’entraînement, le modèle peut calculer les logits de toutes les positions en parallèle. La loss utilise ceux dont le token suivant est une cible valide.
+
+### Pistes de réponse
+
+## Lire le schéma fondateur de 2017 {#lire-le-schema-fondateur-de-2017}
+
+Utilisez la [lecture guidée du schéma original](../transformer-history.qmd#historical-transformer-diagram). Il est préférable d'avoir déjà étudié les [projections Q, K, V](../queries-keys-values.qmd) et le [masque causal](../causal-masking.qmd).
+
+1. **Repérer :** où l'information entre-t-elle, quelles piles sont répétées, où se séparent les flux encodeur et décodeur, et où apparaissent les scores de sortie ?
+2. **Expliquer :** d'où viennent Q, K et V pour chaque attention ? Quelles positions le masque autorise-t-il ? Pourquoi l'attention encodeur-décodeur n'est-elle pas une troisième forme d'auto-attention ?
+3. **Comparer :** que signifie Add & Norm ? Dans quel ordre l'addition et la normalisation sont-elles placées ? Pourquoi le schéma historique post-LN diffère-t-il du bloc pré-LN étudié dans l'approfondissement ?
+4. **Transférer :** quelles boîtes disparaissent dans GPT décodeur seul ? Lesquelles restent sous une forme adaptée ? Pourquoi le masque causal change-t-il le calcul autorisé ?
+5. **Reconstruire :** racontez le trajet d'une représentation depuis l'entrée jusqu'aux logits, en séparant calcul du réseau, conversion en probabilités et génération du token suivant.
+
+
+
+1. **Repérer :** l'encodeur reçoit les embeddings et l'information positionnelle, puis répète auto-attention et réseau feed-forward. Le décodeur reçoit les embeddings de la séquence cible décalée, puis répète auto-attention masquée, attention encodeur-décodeur et réseau feed-forward. La projection linéaire et softmax produisent la distribution de sortie.
+2. **Expliquer :** dans l'auto-attention de l'encodeur ou du décodeur, Q, K et V proviennent du même flux. Dans l'attention encodeur-décodeur, Q provient du décodeur tandis que K et V proviennent des sorties de l'encodeur : elle relie deux flux distincts. Le masque causal du décodeur autorise les positions précédentes et courante, pas les tokens futurs.
+3. **Comparer :** Add & Norm désigne l'addition résiduelle suivie d'une normalisation dans le schéma original (Post-LN). Le bloc pré-LN de l'approfondissement place la normalisation avant chaque sous-couche ; les deux ordres ne sont pas interchangeables.
+4. **Transférer :** GPT décodeur seul ne possède ni pile encodeur ni attention encodeur-décodeur. Il conserve une auto-attention causale, un MLP, les connexions résiduelles et la normalisation, puis une projection vers le vocabulaire.
+5. **Reconstruire :** représentations d'entrée → blocs décodeur répétés → projection vers les logits → softmax et distribution → sélection d'un token puis ajout au contexte. Les deux dernières opérations relèvent du décodage, après le calcul des logits.
 
 </details>
 

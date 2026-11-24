@@ -17,8 +17,8 @@ suggested_route:
   next: "en/entropy"
 hierarchy:
   parents: ["en/logits"]
-  children: []
-related: ["en/generation", "en/entropy", "en/likelihood", "en/probabilities-exercises"]
+  children: ["en/entropy"]
+related: ["en/generation", "en/likelihood", "en/probabilities-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
