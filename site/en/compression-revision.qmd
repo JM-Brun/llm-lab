@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["en/universal-artificial-intelligence"]
-related: ["en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity"]
+related: ["en/entropy", "en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity"]
 tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:en", "status:published"]
 -->
 
@@ -70,7 +70,7 @@ $$
 **Interpretation:** the higher the probability assigned to an observed token, the lower its ideal code cost. Average cross-entropy measures this average cost under a given data distribution and logarithm convention.
 
 ::: {.callout-warning title="A probability distribution is not enough to decompress"}
-A compatible encoder and decoder (for example, arithmetic coders), the same model, tokenizer, symbol order, and numerical conventions are required. Decoding must reconstruct the exact sequence. Generating a plausible continuation is not decompressing the corpus.
+A compatible encoder and decoder (for example, arithmetic coders), the same model, tokenizer, symbol order, and numerical conventions are required. Decoding must reconstruct the exact sequence. Generating a plausible continuation is not decompressing the corpus. LLM weights are not a literal archive of the training corpus: they parameterize a probability model but do not provide an exact-reconstruction protocol.
 :::
 
 ::: {.callout-note title="The corpus is a ceiling, not a floor"}
@@ -100,7 +100,7 @@ The [entropy-versus-surprisal experiment](https://github.com/JM-Brun/llm-lab/blo
 | **Pruning** | Weights or structures are removed | Is the resulting sparsity actually exploited by hardware? |
 | **Distillation** | A student learns to imitate selected teacher behaviours | Which behaviours are retained, on which tasks, and with what loss? |
 
-A smaller checkpoint is not automatically faster: format, kernels, hardware, batch size, and context length matter.
+A smaller checkpoint is not automatically faster: format, kernels, hardware, batch size, and context length matter. For a critical review of model-compression methods and trade-offs, see the [model-compression synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
 
 ### MDL: count the model as well as the data
 

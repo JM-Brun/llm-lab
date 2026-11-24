@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
-related: ["en/likelihood", "en/entropy-exercises"]
+related: ["en/likelihood", "en/entropy-exercises", "en/compression-revision", "en/experience-information-theory"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -149,8 +149,8 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Low entropy does not guarantee that the selected token is correct: a model can be confident and wrong.
 - High entropy does not mean the output is false; multiple continuations may be plausible.
 - Normalized probabilities do not guarantee calibration.
-- **Perplexity** is the exponential of mean NLL per token (or $e^{\bar\ell}$ when the mean is in nats). It summarizes probabilistic performance on a corpus and depends on the tokenizer and evaluation protocol.
-- If the data follow a true distribution $q$ and the model predicts $p$, mean surprisal under the data is cross-entropy $H(q,p)=\mathbb E_{X\sim q}[-\ln p(X)]$. It is not automatically the source entropy $H(q)$: equality holds when $p=q$ (more generally, the gap is KL divergence $D_{KL}(q\|p)$).
+- **Perplexity** summarizes mean NLL per token; its definition and comparison conventions are covered in the canonical [Likelihood](likelihood.qmd) lesson.
+- **Cross-entropy** compares a target distribution q with a predicted distribution p; its definition, connection to NLL, and KL divergence are developed in the dedicated [Cross-entropy](cross-entropy.qmd) lesson.
 
 
 
@@ -185,68 +185,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - [Cross-entropy and KL divergence](cross-entropy.qmd) — the probabilistic objective used to train the model.
 - [Loss](loss.qmd) — target shifting, masks, and loss reduction.
 
-:::: {.callout-note collapse="true" title="Optional reading — prediction, compression and V-information"}
-
-## Are LLMs compression algorithms?
-
-**Short answer: not exactly.** An LLM learns to predict the next token. That ability can help compress a sequence *when paired with an entropy coder*. But generating text is not decompressing the training corpus.
-
-### 1. Prediction gives a measure of information
-
-Given the context already observed, the model assigns a probability to the next token:
-
-$$
-p(x_t\mid x_{<t}).
-$$
-
-After the token is observed, its surprise, or *surprisal*, in bits is:
-
-$$
-I(x_t\mid x_{<t})=-\log_2 p(x_t\mid x_{<t}).
-$$
-
-If the model assigns probability $1/2$, the token ideally costs 1 bit; if it assigns $1/8$, it costs 3 bits. **The more predictable the token, the fewer bits its ideal code needs.** Summing these surprisals gives the ideal length associated with the sequence:
-
-$$
-L(x_{1:T})\approx-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
-$$
-
-### 2. But a coder and decoder are still needed
-
-Probabilities are not, by themselves, a compressed file. An entropy coder (for example, an arithmetic coder) turns those probabilities into a bitstream. The decoder uses exactly the same model, tokenizer, and conventions to recover the tokens.
-
-Without that shared protocol, an LLM's ability to continue a text does not mean it can reconstruct the exact original text from a shorter representation.
-
-### 3. What this does not mean
-
-- LLM weights are not a literal archive of the training corpus.
-- Generating a plausible continuation is not the same as recovering an exact training example.
-- Good predictions do not guarantee a net compression benefit once the model, tokenizer, and metadata are counted.
-- **Model compression** (quantization, pruning, distillation) reduces the network's storage or runtime cost: that is a different question. See the [model-compression synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
-
-### Advanced extension — V-information: what an observer can use
-
-Shannon mutual information describes dependence in the joint distribution without restricting the observer's computational power. Xu et al. (ICLR 2020) define a quantity relative to an explicit predictor family \\(\\mathcal V\\):
-
-\$
-I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
-\$
-
-It measures the predictive gain from the input for that family and loss. A restricted family may fail to exploit structure that is present in the data. The quantity can be directional; it does not replace Shannon mutual information and does not mean computation creates Shannon information.
-
-**XOR example:** two bits determine their XOR perfectly (1 bit of mutual information), yet a constant predictor gains nothing from observing them. A predictor able to represent their interaction can use almost all of that information. See the [reproducible experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) and the [primary paper](https://openreview.net/forum?id=r1eBeyHFDH).
-
-### Takeaway
-
-**Predictive compression:** the model supplies probabilities; a coder can use them to represent data with fewer bits.
-
-**Model compression:** the network itself is made smaller or cheaper to run.
-
-**Generation:** the model samples or selects a next token; this is not, by itself, lossless decoding.
-
-To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md).
-
-::::
+For predictive compression, the conditions for lossless coding, and the distinction from model compression, see the [Compression and LLMs revision sheet](compression-revision.qmd). The [entropy, KL, and predictive-information experiment](experience-information-theory.qmd) develops the numerical checks, V-information, and the limits of these experiments.
 
 ### References
 
@@ -257,6 +196,8 @@ To make these ideas concrete, run the [reproducible predictive-compression exper
 
 
 [**Revision sheet — Compression and LLMs**](compression-revision.qmd): review the connection between conditional probabilities, code length, model compression, and runtime memory in one place.
+
+[**Experiment — Entropy, KL, and predictive information**](experience-information-theory.qmd): verify identities on synthetic distributions and explore V-information.
 
 </div>
 </details>

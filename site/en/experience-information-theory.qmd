@@ -111,6 +111,14 @@ The script exactly compares three situations using synthetic joint distributions
 
 The last case is the key teaching point: the data contain a dependency, but a restricted predictive family cannot exploit it. The quantity therefore depends explicitly on the family \(\mathcal V\), not only on the joint distribution.
 
+### XOR example: a dependency some predictors cannot exploit
+
+Let $X_1$ and $X_2$ be independent uniform bits, and let $Y=X_1\oplus X_2$. The pair $(X_1,X_2)$ determines $Y$ perfectly, so the mutual information $I((X_1,X_2);Y)$ is 1 bit. Yet a family restricted to constant predictors gains nothing from observing the inputs: its conditional logarithmic loss remains 1 bit and its predictive information is zero. A family able to represent the XOR interaction can predict Y exactly and reduce that loss to zero. The example shows that predictive information depends on the capabilities of the predictor family, not only on dependencies present in the data.
+
+This intuition is discussed by Xu et al. (ICLR 2020), [A Theory of Usable Information under Computational Constraints](https://openreview.net/forum?id=r1eBeyHFDH). A [complementary experiment on synthetic XOR-style tasks](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) illustrates the distinction; it is not an evaluation of a trained LLM.
+
+Unlike Shannon mutual information, predictive information depends on the predictor family and on the directed task from X to Y. It does not replace mutual information or mean that computation creates Shannon information: it quantifies what a specified predictor family can exploit.
+
 **Limitations:** this is an exact population-risk calculation on a small discrete example and a hand-specified finite family. No model is trained; it is neither a sample-based estimate, nor an architecture comparison, nor evidence that attention extracts more information than a bag-of-words model. A trained-model experiment would require train/test splits, a pre-specified model class and selection protocol, and an overfitting analysis.
 
 
@@ -139,6 +147,8 @@ h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
 \]
 
 For a first-order Markov chain, it is the conditional transition entropy \(H(X_t\mid X_{t-1})\). It can be much lower than marginal entropy \(H(X_t)\) when successive symbols are correlated.
+
+For a separate deterministic comparison of empirical marginal entropy H0, first-order conditional entropy H1, and the size of an actual zlib stream over three sequences, see the [complementary sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md). It uses a distinct protocol from the source-entropy simulation above.
 
 ## What this experiment does — and does not — show
 

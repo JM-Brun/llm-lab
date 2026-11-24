@@ -306,3 +306,33 @@ This aligns the page ownership with `docs/content-section-mapping.md` and the ca
 ### Validation boundary
 
 The source-level transfer preserves the bilingual interactive controls, fallback, calculation, figure, code and table. The route and concept registries are unchanged. Quarto rendering, local-link/anchor checks, learning-map/graph generation and the automated Playwright desktop/mobile/keyboard review passed. The generated map-list, map-data and guided-route fragments have now been refreshed; the CI freshness suite is being rerun. Rendered reading-time measurement and learner validation remain pending.
+
+## 12. Bilingual migration pilot — entropy, predictive compression and V-information (2026-11-24)
+
+**Status: source-to-destination consolidation prepared in this branch; Quarto, link, generated-map and rendered checks remain pending CI.** The canonical route is unchanged.
+
+### Source and destinations
+
+| Source material in site/fr/entropy.qmd / site/en/entropy.qmd | Canonical destination | Preservation decision |
+|---|---|---|
+| Predictive entropy, finite-vocabulary bounds, the four-token numerical example, expected surprisal, and the distinction between distribution entropy and one observed token | Entropy lesson | **KEEP** — these are the lesson's single learning outcome and remain in the mandatory path. The temperature paragraph also remains as a short bridge to decoding, with the detailed mechanism owned by decoding-strategies. |
+| Perplexity definition and tokenizer/protocol comparison caveat | site/fr/vraisemblance.qmd / site/en/likelihood.qmd | **SYNTHESIZE** — the entropy lesson now points to the canonical sequence-scoring explanation rather than repeating the definition. |
+| Cross-entropy H(q,p), its relation to source entropy and KL divergence | site/fr/cross-entropy.qmd / site/en/cross-entropy.qmd | **SYNTHESIZE** — the lesson retains a concise distinction and contextual link; the formal definition and decomposition stay with the canonical cross-entropy treatment. |
+| Predictive compression, ideal code length, the need for a shared entropy coder/decoder, the distinction from model compression, and the model-compression synthesis link | site/fr/compression-revision.qmd / site/en/compression-revision.qmd | **SYNTHESIZE** — the optional block in Entropy was duplicative of the existing compression resource. The resource already owns predictive coding, exact reconstruction requirements, model/runtime budgets, the non-archive caveat for model weights, and the limitations of compression claims. The model-compression source synthesis is linked from its model-reduction section. |
+| Predictive V-information, its dependence on the predictor family, and the XOR illustration | site/fr/experience-information-theory.qmd / site/en/experience-information-theory.qmd | **TRANSFER + SYNTHESIZE** — the existing experiment page already contains the formal definition, optional-ignorance condition, controlled examples and limitations. The XOR example, Xu et al. (2020) primary-paper reference, and the original XOR experiment link are now included there, alongside the existing controlled V-information experiment. |
+| H0/H1 versus zlib sequence-compression experiment | experience-information-theory.qmd / experience-information-theory.qmd | **TRANSFER** — preserve the separate empirical comparison and its caveats through a contextual link in the entropy-rate experiment section. |
+| Shannon, Cover & Thomas, and 3Blue1Brown references | Entropy lesson | **KEEP** — these sources continue to support the core information-theoretic definition and intuition. |
+
+### Core lesson after consolidation
+
+- Explains entropy of the full conditional next-token distribution, its bounds and a worked numerical example.
+- Makes explicit that entropy is expected surprisal, not the surprise of one observed target.
+- Keeps the high-confidence/wrong counterexample, calibration caveat and concise temperature effect.
+- Links to Likelihood for perplexity and sequence-level scoring; Cross-entropy for H(q,p); Compression and LLMs for predictive coding; and the information-theory experiment for V-information.
+- Keeps the existing Practice companion and the chapter order. No route stage, lesson identity, prerequisite, page or concept node is added or removed.
+
+### Validation boundary
+
+The transfer preserves the coding distinctions, equations, experimental paths and primary references by assigning them to existing canonical destinations. Both the predictive-compression toy experiment and the distinct H0/H1-versus-zlib sequence experiment remain directly reachable; the model-compression source synthesis remains linked from the canonical compression resource. The new XOR illustration supplements (rather than replaces) the existing controlled V-information table. The FR/EN metadata adds reciprocal discovery links between Entropy and the compression resource. The canonical data/guided-route.yml sequence remains logits → probabilities → entropy → generation → context use → likelihood → cross-entropy → loss → gradients → training loop; no computational or pedagogical dependency is inferred from the content moves.
+
+**Pending:** render FR/EN; verify all local links and anchors; check the preserved equations and experiment paths; regenerate and validate page maps/knowledge graph/route fragments; inspect desktop/mobile and keyboard behavior; compare the two languages semantically. Do not mark the migration complete until those checks pass.
