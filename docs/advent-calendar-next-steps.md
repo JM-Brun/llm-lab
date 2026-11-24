@@ -213,3 +213,15 @@ This log should record outcomes, not merely activity.
 - **Validation:** source edits committed; fresh Quarto, CI and secret-scanning checks are required for this new head. The previous browser preview does not validate these changes.
 - **Open work:** inspect the new FR/EN render, especially the SVG labels and formula rendering; obtain novice feedback; record actual reading time; decide editorial acceptance.
 - **Exact next action:** validate the latest PR head and inspect the bilingual preview before requesting the novice read-through. Do not start Day 02.
+
+## 12. Session completion log — landing-page migration follow-up
+
+- **Date:** 2026-11-24
+- **Branch / PR:** `calendar/fix-primary-page-graph` — PR #1574
+- **Files changed:** French and English homepage page-map declarations; this handoff.
+- **Work completed:** verified that PR #1572 is merged and that the new bilingual `scientific-calendar.qmd` landing pages and navigation entries are present on `main`. Found that both homepage page maps still listed the archived `advent-calendar` as a child alongside `scientific-calendar`; removed the archived calendar from those two child lists in PR #1574. Confirmed that the new Day 01 Zipf story is merged as source material but remains `status:planned` and excluded from the public Quarto render list.
+- **Deployment check:** the public search result still exposes the old `/en/advent-calendar.html` page, while direct access to the new `/fr/scientific-calendar.html` and `/en/scientific-calendar.html` could not be verified in this check. Treat the Pages replacement as unconfirmed; do not delete the old landing/day pages or their CSS yet.
+- **Cleanup dependency:** the story page `advent-calendar-story-day-01.qmd` uses the shared language-switch mapping and story source assets, but does not import the prototype's custom calendar CSS. The prototype CSS may be removed only after repository-wide reference checks and after all remaining prototype pages are retired.
+- **Validation:** source-level page-map replacement checked before committing; PR #1574 requires CI, Quarto rendering and graph checks. No novice-reader test has been performed; the Day 01 protocol explicitly requires a real non-specialist reader and must not be marked complete by author self-review.
+- **Open work:** merge #1574 after checks pass; verify the actual GitHub Pages deployment and both language URLs; confirm navigation and redirects; then remove the archived prototype pages/resources in a separate cleanup PR. Obtain novice feedback and record actual reading time before publishing Day 01 or drafting Day 02.
+- **Exact next action:** inspect PR #1574 checks; once merged, verify Pages deployment and then prepare a bounded cleanup PR only if the new calendar is live in both languages.
