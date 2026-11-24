@@ -12,7 +12,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/double-descent"
 summary: "Presents double descent as a phenomenon observed in some regimes and explains why it is not a universal law of generalization."
 scope: "Double descent, interpolation threshold, bias–variance, and limits of generalizing observations."
-purpose: "Study a toy curve and distinguish an empirical observation from a universal law."
+purpose: "Read a double-descent curve, identify the interpolation threshold, and separate empirical results, proposed explanations, and overgeneralization."
 domain: "scale-research"
 suggested_route:
   previous: null
