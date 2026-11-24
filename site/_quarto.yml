@@ -190,12 +190,14 @@ project:
     - en/sinusoidal-positional-encoding.qmd
     - en/rope.qmd
     - fr/exercises.qmd
+    - fr/exercises/zipf-law.qmd
     - fr/exercises-foundations.qmd
     - fr/exercises-text-data.qmd
     - fr/exercises-attention.qmd
     - fr/exercises-transformer.qmd
     - fr/exercises-generation.qmd
     - en/exercises.qmd
+    - en/exercises/zipf-law.qmd
     - en/exercises-foundations.qmd
     - en/exercises-text-data.qmd
     - en/exercises-attention.qmd
