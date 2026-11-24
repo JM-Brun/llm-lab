@@ -71,7 +71,8 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
         "scoring",
         "directed",
     )
-    assert getattr(scoring.pages, language) == [f"{language}/likelihood"]
+    expected_likelihood_page = "fr/vraisemblance" if language == "fr" else "en/likelihood"
+    assert getattr(scoring.pages, language) == [expected_likelihood_page]
     assert getattr(scoring.purpose, language)
 
     cross_entropy = by_id["observed-target-to-training-objective"]
