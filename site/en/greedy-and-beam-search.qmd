@@ -13,7 +13,7 @@ id: "en/greedy-and-beam-search"
 summary: "Builds a probability tree where greedy choice loses to another sequence and explains the trade-offs of beam search."
 scope: "Greedy decoding, beam search, sequence scores, length bias, and trade-offs."
 purpose: "Calculate sequence scores, construct a counterexample to greedy choice, and explain what beam search explores without presenting it as universally optimal."
-domain: "inference-generation"
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
