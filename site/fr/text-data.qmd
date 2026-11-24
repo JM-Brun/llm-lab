@@ -101,22 +101,18 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 
 ## Exercices
 
-[Calculez ce qui entre dans le premier bloc](exercises/text-data.qmd#ex-token-to-block-input) ou parcourez les [autres exercices](exercises/text-data.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
+
+## Approfondir
 
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
-  <span class="learning-resources__description">Retrouver le fil rouge, la chaîne complète et les exercices.</span>
+  <span class="learning-resources__description">Revoir le fil rouge, la chaîne complète et les frontières conceptuelles.</span>
 </summary>
 ::: {.learning-resources__content}
-
-### Encoder le préfixe et la continuation
-
-La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s'appuie au premier pas de génération.
-
-**Critère de réussite :** chaque liste d’IDs se décode exactement en son texte d’origine, le préfixe et la continuation sont encodés séparément sans fusion au point de jonction, et la décomposition affichée par la trace confirme le découpage du préfixe.
 
 ### Du texte Unicode aux représentations contextualisées
 
@@ -134,6 +130,8 @@ flowchart TB
 ```
 
 Le [texte source en Unicode](unicode-text.qmd) peut contenir des espaces, de la ponctuation, des nombres, du code ou plusieurs langues. Selon le tokenizer, le texte peut être normalisé ou pré-découpé. Les tokenizers diffèrent par leurs unités de base, leurs règles, leur vocabulaire et leurs tokens spéciaux. Les tokenizers modernes à sous-mots apprennent souvent leur vocabulaire. La couverture des entrées dépend de ces choix. Un découpage en tokens donne des unités de calcul, dont les frontières peuvent traverser un mot. Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent ces choix et les algorithmes BPE, WordPiece et unigramme.
+
+Une continuation prononcée par une seule personne, utilisée dans le fil rouge, est « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ».
 
 Le schéma regroupe le traitement positionnel et le Transformer. Certaines architectures ajoutent des vecteurs de position absolue appris aux plongements des tokens. Avec [RoPE](positional-encoding.qmd), l'attention fait tourner les vecteurs requête et clé. Ces mécanismes interviennent à des endroits différents dans la chaîne qui produit les [représentations contextualisées](contextualized-representations.qmd).
 
