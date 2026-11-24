@@ -1,0 +1,83 @@
+---
+title: "Normalisation : changer de coordonnées pour mieux apprendre"
+subtitle: "Moments, invariances et conditionnement dans LayerNorm et RMSNorm"
+description-meta: "Une exploration calculée de LayerNorm et RMSNorm pour séparer leurs transformations exactes de leurs effets possibles sur l’optimisation."
+keywords: ["type:deep-dive", "destination:deepen", "topic:normalization-and-conditioning", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/normalization-and-conditioning"
+summary: "Compare LayerNorm et RMSNorm à partir de leurs opérations sur un vecteur, puis précise les invariances et les stabilités qu’elles ne garantissent pas."
+scope: "Moments, normalisation, invariances d’échelle, conditionnement et comparaison LayerNorm/RMSNorm."
+purpose: "Calculer les deux normalisations sur un vecteur, comparer leurs invariances et éviter d’assimiler normalisation et garantie de convergence."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/gradients", "fr/transformer-block-walkthrough"]
+tags: ["type:deep-dive", "destination:deepen", "topic:normalization-and-conditioning", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 12 · squelette éditorial*
+
+## Question centrale
+
+Compare LayerNorm et RMSNorm à partir de leurs opérations sur un vecteur, puis précise les invariances et les stabilités qu’elles ne garantissent pas.
+
+Moments, normalisation, invariances d’échelle, conditionnement et comparaison LayerNorm/RMSNorm.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Dérivation numérique sur un vecteur
+
+Que veut-on stabiliser dans une représentation ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Calculer une normalisation à la main
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Comparer LayerNorm et RMSNorm
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Normaliser n’est pas conditionner parfaitement
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
