@@ -1,0 +1,77 @@
+schema_version: 1
+source_id: roda-wolfram-zipf-natural-languages-2024
+scan:
+  accessed_at: "2026-11-24"
+  retrieval_method: direct-demonstration-page
+  author_text:
+    status: partial
+    coverage: "Demonstration page description, formula, usage instructions, controls, contributor attribution and displayed licence label."
+    notes: ["The page is a JavaScript-hosted interactive demonstration; only its descriptive page content was inspected."]
+  figures_media:
+    status: partial
+    coverage: "Interactive chart behavior described by the page: log-log rank/occurrence plot, point hover and term labels."
+    notes: ["The running notebook was not loaded or visually inspected in this environment."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Downloadable source notebook was not opened, executed or audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Demonstration page and its cited Manning & Schütze reference."
+    notes: ["The notebook and Wolfram ExampleData corpus files were not retrieved."]
+  metadata:
+    status: partial
+    coverage: "Contributor, 2024 attribution, platform and CC BY-NC-SA label."
+    notes: ["The displayed licence version was not established."]
+  rights:
+    status: unknown
+    coverage: "Page displays CC BY-NC-SA; no version-specific identifier or individual asset rights were established."
+    notes: ["Do not copy/adapt the notebook or embedded assets without checking exact licence and attribution requirements."]
+  unresolved_questions:
+    - "Inspect and execute the source notebook, including its dependencies and supported input formats."
+    - "Test desktop and mobile behavior and verify the exact licence version."
+items:
+  - id: roda-wolfram-zipf-natural-languages-2024:interactive-rank-frequency-workbench
+    kind: visualization
+    summary: "The demonstration lets a learner select one of Wolfram's example texts, choose a maximum rank, and inspect a log-log plot of term occurrences against frequency rank. Hovering over points reveals the corresponding term and values."
+    locator: {type: page-section, value: "Demonstration description and controls", label: "Interactive rank-frequency plot"}
+    evidence:
+      kind: direct-demonstration-description
+      confidence: well-supported
+      scope: "The controls and interaction described on the published demonstration page."
+      assumptions: ["The running demonstration behaves as described by its published page."]
+      limitations: ["The notebook was not executed; exact interaction details and corpus choices remain unverified."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Page description is directly available, but the executable notebook was not inspected."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "How can I see the rank-frequency relation in an actual text?"
+      explanatory_lens: exploratory data analysis
+      teaching_form: [interactive-visualization, guided-experiment]
+      abstraction_level: introductory
+      prerequisites: ["counting words", "sorting frequencies", "reading logarithmic axes"]
+      distinctive_value: "Links each plotted point to its lexical item, making the abstraction of rank-frequency concrete."
+      limitations: ["The demonstration is desktop-optimized and depends on the Wolfram environment."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current published lesson has a static synthetic SVG rather than an interactive corpus explorer."}
+      complementarity: {level: high, rationale: "It offers data exploration and term-level inspection, unlike the fixed illustrative curve in the story."}
+      pedagogical_value: {level: high, rationale: "Learners can move from formula to corpus evidence and observe departures from the idealized relation."}
+      applicability: {level: moderate, rationale: "Best used as an external inspiration; a project-owned notebook could offer reproducibility and accessibility."}
+      redundancy: {level: low, rationale: "It performs an exploratory task not covered by the current static figure."}
+      evidence_quality: {level: moderate, rationale: "The page documents intended behavior, but executable code and data have not been inspected."}
+    classification:
+      tags: [topic:word-frequency, modality:interactive, method:log-log-visualization]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: defer
+    disposition_rationale: "The demonstration is retained as inspiration for a project-owned workbench; its notebook, code and mobile behavior have not been inspected, so no external integration is justified yet."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Phase B decision: deferred. The demonstration page is retained as inspiration for a project-owned interactive rank-frequency workbench, not as independent empirical evidence. The notebook/source code, data, execution behavior and mobile accessibility have not been audited, so no learning-page integration or reproduction is justified yet."
