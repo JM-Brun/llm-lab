@@ -83,6 +83,16 @@ $$
 
 La température règle la dispersion des choix, pas la qualité intrinsèque du modèle. Une température basse ne garantit pas une réponse vraie ; une température élevée ne garantit pas la créativité. Elle peut aussi modifier la calibration des probabilités et la diversité des séquences.
 
+Nous reprenons la distribution de base de la [leçon Probabilités](probabilites.qmd) pour isoler l'effet de la température sans changer les logits.
+
+::: {.probability-example}
+| Token candidat | Logit | Exponentielle | Probabilité |
+|---|---:|---:|---:|
+| « Vous » | $\ln 6$ | 6 | 0,6 |
+| « Je » | $\ln 2$ | 2 | 0,2 |
+| « Moi » | $0$ | 1 | 0,1 |
+| « Oui » | $0$ | 1 | 0,1 |
+:::
 ### Explorer l'effet de la température
 
 À température 1, « Vous » reçoit 60 % dans l'exemple illustratif du parcours. Avant de passer à $\tau=0{,}5$, prédisez ce qui changera : la répartition des probabilités, le token en tête, ou les deux ?
