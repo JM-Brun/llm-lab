@@ -55,6 +55,12 @@ La traduction qui consomme davantage de tokens utilise une plus grande part du b
 
 </details>
 
+## Encoder le préfixe et la continuation {#ex-prefix-and-continuation}
+
+La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour comparer les deux découpages, encodez séparément le préfixe et ce début de réponse avec le tokenizer étudié. La continuation est absente du contexte sur lequel le modèle s'appuie au premier pas de génération.
+
+**Critère de réussite :** chaque liste d’IDs se décode exactement en son texte d’origine, le préfixe et la continuation sont encodés séparément sans fusion au point de jonction, et la décomposition affichée par la trace confirme le découpage du préfixe.
+
 ## Du texte aux lignes de la table de plongements {#ex-text-to-embedding-lookup}
 
 Un tokenizer jouet segmente « chat suit le chat » en [« chat », « suit », « le », « chat »]. Son vocabulaire associe à ces tokens les identifiants [17, 42, 8, 17]. La table de plongements $E$ a la forme $(V,d)$ et ses lignes sont numérotées à partir de zéro.
