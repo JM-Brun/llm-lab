@@ -29,8 +29,24 @@ A surprising statistical law. A decades-old question about information. A numeri
 The LLM Lab scientific calendar offers **24 self-contained stories**, to be read in any order. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
 
 ::: {.callout-note}
-**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. Editorial production moves forward one day at a time; each story will be published after scientific, pedagogical, and technical review.
+**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. Editorial production moves forward one day at a time; each story is published independently when it is ready to be read. The first story is available below.
 :::
+
+## First story available
+
+<article class="calendar-feature">
+
+**Day 01 · Language, information, and probability**
+
+### [Why does the word “the” appear everywhere?](advent-calendar-story-day-01.qmd)
+
+An investigation of Zipf's law: why do a few words appear everywhere while a long tail of words remains rare? A compact formula, a worked example, a plot, and a critical look at the statistical limits of this regularity.
+
+*About 10 minutes · Independent story · Open for reader feedback*
+
+[Read Day 01 →](advent-calendar-story-day-01.qmd)
+
+</article>
 
 ## A collection, not a progression
 
@@ -45,7 +61,7 @@ Allow about **10 minutes per story**, excluding further reading. The thematic sh
 
 From word frequencies to the information carried by a message, these stories explore statistical regularities in language and the tools used to measure them.
 
-- **Day 01** — **Why does the word “the” appear everywhere?** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
+- **Day 01** — [**Why does the word “the” appear everywhere?**](advent-calendar-story-day-01.qmd) — **Available** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
 - **Day 02** — **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
 - **Day 03** — **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
 - **Day 13** — **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
@@ -87,9 +103,9 @@ From large-scale empirical phenomena to system-design choices, these stories ask
 
 ## Where does the edition stand?
 
-The list above is a proposed editorial slate, not a claim that all 24 stories are already available. Each story is prepared and checked before publication; topics may change if a story proves repetitive, insufficiently sourced, or less valuable than an alternative.
+The list above is the editorial slate: **one of the 24 stories is currently available**. The other 23 titles are still in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative.
 
-The first story, about Zipf's law, is undergoing editorial review. The remaining stories will be developed in day order, but that production order does not impose a reading order.
+Day 01 is published as a reading version open to feedback. Its non-specialist reader review is still pending; improvements from that review will be incorporated without making the text inaccessible in the meantime. Production will then continue in day order, but that order does not impose a reading order.
 
 ## Explore further
 
