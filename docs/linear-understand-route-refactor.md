@@ -1,6 +1,6 @@
 # Refactor the Understand route into a simple linear course
 
-**Status:** architectural proposal based on repository inspection; no reader-facing pages or curriculum content have been moved yet.  
+**Status:** partially implemented. The bilingual Understand and Review sidebars were flattened into peer projections by PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549). The editorial/content refactor and completion of the peer Review traversal remain in progress; this document records the remaining target and migration safeguards.  
 **Scope:** Understand / Comprendre route, its bilingual review counterpart, and the navigation that exposes them.  
 **Related work:** [parallel review-route contract](parallel-review-route-contract.md), [lesson sizing and editorial rhythm](parallel-review-route-contract.md#11-lesson-size-and-editorial-rhythm), [issue #1541](https://github.com/JM-Brun/llm-lab/issues/1541), [canonical computational spine #575](https://github.com/JM-Brun/llm-lab/issues/575).
 
@@ -47,11 +47,9 @@ The nine stages are not all strict prerequisite chains. In particular, inference
 
 ### 2.2 Navigation
 
-The French Quarto sidebar currently nests Understand content several levels deep. For example, the text/data entry contains nested groups for representations, Transformer computation and scores/probabilities; other groups separately expose generation/context, scoring, loss/gradients, and architectures/limits. This does not exactly mirror the nine canonical stages.
+The bilingual Understand sidebar is now a flat list of the twenty core lessons in canonical order. The Review sidebar is a peer projection: it follows the same lesson order, then exposes the review index, primary synthesis pages and shared review aids (PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549)). This removes nested navigation levels from the two main routes without deleting page hierarchy or exploratory map groupings.
 
-The English sidebar follows the same general nested-navigation model. The learning-map generator deliberately reads and preserves this recursive sidebar structure. Therefore, simply changing the route YAML would not simplify the reader-facing navigation: the sidebar and the generated exploratory map would still expose nested groupings.
-
-Revision pages are published and linked from core lessons and the review-path index, but are not currently a flat, complete peer route in the sidebar.
+The Review experience is not yet a complete peer traversal. The current review page still behaves primarily as a stage-grouped plan/sheet index; progress cues, complete route switching, optional-aid handling and learner-facing validation remain tracked by [issue #1541](https://github.com/JM-Brun/llm-lab/issues/1541). The learning map remains an exploratory projection and must not be mistaken for another mandatory route.
 
 ### 2.3 Existing documentation drift
 
