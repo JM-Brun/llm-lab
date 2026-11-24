@@ -142,4 +142,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "Phase A only. Lestrade offers a complementary candidate mechanism (unequal syntactic class sizes plus semantic specificity/reusability) for optional depth. It should be contrasted with the critical review and not presented as an accepted causal explanation."
+  decision_summary: "Phase B partial. The three extracted contributions are used in the bilingual explanatory-model exercise to compare syntactic class sizes, semantic specificity/reusability, and the author's combined proposal. The exercise explicitly frames this as one candidate model rather than an accepted or universal causal explanation. The shared concepts are registered centrally; no source-specific concept or route edge is proposed."
