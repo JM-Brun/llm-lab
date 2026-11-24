@@ -1,0 +1,83 @@
+---
+title: "Température : créativité ou distribution simplement plus plate ?"
+subtitle: "Ce que la transformation des logits change réellement dans un tirage"
+description-meta: "Une expérience contrôlée qui sépare l’effet mathématique de la température sur une distribution de l’interprétation subjective de la créativité."
+keywords: ["type:deep-dive", "destination:deepen", "topic:temperature-and-sampling", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/temperature-sampling"
+summary: "Montre que la température modifie la concentration de la distribution d’échantillonnage, mais ne crée ni connaissance ni créativité à elle seule."
+scope: "Mise à l’échelle des logits, entropie et variabilité des tirages ; ne pas assimiler température et créativité."
+purpose: "Calculer une distribution après changement de température, anticiper ses effets sur l’entropie et distinguer diversité de tirage et qualité."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/decoding-strategies", "fr/probabilites"]
+tags: ["type:deep-dive", "destination:deepen", "topic:temperature-and-sampling", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 14 · squelette éditorial*
+
+## Question centrale
+
+Montre que la température modifie la concentration de la distribution d’échantillonnage, mais ne crée ni connaissance ni créativité à elle seule.
+
+Mise à l’échelle des logits, entropie et variabilité des tirages ; ne pas assimiler température et créativité.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Expérience contrôlée sur des logits fixes
+
+Une même distribution, plusieurs températures
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Transformer les logits avant le softmax
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Mesurer la concentration et observer les tirages
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Pourquoi « plus aléatoire » ne signifie pas « plus créatif »
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
