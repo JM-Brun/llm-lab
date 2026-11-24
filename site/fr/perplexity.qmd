@@ -1,0 +1,83 @@
+---
+title: "Perplexité : à quel point le modèle est-il surpris ?"
+subtitle: "Une métrique prédictive, une moyenne géométrique et plusieurs pièges de comparaison"
+description-meta: "Une lecture calculée de la perplexité qui relie probabilités conditionnelles, entropie croisée et comparabilité des évaluations."
+keywords: ["type:deep-dive", "destination:deepen", "topic:perplexity", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/perplexity"
+summary: "Dérive la perplexité à partir des probabilités des tokens observés et explique pourquoi la tokenisation, les données et le protocole conditionnent les comparaisons."
+scope: "Perplexité, entropie croisée, moyenne géométrique, dépendance à la tokenisation et précautions de comparaison."
+purpose: "Calculer une perplexité à partir de probabilités conditionnelles, l’interpréter comme exponentielle d’une perte moyenne et vérifier les conditions d’une comparaison valide."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/vraisemblance", "fr/entropy", "fr/cross-entropy"]
+tags: ["type:deep-dive", "destination:deepen", "topic:perplexity", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 13 · squelette éditorial*
+
+## Question centrale
+
+Dérive la perplexité à partir des probabilités des tokens observés et explique pourquoi la tokenisation, les données et le protocole conditionnent les comparaisons.
+
+Perplexité, entropie croisée, moyenne géométrique, dépendance à la tokenisation et précautions de comparaison.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Comparaison de deux évaluations avec protocole contrôlé
+
+Une seule moyenne pour toute une séquence
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Du produit des probabilités à la moyenne géométrique
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Calculer et interpréter une perplexité
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Pourquoi deux perplexités ne sont pas toujours comparables
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
