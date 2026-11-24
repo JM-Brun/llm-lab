@@ -50,7 +50,7 @@ days:
     lesson_page:
       fr: "fr/surprisal-information-content"
       en: "en/surprisal-information-content"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Information propre, surprisal et lien entre information d’un événement, entropie et langage ; distinguer surprisal observé et incertitude prédictive."
     practice_page:
       fr: "fr/experience-information-theory"
