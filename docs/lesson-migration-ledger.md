@@ -213,12 +213,12 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 6. Reconcile FR/EN metadata and concept-resource links after the final destinations are known.
 7. Validate the shared computational spine and ensure the reader sees the distinct inference, scoring and training branches without a false dependency chain.
 
-**Current completion status (updated 2026-11-24):** chapter grouping and first-pass section dispositions are documented. Three bilingual content pilots are complete at source-text level: the cross-entropy/KL/perplexity transfer (section 8), the Transformer overview narrowing (section 9), and the temperature/decoding transfer from Probabilities to the existing decoding-strategies Deepen page (section 11). A source-level duration audit of Generation and the training loop confirms that their mandatory paths are bounded once explicitly optional material is separated. Generation's serving/latency content remains in its collapsed optional deep dive, consistent with `content-section-mapping.md`; its KV-cache memory formula remains owned by `llm-computational-complexity`. Rendered reading-time measurements and Quarto/browser checks for all three content pilots remain pending. Continue with bounded bilingual transfers only where a destination is explicit; do not split or move content solely from raw page word counts.
+**Current completion status (updated 2026-11-24):** chapter grouping and first-pass section dispositions are documented. Three bilingual content pilots are complete at source-text level: the cross-entropy/KL/perplexity transfer (section 8), the Transformer overview narrowing (section 9), and the temperature/decoding transfer from Probabilities to the existing decoding-strategies Deepen page (section 11). A source-level duration audit of Generation and the training loop confirms that their mandatory paths are bounded once explicitly optional material is separated. Generation's serving/latency content remains in its collapsed optional deep dive, consistent with `content-section-mapping.md`; its KV-cache memory formula remains owned by `llm-computational-complexity`. Quarto rendering, local-link checks, learning-map/graph generation and automated Playwright desktop/mobile/keyboard review now pass for the revised pages. Generated map-list, map-data and guided-route fragments have been refreshed; the CI freshness suite is being rerun. Rendered reading-time measurements and learner validation remain pending. Continue with bounded bilingual transfers only where a destination is explicit; do not split or move content solely from raw page word counts.
 
 
 ## 8. Completed bilingual pilot — cross-entropy, KL and perplexity (2026-11-24)
 
-**Status: source-to-destination transfer completed at the text level; rendered-site validation remains pending.**
+**Status: source-to-destination transfer completed; Quarto rendering, local-link checks and automated browser review passed.** Rendered reading-time measurement and learner validation remain pending.
 
 - Source: site/fr/cross-entropy.qmd, section “Décomposition en entropie cible et divergence KL”; site/en/cross-entropy.qmd, section “Decomposition into target entropy and KL divergence”.
 - Destination: site/fr/language-modeling-math.qmd and site/en/language-modeling-math.qmd, section 3 (“Cibles souples et divergence KL” / “Soft targets and KL divergence”).
@@ -233,7 +233,7 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 
 ## 9. Completed bilingual pilot — Transformer overview (2026-11-24)
 
-**Status: source-to-destination transfer completed at the text level; Quarto-rendered validation remains pending.** The Understand route and the page identity are unchanged.
+**Status: source-to-destination transfer completed; Quarto rendering, local-link checks and automated browser review passed.** The Understand route and page identity are unchanged; rendered reading-time measurement and learner validation remain pending.
 
 ### Source and destinations
 
@@ -305,4 +305,4 @@ This aligns the page ownership with `docs/content-section-mapping.md` and the ca
 
 ### Validation boundary
 
-The source-level transfer preserves the bilingual interactive controls, fallback, calculation, figure, code and table. The route and concept registries are unchanged. Quarto rendering, local-link/anchor checks, the interactive explorer in its new location, responsive layout, keyboard behavior and learner review remain to be run; this PR must not claim those checks before their evidence is available.
+The source-level transfer preserves the bilingual interactive controls, fallback, calculation, figure, code and table. The route and concept registries are unchanged. Quarto rendering, local-link/anchor checks, learning-map/graph generation and the automated Playwright desktop/mobile/keyboard review passed. The generated map-list, map-data and guided-route fragments have now been refreshed; the CI freshness suite is being rerun. Rendered reading-time measurement and learner validation remain pending.
