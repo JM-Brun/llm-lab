@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 
 [← Retour à la leçon : Probabilités et softmax](../probabilites.qmd)
 
-## Vérifier sa compréhension
+## Vérifier l’idée essentielle
 
 [Exercices de softmax et de NLL dans Fondations mathématiques](../exercises-foundations.qmd).
 
