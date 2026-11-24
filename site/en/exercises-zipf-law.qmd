@@ -166,9 +166,9 @@ This example is constructed for the exercise; it is not taken from a real corpus
 
 ### Does a good fit imply a universal exponent? {#ex-zipf-fit-vs-exponent}
 
-A study of spoken dialogue reports that several linguistic units (words, bigrams, syntactic categories, utterances, and dialog acts) often fit a Zipf formula reasonably well. However, it also observes variation in the exponent $\alpha$ across units and corpora.
+A study of spoken dialogue examines several units: word unigrams, bigrams, words by position within utterances, whole utterances, syntactic and pragmatic units, and some nonverbal channels. The authors report good fits to Zipf's formula, but also find that the exponent $\alpha$ varies across units and corpora.
 
-1. What does a goodness-of-fit measure such as $R^2$ describe qualitatively?
+1. What does a goodness-of-fit measure such as $R^2$ describe qualitatively? Why do the authors use it as a diagnostic rather than a universal criterion?
 2. What does the exponent $\alpha$ describe in $f(r)=C/r^\alpha$?
 3. Why do comparable $R^2$ values not show that all units follow the same distribution with the same exponent?
 4. Why should we avoid inferring one cognitive mechanism from this result?
@@ -176,7 +176,7 @@ A study of spoken dialogue reports that several linguistic units (words, bigrams
 <details>
 <summary>Show the solution</summary>
 
-1. $R^2$ quantifies, under the chosen fit, how much variation is described by the model. It does not by itself measure causal validity.
+1. $R^2$ quantifies, under the chosen fit, how much variation is described by the model. The authors treat it as a diagnostic: they set no universal threshold that alone decides whether a distribution “follows Zipf”. It does not measure causal validity.
 2. $\alpha$ determines the slope in log-log coordinates and how quickly frequency decreases with rank.
 3. Two distributions can be described reasonably well by the same curve family while having different exponents. Fit quality and parameter value are distinct pieces of information.
 4. The fit describes a statistical regularity. The linguistic unit, corpus, and protocol influence the parameters; a causal mechanism requires independent predictions and tests.
@@ -192,10 +192,13 @@ Two studies propose different explanatory directions:
 - Lestrade (2017) studies the interaction between syntactic class sizes and semantic specificity/reusability.
 - Linders and Louwerse (2023) formulate a hypothesis that higher cognitive load may lead to more economical linguistic contributions and a larger exponent $\alpha$.
 
+Piantadosi's (2014) critical review argues that no available account straightforwardly explains all the empirical facts or rests on sufficient independent evaluation.
+
 1. Are these proposals the descriptive law itself, or hypotheses about its origin?
 2. What experimental prediction follows from the cognitive-load hypothesis?
 3. Why does Lestrade's model compare syntax alone, semantics alone, and their combination?
-4. What further evidence would be needed before presenting either proposal as a general explanation?
+4. Why does Piantadosi's review invite us to present these proposals as competing or complementary models rather than an established explanation?
+5. What further evidence would be needed before presenting either proposal as a general explanation?
 
 5. In the semantic hypothesis, what does the trade-off between specificity and reusability mean?
 
@@ -205,7 +208,8 @@ Two studies propose different explanatory directions:
 1. They are explanatory proposals. The rank-frequency law describes an observed regularity; these studies investigate mechanisms that might produce it.
 2. With unit and protocol held comparable, a condition imposing higher cognitive load should, under the hypothesis, produce a larger $\alpha$. Corpus, sample-size, and task differences need to be controlled.
 3. This comparison tests whether either ingredient is sufficient alone or whether their interaction is needed in the model being studied. The author reports that both combined are necessary within that framework.
-4. We would need discriminating predictions, independent measures of the proposed variables, replications across corpora and tasks, and comparisons with competing explanations. Reproducing a curve is not enough.
+4. Piantadosi notes that the observed regularities do not by themselves distinguish the proposed mechanisms and that no account convincingly covers all the facts reviewed. Lestrade's and Linders–Louwerse's proposals should therefore be presented as hypotheses with defined scope, not as a consensus.
+5. We would need discriminating predictions, independent measures of the proposed variables, replications across corpora and tasks, and comparisons with competing explanations. Reproducing a curve is not enough.
 
 5. A term that is too general poorly distinguishes referents; a term that is too specific applies to very few situations. The model proposes that a balance between discriminative power and reuse contributes to frequency. This is a hypothesis of the model, not a universal law.
 
