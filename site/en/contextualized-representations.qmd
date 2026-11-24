@@ -46,7 +46,7 @@ By the end of this lesson, you should be able to:
 The question “What have the Romans ever done for us?” and a reply such as “The Romans built roads” contain the same visible word in different surrounding sequences. Under the assumption that the tokenizer assigns it the same ID, both occurrences retrieve the same initial vector. **The lookup does not change; the Transformer's processing of each sequence builds hidden states that depend on context.**
 :::
 
-**Questions and exercises:** [Open the dedicated practice page](exercises/contextualized-representations.qmd).
+
 
 ## Start with what stays the same
 
@@ -150,25 +150,13 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 
 For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
+
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
 :::
 
-:::: {.supplementary-resources}
-
-<details class="learning-resources">
-<summary>
-  <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
-</summary>
-::: {.learning-resources__content}
-
-
-
-:::
-
-</details>
-
-::::
