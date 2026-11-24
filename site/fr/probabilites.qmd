@@ -30,7 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "l
 
 {{< include ../includes/generated-guided-context-fr-probabilites.qmd >}}
 ::: {.chapter-lead}
-Pourquoi « Vous » reçoit-il 60 % dans le premier tour du scribe ? Partons de quatre scores fictifs, puis changeons la température pour voir comment elle redistribue les probabilités.
+Pourquoi « Vous » reçoit-il 60 % dans le premier tour du scribe ? Partons de quatre scores fictifs et voyons comment la softmax les transforme en une distribution sur le vocabulaire.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
