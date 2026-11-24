@@ -1,0 +1,74 @@
+---
+title: "When a model gets worse before it gets better"
+subtitle: "Double descent and the role of the interpolation threshold"
+description-meta: "Presents double descent as a phenomenon observed in some regimes and explains why it is not a universal law of generalization."
+keywords: ["type:deep-dive", "destination:deepen", "topic:double-descent", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/double-descent"
+summary: "Presents double descent as a phenomenon observed in some regimes and explains why it is not a universal law of generalization."
+scope: "Double descent, interpolation threshold, bias–variance, and limits of generalizing observations."
+purpose: "Study a toy curve and distinguish an empirical observation from a universal law."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/scaling-laws", "en/llm-overview"]
+tags: ["type:deep-dive", "destination:deepen", "topic:double-descent", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 21 · editorial skeleton*
+
+## The phenomenon to explain
+
+Presents double descent as a phenomenon observed in some regimes and explains why it is not a universal law of generalization.
+
+Double descent, interpolation threshold, bias–variance, and limits of generalizing observations.
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+## Read the data or build an example
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+## Interpret without overgeneralizing
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+## Limitations and conditions
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+## Transfer challenge
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. -->
+
+## Sources to document
+
+- <!-- Ajouter des sources primaires ou faisant autorité et relier chaque référence aux affirmations étayées. -->
+
+<!--
+Production notes:
+- Keep this lesson independent of other calendar doors.
+- Keep exercises in a companion practice page, not in an expanding question bank here.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate FR/EN parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
