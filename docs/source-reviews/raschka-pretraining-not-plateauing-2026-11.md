@@ -85,8 +85,8 @@ Le cas OpenAI fournit un exemple contemporain de suivi longitudinal d'un modèle
 | Élément | Décision | Justification |
 |---|---|---|
 | Définition token-level de la cross-entropy | Déjà couvert | Ne pas dupliquer la leçon |
-| Perplexité comme agrégation de NLL | À relier à la page cross-entropy | Extension naturelle de la métrique existante |
-| Jeu tenu à l'écart et comparaison longitudinale | À relier à training-loop / évaluation | Clarifie le rôle de l'évaluation sans mise à jour |
+| Perplexité comme agrégation de NLL | Déjà formalisée dans la page cross-entropy | La page existante donne déjà les formules en nats et en bits. |
+| Jeu tenu à l'écart et comparaison longitudinale | Partiellement couvert | La page training-loop distingue déjà entraînement et validation ; le protocole longitudinal reste un approfondissement. |
 | Trois rôles pré-entraînement / post-entraînement / harness | Référence complémentaire | Bonne synthèse conceptuelle, déjà couverte par morceaux |
 | FLOPs et mélange de données | Question ouverte | Aucune donnée ne permet une conclusion causale |
 | Proposition de limites communes de développement | Approfondissement optionnel | Hors du parcours computationnel de base |
