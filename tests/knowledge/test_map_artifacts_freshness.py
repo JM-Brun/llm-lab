@@ -52,7 +52,7 @@ def test_tracked_interactive_map_matches_renderer(language: str) -> None:
             mismatch = next(
                 (
                     index
-                    for index, (left, right) in enumerate(zip(actual, expected))
+                    for index, (left, right) in enumerate(zip(actual, expected, strict=False))
                     if left != right
                 ),
                 min(len(actual), len(expected)),
