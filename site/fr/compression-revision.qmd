@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["fr/universal-artificial-intelligence"]
-related: ["fr/cross-entropy", "fr/vraisemblance", "fr/llm-evolution", "fr/llm-computational-complexity"]
+related: ["fr/entropy", "fr/cross-entropy", "fr/vraisemblance", "fr/llm-evolution", "fr/llm-computational-complexity"]
 tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:fr", "status:published"]
 -->
 
