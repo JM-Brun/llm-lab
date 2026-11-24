@@ -13,7 +13,7 @@ id: "en/top-k-top-p-truncation"
 summary: "Compares top-k and top-p as distinct truncation rules and shows how their selected sets depend on distribution shape."
 scope: "Top-k truncation and top-p nucleus sampling, cumulative mass, edge cases, and diversity."
 purpose: "Apply both rules to a distribution, explain their candidate sets, and identify cases where they differ."
-domain: "inference-generation"
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
