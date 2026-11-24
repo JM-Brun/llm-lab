@@ -438,14 +438,14 @@ The following counts are a structural screening, not final reading-time estimate
 | Logits | 1,138 | Keep as a short lesson. |
 | Probabilités | 1,597 | Keep logits-to-distribution and conditional interpretation; separate extended temperature exploration and additional examples from the mandatory path. |
 | Entropie | 1,924 | Keep predictive entropy and its distinction from observed-token score; move compression and V-information to optional deep dives. |
-| Génération | 2,858 | Split. Candidate lessons: (a) autoregressive selection, feedback and stopping; (b) prefill versus decode and the operational role of the KV cache. Keep serving/scheduling as optional or Build material. |
+| Génération | 2,858 | First transfer serving/scheduling, latency details, exercises and implementation links to their proper destinations. Keep the core autoregressive loop plus conceptual prefill/decode together if the rendered lesson then fits 15 minutes; split only if the remaining material still contains two independent learning outcomes or exceeds the limit. |
 | In-context learning | 1,009 | Keep as a short lesson. |
 | Ingénierie du contexte | 1,531 | Keep the design principles and one worked example; move extended RAG/memory material to linked lessons if it exceeds the time budget. |
 | Vraisemblance | 1,088 | Keep as a short lesson on scoring an observed sequence and teacher forcing. |
-| Entropie croisée | 2,463 | Narrow or split. The mandatory lesson should establish per-token cross-entropy and its relation to NLL. Move implementation/API details, extensive numerical cases and KL decomposition to dedicated deep dives unless one is essential to the core outcome. |
+| Entropie croisée | 2,463 | Narrow first: retain the per-token objective, one worked example and the observed-target distinction; merge the sequence-level perplexity explanation into the likelihood lesson, move the KL derivation to `language-modeling-math`, the gradient bridge to `gradients`, implementation details to Build/Deepen, and exercises to Practice. Split only if the remaining single outcome still exceeds 15 minutes. |
 | Loss | 1,472 | Keep the aggregation over valid shifted targets and the distinction between attention and loss masks; keep teacher forcing only to the extent needed to explain the observed prefix. |
 | Gradients | 1,581 | Keep as one lesson from local derivatives to a parameter update; move extended calculus/optimizer variants out. |
-| Boucle d’entraînement | 2,627 | Narrow or split. Candidate lessons: (a) one training step from loss through gradient to update; (b) repeated optimization, validation and generalization. Implementation and optimizer comparisons remain optional/Build material. |
+| Boucle d’entraînement | 2,627 | Narrow first: keep one coherent update, repeated batches and the train/validation distinction; move implementation/workflows to Build and detailed optimizer comparisons to Deepen. Reassess the rendered duration before deciding whether one-step and repeated-optimization explanations need separate lessons. |
 
 ### 12.4 Candidate chapter structure
 
@@ -473,3 +473,12 @@ The chapter order must reflect the intended first reading, not pretend that ever
 6. Check the complete learner experience: chapter introductions, lesson objectives, previous/next progression, review link, practice link, optional branches, responsive rendering and bilingual parity.
 
 Do not treat a word-count threshold as an automatic split rule. Duration is an acceptance criterion; conceptual coherence determines the split boundary. Preserve all scientific qualifications, citations, diagrams and existing explanations through explicit moves or merges.
+
+
+## 13. Knowledge-preserving migration ledger
+
+The section-size audit and chapter proposal are now complemented by the section-level migration specification in [lesson-migration-ledger.md](lesson-migration-ledger.md). It records the 20-lesson/9-chapter target, first-pass dispositions for every core lesson, and detailed source-section decisions for the largest pages.
+
+**Important refinement to the earlier split proposals:** transfer misplaced material first; split only after measuring the remaining coherent lesson. A large current page is not automatically two lessons. Conversely, do not compress two independent learning outcomes into one page merely to preserve the current page count.
+
+The ledger is a specification, not evidence that any move has been completed. Every source section remains in place until its bilingual destination, exact anchor, contextual link and preservation checks have been verified. Exercises are transferred to Practice companions; implementation to Build; mathematical extensions and variants to Deepen; overlapping explanations to their canonical synthesis page. A destination must exist and be checked before the source is shortened.
