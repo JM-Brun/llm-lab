@@ -136,7 +136,7 @@ For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends 
 
 ## Soft targets and KL divergence
 
-The one-hot case is sufficient to compute the penalty for an observed token. For a target that distributes its mass across several tokens, the identity $H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)$, its assumptions and its boundary cases are developed in the Deepen resource [The mathematics of language modeling](language-modeling-math.qmd). This derivation is not required to compute the NLL of one observed token.
+The one-hot case is sufficient to compute the penalty for an observed token. For a target that distributes its mass across several tokens, the identity $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, its assumptions and its boundary cases are developed in the Deepen resource [The mathematics of language modeling](language-modeling-math.qmd). This derivation is not required to compute the NLL of one observed token.
 
 ## Implementations — NumPy, PyTorch, and numerical stability
 
