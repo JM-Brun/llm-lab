@@ -113,7 +113,7 @@ The last case is the key teaching point: the data contain a dependency, but a re
 
 ### XOR example: a dependency some predictors cannot exploit
 
-Let X1 and X2 be independent uniform bits, and let Y = X1 XOR X2. The pair (X1, X2) determines Y perfectly, so the mutual information I((X1, X2); Y) is 1 bit. Yet a family restricted to constant predictors gains nothing from observing the inputs: its conditional logarithmic loss remains 1 bit and its predictive information is zero. A family able to represent the XOR interaction can predict Y exactly and reduce that loss to zero. The example shows that predictive information depends on the capabilities of the predictor family, not only on dependencies present in the data.
+Let $X_1$ and $X_2$ be independent uniform bits, and let $Y=X_1\oplus X_2$. The pair $(X_1,X_2)$ determines $Y$ perfectly, so the mutual information $I((X_1,X_2);Y)$ is 1 bit. Yet a family restricted to constant predictors gains nothing from observing the inputs: its conditional logarithmic loss remains 1 bit and its predictive information is zero. A family able to represent the XOR interaction can predict Y exactly and reduce that loss to zero. The example shows that predictive information depends on the capabilities of the predictor family, not only on dependencies present in the data.
 
 This intuition is discussed by Xu et al. (ICLR 2020), [A Theory of Usable Information under Computational Constraints](https://openreview.net/forum?id=r1eBeyHFDH). A [complementary experiment on synthetic XOR-style tasks](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) illustrates the distinction; it is not an evaluation of a trained LLM.
 
