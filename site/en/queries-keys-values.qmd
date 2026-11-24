@@ -164,6 +164,8 @@ The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
+## Further exploration
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
