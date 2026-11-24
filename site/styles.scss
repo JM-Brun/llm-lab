@@ -2805,3 +2805,235 @@ details.learning-resources[open] > summary { border-bottom: 0; }
 html[lang^="fr"] .next-token-explorer [lang="en"],
 html[lang^="en"] .next-token-explorer [lang="fr"],
 .next-token-explorer [hidden] { display: none !important; }
+
+
+/* 2026 Advent calendar: a visual set of doors, not a second learning route. */
+.advent-hero {
+  position: relative;
+  overflow: hidden;
+  margin: .5rem 0 2rem;
+  padding: clamp(1.35rem, 3.5vw, 2.5rem);
+  border: 1px solid #286044;
+  border-radius: .7rem;
+  color: #f4f8ed;
+  background:
+    radial-gradient(circle at 88% 15%, rgba(190, 220, 146, .2), transparent 25%),
+    linear-gradient(135deg, #123d2b, #1d5a3b 68%, #285b3d);
+  box-shadow: 0 8px 0 rgba(18, 61, 42, .08), 0 16px 34px rgba(18, 61, 42, .13);
+}
+.advent-hero__eyebrow {
+  margin: 0 0 .9rem;
+  color: #c8e5b2;
+  font: 750 .72rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .15em;
+}
+.advent-hero__statement {
+  max-width: 23ch;
+  margin: 0 0 .8rem;
+  color: #fff;
+  font: 750 clamp(1.65rem, 4vw, 2.65rem)/1.12 Georgia, serif;
+  letter-spacing: -.035em;
+}
+.advent-hero__statement span { color: #d6e9bd; }
+.advent-hero__description {
+  max-width: 67ch;
+  margin: 0;
+  color: #e4eee0;
+  font-size: 1.02rem;
+}
+.advent-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1.35rem;
+}
+.advent-hero__facts span {
+  padding: .4rem .65rem;
+  border: 1px solid rgba(230, 244, 218, .3);
+  border-radius: .25rem;
+  color: #edf5e8;
+  background: rgba(4, 27, 17, .2);
+  font-size: .82rem;
+}
+.advent-hero__facts strong { color: #f1d18b; }
+.advent-progress {
+  margin: .8rem 0 2rem;
+  padding: .9rem 1rem;
+  border: 1px solid #cbd9ca;
+  border-radius: .5rem;
+  background: #f3f7f0;
+}
+.advent-progress__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .45rem .7rem;
+  color: #334b3b;
+  font-size: .86rem;
+}
+.advent-progress__label strong {
+  color: #14532d;
+  font: 800 1.1rem ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.advent-progress__note { margin-left: auto; color: #52675a; font-size: .78rem; }
+.advent-progress__track {
+  height: .42rem;
+  margin-top: .65rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #dce6d9;
+}
+.advent-progress__track span { display: block; height: 100%; border-radius: inherit; background: #27804d; }
+.advent-shelf {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 1rem 0 2.2rem;
+}
+.advent-door {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 190px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: .65rem;
+  overflow: hidden;
+  padding: .85rem .9rem .8rem;
+  border: 1px solid #c7d6c7;
+  border-radius: .42rem;
+  color: #334b3b;
+  background: linear-gradient(150deg, #f8faf5, #eaf1e7);
+  box-shadow: 0 3px 0 #c7d6c7, 0 7px 14px rgba(28, 66, 43, .055);
+  text-decoration: none;
+}
+.advent-door::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(49, 93, 73, .14);
+  content: "";
+  pointer-events: none;
+}
+.advent-door::after {
+  position: absolute;
+  top: .45rem;
+  right: .7rem;
+  color: rgba(49, 93, 73, .18);
+  content: "✳";
+  font-size: 1.55rem;
+  pointer-events: none;
+}
+.advent-door__top, .advent-door__bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .25rem .4rem;
+  font: 650 .63rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .035em;
+}
+.advent-door__top { color: #596e5d; }
+.advent-door__status {
+  padding: .16rem .34rem;
+  border: 1px solid #c5d2c3;
+  border-radius: .2rem;
+  background: rgba(255,255,255,.72);
+  text-transform: uppercase;
+  font-size: .56rem;
+  letter-spacing: .06em;
+}
+.advent-door__number {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  color: #24563b;
+  font: 500 clamp(2.8rem, 4vw, 3.9rem)/.95 Georgia, serif;
+  letter-spacing: -.08em;
+  font-variant-numeric: tabular-nums;
+}
+.advent-door__title {
+  position: relative;
+  z-index: 1;
+  display: block;
+  max-width: 25ch;
+  margin: 0 auto;
+  color: #203a2b;
+  font-size: .83rem;
+  font-weight: 750;
+  line-height: 1.32;
+  text-align: center;
+  text-wrap: balance;
+}
+.advent-door__bottom {
+  justify-content: center;
+  color: #607363;
+  font-size: .61rem;
+  text-align: center;
+}
+.advent-door__bottom span { color: #fff; }
+.advent-door--open {
+  border-color: #276345;
+  color: #f8f7ed;
+  background: linear-gradient(145deg, #326d4d, #194832);
+  box-shadow: 0 3px 0 #123d2b, 0 8px 17px rgba(18, 61, 42, .16);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.advent-door--open::before { border-color: rgba(248, 247, 237, .25); }
+.advent-door--open::after { color: rgba(240, 209, 139, .5); }
+.advent-door--open .advent-door__top,
+.advent-door--open .advent-door__bottom { color: #e4edda; }
+.advent-door--open .advent-door__status {
+  border-color: #b5d8a8;
+  color: #17452f;
+  background: #e6f2dc;
+}
+.advent-door--open .advent-door__number { color: #fffaf0; }
+.advent-door--open .advent-door__title { color: #fff; }
+.advent-door--planned { background: linear-gradient(145deg, #f5f6ef, #e8eee5); }
+.advent-shelf--geometry .advent-door__number { color: #496a72; }
+.advent-shelf--mechanisms .advent-door__number { color: #7a623b; }
+.advent-shelf--research .advent-door__number { color: #5c6480; }
+.advent-door--open:hover,
+.advent-door--open:focus-visible {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 0 #123d2b, 0 13px 22px rgba(18, 61, 42, .2);
+  outline: 3px solid #b45309;
+  outline-offset: 3px;
+  text-decoration: none;
+}
+.advent-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem 1.3rem;
+  margin: -1rem 0 2rem;
+  color: #52675a;
+  font-size: .82rem;
+}
+.advent-legend span { display: inline-flex; align-items: center; gap: .45rem; }
+.advent-legend__swatch { width: .75rem; height: .75rem; border-radius: .15rem; background: #326d4d; }
+.advent-legend__swatch--planned { border: 1px solid #c7d6c7; background: #eaf1e7; }
+@media (max-width: 1000px) {
+  .advent-shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .advent-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .62rem; }
+  .advent-door { min-height: 174px; padding: .72rem .65rem; }
+  .advent-door__number { font-size: 2.8rem; }
+  .advent-door__title { font-size: .76rem; }
+  .advent-door__top, .advent-door__bottom { font-size: .56rem; }
+  .advent-door__status { font-size: .5rem; }
+  .advent-progress__note { width: 100%; margin-left: 0; }
+  .advent-hero__facts { gap: .4rem; }
+}
+@media (max-width: 360px) {
+  .advent-shelf { grid-template-columns: 1fr 1fr; }
+  .advent-door { min-height: 184px; }
+  .advent-door__status { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .advent-door--open { transition: none; }
+  .advent-door--open:hover { transform: none; }
+}
