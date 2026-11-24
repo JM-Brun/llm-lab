@@ -22,7 +22,7 @@ La leçon devrait répondre à quatre questions :
 
 ### A. Piantadosi (2014) — référence critique centrale
 
-Steven T. Piantadosi, *Zipf's word frequency law in natural language: A critical review and future directions*, Psychological Bulletin Review, 21, 1112–1130 (2014). DOI : https://doi.org/10.3758/s13423-014-0585-6. Texte intégral : https://pmc.ncbi.nlm.nih.gov/articles/PMC4176592/.
+Steven T. Piantadosi, *Zipf's word frequency law in natural language: A critical review and future directions*, Psychonomic Bulletin & Review, 21, 1112–1130 (2014). DOI : https://doi.org/10.3758/s13423-014-0585-6. Texte intégral : https://pmc.ncbi.nlm.nih.gov/articles/PMC4176592/.
 
 - **Type / niveau :** article de revue scientifique ; avancé, mais excellent matériau pour une synthèse pédagogique.
 - **Apport :** formule classique \(f(r)\propto r^{-\alpha}\), loi de Zipf–Mandelbrot, phénomènes empiriques au-delà de la droite log-log, comparaison de modèles et examen critique des explications proposées.
@@ -44,7 +44,7 @@ Giovanna Roda (2024), *Zipf's Law for Natural Languages*, Wolfram Demonstrations
 
 ### C. Linders & Louwerse (2023) — élargissement au dialogue oral
 
-Guido M. Linders & Max M. Louwerse, *Zipf's law revisited: Spoken dialog, linguistic units, parameters, and the principle of least effort*, Psychological Bulletin Review, 30, 77–101 (2023). Publication en ligne : 15 juillet 2022. Texte : https://pmc.ncbi.nlm.nih.gov/articles/PMC9971120/.
+Guido M. Linders & Max M. Louwerse, *Zipf's law revisited: Spoken dialog, linguistic units, parameters, and the principle of least effort*, Psychonomic Bulletin & Review, 30, 77–101 (2023). Publication en ligne : 15 juillet 2022. Texte : https://pmc.ncbi.nlm.nih.gov/articles/PMC9971120/.
 
 - **Type / niveau :** revue théorique / étude de synthèse ; intermédiaire à avancé.
 - **Apport :** réexamine les unités linguistiques, les paramètres, le dialogue parlé et le principe du moindre effort ; rappelle les variantes Zipf–Mandelbrot et les écarts à l'exposant proche de 1.
