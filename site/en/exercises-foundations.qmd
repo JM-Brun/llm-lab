@@ -32,7 +32,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-found
 4. Soft targets, entropy and KL divergence in [language-modeling mathematics](language-modeling-math.qmd).
 5. Batch, sequence and vocabulary axes; [tensors](tensors.qmd) is an optional shape reference.
 6. [Softmax and numerical stability](probabilities.qmd), exponentials and logarithms.
-7. [Negative log-likelihood](likelihood.qmd), token averaging and [perplexity](cross-entropy.qmd#connection-to-perplexity).\n8. [Cosine similarity](cosine-similarity.qmd), dot products, norms, and normalization.\n9. [Linearity in representations](embedding-linearity.qmd), decodability, probes, and interventions.
+7. [Negative log-likelihood](likelihood.qmd), token averaging and [perplexity](likelihood.qmd#perplexity).\n8. [Cosine similarity](cosine-similarity.qmd), dot products, norms, and normalization.\n9. [Linearity in representations](embedding-linearity.qmd), decodability, probes, and interventions.
 
 **Current scope:** nine worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, perplexity, cosine similarity, and linear-probe interpretation. Finite-difference gradient checking remains to be developed.
 

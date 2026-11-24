@@ -16,9 +16,9 @@ suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"
 hierarchy:
-  parents: ["en/text-data"]
-  children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
-related: ["en/embedding-space-exercises", "en/gpt-model-walkthrough"]
+  parents: []
+  children: ["en/cosine-similarity", "en/embedding-linearity"]
+related: ["en/text-data", "en/positional-encoding", "en/contextualized-representations", "en/embedding-space-exercises", "en/gpt-model-walkthrough"]
 revision_support:
   status: integrated_sufficient
   evidence:

@@ -117,6 +117,8 @@ $$
 
 Thus $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$.
 
+Under the usual conditions, $D_{\mathrm{KL}}(q\Vert p)\geq 0$, with equality if and only if $q=p$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
+
 Here, $q$ and $p$ are normalized distributions and zero-mass terms contribute zero. If $q_i>0$ but $p_i=0$, cross-entropy and $D_{\mathrm{KL}}(q\Vert p)$ are infinite under the usual extended-value convention. KL divergence is **directional**; cross-entropy is neither symmetric nor a metric distance.
 
 For example, with $q=(1,0)$ and $p=(0.9,0.1)$:
@@ -128,6 +130,14 @@ D_{\mathrm{KL}}(p\Vert q)=+\infty.
 $$
 
 The second quantity is infinite because $p$ assigns positive mass to a category to which $q$ assigns zero mass. In numerical computation, a stable log-softmax implementation helps avoid accidental underflow; it does not change this mathematical condition.
+
+A non-degenerate example makes the three terms in the identity explicit. Take $q=(0.5,0.5)$ and $p=(0.75,0.25)$:
+
+- $H(q)=-(0.5\ln0.5+0.5\ln0.5)\approx0.693$ nats;
+- $H(q,p)=-(0.5\ln0.75+0.5\ln0.25)\approx0.837$ nats;
+- $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0.144$ nats.
+
+Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities are measured in bits. This complements the one-hot example above: both categories contribute to cross-entropy for this target.
 
 The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
 

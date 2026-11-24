@@ -117,6 +117,8 @@ $$
 
 Donc $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$.
 
+Sous les conditions usuelles, $D_{\mathrm{KL}}(q\Vert p)\geq 0$, avec égalité si et seulement si $q=p$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
+
 Ici, $q$ et $p$ sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si $q_i>0$ mais $p_i=0$, l'entropie croisée et $D_{\mathrm{KL}}(q\Vert p)$ sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
 
 Par exemple, avec $q=(1,0)$ et $p=(0.9,0.1)$ :
@@ -128,6 +130,14 @@ D_{\mathrm{KL}}(p\Vert q)=+\infty.
 $$
 
 La seconde quantité est infinie parce que $p$ attribue une masse positive à une catégorie à laquelle $q$ attribue une masse nulle. En calcul numérique, une implémentation stable de log-softmax aide à éviter un sous-débordement accidentel ; elle ne modifie pas cette condition mathématique.
+
+Un exemple non dégénéré permet de lire les trois termes de l'identité. Avec $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
+
+- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
+- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
+- $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0{,}144$ nat.
+
+On retrouve $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits. Cet exemple complète le cas one-hot précédent : il montre une cible dont les deux catégories contribuent à l'entropie croisée.
 
 La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
 

@@ -17,9 +17,9 @@ suggested_route:
   previous: "en/gradients"
   next: null
 hierarchy:
-  parents: ["en/loss"]
+  parents: []
   children: ["en/post-training"]
-related: ["en/scaling-laws", "en/build-path", "en/experimental-evaluation"]
+related: ["en/loss", "en/gradients", "en/scaling-laws", "en/build-path", "en/experimental-evaluation"]
 revision_support:
   status: integrated_sufficient
   evidence:

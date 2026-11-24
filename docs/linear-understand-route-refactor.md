@@ -1,6 +1,6 @@
 # Refactor the Understand route into a simple linear course
 
-**Status:** architectural proposal based on repository inspection; no reader-facing pages or curriculum content have been moved yet.  
+**Status:** navigation simplification is implemented by PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549). This branch adds a first-pass metadata correction and defines the pedagogical target: short 10–15-minute lessons grouped into meaningful chapters. The chapter/lesson map, duration audit and content migration are not yet implemented; section 12 defines their acceptance criteria and migration sequence.  
 **Scope:** Understand / Comprendre route, its bilingual review counterpart, and the navigation that exposes them.  
 **Related work:** [parallel review-route contract](parallel-review-route-contract.md), [lesson sizing and editorial rhythm](parallel-review-route-contract.md#11-lesson-size-and-editorial-rhythm), [issue #1541](https://github.com/JM-Brun/llm-lab/issues/1541), [canonical computational spine #575](https://github.com/JM-Brun/llm-lab/issues/575).
 
@@ -47,11 +47,9 @@ The nine stages are not all strict prerequisite chains. In particular, inference
 
 ### 2.2 Navigation
 
-The French Quarto sidebar currently nests Understand content several levels deep. For example, the text/data entry contains nested groups for representations, Transformer computation and scores/probabilities; other groups separately expose generation/context, scoring, loss/gradients, and architectures/limits. This does not exactly mirror the nine canonical stages.
+The bilingual Understand sidebar is now a flat list of the twenty core lessons in canonical order. The Review sidebar is a peer projection: it follows the same lesson order, then exposes the review index, primary synthesis pages and shared review aids (PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549)). This removes nested navigation levels from the two main routes without deleting page hierarchy or exploratory map groupings.
 
-The English sidebar follows the same general nested-navigation model. The learning-map generator deliberately reads and preserves this recursive sidebar structure. Therefore, simply changing the route YAML would not simplify the reader-facing navigation: the sidebar and the generated exploratory map would still expose nested groupings.
-
-Revision pages are published and linked from core lessons and the review-path index, but are not currently a flat, complete peer route in the sidebar.
+The Review experience is not yet a complete peer traversal. The current review page still behaves primarily as a stage-grouped plan/sheet index; progress cues, complete route switching, optional-aid handling and learner-facing validation remain tracked by [issue #1541](https://github.com/JM-Brun/llm-lab/issues/1541). The learning map remains an exploratory projection and must not be mistaken for another mandatory route.
 
 ### 2.3 Existing documentation drift
 
@@ -117,7 +115,7 @@ A core lesson may link to any of these where contextually useful. Such links do 
 
 ### 4.1 Quarto sidebar
 
-Replace the nested Understand sidebar tree in both languages with a single flat list of core lessons, in the exact order generated from the canonical route. Keep the Understand overview / learning-map entry visible as the route's entry point.
+The flat bilingual Understand and Review sidebars are implemented by PR #1549. Keep the Understand overview / learning-map entry visible as the route's entry point. The twenty lesson identities and order must remain aligned with `data/guided-route.yml`; the sidebars are projections, not a second curriculum source.
 
 Do not hand-maintain the twenty-link sequence in two sidebars. Generate or validate the flat list from the canonical route, or introduce a small generator that emits the Quarto sidebar fragment from `data/guided-route.yml`. If Quarto configuration cannot include generated fragments directly, use a generated file and a test that verifies exact parity with the canonical route.
 
@@ -368,10 +366,10 @@ Once the flat route is validated:
 
 ## 10. Acceptance criteria
 
-- [ ] The Understand route has one flat, canonical sequence of core lessons in FR and EN.
+- [x] The Understand route has one flat, canonical sequence of core lessons in FR and EN (PR #1549).
 - [ ] The sequence is generated from or strictly validated against `data/guided-route.yml`.
-- [ ] No nested page levels are needed to navigate the core course.
-- [ ] The overview explains the nine conceptual groups without making them navigation barriers.
+- [x] No nested page levels are needed to navigate the core course (PR #1549).
+- [x] The overview explains the nine conceptual groups without making them navigation barriers.
 - [ ] Each main lesson has exactly one corresponding review destination.
 - [ ] The review route is a complete peer traversal with the same lesson order.
 - [ ] The review page carries revision aids and supplementary content; the main page remains a self-contained explanation.
@@ -389,3 +387,98 @@ Once the flat route is validated:
 4. Which existing optional pages are truly Deepen resources versus legacy core material that deserves promotion. Decide from learning outcomes and evidence, not sidebar location alone.
 
 These decisions should be settled on the Q/K/V bilingual pilot and then applied consistently.
+
+
+## 12. Pedagogical target: short lessons grouped into chapters
+
+The purpose of the refactor is not merely to flatten navigation. The reader-facing course must become a genuinely linear progression of **short, coherent lessons**, normally requiring 10–15 minutes of focused study each. Several lessons may be grouped into a chapter when they contribute to one larger learning objective. Chapters are orientation/grouping devices; lessons are the units the learner completes.
+
+### 12.1 Information architecture
+
+Use exactly three reader-facing levels:
+
+1. **Course** — the complete path and its expected outcome.
+2. **Chapter** — a meaningful conceptual phase, introduced by a short statement of what the learner will understand by its end.
+3. **Lesson** — one question, one principal learning outcome, one bounded conceptual scope, and a target duration of 10–15 minutes maximum for the mandatory path.
+
+A chapter may contain one lesson when that is pedagogically justified. Do not create artificial lessons to make chapter sizes uniform. Conversely, do not retain an oversized page merely because it currently occupies one route slot.
+
+The linear path must make the progression explicit: what the learner already knows, what this lesson adds, what they should be able to explain or do afterwards, and why the next lesson follows. Optional deep dives, exercises, code labs and historical material are linked from the relevant lesson but do not count toward its mandatory duration.
+
+### 12.2 Lesson-level acceptance contract
+
+A lesson is ready for the main path only when it has:
+
+- one central question, stated in learner-facing language;
+- one observable learning outcome, expressed with an action verb;
+- prerequisites supplied by earlier lessons or explicitly marked as optional;
+- one continuous explanation that answers the question without requiring another page;
+- one worked example, diagram or calculation that operationalizes the idea;
+- a short conclusion that states the acquired idea and motivates the next step;
+- a credible mandatory-path duration estimate, accounting for prose, equations, diagrams and worked examples separately from optional material;
+- a corresponding review companion and a separate practice destination where exercises exist.
+
+A lesson should normally teach one principal new idea. Closely coupled sub-steps of one mechanism may remain together (for example, score calculation, normalization and value aggregation in one attention computation). Independent questions should not be bundled merely because they share a topic label.
+
+### 12.3 First-pass size audit of the current French route
+
+The following counts are a structural screening, not final reading-time estimates. They exclude YAML/front matter, editorial HTML comments and fenced code blocks, but still include some practice and optional sections. Actual duration must be measured after the mandatory path is separated from those sections.
+
+| Current lesson | Approx. words | First-pass editorial decision |
+|---|---:|---|
+| Panorama | 2,038 | Keep as a special orientation, not a standard lesson; reduce the mandatory path to the first prediction loop and defer architecture/history/system material. |
+| Texte et tokens | 1,277 | Keep; move embedded exercises and optional Unicode/tokenizer detail to their dedicated destinations. |
+| Plongements | 1,073 | Keep as a short lesson; remove unrelated forward-looking material from the core argument. |
+| Position | 1,370 | Keep the reason for position and the core mechanism; move exercises and geometric derivations out of the mandatory path. |
+| États contextualisés | 1,414 | Keep; ensure it compares initial and contextualized states without trying to teach the Transformer mechanism itself. |
+| Transformer | 3,107 | Split or substantially narrow. Candidate boundary: (a) the Transformer block and its sublayers; (b) the forward pass and how a stack produces final states/logits. Historical 2017 architecture material remains a separate optional/history destination. Confirm the boundary against the actual explanations before moving content. |
+| Q/K/V | 1,470 | Keep as one focused lesson on the three projection roles; move exercises and advanced variants out of the mandatory path. |
+| Attention | 2,043 | Keep the single-query computation as one lesson; move exercises, Build material and FlashAttention out. Reassess whether the five calculation steps fit 15 minutes with the diagram. |
+| Masque causal | 1,680 | Keep as one lesson if its mandatory path stays focused on visibility and the causal constraint; move comparisons of other masks to optional material. |
+| Logits | 1,138 | Keep as a short lesson. |
+| Probabilités | 1,597 | Keep logits-to-distribution and conditional interpretation; separate extended temperature exploration and additional examples from the mandatory path. |
+| Entropie | 1,924 | Keep predictive entropy and its distinction from observed-token score; move compression and V-information to optional deep dives. |
+| Génération | 2,858 | First transfer serving/scheduling, latency details, exercises and implementation links to their proper destinations. Keep the core autoregressive loop plus conceptual prefill/decode together if the rendered lesson then fits 15 minutes; split only if the remaining material still contains two independent learning outcomes or exceeds the limit. |
+| In-context learning | 1,009 | Keep as a short lesson. |
+| Ingénierie du contexte | 1,531 | Keep the design principles and one worked example; move extended RAG/memory material to linked lessons if it exceeds the time budget. |
+| Vraisemblance | 1,088 | Keep as a short lesson on scoring an observed sequence and teacher forcing. |
+| Entropie croisée | 2,463 | Narrow first: retain the per-token objective, one worked example and the observed-target distinction; merge the sequence-level perplexity explanation into the likelihood lesson, move the KL derivation to `language-modeling-math`, the gradient bridge to `gradients`, implementation details to Build/Deepen, and exercises to Practice. Split only if the remaining single outcome still exceeds 15 minutes. |
+| Loss | 1,472 | Keep the aggregation over valid shifted targets and the distinction between attention and loss masks; keep teacher forcing only to the extent needed to explain the observed prefix. |
+| Gradients | 1,581 | Keep as one lesson from local derivatives to a parameter update; move extended calculus/optimizer variants out. |
+| Boucle d’entraînement | 2,627 | Narrow first: keep one coherent update, repeated batches and the train/validation distinction; move implementation/workflows to Build and detailed optimizer comparisons to Deepen. Reassess the rendered duration before deciding whether one-step and repeated-optimization explanations need separate lessons. |
+
+### 12.4 Candidate chapter structure
+
+These are conceptual chapter groupings, not a commitment to preserve the current nine stage boundaries unchanged:
+
+1. **Voir ce que prédit un LLM** — orientation/panorama.
+2. **Transformer le texte en entrée** — texte, tokens et identifiants.
+3. **Construire les représentations** — plongements, position, états contextualisés.
+4. **Comprendre le calcul du Transformer** — architecture du bloc, passe avant, Q/K/V, attention, causalité.
+5. **Produire une distribution prédictive** — logits, softmax/probabilités, entropie.
+6. **Générer une continuation** — boucle autorégressive, puis prefill/decode et cache KV.
+7. **Concevoir le contexte** — in-context learning et ingénierie du contexte.
+8. **Évaluer une séquence observée** — vraisemblance, entropie croisée.
+9. **Apprendre les paramètres** — loss, gradients, mise à jour et boucle d'entraînement.
+
+The chapter order must reflect the intended first reading, not pretend that every chapter is a strict mathematical prerequisite of the next. Scoring and training are related uses of the predictive distribution; they should be explained as distinct branches, with a clear transition rather than a false dependency.
+
+### 12.5 Required migration sequence
+
+1. Measure the mandatory reading path of all current lessons in both languages using one documented method. Count optional sections, exercises, code walkthroughs and references separately.
+2. Mark each section as core explanation, review aid, practice, optional deepening, implementation/Build, or history. Do not move material until its destination is explicit.
+3. Approve the chapter/lesson map and the split/merge decisions before changing route IDs or navigation.
+4. Pilot one oversized lesson (Transformer or Generation) in French and English. Validate that each resulting lesson stands alone and stays within 10–15 minutes.
+5. Update `data/guided-route.yml`, lesson contracts, revision companions, practice links, metadata and both language sidebars from the same canonical decision. Do not create a second manually maintained route.
+6. Check the complete learner experience: chapter introductions, lesson objectives, previous/next progression, review link, practice link, optional branches, responsive rendering and bilingual parity.
+
+Do not treat a word-count threshold as an automatic split rule. Duration is an acceptance criterion; conceptual coherence determines the split boundary. Preserve all scientific qualifications, citations, diagrams and existing explanations through explicit moves or merges.
+
+
+## 13. Knowledge-preserving migration ledger
+
+The section-size audit and chapter proposal are now complemented by the section-level migration specification in [lesson-migration-ledger.md](lesson-migration-ledger.md). It records the 20-lesson/9-chapter target, first-pass dispositions for every core lesson, and detailed source-section decisions for the largest pages.
+
+**Important refinement to the earlier split proposals:** transfer misplaced material first; split only after measuring the remaining coherent lesson. A large current page is not automatically two lessons. Conversely, do not compress two independent learning outcomes into one page merely to preserve the current page count.
+
+The ledger now records a completed bilingual content pilot across two duplicate explanations: the full soft-target/KL derivation and its non-degenerate numerical example were consolidated in the existing language-modeling-math Deepen page; the sequence-level perplexity definition was consolidated in the likelihood lesson. The core cross-entropy lesson keeps the one-hot case, the mean cross-entropy/mean-NLL equivalence and contextual links. These transfers have been checked at source-text level, but rendered-site validation remains pending. All other source sections remain in place until their bilingual destination, exact anchor, contextual link and preservation checks have been verified. Exercises are transferred to Practice companions; implementation to Build; mathematical extensions and variants to Deepen; overlapping explanations to their canonical synthesis page. A destination must exist and be checked before the source is shortened.

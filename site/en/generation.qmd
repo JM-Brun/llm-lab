@@ -17,8 +17,8 @@ suggested_route:
   next: "en/in-context-learning"
 hierarchy:
   parents: ["en/llm-overview"]
-  children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/transformer", "en/context-engineering", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+  children: []
+related: ["en/text-data", "en/transformer", "en/logits", "en/probabilities", "en/context-engineering", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:

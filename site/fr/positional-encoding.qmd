@@ -16,9 +16,9 @@ suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
 hierarchy:
-  parents: ["fr/embedding-space"]
-  children: ["fr/contextualized-representations", "fr/rope", "fr/sinusoidal-positional-encoding"]
-related: ["fr/transformer", "fr/positional-encoding-exercises"]
+  parents: []
+  children: ["fr/rope", "fr/sinusoidal-positional-encoding"]
+related: ["fr/embedding-space", "fr/contextualized-representations", "fr/transformer", "fr/positional-encoding-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:

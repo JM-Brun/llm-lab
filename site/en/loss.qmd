@@ -17,9 +17,9 @@ suggested_route:
   previous: "en/cross-entropy"
   next: "en/gradients"
 hierarchy:
-  parents: ["en/cross-entropy"]
-  children: ["en/gradients", "en/training-loop"]
-related: ["en/loss-exercises"]
+  parents: []
+  children: []
+related: ["en/cross-entropy", "en/gradients", "en/training-loop", "en/loss-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:

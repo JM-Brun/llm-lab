@@ -46,8 +46,23 @@ def test_tracked_interactive_map_matches_renderer(language: str) -> None:
     for name in ("territories", "data"):
         fragment = ROOT / "site" / "includes" / f"generated-map-{name}-{language}.qmd"
         assert fragment.is_file(), f"Missing tracked map artifact: {fragment}"
-        assert fragment.read_text(encoding="utf-8") == artifacts[fragment], (
-            f"Stale map artifact: {fragment}. Regenerate with "
-            "uv run --no-project --with-requirements docs/requirements-history-validation.txt "
-            "--python 3.12 python site/tools/build_learning_map.py"
-        )
+        actual = fragment.read_text(encoding="utf-8")
+        expected = artifacts[fragment]
+        if actual != expected:
+            mismatch = next(
+                (
+                    index
+                    for index, (left, right) in enumerate(zip(actual, expected, strict=False))
+                    if left != right
+                ),
+                min(len(actual), len(expected)),
+            )
+            context_start = max(0, mismatch - 100)
+            context_end = mismatch + 160
+            pytest.fail(
+                f"Stale map artifact: {fragment}. First difference at character {mismatch}; "
+                f"actual={actual[context_start:context_end]!r}; "
+                f"expected={expected[context_start:context_end]!r}. Regenerate with "
+                "uv run --no-project --with-requirements docs/requirements-history-validation.txt "
+                "--python 3.12 python site/tools/build_learning_map.py"
+            )
