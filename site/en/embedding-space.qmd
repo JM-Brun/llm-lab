@@ -104,15 +104,21 @@ Position and context enter later, depending on the architecture. Transformer lay
 A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers can produce different contextualized states according to position and context.
 :::
 
-[Embedding-space exercises](exercises/embedding-space.qmd).
+
 
 Both occurrences retrieve the same vector. [Positional encoding](positional-encoding.qmd) explains how their location enters the calculation. Transformer blocks then integrate information from the accessible prefix to produce [contextualized representations](contextualized-representations.qmd).
+
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd).
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)
 :::
+
+## Further exploration
 
 :::: {.supplementary-resources}
 
