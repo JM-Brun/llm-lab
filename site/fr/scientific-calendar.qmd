@@ -1,6 +1,6 @@
 ---
-title: "Le calendrier scientifique de LLM Lab"
-subtitle: "24 histoires indépendantes pour explorer les idées, les expériences et les résultats qui éclairent les modèles de langage."
+title: "Le calendrier de l’Avent 2026 de LLM Lab"
+subtitle: "24 portes, 24 histoires et 24 leçons pour découvrir autrement les idées qui éclairent les modèles de langage."
 keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
@@ -22,11 +22,11 @@ related: ["fr/learning-map", "fr/llm-overview", "fr/exercises"]
 tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
 -->
 
-# 24 jours, 24 idées à explorer
+# 24 portes, 24 découvertes à explorer
 
 Une loi statistique étonnante. Une question vieille de plusieurs décennies sur l’information. Une astuce numérique qui rend un calcul possible. Une expérience qui bouscule notre intuition sur l’apprentissage.
 
-Le calendrier scientifique de LLM Lab propose **24 histoires autonomes**, à lire dans l’ordre qui vous intéresse. Chacune part d'une question, déroule un raisonnement ou une expérience, puis invite à tester une idée par soi-même.
+Le calendrier de l’Avent 2026 propose **24 portes indépendantes**. Derrière chacune se trouve une histoire qui introduit une leçon permanente de la partie **Deepen**. Vous pouvez ouvrir les portes dans l’ordre qui vous intéresse : aucune ne suppose d’avoir lu les précédentes. Chacune part d'une question, déroule un raisonnement ou une expérience, puis invite à tester une idée par soi-même.
 
 ::: {.callout-note}
 **Ce calendrier n’est pas un parcours d’apprentissage condensé.** Les journées ne sont ni des étapes ni des prérequis. Vous pouvez commencer par n’importe quelle histoire, même si vous ne connaissez pas encore les autres sujets. La production éditoriale avance jour après jour ; les histoires seront publiées après validation scientifique, pédagogique et technique.
@@ -89,11 +89,11 @@ Des phénomènes observés à grande échelle aux choix d’architecture systèm
 
 La liste ci-dessus constitue le programme éditorial proposé, pas une promesse que les 24 histoires sont déjà disponibles. Chaque texte est préparé et vérifié avant publication ; les sujets pourront évoluer si une histoire se révèle redondante, insuffisamment documentée ou moins intéressante qu’une autre.
 
-La première histoire, consacrée à la loi de Zipf, est en cours de validation éditoriale. Les suivantes seront préparées dans l’ordre des jours, sans que cet ordre de production impose un ordre de lecture.
+La première leçon, consacrée à la loi de Zipf, sert de pilote pour ce modèle : une porte éditoriale, une page Deepen durable, une expérience et des relations vers les autres connaissances. Les autres portes suivront le même contrat, sans que l’ordre de production impose un ordre de lecture.
 
 ## Pour aller plus loin
 
-Le calendrier ouvre des perspectives ; les ressources de LLM Lab permettent ensuite de choisir la profondeur souhaitée :
+Chaque porte est conçue comme une entrée narrative vers une leçon permanente de Deepen. La page de leçon porte le contenu complet ; le calendrier ne duplique pas les articles. Les pages restent accessibles toute l’année et sont également classées dans Deepen après la période de mise en avant.
 
 - [Explorer la carte des notions et des ressources](learning-map.qmd) pour naviguer librement dans les concepts.
 - [Consulter le panorama des modèles de langage](llm-overview.qmd) pour situer les grandes familles de mécanismes.
