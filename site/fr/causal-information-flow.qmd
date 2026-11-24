@@ -1,0 +1,83 @@
+---
+title: "Le mur triangulaire : empêcher les fuites d’information"
+subtitle: "Une contrainte d’accès qui rend la prédiction autorégressive cohérente"
+description-meta: "Une enquête sur le masque causal comme règle d’accès à l’information, et sur les erreurs qu’il évite sans garantir toute forme de causalité."
+keywords: ["type:deep-dive", "destination:deepen", "topic:causal-information-barrier", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/causal-information-flow"
+summary: "Explique comment le masque causal restreint les positions accessibles pendant la prédiction autorégressive et pourquoi cette contrainte ne doit pas être confondue avec la causalité du monde réel."
+scope: "Masque causal comme contrainte d’information, causalité computationnelle et comparaison prudente avec les fuites de données."
+purpose: "Lire un masque causal, identifier les dépendances interdites et distinguer causalité computationnelle, ordre temporel et prévention des fuites."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/queries-keys-values-advanced", "fr/attention-score-scaling"]
+tags: ["type:deep-dive", "destination:deepen", "topic:causal-information-barrier", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 10 · squelette éditorial*
+
+## Question centrale
+
+Explique comment le masque causal restreint les positions accessibles pendant la prédiction autorégressive et pourquoi cette contrainte ne doit pas être confondue avec la causalité du monde réel.
+
+Masque causal comme contrainte d’information, causalité computationnelle et comparaison prudente avec les fuites de données.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Audit d’un flux d’information et contre-exemple
+
+Que signifie regarder le futur dans une séquence ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Lire la matrice d’accès
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Construire une fuite volontaire
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Ce que le masque garantit — et ce qu’il ne garantit pas
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
