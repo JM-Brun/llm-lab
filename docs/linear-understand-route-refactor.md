@@ -1,6 +1,6 @@
 # Refactor the Understand route into a simple linear course
 
-**Status:** partially implemented. The bilingual Understand and Review sidebars were flattened into peer projections by PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549). The editorial/content refactor and completion of the peer Review traversal remain in progress; this document records the remaining target and migration safeguards.  
+**Status:** navigation simplification is implemented by PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549). This branch adds a first-pass metadata correction and defines the pedagogical target: short 10–15-minute lessons grouped into meaningful chapters. The chapter/lesson map, duration audit and content migration are not yet implemented; section 12 defines their acceptance criteria and migration sequence.  
 **Scope:** Understand / Comprendre route, its bilingual review counterpart, and the navigation that exposes them.  
 **Related work:** [parallel review-route contract](parallel-review-route-contract.md), [lesson sizing and editorial rhythm](parallel-review-route-contract.md#11-lesson-size-and-editorial-rhythm), [issue #1541](https://github.com/JM-Brun/llm-lab/issues/1541), [canonical computational spine #575](https://github.com/JM-Brun/llm-lab/issues/575).
 
