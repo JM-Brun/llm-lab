@@ -6935,7 +6935,7 @@ sources:
       contribution_types: [theory, experiment, implementation, dataset, visualization]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
@@ -6975,7 +6975,7 @@ sources:
       contribution_types: [theory, mathematical-derivation, experiment, implementation, limitation]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: partially-integrated
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
@@ -7015,7 +7015,7 @@ sources:
       contribution_types: [theory, experiment, dataset, limitation]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: not-reviewed
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
@@ -7056,7 +7056,7 @@ sources:
       contribution_types: [visualization, pedagogy, experiment]
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: not-reviewed
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
