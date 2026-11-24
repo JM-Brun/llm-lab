@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index", "en/llm-overview", "en/transformer-architectures"]
   children: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits"]
-related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/logits", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/transformer-exercises"]
+related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/transformer-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
