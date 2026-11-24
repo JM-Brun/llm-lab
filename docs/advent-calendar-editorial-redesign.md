@@ -1,6 +1,6 @@
 # LLM Lab Advent Calendar — editorial redesign
 
-**Status:** approved editorial direction; chronological production started with Day 01  
+**Status:** approved editorial direction; 2026 edition uses one permanent Deepen lesson per door  
 **Date:** 2026-11-23
 
 > **Production-order decision (2026-11-23):** draft, review and validate the stories in calendar order (Day 01, then Day 02, and so on). The earlier proposal to prepare non-adjacent pilots (Days 06, 17 and 23) is superseded as a production strategy. The stories remain independent for readers: chronological authoring does not create prerequisite dependencies.  
@@ -23,7 +23,7 @@ The calendar should therefore **stop being a compressed version of the main LLM 
 
 > Every day, open an independent scientific story about one idea from mathematics, statistics, information theory, computer science, or modern language-model research. In about ten minutes, understand the question, follow a worked example, and leave with an experiment or a new way to think.
 
-The calendar becomes a collection of 24 editorial features, not a prerequisite path. A reader can open day 17 before day 3 and still understand it. The entries are connected by a shared interest in mathematics and LLMs, not by a dependency chain.
+The calendar becomes a collection of 24 story-led Deepen lessons, not a prerequisite path or a duplicate curriculum. A reader can open day 17 before day 3 and still understand it. The entries are connected by a shared interest in mathematics and LLMs, not by a dependency chain.
 
 The calendar should have value even for someone who has already completed the main learning path.
 
@@ -39,17 +39,40 @@ The two experiences have different jobs.
 | Uses lessons and dedicated exercise pages | Uses one self-contained feature per day, with a small experiment or challenge |
 | Is cumulative where prerequisites matter | Is deliberately non-cumulative |
 
-### Strict anti-duplication rules
+### One permanent lesson behind every door
 
-1. Do not retell a canonical lesson in shorter form.
-2. Do not use the calendar to introduce the next step of the guided route.
-3. Do not reproduce canonical definitions, diagrams, or exercises verbatim.
-4. Choose a different question, lens, example, or intellectual connection from the main lesson.
-5. A canonical lesson may appear in a small optional **Go further** link, never as the main content or a required continuation.
-6. A calendar entry must remain complete if all links to the main learning path are removed.
-7. If a proposed topic cannot be given a genuinely distinct angle, replace it rather than paraphrase the canonical page.
+The calendar is a seasonal presentation layer over the permanent **Deepen** collection. Each of the 24 doors must lead to one identifiable, durable lesson in Deepen.
 
-The calendar may reuse canonical concepts and source material, but its editorial treatment must be original and complementary.
+The relationship is:
+
+`one door → one story-led lesson → one Deepen page`
+
+The calendar and Deepen must not contain two copies of the same article. The page behind the door is the canonical lesson itself: it opens with the narrative hook that makes the door attractive, then develops the subject as a rigorous lesson. The calendar landing page presents the 24 doors; it does not reproduce their lesson content.
+
+A door therefore has two complementary roles:
+
+- **Seasonal role:** a short title, question, visual and teaser that create curiosity during December.
+- **Learning role:** a permanent Deepen lesson with enough substance to remain useful after the calendar is archived.
+
+The lesson must stand on its own. It should not require the reader to have opened earlier doors or completed the main learning path. Its placement in Deepen is based on its lasting intellectual subject, not on its December date.
+
+### Deepen integration contract
+
+Every door must resolve to a bilingual page identity (French and English) and a primary Deepen domain. The calendar manifest records this relationship explicitly.
+
+For each lesson:
+
+1. Reuse an existing Deepen page when its scope genuinely matches the story; audit and improve it rather than creating a duplicate.
+2. If no suitable page exists, create a dedicated Deepen page. Do not point to a broad or only loosely related page merely to fill the calendar.
+3. Keep the story and the lesson in the same page. The narrative is the entry point; the mathematical, conceptual and experimental development is the lesson.
+4. Add the page to the appropriate thematic section of `site/fr/deepen.qmd` and its English counterpart, with the project's normal metadata and bilingual navigation.
+5. Connect it to canonical concepts, domains, the knowledge map and relevant main-path pages. These are semantic links, not new prerequisites.
+6. Keep exercises in the dedicated Practice & experiment area where they grow independently; the lesson may include one small challenge, but must link to the full exercise page when one exists.
+7. Keep the calendar's seasonal presentation separate from the page's permanent identity. Archiving an edition must never archive, move or hide its Deepen lessons.
+
+A page can be linked from several annual editions if it remains the right canonical lesson. A later edition may also point to a substantially revised lesson, but the historical manifest must preserve which page each edition originally featured.
+
+The 2026 mapping is maintained in `data/calendars/advent-2026.yml`. Each entry records the door, the permanent page ID, its primary Deepen domain, whether the page is reused or still needs to be created, and its FR/EN counterparts. A planned page is not considered published until its content, metadata, navigation and Deepen placement have been validated.
 
 ## 3. The daily reading contract
 
