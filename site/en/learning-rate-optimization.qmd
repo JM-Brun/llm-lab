@@ -1,0 +1,83 @@
+---
+title: "The learning-rate cliff"
+subtitle: "When an oversized step turns descent into instability"
+description-meta: "An experiment on a quadratic function connecting learning rate, curvature, oscillation, and divergence."
+keywords: ["type:deep-dive", "destination:deepen", "topic:learning-rate-and-optimization", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/learning-rate-optimization"
+summary: "Uses a quadratic function to study how learning rate interacts with curvature and can cause slow convergence, oscillation, or divergence."
+scope: "Gradient descent, curvature, conditioning, stability, and learning-rate schedules."
+purpose: "Predict gradient-descent behaviour for different step sizes, connect stability to curvature, and distinguish a learning-rate problem from a poor objective."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/gradients", "en/training-loop"]
+tags: ["type:deep-dive", "destination:deepen", "topic:learning-rate-and-optimization", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 20 · editorial skeleton*
+
+## Central question
+
+Uses a quadratic function to study how learning rate interacts with curvature and can cause slow convergence, oscillation, or divergence.
+
+Gradient descent, curvature, conditioning, stability, and learning-rate schedules.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Numerical experiment on a quadratic function
+
+Descending a slope is not always simple
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+One objective, three step sizes
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Curvature sets a stability scale
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+Why one fixed rate may be insufficient
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
