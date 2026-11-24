@@ -159,3 +159,24 @@ Le travail sur le parcours principal pourra être considéré comme stabilisé l
 - la prochaine action concrète et son issue/PR propriétaire.
 
 Une PR fusionnée ne vaut pas preuve de validation lecteur. Une CI verte ne vaut pas preuve de compréhension pédagogique. Ces niveaux de preuve doivent rester séparés.
+
+
+## Progress snapshot — 2026-11-24
+
+This snapshot records only work completed after the execution plan was merged in PR #1607. It does not close a P1 item globally unless all of its pages and criteria have been checked.
+
+| Work item | Progress from the current audit | Remaining scope |
+|---|---|---|
+| P1.1 — Understand continuity | **Partial.** The predictive distribution → observed-target likelihood → cross-entropy → batch loss → gradients → training loop path, inference → context-use boundary, and text-input → representations boundary have been checked in FR/EN. The new prediction → scoring transition has the correct likelihood destination; the likelihood Practice exercise explicitly contrasts generated and observed prefixes. The text-input slice revealed a remaining Practice-placement migration. Evidence: the 2026-11-24 route audit in docs/page-audit-inventory.md. | Continue with the other unverified stage boundaries; do not infer that the whole nine-stage route is closed. |
+| P1.2 — Understand / Build / Deepen / Practice boundaries | **Partial.** Dedicated Practice companions exist across the inspected groups, but the text-data lesson still contains one practical task in its supplementary panel, and some pages do not expose the companion link under a consistent Practice heading. The training-loop code remains an optional, collapsed lookup-table experiment, clearly distinguished from the full GPT implementation in Build. | Continue the same check on the remaining core pages; retain optional code only where its role and scope are explicit. |
+| P1.3 — Lesson-to-Practice links | **Partial.** Probability, likelihood, cross-entropy, loss, gradients, training-loop, text-data, embedding-space, positional-encoding and contextualized-representations all have FR/EN Practice companions. Link placement is inconsistent on some representation pages; the focused migration is recorded in the latest inventory entry. The scaled-attention companion is handled separately by #1604. | Verify the remaining Understand pages and ensure old anchors remain valid after future migrations. |
+| P1.4 — FR/EN parity | **Partial.** The inspected route slices have matching objectives, exercise content and destinations. A missing English likelihood → cross-entropy link was found and corrected in PR #1609; the text-input/representations pages also have consistent FR/EN roles, with navigation placement to harmonize. | Continue semantic parity checks beyond this slice; matching page counts alone are insufficient. |
+| P1.5 — Generated projections | **Integrated.** #1604 and #1606 are merged. Their final-head CI and Quarto/browser checks passed; the map freshness tests and bilingual route-transition checks passed. | Reconcile maps and generated route/context fragments again after both merges. |
+| P1.6 — Computational graph versus lessons | **Integrated for this branch.** The direct prediction → scoring relation is merged as an explanatory transition, not a new prerequisite or serial stage. The likelihood lesson preserves the observed-prefix/fixed-parameter semantics, and the final route-projection and Quarto checks passed. | After #1606 merges, inspect the final graph and generated reader projections together; keep evaluation distinct from training. |
+| P1.7 — Transformer details | **Not revisited in this pass.** Existing Q/K/V, causal-mask, positional-encoding and tensor-shape audit records remain authoritative. | Reopen only if a concrete regression or unresolved item in the inventory requires it. |
+
+### Next bounded audit
+
+The text-input → representations boundary is now audited in FR/EN. The route order is coherent, but a focused content PR remains: move the prefix/continuation task from the Text and data lesson into its Practice companion; normalize link-only Practice sections on Embedding space and Contextualized representations; move optional positional-encoding material under Further exploration; remove the empty Contextualized representations disclosure. Implement that migration in the next focused content PR. After it is validated, audit the representations → computation boundary (contextualized states → Transformer block → Q/K/V), reusing the existing Q/K/V and attention source audits and checking only the hand-off and page ownership.
+
+**Evidence boundary:** the 2026-11-24 source and executable checks do not substitute for the final-head browser review of #1604/#1606, manual screen-reader/native-breadcrumb work, or the independent learner pilot owned by #447.

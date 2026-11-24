@@ -2,7 +2,7 @@
 
 **Status:** cumulative record of bounded, dated audits. It is neither a complete site-wide certification nor a live operational status board.  
 **Started:** 2026-10-28  
-**Latest entry in this file:** 2026-11-16. Later Raschka chapter and appendix audits are recorded in [the full curriculum plan](full-curriculum-plan.md).  
+**Latest entry in this file:** 2026-11-24. Later Raschka chapter and appendix audits are recorded in [the full curriculum plan](full-curriculum-plan.md).  
 **Scope:** selected bilingual pages, page groups, source contributions, scientific claims, implementation evidence, and rendered/visual observations. Each entry states its own scope and evidence boundary.  
 **Method:** [Reader experience and editorial method](reader-experience-and-editorial-method.md).
 
@@ -1672,3 +1672,102 @@ A bilingual refactor now separates the core predictive-distribution lesson from 
 The transfer was checked against the prior bilingual probability and decoding pages: the core page is shorter, while the decoding page gains the moved explanations and interactive material; the moved numerical examples, filters, comparison and implementation details remain represented. This is an ownership/sequence correction, not a deletion of those concepts.
 
 **Validation boundary:** source-level ownership, bilingual links, page metadata and generated map projections have been reconciled. Final-head Quarto/Chromium and Python CI results are tracked by PR #1584; no learner-outcome or manual screen-reader claim is made here.
+
+
+## 2026-11-24: route and Practice audit — predictive distribution → scoring → loss
+
+**Scope.** Bounded reader-continuity and exercise-ownership audit of the FR/EN path from the predictive distribution through observed-target scoring, cross-entropy and batch loss. This pass reuses the prior source-level mathematical audits recorded above; it does not re-derive or re-certify their equations. It checks page roles, transitions, bilingual destinations and the separation between Understand and Practice.
+
+| Page pair | Existing reader contract and Practice destination | Audit finding |
+|---|---|---|
+| `probabilities.qmd` / `probabilites.qmd` | Core Understand page for logits → softmax → conditional distribution; dedicated FR/EN Practice companions. Temperature and filtering are delegated to the existing Deepen/Generation owners. | **Keep.** The page owns the predictive distribution and does not absorb scoring or decoding policy. Its companion checks prefix dependence, normalization, calibration and truth, and links temperature work to the canonical decoding destination. |
+| `likelihood.qmd` / `vraisemblance.qmd` | Core scoring page; dedicated FR/EN Practice companions. The page states that the prefix and target are observed, parameters are fixed, and no generated token is fed back. | **Keep.** This is the correct reader-facing destination for the prediction → scoring transition. The exercise “Generate or score from the same prefix” makes the distinction operational: generation follows its own greedy prefix, while scoring follows the observed continuation. In the worked example, the observed continuation has likelihood 0.27 versus 0.24 for the greedy continuation; greedy selection is not sequence-level likelihood maximization. |
+| `cross-entropy.qmd` (FR/EN) | Core page for the local penalty; dedicated FR/EN Practice companions. It connects one-hot targets to token NLL and delegates soft-target/KL derivation to Deepen. | **Keep the ownership boundary.** The Practice companion contains concise checks on zero loss, masked-token denominators and the limits of perplexity. The actual soft-target/KL calculation already exists in the shared Foundations exercise (`ex-foundations-soft-targets-kl`); do not duplicate it here. |
+| `loss.qmd` (FR/EN) | Core page for aggregation, target masking and reduction; dedicated FR/EN Practice companions. | **Keep.** The page follows naturally after cross-entropy and leads to gradients. Its exercises cover visible inputs versus ignored targets and validation-loss comparison. |
+
+### Cross-page findings and decisions
+
+1. The conceptual path is coherent: predictive distribution → observed-target likelihood → local cross-entropy penalty → masked/reduced batch loss → gradients. The new prediction → scoring edge is explanatory and cross-cutting; it does not insert scoring into the linear inference sequence or make scoring a prerequisite for generation.
+2. The likelihood Practice exercise is a strong transfer task because it contrasts two prefixes and exposes why greedy decoding does not maximize sequence likelihood. Retain it as the principal exercise supporting the new transition.
+3. All four core lessons have dedicated bilingual Practice destinations. Their links return to the corresponding lesson, and their question banks remain outside the Understand pages.
+4. One bilingual link-parity gap was found: the French likelihood Practice page linked to both cross-entropy and loss, while the English page linked only to loss. **Corrected in the accompanying audit PR** by adding the cross-entropy link to the English page.
+5. The cross-entropy Practice page is intentionally concise. Do not add a second soft-target/KL calculation: the shared Foundations collection already owns that exercise and the cross-entropy lesson links to the relevant deeper treatment.
+6. The probability Practice page correctly delegates temperature and top-k/top-p exercises to the Generation collection rather than duplicating decoding-policy work.
+
+### Evidence boundary
+
+This is a source/metadata/link and exercise-ownership audit. It is not a new mathematical derivation review, a final rendered visual audit, a manual screen-reader test, or an independent learner study. The existing inventory entries for logits/probabilities/likelihood/cross-entropy/loss remain the source of prior mathematical-review evidence. Final-head CI, rendered-link/browser review for the small bilingual link correction, manual accessibility and learner validation remain separate checks.
+
+
+## 2026-11-24: gradient and training-loop audit — source, numerical trace and Practice boundary
+
+**Scope.** Bounded FR/EN source and executable-example audit of the final core training path: loss gradient → parameter gradient → optimizer update → repeated training and held-out validation. This completes the specific open example checks noted in the earlier mathematical-chain inventory. It does not certify a full Transformer backward pass, checkpointing, distributed training or the unfinished end-to-end Build milestone.
+
+| Page pair | Source and numerical evidence | Decision |
+|---|---|---|
+| \`gradients.qmd\` (FR/EN) | The one-hot cross-entropy derivative is consistently stated as \(p_i-\mathbb{1}[i=y]\); its components sum to zero. The batch-mean form correctly adds \(1/|\mathcal{M}|\) over valid target positions and zero derivative for ignored logits. The text distinguishes this local logit derivative from parameter gradients and explains the flattened-logit/Jacobian view used by backpropagation. | **Keep.** The conceptual progression from local logit gradient to parameter gradient and optimizer update is explicit. The caveat that an ignored logit's zero derivative does not necessarily cut every gradient path through a hidden representation is important and correctly scoped. |
+| Gradient worked example | For \(p=(0.6,0.2,0.1,0.1)\) and target class 0, \(g_z=(-0.4,0.2,0.1,0.1)\), whose sum is zero. With \(h=(1,-1)\) and \(\eta=0.1\), the updated logits are \(z-0.2g_z\), giving changes \((+0.08,-0.04,-0.02,-0.02)\). A fresh softmax gives target probability \(0.626075\), consistent with the page's \(0.626\). | **Numerically verified.** The FR example uses the localized target token “Vous”; the EN example uses “They”. The same probabilities and gradient are preserved. |
+| Finite-difference check | A central difference with \(\epsilon=10^{-6}\) on the four-logit cross-entropy example was compared with the analytical gradient using the repository's documented loss convention. Maximum absolute discrepancy: approximately \(2.34\times10^{-10}\). | **Targeted check passed.** This validates this deterministic example only; it is not a general \`gradcheck\` of the full GPT backward pass. |
+| Gradient Practice companion | FR/EN companions ask about the \(p-y\) derivative, interpretation of finite-difference disagreement and step-size choice. The applied exercise compares two distributions with equal target loss but different non-target probabilities, then computes distinct parameter updates and next-token probabilities. The worked values \(0.537\) and \(0.540\) were independently recomputed. | **Keep.** It tests transfer from equal scalar loss to different gradient vectors and updates, rather than repeating the lesson's derivation. |
+| \`training-loop.qmd\` (FR/EN) | The runnable example uses the maintained \`cross_entropy_from_logits\` and \`cross_entropy_gradient\` functions in \`src/llm_lab/foundations/losses.py\`. It trains a 12-state lookup table with full-batch SGD on 60 sampled transitions and measures 400 held-out transitions. | **Numerically verified.** The same code and seed reproduce the bilingual narrative. |
+| Training-loop numerical output | Under NumPy 2.3.5 and seed 0, training loss is 2.485 at step 0 and 1.147 at step 300. Validation loss is minimized at step 100 (2.006), then reaches 2.162 at step 300. This matches the rounded FR/EN claims (2.485 → 1.15; 2.01 minimum; 2.16 final). | **Keep with current qualification.** The code asserts the qualitative pattern, not exact values; the prose correctly says exact values depend on seed/library version. |
+| Training-loop Practice companion | FR/EN pages cover optimizer versus gradient, overfitting, validation versus test, one SGD step, and an end-to-end transfer through representations, generation, observed-target scoring, loss, gradients and validation. | **Keep.** The transfer task explicitly uses the generated prefix for generation and the observed prefix for scoring, preserving the distinction established in the earlier route audit. |
+
+### Pedagogical boundary and remaining checks
+
+- The training-loop code is inside a collapsed **Further exploration → Implementation** section. It is a deliberately small Markov lookup-table experiment, not a Transformer implementation; the page explicitly states that limitation and keeps the full from-scratch training milestone in Build. Retain this as an optional experiment for now rather than moving it and losing its explanatory role.
+- The optimizer section correctly distinguishes the gradient, optimizer and learning rate. Adam/AdamW are described as adaptive first-order methods; the second moment is not confused with a Hessian or Newton update.
+- The code measures validation with fixed parameters; it does not update on validation data. The page distinguishes validation-based selection from final test-set assessment.
+- The earlier visual inventory still identifies the training loop as a candidate for one compact visual using this same numerical example. That is a separate rendered-pedagogy decision; do not add a generic training diagram or duplicate the code trace.
+- Rendered desktop/mobile inspection, manual screen-reader review and independent learner comprehension remain separate evidence. This source/code pass does not claim any of them.
+
+
+## 2026-11-24: inference → context-use boundary audit
+
+**Scope.** Reader-facing route, page ownership and Practice-link audit for the transition from free-running inference to application-level context use. This pass reuses the existing generation, prefill/decode and context-engineering source/visual inventory entries; it does not repeat their mathematical or source reviews.
+
+| Page / stage | Existing contract | Audit finding |
+|---|---|---|
+| Generation — inference stage | One canonical FR/EN page owns the autoregressive loop, prompt prefill, iterative decode, token-selection decoding, feedback and stopping. Its Practice companion has self-check questions and links to the extended Generation collection. | **Keep.** The page explicitly separates prefill/decode from teacher forcing, and its Practice page asks learners to distinguish the two. No separate prefill lesson is needed. |
+| In-context learning — first page in context-use | Explains zero-shot/one-shot/few-shot adaptation from prompt examples while parameters remain fixed. It follows generation and leads to context engineering in both languages. | **Keep.** The route transition is pedagogically sound: the learner moves from how a continuation is generated to how demonstrations in the supplied prompt can affect that continuation without changing parameters. |
+| Context engineering — second page in context-use | Explains application-side selection, organization, updating and security of the context; distinguishes ICL, RAG, memory and model parameters. It follows ICL and closes the context-use stage. | **Keep.** The page's three-level comparison, neighboring-concept table, design example and eight operations already provide the needed distinctions. A system-boundary diagram remains a conditional visual candidate from the earlier visual inventory, not a missing definition or a reason to add another page. |
+| Generation Practice companion | Four self-check questions include prefill versus teacher forcing; extended Generation exercises cover the autoregressive loop, KV cache and selection. | **Keep.** This is the correct owner for inference mechanics and selection exercises. |
+| In-context-learning Practice companion | Dedicated FR/EN page with answered transfer questions and an experiment on few-shot generalization, irrelevant/reordered/contradictory examples and held-out cases. It links to the shared exercise space rather than a separate one-to-one collection page. | **Keep.** The companion is self-contained enough; do not create a redundant topic-specific exercise collection merely to satisfy a filename convention. |
+| Context-engineering Practice companion | Dedicated FR/EN applied page with design, evaluation, neighboring-concept and two-call context-tracing exercises. The final exercise explicitly separates information retained by the application, information sent on each call, and tokens fed back within a single generation. | **Keep.** The two-call exercise is a strong transfer task for distinguishing application context from model parameters and within-call autoregressive feedback. It does not need a second extended collection. |
+
+### Cross-boundary decisions
+
+1. The route order is coherent: generation → in-context learning → context engineering. The nine-stage route places generation in inference and the two context-use lessons in the following context-use stage; the pages' suggested-route metadata agrees in FR/EN.
+2. No new computational edge or prerequisite is justified. The stage transition is an application-level extension of inference, not a change to the model's forward computation.
+3. Keep the ownership distinction: ICL describes how prompt demonstrations affect behavior at fixed parameters; context engineering describes how the application chooses and assembles the context that reaches the model. RAG and external memory remain system-side mechanisms, not hidden model state.
+4. No new prefill/decode page is needed. The canonical generation lesson and its Practice companion already own those execution phases and explicitly distinguish them from teacher forcing.
+5. The browser-review contract should not require every Practice companion to link to a separate extended collection. Some companions (notably ICL and context engineering) are intentionally self-contained. PR #1604 generalizes the existing check: require the collection link only when a shared collection is explicitly mapped or a matching published collection exists; still require a visible return link, a learner-facing self-check section and native collapsed answer disclosures.
+
+### Evidence boundary
+
+This is a source, metadata, route and exercise-ownership audit. It is not a new review of the ICL mechanism, RAG implementation, generation math, rendered screenshots, screen-reader output or learner performance. The previously recorded visual inventory remains authoritative for the conditional context-engineering diagram and generation timeline.
+
+
+## 2026-11-24: text-input → representations boundary audit
+
+**Scope.** Reader continuity, page ownership and Practice placement for text/data → token IDs → embedding lookup → positional information → contextualized representations. Existing source and mathematical audits for these pages are reused; this pass does not re-derive tokenizer, embedding, positional-encoding or Transformer equations.
+
+| Page | Existing role and companion | Audit finding |
+|---|---|---|
+| Text and data | Sole core page in the text-input stage; next page is embedding space. Dedicated FR/EN companion has three self-check questions and two applied tasks; the broad Text data collection owns the longer tokenizer, tensor-shape, training-window and leakage exercises. | **Mostly keep; one migration needed.** The core page already has a link-only Practice section, but its collapsed supplementary panel still contains the distinct “Encode the prefix and continuation” task. That task is absent from the dedicated companion and should move there. The remaining diagram, explanation of the two tokenizer uses and further-reading links are explanatory depth, not exercises; retain them under a separate Further exploration heading. |
+| Embedding space | First page in the representations stage; follows text/data and precedes positional encoding. Dedicated FR/EN companion includes ID/row checks, a small lookup table and the Embedding Atlas. | **Keep; normalize navigation.** The main page links to its companion but does not give that link a dedicated Practice heading. Add the standard link-only section; retain the explanatory “where do table values come from?” material in supplementary resources and the cross-link to the text-data lookup exercise. |
+| Positional encoding | Follows embedding space and precedes contextualized representations. Dedicated FR/EN companion contains four checks covering order, RoPE, causal masking and extrapolation; it links to the shared Transformer exercise collection. | **Keep; clarify section ownership.** The core page's Practice section is already link-only. Its collapsed panel contains a permutation-equivariance explanation, optional sinusoidal geometry and references—not learner questions. Move that panel under an explicit Further exploration heading and remove wording that describes it as practice. Do not move the mathematical explanation into the exercise bank. |
+| Contextualized representations | Final page in the representations stage; next page is the Transformer. Dedicated FR/EN companion includes a causal-boundary question and an SAE investigation. | **Keep; normalize navigation and remove empty UI.** The main page links to the companion inline but has no Practice heading. Move the link into the standard link-only Practice section and remove the empty supplementary-resources disclosure. Keep the existing five-step pipeline and absolute-position/RoPE comparison in Understand. |
+
+### Cross-page decisions
+
+1. The stage order and page metadata are coherent in both languages: text/data → embedding space → positional encoding → contextualized representations → Transformer. The route objective correctly distinguishes the project's learned absolute position vector added before the first block from RoPE rotations applied to Q/K inside attention.
+2. No new page, concept, stage or graph edge is needed. The hand-off is already represented in the guided route and the page-level previous/next metadata.
+3. Keep the broad Text data collection as the owner of extended tokenizer, tensor-shape, BPE, windowing and leakage exercises. The dedicated Text and data companion owns short checks and the moved prefix/continuation task; do not duplicate the practical tokenizer trace.
+4. Keep the positional-equivariance proof and sinusoidal geometry on the core page as optional Further exploration. They are explanatory/deepening material, not questions; the companion already owns the four learner checks.
+5. Harmonize Practice as a link-only section on all four core lessons. The companion pages remain the sole location for their questions and exercises. Supplementary explanations and optional mathematical depth stay in clearly labelled Further exploration sections.
+6. The existing browser review must accept self-contained companions and companions linked to a shared collection rather than requiring a non-existent topic-specific collection. This is covered by the generalized browser-contract correction in #1604.
+
+### Follow-up
+
+A focused content PR should move the prefix/continuation task to the Text and data companion, add consistent Practice headings to Embedding space and Contextualized representations, move optional panels outside Practice on Text and data and Positional encoding, and remove the empty Contextualized representations panel. Preserve every explanatory paragraph, diagram, citation and existing anchor.
