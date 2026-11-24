@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
-related: ["fr/vraisemblance", "fr/entropy-exercises"]
+related: ["fr/vraisemblance", "fr/entropy-exercises", "fr/compression-revision", "fr/experience-information-theory"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -149,8 +149,8 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie faible ne garantit pas que le token choisi soit correct : le modèle peut être très confiant et se tromper.
 - Une entropie élevée ne signifie pas que la sortie est fausse ; plusieurs continuations peuvent être plausibles.
 - Les probabilités normalisées ne garantissent pas la calibration.
-- La **perplexité** est l'exponentielle de la NLL moyenne par token (ou $e^{\bar\ell}$ si la moyenne est en nats). Elle résume la performance probabiliste sur un corpus ; elle dépend du tokenizer et du protocole d'évaluation.
-- Si les données suivent une distribution réelle $q$ et que le modèle prédit $p$, la surprise moyenne sous les données est la cross-entropy $H(q,p)=\mathbb E_{X\sim q}[-\ln p(X)]$. Elle n'est pas automatiquement l'entropie de la source $H(q)$ : l'égalité vaut lorsque $p=q$ (et, plus généralement, l'écart est la divergence KL $D_{KL}(q\|p)$).
+- La **perplexité** résume la NLL moyenne par token ; sa définition et les conventions de comparaison sont traitées dans la page canonique sur la [vraisemblance](vraisemblance.qmd).
+- L’**entropie croisée** compare une distribution cible q à une distribution prédite p ; sa définition, son lien avec la NLL et la divergence KL sont développés dans la leçon dédiée sur l’[entropie croisée](cross-entropy.qmd).
 
 
 
@@ -185,68 +185,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - [Entropie croisée et divergence KL](cross-entropy.qmd) — objectif probabiliste utilisé pour entraîner le modèle.
 - [Loss](loss.qmd) — décalage des cibles, masques et réduction de la perte.
 
-:::: {.callout-note collapse="true" title="Approfondissement — prédiction, compression et V-information"}
-
-## Les LLM sont-ils des algorithmes de compression ?
-
-**Réponse courte : pas exactement.** Un LLM apprend à prédire le prochain token. Cette capacité peut servir à compresser une séquence *si on lui associe un véritable codeur entropique*. Mais générer du texte n'est pas décompresser le corpus d'entraînement.
-
-### 1. Prédire donne une mesure de la quantité d'information
-
-Pour le contexte déjà observé, le modèle attribue une probabilité au prochain token :
-
-$$
-p(x_t\mid x_{<t}).
-$$
-
-Après observation du token, sa surprise — ou *surprisal* — en bits vaut :
-
-$$
-I(x_t\mid x_{<t})=-\log_2 p(x_t\mid x_{<t}).
-$$
-
-Si le modèle attribue une probabilité de $1/2$, le token coûte idéalement 1 bit ; s'il lui attribue $1/8$, il coûte 3 bits. **Plus le token est prévisible, moins son codage idéal demande de bits.** La somme de ces surprises donne la longueur idéale associée à la séquence :
-
-$$
-L(x_{1:T})\approx-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
-$$
-
-### 2. Mais il faut un codeur et un décodeur
-
-Les probabilités ne sont pas, à elles seules, un fichier compressé. Un codeur entropique (par exemple un codeur arithmétique) transforme ces probabilités en un flux de bits. Le décodeur utilise exactement le même modèle, le même tokenizer et les mêmes conventions pour retrouver les tokens.
-
-Sans ce protocole partagé, le fait qu'un LLM puisse continuer un texte ne signifie pas qu'il peut reconstruire exactement le texte original à partir d'une représentation plus courte.
-
-### 3. Ce que cela ne veut pas dire
-
-- Les poids du LLM ne sont pas une archive littérale du corpus d'entraînement.
-- Générer une continuation plausible n'est pas retrouver un exemple exact du corpus.
-- Une bonne prédiction ne garantit pas une compression nette une fois comptés le modèle, le tokenizer et les métadonnées.
-- Une compression **du modèle** (quantification, pruning, distillation) réduit le coût de stockage ou d'exécution du réseau : c'est une autre question. Voir la [synthèse sur la compression des modèles](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
-
-### Approfondissement — V-information : ce qu'un observateur peut exploiter
-
-L'information mutuelle de Shannon décrit une dépendance dans la distribution jointe, sans limiter les capacités du calculateur. Xu et al. (ICLR 2020) définissent une quantité relative à une famille explicite de prédicteurs \\(\\mathcal V\\) :
-
-\$
-I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
-\$
-
-Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette famille et cette perte. Une famille trop limitée peut ne pas exploiter une structure pourtant présente. La quantité peut être directionnelle ; elle ne remplace pas l'information mutuelle de Shannon et ne signifie pas que le calcul crée de l'information de Shannon.
-
-**Exemple XOR :** deux bits déterminent parfaitement leur XOR (1 bit d'information mutuelle), mais un prédicteur constant ne gagne rien à observer les bits. Un prédicteur qui sait représenter leur interaction exploite presque toute cette information. Voir l'[expérience reproductible](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.fr.md) et le [papier primaire](https://openreview.net/forum?id=r1eBeyHFDH).
-
-### À retenir
-
-**Compression prédictive :** le modèle fournit des probabilités ; un codeur peut les exploiter pour représenter les données en moins de bits.
-
-**Compression du modèle :** on réduit la taille ou le coût du réseau lui-même.
-
-**Génération :** le modèle échantillonne ou choisit un prochain token ; ce n'est pas, à elle seule, une opération de décodage sans perte.
-
-Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md). Pour comparer entropie marginale, entropie conditionnelle et compression zlib, utilisez aussi l'[expérience sur les séquences](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.fr.md).
-
-::::
+Pour approfondir la compression prédictive, les conditions du codage sans perte et la distinction avec la compression du modèle, consultez la [fiche de révision — Compression et LLM](compression-revision.qmd). La [fiche d'expérience sur l'entropie, la KL et l'information prédictive](experience-information-theory.qmd) développe les vérifications numériques, la V-information et les limites de ces expériences.
 
 ### Références
 
@@ -257,6 +196,8 @@ Pour manipuler ces idées, lancez l'[expérience reproductible de compression pr
 
 
 [**Fiche de révision — Compression et LLM**](compression-revision.qmd) : retrouver en une page la relation entre probabilités conditionnelles, longueur de code, compression du modèle et mémoire d'exécution.
+
+[**Expérience — Entropie, KL et information prédictive**](experience-information-theory.qmd) : vérifier les identités sur des distributions synthétiques et explorer la V-information.
 
 </div>
 </details>
