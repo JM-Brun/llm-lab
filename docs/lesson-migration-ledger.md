@@ -124,7 +124,7 @@ The following is the first migration ledger derived from the current French sour
 | Plusieurs positions : décalage causal et masques | **SYNTHESIZE** | Keep the minimum explanation of position-wise targets and valid-token reduction in loss; construction of shifted examples, padding and masks belongs to the Build resource training-examples. |
 | Lien avec la perplexité | **MERGE-INTO-LESSON** | vraisemblance owns sequence-level likelihood and perplexity. Keep only the local cross-reference and the precise relation needed to interpret mean token NLL. |
 | Idées reçues | **KEEP, selective** | Retain warnings that prevent misreading cross-entropy as truth, accuracy or a probability; move generic information-theory discussion only if its destination is verified. |
-| Décomposition en entropie cible et divergence KL; Exemple numérique en nats | **DEEPEN** | The full soft-target/KL derivation belongs to language-modeling-math. Keep the one-hot special case in this lesson. Verify every equation and caveat against the destination before moving. |
+| Décomposition en entropie cible et divergence KL; Exemple numérique en nats | **MOVED — 2026-11-24 pilot** | The bilingual derivation now has one canonical owner in language-modeling-math, section 3. The distinct non-degenerate numerical example (q=(0.5,0.5), p=(0.75,0.25)) was added there; the core lesson retains a short contextual link. The one-hot case remains in the core lesson. |
 | Implémentations — NumPy, PyTorch et stabilité numérique; dimension, réduction et log-softmax examples | **BUILD / DEEPEN** | Move code/API-specific walkthroughs to the appropriate Build implementation resource; preserve numerical-stability and axis/reduction reasoning in language-modeling-math or a dedicated numerical Deepen section. Do not discard counterexamples or framework-contract warnings. |
 | Exercices; Exercices complémentaires | **PRACTICE** | Move all exercises, worked answers and feedback to the cross-entropy Practice companion. |
 | Références | **KEEP / REFERENCE** | Preserve every source and attribution at the canonical destination; references must follow the claims they support. |
@@ -214,3 +214,18 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 7. Validate the shared computational spine and ensure the reader sees the distinct inference, scoring and training branches without a false dependency chain.
 
 **Current completion status:** chapter grouping and first-pass section dispositions are documented. No lesson content has yet been removed, moved, merged or declared complete by this ledger. The next content operation must be a bilingual source-to-destination pilot with the preservation evidence attached.
+
+
+## 8. Completed bilingual pilot — cross-entropy and KL (2026-11-24)
+
+**Status: source-to-destination transfer completed at the text level; rendered-site validation remains pending.**
+
+- Source: site/fr/cross-entropy.qmd, section “Décomposition en entropie cible et divergence KL”; site/en/cross-entropy.qmd, section “Decomposition into target entropy and KL divergence”.
+- Destination: site/fr/language-modeling-math.qmd and site/en/language-modeling-math.qmd, section 3 (“Cibles souples et divergence KL” / “Soft targets and KL divergence”).
+- Preserved and consolidated: the general target-distribution cross-entropy formula, the identity H(q,p) = H(q) + D_KL(q || p), the fixed-target minimization interpretation, assumptions on normalized distributions, logarithm base/units, non-negativity and support caveats, and the one-hot special case.
+- Additional example preserved: q=(0.5,0.5), p=(0.75,0.25), with H(q)=0.693 nat, H(q,p)=0.837 nat and KL=0.144 nat. This example was added to both Deepen pages so the non-degenerate worked calculation is not lost when the duplicated core derivation is removed.
+- Core lesson after migration: keeps the one-hot token penalty and a concise link to the Deepen explanation; it no longer repeats the full soft-target/KL derivation.
+- Metadata: the bilingual cross-entropy pages now link to language-modeling-math through their related resources.
+- Not moved in this pilot: the NumPy/PyTorch implementation and numerical-stability material, multi-position alignment/masking explanation, perplexity discussion, misconceptions, references and exercises. Each remains in the source until its own destination is verified.
+
+**Validation still required:** render both language pages; inspect equations and links; compare the final Deepen section against the removed source material; verify page metadata and generated navigation; measure the mandatory lesson duration. This pilot does not certify the entire cross-entropy lesson or the full route.
