@@ -731,6 +731,8 @@ async function runCase(testCase, caseIndex) {
     }
     if (kind === "practice-companion") {
       const lessonSlug = pagePath.split("/").pop().replace(/\.html$/, "");
+      // Some Practice pages are self-contained; require a collection link only when
+      // a shared collection is mapped or a matching published collection exists.
       const collectionRequired = [
         "probabilities",
         "probabilites",
