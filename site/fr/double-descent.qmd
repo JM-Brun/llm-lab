@@ -1,0 +1,74 @@
+---
+title: "Quand un modèle devient moins bon avant de s’améliorer"
+subtitle: "La double descente et le rôle du seuil d’interpolation"
+description-meta: "Présente la double descente comme un phénomène observé dans certains régimes et explique pourquoi elle ne constitue pas une loi universelle de généralisation."
+keywords: ["type:deep-dive", "destination:deepen", "topic:double-descent", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/double-descent"
+summary: "Présente la double descente comme un phénomène observé dans certains régimes et explique pourquoi elle ne constitue pas une loi universelle de généralisation."
+scope: "Double descente, seuil d’interpolation, biais-variance et limites de généralisation des observations."
+purpose: "Lire une courbe jouet et distinguer observation empirique et loi universelle."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/scaling-laws", "fr/llm-overview"]
+tags: ["type:deep-dive", "destination:deepen", "topic:double-descent", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 21 · squelette éditorial*
+
+## Le phénomène à expliquer
+
+Présente la double descente comme un phénomène observé dans certains régimes et explique pourquoi elle ne constitue pas une loi universelle de généralisation.
+
+Double descente, seuil d’interpolation, biais-variance et limites de généralisation des observations.
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+## Lire les données ou construire un exemple
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+## Interpréter sans sur-généraliser
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+## Limites et conditions
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+## Défi de transfert
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : développer le raisonnement spécifique à cette histoire. -->
+
+## Sources à documenter
+
+- <!-- Ajouter des sources primaires ou faisant autorité et relier chaque référence aux affirmations étayées. -->
+
+<!--
+Production notes:
+- Keep this lesson independent of other calendar doors.
+- Keep exercises in a companion practice page, not in an expanding question bank here.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate FR/EN parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
