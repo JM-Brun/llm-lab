@@ -109,7 +109,7 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 <details class="learning-resources">
 <summary>
-  <span class="learning-resources__title">Further exploration</span>
+  <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Revisit the running example, the full pipeline, and the conceptual boundaries.</span>
 </summary>
 ::: {.learning-resources__content}
