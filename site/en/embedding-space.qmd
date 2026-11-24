@@ -118,6 +118,8 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)
 :::
 
+## Further exploration
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
