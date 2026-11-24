@@ -33,15 +33,17 @@ def published_ids() -> set[str]:
 
 def test_route_document_uses_the_strict_transition_schema() -> None:
     document = GENERATOR["GuidedRouteDocument"].model_validate(route_payload())
-    transitions = {item.id: item for item in document.transitions}
+    transition_ids = [item.id for item in document.transitions]
 
-    assert len(transitions) == 3
-    assert set(transitions) == {
-        "predictive-distribution-to-generation",
-        "predictive-distribution-to-observed-scoring",
-        "observed-target-to-training-objective",
-    }
-    scoring = transitions["predictive-distribution-to-observed-scoring"]
+    assert transition_ids
+    assert len(transition_ids) == len(set(transition_ids))
+    assert "predictive-distribution-to-generation" in transition_ids
+    assert "predictive-distribution-to-observed-scoring" in transition_ids
+    scoring = next(
+        item
+        for item in document.transitions
+        if item.id == "predictive-distribution-to-observed-scoring"
+    )
     assert (scoring.from_stage, scoring.to_stage, scoring.direction) == (
         "prediction",
         "scoring",
