@@ -20,7 +20,7 @@ suggested_route:
 hierarchy:
   parents: ["en/deepen"]
   children: []
-related: ["en/scientific-calendar", "en/text-data", "en/tokenization-strategies", "en/entropy", "en/language-modeling-math"]
+related: ["en/scientific-calendar","en/text-data","en/tokenization-strategies","en/entropy","en/language-modeling-math","en/zipf-law-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 -->
 
@@ -130,7 +130,7 @@ We should also be precise about the counted unit. A lexical study may count word
 
 Calculations, transfer questions, and worked solutions live on a dedicated companion page. This keeps the lesson focused while allowing the practice material to grow independently.
 
-A companion exercise page will be published separately.
+[Open the Zipf's law exercises](exercises/zipf-law.qmd)..
 
 ## The takeaway
 
