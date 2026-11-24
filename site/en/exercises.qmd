@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 46 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 47 per-lesson practice pages"}
 
 ### Understand
 
@@ -98,6 +98,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 - [Tokenization strategies](exercises/tokenization-strategies.qmd)
 - [Unicode, UTF-8, and normalization](exercises/unicode-text.qmd)
+- [Zipf’s law and lexical frequencies](exercises/zipf-law.qmd)
 
 #### Mathematical tools and geometry
 
