@@ -45,8 +45,8 @@ Comptez environ **10 minutes par histoire**, hors lectures complémentaires. Les
 
 Des fréquences des mots à la quantité d’information d’un message : ces histoires explorent les régularités statistiques du langage et les outils qui permettent de les mesurer.
 
-- **Jour 01** — **Pourquoi le mot « de » revient-il si souvent ?** — La loi de Zipf, les distributions à longue traîne et l’inégalité des fréquences lexicales.
-- **Jour 02** — **Combien de bits contient la surprise d’une phrase ?** — Comment quantifier l’incertitude et la surprise avec la théorie de l’information.
+- **Jour 01** — [**Pourquoi le mot « de » revient-il si souvent ?**](advent-calendar-story-day-01.qmd) — La loi de Zipf, les distributions à longue traîne et l’inégalité des fréquences lexicales.
+- **Jour 02** — [**Combien de bits contient la surprise d’une phrase ?**](surprisal-information-content.qmd) — Comment quantifier l’incertitude et la surprise avec la théorie de l’information.
 - **Jour 03** — **Le tokenizer, ingénieur de compression** — Le compromis entre taille du vocabulaire, réutilisation des fragments et longueur des séquences.
 - **Jour 13** — **Perplexité : à quel point le modèle est-il surpris ?** — Ce que mesure cette métrique, et pourquoi les comparaisons peuvent être trompeuses.
 - **Jour 17** — **L’entropie croisée comme longueur de code** — Le prix à payer lorsqu’on décrit des données avec un modèle probabiliste imparfait.
