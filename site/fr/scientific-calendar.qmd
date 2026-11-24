@@ -96,6 +96,7 @@ La première leçon, consacrée à la loi de Zipf, sert de pilote pour ce modèl
 Chaque porte est conçue comme une entrée narrative vers une leçon permanente de Deepen. La page de leçon porte le contenu complet ; le calendrier ne duplique pas les articles. Les pages restent accessibles toute l’année et sont également classées dans Deepen après la période de mise en avant.
 
 - [Explorer la carte des notions et des ressources](learning-map.qmd) pour naviguer librement dans les concepts.
+- [Approfondir](deepen.qmd) pour retrouver les leçons permanentes par domaine.
 - [Consulter le panorama des modèles de langage](llm-overview.qmd) pour situer les grandes familles de mécanismes.
 - [S’exercer et expérimenter](exercises.qmd) pour travailler les notions du parcours principal.
 
