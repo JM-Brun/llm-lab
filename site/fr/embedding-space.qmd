@@ -116,6 +116,8 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)
 :::
 
+## Approfondir
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
