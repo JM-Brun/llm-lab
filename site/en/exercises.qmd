@@ -15,7 +15,7 @@ suggested_route:
   next: "en/experimental-evaluation"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/exercises-foundations", "en/exercises-text-data", "en/exercises-attention", "en/exercises-transformer", "en/exercises-generation", "en/experimental-evaluation"]
+  children: ["en/exercises-foundations","en/exercises-text-data","en/exercises-attention","en/exercises-transformer","en/exercises-generation","en/experimental-evaluation","en/zipf-law-exercises"]
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 47 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 48 per-lesson practice pages"}
 
 ### Understand
 
@@ -93,6 +93,10 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 - [Hybrid LLM architectures](exercises/hybrid-llm-architectures.qmd)
 - [Multimodal architectures](exercises/multimodal-architectures.qmd)
 - [Next-Concept Modeling](exercises/next-concept-modeling.qmd)
+
+#### Language, information, and statistics
+
+- [Zipf's law and lexical frequencies](exercises/zipf-law.qmd)
 
 #### Text and tokenization
 
