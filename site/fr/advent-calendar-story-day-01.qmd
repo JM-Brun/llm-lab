@@ -18,7 +18,7 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: []
+  parents: ["fr/deepen"]
   children: []
 related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies", "fr/entropy", "fr/language-modeling-math"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
