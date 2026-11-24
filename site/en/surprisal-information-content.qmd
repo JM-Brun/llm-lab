@@ -1,0 +1,206 @@
+---
+title: "How many bits of surprise does an event contain?"
+subtitle: "Self-information, surprisal, and conditional probabilities"
+description-meta: "Understand why a rare event carries more information in Shannon's sense, distinguish surprisal from entropy, and connect these ideas to next-token prediction."
+keywords: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:en", "status:published"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/surprisal-information-content"
+summary: "Introduces the self-information of an event and surprisal, then connects them to entropy, conditional probabilities, and autoregressive prediction."
+scope: "Defines I(x)=-log p(x), explains additivity for independent events and the chain rule for dependent sequences, then distinguishes observed surprisal from predictive entropy."
+purpose: "Calculate an event's self-information, interpret its units, and connect observed-token surprisal to a sequence's probabilistic score."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/deepen"]
+  children: []
+related: ["en/entropy", "en/likelihood", "en/cross-entropy", "en/language-modeling-math", "en/experience-information-theory"]
+tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:en", "status:published"]
+-->
+
+*LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
+
+This is an in-progress reading preview. Scientific and pedagogical review is still pending.
+
+## Surprise is not an emotion
+
+Imagine two events:
+
+- an event you assign a probability of $0.99$;
+- a rare event you assign a probability of $1/100$.
+
+The second is more surprising if all you know is this probability distribution. But how can we quantify the difference? Can we say that one event carries “twice as much information” as another?
+
+Information theory gives a precise answer: an event's self-information depends on its probability. The less likely the event, the greater its surprisal.
+
+This quantity measures neither emotional importance nor truth nor semantic richness. It measures rarity relative to an explicitly chosen probability distribution.
+
+## Measuring the self-information of an event
+
+For an event $x$ with probability $p(x)>0$, its self-information is defined as:
+
+$$
+I(x)=-\log_b p(x).
+$$
+
+The base $b$ determines the unit:
+
+- $b=2$: bits;
+- $b=e$: nats;
+- $b=10$: hartleys.
+
+With base-2 logarithms:
+
+| Event probability | Self-information |
+|---:|---:|
+| $1$ | $0$ bits |
+| $1/2$ | $1$ bit |
+| $1/4$ | $2$ bits |
+| $1/8$ | $3$ bits |
+| $1/16$ | $4$ bits |
+| $1/100$ | about $6.64$ bits |
+
+A certain event contributes zero bits under this definition: it does not reduce uncertainty about what will happen. An event with probability zero has infinite surprisal in the idealized model; in practice, this often signals that a model assigns zero probability to an observation it must nevertheless account for.
+
+## Why use a negative logarithm?
+
+The definition has three useful properties.
+
+1. **Inverse monotonicity:** as probability decreases, self-information increases.
+2. **Non-negativity:** for $p(x)\in(0,1]$, $I(x)\geq 0$.
+3. **Additivity for independent events:** if $X$ and $Y$ are independent,
+
+$$
+\begin{aligned}
+I(x,y)
+&=-\log_2 p(x,y)\\
+&=-\log_2\bigl(p(x)p(y)\bigr)\\
+&=I(x)+I(y).
+\end{aligned}
+$$
+
+This additivity is a central reason for the logarithm: probabilities multiply for independent events, while their self-information adds.
+
+Caution: the simple additive relation above assumes independence. For dependent events, conditional probabilities are required.
+
+## From events to sequences: the chain rule
+
+For any two events:
+
+$$
+p(x,y)=p(x)\,p(y\mid x).
+$$
+
+Their joint self-information is therefore:
+
+$$
+I(x,y)=I(x)+I(y\mid x),
+$$
+
+where $I(y\mid x)=-\log_2 p(y\mid x)$ is the information contributed by $y$ once $x$ is known.
+
+The same relation extends to a sequence:
+
+$$
+p(x_1,\ldots,x_T)
+=\prod_{t=1}^{T}p(x_t\mid x_{<t}),
+$$
+
+and taking the negative logarithm gives:
+
+$$
+I(x_1,\ldots,x_T)
+=\sum_{t=1}^{T}-\log_2 p(x_t\mid x_{<t}).
+$$
+
+A sequence's self-information is therefore the sum of its elements' conditional surprisals. Do not replace these conditional probabilities with marginal probabilities: the context changes the prediction.
+
+### Example: three observed tokens
+
+Suppose a model assigns the following conditional probabilities to the tokens that were actually observed:
+
+| Position | Probability of observed token | Surprisal |
+|---:|---:|---:|
+| 1 | $1/2$ | $1$ bit |
+| 2 | $1/4$ | $2$ bits |
+| 3 | $1/8$ | $3$ bits |
+
+The probability of the observed sequence is:
+
+$$
+p(x_1,x_2,x_3)=\frac12\times\frac14\times\frac18=\frac1{64}.
+$$
+
+Its total surprisal is therefore:
+
+$$
+-\log_2(1/64)=6\text{ bits}=1+2+3.
+$$
+
+The six bits describe this sequence's score under the model being considered. They are not the entropy of the model's distribution.
+
+## Observed surprisal and predictive entropy: two different questions
+
+Fix a context $c$. A language model produces a distribution over possible tokens:
+
+$$
+p_\theta(v\mid c),\qquad v\in\mathcal V.
+$$
+
+Two quantities must be distinguished.
+
+- **Surprisal of the observed token:** if the actual target is $y$, then $-\log p_\theta(y\mid c)$ scores that particular event.
+- **Predictive entropy:** $H(p_\theta(\cdot\mid c))$ averages surprisal over all possible tokens according to the predicted distribution.
+
+$$
+H_b(X\mid c)
+=-\sum_{v\in\mathcal V}p_\theta(v\mid c)
+\log_b p_\theta(v\mid c).
+$$
+
+Surprisal is a value associated with an observed outcome. Entropy is an expectation before we know which outcome will be observed. A very unlikely target can have high surprisal even when the full distribution has low entropy.
+
+For this distinction, see the [Entropy: uncertainty over the next token](entropy.qmd) lesson. [Likelihood](likelihood.qmd) formalizes the score of an observed sequence, while [cross-entropy](cross-entropy.qmd) connects a target distribution to a predicted distribution.
+
+## What surprisal does — and does not — tell us about an LLM
+
+In an autoregressive model, the conditional surprisal of an observed token is one local contribution to the sequence's negative log-likelihood, using the chosen logarithm base. Adding these contributions gives the sequence score, subject to the conventions used for the evaluated positions.
+
+This perspective helps explain:
+
+- why a token that is frequent in a given context often receives lower surprisal;
+- why a continuation that is unexpected under the model receives higher surprisal;
+- how local scores add up along a sequence;
+- why tokenization matters: text is split into different units by different tokenizers, so “surprisal per token” is not directly comparable unless the unit is specified.
+
+But surprisal is not a direct measure of answer quality. A false statement that is common under the model may have low surprisal; a true but rare formulation may have high surprisal. It measures probabilistic fit to an observation, not truth.
+
+## Experiment
+
+The [Experiment — Entropy, KL, and predictive compression](experience-information-theory.qmd) page lets you manipulate synthetic distributions and verify relationships between entropy, cross-entropy, KL divergence, and code lengths.
+
+For further practice, compare the surprisal of several events under one distribution, then change the distribution while keeping the observed event fixed. You will see that surprisal depends on the chosen probabilistic model.
+
+## Takeaways
+
+- An event's self-information is $I(x)=-\log p(x)$.
+- A lower probability corresponds to higher surprisal.
+- The logarithm base determines the unit: bits in base 2, nats in base $e$.
+- Sequence surprisal decomposes into a sum of conditional surprisals.
+- Observed surprisal is not predictive entropy.
+- For an LLM, these quantities depend on context, model, and tokenization unit.
+
+## Sources and further reading
+
+- [Shannon (1948), *A Mathematical Theory of Communication*](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) — foundations of entropy, uncertainty, and the statistical structure of information sources; [PDF version](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- [Shannon (1948), Part II](https://doi.org/10.1002/j.1538-7305.1948.tb00917.x) — continuation of the mathematical framework of information theory.
+
+::: {.language-switch}
+**Language:** [Français](../fr/surprisal-information-content.qmd) · [English](surprisal-information-content.qmd)
+:::
