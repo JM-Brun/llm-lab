@@ -130,7 +130,7 @@ We should also be precise about the counted unit. A lexical study may count word
 
 Calculations, transfer questions, and worked solutions live on a dedicated companion page. This keeps the lesson focused while allowing the practice material to grow independently.
 
-A companion exercise page will be published separately..
+A companion exercise page will be published separately.
 
 ## The takeaway
 
