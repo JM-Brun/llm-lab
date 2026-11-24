@@ -34,6 +34,9 @@ days:
       en: "en/advent-calendar-story-day-01"
     page_status: in-progress
     lesson_scope: "Loi de Zipf, distributions rang-fréquence, longue traîne, corpus et limites empiriques."
+    practice_page:
+      fr: "fr/exercises/zipf-law"
+      en: "en/exercises/zipf-law"
     experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
   - day: 2
     id: information-and-surprisal
@@ -45,10 +48,13 @@ days:
       en: "How can uncertainty be quantified before an outcome is known?"
     deepen_domain: "Probabilités et théorie de l’information"
     lesson_page:
+      fr: "fr/surprisal-information-content"
+      en: "en/surprisal-information-content"
+    page_status: create
+    lesson_scope: "Information propre, surprisal et lien entre information d’un événement, entropie et langage ; distinguer surprisal observé et incertitude prédictive."
+    practice_page:
       fr: "fr/experience-information-theory"
       en: "en/experience-information-theory"
-    page_status: reuse-audit
-    lesson_scope: "Information propre, surprisal, entropie et entropie conditionnelle appliqués au langage."
     experiment: "Comparer la surprise de plusieurs événements sous des distributions construites."
   - day: 3
     id: tokenizer-as-compression-engineer
