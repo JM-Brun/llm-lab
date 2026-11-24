@@ -113,7 +113,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 <details class="learning-resources">
 <summary>
-  <span class="learning-resources__title">Further exploration</span>
+  <span class="learning-resources__title">Mathematical details and references</span>
   <span class="learning-resources__description">Explore the permutation-equivariance argument, sinusoidal geometry, and further references.</span>
 </summary>
 ::: {.learning-resources__content}
