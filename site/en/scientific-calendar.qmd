@@ -1,7 +1,7 @@
 ---
 title: "The LLM Lab 2026 Advent Calendar"
 subtitle: "24 doors, 24 stories, and 24 lessons exploring the ideas that illuminate language models."
-keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
+keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
 toc: false
@@ -19,7 +19,7 @@ hierarchy:
   parents: ["en/index"]
   children: []
 related: ["en/learning-map", "en/llm-overview", "en/exercises"]
-tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
+tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
 -->
 
 # 24 doors, 24 discoveries to explore
