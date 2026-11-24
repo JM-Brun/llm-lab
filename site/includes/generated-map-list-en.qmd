@@ -96,6 +96,7 @@
     - [Does cosine similarity measure semantic similarity?](cosine-similarity.html)
     - [The linearity hypothesis in representation spaces](embedding-linearity.html)
   - Probabilistic formalization and the training chain
+    - [How many bits of surprise does an event contain?](surprisal-information-content.html)
     - [The mathematics of language modeling](language-modeling-math.html)
     - [The mathematical chain of LLM training](mathematical-foundations.html)
     - [Kolmogorov Complexity, AIXI, and the Limits of Computation](universal-artificial-intelligence.html)
