@@ -13,7 +13,7 @@ id: "fr/greedy-and-beam-search"
 summary: "Construit un arbre de probabilités où le choix greedy perd face à une autre séquence et explique les compromis de la recherche en faisceau."
 scope: "Greedy decoding, recherche en faisceau, scores de séquence, biais de longueur et compromis."
 purpose: "Calculer des scores de séquence, construire un contre-exemple au choix greedy et expliquer ce que beam search explore — sans le présenter comme optimal dans tous les cas."
-domain: "inference-generation"
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
