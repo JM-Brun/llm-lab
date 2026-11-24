@@ -50,7 +50,11 @@ def test_tracked_interactive_map_matches_renderer(language: str) -> None:
         expected = artifacts[fragment]
         if actual != expected:
             mismatch = next(
-                (index for index, (left, right) in enumerate(zip(actual, expected)) if left != right),
+                (
+                    index
+                    for index, (left, right) in enumerate(zip(actual, expected))
+                    if left != right
+                ),
                 min(len(actual), len(expected)),
             )
             context_start = max(0, mismatch - 100)
