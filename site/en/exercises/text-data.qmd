@@ -55,6 +55,12 @@ The translation using more tokens consumes a larger share of the context budget:
 
 </details>
 
+## Encode the prefix and its continuation {#ex-prefix-and-continuation}
+
+The film replies name aqueducts, sanitation, roads, and irrigation. Several members of the group speak in turn. To trace a single-speaker continuation, use “They built roads between distant towns.” Encode the prefix and this continuation separately with the tokenizer being studied to compare the splits. The continuation is absent from the context the model uses at the first generation step.
+
+**Success criterion:** each ID list decodes exactly to its source text, the prefix and continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
+
 ## From text to embedding rows {#ex-text-to-embedding-lookup}
 
 A toy tokenizer splits “cat follows the cat” into [“cat”, “follows”, “the”, “cat”]. Its vocabulary maps those tokens to IDs [17, 42, 8, 17]. The embedding table $E$ has shape $(V,d)$ and its rows are indexed from zero.
