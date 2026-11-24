@@ -122,8 +122,8 @@ The following is the first migration ledger derived from the current French sour
 | Intuition visuelle : la perte mesure la surprise du token observé | **KEEP / SYNTHESIZE** | Keep the visual intuition if it adds a distinct interpretation; avoid duplicating the surprisal definition from entropy and vraisemblance. |
 | Lien avec le gradient | **SYNTHESIZE** | Keep the short bridge from token penalty to differentiable objective; the derivative and parameter effects belong to gradients. |
 | Plusieurs positions : décalage causal et masques | **SYNTHESIZE** | Keep the minimum explanation of position-wise targets and valid-token reduction in loss; construction of shifted examples, padding and masks belongs to the Build resource training-examples. |
-| Lien avec la perplexité | **MERGE-INTO-LESSON** | vraisemblance owns sequence-level likelihood and perplexity. Keep only the local cross-reference and the precise relation needed to interpret mean token NLL. |
-| Idées reçues | **KEEP, selective** | Retain warnings that prevent misreading cross-entropy as truth, accuracy or a probability; move generic information-theory discussion only if its destination is verified. |
+| Lien avec la perplexité | **MOVED — 2026-11-24 pilot** | The canonical sequence-level definition, interpretation and comparison conditions now live in vraisemblance / likelihood. That page also states that mean cross-entropy equals mean NLL for one-hot targets and preserves the base-2 formula. The core lesson retains this exact local relation and links to the sequence-level owner. |
+| Idées reçues | **KEEP, selective** | Retain warnings specific to cross-entropy; the perplexity-comparability warning is consolidated with the sequence-level definition in vraisemblance / likelihood. |
 | Décomposition en entropie cible et divergence KL; Exemple numérique en nats | **MOVED — 2026-11-24 pilot** | The bilingual derivation now has one canonical owner in language-modeling-math, section 3. The distinct non-degenerate numerical example (q=(0.5,0.5), p=(0.75,0.25)) was added there; the core lesson retains a short contextual link. The one-hot case remains in the core lesson. |
 | Implémentations — NumPy, PyTorch et stabilité numérique; dimension, réduction et log-softmax examples | **BUILD / DEEPEN** | Move code/API-specific walkthroughs to the appropriate Build implementation resource; preserve numerical-stability and axis/reduction reasoning in language-modeling-math or a dedicated numerical Deepen section. Do not discard counterexamples or framework-contract warnings. |
 | Exercices; Exercices complémentaires | **PRACTICE** | Move all exercises, worked answers and feedback to the cross-entropy Practice companion. |
@@ -216,7 +216,7 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 **Current completion status:** chapter grouping and first-pass section dispositions are documented. No lesson content has yet been removed, moved, merged or declared complete by this ledger. The next content operation must be a bilingual source-to-destination pilot with the preservation evidence attached.
 
 
-## 8. Completed bilingual pilot — cross-entropy and KL (2026-11-24)
+## 8. Completed bilingual pilot — cross-entropy, KL and perplexity (2026-11-24)
 
 **Status: source-to-destination transfer completed at the text level; rendered-site validation remains pending.**
 
@@ -224,8 +224,9 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 - Destination: site/fr/language-modeling-math.qmd and site/en/language-modeling-math.qmd, section 3 (“Cibles souples et divergence KL” / “Soft targets and KL divergence”).
 - Preserved and consolidated: the general target-distribution cross-entropy formula, the identity H(q,p) = H(q) + D_KL(q || p), the fixed-target minimization interpretation, assumptions on normalized distributions, logarithm base/units, non-negativity, equality at q=p, support caveats, and the warning that language entropy is not a universal constant but depends on distribution, context, corpus and tokenization.
 - Additional example preserved: q=(0.5,0.5), p=(0.75,0.25), with H(q)=0.693 nat, H(q,p)=0.837 nat and KL=0.144 nat. This example was added to both Deepen pages so the non-degenerate worked calculation is not lost when the duplicated core derivation is removed.
-- Core lesson after migration: keeps the one-hot token penalty and a concise link to the Deepen explanation; it no longer repeats the full soft-target/KL derivation.
-- Metadata: the bilingual cross-entropy pages now link to language-modeling-math through their related resources.
-- Not moved in this pilot: the NumPy/PyTorch implementation and numerical-stability material, multi-position alignment/masking explanation, perplexity discussion, misconceptions, references and exercises. Each remains in the source until its own destination is verified.
+- Core lesson after migration: keeps the one-hot token penalty, the equivalence between mean cross-entropy and mean NLL for one-hot targets, and concise links to the Deepen and sequence-scoring owners; it no longer repeats the full soft-target/KL derivation or the sequence-level perplexity definition.
+- Perplexity transfer: the duplicated formula and interpretation were consolidated into the canonical likelihood pages. Their existing comparison caveats were retained; the base-2 form and the one-hot equivalence were added there. The cross-entropy pages keep only the local equivalence and a link to likelihood.
+- Metadata: the bilingual cross-entropy pages now link to language-modeling-math through their related resources; their existing likelihood relation remains explicit.
+- Not moved in this pilot: the NumPy/PyTorch implementation and numerical-stability material, multi-position alignment/masking explanation, remaining misconceptions, references and exercises. Each remains in the source until its own destination is verified.
 
 **Validation still required:** render both language pages; inspect equations and links; compare the final Deepen section against the removed source material; verify page metadata and generated navigation; measure the mandatory lesson duration. This pilot does not certify the entire cross-entropy lesson or the full route.
