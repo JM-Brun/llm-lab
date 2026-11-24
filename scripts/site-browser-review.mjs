@@ -400,61 +400,14 @@ async function runCase(testCase, caseIndex) {
 
     item.title = await page.title();
 
-    if (pagePath === "advent-calendar.html") {
-      const cards = page.locator(".advent-card");
-      const dayNumbers = await page.locator(".advent-card .advent-number").allTextContents();
-      const openingCards = page.locator(".advent-grid-opening .advent-card");
-      const openingTargets = await openingCards.locator(".advent-card-links a[href]").evaluateAll(
-        links => links.map(link => new URL(link.href).pathname.split("/").pop())
-      );
-      if (await cards.count() !== 24 ||
-          dayNumbers.map(value => Number(value.trim())).join(",") !==
-            Array.from({ length: 24 }, (_, index) => index + 1).join(",") ||
-          await openingCards.count() !== 3) {
-        throw new Error("The Advent calendar must render exactly 24 ordered doors and three guided opening days.");
-      }
-      for (const day of ["01", "02", "03"]) {
-        if (!openingTargets.includes(`advent-calendar-day-${day}.html`)) {
-          throw new Error(`The opening day ${day} must link to its dedicated guided page.`);
-        }
-      }
-      if (await cards.evaluateAll(items => items.some(card =>
-        !card.querySelector("a[href]") || card.querySelector('[aria-disabled="true"]')
-      ))) {
-        throw new Error("Every calendar door must remain accessible without date-based locking.");
-      }
-      item.adventCalendar = { doors: 24, openingDays: 3, ordered: true, dateLocks: false };
-    }
-
-    if (/^advent-calendar-day-0[1-3]\.html$/.test(pagePath)) {
-      const answer = page.locator("details.advent-answer");
-      const summary = answer.locator(":scope > summary");
-      if (await answer.count() !== 1 || !(await summary.innerText()).trim()) {
-        throw new Error("Each guided day must provide one named, keyboard-operable self-check.");
-      }
-      await summary.focus();
-      await summary.press("Enter");
-      if (!await answer.evaluate(element => element.open)) {
-        throw new Error("The guided-day self-check must open from the keyboard.");
-      }
-      await summary.press("Space");
-      if (await answer.evaluate(element => element.open)) {
-        throw new Error("The guided-day self-check must close from the keyboard.");
-      }
-      if (await page.locator(".advent-day-resources a[href]").count() < 2) {
-        throw new Error("Each guided day must link to its canonical lesson and dedicated practice page.");
-      }
-      item.adventDay = { selfCheck: "keyboard", canonicalResources: true };
-    }
-
     const retiredCalendarDay = pagePath.match(/^advent-calendar-day-(0[1-3])\.html$/);
     if (pagePath === "advent-calendar.html" || retiredCalendarDay) {
       const expectedCalendar = new URL(`${BASE}/${lang}/scientific-calendar.html`);
       const retiredPath = new URL(url).pathname;
       const currentPath = new URL(page.url()).pathname;
       const redirected = currentPath === expectedCalendar.pathname;
-      if (!redirected && currentPath !== retiredPath) {
-        throw new Error("Retired calendar route must either reach the scientific calendar or remain readable.");
+      if (!redirected) {
+        throw new Error(`Retired calendar route must redirect to ${expectedCalendar.pathname}; reached ${currentPath} from ${retiredPath}.`);
       }
 
       // The redirect is progressive enhancement: the destination must also be
