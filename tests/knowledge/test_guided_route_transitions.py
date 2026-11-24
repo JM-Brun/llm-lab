@@ -33,8 +33,22 @@ def published_ids() -> set[str]:
 
 def test_route_document_uses_the_strict_transition_schema() -> None:
     document = GENERATOR["GuidedRouteDocument"].model_validate(route_payload())
-    assert len(document.transitions) == 2
-    assert document.transitions[0].id == "predictive-distribution-to-generation"
+    transition_ids = [item.id for item in document.transitions]
+
+    assert transition_ids
+    assert len(transition_ids) == len(set(transition_ids))
+    assert "predictive-distribution-to-generation" in transition_ids
+    assert "predictive-distribution-to-observed-scoring" in transition_ids
+    scoring = next(
+        item
+        for item in document.transitions
+        if item.id == "predictive-distribution-to-observed-scoring"
+    )
+    assert (scoring.from_stage, scoring.to_stage, scoring.direction) == (
+        "prediction",
+        "scoring",
+        "directed",
+    )
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
@@ -50,6 +64,16 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
     )
     assert getattr(generation.pages, language) == [f"{language}/generation"]
     assert getattr(generation.purpose, language)
+
+    scoring = by_id["predictive-distribution-to-observed-scoring"]
+    assert (scoring.from_stage, scoring.to_stage, scoring.direction) == (
+        "prediction",
+        "scoring",
+        "directed",
+    )
+    expected_likelihood_page = "fr/vraisemblance" if language == "fr" else "en/likelihood"
+    assert getattr(scoring.pages, language) == [expected_likelihood_page]
+    assert getattr(scoring.purpose, language)
 
     cross_entropy = by_id["observed-target-to-training-objective"]
     assert (cross_entropy.from_stage, cross_entropy.to_stage, cross_entropy.direction) == (
