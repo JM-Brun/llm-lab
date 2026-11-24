@@ -1,0 +1,83 @@
+---
+title: "Softmax et physique d’une foule"
+subtitle: "Température, concentration et analogie avec les distributions de Boltzmann"
+description-meta: "Une enquête sur le rôle de la température dans le softmax, la fonction de partition et les limites de l’analogie avec la physique statistique."
+keywords: ["type:deep-dive", "destination:deepen", "topic:softmax-and-statistical-physics", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/softmax-temperature-statistical-mechanics"
+summary: "Relie la température du softmax à la concentration d’une distribution de Boltzmann, tout en distinguant analogie mathématique et interprétation physique."
+scope: "Softmax, température, fonction de partition et distribution de Boltzmann ; analogie et limites."
+purpose: "Expliquer comment la température redistribue les probabilités, interpréter la fonction de partition et identifier ce que l’analogie physique permet — ou non — de conclure."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/probabilites", "fr/entropy"]
+tags: ["type:deep-dive", "destination:deepen", "topic:softmax-and-statistical-physics", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 09 · squelette éditorial*
+
+## Question centrale
+
+Relie la température du softmax à la concentration d’une distribution de Boltzmann, tout en distinguant analogie mathématique et interprétation physique.
+
+Softmax, température, fonction de partition et distribution de Boltzmann ; analogie et limites.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Expérience de pensée et comparaison de distributions
+
+Une foule de possibilités, une règle de répartition
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+La température change-t-elle les individus ou leurs poids relatifs ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Lire la fonction de partition
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Jusqu’où va l’analogie physique ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
