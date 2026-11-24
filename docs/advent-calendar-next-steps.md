@@ -74,7 +74,7 @@ For each day:
 - [x] Record defects and fixes in the handoff document.
 - [ ] Do not start the next numbered day until the current day passes its acceptance gates.
 
-**Current Day 01:** Zipf's rank-frequency relation and lexical frequency imbalance. PR #1565 is merged. The FR/EN drafts, source dossier, original SVG, bilingual language mapping and generic new-page browser-review support are on `main`. The story pages remain `status:planned` and outside the render list. Technical gates passed; novice review and editorial acceptance remain pending.
+**Current Day 01:** Zipf's rank-frequency relation and lexical frequency imbalance. PR #1565 merged the FR/EN drafts, source dossier, original SVG, novice-review protocol and bilingual language mapping into `main`. PR #1593 changes both story pages to `status:published`, adds them to the public render list and links them from the calendar landing pages. The release is not live until PR #1593 is merged and deployed. Fresh CI, Quarto and browser checks on the current PR head are required; novice review and editorial acceptance remain pending.
 
 ### Phase D — Next days after acceptance
 
