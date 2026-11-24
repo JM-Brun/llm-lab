@@ -536,6 +536,9 @@ website:
                   contents:
                     - fr/exercises/tokenization-strategies.qmd
                     - fr/exercises/unicode-text.qmd
+                - section: "Langage, information et statistiques"
+                  contents:
+                    - fr/exercises/zipf-law.qmd
                 - section: "Outils mathématiques et géométrie"
                   contents:
                     - fr/exercises/embeddings-deep-dive.qmd
@@ -783,6 +786,9 @@ website:
                   contents:
                     - en/exercises/tokenization-strategies.qmd
                     - en/exercises/unicode-text.qmd
+                - section: "Language, information, and statistics"
+                  contents:
+                    - en/exercises/zipf-law.qmd
                 - section: "Mathematical tools and geometry"
                   contents:
                     - en/exercises/embeddings-deep-dive.qmd
