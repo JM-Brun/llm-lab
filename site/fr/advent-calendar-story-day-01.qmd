@@ -20,13 +20,13 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies"]
+related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies", "fr/entropy", "fr/language-modeling-math"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
-*Histoire indépendante · environ 10 minutes · Jour 01*
+*Calendrier de l’Avent 2026 · Porte 1 · environ 10 minutes*
 
-Cette première version est publiée pour être lue et discutée. Les retours de lecteurs non spécialistes permettront d’en affiner encore la clarté.
+Cette version est publiée pour être lue et discutée. Les retours sont bienvenus ; la relecture par un lecteur non spécialiste reste à réaliser et pourra conduire à des améliorations.
 
 ## Pourquoi certains mots semblent-ils partout ?
 
@@ -126,25 +126,11 @@ Cela ne signifie pas qu'un modèle ne peut jamais produire un mot rare. Il peut 
 
 Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des mots, alors qu'un modèle de langage prédit des **tokens** issus de son tokenizer. Un mot peut être représenté par un token ou par plusieurs sous-unités ; la distribution des fréquences de tokens n'est donc pas identique à celle des mots. Cette histoire porte sur les fréquences lexicales, pas sur les algorithmes de tokenisation.
 
-## À vous de jouer
+## S’exercer
 
-Dans un corpus jouet, le mot de rang 1 apparaît 12 000 fois. Supposons que la loi de Zipf avec \(\alpha=1\) soit une approximation acceptable.
+Les calculs, questions de transfert et corrigés sont regroupés dans une page dédiée afin de pouvoir enrichir progressivement la pratique sans alourdir cette leçon.
 
-1. Quelle fréquence prédit-elle pour le mot de rang 4 ?
-2. Et pour le mot de rang 20 ?
-3. Peut-on en déduire que le mot de rang 20 apparaîtra exactement 600 fois dans un autre corpus ?
-
-<details>
-<summary>Voir la solution</summary>
-
-Avec \(f(r)=C/r\) et \(C=12\,000\) :
-
-- rang 4 : \(12\,000/4=3\,000\) occurrences ;
-- rang 20 : \(12\,000/20=600\) occurrences.
-
-Ce sont des valeurs prédites par le modèle jouet, pas des garanties. Dans un autre corpus, la taille, le domaine, la période, les conventions de comptage et les écarts à la loi peuvent modifier les fréquences observées.
-
-</details>
+[Accéder aux exercices sur la loi de Zipf](exercises/zipf-law.qmd).
 
 ## L'idée à retenir
 
@@ -162,9 +148,7 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 - [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
 
-## Revenir au calendrier
-
-[Retrouver les 24 idées et les prochaines histoires](scientific-calendar.qmd).
+[Retour au calendrier de l’Avent](scientific-calendar.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](advent-calendar-story-day-01.qmd) · [English](../en/advent-calendar-story-day-01.qmd)

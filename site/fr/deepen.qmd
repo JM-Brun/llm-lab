@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01"]
 related: []
 tags:
   - "type:entry-point"
@@ -30,6 +30,13 @@ tags:
 La partie **Approfondir** rassemble les traitements qui dépassent le modèle mental nécessaire pour suivre le parcours principal. Elle n'est ni une deuxième séquence obligatoire, ni un dépôt de sujets spécialisés sans liens entre eux.
 
 Chaque entrée répond à une question plus précise : pourquoi un mécanisme fonctionne, dans quelles conditions il reste valide, quels compromis il introduit, ou comment l'étudier rigoureusement. Les pages sont regroupées par **problème intellectuel**, pas alphabétiquement. Une page peut avoir des liens transversaux, mais conserve une seule rubrique principale pour stabiliser son point d'entrée.
+
+
+::: {.callout-note}
+**Une autre porte d’entrée : le calendrier de l’Avent 2026.** Ses 24 portes mettent en lumière des leçons indépendantes de cette collection. Pendant décembre, le calendrier les présente sous forme d’histoires ; toute l’année, les pages restent accessibles ici, dans leur rubrique thématique. Une porte ne crée ni prérequis ni parcours parallèle.
+
+[Découvrir les 24 portes du calendrier de l’Avent 2026](scientific-calendar.qmd).
+:::
 
 ## Choisir par question
 
@@ -100,6 +107,7 @@ Ces ressources sont complémentaires, pas interchangeables : les visualisations 
 
 - [Unicode et représentation du texte](unicode-text.qmd) — couches de représentation des caractères et conséquences.
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — familles BPE, WordPiece et Unigramme, conception et protocole empirique.
+- [Loi de Zipf et statistiques des fréquences lexicales](advent-calendar-story-day-01.qmd) — distributions rang-fréquence, longue traîne, ajustements empiriques et limites de l’interprétation.
 
 La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours principal reste le point d'entrée conceptuel ; la conception et l'évaluation comparative sont des approfondissements.
 

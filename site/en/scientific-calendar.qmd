@@ -1,7 +1,7 @@
 ---
-title: "The LLM Lab scientific calendar"
-subtitle: "24 independent stories exploring the ideas, experiments, and results that illuminate language models."
-keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
+title: "The LLM Lab 2026 Advent Calendar"
+subtitle: "24 doors, 24 stories, and 24 lessons exploring the ideas that illuminate language models."
+keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
 toc: false
@@ -10,8 +10,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/scientific-calendar"
-scope: "Landing page for a collection of 24 independent scientific stories about mathematics, statistics, computer science, and language models."
-purpose: "Present the editorial promise, thematic shelves, and 24 topics without creating pedagogical dependencies between days."
+scope: "Landing page for the 2026 Advent Calendar: 24 independent doors highlighting permanent Deepen lessons."
+purpose: "Present the 24 doors, their narrative promise, and their relationship to permanent Deepen lessons without creating pedagogical dependencies between days."
 suggested_route:
   previous: null
   next: null
@@ -19,17 +19,17 @@ hierarchy:
   parents: ["en/index"]
   children: []
 related: ["en/learning-map", "en/llm-overview", "en/exercises"]
-tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
+tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
 -->
 
-# 24 days, 24 ideas to explore
+# 24 doors, 24 discoveries to explore
 
 A surprising statistical law. A decades-old question about information. A numerical trick that makes a calculation possible. An experiment that challenges our intuition about learning.
 
-The LLM Lab scientific calendar offers **24 self-contained stories**, to be read in any order. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
+The 2026 Advent Calendar offers **24 independent doors**. Behind each one is a story-led, permanent lesson in the **Deepen** collection. Open the doors in any order: none assumes that you have read another. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
 
 ::: {.callout-note}
-**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. Editorial production moves forward one day at a time; each story is published independently when it is ready to be read. The first story is available below.
+**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. The other 23 stories will be published progressively after scientific, pedagogical, and technical review.
 :::
 
 ## First story available
@@ -42,9 +42,9 @@ The LLM Lab scientific calendar offers **24 self-contained stories**, to be read
 
 An investigation of Zipf's law: why do a few words appear everywhere while a long tail of words remains rare? A compact formula, a worked example, a plot, and a critical look at the statistical limits of this regularity.
 
-*About 10 minutes · Independent story · Open for reader feedback*
+*About 10 minutes · Open for feedback · Non-specialist review pending*
 
-[Read Day 01 →](advent-calendar-story-day-01.qmd)
+[Read Day 01](advent-calendar-story-day-01.qmd).
 
 :::
 
@@ -103,9 +103,9 @@ From large-scale empirical phenomena to system-design choices, these stories ask
 
 ## Where does the edition stand?
 
-The list above is the editorial slate: **one of the 24 stories is currently available**. The other 23 titles are still in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative.
+The list above presents the 24 doors planned for the 2026 edition. **One of the 24 stories is currently available**; the other 23 titles remain in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative. Published lessons remain available year-round in Deepen.
 
-Day 01 is published as a reading version open to feedback. Its non-specialist reader review is still pending; improvements from that review will be incorporated without making the text inaccessible in the meantime. Production will then continue in day order, but that order does not impose a reading order.
+Lesson 01, about Zipf's law, is published as a reading version open to feedback. Its non-specialist reader review is still pending; improvements from that review will be incorporated without blocking access to the text. It serves as the pilot for this model: one editorial door, one durable Deepen page, a dedicated exercise page, and links to related knowledge. The production order does not impose a reading order.
 
 ## Explore further
 

@@ -1,7 +1,7 @@
 ---
-title: "Le calendrier scientifique de LLM Lab"
-subtitle: "24 histoires indépendantes pour explorer les idées, les expériences et les résultats qui éclairent les modèles de langage."
-keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
+title: "Le calendrier de l’Avent 2026 de LLM Lab"
+subtitle: "24 portes, 24 histoires et 24 leçons pour découvrir autrement les idées qui éclairent les modèles de langage."
+keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
@@ -10,8 +10,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/scientific-calendar"
-scope: "Page d’accueil de la collection de 24 histoires scientifiques indépendantes autour des mathématiques, des statistiques, de l’informatique et des modèles de langage."
-purpose: "Présenter la promesse éditoriale, les rubriques thématiques et les 24 sujets sans créer de dépendances pédagogiques entre les journées."
+scope: "Page d’accueil de l’édition 2026 du calendrier de l’Avent : 24 portes indépendantes mettant en avant des leçons permanentes de Deepen."
+purpose: "Présenter les 24 portes, leur promesse narrative et leur relation avec les leçons permanentes de Deepen, sans créer de dépendances pédagogiques entre les journées."
 suggested_route:
   previous: null
   next: null
@@ -19,17 +19,17 @@ hierarchy:
   parents: ["fr/index"]
   children: []
 related: ["fr/learning-map", "fr/llm-overview", "fr/exercises"]
-tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
+tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
 -->
 
-# 24 jours, 24 idées à explorer
+# 24 portes, 24 découvertes à explorer
 
-Une loi statistique étonnante. Une question vieille de plusieurs décennies sur l’information. Une astuce numérique qui rend un calcul possible. Une expérience qui bouscule notre intuition sur l’apprentissage.
+Une loi statistique étonnante. Une question sur l’information. Une astuce numérique. Une expérience qui bouscule notre intuition sur l’apprentissage.
 
-Le calendrier scientifique de LLM Lab propose **24 histoires autonomes**, à lire dans l’ordre qui vous intéresse. Chacune part d'une question, déroule un raisonnement ou une expérience, puis invite à tester une idée par soi-même.
+Le calendrier de l’Avent 2026 propose **24 portes indépendantes**. Derrière chacune se trouve une histoire qui introduit une leçon permanente de la partie **Deepen**. Vous pouvez ouvrir les portes dans l’ordre qui vous intéresse : aucune ne suppose d’avoir lu les précédentes. Chacune part d'une question, déroule un raisonnement ou une expérience, puis invite à tester une idée par soi-même.
 
 ::: {.callout-note}
-**Ce calendrier n’est pas un parcours d’apprentissage condensé.** Les journées ne sont ni des étapes ni des prérequis. Vous pouvez commencer par n’importe quelle histoire, même si vous ne connaissez pas encore les autres sujets. La production éditoriale avance jour après jour ; chaque histoire est publiée indépendamment lorsqu’elle est prête à être lue. La première est disponible ci-dessous.
+**Ce calendrier n’est pas un parcours d’apprentissage condensé.** Les journées ne sont ni des étapes ni des prérequis. Vous pouvez commencer par n’importe quelle histoire, même si vous ne connaissez pas encore les autres sujets. Les 23 autres histoires seront publiées progressivement après leurs validations scientifique, pédagogique et technique.
 :::
 
 ## Première histoire disponible
@@ -42,9 +42,9 @@ Le calendrier scientifique de LLM Lab propose **24 histoires autonomes**, à lir
 
 Une enquête sur la loi de Zipf : pourquoi quelques mots apparaissent-ils partout tandis qu'une longue traîne de mots reste rare ? Une formule simple, un exemple chiffré, une représentation graphique et les limites statistiques de cette régularité.
 
-*Environ 10 minutes · Histoire indépendante · Lecture ouverte aux retours*
+*Environ 10 minutes · Lecture ouverte aux retours · Relecture non spécialiste à venir*
 
-[Lire l'histoire du jour 01 →](advent-calendar-story-day-01.qmd)
+[Lire l’histoire du jour 01](advent-calendar-story-day-01.qmd).
 
 :::
 
@@ -103,15 +103,16 @@ Des phénomènes observés à grande échelle aux choix d’architecture systèm
 
 ## Où en est l’édition ?
 
-La liste ci-dessus constitue le programme éditorial : **une histoire sur 24 est actuellement accessible**. Les 23 autres titres sont encore au stade de la préparation éditoriale et pourront évoluer si un sujet se révèle redondant, insuffisamment documenté ou moins intéressant qu’une autre piste.
+La liste ci-dessus présente les 24 portes prévues pour l’édition 2026. **Une histoire sur 24 est actuellement accessible** ; les 23 autres titres restent en préparation éditoriale et pourront évoluer si un sujet se révèle redondant, insuffisamment documenté ou moins intéressant qu’une autre piste. Les pages publiées restent disponibles toute l’année dans la rubrique Deepen.
 
-Le jour 01 est publié en version de lecture ouverte aux retours. Sa relecture par un lecteur non spécialiste reste à réaliser ; les améliorations issues de cette lecture seront intégrées sans bloquer l'accès au texte. La production se poursuit ensuite dans l'ordre des jours, sans que cet ordre impose un ordre de lecture.
+La leçon 01, consacrée à la loi de Zipf, est publiée en version de lecture ouverte aux retours. Sa relecture par un lecteur non spécialiste reste à réaliser ; les améliorations issues de cette lecture seront intégrées sans bloquer l’accès au texte. Elle sert de pilote pour ce modèle : une porte éditoriale, une page Deepen durable, une page d’exercices dédiée et des relations vers les autres connaissances. L’ordre de production n’impose aucun ordre de lecture.
 
 ## Pour aller plus loin
 
-Le calendrier ouvre des perspectives ; les ressources de LLM Lab permettent ensuite de choisir la profondeur souhaitée :
+Chaque porte est conçue comme une entrée narrative vers une leçon permanente de Deepen. La page de leçon porte le contenu complet ; le calendrier ne duplique pas les articles. Les pages restent accessibles toute l’année et sont également classées dans Deepen après la période de mise en avant.
 
 - [Explorer la carte des notions et des ressources](learning-map.qmd) pour naviguer librement dans les concepts.
+- [Approfondir](deepen.qmd) pour retrouver les leçons permanentes par domaine.
 - [Consulter le panorama des modèles de langage](llm-overview.qmd) pour situer les grandes familles de mécanismes.
 - [S’exercer et expérimenter](exercises.qmd) pour travailler les notions du parcours principal.
 
