@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/probabilites"]
-related: ["fr/causal-masking", "fr/transformer", "fr/generation", "fr/logits-exercises"]
+related: ["fr/causal-masking", "fr/generation", "fr/logits-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
