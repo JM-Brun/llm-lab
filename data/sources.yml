@@ -6894,7 +6894,7 @@ sources:
       contribution_types: [theory, mathematical-derivation, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: partially-integrated
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
@@ -6935,7 +6935,7 @@ sources:
       contribution_types: [theory, experiment, implementation, dataset, visualization]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: not-reviewed
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
@@ -7078,7 +7078,7 @@ sources:
     identifiers: {}
     canonical_url: "https://books.google.com/books?id=1tx9AAAAIAAJ"
     publisher: "Addison-Wesley Press"
-    publication_date: "1949-01-01"
+    publication_date: null
     updated_date: null
     language: en
     version: "1949 edition; bibliographic and table-of-contents metadata only"
