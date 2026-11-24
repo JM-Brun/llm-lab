@@ -452,6 +452,17 @@ transitions:
       fr: "Relier la distribution conditionnelle du prochain token à sa sélection, puis à sa réinjection dans la boucle autorégressive jusqu'à l'arrêt."
       en: "Connect the conditional next-token distribution to token selection, then to feedback into the autoregressive loop until stopping."
 
+  - id: predictive-distribution-to-observed-scoring
+    from: prediction
+    to: scoring
+    direction: directed
+    pages:
+      fr: [fr/vraisemblance]
+      en: [en/likelihood]
+    purpose:
+      fr: "Montrer que la même distribution conditionnelle peut servir soit à sélectionner un token à générer, soit à lire la probabilité d’une cible observée pour construire une vraisemblance. Le scoring suit le préfixe de référence : il ne sélectionne aucun token et ne modifie pas les paramètres."
+      en: "Show that the same conditional distribution can be used either to select a token for generation or to read the probability of an observed target and build a likelihood. Scoring follows the reference prefix: it selects no token and does not update parameters."
+
   - id: observed-target-to-training-objective
     from: scoring
     to: training
