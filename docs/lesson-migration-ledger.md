@@ -100,15 +100,15 @@ The following is the first migration ledger derived from the current French sour
 | Des représentations aux logits | **SYNTHESIZE** | Keep the transition and one compact flow diagram; the output projection and logits are taught canonically in logits. |
 | Lire aussi le schéma fondateur du Transformer; Parcours de lecture guidée | **MOVED — 2026-11-24 pilot** | The historical explanation, comparison table and architecture distinction now live in `transformer-history` under the original `historical-transformer-diagram` anchor. The five guided-reading questions are in the existing FR/EN `exercises/transformer.qmd` Practice companion; the history page links to them. The old anchor remains on the core page and links to the new canonical location. |
 
-### 3.3 generation — preserve the complete conceptual inference path; move serving internals
+### 3.3 generation — preserve the complete conceptual inference path and optional serving depth
 
 | Existing section | Proposed disposition | Destination / boundary |
 |---|---|---|
 | La boucle sur un exemple; Une étape, en notation | **KEEP** | The core autoregressive loop, including fixed parameters and context feedback. |
 | Comment le prochain token est-il choisi ? | **KEEP, concise** | Explain selection at the level required to distinguish the distribution from the decoding policy. Detailed strategies belong to decoding-strategies. |
 | Du prompt aux tokens suivants : prefill et decode | **KEEP** | Prefill and incremental decode are required vocabulary for understanding actual inference. Keep the conceptual contrast; avoid implementation-level cache internals. |
-| Pourquoi l'inférence semble-t-elle parfois lente ? | **DEEPEN** | Move the detailed latency explanation to llm-computational-complexity, preserving a short pointer from the lesson. |
-| Servir plusieurs requêtes : ordonnancement et réutilisation du cache | **DEEPEN / VERIFY** | Preserve the full serving/scheduling explanation in an existing or newly created inference-serving Deepen resource. llm-computational-complexity can own the compute/memory/KV-cache analysis, but do not assume it already covers scheduling policy. |
+| Pourquoi l'inférence semble-t-elle parfois lente ? | **KEEP (optional deep dive)** | The detailed TTFT/ITL diagnosis remains in Generation's collapsed optional deep dive. Keep the quantitative KV-cache memory estimate in `llm-computational-complexity` and link to it; do not duplicate the formula. |
+| Servir plusieurs requêtes : ordonnancement et réutilisation du cache | **KEEP (optional deep dive)** | Keep the serving/scheduling explanation in Generation's collapsed optional deep dive: TTFT/ITL/TPOT, continuous batching, prefix caching, chunked prefill and speculative decoding. The canonical ownership map assigns this operational story to Generation; no separate Deepen page is needed for the current scope. |
 | Ce que la génération ne fait pas | **KEEP** | Preserve the explicit boundary with scoring and parameter learning. |
 | Exercices | **PRACTICE** | Move all questions and solutions to the dedicated generation Practice companion; the lesson keeps a contextual link. |
 | Ressources d'implémentation complémentaires | **BUILD** | Keep links to the generation walkthrough and relevant Build milestone; do not duplicate code explanations in Understand. |
@@ -156,7 +156,7 @@ This inventory identifies the expected boundary; it is not permission to remove 
 | scaled-dot-product-attention | One-query computation: QKᵀ, scaling, mask, softmax and weighted sum of V. | Score variance and scaling derivation → attention-score-scaling; FlashAttention and memory/IO analysis → llm-computational-complexity; implementation → Build; exercises → Practice. |
 | causal-masking | Why future positions must be hidden; causal visibility versus other masks; one small mask example. | Padding/document-boundary mask construction → training-examples; API polarity and fully masked row edge cases stay in a verified technical/deep section; exercises → Practice. |
 | logits | Output projection, vocabulary dimension, score interpretation and invariance to a common offset. | Extended algebra/numerical cases → language-modeling-math or another verified Deepen resource; exercises → Practice. |
-| probabilites | Softmax over vocabulary, conditional distribution and normalization; one compact numerical example. | Temperature, top-k/top-p and selection trade-offs → decoding-strategies; calibration theory → a verified evaluation/deepen destination; exercises → Practice. |
+| probabilites | **KEEP** — softmax over the vocabulary, conditional distribution, normalization/calibration, and one compact numerical example. | **MOVED — 2026-11-24** — the temperature equation, interactive explorer, worked calculations, and decoding pipeline now belong to `decoding-strategies`; the probability lesson keeps a concise transition and link. Temperature practice is linked to the existing Generation exercise GE-F. |
 | entropy | Predictive entropy over all candidates; distinguish it from surprisal of one observed token; limits of interpretation. | Compression/coding and broader information-theory treatment → compression-revision and experience-information-theory (the latter is an experiment); V-information remains in its verified advanced/experimental destination. |
 | in-context-learning | Zero/one/few-shot distinction, effect of supplied examples, and difference from parameter updates. | Research-level mechanistic hypotheses → a Deepen resource only after verifying its current owner; exercises → Practice. |
 | context-engineering | Context as application-selected input, one design example, context-window limits and evaluation criteria. | Retrieval algorithms → document-retrieval; RAG and persistent-memory boundaries → rag-memory-boundaries; exercises → Practice. |
@@ -213,12 +213,12 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 6. Reconcile FR/EN metadata and concept-resource links after the final destinations are known.
 7. Validate the shared computational spine and ensure the reader sees the distinct inference, scoring and training branches without a false dependency chain.
 
-**Current completion status:** chapter grouping and first-pass section dispositions are documented. One bilingual subsection pilot has consolidated the duplicated soft-target/KL derivation and sequence-level perplexity explanation from the cross-entropy lessons into their canonical Deepen and likelihood destinations. This is source-text-level completion only; rendered validation remains pending. The rest of the cross-entropy page and all other lesson pages remain under the preservation gates above. The next content operation should continue with a bounded bilingual section transfer, not a bulk rewrite.
+**Current completion status (updated 2026-11-24):** chapter grouping and first-pass section dispositions are documented. Three bilingual content pilots are complete at source-text level: the cross-entropy/KL/perplexity transfer (section 8), the Transformer overview narrowing (section 9), and the temperature/decoding transfer from Probabilities to the existing decoding-strategies Deepen page (section 11). A source-level duration audit of Generation and the training loop confirms that their mandatory paths are bounded once explicitly optional material is separated. Generation's serving/latency content remains in its collapsed optional deep dive, consistent with `content-section-mapping.md`; its KV-cache memory formula remains owned by `llm-computational-complexity`. Quarto rendering, local-link checks, learning-map/graph generation and automated Playwright desktop/mobile/keyboard review now pass for the revised pages. Generated map-list, map-data and guided-route fragments have been refreshed; the CI freshness suite is being rerun. Rendered reading-time measurements and learner validation remain pending. Continue with bounded bilingual transfers only where a destination is explicit; do not split or move content solely from raw page word counts.
 
 
 ## 8. Completed bilingual pilot — cross-entropy, KL and perplexity (2026-11-24)
 
-**Status: source-to-destination transfer completed at the text level; rendered-site validation remains pending.**
+**Status: source-to-destination transfer completed; Quarto rendering, local-link checks and automated browser review passed.** Rendered reading-time measurement and learner validation remain pending.
 
 - Source: site/fr/cross-entropy.qmd, section “Décomposition en entropie cible et divergence KL”; site/en/cross-entropy.qmd, section “Decomposition into target entropy and KL divergence”.
 - Destination: site/fr/language-modeling-math.qmd and site/en/language-modeling-math.qmd, section 3 (“Cibles souples et divergence KL” / “Soft targets and KL divergence”).
@@ -233,7 +233,7 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 
 ## 9. Completed bilingual pilot — Transformer overview (2026-11-24)
 
-**Status: source-to-destination transfer completed at the text level; Quarto-rendered validation remains pending.** The Understand route and the page identity are unchanged.
+**Status: source-to-destination transfer completed; Quarto rendering, local-link checks and automated browser review passed.** The Understand route and page identity are unchanged; rendered reading-time measurement and learner validation remain pending.
 
 ### Source and destinations
 
@@ -257,3 +257,52 @@ The five guided-reading questions (locate, explain, compare, transfer, reconstru
 - FR/EN source sections were transferred to existing canonical pages; no image, equation, historical question, source attribution or example was intentionally discarded.
 - Page-map metadata and reciprocal discovery links were updated; the guided route order and data/guided-route.yml were intentionally left unchanged.
 - Remaining checks: Quarto render both languages; verify local links and the legacy anchor; inspect Mermaid, MathJax and moved figures; check bilingual semantic parity; measure the rendered mandatory lesson duration; inspect responsive and keyboard behavior.
+
+
+## 10. Bounded source audit — Generation and training loop (2026-11-24)
+
+**Status: source-level audit only.** No lesson content was moved or removed in this pass. Counts below are approximate source-text counts, not rendered reading-time measurements. The counting pass excluded front matter, HTML comments, generated include directives, fenced code, HTML tags and Markdown link destinations. The *mandatory* count stops before the explicitly optional section; the *total* includes optional prose and navigation text. Figures, equation-reading time and interaction time are not represented by these counts.
+
+| Lesson | FR mandatory / total | EN mandatory / total | Source-level decision |
+|---|---:|---:|---|
+| Generation | ~1,604 / 2,707 words | ~1,465 / 2,427 words | Keep the four core sections: autoregressive loop, notation, token selection and prefill/decode. Keep latency and multi-request serving inside the existing collapsed optional deep dive. No split is justified by this source estimate. |
+| Training loop | ~1,589 / 2,269 words | ~1,333 / 1,901 words | Keep one coherent path: one update, extension to a batch, optimizer/learning-rate role, train versus validation loss, and pretraining at scale. Keep implementation and extended optimizer material under Further exploration; no split is justified by this source estimate. |
+
+### Generation — ownership and boundary
+
+The current FR/EN pages place TTFT, ITL, TPOT, KV-cache behavior, continuous batching, prefix caching, chunked prefill and speculative decoding inside the collapsed optional section **“Approfondissement facultatif : latence et optimisations d'inférence”** / **“Optional deep dive: inference latency and optimizations”**. This is consistent with the canonical ownership row in `docs/content-section-mapping.md`: Generation owns the operational inference/serving story as optional depth, while `llm-computational-complexity` owns quantitative compute/memory accounting, including the KV-cache memory formula. The earlier proposal in section 3.3 to move the latency and serving sections elsewhere was therefore too broad and has been corrected. Preserve the link from the serving explanation to the KV-cache memory estimate.
+
+The mandatory path remains self-contained: it introduces the autoregressive loop, distinguishes model distribution from token-selection policy, explains prompt prefill versus incremental decode, and keeps the boundary between generation, parameter learning and application-supplied context. The FR/EN revision companions and dedicated Practice pages are already linked. Do not split this lesson unless a rendered timed review demonstrates that the mandatory path exceeds the target or contains independent outcomes.
+
+### Training loop — ownership and boundary
+
+The mandatory path has one coherent outcome: explain how a prediction becomes a parameter update, how updates repeat over batches, and why validation is a separate fixed-parameter measurement. The page's optional section contains the runnable micro-code, the conceptual SGD/Adam/AdamW comparison, the Newton-method clarification, and implementation/workflow resources. Keep the concise optimizer overview because the canonical ownership map assigns the conceptual SGD/Adam/AdamW overview and learning-rate role to this lesson; detailed optimizer formulas, schedules and gradient clipping remain outside the core lesson.
+
+The FR/EN revision companions and dedicated Practice pages are present. The lesson also links to the existing loss-aggregation transfer exercise rather than embedding it. No split is justified from the source estimate. A rendered review should still confirm that the visible Further exploration section is clearly distinguished from the mandatory path and that the diagrams/equations fit the 10–15-minute target.
+
+### Evidence boundary and next step
+
+This pass validates source ownership, section boundaries, bilingual presence and the existence of review/Practice destinations. It does **not** certify visual hierarchy, actual reading time, responsive rendering, keyboard/screen-reader behavior or learner comprehension. The next useful action is to run the same rendered-duration and first-screen review on the two remaining oversized candidates with explicit migration decisions, then update the ledger only after their destination checks. No new route, page, registry or issue is created by this audit.
+
+## 11. Completed bilingual pilot — predictive distribution versus decoding (2026-11-24)
+
+**Status: source-to-destination transfer completed at source-text level.** The Understand route remains unchanged: the probability lesson still follows logits and precedes entropy. No concept, route stage, page identity or new page was added.
+
+### Source and destination
+
+| Source | Destination | Preservation decision |
+|---|---|---|
+| `site/fr/probabilites.qmd` / `site/en/probabilities.qmd`, section on temperature and decoding strategy | `site/fr/decoding-strategies.qmd` / `site/en/decoding-strategies.qmd`, section 2 (`#temperature`) | The temperature equation, interactive explorer, no-JavaScript fallback, worked calculation from 60% to approximately 85.7%, concentration/flattening interpretation, uniform-limit behavior and probability-ratio property are now owned by the optional decoding deep dive. |
+| Probability-page supplementary temperature material: decoding pipeline figure, stable-softmax micro-workbench, and four-logit comparison table | Same bilingual decoding-strategies section, inside an optional disclosure | Preserves the visual pipeline, executable NumPy example, three-temperature comparison and all displayed values. The generic PyTorch softmax/numerical-accuracy references remain with the probability lesson. |
+| Probability lesson's selection transition and generation lesson's temperature pointer | `probabilities.qmd` and `generation.qmd` | The probability lesson retains the compact logits → optional temperature → softmax → optional filtering → selection overview, with a link to the deep dive. Generation keeps the concise operational intuition and now links to the decoding owner for detailed treatment. |
+| Probability revision and Practice companions | `revision-probabilites.qmd` and `exercises/probabilites.qmd` | Revision now treats temperature as an optional decoding transformation rather than a core explanation. The dedicated per-lesson Practice companion remains the probability question page. It links to the shared Foundations collection for softmax/NLL and to the Generation collection's GE-F exercise for temperature; the entropy/observed-score transfer remains in the existing entropy exercise destination. No duplicate probability-only collection is created, and no question or worked answer is discarded. |
+
+### Pedagogical rationale
+
+The probability lesson answers **how logits become the model's base conditional distribution and what its probabilities mean**. Temperature is applied to logits before softmax; top-k/top-p filter and renormalize candidates; argmax or sampling selects a token. These are decoding-policy operations, not additional steps in the construction or interpretation of the base distribution. The short transition remains in the probability lesson so the learner can see where the sibling generation branch begins, while the detailed mechanics live in the optional Deepen destination. The FR/EN Transformer Explainer links that previously targeted the old probability-page explorer now point to the decoding section, and their related-page metadata has been updated.
+
+This aligns the page ownership with `docs/content-section-mapping.md` and the canonical computational spine: the predictive distribution is the shared output; generation applies a selection policy, whereas scoring and training consume observed targets through separate branches. The entropy lesson retains only the concise relation between temperature and the entropy of the resulting distribution, with a link to the decoding deep dive; it does not repeat the temperature mechanism. The move does not make temperature a prerequisite for understanding the distribution.
+
+### Validation boundary
+
+The source-level transfer preserves the bilingual interactive controls, fallback, calculation, figure, code and table. The route and concept registries are unchanged. Quarto rendering, local-link/anchor checks, learning-map/graph generation and the automated Playwright desktop/mobile/keyboard review passed. The generated map-list, map-data and guided-route fragments have now been refreshed; the CI freshness suite is being rerun. Rendered reading-time measurement and learner validation remain pending.

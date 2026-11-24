@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer-architectures"]
   children: []
-related: ["fr/exercises"]
+related: ["fr/exercises", "fr/decoding-strategies"]
 tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -108,7 +108,7 @@ Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-expla
 
 [Ouvrir Transformer Explainer dans un nouvel onglet](https://poloclub.github.io/transformer-explainer/) si l'intégration ne s'affiche pas ou si vous préférez disposer de toute la fenêtre.
 
-Sur téléphone, choisissez un exemple avec **Examples**. Sur ordinateur, attendez le chargement du modèle pour saisir votre propre prompt. Pour isoler l’effet de la température à partir de scores fixes, utilisez aussi l’[explorateur de température de LLM Lab](probabilites.qmd#temp-explorer).
+Sur téléphone, choisissez un exemple avec **Examples**. Sur ordinateur, attendez le chargement du modèle pour saisir votre propre prompt. Pour isoler l’effet de la température à partir de scores fixes, utilisez aussi l’[explorateur de température](decoding-strategies.qmd#temperature), dans les stratégies de décodage.
 
 ### Une expérience guidée en quatre observations
 
