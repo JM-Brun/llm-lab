@@ -7056,7 +7056,7 @@ sources:
       contribution_types: [visualization, pedagogy, experiment]
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: deferred
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
