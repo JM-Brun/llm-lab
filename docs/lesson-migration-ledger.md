@@ -222,7 +222,7 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 
 - Source: site/fr/cross-entropy.qmd, section “Décomposition en entropie cible et divergence KL”; site/en/cross-entropy.qmd, section “Decomposition into target entropy and KL divergence”.
 - Destination: site/fr/language-modeling-math.qmd and site/en/language-modeling-math.qmd, section 3 (“Cibles souples et divergence KL” / “Soft targets and KL divergence”).
-- Preserved and consolidated: the general target-distribution cross-entropy formula, the identity H(q,p) = H(q) + D_KL(q || p), the fixed-target minimization interpretation, assumptions on normalized distributions, logarithm base/units, non-negativity and support caveats, and the one-hot special case.
+- Preserved and consolidated: the general target-distribution cross-entropy formula, the identity H(q,p) = H(q) + D_KL(q || p), the fixed-target minimization interpretation, assumptions on normalized distributions, logarithm base/units, non-negativity, equality at q=p, support caveats, and the warning that language entropy is not a universal constant but depends on distribution, context, corpus and tokenization.
 - Additional example preserved: q=(0.5,0.5), p=(0.75,0.25), with H(q)=0.693 nat, H(q,p)=0.837 nat and KL=0.144 nat. This example was added to both Deepen pages so the non-degenerate worked calculation is not lost when the duplicated core derivation is removed.
 - Core lesson after migration: keeps the one-hot token penalty and a concise link to the Deepen explanation; it no longer repeats the full soft-target/KL derivation.
 - Metadata: the bilingual cross-entropy pages now link to language-modeling-math through their related resources.
