@@ -1,6 +1,6 @@
 ---
 title: "Révision — Probabilités du prochain token"
-description-meta: "Le softmax sur le vocabulaire, l’effet de la température, le choix du token et la calibration."
+description-meta: "Softmax sur le vocabulaire, distribution conditionnelle, normalisation et calibration."
 keywords: ["type:concept-bridge", "destination:practice", "topic:revision-probabilites", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-probabilites"
-scope: "Le softmax sur le vocabulaire, l’effet de la température, le choix du token et la calibration."
+scope: "Le softmax sur le vocabulaire, la distribution conditionnelle et la distinction entre normalisation, calibration et vérité factuelle."
 purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
 revision_role: synthesis
 revision_of: ["fr/probabilites"]
@@ -28,7 +28,7 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-probabilit
 
 - Le softmax exponentie chaque logit puis le divise par la somme des exponentielles sur le vocabulaire. On obtient une distribution conditionnée au contexte.
 - Ajouter la même constante à tous les logits conserve la distribution. Les différences entre scores déterminent les rapports de probabilités.
-- Pour une température T > 0, on applique le softmax aux logits divisés par T. Une température plus faible accentue les écarts, une plus forte aplatit la distribution. Le choix du token est une autre opération.
+- La température et les filtres top-k/top-p sont des transformations facultatives du décodage, distinctes de la distribution prédictive de base ; leurs mécanismes sont détaillés dans les [stratégies de décodage](decoding-strategies.qmd#temperature).
 - Être normalisée signifie que la distribution somme à 1. Être calibrée signifie que, pour une population et une définition de succès données, les événements annoncés à 80 % arrivent environ 80 % du temps. Une probabilité pour le prochain token ne mesure pas à elle seule la véracité d’une réponse.
 
 ## Vérifier de mémoire {#revision-check}
