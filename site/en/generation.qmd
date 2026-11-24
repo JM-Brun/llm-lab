@@ -147,7 +147,7 @@ The distribution at turn 1 does not point to a single output. The decoding rule 
 | “Nothing” | 0.02 | 0.10 | 0.17 |
 | “Well” | 0.02 | 0.10 | 0.17 |
 
-A low temperature concentrates probability on the leading token; a high temperature leaves more room for the others. The order of the candidates does not change. As $\tau$ approaches zero, sampling joins greedy selection, except for ties and numerical effects. Temperature acts on the distribution used for the draw, not on the model's parameters, and makes an answer neither truer nor better. Its computation is detailed in [Output probabilities](probabilities.qmd).
+A low temperature concentrates probability on the leading token; a high temperature leaves more room for the others. The order of the candidates does not change. As $\tau$ approaches zero, sampling joins greedy selection, except for ties and numerical effects. Temperature acts on the distribution used for the draw, not on the model's parameters, and makes an answer neither truer nor better. Its computation and effects are explored in [decoding strategies](decoding-strategies.qmd#temperature).
 
 **Top-k** and **top-p** filters discard the least probable candidates before the draw; beam search and contrastive decoding follow other logics. The basic loop can be understood without them; their trade-offs are compared in [decoding strategies](decoding-strategies.qmd), and an [introduction by Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) gives a first overview.
 
