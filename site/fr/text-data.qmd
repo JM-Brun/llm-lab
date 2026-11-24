@@ -131,6 +131,8 @@ flowchart TB
 
 Le [texte source en Unicode](unicode-text.qmd) peut contenir des espaces, de la ponctuation, des nombres, du code ou plusieurs langues. Selon le tokenizer, le texte peut être normalisé ou pré-découpé. Les tokenizers diffèrent par leurs unités de base, leurs règles, leur vocabulaire et leurs tokens spéciaux. Les tokenizers modernes à sous-mots apprennent souvent leur vocabulaire. La couverture des entrées dépend de ces choix. Un découpage en tokens donne des unités de calcul, dont les frontières peuvent traverser un mot. Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent ces choix et les algorithmes BPE, WordPiece et unigramme.
 
+Une continuation prononcée par une seule personne, utilisée dans le fil rouge, est « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ».
+
 Le schéma regroupe le traitement positionnel et le Transformer. Certaines architectures ajoutent des vecteurs de position absolue appris aux plongements des tokens. Avec [RoPE](positional-encoding.qmd), l'attention fait tourner les vecteurs requête et clé. Ces mécanismes interviennent à des endroits différents dans la chaîne qui produit les [représentations contextualisées](contextualized-representations.qmd).
 
 
