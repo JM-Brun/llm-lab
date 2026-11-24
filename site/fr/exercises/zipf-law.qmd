@@ -1,7 +1,7 @@
 ---
-title: "Exercices — Loi de Zipf et fréquences lexicales"
-subtitle: "Rangs, fréquences, ajustement et limites d’interprétation"
-description-meta: "Exercices pour calculer une approximation de Zipf, interpréter une droite log-log et distinguer fréquence lexicale et fréquence de tokens."
+title: "Exercices — Loi de Zipf"
+subtitle: "Questions de vérification et accès à l'entraînement approfondi"
+description-meta: "Questions courtes d'auto-vérification associées à la leçon sur la loi de Zipf et les fréquences lexicales."
 keywords: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,130 +9,41 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/zipf-law-exercises"
-summary: "Exercices de calcul et d'interprétation associés à la leçon sur la loi de Zipf."
-scope: "Entraîne au calcul rang-fréquence, à l'interprétation de l'exposant sur un graphique log-log et à la distinction entre unités lexicales et tokens."
-purpose: "Vérifier les calculs, expliciter les hypothèses et éviter les conclusions excessives à partir d'un ajustement empirique."
+summary: "Courtes questions d'auto-vérification associées à la leçon sur la loi de Zipf."
+scope: "Vérifie la relation rang-fréquence, l'interprétation des graphiques log-log et la distinction entre fréquences lexicales et fréquences de tokens ; oriente vers la collection d'exercices approfondie."
+purpose: "Vérifier l'idée essentielle avant de passer aux calculs et questions de transfert plus développés."
 suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["fr/exercises"]
+  parents: []
   children: []
-related: ["fr/advent-calendar-story-day-01","fr/text-data","fr/tokenization-strategies"]
+related: ["fr/advent-calendar-story-day-01", "fr/exercises-zipf-law", "fr/text-data", "fr/tokenization-strategies"]
 tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-[← Retour à la leçon : loi de Zipf](../advent-calendar-story-day-01.qmd)
+[← Retour à la leçon : loi de Zipf et fréquences lexicales](../advent-calendar-story-day-01.qmd)
 
-Cette page rassemble les calculs et questions de transfert associés à la leçon. Les corrigés sont repliés : essayez d'abord de justifier chaque réponse, y compris les hypothèses utilisées.
+## Vérifier l’idée essentielle
 
-[Parcourir le catalogue complet des exercices](../exercises.qmd) pour retrouver les autres vérifications par leçon et collections thématiques.
+Essayez de répondre à ces questions avant d'ouvrir les réponses.
 
-## 1. Calculer une fréquence à partir du rang
-
-Dans un corpus jouet, le mot de rang 1 apparaît 12 000 fois. On suppose que la loi de Zipf avec $\alpha=1$ constitue une approximation acceptable :
-
-$$
-f(r)=\frac{C}{r^\alpha}.
-$$
-
-1. Quelle fréquence le modèle prédit-il pour le mot de rang 4 ?
-2. Quelle fréquence prédit-il pour le mot de rang 20 ?
-3. Quel rapport le modèle prévoit-il entre les fréquences des rangs 5 et 25 ?
-4. Ces valeurs sont-elles des garanties sur les fréquences observées dans un autre corpus ?
+1. Si le mot le plus fréquent apparaît 12 000 fois et que l'exposant vaut $\alpha=1$, quelle fréquence le modèle prédit-il au rang 4 ?
+2. Pourquoi une droite approximative sur un graphique log-log ne prouve-t-elle pas une loi de Zipf exacte et universelle ?
+3. Pourquoi faut-il analyser séparément les fréquences lexicales et les fréquences de tokens ?
 
 <details>
-<summary>Afficher le corrigé</summary>
+<summary>Afficher les réponses</summary>
 
-Ici, $C=f(1)=12\,000$ et $\alpha=1$, donc $f(r)=12\,000/r$.
-
-1. Rang 4 : $12\,000/4=3\,000$ occurrences.
-2. Rang 20 : $12\,000/20=600$ occurrences.
-3. Le rang 25 est cinq fois plus élevé que le rang 5 ; sa fréquence est donc prédite cinq fois plus faible : $f(5)=2\,400$ et $f(25)=480$.
-4. Non. Ce sont des valeurs issues d'une approximation. La taille, le domaine, la période, les conventions de comptage et les écarts empiriques à la loi modifient les fréquences observées.
+1. Avec $f(r)=C/r^\alpha$ et $C=12\,000$, la fréquence prédite au rang 4 vaut $3\,000$.
+2. Un segment visuellement linéaire est compatible avec une loi de puissance sur la plage observée. Il n'établit ni une loi exacte, ni un exposant universel, ni un mécanisme causal.
+3. Le tokenizer définit les unités prédites par le modèle. Un mot lexical peut être représenté par un token ou plusieurs sous-tokens ; les deux distributions de fréquences ne coïncident donc pas nécessairement.
 
 </details>
 
-## 2. Lire l'exposant sur un graphique log-log
+## Entraînement approfondi
 
-On observe deux points synthétiques :
-
-| Rang $r$ | Fréquence $f(r)$ |
-|---:|---:|
-| 1 | 1 000 |
-| 10 | 100 |
-
-On suppose que ces deux points suivent exactement le modèle $f(r)=C/r^\alpha$.
-
-1. Déterminez $C$.
-2. Déterminez $\alpha$.
-3. Écrivez la relation après transformation logarithmique.
-4. Quelle pente obtient-on en représentant $\log f(r)$ en fonction de $\log r$ ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-Au rang 1, $f(1)=C=1\,000$.
-
-Au rang 10 :
-
-$$
-100=\frac{1\,000}{10^\alpha}
-\quad\Longrightarrow\quad
-10^\alpha=10
-\quad\Longrightarrow\quad
-\alpha=1.
-$$
-
-En prenant le logarithme :
-
-$$
-\log f(r)=\log C-\alpha\log r.
-$$
-
-La pente est donc $-\alpha=-1$. L'ordonnée à l'origine dépend de $C$ et de la base du logarithme choisie.
-
-</details>
-
-## 3. Fréquences lexicales et fréquences de tokens
-
-Un corpus contient le mot « unbelievable » 100 fois. Un premier tokenizer le représente comme un token unique ; un second tokenizer le découpe en plusieurs sous-tokens, par exemple « un », « believ » et « able ».
-
-1. Pourquoi le rang du mot « unbelievable » dans une étude lexicale n'est-il pas directement comparable au rang de chacun de ses sous-tokens ?
-2. Si un modèle prédit des tokens, quelle unité faut-il compter pour étudier la distribution des unités qu'il prédit ?
-3. Peut-on déduire la distribution des fréquences de tokens à partir de la seule distribution des fréquences des mots ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-1. Un rang lexical porte sur une forme de mot comptée comme une unité. Les sous-tokens sont des unités définies par le tokenizer ; plusieurs occurrences du même mot peuvent contribuer aux fréquences de plusieurs sous-tokens.
-2. Il faut compter les unités effectivement produites par le tokenizer considéré, sur le corpus et avec les conventions de prétraitement explicités.
-3. Non. Le découpage dépend du vocabulaire et des règles du tokenizer. La distribution des fréquences de tokens n'est donc pas identique à celle des fréquences lexicales.
-
-</details>
-
-## 4. Une droite log-log prouve-t-elle une loi de puissance ?
-
-Un graphique rang-fréquence semble approximativement linéaire sur des axes logarithmiques. Un collègue conclut : « Nous avons prouvé que le langage suit exactement une loi de Zipf d'exposant 1. »
-
-1. Quelle partie de cette conclusion est excessive ?
-2. Pourquoi l'estimation des rangs et des fréquences sur le même échantillon peut-elle créer une dépendance entre les deux coordonnées ?
-3. Quelle précaution peut réduire ce problème sans éliminer tous les biais ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-1. Une relation approximativement linéaire sur un graphique log-log est compatible avec une loi de puissance sur la plage observée ; elle ne prouve ni une loi exacte, ni un exposant universel égal à 1, ni un mécanisme causal.
-2. Une fluctuation qui augmente le compte observé d'un mot augmente sa fréquence mesurée et peut aussi le faire remonter dans le classement. Les coordonnées ne sont donc pas estimées indépendamment.
-3. Estimer les rangs et les fréquences sur des échantillons séparés réduit cette corrélation d'erreur. Cela ne supprime pas les autres biais, notamment ceux qui affectent l'estimation de l'exposant et la longue traîne.
-
-</details>
-
-## Pour aller plus loin
-
-- [Revenir à la leçon sur la loi de Zipf](../advent-calendar-story-day-01.qmd).
-- [Comparer avec les données textuelles](../text-data.qmd) et [les stratégies de tokenisation](../tokenization-strategies.qmd).
-- [Approfondir les probabilités et l'information](../deepen.qmd).
+La [collection d'exercices sur la loi de Zipf](../exercises-zipf-law.qmd#zipf-law) contient quatre exercices corrigés sur les calculs rang-fréquence, l'interprétation log-log, les fréquences lexicales et tokeniques et les limites empiriques.
 
 ::: {.language-switch}
 **Langue :** [Français](zipf-law.qmd) · [English](../../en/exercises/zipf-law.qmd)

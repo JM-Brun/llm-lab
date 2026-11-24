@@ -193,6 +193,7 @@ project:
     - en/rope.qmd
     - fr/exercises.qmd
     - fr/exercises/zipf-law.qmd
+    - fr/exercises-zipf-law.qmd
     - fr/exercises-foundations.qmd
     - fr/exercises-text-data.qmd
     - fr/exercises-attention.qmd
@@ -200,6 +201,7 @@ project:
     - fr/exercises-generation.qmd
     - en/exercises.qmd
     - en/exercises/zipf-law.qmd
+    - en/exercises-zipf-law.qmd
     - en/exercises-foundations.qmd
     - en/exercises-text-data.qmd
     - en/exercises-attention.qmd
@@ -541,6 +543,7 @@ website:
                 - section: "Langage, information et statistiques"
                   contents:
                     - fr/exercises/zipf-law.qmd
+                    - fr/exercises-zipf-law.qmd
                 - section: "Outils mathématiques et géométrie"
                   contents:
                     - fr/exercises/embeddings-deep-dive.qmd
@@ -792,6 +795,7 @@ website:
                 - section: "Language, information, and statistics"
                   contents:
                     - en/exercises/zipf-law.qmd
+                    - en/exercises-zipf-law.qmd
                 - section: "Mathematical tools and geometry"
                   contents:
                     - en/exercises/embeddings-deep-dive.qmd

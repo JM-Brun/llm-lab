@@ -66,6 +66,9 @@
     - [Exercices — Transformer](exercises-transformer.html)
   - Génération
     - [Exercices — Génération](exercises-generation.html)
+  - Approfondir
+    - Langage, information et statistiques
+      - [Exercices — Loi de Zipf](exercises-zipf-law.html)
   - Théorie de l'information
     - [Expérience — Entropie, KL et compression prédictive](experience-information-theory.html)
   - [Catalogue des exercices](exercises.html)

@@ -1,7 +1,7 @@
 ---
-title: "Exercises — Zipf’s law and lexical frequencies"
-subtitle: "Ranks, frequencies, fitting, and interpretive limits"
-description-meta: "Exercises on calculating a Zipf approximation, interpreting a log-log line, and distinguishing lexical frequencies from token frequencies."
+title: "Exercises — Zipf’s law"
+subtitle: "Self-check questions and a route to extended practice"
+description-meta: "Short self-check questions associated with the lesson on Zipf’s law and lexical frequencies."
 keywords: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,130 +9,41 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/zipf-law-exercises"
-summary: "Calculation and interpretation exercises accompanying the lesson on Zipf's law."
-scope: "Practises rank-frequency calculations, interpreting the exponent on a log-log plot, and distinguishing lexical units from tokens."
-purpose: "Check calculations, state assumptions, and avoid overclaiming from an empirical fit."
+summary: "Short self-check questions accompanying the lesson on Zipf's law."
+scope: "Checks the central rank-frequency relation, the interpretation of log-log plots, and the distinction between lexical and token frequencies; points to the extended exercise collection."
+purpose: "Verify the essential idea before moving to the longer calculations and transfer exercises."
 suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["en/exercises"]
+  parents: []
   children: []
-related: ["en/advent-calendar-story-day-01","en/text-data","en/tokenization-strategies"]
+related: ["en/advent-calendar-story-day-01", "en/exercises-zipf-law", "en/text-data", "en/tokenization-strategies"]
 tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", "level:applied", "language:en", "status:published"]
 -->
 
-[← Back to the lesson: Zipf’s law](../advent-calendar-story-day-01.qmd)
+[← Back to the lesson: Zipf’s law and lexical frequencies](../advent-calendar-story-day-01.qmd)
 
-This page collects calculations and transfer questions associated with the lesson. Solutions are collapsed: first try to justify each answer, including the assumptions you use.
+## Check the essential idea
 
-[Browse the full exercise catalogue](../exercises.qmd) for the other lesson checks and topic collections.
+Try to answer these questions before opening the answers.
 
-## 1. Calculate a frequency from rank
-
-In a toy corpus, the word at rank 1 occurs 12,000 times. Assume Zipf's law with $\alpha=1$ is a reasonable approximation:
-
-$$
-f(r)=\frac{C}{r^\alpha}.
-$$
-
-1. What frequency does the model predict for the word at rank 4?
-2. What frequency does it predict for the word at rank 20?
-3. What ratio does the model predict between the frequencies at ranks 5 and 25?
-4. Are these values guaranteed to match observed frequencies in another corpus?
+1. If the most frequent word occurs 12,000 times and the exponent is $\alpha=1$, what frequency does the model predict at rank 4?
+2. Why does an approximately straight line on a log-log plot not prove an exact, universal Zipf law?
+3. Why should lexical word frequencies and token frequencies be analysed as distinct distributions?
 
 <details>
-<summary>Show the solution</summary>
+<summary>Show the answers</summary>
 
-Here, $C=f(1)=12,000$ and $\alpha=1$, so $f(r)=12,000/r$.
-
-1. Rank 4: $12,000/4=3,000$ occurrences.
-2. Rank 20: $12,000/20=600$ occurrences.
-3. Rank 25 is five times the rank of 5, so its predicted frequency is five times lower: $f(5)=2,400$ and $f(25)=480$.
-4. No. These are values from an approximation. Corpus size, domain, period, counting conventions, and empirical deviations from the law all affect observed frequencies.
+1. With $f(r)=C/r^\alpha$ and $C=12,000$, the predicted frequency at rank 4 is $3,000$.
+2. A straight-looking segment is compatible with a power law over the observed range. It does not establish an exact law, a universal exponent, or a causal mechanism.
+3. A tokenizer defines the units predicted by the model. One lexical word may be represented by one token or several sub-tokens, so the two frequency distributions need not coincide.
 
 </details>
 
-## 2. Read the exponent from a log-log plot
+## Extended practice
 
-Consider two synthetic points:
-
-| Rank $r$ | Frequency $f(r)$ |
-|---:|---:|
-| 1 | 1,000 |
-| 10 | 100 |
-
-Assume these two points follow the model $f(r)=C/r^\alpha$ exactly.
-
-1. Determine $C$.
-2. Determine $\alpha$.
-3. Write the relation after taking logarithms.
-4. What slope do we obtain by plotting $\log f(r)$ against $\log r$?
-
-<details>
-<summary>Show the solution</summary>
-
-At rank 1, $f(1)=C=1,000$.
-
-At rank 10:
-
-$$
-100=\frac{1,000}{10^\alpha}
-\quad\Longrightarrow\quad
-10^\alpha=10
-\quad\Longrightarrow\quad
-\alpha=1.
-$$
-
-Taking logarithms gives:
-
-$$
-\log f(r)=\log C-\alpha\log r.
-$$
-
-The slope is therefore $-\alpha=-1$. The intercept depends on $C$ and on the chosen logarithm base.
-
-</details>
-
-## 3. Lexical frequencies and token frequencies
-
-A corpus contains the word “unbelievable” 100 times. One tokenizer represents it as a single token; a different tokenizer splits it into several sub-tokens, for example “un”, “believ”, and “able”.
-
-1. Why is the rank of “unbelievable” in a lexical study not directly comparable to the rank of each of its sub-tokens?
-2. If a model predicts tokens, which units should be counted when studying the distribution of the units it predicts?
-3. Can the token-frequency distribution be derived from the word-frequency distribution alone?
-
-<details>
-<summary>Show the solution</summary>
-
-1. A lexical rank counts a word form as one unit. Sub-tokens are units defined by a tokenizer; occurrences of the same word may contribute to the frequencies of several sub-tokens.
-2. Count the units actually produced by the tokenizer being studied, on the specified corpus and with explicit preprocessing conventions.
-3. No. Segmentation depends on the tokenizer's vocabulary and rules. The token-frequency distribution is therefore not identical to the lexical word-frequency distribution.
-
-</details>
-
-## 4. Does a log-log line prove a power law?
-
-A rank-frequency plot looks approximately linear on logarithmic axes. A colleague concludes: “We have proved that language follows an exact Zipf law with exponent 1.”
-
-1. Which part of this conclusion is too strong?
-2. Why can estimating ranks and frequencies on the same sample create dependence between the two coordinates?
-3. What precaution can reduce this problem without removing every bias?
-
-<details>
-<summary>Show the solution</summary>
-
-1. An approximately straight line on a log-log plot is compatible with a power law over the observed range; it proves neither an exact law, a universal exponent of 1, nor a causal mechanism.
-2. A fluctuation that increases a word's observed count raises its measured frequency and can also move it up the ranking. The two coordinates are therefore not estimated independently.
-3. Estimating ranks and frequencies on separate samples reduces this error correlation. It does not eliminate other biases, including those affecting exponent estimation and the long tail.
-
-</details>
-
-## Further reading
-
-- [Return to the Zipf's law lesson](../advent-calendar-story-day-01.qmd).
-- [Compare with text data](../text-data.qmd) and [tokenization strategies](../tokenization-strategies.qmd).
-- [Explore probability and information deep dives](../deepen.qmd).
+The [Zipf’s law exercise collection](../exercises-zipf-law.qmd#zipf-law) contains four worked exercises on rank-frequency calculations, log-log interpretation, lexical versus token frequencies, and empirical limitations.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/zipf-law.qmd) · [English](zipf-law.qmd)
