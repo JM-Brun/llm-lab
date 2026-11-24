@@ -1,6 +1,6 @@
 # Reusable Quarto story template
 
-Use this as a starting point for an independent scientific story. It is not a rigid page layout and should not become a second curriculum.
+Use this as a starting point for an independent scientific story. It is not a rigid page layout and should not become a second curriculum. **Vary the investigative form from one story to another**: the reader should recognize a consistent quality contract, not a repeated article formula.
 
 ~~~yaml
 ---
@@ -36,54 +36,77 @@ tags: ["type:deep-dive", "destination:deepen", "topic:story-topic-id", "level:ov
 
 ## Start with a concrete question
 
-A hook, a puzzle, a counterexample or a surprising observation. State one central question. Do not assume that the reader has opened a canonical lesson or a previous day.
+Open with a puzzle, an observation, a historical episode, a counterexample or a practical dilemma. State one central question. Do not assume that the reader has opened a canonical lesson or a previous day.
 
-## Build the idea
+## Choose the investigative form that fits the idea
 
-Explain the mechanism in a few connected steps. Define every symbol before using it. Separate assumptions, mathematical results, empirical observations and hypotheses.
+Do not force every story into the same sequence of sections or the same kind of example. Choose one primary device and, if useful, one supporting device:
 
-## Work through one example
+- **Compare cases:** hold most factors fixed and vary one property; a compact table or plot can expose the contrast.
+- **Construct a counterexample:** show why an attractive generalization fails, then identify the missing condition.
+- **Follow a derivation:** start from a concrete quantity and make each mathematical step visible.
+- **Run a thought experiment:** specify the setup, possible outcomes and what each outcome would establish.
+- **Reconstruct a design decision:** explain the practical problem, constraints, alternatives and trade-off behind a technique.
+- **Tell a research story:** distinguish the original question, the experiment or theorem, the result and later qualifications.
 
-Use a small numerical or symbolic example that the reader can verify by hand. State what the example demonstrates and what it does not demonstrate.
+The format is a means, not a checklist. A story about covariance may need a numerical derivation; a story about scaling laws may need a careful reading of empirical plots; a story about quantization may need a controlled rounding example. Avoid adding a historical anecdote, diagram, table or interaction unless it advances the central explanation.
 
-## Add one visual when it materially helps
+## Develop the reasoning
 
-Prefer a clear, accessible diagram or plot with a descriptive alternative text and a caption. Do not add a decorative visual merely to satisfy a template.
+Explain why the question matters and build the answer in connected steps. Define symbols before using them. Make assumptions explicit. Distinguish mathematical results under stated assumptions, empirical observations on particular data or models, proposed explanations and open questions.
+
+Where the story has a historical or research dimension, identify what changed in understanding; do not imply that a technique appeared fully formed or that one paper settled an open question.
+
+## Work through an example
+
+Use a small numerical, symbolic, geometric, textual or computational example that the reader can inspect. Show intermediate steps when they carry the reasoning. State exactly what the example demonstrates and what it does not demonstrate. Label constructed or synthetic data as such; never present an illustration as an empirical measurement.
+
+## Add a visual only when it earns its place
+
+Prefer a clear, accessible diagram or plot when it reveals structure, comparison, geometry or change more effectively than prose. Provide descriptive alternative text and a caption that explains how to read it. Identify the source and licence for adapted material. Do not add a decorative visual merely to satisfy a template.
 
 ## Identify a limitation or counterexample
 
-Show where the intuition fails, which assumptions matter, or what the method does not guarantee.
+Show where the intuition fails, which assumptions matter, what the method does not guarantee, or which alternative explanation remains plausible. A limitation should be specific to the story, not a generic disclaimer.
 
 ## Challenge the reader
 
-Ask one meaningful question that requires transfer or reasoning, not only recall.
+Ask one meaningful question that requires calculation, prediction, diagnosis or transfer—not only recall. Prefer a small variation of the worked example so the reader must reuse the reasoning in a new situation.
 
 <details>
 <summary>Show the solution</summary>
 
-Explain the reasoning, including the assumptions and the common incorrect answer.
+Explain the reasoning, including assumptions, intermediate steps and the most tempting incorrect answer. A final number without its reasoning is not sufficient.
 
 </details>
 
+## Closing insight
+
+End with one precise statement that answers the opening question and preserves its main qualification. Avoid a generic list that merely repeats the article.
+
 ## Optional connection to the canonical curriculum
 
-Link to the relevant lesson as further reading, never as a prerequisite for understanding this story.
+Link to a relevant lesson as further reading, never as a prerequisite for understanding this story. The story must remain complete if all links to the main learning path are removed.
 
 ### Sources
 
-List primary/authoritative sources and specify which claims they support. Record provenance and licensing for any reused visual.
+List primary or authoritative sources and specify which central claims they support. Record publication details, stable links, and provenance/licensing for reused figures or adapted material. Do not use a secondary explainer as the sole support for a central scientific claim.
 
 ---
 
 ## Author review checklist
 
-- [ ] One central question and one distinct intellectual angle.
+- [ ] One central question and one distinct intellectual angle beyond the canonical curriculum.
+- [ ] Investigative form chosen to fit the subject; no mechanical repetition of another day's structure.
 - [ ] Understandable without prerequisite days or canonical lessons.
-- [ ] Approximately 10 minutes, checked with a reader.
-- [ ] One worked example and one meaningful challenge with solution.
-- [ ] Mathematical/scientific claims and assumptions checked.
-- [ ] Source dossier completed.
-- [ ] FR/EN parity across ideas, equations, caveats and examples.
+- [ ] The narrative explains the problem, reasoning and consequence—not just the definition of a technique.
+- [ ] Approximately 10 minutes, checked with a reader rather than inferred from word count alone.
+- [ ] One inspectable worked example; constructed data and empirical evidence are clearly distinguished.
+- [ ] One specific limitation, counterexample or boundary condition.
+- [ ] One meaningful challenge requiring reasoning or transfer, with an explained solution.
+- [ ] Mathematical/scientific claims, assumptions and numerical values checked.
+- [ ] Source dossier maps central claims to primary/authoritative evidence.
+- [ ] FR/EN parity across ideas, equations, caveats, examples and challenge.
 - [ ] Native Quarto rendering inspected on desktop and mobile.
-- [ ] Keyboard, contrast, alternative text and link checks passed.
-- [ ] No new prerequisite edges or parallel concept registry.
+- [ ] Keyboard, contrast, alternative text, captions and links checked.
+- [ ] No new prerequisite edges, parallel concept registry or second guided route.

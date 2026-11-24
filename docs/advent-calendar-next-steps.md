@@ -246,3 +246,16 @@ This log should record outcomes, not merely activity.
 - **Validation performed and results:** confirmed #1565 and #1576 are merged. On merge commit `0fb77b2`, secret scanning and Python quality/domain checks passed; test-suite and Quarto-render jobs were still in progress at the last inspection. No claim is made that those two jobs or a post-cleanup deployment have completed.
 - **Open decisions:** obtain an actual novice review; record reading time, comprehension evidence, observed confusion and an explicit accept/revise decision. Day 01 remains planned and unpublished.
 - **Exact next action:** conduct the Day 01 novice read-through, update the decision record and revise the story if observations warrant it. Only after acceptance should Day 02 be researched and drafted.
+
+
+## 15. Session completion log — transfer of investigative craft from Knowledge Stories
+
+- **Date:** 2026-11-24
+- **Branch:** `docs/calendar-story-craft-transfer`
+- **Reference examined:** [Knowledge Stories — 2026 Data Science & Machine Learning calendar](https://jm-brun.github.io/knowledge-stories/calendar/), including its landing page and the five published investigations.
+- **Files changed:** `docs/templates/advent-story-template.qmd`; this handoff.
+- **Work completed:** compared the Knowledge Stories calendar's editorial practice with the LLM Lab story contract. The useful transferable principle is not to copy its topics or impose its page structure, but to vary the investigative device to fit the question. Its published examples demonstrate several distinct forms: measurement-profile comparison, sampling and representativeness, counterexamples to summary statistics, covariance derivation, and probabilistic calculation. The reusable LLM Lab template now makes this variation explicit and adds a clearer narrative arc, a specific limitation, a transfer-oriented challenge, an explained solution, and stronger distinctions between synthetic examples, empirical observations and theoretical claims.
+- **Boundary preserved:** LLM Lab keeps its approved 24-story slate, anti-duplication rule, thematic shelves and chronological production order. The Knowledge Stories calendar remains an editorial reference, not a source of replacement topics or a prerequisite sequence. No landing-page redesign, new manifest, concept ontology or calendar dependency graph was introduced.
+- **Validation performed:** inspected the source calendar's editorial framing and five published day pages; compared them with the current LLM Lab editorial redesign, reusable template, Day 01 bilingual draft and novice-review protocol. This is a documentation/template change only; no article content or public rendering configuration changed.
+- **Open gate:** Day 01 remains `status:planned`. A real non-specialist reader must complete the existing protocol, with observed reading time and comprehension evidence, before Day 01 can be accepted or Day 02 can begin. This transfer does not waive or simulate that review.
+- **Exact next action:** obtain the Day 01 novice read-through; revise and re-test only where observations justify it. After explicit acceptance, prepare Day 02 using the revised, deliberately non-rigid story template.
