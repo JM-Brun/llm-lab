@@ -20,7 +20,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/deepen"]
   children: []
-related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies", "fr/entropy", "fr/language-modeling-math"]
+related: ["fr/scientific-calendar","fr/text-data","fr/tokenization-strategies","fr/entropy","fr/language-modeling-math","fr/zipf-law-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -130,7 +130,7 @@ Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des 
 
 Les calculs, questions de transfert et corrigés sont regroupés dans une page dédiée afin de pouvoir enrichir progressivement la pratique sans alourdir cette leçon.
 
-Une page d’exercices complémentaire sera publiée séparément.
+[Accéder aux exercices sur la loi de Zipf](exercises/zipf-law.qmd)..
 
 ## L'idée à retenir
 
