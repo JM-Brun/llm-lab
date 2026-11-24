@@ -76,7 +76,7 @@ days:
     deepen_domain: "Géométrie des représentations"
     lesson_page:
       fr: "fr/linearite-embeddings"
-      en: "en/linearite-embeddings"
+      en: "en/embedding-linearity"
     page_status: reuse-audit
     lesson_scope: "Relations linéaires dans les espaces de représentation, analogies célèbres et limites empiriques."
     experiment: "Comparer des directions et des similarités en explicitant les limites de l’interprétation."
