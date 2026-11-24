@@ -1746,3 +1746,28 @@ This is a source/metadata/link and exercise-ownership audit. It is not a new mat
 ### Evidence boundary
 
 This is a source, metadata, route and exercise-ownership audit. It is not a new review of the ICL mechanism, RAG implementation, generation math, rendered screenshots, screen-reader output or learner performance. The previously recorded visual inventory remains authoritative for the conditional context-engineering diagram and generation timeline.
+
+
+## 2026-11-24: text-input → representations boundary audit
+
+**Scope.** Reader continuity, page ownership and Practice placement for text/data → token IDs → embedding lookup → positional information → contextualized representations. Existing source and mathematical audits for these pages are reused; this pass does not re-derive tokenizer, embedding, positional-encoding or Transformer equations.
+
+| Page | Existing role and companion | Audit finding |
+|---|---|---|
+| Text and data | Sole core page in the text-input stage; next page is embedding space. Dedicated FR/EN companion has three self-check questions and two applied tasks; the broad Text data collection owns the longer tokenizer, tensor-shape, training-window and leakage exercises. | **Mostly keep; one migration needed.** The core page already has a link-only Practice section, but its collapsed supplementary panel still contains the distinct “Encode the prefix and continuation” task. That task is absent from the dedicated companion and should move there. The remaining diagram, explanation of the two tokenizer uses and further-reading links are explanatory depth, not exercises; retain them under a separate Further exploration heading. |
+| Embedding space | First page in the representations stage; follows text/data and precedes positional encoding. Dedicated FR/EN companion includes ID/row checks, a small lookup table and the Embedding Atlas. | **Keep; normalize navigation.** The main page links to its companion but does not give that link a dedicated Practice heading. Add the standard link-only section; retain the explanatory “where do table values come from?” material in supplementary resources and the cross-link to the text-data lookup exercise. |
+| Positional encoding | Follows embedding space and precedes contextualized representations. Dedicated FR/EN companion contains four checks covering order, RoPE, causal masking and extrapolation; it links to the shared Transformer exercise collection. | **Keep; clarify section ownership.** The core page's Practice section is already link-only. Its collapsed panel contains a permutation-equivariance explanation, optional sinusoidal geometry and references—not learner questions. Move that panel under an explicit Further exploration heading and remove wording that describes it as practice. Do not move the mathematical explanation into the exercise bank. |
+| Contextualized representations | Final page in the representations stage; next page is the Transformer. Dedicated FR/EN companion includes a causal-boundary question and an SAE investigation. | **Keep; normalize navigation and remove empty UI.** The main page links to the companion inline but has no Practice heading. Move the link into the standard link-only Practice section and remove the empty supplementary-resources disclosure. Keep the existing five-step pipeline and absolute-position/RoPE comparison in Understand. |
+
+### Cross-page decisions
+
+1. The stage order and page metadata are coherent in both languages: text/data → embedding space → positional encoding → contextualized representations → Transformer. The route objective correctly distinguishes the project's learned absolute position vector added before the first block from RoPE rotations applied to Q/K inside attention.
+2. No new page, concept, stage or graph edge is needed. The hand-off is already represented in the guided route and the page-level previous/next metadata.
+3. Keep the broad Text data collection as the owner of extended tokenizer, tensor-shape, BPE, windowing and leakage exercises. The dedicated Text and data companion owns short checks and the moved prefix/continuation task; do not duplicate the practical tokenizer trace.
+4. Keep the positional-equivariance proof and sinusoidal geometry on the core page as optional Further exploration. They are explanatory/deepening material, not questions; the companion already owns the four learner checks.
+5. Harmonize Practice as a link-only section on all four core lessons. The companion pages remain the sole location for their questions and exercises. Supplementary explanations and optional mathematical depth stay in clearly labelled Further exploration sections.
+6. The existing browser review must accept self-contained companions and companions linked to a shared collection rather than requiring a non-existent topic-specific collection. This is covered by the generalized browser-contract correction in #1604.
+
+### Follow-up
+
+A focused content PR should move the prefix/continuation task to the Text and data companion, add consistent Practice headings to Embedding space and Contextualized representations, move optional panels outside Practice on Text and data and Positional encoding, and remove the empty Contextualized representations panel. Preserve every explanatory paragraph, diagram, citation and existing anchor.
