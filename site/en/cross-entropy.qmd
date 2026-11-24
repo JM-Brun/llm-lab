@@ -112,7 +112,7 @@ For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before 
 - **Weighting:** class weights, label smoothing, or auxiliary losses change the objective from the unweighted one-hot case.
 - **Comparison:** state the tokenizer, included positions, and averaging convention before comparing two values.
 
-## Perplexity
+## Perplexity {#connection-to-perplexity}
 
 For one-hot targets, mean cross-entropy computed over the same valid positions with the same reduction convention coincides with mean NLL. The definition and interpretation of perplexity, and the conditions required to compare scores, are consolidated in the [Likelihood](likelihood.qmd) lesson.
 
