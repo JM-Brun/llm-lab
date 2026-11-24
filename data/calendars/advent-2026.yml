@@ -158,7 +158,7 @@ days:
     lesson_page:
       fr: "fr/softmax-temperature-statistical-mechanics"
       en: "en/softmax-temperature-statistical-mechanics"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Softmax, température, fonction de partition et distribution de Boltzmann ; analogie et limites."
     experiment: "Faire varier la température sur des logits fixes et mesurer l’entropie."
   - day: 10
@@ -173,7 +173,7 @@ days:
     lesson_page:
       fr: "fr/causal-information-flow"
       en: "en/causal-information-flow"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Masque causal comme contrainte d’information, causalité computationnelle et comparaison prudente avec les fuites de données."
     experiment: "Retirer une contrainte du masque et identifier précisément quelles positions accèdent au futur."
   - day: 11
@@ -188,7 +188,7 @@ days:
     lesson_page:
       fr: "fr/residual-connections"
       en: "en/residual-connections"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Transformations résiduelles x + F(x), chemin identité, Jacobien et intuition de l’optimisation."
     experiment: "Comparer les gradients d’un petit réseau avec et sans chemin identité."
   - day: 12
@@ -203,7 +203,7 @@ days:
     lesson_page:
       fr: "fr/normalization-and-conditioning"
       en: "en/normalization-and-conditioning"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Moments, normalisation, invariances d’échelle, conditionnement et comparaison LayerNorm/RMSNorm."
     experiment: "Calculer les sorties de LayerNorm et RMSNorm sur un petit vecteur."
   - day: 13
@@ -218,7 +218,7 @@ days:
     lesson_page:
       fr: "fr/perplexity"
       en: "en/perplexity"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Perplexité, entropie croisée, moyenne géométrique, dépendance à la tokenisation et précautions de comparaison."
     experiment: "Calculer la perplexité de deux modèles jouets sur les mêmes cibles."
   - day: 14
@@ -233,7 +233,7 @@ days:
     lesson_page:
       fr: "fr/temperature-sampling"
       en: "en/temperature-sampling"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Mise à l’échelle des logits, entropie et variabilité des tirages ; ne pas assimiler température et créativité."
     experiment: "Comparer les distributions et des fréquences empiriques de tirage pour plusieurs températures."
   - day: 15
@@ -248,7 +248,7 @@ days:
     lesson_page:
       fr: "fr/top-k-top-p-truncation"
       en: "en/top-k-top-p-truncation"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Troncature top-k et nucleus sampling top-p, masse cumulée, cas limites et diversité."
     experiment: "Appliquer les deux règles à une distribution construite et comparer les candidats conservés."
   - day: 16
@@ -263,7 +263,7 @@ days:
     lesson_page:
       fr: "fr/greedy-and-beam-search"
       en: "en/greedy-and-beam-search"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Greedy decoding, recherche en faisceau, scores de séquence, biais de longueur et compromis."
     experiment: "Construire un petit arbre de probabilités où greedy échoue à trouver la meilleure séquence."
   - day: 17
@@ -293,7 +293,7 @@ days:
     lesson_page:
       fr: "fr/sequence-log-likelihood"
       en: "en/sequence-log-likelihood"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Règle de chaîne, vraisemblance de séquence, log-vraisemblance et sous-flux numérique."
     experiment: "Calculer une vraisemblance de séquence en probabilités puis en log-probabilités."
   - day: 19
@@ -323,7 +323,7 @@ days:
     lesson_page:
       fr: "fr/learning-rate-optimization"
       en: "en/learning-rate-optimization"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Descente de gradient, courbure, conditionnement, stabilité et calendriers de taux d’apprentissage."
     experiment: "Comparer plusieurs pas sur une fonction quadratique simple."
   - day: 21
@@ -338,7 +338,7 @@ days:
     lesson_page:
       fr: "fr/double-descent"
       en: "en/double-descent"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Double descente, seuil d’interpolation, biais-variance et limites de généralisation des observations."
     experiment: "Étudier une courbe jouet et distinguer observation empirique et loi universelle."
   - day: 22
@@ -383,6 +383,6 @@ days:
     lesson_page:
       fr: "fr/quantization"
       en: "en/quantization"
-    page_status: create
+    page_status: in-progress
     lesson_scope: "Quantification, erreurs d’arrondi, plage dynamique, calibration et compromis mémoire-qualité."
     experiment: "Quantifier un petit vecteur de poids et mesurer l’erreur de reconstruction."
