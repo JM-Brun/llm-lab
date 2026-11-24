@@ -41,8 +41,8 @@ days:
   - day: 2
     id: information-and-surprisal
     door:
-      fr: "Combien de bits contient la surprise d’une phrase ?"
-      en: "How many bits of surprise does a sentence contain?"
+      fr: "Combien de bits contient la surprise d’un événement ?"
+      en: "How many bits of surprise does an event contain?"
     question:
       fr: "Comment quantifier l’incertitude avant de connaître le résultat ?"
       en: "How can uncertainty be quantified before an outcome is known?"
