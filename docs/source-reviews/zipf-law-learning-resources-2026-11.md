@@ -184,25 +184,60 @@ Le premier jalon doit rester modeste : quelques romans par langue, un pipeline d
 - Aucun concept distinct `frequency-rank` n'est créé : le rang est défini dans la notion de loi et les exercices, sans justifier ici une carte autonome.
 - Ces relations appartiennent au graphe de connaissances (`data/concepts.yml`) : elles ne décrivent pas une dépendance de calcul et ne créent aucune arête dans le graphe computationnel canonique.
 - Le parcours principal n'est pas réordonné : Zipf reste un approfondissement des propriétés statistiques des corpus, pas une étape du forward pass ou du calcul d'attention.
-## 7. Limites et tâches de vérification
+## 7. Travail restant — état au 2026-11-24
 
-### Inspection des sources
+Le travail restant est séparé en trois niveaux : clôture technique de la PR, compléments d'inspection des sources, puis laboratoire expérimental. Les éléments reportés ne doivent pas être interprétés comme des lacunes bloquant la validité des contenus déjà intégrés.
 
-- [ ] Inspection visuelle des figures de Piantadosi, Lestrade, Pilgrim & Hills et Linders & Louwerse.
-- [ ] Inspection des suppléments de Lestrade, Pilgrim & Hills et Linders & Louwerse.
-- [ ] Audit du dépôt de code et des données de Pilgrim & Hills ; aucune reproduction n'a été effectuée.
-- [ ] Audit des scripts, données et modèles alternatifs de Lestrade ; aucune reproduction n'a été effectuée.
-- [ ] Lecture ciblée de Zipf (1949), notamment “On the Economy of Words”.
-- [ ] Ouverture et exécution du notebook Wolfram ; vérification de sa licence exacte et de son ergonomie.
+### 7.1 Clôture de la PR #1601
 
-### Intégration et validation pédagogique
+- [x] Suite de tests CI : réussie sur le commit `7b01334d18bbca5f6b51498b2553915004186c1a`.
+- [x] Contrôles de qualité Python et contrôles de domaine : réussis.
+- [x] Rendu complet Quarto et audit navigateur : réussis.
+- [x] Secret scanning : réussi.
+- [x] Vérification des discussions de revue : aucune review ni thread de revue ouvert n'a été retourné lors du contrôle du 2026-11-24.
+- [ ] **Synchroniser la branche avec `main` avant fusion.** Au contrôle du 2026-11-24, la branche était en avance de 32 commits et en retard d'un commit (`main` : `9c18169568b5b139963362e1656d8ae4f9877f47`, base commune : `64007c9b256ca5f4caac2cbfae0d59a280f86fb9`). GitHub signalait alors la PR comme non fusionnable. Intégrer le commit manquant de `main`, résoudre d'éventuels conflits sans écraser les changements de la PR, puis vérifier le diff final.
+- [ ] Relancer et attendre les workflows sur le nouveau SHA après synchronisation. Les succès du SHA précédent ne valident pas un commit ultérieur.
+- [ ] Vérifier une dernière fois le diff, l'état mergeable et les checks requis, puis fusionner la PR.
 
-- [x] Phase B : deux concepts canoniques et leurs relations typées ont été ajoutés au graphe de connaissances.
-- [x] Trois exercices complémentaires ont été ajoutés à la collection FR/EN ; les pages d'auto-vérification et les relations de pages ont été synchronisées.
-- [x] Chaque item extrait possède une disposition et une justification ; les sources effectivement mobilisées ont des statuts et destinations actualisés.
-- [ ] Concevoir et exécuter un laboratoire indépendant sur des corpus redistribuables ; la démonstration Wolfram reste une inspiration non intégrée.
-- [ ] Effectuer une revue du rendu Quarto, des liens, de l'accessibilité clavier et mobile.
-- [ ] Réaliser une validation formative par un lecteur non spécialiste ; aucune mesure d'efficacité pédagogique n'a été menée.
+**Décision :** les validations automatiques du contenu actuel sont réussies ; la fusion reste suspendue à la synchronisation de branche et à la validation du nouveau commit. Les compléments de recherche listés ci-dessous ne sont pas des prérequis à la fusion de cette PR.
+
+### 7.2 Inspection scientifique et bibliographique différée
+
+- [ ] Inspecter visuellement les figures originales de Piantadosi, Lestrade, Pilgrim & Hills et Linders & Louwerse ; noter ce qu'elles apportent au-delà des descriptions textuelles déjà extraites.
+- [ ] Examiner les suppléments de Lestrade, Pilgrim & Hills et Linders & Louwerse ; mettre à jour les limites d'inspection item par item.
+- [ ] Auditer le dépôt de code et les données de Pilgrim & Hills sans supposer que les résultats sont directement reproductibles.
+- [ ] Auditer les scripts, données et modèles alternatifs de Lestrade ; ne pas transformer une reproduction partielle en validation indépendante.
+- [ ] Lire de manière ciblée Zipf (1949), en particulier le chapitre “On the Economy of Words”, avant toute affirmation historique plus précise.
+- [ ] Ouvrir et exécuter le notebook Wolfram ; vérifier le comportement réel, les dépendances, l'ergonomie et la licence affichée. Ne pas le recopier dans le dépôt.
+
+### 7.3 Laboratoire de corpus — issue dédiée
+
+Le laboratoire ne doit pas être développé dans la PR d'ingestion et ne doit pas alourdir la leçon Day 01. Son cadrage détaillé et ses critères d'acceptation sont suivis dans [l'issue #1605 — laboratoire reproductible sur corpus Zipf](https://github.com/JM-Brun/llm-lab/issues/1605).
+
+Ordre recommandé :
+
+1. **Ressources et droits** : épingler les versions ELTeC-fra et ELTeC-eng, examiner séparément les droits des textes, transcriptions, métadonnées et encodages, puis sélectionner quelques romans par langue.
+2. **Extraction TEI** : définir une extraction déterministe excluant balises, métadonnées et notes éditoriales ; conserver un manifeste des documents et des journaux de nettoyage.
+3. **Comptage** : tester les choix de normalisation (Unicode, casse, apostrophes, ponctuation, mots composés), distinguer occurrences, formes lexicales, types et tokens d'un tokenizer.
+4. **Rang et visualisation** : définir le traitement des ex æquo, produire tableaux de fréquences, rangs, courbes linéaires et log-log, et rendre les observations inspectables.
+5. **Estimation et robustesse** : séparer ajustement descriptif et estimation de l'exposant ; étudier résidus, incertitude, taille d'échantillon et rééchantillonnage par document. Une pente OLS en log-log ne doit pas être présentée comme une estimation robuste à elle seule.
+6. **Comparaison** : analyser français et anglais séparément ; expliciter les limites d'un corpus littéraire historique et de toute interprétation interlinguistique.
+7. **Pédagogie** : publier le laboratoire dans “S'exercer et expérimenter”, avec une page d'entrée courte, des questions de transfert et des corrigés/critères d'interprétation. La leçon principale reste concise.
+
+### 7.4 Sources pédagogiques candidates non encore ingérées
+
+Ces ressources ont été repérées mais **ne sont pas encore enregistrées comme sources extraites dans le catalogue** :
+
+- **Webis, notes de cours “Corpus Linguistics”** ([PDF](https://downloads.webis.de/lecturenotes/natural-language-processing/unit-en-corpora.pdf)) : candidate pour la sparsité des corpus, les hapax, la queue longue, Zipf–Mandelbrot, les écarts tête/queue et les implications pour le lissage. À examiner avec les pages et passages exacts avant toute intégration.
+- **UMBC, NLP Assignment 1 (2018)** ([PDF](https://courses.cs.umbc.edu/undergraduate/473/f18/content/materials/a1.pdf)) : candidate pour la séquence pratique comptage token/type → rang-fréquence → visualisation → comparaison de langues. Son ajustement log-log par OLS doit être contextualisé comme simplification pédagogique exploratoire, et non repris comme méthode statistique de référence.
+
+Pour chacune : enregistrer la référence, inspecter les sections pertinentes, produire des extractions atomiques avec localisateurs, comparer aux pages/exercices existants, puis attribuer à chaque contribution une disposition motivée (`integrate`, `already-covered` ou `defer`). Ne créer une page ou un concept que si un apport distinct le justifie.
+
+### 7.5 Validation pédagogique à mener après réalisation
+
+- [ ] Faire relire la séquence et le laboratoire par une personne non spécialiste : compréhension des rangs, de l'exposant, des limites d'un ajustement et distinction entre description et causalité.
+- [ ] Vérifier les consignes, corrigés, liens, navigation clavier, rendu mobile et fonctionnement sans exécution du notebook.
+- [ ] Recueillir des difficultés observées et réviser les exercices ; ne revendiquer aucune efficacité pédagogique tant qu'aucune évaluation n'a été conduite.
 
 ## 8. Références
 
