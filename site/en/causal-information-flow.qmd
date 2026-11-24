@@ -1,0 +1,83 @@
+---
+title: "The triangular wall: preventing information leaks"
+subtitle: "An information-access constraint for coherent autoregressive prediction"
+description-meta: "An investigation of causal masking as an information-access rule, and of the errors it prevents without guaranteeing every form of causality."
+keywords: ["type:deep-dive", "destination:deepen", "topic:causal-information-barrier", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/causal-information-flow"
+summary: "Explains how causal masking restricts accessible positions during autoregressive prediction and why this constraint should not be confused with causality in the real world."
+scope: "Causal masking as an information constraint, computational causality, and a careful comparison with data leakage."
+purpose: "Read a causal mask, identify forbidden dependencies, and distinguish computational causality, temporal order, and leakage prevention."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/queries-keys-values-advanced", "en/attention-score-scaling"]
+tags: ["type:deep-dive", "destination:deepen", "topic:causal-information-barrier", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 10 · editorial skeleton*
+
+## Central question
+
+Explains how causal masking restricts accessible positions during autoregressive prediction and why this constraint should not be confused with causality in the real world.
+
+Causal masking as an information constraint, computational causality, and a careful comparison with data leakage.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Information-flow audit and counterexample
+
+What does it mean to look ahead in a sequence?
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+Reading the access matrix
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Constructing a deliberate leak
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+What the mask guarantees—and what it does not
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
