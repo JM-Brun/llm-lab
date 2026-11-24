@@ -6972,7 +6972,7 @@ sources:
       concept_ids: []
     metadata:
       technical_level: advanced
-      contribution_types: [theory, mathematical-derivation, experiment, implementation, limitation]
+      contribution_types: [theory, mathematical-derivation, experiment, implementation]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
@@ -7012,7 +7012,7 @@ sources:
       concept_ids: []
     metadata:
       technical_level: advanced
-      contribution_types: [theory, experiment, dataset, limitation]
+      contribution_types: [theory, experiment, dataset]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: not-reviewed
