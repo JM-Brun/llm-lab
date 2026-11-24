@@ -1,7 +1,7 @@
 ---
 title: "Le calendrier de l’Avent 2026 de LLM Lab"
 subtitle: "24 portes, 24 histoires et 24 leçons pour découvrir autrement les idées qui éclairent les modèles de langage."
-keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
+keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
@@ -19,7 +19,7 @@ hierarchy:
   parents: ["fr/index"]
   children: []
 related: ["fr/learning-map", "fr/llm-overview", "fr/exercises"]
-tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:fr", "status:published"]
+tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
 -->
 
 # 24 portes, 24 découvertes à explorer
