@@ -166,9 +166,9 @@ Cet exemple est construit pour l'exercice ; il ne provient pas d'un corpus réel
 
 ### Un bon ajustement implique-t-il un exposant universel ? {#ex-zipf-fit-vs-exponent}
 
-Une étude de dialogues oraux rapporte que plusieurs unités linguistiques (mots, bigrammes, catégories syntaxiques, énoncés et actes de dialogue) présentent souvent un ajustement satisfaisant à une formule de Zipf. Elle observe néanmoins des variations de l'exposant $\alpha$ selon les unités et les corpus.
+Une étude de dialogues oraux examine plusieurs unités : mots isolés, bigrammes, mots selon leur position dans l'énoncé, énoncés entiers, unités syntaxiques et pragmatiques, ainsi que certains canaux non verbaux. Les auteurs rapportent de bons ajustements à la formule de Zipf, mais observent que l'exposant $\alpha$ varie selon les unités et les corpus.
 
-1. Que mesure qualitativement la qualité d'ajustement, par exemple $R^2$ ?
+1. Que mesure qualitativement la qualité d'ajustement, par exemple $R^2$ ? Pourquoi les auteurs l'emploient-ils comme diagnostic plutôt que comme critère universel ?
 2. Que décrit l'exposant $\alpha$ dans $f(r)=C/r^\alpha$ ?
 3. Pourquoi des valeurs de $R^2$ comparables ne suffisent-elles pas à conclure que toutes les unités suivent la même distribution avec le même exposant ?
 4. Pourquoi faut-il éviter d'en déduire un mécanisme cognitif unique ?
@@ -176,7 +176,7 @@ Une étude de dialogues oraux rapporte que plusieurs unités linguistiques (mots
 <details>
 <summary>Afficher le corrigé</summary>
 
-1. $R^2$ quantifie, dans le cadre de l'ajustement choisi, la part de variation décrite par le modèle. Il ne mesure pas à lui seul la validité causale du modèle.
+1. $R^2$ quantifie, dans le cadre de l'ajustement choisi, la part de variation décrite par le modèle. Les auteurs le traitent comme un diagnostic : ils ne fixent pas de seuil universel permettant de décider à lui seul si une distribution « suit Zipf ». Il ne mesure pas la validité causale du modèle.
 2. $\alpha$ détermine la pente en coordonnées log-log et la vitesse à laquelle la fréquence décroît avec le rang.
 3. Deux distributions peuvent être approximativement bien décrites par une même famille de courbes tout en ayant des exposants différents. La qualité d'ajustement et la valeur du paramètre sont deux informations distinctes.
 4. L'ajustement décrit une régularité statistique. L'unité linguistique, le corpus et le protocole influencent les paramètres ; un mécanisme causal exige des prédictions et des tests indépendants.
@@ -192,10 +192,13 @@ Deux travaux proposent des pistes explicatives différentes :
 - Lestrade (2017) étudie l'interaction entre la taille des classes syntaxiques et la spécificité/réutilisabilité sémantique.
 - Linders et Louwerse (2023) formulent une hypothèse selon laquelle une charge cognitive plus élevée pourrait conduire à des contributions linguistiques plus économes et à un exposant $\alpha$ plus élevé.
 
+La revue critique de Piantadosi (2014) souligne qu'aucune explication disponible ne rend compte simplement de tous les faits empiriques ni ne repose sur une validation indépendante suffisante.
+
 1. Ces propositions sont-elles la loi descriptive elle-même ou des hypothèses sur son origine ?
 2. Quelle prédiction expérimentale découle de l'hypothèse de charge cognitive ?
 3. Pourquoi le modèle de Lestrade compare-t-il la syntaxe seule, la sémantique seule et leur combinaison ?
-4. Quelles preuves supplémentaires seraient nécessaires avant de présenter l'une de ces propositions comme une explication générale ?
+4. Pourquoi la revue de Piantadosi invite-t-elle à présenter ces propositions comme des modèles concurrents ou complémentaires, et non comme une explication acquise ?
+5. Quelles preuves supplémentaires seraient nécessaires avant de présenter l'une de ces propositions comme une explication générale ?
 
 5. Que signifie, dans l'hypothèse sémantique, le compromis entre spécificité et réutilisabilité ?
 
@@ -205,7 +208,8 @@ Deux travaux proposent des pistes explicatives différentes :
 1. Ce sont des propositions explicatives. La loi rang-fréquence décrit une régularité observée ; ces travaux cherchent des mécanismes susceptibles de la produire.
 2. À unité et protocole comparables, une condition imposant une charge cognitive plus élevée devrait, selon l'hypothèse, conduire à un $\alpha$ plus élevé. Il faut contrôler les différences de corpus, de taille d'échantillon et de tâche.
 3. Cette comparaison permet de tester si chaque ingrédient suffit isolément ou si l'interaction est nécessaire dans le modèle étudié. L'auteur rapporte que les deux ingrédients combinés sont nécessaires dans son cadre.
-4. Il faudrait des prédictions discriminantes, des mesures indépendantes des variables invoquées, des réplications sur d'autres corpus et tâches, et une comparaison avec des explications concurrentes. Reproduire une courbe ne suffit pas.
+4. Piantadosi rappelle que les régularités observées ne départagent pas à elles seules les mécanismes proposés et qu'aucune explication ne couvre de façon convaincante l'ensemble des faits examinés. Les propositions de Lestrade et de Linders–Louwerse doivent donc être présentées comme des hypothèses de portée définie, pas comme un consensus.
+5. Il faudrait des prédictions discriminantes, des mesures indépendantes des variables invoquées, des réplications sur d'autres corpus et tâches, et une comparaison avec des explications concurrentes. Reproduire une courbe ne suffit pas.
 
 5. Un terme trop général distingue mal les référents ; un terme trop spécifique ne s'applique qu'à peu de situations. Le modèle propose qu'un équilibre entre pouvoir discriminant et réutilisation contribue à la fréquence. C'est une hypothèse du modèle, pas une loi universelle.
 
