@@ -142,7 +142,7 @@ $$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 $$
 
-Une température plus faible tend à concentrer la distribution ; une température plus élevée tend à l'aplatir. Pour $\tau>0$, l'ordre des logits et l'argmax restent inchangés, mais les probabilités et donc l'entropie changent. L'entropie de la distribution après température ne doit pas être présentée comme une mesure de l'incertitude calibrée du modèle sans évaluation empirique.
+Une température plus faible tend à concentrer la distribution ; une température plus élevée tend à l'aplatir. Pour $\tau>0$, l'ordre des logits et l'argmax restent inchangés, mais les probabilités et donc l'entropie changent. L'entropie de la distribution après température ne doit pas être présentée comme une mesure de l'incertitude calibrée du modèle sans évaluation empirique. Le mécanisme de température et ses autres effets sur le décodage sont détaillés dans les [stratégies avancées de décodage](decoding-strategies.qmd#temperature).
 
 ## Ce que l'entropie ne permet pas de conclure
 

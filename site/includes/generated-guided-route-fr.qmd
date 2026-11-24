@@ -115,7 +115,7 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 **Pages centrales**
 
 - [Logits : les scores avant normalisation](logits.html)
-- [Probabilités de sortie : des logits aux tokens](probabilites.html)
+- [Probabilités de sortie : des logits à une distribution](probabilites.html)
 - [Entropie : incertitude sur le prochain token](entropy.html)
 
 :::

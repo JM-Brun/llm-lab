@@ -142,7 +142,7 @@ $$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 $$
 
-Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For $\tau>0$, logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation.
+Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For $\tau>0$, logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation. The temperature mechanism and its other decoding effects are developed in [advanced decoding strategies](decoding-strategies.qmd#temperature).
 
 ## What entropy does not establish
 

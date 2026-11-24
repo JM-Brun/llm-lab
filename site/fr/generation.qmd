@@ -151,7 +151,7 @@ La distribution du tour 1 ne désigne pas une sortie unique. C'est la règle de 
 | « Moi » | 0,02 | 0,10 | 0,17 |
 | « Oui » | 0,02 | 0,10 | 0,17 |
 
-Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul est détaillé dans [Probabilités de sortie](probabilites.qmd).
+Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul et ses effets sont approfondis dans les [stratégies de décodage](decoding-strategies.qmd#temperature).
 
 Les filtres **top-k** et **top-p** écartent les candidats les moins probables avant le tirage ; la recherche par faisceau (*beam search*) et le décodage contrastif suivent d'autres logiques. La boucle de base se comprend sans eux ; leurs compromis sont comparés dans les [stratégies de décodage](decoding-strategies.qmd), et une [introduction de Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) en donne un premier aperçu.
 

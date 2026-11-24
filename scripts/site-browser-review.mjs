@@ -448,6 +448,13 @@ async function runCase(testCase, caseIndex) {
     }
 
     if (["probabilites.html", "probabilities.html"].includes(pagePath)) {
+      const flowFits = await page.locator("ol.probability-flow").evaluate(
+        flow => flow.children.length === 6 && flow.scrollWidth <= flow.clientWidth + 1
+      );
+      if (!flowFits) throw new Error("The probability flow must fit without horizontal scrolling.");
+    }
+
+    if (pagePath === "decoding-strategies.html") {
       const explorer = page.locator("[data-temperature-explorer]");
       await explorer.waitFor({ state: "visible" });
       const workedRows = await page.locator(".probability-example tbody tr").evaluateAll(rows =>
@@ -482,12 +489,7 @@ async function runCase(testCase, caseIndex) {
       if (JSON.stringify(await readBars()) !== JSON.stringify(baseline)) {
         throw new Error("The standard-temperature preset must restore the worked distribution.");
       }
-      const flowFits = await page.locator("ol.probability-flow").evaluate(
-        flow => flow.children.length === 6 && flow.scrollWidth <= flow.clientWidth + 1
-      );
-      if (!flowFits) throw new Error("The probability flow must fit without horizontal scrolling.");
     }
-
     if (pagePath === "scaled-dot-product-attention.html") {
       item.attentionDisclosures = await reviewAttentionDisclosures(page, context, mobileAttention);
       const lab = page.locator("[data-attention-intervention]");
@@ -745,10 +747,25 @@ async function runCase(testCase, caseIndex) {
         const lessonLink = links.find(link =>
           link.path.endsWith(`/${lessonSlug}.html`) && link.visible
         );
-        const collectionSlug = `exercises-${lessonSlug}`;
+        // Probability practice reuses shared Foundations and Generation collections;
+        // it intentionally has no redundant one-to-one exercises-probabilities collection.
+        const collectionTargets = {
+          probabilities: [
+            { slug: "exercises-foundations", hash: "" },
+            { slug: "exercises-generation", hash: "#ex-generation-temperature" },
+          ],
+          probabilites: [
+            { slug: "exercises-foundations", hash: "" },
+            { slug: "exercises-generation", hash: "#ex-generation-temperature" },
+          ],
+        };
+        const expectedCollections = collectionTargets[lessonSlug] ?? [
+          { slug: `exercises-${lessonSlug}`, hash: `#${lessonSlug}` },
+        ];
         const collectionLink = links.find(link =>
-          link.path.endsWith(`/${collectionSlug}.html`) &&
-          link.hash === `#${lessonSlug}` && link.visible
+          expectedCollections.some(({ slug, hash }) =>
+            link.path.endsWith(`/${slug}.html`) && (!hash || link.hash === hash)
+          ) && link.visible
         );
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
           /check the essential idea|vérifier l['’]idée essentielle/i.test(heading.textContent)
