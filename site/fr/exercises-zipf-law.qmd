@@ -200,7 +200,7 @@ La revue critique de Piantadosi (2014) souligne qu'aucune explication disponible
 4. Pourquoi la revue de Piantadosi invite-t-elle à présenter ces propositions comme des modèles concurrents ou complémentaires, et non comme une explication acquise ?
 5. Quelles preuves supplémentaires seraient nécessaires avant de présenter l'une de ces propositions comme une explication générale ?
 
-5. Que signifie, dans l'hypothèse sémantique, le compromis entre spécificité et réutilisabilité ?
+6. Que signifie, dans l'hypothèse sémantique, le compromis entre spécificité et réutilisabilité ?
 
 <details>
 <summary>Afficher le corrigé</summary>
@@ -211,7 +211,7 @@ La revue critique de Piantadosi (2014) souligne qu'aucune explication disponible
 4. Piantadosi rappelle que les régularités observées ne départagent pas à elles seules les mécanismes proposés et qu'aucune explication ne couvre de façon convaincante l'ensemble des faits examinés. Les propositions de Lestrade et de Linders–Louwerse doivent donc être présentées comme des hypothèses de portée définie, pas comme un consensus.
 5. Il faudrait des prédictions discriminantes, des mesures indépendantes des variables invoquées, des réplications sur d'autres corpus et tâches, et une comparaison avec des explications concurrentes. Reproduire une courbe ne suffit pas.
 
-5. Un terme trop général distingue mal les référents ; un terme trop spécifique ne s'applique qu'à peu de situations. Le modèle propose qu'un équilibre entre pouvoir discriminant et réutilisation contribue à la fréquence. C'est une hypothèse du modèle, pas une loi universelle.
+6. Un terme trop général distingue mal les référents ; un terme trop spécifique ne s'applique qu'à peu de situations. Le modèle propose qu'un équilibre entre pouvoir discriminant et réutilisation contribue à la fréquence. C'est une hypothèse du modèle, pas une loi universelle.
 
 Ces deux travaux proposent des cadres différents ; ils ne constituent pas une explication consensuelle unique.
 
