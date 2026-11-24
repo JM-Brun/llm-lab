@@ -117,6 +117,8 @@ $$
 
 Thus $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$.
 
+Under the usual conditions, $D_{\mathrm{KL}}(q\Vert p)\geq 0$, with equality if and only if $q=p$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
+
 Here, $q$ and $p$ are normalized distributions and zero-mass terms contribute zero. If $q_i>0$ but $p_i=0$, cross-entropy and $D_{\mathrm{KL}}(q\Vert p)$ are infinite under the usual extended-value convention. KL divergence is **directional**; cross-entropy is neither symmetric nor a metric distance.
 
 For example, with $q=(1,0)$ and $p=(0.9,0.1)$:
