@@ -32,7 +32,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-found
 4. Cibles souples, entropie et divergence KL dans les [mathématiques des modèles de langage](language-modeling-math.qmd).
 5. Axes du batch, de la séquence et du vocabulaire ; les [tenseurs](tensors.qmd) sont une référence facultative sur les formes.
 6. [Softmax et stabilité numérique](probabilites.qmd), exponentielles et logarithmes.
-7. [Log-vraisemblance négative](vraisemblance.qmd), moyenne par token et [perplexité](likelihood.qmd#perplexity).\n8. [Similarité cosinus](cosine-similarity.qmd), produit scalaire, normes et normalisation.\n9. [Linéarité des représentations](linearite-embeddings.qmd), décodabilité, probes et interventions.
+7. [Log-vraisemblance négative](vraisemblance.qmd), moyenne par token et [perplexité](vraisemblance.qmd#perplexite).\n8. [Similarité cosinus](cosine-similarity.qmd), produit scalaire, normes et normalisation.\n9. [Linéarité des représentations](linearite-embeddings.qmd), décodabilité, probes et interventions.
 
 **Périmètre actuel :** neuf exercices corrigés couvrent softmax/NLL, masquage et réduction, gradients, cibles souples et KL, formes de tenseurs, stabilité de log-sum-exp/log-softmax, perplexité, similarité cosinus et interprétation des probes linéaires. La vérification de gradients par différences finies reste à construire.
 
