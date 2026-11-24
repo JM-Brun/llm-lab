@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-at
 
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](../exercises.qmd#attention).
+[Collection d’exercices approfondis sur l’attention](../exercises-attention.qmd#attention).
 
 1. Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle.
 
