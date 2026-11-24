@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 
 [← Back to the lesson: Probabilities and softmax](../probabilities.qmd)
 
-## Check your understanding
+## Check the essential idea
 
 [Softmax and NLL practice in Mathematical foundations](../exercises-foundations.qmd).
 
