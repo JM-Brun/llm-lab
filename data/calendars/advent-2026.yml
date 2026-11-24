@@ -1,0 +1,382 @@
+schema_version: 1
+calendar:
+  id: llm-advent-2026
+  year: 2026
+  status: in-production
+  event_window: "2026-12-01/2026-12-24"
+  duration_days: 24
+  languages: [fr, en]
+  title:
+    fr: "Le calendrier de l’Avent 2026 de LLM Lab"
+    en: "LLM Lab Advent Calendar 2026"
+  editorial_model: "one-door-one-story-led-deepen-lesson"
+  archive_policy: "archive-the-edition-not-the-lessons"
+  description:
+    fr: "24 portes indépendantes. Chaque porte met en scène une leçon permanente de Deepen."
+    en: "24 independent doors. Each door presents a permanent Deepen lesson."
+
+# The lesson page is the content behind the door: do not create a second calendar-only copy.
+# page_status values: reuse-audit | create | in-progress | published
+# A page marked reuse-audit exists in the repository, but its Deepen placement and scope
+# must be checked before the door is considered complete.
+days:
+  - day: 1
+    id: zipf-law
+    door:
+      fr: "Pourquoi le mot « de » revient-il si souvent ?"
+      en: "Why does the word “the” appear everywhere?"
+    question:
+      fr: "Quelle régularité statistique se cache derrière le classement des fréquences lexicales ?"
+      en: "What statistical regularity hides behind word-frequency rankings?"
+    deepen_domain: "Texte, langage et statistiques"
+    lesson_page:
+      fr: "fr/zipf-law"
+      en: "en/zipf-law"
+    page_status: create
+    lesson_scope: "Loi de Zipf, distributions rang-fréquence, longue traîne, corpus et limites empiriques."
+    experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
+  - day: 2
+    id: information-and-surprisal
+    door:
+      fr: "Combien de bits contient la surprise d’une phrase ?"
+      en: "How many bits of surprise does a sentence contain?"
+    question:
+      fr: "Comment quantifier l’incertitude avant de connaître le résultat ?"
+      en: "How can uncertainty be quantified before an outcome is known?"
+    deepen_domain: "Probabilités et théorie de l’information"
+    lesson_page:
+      fr: "fr/experience-information-theory"
+      en: "en/experience-information-theory"
+    page_status: reuse-audit
+    lesson_scope: "Information propre, surprisal, entropie et entropie conditionnelle appliqués au langage."
+    experiment: "Comparer la surprise de plusieurs événements sous des distributions construites."
+  - day: 3
+    id: tokenizer-as-compression-engineer
+    door:
+      fr: "Le tokenizer, ingénieur de compression"
+      en: "The tokenizer as a compression engineer"
+    question:
+      fr: "Quel compromis existe entre taille du vocabulaire et longueur des séquences ?"
+      en: "What trade-off exists between vocabulary size and sequence length?"
+    deepen_domain: "Texte et tokenisation"
+    lesson_page:
+      fr: "fr/tokenizer-design-evaluation"
+      en: "en/tokenizer-design-evaluation"
+    page_status: reuse-audit
+    lesson_scope: "BPE, stratégies de segmentation, compression, taille du vocabulaire et protocole d’évaluation."
+    experiment: "Comparer plusieurs segmentations d’un même corpus et mesurer les longueurs obtenues."
+  - day: 4
+    id: geometry-of-meaning
+    door:
+      fr: "Le sens peut-il avoir une direction ?"
+      en: "Can meaning have a direction?"
+    question:
+      fr: "Que peut-on réellement déduire de la géométrie des représentations vectorielles ?"
+      en: "What can we actually infer from the geometry of vector representations?"
+    deepen_domain: "Géométrie des représentations"
+    lesson_page:
+      fr: "fr/linearite-embeddings"
+      en: "en/linearite-embeddings"
+    page_status: reuse-audit
+    lesson_scope: "Relations linéaires dans les espaces de représentation, analogies célèbres et limites empiriques."
+    experiment: "Comparer des directions et des similarités en explicitant les limites de l’interprétation."
+  - day: 5
+    id: contextual-meaning
+    door:
+      fr: "Le même mot, deux mondes différents"
+      en: "The same word, two different worlds"
+    question:
+      fr: "Comment une même unité lexicale peut-elle prendre des représentations différentes selon le contexte ?"
+      en: "How can the same lexical unit receive different representations across contexts?"
+    deepen_domain: "Représentations et géométrie"
+    lesson_page:
+      fr: "fr/contextualized-representations-advanced"
+      en: "en/contextualized-representations-advanced"
+    page_status: reuse-audit
+    lesson_scope: "Polysémie, contextualisation, positions et couches ; distinguer embeddings initiaux et états contextualisés."
+    experiment: "Comparer les occurrences d’un mot ambigu dans deux contextes."
+  - day: 6
+    id: positional-encoding-as-signal
+    door:
+      fr: "Que vient faire une sinusoïde dans l’ordre des mots ?"
+      en: "What does a sine wave have to do with word order?"
+    question:
+      fr: "Comment des fréquences et des phases peuvent-elles coder une position ?"
+      en: "How can frequencies and phases encode a position?"
+    deepen_domain: "Attention, position et architectures"
+    lesson_page:
+      fr: "fr/sinusoidal-positional-encoding"
+      en: "en/sinusoidal-positional-encoding"
+    page_status: reuse-audit
+    lesson_scope: "Fréquences logarithmiques, longueurs d’onde, phases et propriété de décalage."
+    experiment: "Tracer plusieurs composantes sinusoïdales et comparer leurs variations selon la position."
+  - day: 7
+    id: attention-as-retrieval
+    door:
+      fr: "L’attention comme système de recherche appris"
+      en: "Attention as a learned retrieval system"
+    question:
+      fr: "Comment une requête retrouve-t-elle des informations pertinentes parmi des valeurs ?"
+      en: "How does a query retrieve relevant information from values?"
+    deepen_domain: "Attention, position et architectures"
+    lesson_page:
+      fr: "fr/queries-keys-values-advanced"
+      en: "en/queries-keys-values-advanced"
+    page_status: reuse-audit
+    lesson_scope: "Lecture de Q/K/V par l’analogie recherche–index–contenu, puis formalisation et limites de l’analogie."
+    experiment: "Modifier Q, K ou V séparément et prédire l’effet sur les poids et la sortie."
+  - day: 8
+    id: attention-score-scaling
+    door:
+      fr: "Pourquoi diviser par la racine carrée de la dimension ?"
+      en: "Why divide by the square root of the dimension?"
+    question:
+      fr: "Pourquoi la variance des produits scalaires pose-t-elle un problème lorsque la dimension augmente ?"
+      en: "Why does the variance of dot products become problematic as dimensionality grows?"
+    deepen_domain: "Attention, position et architectures"
+    lesson_page:
+      fr: "fr/attention-score-scaling"
+      en: "en/attention-score-scaling"
+    page_status: reuse-audit
+    lesson_scope: "Dérivation sous hypothèses explicites, saturation du softmax et limites du facteur de mise à l’échelle."
+    experiment: "Simuler des produits scalaires de dimensions différentes et comparer leur dispersion."
+  - day: 9
+    id: softmax-and-statistical-physics
+    door:
+      fr: "Softmax et physique d’une foule"
+      en: "Softmax and the physics of a crowd"
+    question:
+      fr: "Comment une température modifie-t-elle la concentration d’une distribution ?"
+      en: "How does temperature change the concentration of a distribution?"
+    deepen_domain: "Probabilités et théorie de l’information"
+    lesson_page:
+      fr: "fr/softmax-temperature-statistical-mechanics"
+      en: "en/softmax-temperature-statistical-mechanics"
+    page_status: create
+    lesson_scope: "Softmax, température, fonction de partition et distribution de Boltzmann ; analogie et limites."
+    experiment: "Faire varier la température sur des logits fixes et mesurer l’entropie."
+  - day: 10
+    id: causal-information-barrier
+    door:
+      fr: "Le mur triangulaire : empêcher les fuites d’information"
+      en: "The triangular wall: preventing information leaks"
+    question:
+      fr: "Comment une contrainte d’accès à l’information empêche-t-elle de regarder les tokens futurs ?"
+      en: "How does an information-access constraint prevent looking at future tokens?"
+    deepen_domain: "Attention, position et architectures"
+    lesson_page:
+      fr: "fr/causal-information-flow"
+      en: "en/causal-information-flow"
+    page_status: create
+    lesson_scope: "Masque causal comme contrainte d’information, causalité computationnelle et comparaison prudente avec les fuites de données."
+    experiment: "Retirer une contrainte du masque et identifier précisément quelles positions accèdent au futur."
+  - day: 11
+    id: residual-stream
+    door:
+      fr: "Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?"
+      en: "Why do deep networks keep a residual stream?"
+    question:
+      fr: "Comment un chemin identité modifie-t-il la propagation du signal et des gradients ?"
+      en: "How does an identity path change signal and gradient propagation?"
+    deepen_domain: "Architectures et optimisation"
+    lesson_page:
+      fr: "fr/residual-connections"
+      en: "en/residual-connections"
+    page_status: create
+    lesson_scope: "Transformations résiduelles x + F(x), chemin identité, Jacobien et intuition de l’optimisation."
+    experiment: "Comparer les gradients d’un petit réseau avec et sans chemin identité."
+  - day: 12
+    id: normalization-and-conditioning
+    door:
+      fr: "Normalisation : changer de coordonnées pour mieux apprendre"
+      en: "Normalization: changing coordinates to make learning easier"
+    question:
+      fr: "Que stabilisent LayerNorm et RMSNorm, et que ne garantissent-elles pas ?"
+      en: "What do LayerNorm and RMSNorm stabilize, and what do they not guarantee?"
+    deepen_domain: "Architectures et optimisation"
+    lesson_page:
+      fr: "fr/normalization-and-conditioning"
+      en: "en/normalization-and-conditioning"
+    page_status: create
+    lesson_scope: "Moments, normalisation, invariances d’échelle, conditionnement et comparaison LayerNorm/RMSNorm."
+    experiment: "Calculer les sorties de LayerNorm et RMSNorm sur un petit vecteur."
+  - day: 13
+    id: perplexity
+    door:
+      fr: "Perplexité : à quel point le modèle est-il surpris ?"
+      en: "Perplexity: how surprised was the model?"
+    question:
+      fr: "Comment comparer les performances prédictives de deux modèles sur un texte ?"
+      en: "How can two models’ predictive performance on a text be compared?"
+    deepen_domain: "Probabilités et évaluation"
+    lesson_page:
+      fr: "fr/perplexity"
+      en: "en/perplexity"
+    page_status: create
+    lesson_scope: "Perplexité, entropie croisée, moyenne géométrique, dépendance à la tokenisation et précautions de comparaison."
+    experiment: "Calculer la perplexité de deux modèles jouets sur les mêmes cibles."
+  - day: 14
+    id: temperature-and-sampling
+    door:
+      fr: "Température : créativité ou distribution simplement plus plate ?"
+      en: "Temperature: creativity or just a flatter distribution?"
+    question:
+      fr: "Que change exactement la température dans le comportement d’échantillonnage ?"
+      en: "What exactly does temperature change in sampling behaviour?"
+    deepen_domain: "Inférence et génération"
+    lesson_page:
+      fr: "fr/temperature-sampling"
+      en: "en/temperature-sampling"
+    page_status: create
+    lesson_scope: "Mise à l’échelle des logits, entropie et variabilité des tirages ; ne pas assimiler température et créativité."
+    experiment: "Comparer les distributions et des fréquences empiriques de tirage pour plusieurs températures."
+  - day: 15
+    id: top-k-and-top-p
+    door:
+      fr: "Top-k et top-p : où couper la queue de probabilité ?"
+      en: "Top-k and top-p: where should the probability tail end?"
+    question:
+      fr: "Comment deux règles de troncature sélectionnent-elles des ensembles de candidats différents ?"
+      en: "How do two truncation rules select different candidate sets?"
+    deepen_domain: "Inférence et génération"
+    lesson_page:
+      fr: "fr/top-k-top-p-truncation"
+      en: "en/top-k-top-p-truncation"
+    page_status: create
+    lesson_scope: "Troncature top-k et nucleus sampling top-p, masse cumulée, cas limites et diversité."
+    experiment: "Appliquer les deux règles à une distribution construite et comparer les candidats conservés."
+  - day: 16
+    id: local-choice-global-sequence
+    door:
+      fr: "Pourquoi le token le plus probable peut-il produire une phrase moins bonne ?"
+      en: "Why can the most likely next token produce a worse sentence?"
+    question:
+      fr: "Pourquoi un choix localement optimal ne garantit-il pas une séquence globalement optimale ?"
+      en: "Why does a locally optimal choice not guarantee a globally optimal sequence?"
+    deepen_domain: "Inférence et génération"
+    lesson_page:
+      fr: "fr/greedy-and-beam-search"
+      en: "en/greedy-and-beam-search"
+    page_status: create
+    lesson_scope: "Greedy decoding, recherche en faisceau, scores de séquence, biais de longueur et compromis."
+    experiment: "Construire un petit arbre de probabilités où greedy échoue à trouver la meilleure séquence."
+  - day: 17
+    id: cross-entropy-as-code-length
+    door:
+      fr: "L’entropie croisée comme longueur de code"
+      en: "Cross-entropy as a code length"
+    question:
+      fr: "Combien de bits supplémentaires paie-t-on avec un modèle probabiliste imparfait ?"
+      en: "How many extra bits do we pay with an imperfect probabilistic model?"
+    deepen_domain: "Probabilités et théorie de l’information"
+    lesson_page:
+      fr: "fr/cross-entropy"
+      en: "en/cross-entropy"
+    page_status: reuse-audit
+    lesson_scope: "Entropie croisée, codage, divergence KL et regret de codage."
+    experiment: "Comparer les longueurs de code attendues sous deux modèles."
+  - day: 18
+    id: log-likelihood-and-sequence-products
+    door:
+      fr: "Pourquoi additionner les logarithmes plutôt que multiplier les probabilités ?"
+      en: "Why add log-probabilities instead of multiplying probabilities?"
+    question:
+      fr: "Comment le produit des probabilités conditionnelles devient-il une somme numériquement stable ?"
+      en: "How does a product of conditional probabilities become a numerically stable sum?"
+    deepen_domain: "Probabilités et évaluation"
+    lesson_page:
+      fr: "fr/sequence-log-likelihood"
+      en: "en/sequence-log-likelihood"
+    page_status: create
+    lesson_scope: "Règle de chaîne, vraisemblance de séquence, log-vraisemblance et sous-flux numérique."
+    experiment: "Calculer une vraisemblance de séquence en probabilités puis en log-probabilités."
+  - day: 19
+    id: backpropagation-chain-rule
+    door:
+      fr: "La règle de la chaîne : comment l’erreur atteint-elle les premières couches ?"
+      en: "The chain rule: how does an error reach an early layer?"
+    question:
+      fr: "Comment dériver la perte par rapport à un paramètre situé dans les premières transformations ?"
+      en: "How do we differentiate the loss with respect to a parameter in an early transformation?"
+    deepen_domain: "Apprentissage et optimisation"
+    lesson_page:
+      fr: "fr/gradients"
+      en: "en/gradients"
+    page_status: reuse-audit
+    lesson_scope: "Dérivées de fonctions composées, graphe de calcul et rétropropagation sur un réseau jouet."
+    experiment: "Calculer à la main un gradient dans un petit réseau à deux couches."
+  - day: 20
+    id: learning-rate-and-optimization
+    door:
+      fr: "La falaise du taux d’apprentissage"
+      en: "The learning-rate cliff"
+    question:
+      fr: "Pourquoi un pas trop grand peut-il faire diverger une optimisation qui progressait ?"
+      en: "Why can an oversized step destabilize an optimization that was making progress?"
+    deepen_domain: "Apprentissage et optimisation"
+    lesson_page:
+      fr: "fr/learning-rate-optimization"
+      en: "en/learning-rate-optimization"
+    page_status: create
+    lesson_scope: "Descente de gradient, courbure, conditionnement, stabilité et calendriers de taux d’apprentissage."
+    experiment: "Comparer plusieurs pas sur une fonction quadratique simple."
+  - day: 21
+    id: double-descent
+    door:
+      fr: "Quand un modèle devient moins bon avant de s’améliorer"
+      en: "When a model gets worse before it gets better"
+    question:
+      fr: "Pourquoi l’erreur de généralisation peut-elle présenter deux phases de décroissance ?"
+      en: "Why can generalization error show two phases of decline?"
+    deepen_domain: "Échelle et questions de recherche"
+    lesson_page:
+      fr: "fr/double-descent"
+      en: "en/double-descent"
+    page_status: create
+    lesson_scope: "Double descente, seuil d’interpolation, biais-variance et limites de généralisation des observations."
+    experiment: "Étudier une courbe jouet et distinguer observation empirique et loi universelle."
+  - day: 22
+    id: scaling-laws
+    door:
+      fr: "Les grands modèles deviennent-ils prévisibles ?"
+      en: "Do bigger models become predictable?"
+    question:
+      fr: "Que permettent réellement d’extrapoler les lois d’échelle empiriques ?"
+      en: "What can empirical scaling laws actually let us extrapolate?"
+    deepen_domain: "Échelle et questions de recherche"
+    lesson_page:
+      fr: "fr/scaling-laws"
+      en: "en/scaling-laws"
+    page_status: reuse-audit
+    lesson_scope: "Lois de puissance empiriques, compromis paramètres-données-calcul et incertitude d’extrapolation."
+    experiment: "Ajuster une loi de puissance à des données synthétiques et examiner l’incertitude."
+  - day: 23
+    id: retrieval-augmented-generation
+    door:
+      fr: "Et si le modèle pouvait consulter une bibliothèque ?"
+      en: "What if the model could look things up?"
+    question:
+      fr: "Comment une recherche externe modifie-t-elle les informations disponibles pour générer une réponse ?"
+      en: "How does external retrieval change the information available for generation?"
+    deepen_domain: "Inférence, systèmes et contexte"
+    lesson_page:
+      fr: "fr/rag-memory-boundaries"
+      en: "en/rag-memory-boundaries"
+    page_status: reuse-audit
+    lesson_scope: "Recherche externe, mémoire, récupération, grounding et frontières entre paramètres et contexte."
+    experiment: "Comparer une réponse sans document récupéré et une réponse conditionnée par un extrait."
+  - day: 24
+    id: quantization
+    door:
+      fr: "Réduire un modèle sans tout réentraîner"
+      en: "Making a model smaller without retraining everything"
+    question:
+      fr: "Quel compromis introduit la représentation des poids en précision réduite ?"
+      en: "What trade-off is introduced by representing weights at reduced precision?"
+    deepen_domain: "Calcul numérique et efficacité"
+    lesson_page:
+      fr: "fr/quantization"
+      en: "en/quantization"
+    page_status: create
+    lesson_scope: "Quantification, erreurs d’arrondi, plage dynamique, calibration et compromis mémoire-qualité."
+    experiment: "Quantifier un petit vecteur de poids et mesurer l’erreur de reconstruction."
