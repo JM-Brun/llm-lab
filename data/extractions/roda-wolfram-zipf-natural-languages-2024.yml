@@ -74,4 +74,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "Phase A only. This is a useful model for an interactive workbench, not a source of independent empirical evidence. Reproduce the learning activity with project-owned code and data rather than copying the Wolfram notebook before rights and code inspection."
+  decision_summary: "Phase B decision: deferred. The demonstration page is retained as inspiration for a project-owned interactive rank-frequency workbench, not as independent empirical evidence. The notebook/source code, data, execution behavior and mobile accessibility have not been audited, so no learning-page integration or reproduction is justified yet."
