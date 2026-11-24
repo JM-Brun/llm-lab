@@ -13,7 +13,7 @@ id: "fr/top-k-top-p-truncation"
 summary: "Compare top-k et top-p comme deux règles de troncature distinctes et montre comment leur sélection dépend de la forme de la distribution."
 scope: "Troncature top-k et nucleus sampling top-p, masse cumulée, cas limites et diversité."
 purpose: "Appliquer les deux règles à une distribution, expliquer leurs ensembles de candidats et identifier les cas où elles divergent."
-domain: "inference-generation"
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
