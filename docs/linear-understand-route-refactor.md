@@ -387,3 +387,89 @@ Once the flat route is validated:
 4. Which existing optional pages are truly Deepen resources versus legacy core material that deserves promotion. Decide from learning outcomes and evidence, not sidebar location alone.
 
 These decisions should be settled on the Q/K/V bilingual pilot and then applied consistently.
+
+
+## 12. Pedagogical target: short lessons grouped into chapters
+
+The purpose of the refactor is not merely to flatten navigation. The reader-facing course must become a genuinely linear progression of **short, coherent lessons**, normally requiring 10–15 minutes of focused study each. Several lessons may be grouped into a chapter when they contribute to one larger learning objective. Chapters are orientation/grouping devices; lessons are the units the learner completes.
+
+### 12.1 Information architecture
+
+Use exactly three reader-facing levels:
+
+1. **Course** — the complete path and its expected outcome.
+2. **Chapter** — a meaningful conceptual phase, introduced by a short statement of what the learner will understand by its end.
+3. **Lesson** — one question, one principal learning outcome, one bounded conceptual scope, and a target duration of 10–15 minutes maximum for the mandatory path.
+
+A chapter may contain one lesson when that is pedagogically justified. Do not create artificial lessons to make chapter sizes uniform. Conversely, do not retain an oversized page merely because it currently occupies one route slot.
+
+The linear path must make the progression explicit: what the learner already knows, what this lesson adds, what they should be able to explain or do afterwards, and why the next lesson follows. Optional deep dives, exercises, code labs and historical material are linked from the relevant lesson but do not count toward its mandatory duration.
+
+### 12.2 Lesson-level acceptance contract
+
+A lesson is ready for the main path only when it has:
+
+- one central question, stated in learner-facing language;
+- one observable learning outcome, expressed with an action verb;
+- prerequisites supplied by earlier lessons or explicitly marked as optional;
+- one continuous explanation that answers the question without requiring another page;
+- one worked example, diagram or calculation that operationalizes the idea;
+- a short conclusion that states the acquired idea and motivates the next step;
+- a credible mandatory-path duration estimate, accounting for prose, equations, diagrams and worked examples separately from optional material;
+- a corresponding review companion and a separate practice destination where exercises exist.
+
+A lesson should normally teach one principal new idea. Closely coupled sub-steps of one mechanism may remain together (for example, score calculation, normalization and value aggregation in one attention computation). Independent questions should not be bundled merely because they share a topic label.
+
+### 12.3 First-pass size audit of the current French route
+
+The following counts are a structural screening, not final reading-time estimates. They exclude YAML/front matter, editorial HTML comments and fenced code blocks, but still include some practice and optional sections. Actual duration must be measured after the mandatory path is separated from those sections.
+
+| Current lesson | Approx. words | First-pass editorial decision |
+|---|---:|---|
+| Panorama | 2,038 | Keep as a special orientation, not a standard lesson; reduce the mandatory path to the first prediction loop and defer architecture/history/system material. |
+| Texte et tokens | 1,277 | Keep; move embedded exercises and optional Unicode/tokenizer detail to their dedicated destinations. |
+| Plongements | 1,073 | Keep as a short lesson; remove unrelated forward-looking material from the core argument. |
+| Position | 1,370 | Keep the reason for position and the core mechanism; move exercises and geometric derivations out of the mandatory path. |
+| États contextualisés | 1,414 | Keep; ensure it compares initial and contextualized states without trying to teach the Transformer mechanism itself. |
+| Transformer | 3,107 | Split or substantially narrow. Candidate boundary: (a) the Transformer block and its sublayers; (b) the forward pass and how a stack produces final states/logits. Historical 2017 architecture material remains a separate optional/history destination. Confirm the boundary against the actual explanations before moving content. |
+| Q/K/V | 1,470 | Keep as one focused lesson on the three projection roles; move exercises and advanced variants out of the mandatory path. |
+| Attention | 2,043 | Keep the single-query computation as one lesson; move exercises, Build material and FlashAttention out. Reassess whether the five calculation steps fit 15 minutes with the diagram. |
+| Masque causal | 1,680 | Keep as one lesson if its mandatory path stays focused on visibility and the causal constraint; move comparisons of other masks to optional material. |
+| Logits | 1,138 | Keep as a short lesson. |
+| Probabilités | 1,597 | Keep logits-to-distribution and conditional interpretation; separate extended temperature exploration and additional examples from the mandatory path. |
+| Entropie | 1,924 | Keep predictive entropy and its distinction from observed-token score; move compression and V-information to optional deep dives. |
+| Génération | 2,858 | Split. Candidate lessons: (a) autoregressive selection, feedback and stopping; (b) prefill versus decode and the operational role of the KV cache. Keep serving/scheduling as optional or Build material. |
+| In-context learning | 1,009 | Keep as a short lesson. |
+| Ingénierie du contexte | 1,531 | Keep the design principles and one worked example; move extended RAG/memory material to linked lessons if it exceeds the time budget. |
+| Vraisemblance | 1,088 | Keep as a short lesson on scoring an observed sequence and teacher forcing. |
+| Entropie croisée | 2,463 | Narrow or split. The mandatory lesson should establish per-token cross-entropy and its relation to NLL. Move implementation/API details, extensive numerical cases and KL decomposition to dedicated deep dives unless one is essential to the core outcome. |
+| Loss | 1,472 | Keep the aggregation over valid shifted targets and the distinction between attention and loss masks; keep teacher forcing only to the extent needed to explain the observed prefix. |
+| Gradients | 1,581 | Keep as one lesson from local derivatives to a parameter update; move extended calculus/optimizer variants out. |
+| Boucle d’entraînement | 2,627 | Narrow or split. Candidate lessons: (a) one training step from loss through gradient to update; (b) repeated optimization, validation and generalization. Implementation and optimizer comparisons remain optional/Build material. |
+
+### 12.4 Candidate chapter structure
+
+These are conceptual chapter groupings, not a commitment to preserve the current nine stage boundaries unchanged:
+
+1. **Voir ce que prédit un LLM** — orientation/panorama.
+2. **Transformer le texte en entrée** — texte, tokens et identifiants.
+3. **Construire les représentations** — plongements, position, états contextualisés.
+4. **Comprendre le calcul du Transformer** — architecture du bloc, passe avant, Q/K/V, attention, causalité.
+5. **Produire une distribution prédictive** — logits, softmax/probabilités, entropie.
+6. **Générer une continuation** — boucle autorégressive, puis prefill/decode et cache KV.
+7. **Concevoir le contexte** — in-context learning et ingénierie du contexte.
+8. **Évaluer une séquence observée** — vraisemblance, entropie croisée.
+9. **Apprendre les paramètres** — loss, gradients, mise à jour et boucle d'entraînement.
+
+The chapter order must reflect the intended first reading, not pretend that every chapter is a strict mathematical prerequisite of the next. Scoring and training are related uses of the predictive distribution; they should be explained as distinct branches, with a clear transition rather than a false dependency.
+
+### 12.5 Required migration sequence
+
+1. Measure the mandatory reading path of all current lessons in both languages using one documented method. Count optional sections, exercises, code walkthroughs and references separately.
+2. Mark each section as core explanation, review aid, practice, optional deepening, implementation/Build, or history. Do not move material until its destination is explicit.
+3. Approve the chapter/lesson map and the split/merge decisions before changing route IDs or navigation.
+4. Pilot one oversized lesson (Transformer or Generation) in French and English. Validate that each resulting lesson stands alone and stays within 10–15 minutes.
+5. Update `data/guided-route.yml`, lesson contracts, revision companions, practice links, metadata and both language sidebars from the same canonical decision. Do not create a second manually maintained route.
+6. Check the complete learner experience: chapter introductions, lesson objectives, previous/next progression, review link, practice link, optional branches, responsive rendering and bilingual parity.
+
+Do not treat a word-count threshold as an automatic split rule. Duration is an acceptance criterion; conceptual coherence determines the split boundary. Preserve all scientific qualifications, citations, diagrams and existing explanations through explicit moves or merges.
