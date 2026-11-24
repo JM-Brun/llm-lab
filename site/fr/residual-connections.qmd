@@ -1,0 +1,83 @@
+---
+title: "Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?"
+subtitle: "Le chemin identité comme voie de circulation du signal et des gradients"
+description-meta: "Une comparaison de réseaux avec et sans chemin identité pour comprendre le rôle des transformations résiduelles dans l’optimisation."
+keywords: ["type:deep-dive", "destination:deepen", "topic:residual-stream", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/residual-connections"
+summary: "Montre comment une connexion résiduelle x + F(x) préserve un chemin identité et modifie la propagation du signal et des gradients, sans garantir à elle seule un apprentissage stable."
+scope: "Transformations résiduelles x + F(x), chemin identité, Jacobien et intuition de l’optimisation."
+purpose: "Décomposer une transformation résiduelle, interpréter son Jacobien et comparer les chemins de gradient avec et sans connexion identité."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/transformer-block-walkthrough", "fr/gradients"]
+tags: ["type:deep-dive", "destination:deepen", "topic:residual-stream", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 11 · squelette éditorial*
+
+## Question centrale
+
+Montre comment une connexion résiduelle x + F(x) préserve un chemin identité et modifie la propagation du signal et des gradients, sans garantir à elle seule un apprentissage stable.
+
+Transformations résiduelles x + F(x), chemin identité, Jacobien et intuition de l’optimisation.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Comparaison de deux architectures et lecture du Jacobien
+
+Quand chaque couche doit-elle tout reconstruire ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Ajouter une correction plutôt que remplacer l’état
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Suivre le signal et le gradient
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Le chemin identité n’est pas une garantie universelle
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
