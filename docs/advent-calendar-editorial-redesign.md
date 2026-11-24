@@ -113,6 +113,8 @@ The four groups below are **editorial shelves**, not acts in a learning sequence
 
 ### Selection and balance notes
 
+For the wider set of scientific, historical, linguistic, mathematical, experimental, philosophical and sociotechnical perspectives that may inform later editions, see the [thematic landscape and future story candidates](advent-calendar-thematic-landscape.md). That document is a discovery backlog only: it does not change this approved 2026 slate, add days, or alter chronological production.
+
 - The list deliberately alternates between information theory, probability, geometry, numerical analysis, optimization, and LLM system design.
 - Some subjects (attention, normalization, cross-entropy, backpropagation) exist in the main curriculum. Their calendar angle must be materially different as specified above; if the pilot reveals duplication, replace the story.
 - Day 21 (double descent) and day 22 (scaling laws) require careful primary-source review and must not be presented as universal laws.
