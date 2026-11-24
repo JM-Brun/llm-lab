@@ -1,0 +1,83 @@
+---
+title: "Perplexity: how surprised was the model?"
+subtitle: "A predictive metric, a geometric mean, and several comparison traps"
+description-meta: "A worked reading of perplexity connecting conditional probabilities, cross-entropy, and the comparability of evaluations."
+keywords: ["type:deep-dive", "destination:deepen", "topic:perplexity", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/perplexity"
+summary: "Derives perplexity from observed-token probabilities and explains why tokenization, data, and evaluation protocol condition comparisons."
+scope: "Perplexity, cross-entropy, geometric mean, tokenization dependence, and comparison precautions."
+purpose: "Calculate perplexity from conditional probabilities, interpret it as the exponential of an average loss, and check whether a comparison is valid."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/likelihood", "en/entropy", "en/cross-entropy"]
+tags: ["type:deep-dive", "destination:deepen", "topic:perplexity", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 13 · editorial skeleton*
+
+## Central question
+
+Derives perplexity from observed-token probabilities and explains why tokenization, data, and evaluation protocol condition comparisons.
+
+Perplexity, cross-entropy, geometric mean, tokenization dependence, and comparison precautions.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Comparison of two evaluations under a controlled protocol
+
+One average for an entire sequence
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+From probability products to a geometric mean
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Calculating and interpreting perplexity
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+Why two perplexities are not always comparable
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
