@@ -2,7 +2,7 @@
 title: "Why does the word “the” appear everywhere?"
 subtitle: "A simple statistical law behind a highly uneven distribution of words"
 description-meta: "Discover Zipf's law, long-tailed distributions and what they do — and do not — imply for language data."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:in-progress"]
 lang: en
 toc: true
 ---
@@ -20,11 +20,11 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/text-data", "en/tokenization-strategies"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:planned"]
+related: ["en/text-data", "en/tokenization-strategies", "en/entropy", "en/language-modeling-math"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:in-progress"]
 -->
 
-*Independent story · about 10 minutes · Day 1 — draft for review*
+*LLM Lab Advent Calendar 2026 · Door 1 · about 10 minutes*
 
 ## Why do some words seem to appear everywhere?
 
@@ -124,25 +124,11 @@ This does not mean that a model can never produce a rare word. It can exploit it
 
 We should also be precise about the counted unit. A lexical study may count words, whereas a language model predicts **tokens** produced by its tokenizer. A word may be represented by one token or several subword units; the token-frequency distribution is therefore not identical to the word-frequency distribution. This story is about lexical frequencies, not tokenization algorithms.
 
-## Try it
+## Practise
 
-In a toy corpus, the word at rank 1 occurs 12,000 times. Assume Zipf's law with \(\alpha=1\) is a reasonable approximation.
+Calculations, transfer questions, and worked solutions live on a dedicated companion page. This keeps the lesson focused while allowing the practice material to grow independently.
 
-1. What frequency does it predict for the word at rank 4?
-2. What about the word at rank 20?
-3. Can we conclude that the word at rank 20 will occur exactly 600 times in another corpus?
-
-<details>
-<summary>Show the solution</summary>
-
-Using \(f(r)=C/r\) and \(C=12,000\):
-
-- rank 4: \(12,000/4=3,000\) occurrences;
-- rank 20: \(12,000/20=600\) occurrences.
-
-These are values predicted by the toy model, not guarantees. In another corpus, size, domain, period, counting conventions and deviations from the law can all change the observed frequencies.
-
-</details>
+[Open the Zipf's law exercises](exercises/zipf-law.qmd).
 
 ## The takeaway
 
