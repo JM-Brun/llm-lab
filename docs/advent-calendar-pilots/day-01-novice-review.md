@@ -34,7 +34,7 @@ Ask openly first. Do not show the expected answer until the reader has responded
 1. **Main idea:** In your own words, what does the story say about how often words occur?
 2. **Building the ranking:** In the small count table in the story, why is “de” / “the” at rank 1, and what would make its rank change?
 3. **Graph:** What do the horizontal and vertical axes represent? What does a roughly straight line on log-log axes suggest, and what does it not prove?
-4. **Worked example:** If (C=12,000), what frequency does the model predict at rank 4? Can you explain the calculation?
+4. **Transfer calculation:** With (C=12,000) and (\\alpha=1), what frequency does the model predict at rank 6? Can you explain the calculation? This rank is deliberately different from the article's challenge so the question still tests transfer if the reader opened the solution.
 5. **Limits:** Name one reason not to treat the formula as an exact law for every word or every corpus.
 6. **LLM connection:** What is one cautious implication of unequal lexical frequencies for language-model training data? What cannot be concluded from the Zipf curve alone?
 7. **Terminology:** In this story, what does *token* mean? How is that different from a tokenizer token in an LLM?
