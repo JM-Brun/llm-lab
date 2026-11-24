@@ -98,7 +98,6 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 - [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
 - [Unicode, UTF-8 et normalisation](exercises/unicode-text.qmd)
-- [Loi de Zipf et fréquences lexicales](exercises/zipf-law.qmd)
 
 #### Outils mathématiques et géométrie
 
