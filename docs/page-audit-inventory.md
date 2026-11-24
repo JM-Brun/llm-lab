@@ -1658,3 +1658,16 @@ The uncertainty guidance now makes the crossed-dependence consequence explicit: 
 ### Validation still required
 
 Quarto rendering, bilingual link checks, YAML/schema and graph validation, Python/domain checks, and CI must pass on the final PR head. No rendered visual audit or learner study is claimed.
+
+## Probability and decoding ownership update — 2026-11-24
+
+A bilingual refactor now separates the core predictive-distribution lesson from optional decoding policy details. The earlier visual-pedagogy inventory above is retained as a dated snapshot; its ownership notes for the probability page are superseded as follows:
+
+- `probabilities` / `probabilites` remains the core lesson for logits, softmax, the conditional next-token distribution, normalization, calibration, and the distinction between model probability and factual truth. It keeps a short conceptual bridge to generation, observed-target scoring, and training.
+- The detailed temperature treatment and interactive explorer, its worked numerical comparison, the decoding-flow visual, NumPy workbench, and comparison table now belong to the existing optional `decoding-strategies` Deepen page. The page owns the `#temperature` anchor; generation and other cross-links point there.
+- Questions and worked answers for the probability lesson now live in a dedicated bilingual Practice companion. The main lesson links to it rather than embedding a growing question bank. Existing shared Foundations exercises remain the canonical location for softmax/NLL calculations; temperature and top-k/top-p practice remains in the Generation exercise collection.
+- The bilingual revision pages now describe temperature and top-k/top-p as optional decoding transformations, not as part of the base predictive distribution. Entropy, Generation, and the Transformer Explainer link to the canonical decoding owner where relevant.
+
+The transfer was checked against the prior bilingual probability and decoding pages: the core page is shorter, while the decoding page gains the moved explanations and interactive material; the moved numerical examples, filters, comparison and implementation details remain represented. This is an ownership/sequence correction, not a deletion of those concepts.
+
+**Validation boundary:** source-level ownership, bilingual links, page metadata and generated map projections have been reconciled. Final-head Quarto/Chromium and Python CI results are tracked by PR #1584; no learner-outcome or manual screen-reader claim is made here.
