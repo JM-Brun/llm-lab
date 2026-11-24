@@ -79,6 +79,9 @@ The original pages include:
 
 **Follow-up changes on this branch:** the English and French pages now explicitly state normalized-distribution and log-base assumptions, zero-mass and zero-support conventions, and the distinction between target-position and input-position indexing. The algebraic derivation of the KL identity is restored locally, with the target entropy defined in the page; a concrete KL direction/support counterexample is included. The one-hot logit-gradient derivation and the direction of the resulting gradient-descent update are also explicit. The LLM-specific objective, target alignment, masking, reduction, perplexity, examples and practical misconceptions remain public. The rendered page and final line-by-line baseline comparison still require review.
 
+**Current route-refactor reconciliation — 2026-11-24:** the paragraph above records an earlier editorial state and is superseded for the duplicated soft-target/KL derivation and sequence-level perplexity by [the current lesson migration ledger](lesson-migration-ledger.md#8-completed-bilingual-pilot--cross-entropy-kl-and-perplexity-2026-11-24). The full soft-target/KL derivation, its assumptions, support conditions and numerical examples now have one canonical owner in the Deepen page `language-modeling-math`; the core cross-entropy lesson retains the one-hot token objective and a contextual link. The sequence-level perplexity definition and comparison conditions now have one canonical owner in the likelihood lesson. This transfer is source-text checked in both languages; rendered validation remains pending. The remaining implementation/API and numerical-stability material has not yet been moved.
+
+
 ## 3. Probabilities and softmax — `site/fr/probabilites.qmd`, `site/en/probabilities.qmd`
 
 ### Baseline content inventoried
