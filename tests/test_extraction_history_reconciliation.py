@@ -111,14 +111,24 @@ def test_all_canonical_mapping_blocks_are_preserved_and_classified_by_shape() ->
         if "canonical_mapping" in record
     }
 
-    assert len(mappings) == 28
+    assert len(mappings) == 33
     assert all(isinstance(mapping, dict) for mapping in mappings.values())
     assert all(
         {"proposed_relations", "route_implications", "decision_summary"} <= set(mapping)
         for mapping in mappings.values()
     )
-    assert sum("proposed_concepts" in mapping for mapping in mappings.values()) == 27
+    assert sum("proposed_concepts" in mapping for mapping in mappings.values()) == 32
     assert sum("integrated_concepts" in mapping for mapping in mappings.values()) == 1
+    zipf_sources = {
+        "piantadosi-zipf-word-frequency-2014",
+        "lestrade-unzipping-zipfs-law-2017",
+        "pilgrim-hills-bias-zipf-estimators-2021",
+        "linders-louwerse-zipf-spoken-dialog-2023",
+        "roda-wolfram-zipf-natural-languages-2024",
+    }
+    assert zipf_sources <= set(mappings)
+    assert all(mappings[source_id]["proposed_concepts"] == [] for source_id in zipf_sources)
+    assert all(mappings[source_id]["proposed_relations"] == [] for source_id in zipf_sources)
 
     non_empty_relations = {
         source_id: mapping["proposed_relations"]
