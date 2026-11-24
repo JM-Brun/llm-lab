@@ -1,5 +1,7 @@
 # Advent calendar — remaining work and session handoff
 
+> **Mise à jour de migration — 24 novembre 2026.** La PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) est fusionnée et le rendu complet ainsi que le déploiement GitHub Pages post-fusion ont réussi. Les pages principales FR/EN pointent maintenant vers le calendrier scientifique. La PR de nettoyage remplace les huit anciennes pages du prototype par des redirections vers la nouvelle collection, retire leurs mini-leçons du graphe pédagogique et supprime le CSS spécifique devenu inutilisé. Les histoires indépendantes `advent-calendar-story-day-01` et `day-06` sont conservées. Cette mise à jour supersède les consignes de transition antérieures qui demandaient d'attendre le déploiement.
+
 **Last updated:** 2026-11-23  
 **Status:** Day 01 (Zipf's law) has bilingual drafts, an original SVG and a source dossier in PR #1565. The Quarto preview and FR/EN desktop/mobile browser review passed (run #45219428295); the pages remain status:planned and outside the public render list. Scientific and technical review is complete; novice review and editorial acceptance remain pending. Production proceeds strictly from Day 01 to Day 02, then Day 03, etc.  
 **Parent decision:** PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) — merged into `main`.
@@ -225,3 +227,14 @@ This log should record outcomes, not merely activity.
 - **Validation:** source-level page-map replacement checked before committing; PR #1574 requires CI, Quarto rendering and graph checks. No novice-reader test has been performed; the Day 01 protocol explicitly requires a real non-specialist reader and must not be marked complete by author self-review.
 - **Open work:** merge #1574 after checks pass; verify the actual GitHub Pages deployment and both language URLs; confirm navigation and redirects; then remove the archived prototype pages/resources in a separate cleanup PR. Obtain novice feedback and record actual reading time before publishing Day 01 or drafting Day 02.
 - **Exact next action:** inspect PR #1574 checks; once merged, verify Pages deployment and then prepare a bounded cleanup PR only if the new calendar is live in both languages.
+
+
+## 13. Session completion log — replacement and retirement of the old prototype
+
+- **Date:** 2026-11-24
+- **Branch / PR:** `chore/archive-legacy-advent-calendar` — cleanup PR prepared after merge of #1574.
+- **Files changed:** eight legacy Quarto routes (two former landing pages and six mini-lessons); legacy calendar CSS; this handoff document.
+- **Work completed:** verified that the post-#1574 full-site render and GitHub Pages deployment both succeeded. Replaced the old landing pages and mini-lessons with lightweight redirects to the bilingual scientific-calendar landing pages, retaining the old rendered URLs. The old lesson routes keep a fallback link to the corresponding canonical learning resource. Their former page-map metadata is retired from the source graph. The independent scientific stories for Days 01 and 06 remain untouched.
+- **Validation required:** CI/domain checks must confirm that retired page-map entries are excluded cleanly; Quarto must render the eight redirect routes and pass link/browser checks; CSS reference checks must confirm that the prototype stylesheet is no longer used.
+- **Editorial status:** Day 01 remains a planned draft awaiting an actual novice-reader review and editorial acceptance. Do not publish it or begin Day 02 on the basis of this migration.
+- **Exact next action:** review the cleanup PR checks; fix any stale generated-map or navigation references before merging.
