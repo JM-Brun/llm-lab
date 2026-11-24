@@ -33,8 +33,8 @@ Dans le détail du Transformer, Q/K/V restent des projections des états d'entr�
 |---|---|---|
 | PR [#1602](https://github.com/JM-Brun/llm-lab/pull/1602) — consolidation Entropie | Fusionnée | Considérer le contenu comme intégré. Les liens du Panorama et les relations de carte avaient été corrigés. |
 | PR [#1603](https://github.com/JM-Brun/llm-lab/pull/1603) — première migration Practice Attention | Fermée, remplacée | Ne pas la reprendre ; son successeur est #1604. |
-| PR [#1604](https://github.com/JM-Brun/llm-lab/pull/1604) — page Practice dédiée à l'attention à produit scalaire | Ouverte, fusionnable, CI en échec au dernier contrôle | Corriger les artefacts de carte bilingues périmés, puis refaire tous les contrôles. |
-| PR [#1606](https://github.com/JM-Brun/llm-lab/pull/1606) — transition distribution prédictive → scoring | Ouverte, fusionnable, CI en échec au dernier contrôle | Adapter le test de contrat des transitions au troisième lien typé, sans supprimer la relation pédagogique. |
+| PR [#1604](https://github.com/JM-Brun/llm-lab/pull/1604) — page Practice dédiée à l'attention à produit scalaire | Ouverte, fusionnable, CI en échec ; Quarto annulé au dernier contrôle | Corriger les artefacts de carte bilingues périmés, puis refaire tous les contrôles. |
+| PR [#1606](https://github.com/JM-Brun/llm-lab/pull/1606) — transition distribution prédictive → scoring | Ouverte, fusionnable, CI en échec ; Quarto réussi au dernier contrôle | Adapter le test de contrat des transitions au troisième lien typé, sans supprimer la relation pédagogique. |
 | Issue [#575](https://github.com/JM-Brun/llm-lab/issues/575) | Fermée comme décision architecturale terminée | Ne pas la rouvrir pour des tâches éditoriales ou de validation. |
 | Issue [#584](https://github.com/JM-Brun/llm-lab/issues/584) | Ouverte | Conserver les validations lecteur, accessibilité et intégration résiduelles ici. |
 
@@ -46,6 +46,7 @@ Le contenu déplacé est le bon périmètre : l'exercice « mélange pondéré o
 
 - Contrôles de qualité et validation de domaine : succès.
 - Tests : **816 réussis, 2 échoués, 1 ignoré**.
+- Quarto : exécution annulée ; il faut la relancer après correction.
 - Les deux échecs sont `test_tracked_interactive_map_matches_renderer[fr]` et `[en]`.
 - Les fichiers suivis `site/includes/generated-map-data-fr.qmd` et `site/includes/generated-map-data-en.qmd` ne contiennent pas les relations Entropie → fiche de révision sur la compression et → expérience de théorie de l'information attendues par le générateur.
 
@@ -68,6 +69,7 @@ La relation ajoutée exprime que la distribution prédictive commune peut être 
 
 - Contrôles de qualité et validation de domaine : succès.
 - Tests : **817 réussis, 1 échoué, 1 ignoré**.
+- Quarto : succès sur le head contrôlé.
 - L'échec est `test_route_document_uses_the_strict_transition_schema` dans `tests/knowledge/test_guided_route_transitions.py`.
 - Le test attend exactement deux transitions ; le registre en contient maintenant trois, dont la nouvelle transition `predictive-distribution-to-observed-scoring`.
 
