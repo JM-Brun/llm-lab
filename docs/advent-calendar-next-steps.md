@@ -259,3 +259,15 @@ This log should record outcomes, not merely activity.
 - **Validation performed:** inspected the source calendar's editorial framing and five published day pages; compared them with the current LLM Lab editorial redesign, reusable template, Day 01 bilingual draft and novice-review protocol. This is a documentation/template change only; no article content or public rendering configuration changed.
 - **Open gate:** Day 01 remains `status:planned`. A real non-specialist reader must complete the existing protocol, with observed reading time and comprehension evidence, before Day 01 can be accepted or Day 02 can begin. This transfer does not waive or simulate that review.
 - **Exact next action:** obtain the Day 01 novice read-through; revise and re-test only where observations justify it. After explicit acceptance, prepare Day 02 using the revised, deliberately non-rigid story template.
+
+
+## 16. Session completion log — Day 01 public reading release
+
+- **Date:** 2026-11-24
+- **Branch / PR:** `calendar/day01-public-release-v3` — PR #1592 (prepared from current `main`).
+- **Files changed:** bilingual scientific-calendar landing pages; bilingual Day 01 story pages; Quarto render/resource configuration; regenerated French and English learning-map data; this handoff.
+- **Work completed:** exposed the French and English Day 01 stories as public reading versions, linked them from both calendar landing pages, and explicitly distinguished publication for reading from final editorial acceptance. The story remains open to feedback; no novice review is claimed.
+- **Integration correction:** the first PR branch became one commit behind `main` after #1586 merged. Rebased the work onto current `main` rather than carrying stale generated artifacts forward. The learning-map generator assigns display ranks by traversing route/hierarchy reachability; the new story is not part of that route, so its record is appended after the existing published pages (rank 144). Existing page ranks are preserved. This is a display-order property, not a curricular dependency.
+- **Validation state:** on the previous branch commit, the full Quarto build and secret scan passed; CI identified stale bilingual map data. The map payloads have now been regenerated from current `main` and include 145 records per language. The latest commit still requires fresh CI, Quarto, browser, responsive and accessibility validation.
+- **Open gate:** merge and deployment only after required checks pass. Then obtain an actual non-specialist read-through and record reading time, comprehension evidence, observed confusion and an explicit accept/revise decision. Do not begin Day 02 before that editorial gate.
+- **Exact next action:** validate PR #1592 against current `main`; after deployment, run the Day 01 novice-review protocol.
