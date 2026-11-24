@@ -33,8 +33,20 @@ def published_ids() -> set[str]:
 
 def test_route_document_uses_the_strict_transition_schema() -> None:
     document = GENERATOR["GuidedRouteDocument"].model_validate(route_payload())
-    assert len(document.transitions) == 2
-    assert document.transitions[0].id == "predictive-distribution-to-generation"
+    transitions = {item.id: item for item in document.transitions}
+
+    assert len(transitions) == 3
+    assert set(transitions) == {
+        "predictive-distribution-to-generation",
+        "predictive-distribution-to-observed-scoring",
+        "observed-target-to-training-objective",
+    }
+    scoring = transitions["predictive-distribution-to-observed-scoring"]
+    assert (scoring.from_stage, scoring.to_stage, scoring.direction) == (
+        "prediction",
+        "scoring",
+        "directed",
+    )
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
@@ -50,6 +62,16 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
     )
     assert getattr(generation.pages, language) == [f"{language}/generation"]
     assert getattr(generation.purpose, language)
+
+    scoring = by_id["predictive-distribution-to-observed-scoring"]
+    assert (scoring.from_stage, scoring.to_stage, scoring.direction) == (
+        "prediction",
+        "scoring",
+        "directed",
+    )
+    assert getattr(scoring.pages, language) == [f"{language}/likelihood"]
+    assert getattr(scoring.purpose, language)
+    assert "observed" in getattr(scoring.purpose, language).lower() or language == "fr"
 
     cross_entropy = by_id["observed-target-to-training-objective"]
     assert (cross_entropy.from_stage, cross_entropy.to_stage, cross_entropy.direction) == (
