@@ -30,7 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "l
 
 {{< include ../includes/generated-guided-context-en-probabilities.qmd >}}
 ::: {.chapter-lead}
-Why does “They” get 60% in the first turn of the Romans example? Start with four illustrative scores, then change the temperature to see how it redistributes the probabilities.
+Why does “They” get 60% in the first turn of the Romans example? Start with four illustrative scores and see how softmax turns them into a distribution over the vocabulary.
 :::
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
