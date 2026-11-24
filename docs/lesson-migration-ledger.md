@@ -156,7 +156,7 @@ This inventory identifies the expected boundary; it is not permission to remove 
 | scaled-dot-product-attention | One-query computation: QKᵀ, scaling, mask, softmax and weighted sum of V. | Score variance and scaling derivation → attention-score-scaling; FlashAttention and memory/IO analysis → llm-computational-complexity; implementation → Build; exercises → Practice. |
 | causal-masking | Why future positions must be hidden; causal visibility versus other masks; one small mask example. | Padding/document-boundary mask construction → training-examples; API polarity and fully masked row edge cases stay in a verified technical/deep section; exercises → Practice. |
 | logits | Output projection, vocabulary dimension, score interpretation and invariance to a common offset. | Extended algebra/numerical cases → language-modeling-math or another verified Deepen resource; exercises → Practice. |
-| probabilites | Softmax over vocabulary, conditional distribution and normalization; one compact numerical example. | Temperature, top-k/top-p and selection trade-offs → decoding-strategies; calibration theory → a verified evaluation/deepen destination; exercises → Practice. |
+| probabilites | **KEEP** — softmax over the vocabulary, conditional distribution, normalization/calibration, and one compact numerical example. | **MOVED — 2026-11-24** — the temperature equation, interactive explorer, worked calculations, and decoding pipeline now belong to `decoding-strategies`; the probability lesson keeps a concise transition and link. Temperature practice is linked to the existing Generation exercise GE-F. |
 | entropy | Predictive entropy over all candidates; distinguish it from surprisal of one observed token; limits of interpretation. | Compression/coding and broader information-theory treatment → compression-revision and experience-information-theory (the latter is an experiment); V-information remains in its verified advanced/experimental destination. |
 | in-context-learning | Zero/one/few-shot distinction, effect of supplied examples, and difference from parameter updates. | Research-level mechanistic hypotheses → a Deepen resource only after verifying its current owner; exercises → Practice. |
 | context-engineering | Context as application-selected input, one design example, context-window limits and evaluation criteria. | Retrieval algorithms → document-retrieval; RAG and persistent-memory boundaries → rag-memory-boundaries; exercises → Practice. |
@@ -283,3 +283,26 @@ The FR/EN revision companions and dedicated Practice pages are present. The less
 ### Evidence boundary and next step
 
 This pass validates source ownership, section boundaries, bilingual presence and the existence of review/Practice destinations. It does **not** certify visual hierarchy, actual reading time, responsive rendering, keyboard/screen-reader behavior or learner comprehension. The next useful action is to run the same rendered-duration and first-screen review on the two remaining oversized candidates with explicit migration decisions, then update the ledger only after their destination checks. No new route, page, registry or issue is created by this audit.
+
+## 11. Completed bilingual pilot — predictive distribution versus decoding (2026-11-24)
+
+**Status: source-to-destination transfer completed at source-text level.** The Understand route remains unchanged: the probability lesson still follows logits and precedes entropy. No concept, route stage, page identity or new page was added.
+
+### Source and destination
+
+| Source | Destination | Preservation decision |
+|---|---|---|
+| `site/fr/probabilites.qmd` / `site/en/probabilities.qmd`, section on temperature and decoding strategy | `site/fr/decoding-strategies.qmd` / `site/en/decoding-strategies.qmd`, section 2 (`#temperature`) | The temperature equation, interactive explorer, no-JavaScript fallback, worked calculation from 60% to approximately 85.7%, concentration/flattening interpretation, uniform-limit behavior and probability-ratio property are now owned by the optional decoding deep dive. |
+| Probability-page supplementary temperature material: decoding pipeline figure, stable-softmax micro-workbench, and four-logit comparison table | Same bilingual decoding-strategies section, inside an optional disclosure | Preserves the visual pipeline, executable NumPy example, three-temperature comparison and all displayed values. The generic PyTorch softmax/numerical-accuracy references remain with the probability lesson. |
+| Probability lesson's selection transition and generation lesson's temperature pointer | `probabilities.qmd` and `generation.qmd` | The probability lesson retains the compact logits → optional temperature → softmax → optional filtering → selection overview, with a link to the deep dive. Generation keeps the concise operational intuition and now links to the decoding owner for detailed treatment. |
+| Probability revision and Practice companions | `revision-probabilites.qmd` and `exercises/probabilites.qmd` | Revision now treats temperature as an optional decoding transformation rather than a core explanation. The Practice page links to the existing GE-F temperature exercise in `exercises-generation`; no question or worked answer is discarded. |
+
+### Pedagogical rationale
+
+The probability lesson answers **how logits become the model's base conditional distribution and what its probabilities mean**. Temperature is applied to logits before softmax; top-k/top-p filter and renormalize candidates; argmax or sampling selects a token. These are decoding-policy operations, not additional steps in the construction or interpretation of the base distribution. The short transition remains in the probability lesson so the learner can see where the sibling generation branch begins, while the detailed mechanics live in the optional Deepen destination.
+
+This aligns the page ownership with `docs/content-section-mapping.md` and the canonical computational spine: the predictive distribution is the shared output; generation applies a selection policy, whereas scoring and training consume observed targets through separate branches. The move does not make temperature a prerequisite for understanding the distribution.
+
+### Validation boundary
+
+The source-level transfer preserves the bilingual interactive controls, fallback, calculation, figure, code and table. The route and concept registries are unchanged. Quarto rendering, local-link/anchor checks, the interactive explorer in its new location, responsive layout, keyboard behavior and learner review remain to be run; this PR must not claim those checks before their evidence is available.
