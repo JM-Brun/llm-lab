@@ -30,9 +30,9 @@ days:
       en: "What statistical regularity hides behind word-frequency rankings?"
     deepen_domain: "Texte, langage et statistiques"
     lesson_page:
-      fr: "fr/zipf-law"
-      en: "en/zipf-law"
-    page_status: create
+      fr: "fr/advent-calendar-story-day-01"
+      en: "en/advent-calendar-story-day-01"
+    page_status: in-progress
     lesson_scope: "Loi de Zipf, distributions rang-fréquence, longue traîne, corpus et limites empiriques."
     experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
   - day: 2
@@ -105,10 +105,10 @@ days:
       en: "How can frequencies and phases encode a position?"
     deepen_domain: "Attention, position et architectures"
     lesson_page:
-      fr: "fr/sinusoidal-positional-encoding"
-      en: "en/sinusoidal-positional-encoding"
-    page_status: reuse-audit
-    lesson_scope: "Fréquences logarithmiques, longueurs d’onde, phases et propriété de décalage."
+      fr: "fr/advent-calendar-story-day-06"
+      en: "en/advent-calendar-story-day-06"
+    page_status: in-progress
+    lesson_scope: "Caractéristiques de Fourier, échelles fréquentielles et biais spectral, avec le codage positionnel comme application."
     experiment: "Tracer plusieurs composantes sinusoïdales et comparer leurs variations selon la position."
   - day: 7
     id: attention-as-retrieval
