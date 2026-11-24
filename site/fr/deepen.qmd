@@ -31,6 +31,13 @@ La partie **Approfondir** rassemble les traitements qui dépassent le modèle me
 
 Chaque entrée répond à une question plus précise : pourquoi un mécanisme fonctionne, dans quelles conditions il reste valide, quels compromis il introduit, ou comment l'étudier rigoureusement. Les pages sont regroupées par **problème intellectuel**, pas alphabétiquement. Une page peut avoir des liens transversaux, mais conserve une seule rubrique principale pour stabiliser son point d'entrée.
 
+
+::: {.callout-note}
+**Une autre porte d’entrée : le calendrier de l’Avent 2026.** Ses 24 portes mettent en lumière des leçons indépendantes de cette collection. Pendant décembre, le calendrier les présente sous forme d’histoires ; toute l’année, les pages restent accessibles ici, dans leur rubrique thématique. Une porte ne crée ni prérequis ni parcours parallèle.
+
+[Découvrir les 24 portes du calendrier de l’Avent 2026](scientific-calendar.qmd).
+:::
+
 ## Choisir par question
 
 | Votre question | Domaine |
