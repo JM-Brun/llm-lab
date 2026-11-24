@@ -175,6 +175,8 @@ The analogy can motivate a useful question — which positions contribute to a c
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
 
+## Further exploration
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
