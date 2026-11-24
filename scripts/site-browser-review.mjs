@@ -771,6 +771,11 @@ async function runCase(testCase, caseIndex) {
           "scaled-dot-product-attention": [
             { slug: "exercises-attention", hash: "#attention" },
           ],
+          // The text-data collection uses a translated section anchor in French;
+          // validate the collection destination without assuming an English anchor.
+          "text-data": [
+            { slug: "exercises-text-data", hash: "" },
+          ],
         };
         const expectedCollections = collectionTargets[lessonSlug] ?? [
           { slug: `exercises-${lessonSlug}`, hash: `#${lessonSlug}` },
