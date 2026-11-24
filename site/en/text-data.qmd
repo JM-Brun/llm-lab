@@ -101,22 +101,18 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 ## Practice
 
-[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/text-data.qmd).
+
+## Further exploration
 
 :::: {.supplementary-resources}
 
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Revisit the running example, the full pipeline, and the exercises.</span>
+  <span class="learning-resources__description">Revisit the running example, the full pipeline, and the conceptual boundaries.</span>
 </summary>
 ::: {.learning-resources__content}
-
-### Encoding the prefix and continuation
-
-The film replies name aqueducts, sanitation, roads, and irrigation. Several members of the group speak in turn. To trace a single-speaker continuation, use “They built roads between distant towns.” Encode the prefix and this continuation separately with the tokenizer being studied to compare the splits. The continuation is absent from the context the model uses at the first generation step.
-
-**Success criterion:** each ID list decodes exactly to its source text, the prefix and continuation are encoded separately with no merge at the junction, and the decomposition printed by the trace confirms the prefix split.
 
 ### From Unicode text to contextual representations
 
@@ -134,6 +130,8 @@ flowchart TB
 ```
 
 [Unicode source text](unicode-text.qmd) can contain spaces, punctuation, numbers, code, or multiple languages. Depending on the tokenizer, the text can be normalized or split into preliminary pieces. Tokenizers differ in their base units, rules, vocabulary, and special tokens. Modern subword tokenizers often learn their vocabulary. These choices affect which inputs a tokenizer can encode. Tokens are units of computation and their boundaries can fall inside a word. [Tokenization strategies](tokenization-strategies.qmd) compares these choices and the BPE, WordPiece, and unigram algorithms.
+
+A separate single-speaker continuation used in the running example is “They built roads between distant towns.”
 
 The diagram groups positional handling with the Transformer. Some architectures add learned absolute position vectors to token embeddings. With [RoPE](positional-encoding.qmd), attention rotates the query and key vectors. These mechanisms act at different points in the sequence of operations that produces [contextual representations](contextualized-representations.qmd).
 
