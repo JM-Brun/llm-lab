@@ -16,9 +16,9 @@ suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"
 hierarchy:
-  parents: ["fr/text-data"]
-  children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
-related: ["fr/embedding-space-exercises", "fr/gpt-model-walkthrough"]
+  parents: []
+  children: ["fr/cosine-similarity", "fr/linearite-embeddings"]
+related: ["fr/text-data", "fr/positional-encoding", "fr/contextualized-representations", "fr/embedding-space-exercises", "fr/gpt-model-walkthrough"]
 revision_support:
   status: integrated_sufficient
   evidence:
