@@ -1,7 +1,7 @@
 ---
 title: "The LLM Lab 2026 Advent Calendar"
 subtitle: "24 doors, 24 stories, and 24 lessons exploring the ideas that illuminate language models."
-keywords: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
+keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
 lang: en
 sidebar: en
 toc: false
@@ -19,7 +19,7 @@ hierarchy:
   parents: ["en/index"]
   children: []
 related: ["en/learning-map", "en/llm-overview", "en/exercises"]
-tags: ["type:entry-point", "destination:orient", "topic:advent-calendar", "level:overview", "language:en", "status:published"]
+tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:en", "status:published"]
 -->
 
 # 24 doors, 24 discoveries to explore
@@ -29,7 +29,23 @@ A surprising statistical law. A decades-old question about information. A numeri
 The 2026 Advent Calendar offers **24 independent doors**. Behind each one is a story-led, permanent lesson in the **Deepen** collection. Open the doors in any order: none assumes that you have read another. Each starts with a question, develops an argument or an experiment, and invites you to test an idea for yourself.
 
 ::: {.callout-note}
-**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. Editorial production moves forward one day at a time; each story will be published after scientific, pedagogical, and technical review.
+**This is not a condensed learning path.** The days are neither steps nor prerequisites. You can start with any story, even if you are not yet familiar with the other topics. The other 23 stories will be published progressively after scientific, pedagogical, and technical review.
+:::
+
+## First story available
+
+::: {.callout-note}
+
+**Day 01 · Language, information, and probability**
+
+### [Why does the word “the” appear everywhere?](advent-calendar-story-day-01.qmd)
+
+An investigation of Zipf's law: why do a few words appear everywhere while a long tail of words remains rare? A compact formula, a worked example, a plot, and a critical look at the statistical limits of this regularity.
+
+*About 10 minutes · Open for feedback · Non-specialist review pending*
+
+[Read Day 01](advent-calendar-story-day-01.qmd).
+
 :::
 
 ## A collection, not a progression
@@ -45,7 +61,7 @@ Allow about **10 minutes per story**, excluding further reading. The thematic sh
 
 From word frequencies to the information carried by a message, these stories explore statistical regularities in language and the tools used to measure them.
 
-- **Day 01** — **Why does the word “the” appear everywhere?** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
+- **Day 01** — [**Why does the word “the” appear everywhere?**](advent-calendar-story-day-01.qmd) — **Available** — Zipf's law, long-tailed distributions, and unequal lexical frequencies.
 - **Day 02** — **How many bits of surprise are in a sentence?** — Quantifying uncertainty and surprise with information theory.
 - **Day 03** — **The tokenizer as a compression engineer** — The trade-off between vocabulary size, reusable fragments, and sequence length.
 - **Day 13** — **Perplexity: how surprised was the model?** — What the metric measures, and why comparisons can mislead.
@@ -87,9 +103,9 @@ From large-scale empirical phenomena to system-design choices, these stories ask
 
 ## Where does the edition stand?
 
-The list above is a proposed editorial slate, not a claim that all 24 stories are already available. Each story is prepared and checked before publication; topics may change if a story proves repetitive, insufficiently sourced, or less valuable than an alternative.
+The list above presents the 24 doors planned for the 2026 edition. **One of the 24 stories is currently available**; the other 23 titles remain in editorial preparation and may change if a topic proves repetitive, insufficiently sourced, or less valuable than an alternative. Published lessons remain available year-round in Deepen.
 
-The first story, about Zipf's law, is undergoing editorial review. The remaining stories will be developed in day order, but that production order does not impose a reading order.
+Lesson 01, about Zipf's law, is published as a reading version open to feedback. Its non-specialist reader review is still pending; improvements from that review will be incorporated without blocking access to the text. It serves as the pilot for this model: one editorial door, one durable Deepen page, a dedicated exercise page, and links to related knowledge. The production order does not impose a reading order.
 
 ## Explore further
 

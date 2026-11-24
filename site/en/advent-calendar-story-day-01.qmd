@@ -2,7 +2,7 @@
 title: "Why does the word “the” appear everywhere?"
 subtitle: "A simple statistical law behind a highly uneven distribution of words"
 description-meta: "Discover Zipf's law, long-tailed distributions and what they do — and do not — imply for language data."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:in-progress"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
 ---
@@ -18,13 +18,15 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: []
+  parents: ["en/deepen"]
   children: []
-related: ["en/text-data", "en/tokenization-strategies", "en/entropy", "en/language-modeling-math"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:in-progress"]
+related: ["en/scientific-calendar", "en/text-data", "en/tokenization-strategies", "en/entropy", "en/language-modeling-math"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 -->
 
 *LLM Lab Advent Calendar 2026 · Door 1 · about 10 minutes*
+
+This version is published for reading and discussion. Feedback is welcome; a non-specialist reader review is still pending and may lead to further improvements.
 
 ## Why do some words seem to appear everywhere?
 
@@ -128,7 +130,7 @@ We should also be precise about the counted unit. A lexical study may count word
 
 Calculations, transfer questions, and worked solutions live on a dedicated companion page. This keeps the lesson focused while allowing the practice material to grow independently.
 
-[Open the Zipf's law exercises](exercises/zipf-law.qmd).
+A companion exercise page will be published separately.
 
 ## The takeaway
 
@@ -145,6 +147,8 @@ Language does not use all its words at the same frequency. Zipf's law provides a
 - [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposes a model in which syntax and semantics jointly contribute to observed distributions.
 - [Pilgrim and Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — shows that common estimators can remain biased on linguistic data, even after some corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — historical book that popularized the law in language study.
+
+[Back to the Advent Calendar](scientific-calendar.qmd).
 
 ::: {.language-switch}
 **Language:** [Français](../fr/advent-calendar-story-day-01.qmd) · [English](advent-calendar-story-day-01.qmd)

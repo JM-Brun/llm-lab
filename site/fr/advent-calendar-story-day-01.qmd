@@ -2,7 +2,7 @@
 title: "Pourquoi le mot « de » revient-il si souvent ?"
 subtitle: "Une loi statistique simple derrière une distribution de mots très inégale"
 description-meta: "Découvrir la loi de Zipf, les distributions à longue traîne et ce qu'elles impliquent — avec prudence — pour les données de langage."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:in-progress"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
 ---
@@ -18,13 +18,15 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: []
+  parents: ["fr/deepen"]
   children: []
-related: ["fr/text-data", "fr/tokenization-strategies", "fr/entropy", "fr/language-modeling-math"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:in-progress"]
+related: ["fr/scientific-calendar", "fr/text-data", "fr/tokenization-strategies", "fr/entropy", "fr/language-modeling-math"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
 *Calendrier de l’Avent 2026 · Porte 1 · environ 10 minutes*
+
+Cette version est publiée pour être lue et discutée. Les retours sont bienvenus ; la relecture par un lecteur non spécialiste reste à réaliser et pourra conduire à des améliorations.
 
 ## Pourquoi certains mots semblent-ils partout ?
 
@@ -128,7 +130,7 @@ Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des 
 
 Les calculs, questions de transfert et corrigés sont regroupés dans une page dédiée afin de pouvoir enrichir progressivement la pratique sans alourdir cette leçon.
 
-[Accéder aux exercices sur la loi de Zipf](exercises/zipf-law.qmd).
+Une page d’exercices complémentaire sera publiée séparément.
 
 ## L'idée à retenir
 
@@ -145,6 +147,8 @@ La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fou
 - [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.
 - [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
 - [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
+
+[Retour au calendrier de l’Avent](scientific-calendar.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](advent-calendar-story-day-01.qmd) · [English](../en/advent-calendar-story-day-01.qmd)
