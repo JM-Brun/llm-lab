@@ -33,7 +33,7 @@ scan:
     - "Assess the paper's estimator comparison against later work not covered by this pass."
 items:
   - id: pilgrim-hills-bias-zipf-estimators-2021:empirical-rank-vs-probability-rank
-    kind: distinction
+    kind: definition
     summary: "The paper distinguishes an event's empirical rank in a finite sample from its rank in the unknown underlying probability distribution. They need not match: sampling noise can reorder events, so the nth most frequent observed word is not necessarily the nth most probable word."
     locator: {type: section, value: "Introduction, Eqs. 1–2 and discussion of Fig. 2", label: "Empirical and probability ranks"}
     evidence:
