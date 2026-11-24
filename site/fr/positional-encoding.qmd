@@ -114,7 +114,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 <details class="learning-resources">
 <summary>
-  <span class="learning-resources__title">Approfondir</span>
+  <span class="learning-resources__title">Détails mathématiques et références</span>
   <span class="learning-resources__description">Explorer l'équivariance par permutation, la géométrie des encodages sinusoïdaux et les références.</span>
 </summary>
 ::: {.learning-resources__content}
