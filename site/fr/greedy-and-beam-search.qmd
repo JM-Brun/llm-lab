@@ -1,0 +1,83 @@
+---
+title: "Pourquoi le token le plus probable peut-il produire une phrase moins bonne ?"
+subtitle: "Un choix local ne résout pas nécessairement le problème global"
+description-meta: "Un contre-exemple construit pour distinguer le meilleur prochain token de la meilleure séquence selon un score probabiliste."
+keywords: ["type:deep-dive", "destination:deepen", "topic:local-choice-global-sequence", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/greedy-and-beam-search"
+summary: "Construit un arbre de probabilités où le choix greedy perd face à une autre séquence et explique les compromis de la recherche en faisceau."
+scope: "Greedy decoding, recherche en faisceau, scores de séquence, biais de longueur et compromis."
+purpose: "Calculer des scores de séquence, construire un contre-exemple au choix greedy et expliquer ce que beam search explore — sans le présenter comme optimal dans tous les cas."
+domain: "inference-generation"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/decoding-strategies", "fr/vraisemblance"]
+tags: ["type:deep-dive", "destination:deepen", "topic:local-choice-global-sequence", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 16 · squelette éditorial*
+
+## Question centrale
+
+Construit un arbre de probabilités où le choix greedy perd face à une autre séquence et explique les compromis de la recherche en faisceau.
+
+Greedy decoding, recherche en faisceau, scores de séquence, biais de longueur et compromis.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Contre-exemple sur un arbre de séquences
+
+Le meilleur prochain token, vraiment ?
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Construire un arbre de probabilités
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Suivre le choix greedy jusqu’au bout
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Ce que beam search conserve et ce qu’il peut manquer
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
