@@ -26,6 +26,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:zipf-law-exercises", 
 
 Cette page rassemble les calculs et questions de transfert associés à la leçon. Les corrigés sont repliés : essayez d'abord de justifier chaque réponse, y compris les hypothèses utilisées.
 
+[Parcourir le catalogue complet des exercices](../exercises.qmd) pour retrouver les autres vérifications par leçon et collections thématiques.
+
 ## 1. Calculer une fréquence à partir du rang
 
 Dans un corpus jouet, le mot de rang 1 apparaît 12 000 fois. On suppose que la loi de Zipf avec $\alpha=1$ constitue une approximation acceptable :
