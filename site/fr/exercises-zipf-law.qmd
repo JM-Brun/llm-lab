@@ -137,5 +137,5 @@ Un graphique rang-fréquence semble approximativement linéaire sur des axes log
 - [Approfondir les probabilités et l'information](deepen.qmd).
 
 ::: {.language-switch}
-**Langue :** [Français](../en/exercises-zipf-law.qmd#zipf-law) · [English](exercises-zipf-law.qmd#zipf-law)
+**Langue :** [Français](exercises-zipf-law.qmd#zipf-law) · [English](../en/exercises-zipf-law.qmd#zipf-law)
 :::
