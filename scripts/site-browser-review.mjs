@@ -447,6 +447,53 @@ async function runCase(testCase, caseIndex) {
       item.adventDay = { selfCheck: "keyboard", canonicalResources: true };
     }
 
+    const retiredCalendarDay = pagePath.match(/^advent-calendar-day-(0[1-3])\.html$/);
+    if (pagePath === "advent-calendar.html" || retiredCalendarDay) {
+      const expectedCalendar = new URL(`${BASE}/${lang}/scientific-calendar.html`);
+      const retiredPath = new URL(url).pathname;
+      const currentPath = new URL(page.url()).pathname;
+      const redirected = currentPath === expectedCalendar.pathname;
+      if (!redirected && currentPath !== retiredPath) {
+        throw new Error("Retired calendar route must either reach the scientific calendar or remain readable.");
+      }
+
+      // The redirect is progressive enhancement: the destination must also be
+      // reachable through an ordinary link when JavaScript is unavailable.
+      const staticContext = await browser.newContext({ javaScriptEnabled: false, viewport });
+      try {
+        const staticPage = await staticContext.newPage();
+        const retiredUrl = `${BASE}/${lang}/${pagePath}`;
+        const staticResponse = await staticPage.goto(retiredUrl, { waitUntil: "load", timeout: 30000 });
+        if (!staticResponse?.ok()) throw new Error(`No-script fallback returned HTTP ${staticResponse?.status()}.`);
+        const calendarLink = staticPage.locator('a[href*="scientific-calendar"]');
+        if (await calendarLink.count() !== 1 || !await calendarLink.isVisible()) {
+          const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
+          throw new Error(`Retired calendar route must expose one visible fallback link to the scientific calendar; found ${await calendarLink.count()} matching links. Links: ${JSON.stringify(links)}`);
+        }
+        if (retiredCalendarDay) {
+          const canonicalByDay = {
+            "01": "llm-overview.html",
+            "02": "generation.html",
+            "03": "text-data.html",
+          };
+          const canonicalLink = staticPage.locator(`a[href*="${canonicalByDay[retiredCalendarDay[1]].replace(".html","")}"]`);
+          if (await canonicalLink.count() !== 1 || !await canonicalLink.isVisible()) {
+            const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
+            throw new Error(`Retired mini-lesson must retain its visible link to the canonical learning resource; found ${await canonicalLink.count()} matching links. Links: ${JSON.stringify(links)}`);
+          }
+        }
+      } finally {
+        await staticContext.close();
+      }
+
+      item.retiredCalendarRoute = {
+        redirected,
+        destination: expectedCalendar.pathname,
+        noScriptFallback: true,
+        canonicalResourceFallback: Boolean(retiredCalendarDay),
+      };
+    }
+
     if (["probabilites.html", "probabilities.html"].includes(pagePath)) {
       const explorer = page.locator("[data-temperature-explorer]");
       await explorer.waitFor({ state: "visible" });

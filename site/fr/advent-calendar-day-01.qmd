@@ -1,109 +1,37 @@
 ---
-title: "Jour 1 — Que prédit un LLM ?"
-description: "Comprendre la distribution conditionnelle que calcule un modèle autorégressif avant toute sélection de token."
-keywords: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:published"]
+title: "Ancienne mini-leçon — jour 1"
+description: "Cette mini-leçon appartient au prototype retiré. La nouvelle collection rassemble des histoires scientifiques indépendantes."
+keywords: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:retired"]
 lang: fr
 sidebar: fr
 toc: false
-page-layout: custom
-css: ../styles/advent-calendar.css
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/advent-calendar-day-01"
-summary: "Une première lecture du calcul prédictif : à partir d'un préfixe, le modèle attribue une distribution conditionnelle aux tokens possibles."
-scope: "Introduit la prédiction du prochain token et distingue le calcul d'une distribution de la sélection opérée par le décodage."
-purpose: "Expliquer ce qu'un modèle autorégressif calcule à une étape donnée, sans confondre probabilité, choix et vérité."
+summary: "Cette mini-leçon appartient au prototype retiré. La nouvelle collection rassemble des histoires scientifiques indépendantes."
+scope: "Ancienne URL conservée uniquement pour redirection vers le calendrier scientifique."
+purpose: "Préserver les liens historiques sans maintenir l'ancien prototype dans le parcours ou la carte des connaissances."
 suggested_route:
   previous: null
-  next: "fr/advent-calendar-day-02"
+  next: null
 hierarchy:
-  parents: ["fr/advent-calendar"]
+  parents: []
   children: []
-related: ["fr/llm-overview", "fr/probabilites", "fr/generation"]
-tags: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:published"]
+related: []
+tags: ["type:concept-bridge", "destination:orient", "topic:next-token-prediction", "level:overview", "language:fr", "status:retired"]
 -->
 
-<div class="advent-day-shell">
-  <nav class="advent-day-topnav" aria-label="Navigation du calendrier">
-    <a href="advent-calendar.qmd">← Retour aux 24 cases</a>
-    <span>JOUR 01 <span aria-hidden="true">/</span> 24</span>
-  </nav>
-  <div class="advent-day-progress" role="img" aria-label="Première journée sur vingt-quatre"><span style="width: 4.1667%"></span></div>
-  <p class="advent-day-kicker">LE POINT DE DÉPART · 6 MINUTES</p>
-  <h1 class="advent-day-title">Que prédit un LLM ?</h1>
-  <p class="advent-day-lead">Avant de parler d'attention, d'embeddings ou d'entraînement, commençons par la question qui donne son objectif au modèle : <strong>que cherche-t-il à prédire ?</strong></p>
-</div>
+<script>
+  // Keep the retired URL functional while preserving the visible no-script links below.
+  window.location.replace(new URL("scientific-calendar.html", window.location.href).href);
+</script>
 
-## La question
+# Ancienne mini-leçon — jour 1
 
-Que calcule réellement un modèle de langage à partir d'un contexte, avant de sélectionner un token ?
+Cette mini-leçon appartient au prototype retiré. La nouvelle collection rassemble des histoires scientifiques indépendantes.
 
-## L'idée essentielle
+<p><a href="scientific-calendar.html">Ouvrir le calendrier scientifique</a></p>
 
-À partir d'un préfixe déjà fourni, le modèle calcule des scores appelés **logits**, puis une distribution de probabilité sur les tokens possibles à l'étape suivante.
-
-On peut résumer ce calcul par :
-
-\[
-p_\theta(\cdot \mid x_{<t})
-= \operatorname{softmax}\!\left(f_\theta(x_{<t})\right)
-\]
-
-- `x_{<t}` désigne le préfixe disponible avant l'étape `t`.
-- `f_theta` représente le calcul du modèle avec ses paramètres `theta`, jusqu'aux logits.
-- Le softmax transforme ces scores en une distribution sur le vocabulaire.
-
-**La sortie prédictive est donc une distribution, pas encore un token choisi.**
-
-## Un exemple guidé
-
-Après le préfixe « Le chat », imaginons la distribution jouet suivante :
-
-| Token candidat | Probabilité |
-|---|---:|
-| « dort » | 0,55 |
-| « mange » | 0,25 |
-| « court » | 0,15 |
-| Autres | 0,05 |
-| **Total** | **1,00** |
-
-Ces valeurs sont illustratives : elles ne proviennent pas d'un modèle réel. Elles montrent que le modèle attribue une probabilité conditionnelle de 0,55 à « dort », sans imposer cette continuation.
-
-<div class="advent-mini-flow" aria-label="Du contexte à la sélection">
-  <div><span>Entrée</span><strong>« Le chat »</strong></div>
-  <b aria-hidden="true">→</b>
-  <div><span>Calcul du modèle</span><strong>Logits puis softmax</strong></div>
-  <b aria-hidden="true">→</b>
-  <div><span>Résultat</span><strong>Une distribution</strong></div>
-  <b aria-hidden="true">→</b>
-  <div><span>Ensuite</span><strong>Décodage</strong></div>
-</div>
-
-Le **décodage** intervient après ce calcul : il applique une règle de sélection, par exemple choisir le token le plus probable ou échantillonner selon la distribution. Prédire une distribution et sélectionner un token sont deux opérations distinctes.
-
-## À vous de vérifier
-
-La distribution attribue 0,55 à « dort ». Que peut-on conclure ?
-
-<details class="advent-answer">
-<summary>Afficher la réponse</summary>
-
-Le modèle a attribué une probabilité conditionnelle de 0,55 à « dort » pour le préfixe considéré. On ne peut pas conclure que ce token a déjà été généré, qu'il sera nécessairement sélectionné ou que cette continuation est vraie.
-
-</details>
-
-## À retenir
-
-À chaque étape autorégressive, le modèle calcule une distribution conditionnelle sur le prochain token. La génération ajoute ensuite une règle de sélection ; elle ne doit pas être confondue avec le calcul de la distribution.
-
-<div class="advent-day-resources">
-  <a href="llm-overview.qmd"><strong>Leçon de référence</strong><span>Panorama : qu'est-ce qu'un LLM ?</span></a>
-  <a href="exercises/llm-overview.qmd"><strong>S'exercer</strong><span>Questions et exercices sur le panorama des LLM</span></a>
-</div>
-
-<nav class="advent-day-next" aria-label="Suite du calendrier">
-  <span>Demain : identifier le préfixe réellement disponible.</span>
-  <a href="advent-calendar-day-02.qmd">Jour 2 · Le contexte →</a>
-</nav>
+<p>Ressource pédagogique associée : <a href="llm-overview.html">panorama des LLM</a></p>
