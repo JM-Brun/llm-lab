@@ -112,22 +112,15 @@ For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before 
 - **Weighting:** class weights, label smoothing, or auxiliary losses change the objective from the unweighted one-hot case.
 - **Comparison:** state the tokenizer, included positions, and averaging convention before comparing two values.
 
-## Connection to perplexity
+## Perplexity
 
-If $\bar{\ell}$ is mean cross-entropy in nats over valid tokens, perplexity is:
-
-$$
-\operatorname{PPL}=\exp(\bar{\ell}).
-$$
-
-For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends on the logarithm base and evaluation convention. It measures probabilistic performance on the evaluated tokens; it is not a direct measure of factual truth or overall assistant quality.
+For one-hot targets, mean cross-entropy over valid positions coincides with mean NLL. The definition and interpretation of perplexity, and the conditions required to compare scores, are consolidated in the [Likelihood](likelihood.qmd) lesson.
 
 ## Misconceptions
 
 - **“Cross-entropy is between 0 and 1.”** False: it can grow without bound when the model assigns probability close to zero to the target.
 
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
-- **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
 
 
