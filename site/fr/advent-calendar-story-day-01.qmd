@@ -130,7 +130,7 @@ Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des 
 
 Les calculs, questions de transfert et corrigés sont regroupés dans une page dédiée afin de pouvoir enrichir progressivement la pratique sans alourdir cette leçon.
 
-[Accéder aux exercices sur la loi de Zipf](exercises/zipf-law.qmd)..
+[Accéder aux exercices sur la loi de Zipf](exercises/zipf-law.qmd).
 
 ## L'idée à retenir
 
