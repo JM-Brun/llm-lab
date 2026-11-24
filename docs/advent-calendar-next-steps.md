@@ -264,7 +264,7 @@ This log should record outcomes, not merely activity.
 ## 16. Session completion log — Day 01 public reading release
 
 - **Date:** 2026-11-24
-- **Branch / PR:** `calendar/day01-public-release-v3` — PR #1592 (prepared from current `main`).
+- **Branch / PR:** `calendar/day01-public-release-v3` — PR #1593 (prepared from current `main`).
 - **Files changed:** bilingual scientific-calendar landing pages; bilingual Day 01 story pages; Quarto render/resource configuration; regenerated French and English learning-map data; this handoff.
 - **Work completed:** exposed the French and English Day 01 stories as public reading versions, linked them from both calendar landing pages, and explicitly distinguished publication for reading from final editorial acceptance. The story remains open to feedback; no novice review is claimed.
 - **Integration correction:** the first PR branch became one commit behind `main` after #1586 merged. Rebased the work onto current `main` rather than carrying stale generated artifacts forward. The learning-map generator assigns display ranks by traversing route/hierarchy reachability; the new story is not part of that route, so its record is appended after the existing published pages (rank 144). Existing page ranks are preserved. This is a display-order property, not a curricular dependency.
