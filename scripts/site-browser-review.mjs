@@ -400,51 +400,51 @@ async function runCase(testCase, caseIndex) {
 
     item.title = await page.title();
 
-    if (pagePath === "advent-calendar.html") {
-      const cards = page.locator(".advent-card");
-      const dayNumbers = await page.locator(".advent-card .advent-number").allTextContents();
-      const openingCards = page.locator(".advent-grid-opening .advent-card");
-      const openingTargets = await openingCards.locator(".advent-card-links a[href]").evaluateAll(
-        links => links.map(link => new URL(link.href).pathname.split("/").pop())
-      );
-      if (await cards.count() !== 24 ||
-          dayNumbers.map(value => Number(value.trim())).join(",") !==
-            Array.from({ length: 24 }, (_, index) => index + 1).join(",") ||
-          await openingCards.count() !== 3) {
-        throw new Error("The Advent calendar must render exactly 24 ordered doors and three guided opening days.");
+    const retiredCalendarDay = pagePath.match(/^advent-calendar-day-(0[1-3])\.html$/);
+    if (pagePath === "advent-calendar.html" || retiredCalendarDay) {
+      const expectedCalendar = new URL(`${BASE}/${lang}/scientific-calendar.html`);
+      const retiredPath = new URL(url).pathname;
+      const currentPath = new URL(page.url()).pathname;
+      const redirected = currentPath === expectedCalendar.pathname;
+      if (!redirected) {
+        throw new Error(`Retired calendar route must redirect to ${expectedCalendar.pathname}; reached ${currentPath} from ${retiredPath}.`);
       }
-      for (const day of ["01", "02", "03"]) {
-        if (!openingTargets.includes(`advent-calendar-day-${day}.html`)) {
-          throw new Error(`The opening day ${day} must link to its dedicated guided page.`);
-        }
-      }
-      if (await cards.evaluateAll(items => items.some(card =>
-        !card.querySelector("a[href]") || card.querySelector('[aria-disabled="true"]')
-      ))) {
-        throw new Error("Every calendar door must remain accessible without date-based locking.");
-      }
-      item.adventCalendar = { doors: 24, openingDays: 3, ordered: true, dateLocks: false };
-    }
 
-    if (/^advent-calendar-day-0[1-3]\.html$/.test(pagePath)) {
-      const answer = page.locator("details.advent-answer");
-      const summary = answer.locator(":scope > summary");
-      if (await answer.count() !== 1 || !(await summary.innerText()).trim()) {
-        throw new Error("Each guided day must provide one named, keyboard-operable self-check.");
+      // The redirect is progressive enhancement: the destination must also be
+      // reachable through an ordinary link when JavaScript is unavailable.
+      const staticContext = await browser.newContext({ javaScriptEnabled: false, viewport });
+      try {
+        const staticPage = await staticContext.newPage();
+        const retiredUrl = `${BASE}/${lang}/${pagePath}`;
+        const staticResponse = await staticPage.goto(retiredUrl, { waitUntil: "load", timeout: 30000 });
+        if (!staticResponse?.ok()) throw new Error(`No-script fallback returned HTTP ${staticResponse?.status()}.`);
+        const calendarLink = staticPage.locator('main a[href*="scientific-calendar"]');
+        if (await calendarLink.count() !== 1 || !await calendarLink.isVisible()) {
+          const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
+          throw new Error(`Retired calendar route must expose one visible fallback link to the scientific calendar; found ${await calendarLink.count()} matching links. Links: ${JSON.stringify(links)}`);
+        }
+        if (retiredCalendarDay) {
+          const canonicalByDay = {
+            "01": "llm-overview.html",
+            "02": "generation.html",
+            "03": "text-data.html",
+          };
+          const canonicalLink = staticPage.locator(`main a[href*="${canonicalByDay[retiredCalendarDay[1]].replace(".html","")}"]`);
+          if (await canonicalLink.count() !== 1 || !await canonicalLink.isVisible()) {
+            const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
+            throw new Error(`Retired mini-lesson must retain its visible link to the canonical learning resource; found ${await canonicalLink.count()} matching links. Links: ${JSON.stringify(links)}`);
+          }
+        }
+      } finally {
+        await staticContext.close();
       }
-      await summary.focus();
-      await summary.press("Enter");
-      if (!await answer.evaluate(element => element.open)) {
-        throw new Error("The guided-day self-check must open from the keyboard.");
-      }
-      await summary.press("Space");
-      if (await answer.evaluate(element => element.open)) {
-        throw new Error("The guided-day self-check must close from the keyboard.");
-      }
-      if (await page.locator(".advent-day-resources a[href]").count() < 2) {
-        throw new Error("Each guided day must link to its canonical lesson and dedicated practice page.");
-      }
-      item.adventDay = { selfCheck: "keyboard", canonicalResources: true };
+
+      item.retiredCalendarRoute = {
+        redirected,
+        destination: expectedCalendar.pathname,
+        noScriptFallback: true,
+        canonicalResourceFallback: Boolean(retiredCalendarDay),
+      };
     }
 
     if (["probabilites.html", "probabilities.html"].includes(pagePath)) {
