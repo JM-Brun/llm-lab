@@ -131,11 +131,11 @@ La seconde quantité est infinie parce que $p$ attribue une masse positive à un
 
 Un exemple non dégénéré permet de lire les trois termes de l'identité. Avec $q=(0{,}5;0{,}5)$ et $p=(0{,}75;0{,}25)$ :
 
-- $H(q)=-(0{,}5\\ln0{,}5+0{,}5\\ln0{,}5)\\approx0{,}693$ nat ;
-- $H(q,p)=-(0{,}5\\ln0{,}75+0{,}5\\ln0{,}25)\\approx0{,}837$ nat ;
-- $D_{\\mathrm{KL}}(q\\Vert p)=H(q,p)-H(q)\\approx0{,}144$ nat.
+- $H(q)=-(0{,}5\ln0{,}5+0{,}5\ln0{,}5)\approx0{,}693$ nat ;
+- $H(q,p)=-(0{,}5\ln0{,}75+0{,}5\ln0{,}25)\approx0{,}837$ nat ;
+- $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0{,}144$ nat.
 
-On retrouve $0{,}837\\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits. Cet exemple complète le cas one-hot précédent : il montre une cible dont les deux catégories contribuent à l'entropie croisée.
+On retrouve $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les mêmes quantités seraient exprimées en bits. Cet exemple complète le cas one-hot précédent : il montre une cible dont les deux catégories contribuent à l'entropie croisée.
 
 La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
 
