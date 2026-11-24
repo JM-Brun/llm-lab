@@ -12,7 +12,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/double-descent"
 summary: "Présente la double descente comme un phénomène observé dans certains régimes et explique pourquoi elle ne constitue pas une loi universelle de généralisation."
 scope: "Double descente, seuil d’interpolation, biais-variance et limites de généralisation des observations."
-purpose: "Lire une courbe jouet et distinguer observation empirique et loi universelle."
+purpose: "Lire une courbe de double descente, identifier le seuil d’interpolation et séparer résultat empirique, explication proposée et généralisation abusive."
 domain: "scale-research"
 suggested_route:
   previous: null
