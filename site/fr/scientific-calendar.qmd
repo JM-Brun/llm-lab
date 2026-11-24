@@ -1,0 +1,102 @@
+---
+title: "Le calendrier scientifique de LLM Lab"
+subtitle: "24 histoires indépendantes pour explorer les idées, les expériences et les résultats qui éclairent les modèles de langage."
+keywords: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
+lang: fr
+sidebar: fr
+toc: false
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/scientific-calendar"
+scope: "Page d’accueil de la collection de 24 histoires scientifiques indépendantes autour des mathématiques, des statistiques, de l’informatique et des modèles de langage."
+purpose: "Présenter la promesse éditoriale, les rubriques thématiques et les 24 sujets sans créer de dépendances pédagogiques entre les journées."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/index"]
+  children: []
+related: ["fr/learning-map", "fr/llm-overview", "fr/exercises"]
+tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "level:overview", "language:fr", "status:published"]
+-->
+
+# 24 jours, 24 idées à explorer
+
+Une loi statistique étonnante. Une question vieille de plusieurs décennies sur l’information. Une astuce numérique qui rend un calcul possible. Une expérience qui bouscule notre intuition sur l’apprentissage.
+
+Le calendrier scientifique de LLM Lab propose **24 histoires autonomes**, à lire dans l’ordre qui vous intéresse. Chacune part d'une question, déroule un raisonnement ou une expérience, puis invite à tester une idée par soi-même.
+
+::: {.callout-note}
+**Ce calendrier n’est pas un parcours d’apprentissage condensé.** Les journées ne sont ni des étapes ni des prérequis. Vous pouvez commencer par n’importe quelle histoire, même si vous ne connaissez pas encore les autres sujets. La production éditoriale avance jour après jour ; les histoires seront publiées après validation scientifique, pédagogique et technique.
+:::
+
+## Une collection, pas une progression
+
+- **Une question singulière** : un phénomène, un paradoxe, une décision de conception ou un résultat de recherche.
+- **Un raisonnement visible** : des exemples concrets et, lorsque cela aide, une démonstration mathématique expliquée.
+- **Un regard critique** : hypothèses, limites, contre-exemples et distinction entre résultat théorique et observation empirique.
+- **Une expérience à emporter** : un petit calcul, une prédiction ou une manipulation pour prolonger la lecture.
+
+Comptez environ **10 minutes par histoire**, hors lectures complémentaires. Les rubriques ci-dessous sont des rayons thématiques pour explorer la collection ; elles ne définissent aucun ordre de lecture.
+
+## Langage, information et probabilités
+
+Des fréquences des mots à la quantité d’information d’un message : ces histoires explorent les régularités statistiques du langage et les outils qui permettent de les mesurer.
+
+1. **Pourquoi le mot « de » revient-il si souvent ?** — La loi de Zipf, les distributions à longue traîne et l’inégalité des fréquences lexicales.
+2. **Combien de bits contient la surprise d’une phrase ?** — Comment quantifier l’incertitude et la surprise avec la théorie de l’information.
+3. **Le tokenizer, ingénieur de compression** — Le compromis entre taille du vocabulaire, réutilisation des fragments et longueur des séquences.
+13. **Perplexité : à quel point le modèle est-il surpris ?** — Ce que mesure cette métrique, et pourquoi les comparaisons peuvent être trompeuses.
+17. **L’entropie croisée comme longueur de code** — Le prix à payer lorsqu’on décrit des données avec un modèle probabiliste imparfait.
+18. **Pourquoi additionner les logarithmes plutôt que multiplier les probabilités ?** — Vraisemblance, longues séquences et stabilité numérique.
+
+## Géométrie, signaux et représentations
+
+Des vecteurs aux fréquences, ces histoires mettent en relation les représentations utilisées en apprentissage automatique avec des idées de géométrie et de traitement du signal.
+
+4. **Le sens peut-il avoir une direction ?** — Géométrie des représentations vectorielles, analogies célèbres et limites de leur interprétation.
+5. **Le même mot, deux mondes différents** — Polysémie et changement de représentation selon le contexte.
+6. **Que vient faire une sinusoïde dans l’ordre des mots ?** — Fréquences, phases et encodages positionnels vus à travers le traitement du signal.
+
+## Mécanismes, calcul et optimisation
+
+Ces histoires partent de problèmes concrets de calcul : retrouver une information, stabiliser des activations, transmettre un signal d’apprentissage ou choisir un pas de mise à jour.
+
+7. **L’attention comme système de recherche appris** — Une lecture de Q, K et V inspirée des systèmes de recherche d’information.
+8. **Pourquoi diviser par la racine carrée de la dimension ?** — Variance des produits scalaires et mise à l’échelle des scores d’attention.
+9. **Softmax et physique d’une foule** — Température, distributions de Boltzmann et concentration des probabilités.
+10. **Le mur triangulaire : empêcher les fuites d’information** — Causalité, accès à l’information et prévention des fuites entre passé et futur.
+11. **Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?** — Chemins identité, conservation du signal et intuition des gradients.
+12. **Normalisation : changer de coordonnées pour mieux apprendre** — Moyenne, variance, LayerNorm, RMSNorm et conditionnement.
+19. **La règle de la chaîne : comment l’erreur atteint-elle les premières couches ?** — Dérivation de la rétropropagation sur un petit réseau.
+20. **La falaise du taux d’apprentissage** — Géométrie de l’optimisation, courbure et compromis entre progrès et instabilité.
+
+## Recherche, généralisation et systèmes
+
+Des phénomènes observés à grande échelle aux choix d’architecture système, ces histoires interrogent ce que les expériences permettent réellement de conclure.
+
+14. **La température rend-elle vraiment les réponses plus créatives ?** — Ce que change une distribution aplatie, et ce qu’elle ne garantit pas.
+15. **Top-k et top-p : où couper la queue de probabilité ?** — Deux politiques de troncature comparées sur une distribution construite.
+16. **Pourquoi le token le plus probable peut-il produire une moins bonne phrase ?** — Choix locaux, recherche de séquence et compromis de décodage.
+21. **Quand un modèle devient moins bon avant de s’améliorer** — Le phénomène de double descente et les limites des intuitions simples sur la généralisation.
+22. **Les grands modèles deviennent-ils prévisibles ?** — Lois d’échelle, extrapolation et incertitude des relations empiriques.
+23. **Et si le modèle pouvait consulter une bibliothèque ?** — Recherche externe, mémoire et génération augmentée par récupération.
+24. **Réduire un modèle sans tout réentraîner** — Quantification, erreurs d’arrondi et compromis entre mémoire et qualité.
+
+## Où en est l’édition ?
+
+La liste ci-dessus constitue le programme éditorial proposé, pas une promesse que les 24 histoires sont déjà disponibles. Chaque texte est préparé et vérifié avant publication ; les sujets pourront évoluer si une histoire se révèle redondante, insuffisamment documentée ou moins intéressante qu’une autre.
+
+La première histoire, consacrée à la loi de Zipf, est en cours de validation éditoriale. Les suivantes seront préparées dans l’ordre des jours, sans que cet ordre de production impose un ordre de lecture.
+
+## Pour aller plus loin
+
+Le calendrier ouvre des perspectives ; les ressources de LLM Lab permettent ensuite de choisir la profondeur souhaitée :
+
+- [Explorer la carte des notions et des ressources](learning-map.qmd) pour naviguer librement dans les concepts.
+- [Consulter le panorama des modèles de langage](llm-overview.qmd) pour situer les grandes familles de mécanismes.
+- [S’exercer et expérimenter](exercises.qmd) pour travailler les notions du parcours principal.
+
+Ces ressources sont des prolongements facultatifs : aucune n’est nécessaire pour lire une histoire du calendrier.

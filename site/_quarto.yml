@@ -39,12 +39,14 @@ project:
     - images/generation-prefill-decode-fr-mobile.svg
   render:
     - index.qmd
+    - fr/scientific-calendar.qmd
     - fr/advent-calendar.qmd
     - fr/advent-calendar-day-01.qmd
     - fr/advent-calendar-day-02.qmd
     - fr/advent-calendar-day-03.qmd
     - fr/learning-map.qmd
     - en/index.qmd
+    - en/scientific-calendar.qmd
     - en/advent-calendar.qmd
     - en/advent-calendar-day-01.qmd
     - en/advent-calendar-day-02.qmd
@@ -361,8 +363,8 @@ website:
         - index.qmd
         - href: fr/learning-map.qmd
           text: "Parcours guidé et carte des ressources"
-        - href: fr/advent-calendar.qmd
-          text: "Prototype archivé · 24 jours"
+        - href: fr/scientific-calendar.qmd
+          text: "Calendrier scientifique · 24 histoires"
         - section: "Comprendre les LLM"
           contents:
             - text: "Panorama LLM"
@@ -608,8 +610,8 @@ website:
         - en/index.qmd
         - href: en/learning-map.qmd
           text: "Guided route and resource map"
-        - href: en/advent-calendar.qmd
-          text: "Archived prototype · 24 days"
+        - href: en/scientific-calendar.qmd
+          text: "Scientific calendar · 24 stories"
         - section: "Understand LLMs"
           contents:
             - text: "LLM overview"
