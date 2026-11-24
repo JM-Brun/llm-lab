@@ -1,0 +1,83 @@
+---
+title: "Pourquoi additionner les logarithmes plutôt que multiplier les probabilités ?"
+subtitle: "La règle de chaîne et la stabilité numérique des longues séquences"
+description-meta: "Une dérivation de la log-vraisemblance de séquence, de son interprétation additive et du problème numérique des produits de petites probabilités."
+keywords: ["type:deep-dive", "destination:deepen", "topic:log-likelihood-and-sequence-products", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/sequence-log-likelihood"
+summary: "Relie la règle de chaîne à la vraisemblance d’une séquence et montre pourquoi la somme des log-probabilités est plus exploitable numériquement que leur produit."
+scope: "Règle de chaîne, vraisemblance de séquence, log-vraisemblance et sous-flux numérique."
+purpose: "Factoriser une probabilité de séquence, passer au logarithme et expliquer le sous-flux ainsi que le sens du score obtenu."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/vraisemblance", "fr/cross-entropy"]
+tags: ["type:deep-dive", "destination:deepen", "topic:log-likelihood-and-sequence-products", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 18 · squelette éditorial*
+
+## Question centrale
+
+Relie la règle de chaîne à la vraisemblance d’une séquence et montre pourquoi la somme des log-probabilités est plus exploitable numériquement que leur produit.
+
+Règle de chaîne, vraisemblance de séquence, log-vraisemblance et sous-flux numérique.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Dérivation mathématique suivie d’un exemple numérique
+
+Une séquence, beaucoup de probabilités conditionnelles
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+La règle de chaîne transforme le problème
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+Passer du produit à la somme
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Quand la machine arrondit le produit à zéro
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
