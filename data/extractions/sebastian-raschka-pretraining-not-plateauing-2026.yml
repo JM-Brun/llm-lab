@@ -1,0 +1,139 @@
+schema_version: 1
+source_id: sebastian-raschka-pretraining-not-plateauing-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Complete author-authored text available in the indexed public article result on 2026-11-24; canonical page retrieval returned a cache miss."
+      - "The supplied LinkedIn URL was reconciled with the author's canonical quick note."
+      - "The primary OpenAI article cited by Raschka was inspected separately and catalogued as its own source."
+    inferred_elements:
+      - "The learning sequence is reconstructed from a short commentary, not an explicitly declared lesson plan."
+      - "The chart's visual encoding and exact plotted values were not independently inspected."
+  source_graph:
+    nodes:
+      - {id: src-raschka-openai-measurements, kind: empirical-result, description: "OpenAI's reported base-model log-perplexity measurements across successive model releases.", locator: "Opening paragraph and chart reference"}
+      - {id: src-raschka-pretraining, kind: process, description: "Pre-training equips the base model with learned knowledge through next-token prediction.", locator: "Paragraph beginning 'Still, pre-training is super important'"}
+      - {id: src-raschka-posttraining, kind: process, description: "Supervised fine-tuning and RLVR help elicit or access capabilities learned during pre-training.", locator: "Three-part bullet list"}
+      - {id: src-raschka-harness, kind: system, description: "The harness provides the operational context in which a model applies its capabilities.", locator: "Three-part bullet list"}
+      - {id: src-raschka-log-perplexity, kind: metric, description: "Average negative log probability assigned to observed next tokens, reported as log-perplexity/cross-entropy.", locator: "Paragraph beginning 'Note that the chart above'"}
+      - {id: src-raschka-training-flops-question, kind: open-question, description: "The author asks for the same progress chart with training FLOPs on the horizontal axis.", locator: "Paragraph beginning 'Now, I'd still love'"}
+    edges:
+      - {from: src-raschka-openai-measurements, type: illustrates, to: src-raschka-log-perplexity}
+      - {from: src-raschka-pretraining, type: establishes, to: src-raschka-posttraining}
+      - {from: src-raschka-posttraining, type: is-applied-through, to: src-raschka-harness}
+      - {from: src-raschka-log-perplexity, type: measures, to: src-raschka-pretraining}
+      - {from: src-raschka-training-flops-question, type: proposes-alternative-axis-for, to: src-raschka-openai-measurements}
+    interpretation: "This is a source-local reconstruction of a short commentary. Its explanatory framing is not a formal decomposition of all training and deployment systems."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why next-token log-perplexity is used to track base-model predictive progress.", basis: "The note connects the chart to average next-token probability."}
+    - {status: inferred, outcome: "Distinguish pre-training, post-training and the harness by their roles in capability creation, elicitation and application.", basis: "The three-part bullet list."}
+    - {status: inferred, outcome: "Distinguish a next-token prediction metric from a direct task-solving metric.", basis: "The explicit qualification of the chart metric."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional next-token probabilities and negative log-likelihood.", basis: "The note explains perplexity through observed next-token probabilities."}
+    - {status: inferred, topic: "Basic distinction between base-model pre-training and post-training.", basis: "The note assumes these training stages are familiar."}
+  teaching_route:
+    - {order: 1, section: "OpenAI base-model log-perplexity chart", function: motivate-empirical-question, moves: ["Introduce a reported trend in next-token prediction quality.", "Attribute the evidence to OpenAI rather than to an independent Raschka experiment."]}
+    - {order: 2, section: "Pre-training, post-training and harness", function: distinguish-development-stages, moves: ["Separate learned model capability from later elicitation.", "Separate elicitation from operational application."]}
+    - {order: 3, section: "How perplexity is computed", function: connect-metric-to-token-probability, moves: ["Condition on the preceding text.", "Score the observed next token.", "Average negative log probabilities across positions."]}
+    - {order: 4, section: "Training compute and data mixture", function: open-research-question, moves: ["Ask for training FLOPs as an alternative x-axis.", "Point to data-mixture choices such as code proportion as possible contributors."]}
+  pedagogical_strengths:
+    - "Connects an abstract aggregate metric to a concrete next-token example."
+    - "Gives a compact three-part distinction between pre-training, post-training and harness-level application."
+    - "Connects current empirical progress to the enduring role of pre-training without treating it as the only source of capability gains."
+  pedagogical_limits:
+    - "The post is a short commentary, not a systematic review or an independent experiment."
+    - "The chart image and its underlying data were not independently inspected."
+    - "The knowledge/access/application framing is a useful simplification; it does not fully specify the mechanisms of post-training or agent harnesses."
+    - "The note does not quantify training FLOPs, data mixtures or causal contributions."
+  comparison:
+    dossier: docs/source-reviews/raschka-pretraining-not-plateauing-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, "Page-level suggested_route metadata", "Build route"]
+    decision: "Use as a contemporary interpretive companion to existing cross-entropy, training-loop and post-training lessons. Do not create a new core concept or mandatory learning stage."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: sebastian-raschka-pretraining-not-plateauing-2026:pretraining-posttraining-harness
+    kind: mental-model
+    summary: "Raschka frames three complementary roles: pre-training establishes a model's learned predictive substrate, post-training (including supervised fine-tuning and RLVR) helps elicit capabilities, and the harness supplies the context and tools through which those capabilities are applied."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already distinguishes pre-training, post-training and inference-time context, but this compact three-role framing connects them in one contemporary example."}
+      complementarity: {level: high, rationale: "It gives a memorable creation–elicitation–application distinction that complements the project's computational account of parameter updates versus context changes."}
+      pedagogical_value: {level: high, rationale: "It helps learners avoid treating post-training and agent orchestration as synonyms for pre-training."}
+      applicability: {level: high, rationale: "Useful as a short comparison note or cross-reference on the existing training-loop and post-training lessons."}
+      redundancy: {level: moderate, rationale: "The underlying stages are already covered; the value is their compact relation, not new definitions."}
+      evidence_quality: {level: moderate, rationale: "This is the author's interpretive framing, not a formal taxonomy or independently tested causal decomposition."}
+    pedagogical_profile:
+      learner_question: "What does pre-training contribute that post-training and an agent harness do not?"
+      explanatory_lens: "Creation of a predictive substrate, elicitation of capabilities, and operational application."
+      teaching_form: "Three-part conceptual contrast."
+      abstraction_level: "Conceptual overview."
+      prerequisites: ["Base model", "Pre-training", "Post-training", "Inference context"]
+      distinctive_value: "Separates learned parameters, later behavioral adaptation and runtime orchestration in one compact mental model."
+      limitations: ["The categories interact in practice and do not constitute a complete taxonomy."]
+    locator: {type: section, value: "Paragraph beginning 'Still, pre-training is super important'", label: "Pre-training, post-training and harness"}
+    evidence:
+      kind: source-interpretation
+      confidence: context-dependent
+      scope: "The author's conceptual distinction among pre-training, post-training and harness engineering."
+      assumptions: ["The terms are used at a high level rather than as exhaustive implementation categories."]
+      limitations: ["The note does not define all forms of mid-training, post-training or harness engineering."]
+    disposition: integrate-by-reference
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/training-loop, en/training-loop, fr/post-training, en/post-training]
+  - id: sebastian-raschka-pretraining-not-plateauing-2026:perplexity-as-next-token-metric
+    kind: definition
+    summary: "The chart's log-perplexity is described as the average negative natural log probability assigned to observed next tokens. It is a next-token prediction metric: lower values indicate better average predictive fit on the evaluated corpus, not a direct task-solving score."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The token-level cross-entropy is already taught, but the aggregate metric and its interpretation as a base-model progress indicator are not prominent in the core lesson."}
+      complementarity: {level: high, rationale: "It connects per-token loss to corpus-level evaluation and a real contemporary model comparison."}
+      pedagogical_value: {level: high, rationale: "It gives learners a concrete interpretation of why lower held-out log-perplexity is meaningful and what it does not measure."}
+      applicability: {level: high, rationale: "Supports a short cross-reference from cross-entropy to held-out pre-training evaluation; no new page is needed."}
+      redundancy: {level: moderate, rationale: "The mathematical primitive is covered, while the aggregate metric and its evaluation caveats add context."}
+      evidence_quality: {level: moderate, rationale: "The article explains the metric but relies on OpenAI's chart and does not independently reproduce the evaluation."}
+    pedagogical_profile:
+      learner_question: "How can many next-token probabilities be summarized to track a base model's predictive progress?"
+      explanatory_lens: "Aggregate the per-token negative log probabilities over a held-out corpus."
+      teaching_form: "Metric interpretation with a worked sentence example."
+      abstraction_level: "Intermediate."
+      prerequisites: ["Conditional probability", "Cross-entropy", "Held-out evaluation"]
+      distinctive_value: "Connects the token-level objective to an empirical model-progress curve."
+      limitations: ["Does not establish downstream capability or causal effects of scale."]
+    locator: {type: section, value: "Paragraph beginning 'Note that the chart above' and following perplexity example", label: "Perplexity and next-token prediction"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Average negative log probability of the observed next token, as explained in the author's note."
+      assumptions: ["Natural logarithms for the log-perplexity/cross-entropy equivalence used in this context."]
+      limitations: ["The chart image and underlying numeric values were not independently inspected."]
+    disposition: case-study
+    mapped_concepts: [cross-entropy, next-token-prediction]
+    target_resources: [fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop]
+  - id: sebastian-raschka-pretraining-not-plateauing-2026:flops-axis-and-data-mixture
+    kind: open-question
+    summary: "Raschka asks to see the progress curve plotted against training FLOPs and notes that choices such as the proportion of code in the training mixture may contribute to continued gains. The note does not quantify either effect."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The project covers scaling and training data, but this is a timely prompt to distinguish an observed performance trend from an explanatory account of its causes."}
+      complementarity: {level: high, rationale: "It raises a concrete experimental-design question: compare quality against compute and control for data-mixture changes."}
+      pedagogical_value: {level: high, rationale: "It encourages learners to ask what an x-axis, dataset and training recipe permit one to infer from a trend."}
+      applicability: {level: moderate, rationale: "Retain as an optional research question; no quantitative experiment can be reproduced from this note alone."}
+      redundancy: {level: moderate, rationale: "Scaling and data composition are already topics, but this specific metric-versus-compute question is not identical to a scaling-law derivation."}
+      evidence_quality: {level: moderate, rationale: "The source explicitly presents the FLOPs axis as a wish and the data-mixture point as an expectation, not as measured causal evidence."}
+    pedagogical_profile:
+      learner_question: "Does lower held-out log-perplexity reflect more compute, a better data mixture, improved algorithms, or several changes together?"
+      explanatory_lens: "Separate outcome metric from explanatory variables and experimental controls."
+      teaching_form: "Open research question."
+      abstraction_level: "Intermediate to advanced."
+      prerequisites: ["Cross-entropy", "Scaling laws", "Training compute", "Training data mixture"]
+      distinctive_value: "Turns a headline about progress into a question about causal attribution and measurement design."
+      limitations: ["No FLOPs series, data-mixture ablation or controlled comparison is provided."]
+    locator: {type: section, value: "Paragraphs beginning 'Now, I'd still love' and 'Anyways, I expect'", label: "Training compute and data mixture"}
+    evidence:
+      kind: source-interpretation
+      confidence: context-dependent
+      scope: "The author's suggested FLOPs axis and hypothesis about data-mixture contributions."
+      assumptions: ["The comments are interpreted as research prompts, not reported experimental results."]
+      limitations: ["No causal claim or quantitative estimate is established."]
+    disposition: defer
+    mapped_concepts: [cross-entropy]
+    target_resources: [fr/scaling-laws, en/scaling-laws, fr/training-loop, en/training-loop]

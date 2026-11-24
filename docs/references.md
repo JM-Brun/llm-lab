@@ -370,3 +370,14 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Use for:** an introductory walkthrough of Q/K/V, scaled dot-product attention, row-wise softmax, weighted Value aggregation and multi-head attention; especially the distinction between relevance scoring and information aggregation.
   - **Critical qualifications:** softmax is a fixed normalization, not a learned interaction mechanism; attention logits are not semantic similarity; causal masks also matter at autoregressive inference; parallel sequence computation does not remove sequential token generation; standard multi-head attention includes an output projection W_O.
   - **Review status:** complete visible article text inspected on 19 November 2026. Embedded figures, linked series parts and the original paper were not inspected; no code was executed. Text and figures are link-only. See the [critical source review](source-reviews/jose-parreno-garcia-understanding-transformers-part-4-2026-11.md) and [structured extraction](../data/extractions/jose-parreno-garcia-understanding-transformers-part-4-2026.yml).
+
+## Pre-training progress and evaluation
+
+- **Sebastian Raschka — Pre-training is (still) not plateauing** (22 November 2026): https://sebastianraschka.com/blog/2026/pretraining-is-still-not-plateauing.html
+  - LinkedIn post: https://www.linkedin.com/posts/sebastianraschka_pre-training-is-still-not-plateauing-finally-share-7530419578179502080-e0tU/
+  - **Use for:** an accessible reading of recent base-model log-perplexity progress and the distinction between pre-training, post-training and the harness that applies model capabilities.
+  - **Qualification:** the author's note interprets an OpenAI chart; the chart image has not been independently inspected in this review. See [the source review](source-reviews/raschka-pretraining-not-plateauing-2026-11.md).
+
+- **Jakub Pachocki / OpenAI — Perplexity and Intelligence** (22 November 2026): https://openai.com/index/perplexity-and-intelligence/
+  - **Use for:** the primary explanation of OpenAI's reported held-out base-model perplexity measurements, the relation between log-perplexity and cross-entropy, and the limitations of perplexity as a cross-lab or downstream-capability metric.
+  - **Qualification:** reported measurements concern a fixed internal code dataset; the underlying dataset and evaluation pipeline are not public in the article. The chart is linked, not reproduced.
