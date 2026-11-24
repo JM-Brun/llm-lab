@@ -1,0 +1,83 @@
+---
+title: "La falaise du taux d’apprentissage"
+subtitle: "Quand un pas trop grand transforme une descente en instabilité"
+description-meta: "Une expérience sur une fonction quadratique pour relier taux d’apprentissage, courbure, oscillation et divergence."
+keywords: ["type:deep-dive", "destination:deepen", "topic:learning-rate-and-optimization", "level:overview", "language:fr", "status:planned"]
+lang: fr
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/learning-rate-optimization"
+summary: "Étudie sur une fonction quadratique comment le taux d’apprentissage interagit avec la courbure et peut provoquer convergence lente, oscillation ou divergence."
+scope: "Descente de gradient, courbure, conditionnement, stabilité et calendriers de taux d’apprentissage."
+purpose: "Prédire le comportement d’une descente de gradient selon le pas choisi, relier la stabilité à la courbure et distinguer un problème de taux d’apprentissage d’un mauvais objectif."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/gradients", "fr/training-loop"]
+tags: ["type:deep-dive", "destination:deepen", "topic:learning-rate-and-optimization", "level:overview", "language:fr", "status:planned"]
+-->
+
+*Calendrier de l’Avent 2026 · Porte 20 · squelette éditorial*
+
+## Question centrale
+
+Étudie sur une fonction quadratique comment le taux d’apprentissage interagit avec la courbure et peut provoquer convergence lente, oscillation ou divergence.
+
+Descente de gradient, courbure, conditionnement, stabilité et calendriers de taux d’apprentissage.
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Piste d’enquête — Expérience numérique sur une fonction quadratique
+
+Descendre une pente n’est pas toujours simple
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Exemple à construire
+
+Le même objectif, trois tailles de pas
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Limites et conditions
+
+La courbure fixe une échelle de stabilité
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Défi de transfert
+
+Pourquoi un taux unique peut être insuffisant
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+<details>
+<summary>Solution expliquée</summary>
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+</details>
+
+## Idée à retenir
+
+<!-- À rédiger : construire le raisonnement propre à cette histoire. Ne pas remplir mécaniquement le gabarit. -->
+
+## Sources à documenter
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
