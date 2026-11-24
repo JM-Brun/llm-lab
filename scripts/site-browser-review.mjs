@@ -418,7 +418,7 @@ async function runCase(testCase, caseIndex) {
         const retiredUrl = `${BASE}/${lang}/${pagePath}`;
         const staticResponse = await staticPage.goto(retiredUrl, { waitUntil: "load", timeout: 30000 });
         if (!staticResponse?.ok()) throw new Error(`No-script fallback returned HTTP ${staticResponse?.status()}.`);
-        const calendarLink = staticPage.locator('a[href*="scientific-calendar"]');
+        const calendarLink = staticPage.locator('main a[href*="scientific-calendar"]');
         if (await calendarLink.count() !== 1 || !await calendarLink.isVisible()) {
           const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
           throw new Error(`Retired calendar route must expose one visible fallback link to the scientific calendar; found ${await calendarLink.count()} matching links. Links: ${JSON.stringify(links)}`);
@@ -429,7 +429,7 @@ async function runCase(testCase, caseIndex) {
             "02": "generation.html",
             "03": "text-data.html",
           };
-          const canonicalLink = staticPage.locator(`a[href*="${canonicalByDay[retiredCalendarDay[1]].replace(".html","")}"]`);
+          const canonicalLink = staticPage.locator(`main a[href*="${canonicalByDay[retiredCalendarDay[1]].replace(".html","")}"]`);
           if (await canonicalLink.count() !== 1 || !await canonicalLink.isVisible()) {
             const links = await staticPage.locator("a[href]").evaluateAll(nodes => nodes.map(node => ({ href: node.getAttribute("href"), text: node.textContent?.trim() })));
             throw new Error(`Retired mini-lesson must retain its visible link to the canonical learning resource; found ${await canonicalLink.count()} matching links. Links: ${JSON.stringify(links)}`);
