@@ -109,7 +109,7 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 
 <details class="learning-resources">
 <summary>
-  <span class="learning-resources__title">Approfondir</span>
+  <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Revoir le fil rouge, la chaîne complète et les frontières conceptuelles.</span>
 </summary>
 ::: {.learning-resources__content}
