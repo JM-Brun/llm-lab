@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01"]
 related: []
 tags:
   - "type:entry-point"
@@ -29,6 +29,13 @@ tags:
 The **Deepen** area collects treatments that go beyond the mental model needed for the core learning route. It is neither a second mandatory sequence nor an unstructured repository of specialist topics.
 
 Each entry answers a more specific question: why a mechanism works, under which conditions it remains valid, which trade-offs it introduces, or how to investigate it rigorously. Pages are grouped by **intellectual problem**, not alphabetically. A page may have cross-links, but retains one primary category to keep its entry point stable.
+
+
+::: {.callout-note}
+**Another way in: the 2026 Advent Calendar.** Its 24 doors highlight independent lessons from this collection. During December, the calendar presents them as stories; throughout the year, the pages remain available here under their thematic domains. A door creates neither a prerequisite nor a parallel curriculum.
+
+[Explore the 24 doors of the 2026 Advent Calendar](scientific-calendar.qmd).
+:::
 
 ## Choose by question
 
@@ -99,6 +106,7 @@ These resources are complementary, not interchangeable: visualizations build int
 
 - [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
 - [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
+- [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — rank-frequency distributions, long tails, empirical fitting, and limits of interpretation.
 
 The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
 
