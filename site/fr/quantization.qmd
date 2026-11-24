@@ -12,7 +12,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/quantization"
 summary: "Explique comment la quantification réduit la précision de représentation des poids et fait apparaître un compromis mesurable entre mémoire et erreur."
 scope: "Quantification, erreurs d’arrondi, plage dynamique, calibration et compromis mémoire-qualité."
-purpose: "Quantifier un petit vecteur de poids et mesurer l’erreur de reconstruction."
+purpose: "Quantifier un petit vecteur, calculer l’erreur de reconstruction et expliquer pourquoi le choix de l’échelle et de la calibration influence le résultat."
 domain: "inference-efficiency"
 suggested_route:
   previous: null
