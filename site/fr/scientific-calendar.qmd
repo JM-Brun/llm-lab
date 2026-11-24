@@ -34,7 +34,7 @@ Le calendrier scientifique de LLM Lab propose **24 histoires autonomes**, à lir
 
 ## Première histoire disponible
 
-<article class="calendar-feature">
+::: {.callout-note}
 
 **Jour 01 · Langage, information et probabilités**
 
@@ -46,7 +46,7 @@ Une enquête sur la loi de Zipf : pourquoi quelques mots apparaissent-ils partou
 
 [Lire l'histoire du jour 01 →](advent-calendar-story-day-01.qmd)
 
-</article>
+:::
 
 ## Une collection, pas une progression
 
