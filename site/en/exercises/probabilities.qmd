@@ -43,6 +43,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 
 </details>
 
+To practise temperature and decoding filters, see [decoding strategies](../decoding-strategies.qmd#temperature) and the [Temperature and distribution concentration](../exercises-generation.qmd#ex-generation-temperature) exercise in the Generation collection.
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/probabilites.qmd) · [English](probabilities.qmd)
 :::
