@@ -30,6 +30,13 @@ The **Deepen** area collects treatments that go beyond the mental model needed f
 
 Each entry answers a more specific question: why a mechanism works, under which conditions it remains valid, which trade-offs it introduces, or how to investigate it rigorously. Pages are grouped by **intellectual problem**, not alphabetically. A page may have cross-links, but retains one primary category to keep its entry point stable.
 
+
+::: {.callout-note}
+**Another way in: the 2026 Advent Calendar.** Its 24 doors highlight independent lessons from this collection. During December, the calendar presents them as stories; throughout the year, the pages remain available here under their thematic domains. A door creates neither a prerequisite nor a parallel curriculum.
+
+[Explore the 24 doors of the 2026 Advent Calendar](scientific-calendar.qmd).
+:::
+
 ## Choose by question
 
 | Your question | Domain |
