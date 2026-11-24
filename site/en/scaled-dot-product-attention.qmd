@@ -180,17 +180,10 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+  <span class="learning-resources__description">Explore implementation choices and optimizations of attention computation.</span>
 </summary>
 
 ::: {.learning-resources__content}
-
-### Practice
-
-
-
-Two follow-up exercises ask you to [distinguish weighted mixing from selection](exercises-attention.qmd#ex-attention-weighted-mixture-vs-selection) and [compute multi-head attention by hand](exercises-attention.qmd#ex-attention-multihead-manual-calculation).
-
 
 ### Optional Build-path companion
 
