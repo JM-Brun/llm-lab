@@ -8,33 +8,30 @@
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
 
-## 1. Current state — verified
+## 1. Current state — verified (updated 2026-11-24)
 
 ### Completed
 
-- [x] The calendar's editorial direction was changed from a compressed second learning path to a collection of 24 independent scientific stories.
-- [x] The new editorial contract, anti-duplication rules, proposed 24-story slate, source standards, rendering requirements, and pilot acceptance gates were documented.
-- [x] The former curriculum-summary design was marked historical/superseded.
-- [x] The former 24-day manifest was marked superseded and retained as historical material.
-- [x] Source-level inventory completed: the Quarto render list contains the landing page and only days 01–03 in each language; it does not contain 24 day-story pages.
-- [x] The current landing page has 24 cards: days 01–03 link to the old guided mini-lessons; days 04–24 link to canonical lessons and exercise pages rather than independent calendar stories.
-- [x] The old landing page uses the custom advent-calendar CSS and the former four-movement curriculum-summary design; it is explicitly labelled as a historical prototype in PR #1560.
-- [x] The canonical positional-encoding lesson already contains the sinusoidal formula and fixed-offset rotation derivation. The Day 06 story is refocused on Fourier feature mappings and spectral bias to avoid duplication.
-- [x] PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) was merged on 2026-11-23.
-- [x] Day 01 rendered successfully in a PR-only Quarto preview; FR/EN desktop and mobile browser review passed. MathJax, local links, image loading, keyboard focus and desktop Axe checks were verified.
-- [x] Day 01 source-level, metadata, link, FR/EN desktop/mobile and accessibility checks are complete; its missing figure alt text and language-switch mapping were corrected during review.
-- [x] A structured novice-reader protocol with comprehension questions, a diagnostic rubric and an explicit acceptance decision record is available at [day-01-novice-review.md](advent-calendar-pilots/day-01-novice-review.md).
+- [x] The editorial direction, anti-duplication rules, proposed 24-story slate, source standards, rendering requirements and per-day acceptance gates are documented.
+- [x] The former curriculum-summary design and manifest are marked historical/superseded.
+- [x] The bilingual scientific-calendar landing pages are the current calendar entry points.
+- [x] PR [#1565](https://github.com/JM-Brun/llm-lab/pull/1565) merged Day 01's French and English drafts, source dossier, original SVG, novice-review protocol and supporting language-switch/browser-review changes into `main`.
+- [x] Day 01's PR-only Quarto preview and FR/EN desktop/mobile browser review passed (run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295)); the pages remain `status:planned` and excluded from the public render list.
+- [x] PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) corrected the bilingual homepage page maps to point to the scientific calendar.
+- [x] PR [#1576](https://github.com/JM-Brun/llm-lab/pull/1576) retired the eight legacy prototype routes with redirects to the new calendar, retained no-JavaScript fallback links on old lesson routes, removed obsolete page-map entries and deleted the unused prototype CSS.
+- [x] The cleanup PR's secret scan and Python quality/domain checks passed. Its test-suite and Quarto render checks were still running at the last status inspection; verify the completed results before treating the migration as fully validated.
+- [x] The old Day 01–03 mini-lessons are no longer the calendar's content model. The new collection is intended to contain independent scientific stories, not a second curriculum sequence.
 
 ### Not completed
 
-- [ ] An earlier Day 06 FR/EN draft exists in PR #1560 but remains parked and unaccepted; it will be reviewed when chronological production reaches Day 06. No later-day story is an active target.
-- [ ] A native Quarto story-template draft exists in PR #1560. Day 01 validates its standard article layout; broader template reuse remains to be assessed as later days are produced.
-- [ ] No new story-oriented manifest has been approved or created.
-- [ ] The 24 existing entries have not been migrated; they remain prototype/historical material.
-- [ ] No novice-reader review has been performed.
-- [ ] No final editorial acceptance has been recorded for Day 01.
+- [ ] No novice-reader review has been performed for Day 01.
+- [ ] No observed reading time, comprehension record or final editorial acceptance has been recorded for Day 01.
+- [ ] Day 01 remains planned and unpublished.
+- [ ] Day 02 has not been drafted; chronological production remains blocked on Day 01 acceptance.
+- [ ] The story-oriented manifest and thematic-shelf redesign remain deferred until a small set of accepted stories establishes their actual metadata needs.
+- [ ] The parked Day 06 draft remains unaccepted and must not cause the production sequence to skip ahead.
 
-**Important:** merging #1551 means the editorial decision is recorded. It does not mean the calendar implementation is complete or ready to publish.
+**Current blocker:** Day 01 needs a real non-specialist reader. Author self-review, source review and passing CI do not satisfy this gate. Use the protocol in [day-01-novice-review.md](advent-calendar-pilots/day-01-novice-review.md), record actual observations, revise if needed, and make an explicit acceptance decision.
 
 ## 2. Execution order
 
@@ -77,7 +74,7 @@ For each day:
 - [x] Record defects and fixes in the handoff document.
 - [ ] Do not start the next numbered day until the current day passes its acceptance gates.
 
-**Current Day 01:** Zipf's rank-frequency relation and lexical frequency imbalance. PR #1565 contains the FR/EN drafts, source dossier, original SVG, bilingual language mapping and generic new-page browser-review support. The PR is open and ready for review; the story pages remain status:planned and outside the render list. Technical gates passed; novice review remains pending.
+**Current Day 01:** Zipf's rank-frequency relation and lexical frequency imbalance. PR #1565 is merged. The FR/EN drafts, source dossier, original SVG, bilingual language mapping and generic new-page browser-review support are on `main`. The story pages remain `status:planned` and outside the render list. Technical gates passed; novice review and editorial acceptance remain pending.
 
 ### Phase D — Next days after acceptance
 
@@ -190,7 +187,7 @@ This log should record outcomes, not merely activity.
 - **Validation performed:** arithmetic and source claims checked; canonical QMD paths, metadata, relative image path and bilingual page mapping verified. PR-only Quarto render and browser audit run #45219428295 passed: FR/EN pages returned HTTP 200 at desktop (1440 px) and mobile (390 px); MathJax rendered 2/2 expressions on each page; no console/page errors or horizontal overflow; the SVG loaded with its descriptive fig-alt; desktop Axe reported zero violations; local links and the full site render passed.
 - **Defects found and fixed during review:** the first browser audit exposed missing figure alternative text (image-alt); added fig-alt. The test suite exposed a missing language-switch mapping; added the FR/EN slug mapping. Added generic browser cases for changed Quarto pages, limited to pages present in project.render.
 - **Preview-only configuration:** the two pages were temporarily marked published and added to the PR render list to exercise metadata validation and browser review. They have now been restored to status:planned and removed from the render list; they are not part of the public build.
-- **Status:** technical review passed; novice read-through and editorial acceptance remain pending. PR #1565 is open and ready for review, not merged.
+- **Status at the time of this entry:** technical review passed; novice read-through and editorial acceptance remained pending. PR #1565 was subsequently merged; this did not publish the story or waive its novice-review gate.
 - **Production rule:** proceed chronologically by day number. Do not draft Day 02 until Day 01 has passed scientific, editorial, bilingual, rendered-layout, accessibility, and novice-review gates. Chronological production does not imply prerequisite reading; stories remain independently understandable.
 - **Next action:** obtain novice feedback and accept Day 01 before beginning Day 02.
 
@@ -238,3 +235,14 @@ This log should record outcomes, not merely activity.
 - **Validation required:** CI/domain checks must confirm that retired page-map entries are excluded cleanly; Quarto must render the eight redirect routes and pass link/browser checks; CSS reference checks must confirm that the prototype stylesheet is no longer used.
 - **Editorial status:** Day 01 remains a planned draft awaiting an actual novice-reader review and editorial acceptance. Do not publish it or begin Day 02 on the basis of this migration.
 - **Exact next action:** review the cleanup PR checks; fix any stale generated-map or navigation references before merging.
+
+
+## 14. Session completion log — calendar migration verification and handoff correction
+
+- **Date:** 2026-11-24
+- **Branch / PR:** `docs/calendar-handoff-refresh`; intended PR after review.
+- **Files changed:** `docs/advent-calendar-next-steps.md`.
+- **Work completed:** rechecked the merged state of Day 01 and the legacy-calendar retirement. Corrected the operational handoff, which still described #1565 as open and the old 24-card prototype as the current calendar. Recorded the real remaining gate: a non-specialist reader must complete the Day 01 protocol before the story is accepted or Day 02 is drafted.
+- **Validation performed and results:** confirmed #1565 and #1576 are merged. On merge commit `0fb77b2`, secret scanning and Python quality/domain checks passed; test-suite and Quarto-render jobs were still in progress at the last inspection. No claim is made that those two jobs or a post-cleanup deployment have completed.
+- **Open decisions:** obtain an actual novice review; record reading time, comprehension evidence, observed confusion and an explicit accept/revise decision. Day 01 remains planned and unpublished.
+- **Exact next action:** conduct the Day 01 novice read-through, update the decision record and revise the story if observations warrant it. Only after acceptance should Day 02 be researched and drafted.
