@@ -27,6 +27,28 @@ $font-size-base: 1.02rem;
 }
 
 
+/* 2026 Advent Calendar: responsive, accessible numbered doors. */
+.advent-calendar { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.85rem; margin:1.4rem 0 2rem; }
+.advent-door { position:relative; display:flex; flex-direction:column; gap:.45rem; padding:1rem 1.05rem 1.1rem; min-width:0; transition:transform .16s ease,box-shadow .16s ease; min-height:190px; overflow:hidden; border:1px solid #315E43; border-radius:.55rem; color:#F8FAFC; background:linear-gradient(145deg,#1B5138 0%,#14532D 68%,#0F3D28 100%); box-shadow:0 4px 0 #0B3522,0 8px 18px rgba(18,61,42,.10); }
+.advent-door::before { position:absolute; inset:.42rem; border:1px solid rgba(220,252,231,.28); border-radius:.32rem; content:""; pointer-events:none; }
+.advent-door__link { position:relative; display:flex; min-height:190px; flex-direction:column; gap:.45rem; padding:1rem 1.05rem 1.1rem; color:#F8FAFC !important; text-decoration:none; }
+.advent-door__link::after { position:absolute; top:50%; right:.9rem; width:.42rem; height:.42rem; border:1px solid #E5BD69; border-radius:50%; background:#B98A42; content:""; }
+.advent-door__number { color:#BBF7D0; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:1.8rem; font-weight:850; letter-spacing:-.06em; line-height:1; }
+.advent-door__title { max-width:24ch; color:#FFF; font-size:.98rem; font-weight:780; line-height:1.25; text-wrap:balance; }
+.advent-door__teaser { margin-top:auto; padding-right:.4rem; color:#DCEFE2; font-size:.78rem; line-height:1.35; }
+.advent-door__status { color:#BBF7D0; font-size:.72rem; font-weight:800; letter-spacing:.035em; text-transform:uppercase; }
+.advent-door.is-open { border-color:#86EFAC; background:linear-gradient(145deg,#226342 0%,#14532D 72%,#103E29 100%); }
+.advent-door.is-open:hover { transform:translateY(-3px); box-shadow:0 7px 0 #0B3522,0 13px 22px rgba(18,61,42,.16); }
+.advent-door.is-open:focus-within { outline:3px solid #D6A34A; outline-offset:3px; }
+.advent-door.is-planned { border-color:#557363; background:linear-gradient(145deg,#355B48 0%,#284A39 72%,#203D2F 100%); }
+.advent-door.is-planned .advent-door__number { color:#D1DCCF; }
+.advent-door.is-planned .advent-door__title { color:#E6EEE8; }
+.advent-door.is-planned .advent-door__teaser { color:#C3D2C8; }
+.advent-door.is-planned .advent-door__status { color:#E5BD69; }
+@media (max-width:900px) { .advent-calendar { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (max-width:620px) { .advent-calendar { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; } .advent-door,.advent-door__link { min-height:175px; } .advent-door__link { padding:.85rem .9rem 1rem; } .advent-door__title { font-size:.91rem; } }
+@media (prefers-reduced-motion:reduce) { .advent-door { transition:none; } .advent-door.is-open:hover { transform:none; } }
+
 /* Keep reading-area links on the shared AA action-green token. */
 main.content a:not(.btn):not(.nav-link),
 main.content a:not(.btn):not(.nav-link):visited {
