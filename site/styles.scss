@@ -2884,7 +2884,7 @@ html[lang^="en"] .next-token-explorer [lang="fr"],
   background: #dce6d9;
 }
 .advent-progress__track span { display: block; height: 100%; border-radius: inherit; background: #27804d; }
-.advent-shelf {
+.advent-calendar-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: .8rem;
@@ -2992,9 +2992,9 @@ html[lang^="en"] .next-token-explorer [lang="fr"],
 .advent-door--open .advent-door__number { color: #fffaf0; }
 .advent-door--open .advent-door__title { color: #fff; }
 .advent-door--planned { background: linear-gradient(145deg, #f5f6ef, #e8eee5); }
-.advent-shelf--geometry .advent-door__number { color: #496a72; }
-.advent-shelf--mechanisms .advent-door__number { color: #7a623b; }
-.advent-shelf--research .advent-door__number { color: #5c6480; }
+.advent-calendar-grid--geometry .advent-door__number { color: #496a72; }
+.advent-calendar-grid--mechanisms .advent-door__number { color: #7a623b; }
+.advent-calendar-grid--research .advent-door__number { color: #5c6480; }
 .advent-door--open:hover,
 .advent-door--open:focus-visible {
   color: #fff;
@@ -3016,10 +3016,10 @@ html[lang^="en"] .next-token-explorer [lang="fr"],
 .advent-legend__swatch { width: .75rem; height: .75rem; border-radius: .15rem; background: #326d4d; }
 .advent-legend__swatch--planned { border: 1px solid #c7d6c7; background: #eaf1e7; }
 @media (max-width: 1000px) {
-  .advent-shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .advent-calendar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
-  .advent-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .62rem; }
+  .advent-calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .62rem; }
   .advent-door { min-height: 174px; padding: .72rem .65rem; }
   .advent-door__number { font-size: 2.8rem; }
   .advent-door__title { font-size: .76rem; }
@@ -3029,7 +3029,7 @@ html[lang^="en"] .next-token-explorer [lang="fr"],
   .advent-hero__facts { gap: .4rem; }
 }
 @media (max-width: 360px) {
-  .advent-shelf { grid-template-columns: 1fr 1fr; }
+  .advent-calendar-grid { grid-template-columns: 1fr 1fr; }
   .advent-door { min-height: 184px; }
   .advent-door__status { max-width: 100%; }
 }
@@ -3037,3 +3037,19 @@ html[lang^="en"] .next-token-explorer [lang="fr"],
   .advent-door--open { transition: none; }
   .advent-door--open:hover { transform: none; }
 }
+
+.advent-calendar-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 1.4rem; }
+.advent-door__topic { display: block; width: 100%; color: #627568; font: 700 .56rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .045em; text-transform: uppercase; }
+.advent-door__bottom { flex-direction: column; }
+.advent-door__bottom strong { color: #f1d18b; }
+.advent-door--language:not(.advent-door--open) { border-top: 3px solid #7ca889; }
+.advent-door--geometry:not(.advent-door--open) { border-top: 3px solid #7299a1; }
+.advent-door--mechanisms:not(.advent-door--open) { border-top: 3px solid #b69a65; }
+.advent-door--research:not(.advent-door--open) { border-top: 3px solid #858eae; }
+.advent-door--language .advent-door__number { color: #24563b; }
+.advent-door--geometry .advent-door__number { color: #426b75; }
+.advent-door--mechanisms .advent-door__number { color: #80663c; }
+.advent-door--research .advent-door__number { color: #5e6685; }
+.advent-door--open .advent-door__topic { color: #d6e9bd; }
+@media (max-width: 1000px) { .advent-calendar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .advent-calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .62rem; } }
