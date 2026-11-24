@@ -16,7 +16,7 @@ This document is an operational handoff for future sessions. It records what is 
 - [x] The former curriculum-summary design and manifest are marked historical/superseded.
 - [x] The bilingual scientific-calendar landing pages are the current calendar entry points.
 - [x] PR [#1565](https://github.com/JM-Brun/llm-lab/pull/1565) merged Day 01's French and English drafts, source dossier, original SVG, novice-review protocol and supporting language-switch/browser-review changes into `main`.
-- [x] Day 01's PR-only Quarto preview and FR/EN desktop/mobile browser review passed (run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295)); the pages remain `status:planned` and excluded from the public render list.
+- [x] Day 01's original PR-only Quarto preview and FR/EN desktop/mobile browser review passed (run [#45219428295](https://github.com/JM-Brun/llm-lab/actions/runs/45219428295)); PR #1591 now adds the story pages to the public render list as a reading version, pending fresh checks, merge and deployment.
 - [x] PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) corrected the bilingual homepage page maps to point to the scientific calendar.
 - [x] PR [#1576](https://github.com/JM-Brun/llm-lab/pull/1576) retired the eight legacy prototype routes with redirects to the new calendar, retained no-JavaScript fallback links on old lesson routes, removed obsolete page-map entries and deleted the unused prototype CSS.
 - [x] The cleanup PR's secret scan and Python quality/domain checks passed. Its test-suite and Quarto render checks were still running at the last status inspection; verify the completed results before treating the migration as fully validated.
