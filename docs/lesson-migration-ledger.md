@@ -213,7 +213,7 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 6. Reconcile FR/EN metadata and concept-resource links after the final destinations are known.
 7. Validate the shared computational spine and ensure the reader sees the distinct inference, scoring and training branches without a false dependency chain.
 
-**Current completion status:** chapter grouping and first-pass section dispositions are documented. No lesson content has yet been removed, moved, merged or declared complete by this ledger. The next content operation must be a bilingual source-to-destination pilot with the preservation evidence attached.
+**Current completion status:** chapter grouping and first-pass section dispositions are documented. One bilingual subsection pilot has consolidated the duplicated soft-target/KL derivation and sequence-level perplexity explanation from the cross-entropy lessons into their canonical Deepen and likelihood destinations. This is source-text-level completion only; rendered validation remains pending. The rest of the cross-entropy page and all other lesson pages remain under the preservation gates above. The next content operation should continue with a bounded bilingual section transfer, not a bulk rewrite.
 
 
 ## 8. Completed bilingual pilot — cross-entropy, KL and perplexity (2026-11-24)
