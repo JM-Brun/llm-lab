@@ -1,7 +1,7 @@
 ---
 title: "Zipf’s law exercises"
 subtitle: "Extended practice, worked solutions, and transfer"
-description-meta: "Extended exercises on rank-frequency calculations, log-log fitting, lexical versus token frequencies, and empirical limits."
+description-meta: "Extended exercises on rank-frequency calculations, lexical versus token frequencies, estimator uncertainty, fit quality, and explanatory hypotheses."
 keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-law", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-zipf-law"
 summary: "Seven formative exercises on rank-frequency calculations, lexical/token units, rank uncertainty, fit quality, and proposed explanations."
-scope: "Provides extended, worked practice on rank-frequency calculations, log-log plots, tokenizer-dependent counts, and the limits of empirical power-law claims."
+scope: "Provides extended, worked practice on rank-frequency calculations, log-log plots, tokenizer-dependent counts, empirical-rank uncertainty, exponent stability, and the distinction between description and mechanism."
 purpose: "Calculate, interpret, and critically assess rank-frequency regularities without confusing lexical statistics, token statistics, and causal explanations."
 suggested_route:
   previous: null
