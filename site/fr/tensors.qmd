@@ -81,6 +81,20 @@ $$
 
 Les axes du batch et des positions sont conservés ; le dernier axe passe de $D$ à $D'$. Cette notation évite de confondre la dimension de sortie avec $H$, qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
 
+### Dimensions architecturales d'un bloc Transformer
+
+Les dimensions d'un bloc décrivent des choix complémentaires. Elles ne désignent pas toutes un axe du même tenseur. Dans la notation des formes utilisée plus haut, $D$ désigne la dimension cachée ; les descriptions d'architecture Transformer notent souvent cette largeur $d_{\mathrm{model}}$ :
+
+- \(L\) : profondeur, c'est-à-dire nombre de blocs empilés ;
+- \(d_{\mathrm{model}}\) : largeur du modèle, dimension du flux résiduel et des représentations qui circulent entre les blocs ;
+- \(H\) : nombre de têtes d'attention ;
+- \(d_{\mathrm{head}}\) (souvent noté \(d_h\)) : dimension par tête ; dans une attention multi-têtes standard, la concaténation donne généralement \(H d_{\mathrm{head}}=d_{\mathrm{model}}\) ;
+- \(d_{\mathrm{ff}}\) : dimension intermédiaire du MLP, avant la projection de retour vers \(d_{\mathrm{model}}\).
+
+**Repère GPT-2 124M :** \(L=12\), \(d_{\mathrm{model}}=768\), \(H=12\), \(d_{\mathrm{head}}=64\) et \(d_{\mathrm{ff}}=3072=4d_{\mathrm{model}}\). Ces valeurs décrivent cette configuration, pas une règle universelle. Les architectures récentes peuvent modifier le nombre de têtes de requête et de clés/valeurs, utiliser des MLP à portes ou choisir d'autres rapports de dimensions.
+
+Le terme *largeur* est parfois employé pour désigner une autre dimension interne : toujours vérifier la convention du modèle considéré. Dans la configuration de référence du projet, les paramètres correspondants sont nommés `embedding_dim` pour $d_{\mathrm{model}}$ et `mlp_hidden_dim` pour $d_{\mathrm{ff}}$. Pour leur définition et le détail des paramètres, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd).
+
 ## Les axes ont une signification
 
 Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme $(B,T,D)$ peuvent représenter des objets différents.

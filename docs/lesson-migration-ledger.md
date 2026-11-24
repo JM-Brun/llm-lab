@@ -93,12 +93,12 @@ The following is the first migration ledger derived from the current French sour
 |---|---|---|
 | Situer le réseau dans la génération | **KEEP, concise** | Establish where the forward pass sits inside the autoregressive loop; the full loop belongs to generation. |
 | Des identifiants aux représentations d'entrée | **SYNTHESIZE** | Keep a compact input/output map; the canonical explanations remain embedding-space and positional-encoding. Do not repeat their derivations. |
-| Les blocs Transformer | **KEEP** | The central lesson content: block composition, repeated transformations and the role of attention/MLP/residual paths at overview level. Link to Q/K/V and attention for the calculations. |
+| Les blocs Transformer | **KEEP + DEEPEN TRANSFER — 2026-11-24 pilot** | Keep the two sublayer roles, causal access boundary, residual-stream idea and the block's place in the GPT forward pass at overview level. The detailed MLP explanation, residual equation, LayerNorm/Xiong et al. discussion, pre-LN equations and diagram, attention-versus-MLP figure/table, multi-head dimensions and interpretability caveat now have one bilingual owner in `contextualized-representations-advanced` section 3. The Build walkthrough remains implementation-only. |
 | Parallélisme à l'entraînement, génération séquentielle | **SYNTHESIZE / DEEPEN** | Keep the essential distinction in one short comparison; move detailed work/dependency/memory analysis to llm-computational-complexity. Link to generation and training-loop. |
-| Profondeur et largeur : deux dimensions de l'architecture | **DEEPEN** | Move the extended capacity/compute discussion to llm-computational-complexity or a dedicated architecture-depth resource if its content does not fit there. Keep only definitions needed to read the block stack. |
+| Profondeur et largeur : deux dimensions de l'architecture | **SYNTHESIZE + MOVED — 2026-11-24 pilot** | Keep only the definitions of depth (number of blocks) and width (`d_model`) in the core lesson. The definitions of `d_head`, `d_ff`, the relation between head count and head dimension, and the GPT-2 124M numerical configuration now live in the canonical `tensors` reference. |
 | Trois niveaux à ne pas confondre | **KEEP, concise** | Retain the distinction between attention mechanism, Transformer block and complete model; it prevents a central category error. |
 | Des représentations aux logits | **SYNTHESIZE** | Keep the transition and one compact flow diagram; the output projection and logits are taught canonically in logits. |
-| Lire aussi le schéma fondateur du Transformer; Parcours de lecture guidée | **REFERENCE** | Move the historical/source-reading guide to transformer-history; retain a contextual link. |
+| Lire aussi le schéma fondateur du Transformer; Parcours de lecture guidée | **MOVED — 2026-11-24 pilot** | The historical explanation, comparison table and architecture distinction now live in `transformer-history` under the original `historical-transformer-diagram` anchor. The five guided-reading questions are in the existing FR/EN `exercises/transformer.qmd` Practice companion; the history page links to them. The old anchor remains on the core page and links to the new canonical location. |
 
 ### 3.3 generation — preserve the complete conceptual inference path; move serving internals
 
@@ -230,3 +230,30 @@ If any gate fails, keep the source section and mark the migration VERIFY. A shor
 - Not moved in this pilot: the NumPy/PyTorch implementation and numerical-stability material, multi-position alignment/masking explanation, remaining misconceptions and references. The main cross-entropy page already delegates exercises to its dedicated FR/EN Practice companions; this was verified rather than treated as a move.
 
 **Validation still required:** render both language pages; inspect equations and links; compare the final Deepen section against the removed source material; verify page metadata and generated navigation; measure the mandatory lesson duration. This pilot does not certify the entire cross-entropy lesson or the full route.
+
+## 9. Completed bilingual pilot — Transformer overview (2026-11-24)
+
+**Status: source-to-destination transfer completed at the text level; Quarto-rendered validation remains pending.** The Understand route and the page identity are unchanged.
+
+### Source and destinations
+
+| Source content in site/fr/transformer.qmd / site/en/transformer.qmd | Canonical destination | Preservation result |
+|---|---|---|
+| Detailed MLP/feed-forward explanation; residual connection equation; LayerNorm purpose and Xiong et al. (2020) qualification; pre-LN equations and Mermaid diagram; attention-versus-MLP image and comparison table; multi-head dimension example and interpretability caveat | contextualized-representations-advanced.qmd / en/contextualized-representations-advanced.qmd, section 3 | Consolidated into the existing advanced treatment of contextual dependencies and block sublayers. The core lesson retains the two sublayer roles, the residual-stream/normalization overview, and links to both theory depth and Build. |
+| Detailed depth/width distinctions, d_head, d_ff, head-count relation and GPT-2 124M values | tensors.qmd / en/tensors.qmd, “Dimensions architecturales d'un bloc Transformer” / “Architectural dimensions of a Transformer block” | Added a canonical architecture-dimension reference while retaining only depth and width definitions in the core lesson. |
+| Original 2017 encoder–decoder diagram reading, explanatory table of historical labels, and architecture distinction | transformer-history.qmd / en/transformer-history.qmd, #historical-transformer-diagram | Moved to the historical reference, adjacent to its chronology. The old anchor remains on the core page as a link to the new location. |
+
+The five guided-reading questions (locate, explain, compare, transfer, reconstruct) now live in the existing FR/EN `exercises/transformer.qmd` Practice companion, with suggested answers derived from the historical explanation. The history page links to that section; no questions remain embedded in the reference narrative.
+
+### Core lesson after migration
+
+- Still teaches the decoder-only GPT forward pass: input representations → repeated blocks → final normalization/output projection → logits.
+- Keeps the contextual system diagram, a concise account of attention versus MLP, the training-parallelism/generation-sequentiality distinction, depth/width intuition, the three-level distinction (attention / block / complete GPT), and the boundary between logits and decoding.
+- Keeps the dedicated Practice link and generated route includes.
+- Does not turn the Build walkthrough into a theory prerequisite. transformer-block-walkthrough and gpt-model-walkthrough remain separate implementation resources.
+
+### Preservation and validation
+
+- FR/EN source sections were transferred to existing canonical pages; no image, equation, historical question, source attribution or example was intentionally discarded.
+- Page-map metadata and reciprocal discovery links were updated; the guided route order and data/guided-route.yml were intentionally left unchanged.
+- Remaining checks: Quarto render both languages; verify local links and the legacy anchor; inspect Mermaid, MathJax and moved figures; check bilingual semantic parity; measure the rendered mandatory lesson duration; inspect responsive and keyboard behavior.

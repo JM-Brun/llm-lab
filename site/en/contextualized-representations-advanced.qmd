@@ -9,10 +9,10 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations-advanced"
-summary: "Formalizes contextual dependencies of hidden states, masking constraints, and representation changes across blocks."
-scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, and the distinction between self-attention and the MLP."
+summary: "Formalizes contextual dependencies and deepens the internal operation of Transformer blocks: self-attention, MLP, residual connections, and normalization."
+scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, the roles of self-attention and the MLP, the residual stream, and normalization."
 domain: "architectures-mechanisms"
-purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain the limits of a simplified block representation."
+purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain Transformer sublayers, residual connections, and normalization variants."
 suggested_route:
   previous: null
   next: null
@@ -66,7 +66,60 @@ In a standard Transformer block, the operations have distinct roles:
 2. **MLP / feed-forward network**: then transforms each position independently of other positions at that sublayer, using parameters shared across positions.
 3. **Residual connections and normalization**: organize information flow and transformation stability; their exact order depends on the block variant (pre-LN, post-LN, etc.).
 
-Repeating these sublayers evolves hidden states. For the detailed computation, see [Q/K/V](queries-keys-values.qmd), [advanced Q/K/V](queries-keys-values-advanced.qmd), and [the Transformer](transformer.qmd).
+### The MLP: a local transformation at each position
+
+*Feed-forward* signals that information flows one way, from input to output, with no interaction between positions and no feedback loop. *MLP* (*multi-layer perceptron*) is the historical name for a chain of linear layers and nonlinear activations. Concretely, this subnetwork projects the representation from \(d_{\mathrm{model}}\) to an intermediate dimension \(d_{\mathrm{ff}}\) (often about four times larger), applies a nonlinear activation, then maps the result back to \(d_{\mathrm{model}}\). Its exact design varies across models.
+
+### Residual connections: add a correction to the stream
+
+Instead of replacing the flowing representation, each sublayer adds a correction. The stream that crosses the whole stack without interruption is called the **residual stream**; the residual connection gives information and gradients a direct path through it:
+
+$$
+x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
+$$
+
+### Normalization and operation order
+
+Normalization (*LayerNorm* in classic GPT models) centers and rescales the hidden-vector components of each position independently of other positions. It helps control activation scale and supports more favorable gradient flow during optimization. Its effect depends in part on placement: [Xiong et al. (2020)](https://proceedings.mlr.press/v119/xiong20b.html) show that, at initialization, the original Post-LN Transformer can have large gradients near the output, whereas the Pre-LN variant they study has better-behaved gradients. It is therefore too broad to conclude that every deep stack fails without this particular normalization arrangement: stability depends on architecture, initialization, and training choices.
+
+In the **pre-LN** block illustrated below, each sublayer receives a normalized input: \(x' = x + \operatorname{Attention}(\operatorname{LN}(x))\), then \(x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))\). The opposite arrangement (post-LN) and normalization variants such as RMSNorm differ across models.
+
+```{mermaid}
+%%| label: fig-block-prefln
+%%| fig-cap: "One pass through a pre-LN block: each sublayer reads a normalized copy of the stream, and its output is added back to the stream (residual connection)."
+%%| fig-alt: "Flow diagram: x enters the block; a copy passes through LayerNorm then multi-head attention, and rejoins x at an addition; the result x prime passes through LayerNorm then the MLP, which projects from d_model to d_ff and back to d_model, and rejoins x prime at a second addition, giving x double prime, the block output."
+flowchart LR
+    X["x — block input"] --> LN1["LayerNorm"]
+    LN1 --> ATT["Multi-head attention"]
+    ATT --> ADD1["Addition"]
+    X -- "residual path" --> ADD1
+    ADD1 --> X2["x′ — after attention"]
+    X2 --> LN2["LayerNorm"]
+    LN2 --> MLP["MLP: d_model to d_ff to d_model"]
+    MLP --> ADD2["Addition"]
+    X2 -- "residual path" --> ADD2
+    ADD2 --> Y["x″ — block output"]
+```
+
+The image summarizes the difference in scope between the two sublayers:
+
+![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
+
+| | Self-attention | Feed-forward network (MLP) |
+|---|---|---|
+| Scope | all positions allowed by the mask | each position, separately |
+| Links between positions | yes; the causal mask sets which accesses are allowed | none |
+| Weights across positions | shared | shared |
+| Dimensions traversed | \(d_{\mathrm{model}}\) to \(d_{\mathrm{model}}\) | \(d_{\mathrm{model}}\) to \(d_{\mathrm{ff}}\), then back to \(d_{\mathrm{model}}\) |
+| Question it answers | what to take from the context? | how to transform what was taken? |
+
+Both operations are learned. Attention computes a weighted sum of learned value vectors: it does not literally search through human-readable notes.
+
+### Multi-head attention
+
+Each attention sublayer is in fact **multi-head**: several attentions run in parallel on distinct learned projections, and their results are combined. Each head works in a reduced dimension \(d_{\mathrm{head}}\) (64 for GPT-2), with \(H \times d_{\mathrm{head}} = d_{\mathrm{model}}\) in this configuration: \(12 \times 64 = 768\). This diversity does not guarantee that each head develops a clear, human-interpretable specialization; the projections that feed attention are explained in the [Q/K/V lesson](queries-keys-values.qmd).
+
+Repeating these sublayers evolves hidden states. Section 2 formalizes dependencies across positions and layers; for the detailed computation, see [Q/K/V](queries-keys-values.qmd), [advanced Q/K/V](queries-keys-values-advanced.qmd), and [the Transformer](transformer.qmd).
 
 ## 4. Isolating the effect of context in the *bank* example
 

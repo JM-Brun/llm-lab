@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index"]
   children: []
-related: ["en/llm-overview", "en/llm-evolution", "en/scaling-laws", "en/emergence", "en/in-context-learning", "en/post-training"]
+related: ["en/llm-overview", "en/transformer", "en/transformer-exercises", "en/transformer-architectures", "en/queries-keys-values", "en/causal-masking", "en/cross-attention", "en/llm-evolution", "en/scaling-laws", "en/emergence", "en/in-context-learning", "en/post-training"]
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:en", "status:published"]
 -->
 
@@ -94,6 +94,41 @@ The timeline highlights three mutually reinforcing but distinct transformations:
 - **Attention predates the Transformer.** The 2017 paper assembles and reorganizes existing ideas into a coherent architecture; it did not invent the entire family of attention mechanisms.
 - **Scale does not explain everything.** Data, objectives, tokenization, architecture, training procedure, and evaluation also shape observed capabilities.
 - **A publication date is not proof of absolute priority.** This page selects a few pedagogical milestones and does not attempt to catalogue every parallel contribution.
+
+<span id="historical-transformer-diagram"></span>
+
+## Also read the Transformer's original architecture diagram
+
+This comparison uses concepts introduced in [the Transformer lesson](transformer.qmd) to introduce the encoder–decoder data flow.
+
+If you have already come across the classic diagram from the founding paper (*Attention Is All You Need*), you will recognize the same building blocks here: the *Multi-Head Attention*, *Feed Forward*, and *Add & Norm* boxes correspond to the multi-head attention, the MLP, and the residual-plus-normalization pair introduced in [the Transformer lesson](transformer.qmd) and explained in depth in [the contextualized-representations deep dive](contextualized-representations-advanced.qmd). The paper and its visualizations are referenced in the [Deepen resources](deepen.qmd#transformer-resources).
+
+The GPT diagram in [the Transformer lesson](transformer.qmd) is not the historical diagram of every Transformer. To understand where the component names and block organization come from, also learn to read the 2017 paper [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which describes an **encoder–decoder Transformer**. Jay Alammar's [*The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) provides a step-by-step reading; it complements but does not replace the architectural distinction made here.
+
+In the original diagram, follow two streams:
+
+- **Encoder (left):** embeddings and positional encoding, then a stack of layers with multi-head self-attention and a feed-forward network. Each encoder position can use information from the other input positions.
+- **Decoder (right):** shifted target-sequence embeddings, masked self-attention to prevent access to future target tokens, then encoder–decoder attention over encoder representations, followed by the feed-forward network.
+- **Output:** a linear projection to vocabulary scores, then softmax in the paper's diagram to obtain a distribution.
+
+| Historical label | What to understand | Where to continue in LLM Lab |
+|---|---|---|
+| Input / Output Embedding | Lookup of vectors associated with IDs; during training, decoder inputs use the shifted target sequence | [Embeddings](embedding-space.qmd), [text and IDs](text-data.qmd) |
+| Positional Encoding | Order information; the original paper uses sinusoidal functions | [Positional information](positional-encoding.qmd), [sinusoidal derivation](sinusoidal-positional-encoding.qmd) |
+| Multi-Head Attention | Multiple heads computed from learned Q, K and V projections | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
+| Masked Multi-Head Attention | Decoder self-attention with a causal constraint | [Causal masking](causal-masking.qmd) |
+| Encoder–Decoder Attention | Cross-attention: Q comes from the decoder, K and V from encoder outputs | [Cross-attention](cross-attention.qmd) |
+| Add & Norm | Residual addition followed by normalization; the historical diagram is post-LN, unlike the pre-LN block in the deep dive | [Block deep dive](contextualized-representations-advanced.qmd), [block walkthrough](transformer-block-walkthrough.qmd), [tensors](tensors.qmd) |
+| Feed Forward | An MLP applied independently at each position, with parameters shared across positions | [Block deep dive](contextualized-representations-advanced.qmd), [block walkthrough](transformer-block-walkthrough.qmd) |
+| Linear / Softmax | Projection to vocabulary logits, then conversion to probabilities | [Logits](logits.qmd), [probabilities](probabilities.qmd) |
+
+**Do not conflate three architectures:** the original encoder–decoder combines an encoder that reads the input and a decoder that produces an output conditioned on it; an encoder-only model (for example, BERT) builds input representations; a decoder-only model (for example, GPT) predicts sequence continuations using causal self-attention. GPT therefore does not contain the encoder–decoder attention block from the 2017 diagram. The [architecture comparison](transformer-architectures.qmd) explores these differences.
+
+### Guided reading route
+
+Return to the diagram after studying [Q, K, and V projections](queries-keys-values.qmd) and [causal masking](causal-masking.qmd). The five locate, explain, compare, transfer, and reconstruct questions are collected in the [dedicated Transformer Practice page](exercises/transformer.qmd#read-the-original-transformer-diagram), keeping historical reading separate from exercises.
+
+**What the diagram does not show:** tensor dimensions and axes, parameter sharing, projection details, memory and compute costs, training-versus-inference differences, or architectural variants introduced since 2017. The canonical lessons provide these details. Treat the diagram as a reading map, not an exhaustive specification of a modern model.
 
 ## Primary source
 

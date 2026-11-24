@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index"]
   children: []
-related: ["fr/llm-overview", "fr/llm-evolution", "fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/post-training"]
+related: ["fr/llm-overview", "fr/transformer", "fr/transformer-exercises", "fr/transformer-architectures", "fr/queries-keys-values", "fr/causal-masking", "fr/cross-attention", "fr/llm-evolution", "fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/post-training"]
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:fr", "status:published"]
 -->
 
@@ -94,6 +94,41 @@ La chronologie éclaire trois transformations qui se renforcent sans se confondr
 - **L'attention précède le Transformer.** Le papier de 2017 rassemble et réorganise des idées existantes en une architecture cohérente ; il ne crée pas à lui seul toute la famille des mécanismes d'attention.
 - **L'échelle n'explique pas tout.** Données, objectifs, tokenisation, architecture, procédure d'entraînement et évaluation influencent aussi les capacités observées.
 - **Une date de publication n'est pas une preuve de priorité absolue.** Cette page choisit quelques jalons pédagogiques et ne prétend pas recenser toutes les contributions parallèles.
+
+<span id="historical-transformer-diagram"></span>
+
+## Lire aussi le schéma fondateur du Transformer
+
+Cette comparaison mobilise les notions introduites dans [la leçon sur le Transformer](transformer.qmd) et introduit le chemin encodeur-décodeur.
+
+Si vous avez déjà croisé le schéma classique de l'article fondateur (*Attention Is All You Need*), vous y retrouverez les mêmes briques : les boîtes *Multi-Head Attention*, *Feed Forward* et *Add & Norm* correspondent à l'attention multi-têtes, au MLP et au couple connexion résiduelle + normalisation présentés dans [la leçon sur le Transformer](transformer.qmd) et détaillés dans [l'approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). L'article et ses visualisations sont référencés dans la [rubrique Approfondir](deepen.qmd#ressources-transformer).
+
+Le schéma GPT présenté dans [la leçon sur le Transformer](transformer.qmd) n'est pas le schéma historique de tous les Transformers. Pour comprendre d'où viennent les noms et l'organisation des blocs, apprenez aussi à lire la représentation de l'article de 2017 [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui décrit un **Transformer encodeur-décodeur**. La visualisation de [Jay Alammar, *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) en propose une lecture progressive ; elle complète, mais ne remplace pas, la distinction architecturale faite ici.
+
+Dans le schéma original, suivez deux flux :
+
+- **Encodeur (gauche)** : embeddings et encodage positionnel, puis une pile de couches avec auto-attention multi-têtes et réseau feed-forward. Chaque position de l'encodeur peut prendre en compte les autres positions de l'entrée.
+- **Décodeur (droite)** : embeddings décalés de la séquence cible, auto-attention masquée pour ne pas consulter les tokens futurs, puis attention encodeur-décodeur sur les représentations de l'encodeur, avant le réseau feed-forward.
+- **Sortie** : projection linéaire vers les scores du vocabulaire, puis softmax dans le schéma de l'article pour obtenir une distribution.
+
+| Libellé historique | Ce qu'il faut comprendre | Où poursuivre dans LLM Lab |
+|---|---|---|
+| Input / Output Embedding | Recherche de vecteurs associés aux identifiants ; le décodeur reçoit la séquence cible décalée pendant l'entraînement | [Embeddings](embedding-space.qmd), [texte et identifiants](text-data.qmd) |
+| Positional Encoding | Information d'ordre ; l'article original utilise des fonctions sinusoïdales | [Information positionnelle](positional-encoding.qmd), [dérivation sinusoïdale](sinusoidal-positional-encoding.qmd) |
+| Multi-Head Attention | Plusieurs têtes calculées à partir de projections apprises Q, K et V | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
+| Masked Multi-Head Attention | Auto-attention du décodeur avec contrainte causale | [Masquage causal](causal-masking.qmd) |
+| Encoder–Decoder Attention | Attention croisée : Q vient du décodeur, K et V des sorties de l'encodeur | [Attention croisée](cross-attention.qmd) |
+| Add & Norm | Addition résiduelle puis normalisation ; le dessin historique est post-LN, contrairement au bloc pré-LN illustré dans l'approfondissement | [Approfondissement du bloc](contextualized-representations-advanced.qmd), [visite guidée du bloc](transformer-block-walkthrough.qmd), [tenseurs](tensors.qmd) |
+| Feed Forward | MLP appliqué indépendamment à chaque position, avec paramètres partagés entre positions | [Approfondissement du bloc](contextualized-representations-advanced.qmd), [visite guidée du bloc](transformer-block-walkthrough.qmd) |
+| Linear / Softmax | Projection vers les logits du vocabulaire, puis conversion en probabilités | [Logits](logits.qmd), [probabilités](probabilites.qmd) |
+
+**Trois architectures à ne pas confondre :** l'encodeur-décodeur original combine un encodeur qui lit l'entrée et un décodeur qui produit une sortie conditionnée par lui ; un encodeur seul (par exemple BERT) construit des représentations de l'entrée ; un décodeur seul (par exemple GPT) prédit la suite avec une auto-attention causale. GPT ne contient donc pas le bloc d'attention encodeur-décodeur du schéma de 2017. La [comparaison des architectures](transformer-architectures.qmd) détaille ces différences.
+
+### Parcours de lecture guidée
+
+Revenez au schéma après les [projections Q, K, V](queries-keys-values.qmd) et le [masque causal](causal-masking.qmd). Les cinq questions de repérage, d'explication, de comparaison, de transfert et de reconstruction sont regroupées dans la [page Practice dédiée au Transformer](exercises/transformer.qmd#lire-le-schema-fondateur-de-2017), afin de séparer la lecture historique des exercices.
+
+**Ce que le schéma ne montre pas :** dimensions et axes des tenseurs, partage des paramètres, détails des projections, coûts mémoire et calcul, différences entre entraînement et inférence, ni variantes apparues depuis 2017. Les pages canoniques apportent ces précisions. Le schéma est une carte de lecture, pas une spécification exhaustive d'un modèle moderne.
 
 ## Source primaire
 

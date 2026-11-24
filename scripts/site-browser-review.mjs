@@ -745,9 +745,10 @@ async function runCase(testCase, caseIndex) {
         const lessonLink = links.find(link =>
           link.path.endsWith(`/${lessonSlug}.html`) && link.visible
         );
+        const collectionSlug = `exercises-${lessonSlug}`;
         const collectionLink = links.find(link =>
-          link.path.endsWith("/exercises-attention.html") &&
-          link.hash === "#attention" && link.visible
+          link.path.endsWith(`/${collectionSlug}.html`) &&
+          link.hash === `#${lessonSlug}` && link.visible
         );
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
           /check the essential idea|vérifier l['’]idée essentielle/i.test(heading.textContent)

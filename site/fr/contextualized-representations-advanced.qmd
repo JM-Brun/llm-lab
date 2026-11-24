@@ -9,10 +9,10 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/contextualized-representations-advanced"
-summary: "Formalise les dépendances contextuelles des états cachés, les contraintes de masque et l'évolution des représentations à travers les blocs."
-scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer et distinction entre auto-attention et MLP."
+summary: "Formalise les dépendances contextuelles et approfondit le fonctionnement interne des blocs Transformer : auto-attention, MLP, connexions résiduelles et normalisation."
+scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel et normalisation."
 domain: "architectures-mechanisms"
-purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, et expliquer les limites d'une représentation simplifiée du bloc."
+purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, puis expliquer les sous-couches, les connexions résiduelles et les variantes de normalisation d'un bloc."
 suggested_route:
   previous: null
   next: null
@@ -66,7 +66,60 @@ Dans un bloc Transformer standard, les opérations ont des rôles distincts :
 2. **MLP / réseau feed-forward** : transforme ensuite chaque position indépendamment des autres positions à cette sous-couche, avec des paramètres partagés entre positions.
 3. **Connexions résiduelles et normalisation** : organisent le flux et la stabilité des transformations ; leur ordre exact dépend de la variante du bloc (pré-LN, post-LN, etc.).
 
-La répétition de ces sous-couches fait évoluer les états cachés. Pour le calcul détaillé, voir [Q/K/V](queries-keys-values.qmd), [Q/K/V avancé](queries-keys-values-advanced.qmd) et [le Transformer](transformer.qmd).
+### Le MLP : une transformation locale à chaque position
+
+*Feed-forward* signale que l'information y circule dans un seul sens, de l'entrée vers la sortie, sans interaction entre positions ni boucle de retour. *MLP* (*multi-layer perceptron*) est le nom historique d'un enchaînement de couches linéaires et d'activations non linéaires. Concrètement, ce sous-réseau projette la représentation de dimension \(d_{\mathrm{model}}\) vers une dimension intermédiaire \(d_{\mathrm{ff}}\) (souvent environ quatre fois plus grande), applique une activation non linéaire, puis ramène le résultat à \(d_{\mathrm{model}}\). Sa conception précise varie selon les modèles.
+
+### Connexion résiduelle : ajouter une correction au flux
+
+Au lieu de remplacer la représentation qui circule, chaque sous-couche ajoute une correction. Le flux qui traverse ainsi toute la pile sans discontinuité s'appelle le **flux résiduel** ; la connexion résiduelle lui fournit un chemin direct pour l'information et pour le gradient :
+
+$$
+x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
+$$
+
+### Normalisation et ordre des opérations
+
+La normalisation (*LayerNorm*, dans les GPT classiques) centre et remet à l'échelle les composantes du vecteur caché de chaque position, indépendamment des autres positions. Elle contribue à contrôler l'échelle des activations et à rendre la propagation des gradients plus favorable à l'optimisation. Son effet dépend notamment de son emplacement : [Xiong et al. (2020)](https://proceedings.mlr.press/v119/xiong20b.html) montrent qu'à l'initialisation le Transformer Post-LN original peut présenter des gradients élevés près de la sortie, tandis que le Pre-LN étudié donne des gradients mieux comportés. Il serait donc trop général de conclure que toute pile profonde échoue sans cette disposition précise : la stabilité dépend de l'architecture et des choix d'initialisation et d'entraînement.
+
+Dans le bloc **pré-LN** illustré ci-dessous, chaque sous-couche reçoit une entrée normalisée : \(x' = x + \operatorname{Attention}(\operatorname{LN}(x))\), puis \(x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))\). La disposition inverse (post-LN) et les variantes de normalisation, comme RMSNorm, diffèrent entre modèles.
+
+```{mermaid}
+%%| label: fig-bloc-prefln
+%%| fig-cap: "Une passe dans un bloc pré-LN : chaque sous-couche lit une copie normalisée du flux, et sa sortie vient s'ajouter au flux (connexion résiduelle)."
+%%| fig-alt: "Diagramme de flux : x entre dans le bloc ; une copie passe par LayerNorm puis l'attention multi-têtes, et rejoint x par une addition ; le résultat x prime passe par LayerNorm puis le MLP, qui projette de d_model vers d_ff puis revient à d_model, et rejoint x prime par une seconde addition, donnant x seconde, sortie du bloc."
+flowchart LR
+    X["x — entrée du bloc"] --> LN1["LayerNorm"]
+    LN1 --> ATT["Attention multi-têtes"]
+    ATT --> ADD1["Addition"]
+    X -- "chemin résiduel" --> ADD1
+    ADD1 --> X2["x′ — après l'attention"]
+    X2 --> LN2["LayerNorm"]
+    LN2 --> MLP["MLP : d_model vers d_ff vers d_model"]
+    MLP --> ADD2["Addition"]
+    X2 -- "chemin résiduel" --> ADD2
+    ADD2 --> Y["x″ — sortie du bloc"]
+```
+
+L'image résume la différence de portée entre les deux sous-couches :
+
+![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
+
+| | Auto-attention | Réseau feed-forward (MLP) |
+|---|---|---|
+| Portée | toutes les positions autorisées par le masque | chaque position, séparément |
+| Liens entre positions | oui ; le masque causal fixe les accès autorisés | aucun |
+| Poids entre positions | partagés | partagés |
+| Dimensions traversées | \(d_{\mathrm{model}}\) vers \(d_{\mathrm{model}}\) | \(d_{\mathrm{model}}\) vers \(d_{\mathrm{ff}}\), puis retour vers \(d_{\mathrm{model}}\) |
+| Question à laquelle il répond | que retenir du contexte ? | comment transformer ce qui a été retenu ? |
+
+Les deux opérations sont apprises. L'attention calcule une somme pondérée de vecteurs de valeur : elle ne recherche pas littéralement des informations dans des notes lisibles par un humain.
+
+### Attention multi-têtes
+
+Chaque sous-couche d'attention est en réalité **multi-têtes** : plusieurs attentions s'exécutent en parallèle sur des projections apprises distinctes, puis leurs résultats sont combinés. Chaque tête travaille dans une dimension réduite \(d_{\mathrm{head}}\) (64 pour GPT-2), avec \(H \times d_{\mathrm{head}} = d_{\mathrm{model}}\) dans cette configuration : \(12 \times 64 = 768\). Cette diversité ne garantit pas que chaque tête développe une spécialisation nette et interprétable par un humain ; les projections qui alimentent l'attention sont détaillées dans la leçon [Q/K/V](queries-keys-values.qmd).
+
+La répétition de ces sous-couches fait évoluer les états cachés. La section 2 formalise les dépendances entre positions et couches ; pour le calcul détaillé, voir [Q/K/V](queries-keys-values.qmd), [Q/K/V avancé](queries-keys-values-advanced.qmd) et [le Transformer](transformer.qmd).
 
 ## 4. Isoler l'effet du contexte dans l'exemple *bank*
 

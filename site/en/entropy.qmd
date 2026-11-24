@@ -16,9 +16,9 @@ suggested_route:
   previous: "en/probabilities"
   next: "en/likelihood"
 hierarchy:
-  parents: []
+  parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
-related: ["en/probabilities", "en/likelihood", "en/entropy-exercises"]
+related: ["en/likelihood", "en/entropy-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
