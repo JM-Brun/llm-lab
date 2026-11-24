@@ -1,0 +1,83 @@
+---
+title: "Softmax and the physics of a crowd"
+subtitle: "Temperature, concentration, and the analogy with Boltzmann distributions"
+description-meta: "An investigation of temperature in softmax, the partition function, and the limits of the statistical-physics analogy."
+keywords: ["type:deep-dive", "destination:deepen", "topic:softmax-and-statistical-physics", "level:overview", "language:en", "status:planned"]
+lang: en
+toc: true
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/softmax-temperature-statistical-mechanics"
+summary: "Connects softmax temperature to the concentration of a Boltzmann distribution while distinguishing a mathematical analogy from a physical interpretation."
+scope: "Softmax, temperature, partition function, and Boltzmann distribution; analogy and limitations."
+purpose: "Explain how temperature redistributes probabilities, interpret the partition function, and identify what the physical analogy does—and does not—establish."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/probabilities", "en/entropy"]
+tags: ["type:deep-dive", "destination:deepen", "topic:softmax-and-statistical-physics", "level:overview", "language:en", "status:planned"]
+-->
+
+*2026 Advent Calendar · Door 09 · editorial skeleton*
+
+## Central question
+
+Connects softmax temperature to the concentration of a Boltzmann distribution while distinguishing a mathematical analogy from a physical interpretation.
+
+Softmax, temperature, partition function, and Boltzmann distribution; analogy and limitations.
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Investigation — Thought experiment and distribution comparison
+
+A crowd of possibilities and a rule for allocating weight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Worked example to develop
+
+Does temperature change the options or their relative weights?
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Limitations and conditions
+
+Reading the partition function
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Transfer challenge
+
+Where does the physics analogy stop?
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+<details>
+<summary>Explained solution</summary>
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+</details>
+
+## Closing insight
+
+<!-- To write: develop the reasoning specific to this story. Do not fill the template mechanically. -->
+
+## Sources to document
+
+- <!-- À compléter avec des sources primaires ou faisant autorité et les affirmations qu’elles étayent. -->
+
+<!--
+Production notes:
+- Keep this page independent of previous and subsequent doors.
+- Keep the lesson in its primary Deepen domain after the 2026 edition is archived.
+- Put exercises in a companion page under the practice area; do not grow this lesson with a question bank.
+- Distinguish constructed examples, empirical findings, theoretical results, and open hypotheses.
+- Validate French/English parity, rendered mathematics, links, accessibility, and novice comprehension before publication.
+-->
