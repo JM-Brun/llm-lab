@@ -12,7 +12,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/quantization"
 summary: "Explains how quantization reduces the representation precision of weights and creates a measurable trade-off between memory and error."
 scope: "Quantization, rounding errors, dynamic range, calibration, and memory–quality trade-offs."
-purpose: "Quantize a small weight vector and measure reconstruction error."
+purpose: "Quantize a small vector, calculate reconstruction error, and explain why scale and calibration choices affect the result."
 domain: "inference-efficiency"
 suggested_route:
   previous: null
