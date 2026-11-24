@@ -758,6 +758,10 @@ async function runCase(testCase, caseIndex) {
             { slug: "exercises-foundations", hash: "" },
             { slug: "exercises-generation", hash: "#ex-generation-temperature" },
           ],
+          // This topic-specific Practice page points to the shared Attention collection.
+          "scaled-dot-product-attention": [
+            { slug: "exercises-attention", hash: "#attention" },
+          ],
         };
         const expectedCollections = collectionTargets[lessonSlug] ?? [
           { slug: `exercises-${lessonSlug}`, hash: `#${lessonSlug}` },
@@ -768,7 +772,7 @@ async function runCase(testCase, caseIndex) {
           ) && link.visible
         );
         const selfCheckHeading = [...document.querySelectorAll("main h2")].some(heading =>
-          /check the essential idea|vérifier l['’]idée essentielle/i.test(heading.textContent)
+          /check (?:the essential idea|your understanding)|vérifier (?:l['’]idée essentielle|sa compréhension)/i.test(heading.textContent)
         );
         return { lessonLink, collectionLink, selfCheckHeading };
       }, { lessonSlug });
@@ -785,8 +789,8 @@ async function runCase(testCase, caseIndex) {
       const detailsCount = await details.count();
       const summariesCount = await details.locator("summary").count();
       const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
-      if (detailsCount !== 1 || summariesCount !== 1 || openDetailsAtLoad !== 0) {
-        throw new Error("practice companion must expose one native, initially collapsed worked-answer disclosure");
+      if (detailsCount < 1 || summariesCount !== detailsCount || openDetailsAtLoad !== 0) {
+        throw new Error("practice companion must expose one or more native, initially collapsed worked-answer disclosures");
       }
       const summary = details.locator("summary").first();
       await summary.focus();
