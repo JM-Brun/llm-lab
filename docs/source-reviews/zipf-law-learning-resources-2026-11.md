@@ -184,3 +184,17 @@ Pour un laboratoire reproductible, privilégier un notebook écrit dans le proje
 - Linders, G. M., & Louwerse, M. M. (2023). [DOI](https://doi.org/10.3758/s13423-022-02142-9) · [Publisher](https://link.springer.com/article/10.3758/s13423-022-02142-9)
 - Roda, G. (2024). [Wolfram Demonstrations](https://demonstrations.wolfram.com/ZipfsLawForNaturalLanguages/)
 - Zipf, G. K. (1949). [Google Books](https://books.google.com/books?id=1tx9AAAAIAAJ)
+
+## 9. Index des extractions atomiques
+
+Le catalogue relie chaque source à un fichier d'extraction unique. Les identifiants d'items permettent de retrouver une contribution sans dépendre de son titre ni de son ordre dans le document.
+
+| Fichier | Items extraits |
+|---|---|
+| \`data/extractions/piantadosi-zipf-word-frequency-2014.yml\` | \`rank-frequency-form-and-variant\`, \`correlated-rank-frequency-errors\`, \`structure-beyond-simple-law\`, \`theory-underdetermination\` |
+| \`data/extractions/lestrade-unzipping-zipfs-law-2017.yml\` | \`syntax-class-size\`, \`semantic-specificity-reusability\`, \`joint-model-and-non-consensus\` |
+| \`data/extractions/pilgrim-hills-bias-zipf-estimators-2021.yml\` | \`empirical-rank-vs-probability-rank\`, \`maximum-likelihood-bias\`, \`abc-not-a-universal-fix\` |
+| \`data/extractions/linders-louwerse-zipf-spoken-dialog-2023.yml\` | \`unit-generalization\`, \`fit-vs-exponent\`, \`cognitive-effort-hypothesis\` |
+| \`data/extractions/roda-wolfram-zipf-natural-languages-2024.yml\` | \`interactive-rank-frequency-workbench\` |
+
+Les items sont paraphrasés, localisés et bornés par leur niveau d'inspection. Leur présence dans le catalogue ne vaut ni validation indépendante ni décision d'intégration. Les décisions de Phase B devront référencer ces identifiants et comparer leur fonction pédagogique à la section cible avant toute modification.
