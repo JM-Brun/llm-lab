@@ -747,6 +747,8 @@ async function runCase(testCase, caseIndex) {
         const lessonLink = links.find(link =>
           link.path.endsWith(`/${lessonSlug}.html`) && link.visible
         );
+        // Probability practice reuses shared Foundations and Generation collections;
+        // it intentionally has no redundant one-to-one exercises-probabilities collection.
         const collectionTargets = {
           probabilities: [
             { slug: "exercises-foundations", hash: "" },
