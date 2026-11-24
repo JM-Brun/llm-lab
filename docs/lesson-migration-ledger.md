@@ -37,7 +37,7 @@ For merged material, compare propositions and qualifications, not just word coun
 
 ## 2. Reader-facing course: chapters and lessons
 
-The current nine conceptual stages are retained as **chapters**, but the route is presented as one ordered list of lessons. The route is a pedagogical progression, not a claim that every lesson is a formal prerequisite of the next. In particular, generation, observed-target scoring and parameter learning remain distinct uses of the shared predictive distribution.
+The current nine conceptual stages are the **starting chapter proposal**; confirm their boundaries after the lesson content transfers. The route itself is presented as one ordered list of lessons. The route is a pedagogical progression, not a claim that every lesson is a formal prerequisite of the next. In particular, generation, observed-target scoring and parameter learning remain distinct uses of the shared predictive distribution.
 
 | Chapter | Lesson order | Canonical lesson (FR / EN) | Central learning outcome | Target |
 |---|---:|---|---|---:|
