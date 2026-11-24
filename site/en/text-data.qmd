@@ -101,7 +101,7 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 ## Practice
 
-[Calculate what enters the first block](exercises/text-data.qmd#ex-token-to-block-input) or explore the [other practice questions](exercises/text-data.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/text-data.qmd).
 
 ## Further exploration
 
