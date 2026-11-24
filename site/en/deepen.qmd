@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01", "en/surprisal-information-content"]
 related: []
 tags:
   - "type:entry-point"
@@ -163,6 +163,7 @@ These pages provide analytical tools; they are not a prerequisite mathematics co
 
 **Start here:** begin with [likelihood](likelihood.qmd) and [loss](loss.qmd); the deep dives connect these objects without conflating them.
 
+- [Self-information and surprisal](surprisal-information-content.qmd) — event information, conditional surprisal, and the chain rule; distinguish an observed score from predictive entropy.
 - [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
 - [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
 - [Score centering in off-policy RL](score-centering.qmd) — correcting policy-gradient drift when sampler and trainer distributions differ.
