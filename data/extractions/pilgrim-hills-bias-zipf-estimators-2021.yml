@@ -133,7 +133,7 @@ items:
       tags: [topic:statistical-estimation, topic:model-misspecification, method:approximate-bayesian-computation]
       concept_ids: [word-frequency-distribution, zipf-law]
     candidate_destinations:
-      pages: [fr/exercises-zipf-law, en/exercises-zipf-law]
+      pages: []
       concepts: []
       route_ids: []
     disposition: integrate
@@ -142,4 +142,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "Phase A only. The most useful addition is the distinction between empirical rank and latent probability rank, followed by the warning that improved estimators still depend on the assumed generative model. These points could support advanced practice without expanding the introductory story."
+  decision_summary: "Phase B partial. Empirical versus probability ranks and the resulting estimator-bias concern are represented in the bilingual synthetic-sample exercise. The ABC discussion and warning about model misspecification remain deferred because the current collection does not yet teach approximate Bayesian computation or compare estimators computationally. The synthetic counts illustrate rank inversion; they are not a reproduction of the paper's data or estimates."
