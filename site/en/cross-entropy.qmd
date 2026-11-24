@@ -18,8 +18,8 @@ suggested_route:
   next: "en/loss"
 hierarchy:
   parents: ["en/entropy"]
-  children: ["en/loss"]
-related: ["en/likelihood", "en/cross-entropy-exercises"]
+  children: []
+related: ["en/likelihood", "en/loss", "en/cross-entropy-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
