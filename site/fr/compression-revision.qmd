@@ -70,7 +70,7 @@ $$
 **Lecture :** plus le modèle attribue une probabilité élevée au token observé, moins son coût idéal est élevé. La cross-entropy moyenne mesure ce coût moyen sous une distribution de données et une convention de logarithme données.
 
 ::: {.callout-warning title="Une probabilité ne suffit pas à décompresser"}
-Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le même modèle, le même tokenizer, le même ordre des symboles et des conventions numériques identiques. Le décodage doit reconstruire exactement la séquence. Générer une continuation plausible n'est pas décompresser le corpus.
+Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le même modèle, le même tokenizer, le même ordre des symboles et des conventions numériques identiques. Le décodage doit reconstruire exactement la séquence. Générer une continuation plausible n'est pas décompresser le corpus. Les poids du LLM ne sont pas une archive littérale du corpus d'entraînement : ils paramètrent un modèle de probabilité, sans constituer un protocole de restitution exacte.
 :::
 
 ::: {.callout-note title="Le corpus est un plafond, pas un plancher"}
@@ -100,7 +100,7 @@ L'expérience [entropie contre surprisal](https://github.com/JM-Brun/llm-lab/blo
 | **Pruning** | Poids ou structures supprimés | La sparsité est-elle réellement exploitée par le matériel ? |
 | **Distillation** | Un étudiant apprend à imiter certains comportements d'un professeur | Quel comportement est conservé, sur quelles tâches et avec quelle perte ? |
 
-Un checkpoint plus petit n'est pas automatiquement plus rapide : le format, les kernels, le matériel, le batch et la longueur de contexte comptent.
+Un checkpoint plus petit n'est pas automatiquement plus rapide : le format, les kernels, le matériel, le batch et la longueur de contexte comptent. Pour une revue critique des méthodes et compromis de compression des modèles, voir la [synthèse sur la compression des modèles](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
 
 ### MDL : compter le modèle autant que les données
 
