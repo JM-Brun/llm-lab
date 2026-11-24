@@ -116,7 +116,7 @@ Pour un batch, les logits ont souvent la forme $(B,T,V)$ et les labels $(B,T)$. 
 
 ## Perplexité
 
-Pour une cible one-hot, la cross-entropie moyenne sur les positions valides coïncide avec la NLL moyenne. La définition de la perplexité, son interprétation et les conditions nécessaires pour comparer des scores sont regroupées dans la page [Vraisemblance](vraisemblance.qmd).
+Pour une cible one-hot, la cross-entropie moyenne calculée sur les mêmes positions valides et avec la même convention de réduction coïncide avec la NLL moyenne. La définition de la perplexité, son interprétation et les conditions nécessaires pour comparer des scores sont regroupées dans la page [Vraisemblance](vraisemblance.qmd).
 
 ## Idées reçues
 
