@@ -1911,7 +1911,7 @@ The detailed findings, checked arithmetic and acceptance boundary are in [the tr
 - The Further exploration text on both causal lessons incorrectly said that the tests did not cover a complete GPT. It now distinguishes the primitive-level test from the full-GPT logits test and links to both.
 - The roadmap's deferred causal-attention section understated the current implementation. It now records the NumPy reference, additive 2D mask contract, local and full-model invariance tests, bilingual lesson links, and the one direct comparison still deferred: numerical parity of the primitive against PyTorch SDPA. The existing Hugging Face GPT-2 eager parity test is not described as an SDPA primitive-parity test.
 
-### Changes in merged PR #1622 and focused PR #1624
+### Changes in merged PR #1622 and focused PR #1626
 
 - Move the full CA-A task and its worked solution from the shared Attention collection to the dedicated FR/EN causal-masking Practice companions.
 - Add two progressive hints, an explicit test-interpretation prompt, and a compact self-check criterion while preserving the existing worked matrices, mask distinctions, command and optional standalone code.
@@ -1921,4 +1921,4 @@ The detailed findings, checked arithmetic and acceptance boundary are in [the tr
 
 ### Evidence boundary and next action
 
-The move does not change implementation or scientific claims. Run the existing Python suite and full Quarto/browser workflow on the final head of PR #1624; verify the companion pages at desktop/mobile widths and confirm both legacy anchors resolve. Manual screen-reader/touch review remains under #483, and learner evidence remains under #447. The next exercise-development gap from the 2026-11-08 catalogue audit is the text-data transfer sequence (BPE merge tracing, shifted windows and leakage/boundary handling); inspect the current TR-A/B/C and training-example pages before adding anything, to avoid duplication.
+The move does not change implementation or scientific claims. Run the existing Python suite and full Quarto/browser workflow on the final head of PR #1626; verify the companion pages at desktop/mobile widths and confirm both legacy anchors resolve. Manual screen-reader/touch review remains under #483, and learner evidence remains under #447. The next exercise-development gap from the 2026-11-08 catalogue audit is the text-data transfer sequence (BPE merge tracing, shifted windows and leakage/boundary handling); inspect the current TR-A/B/C and training-example pages before adding anything, to avoid duplication.
