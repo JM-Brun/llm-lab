@@ -78,12 +78,14 @@ The notion of type also depends on the convention. Here, “talk” and “talki
 | and | 5 | 5 |
 | my, what | 4 | 6–7 |
 | 6 forms (including “am”, “can”, “not”, “of”, “time” and “to”) | 3 | 8–13 |
-| 16 forms | 2 | 14–29 |
+| an, could, days, idea, in, leave, myself, plan, saying, story, tell, then, this, us, we, why | 2 each | 14–29 |
 | 98 forms | 1 | 30–127 |
 
 The word “I” comes first, but this is not mysterious: the account is told in the first person. Frequency therefore also reflects the topic, viewpoint and genre of a text. That is exactly what this example helps us see: rank is not an intrinsic property of a word.
 
-Rank depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer. With only 196 occurrences, our text is also far too short to estimate a power-law exponent reliably.
+Several forms have the same frequency. They occupy an interval of ranks: “a” and “the” are ranked second and third, with no substantive reason to privilege one over the other. The table therefore gives rank intervals for ties.
+
+Our short text already shows a highly uneven distribution: “I” appears 13 times, while 98 forms appear only once. But this is not enough to establish Zipf’s law. Rank depends on the corpus, language, period, genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer. With only 196 occurrences, our sample is far too short to estimate a power-law exponent reliably.
 
 ## 2. Zipf’s law: a rank-frequency approximation
 
