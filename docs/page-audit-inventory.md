@@ -1846,4 +1846,21 @@ This is a code/page/test contract audit, not a full audit of the remaining Build
 
 ### Evidence boundary and next action
 
-The source/test checks for these three tours are complete. Python CI passed on the final corrected branch head; full Quarto rendering and browser review are required before integration. The final fifth tour, `generate.py`, remains a separate source-to-page pass and is tracked in the next correction. Manual screen-reader/native-breadcrumb review and the learner pilot remain separate evidence.
+The source/test checks for the operations, block and assembled-model tours are complete. The fifth tour, `generate.py`, was audited and corrected separately in merged PR #1617. Together with the configuration correction in merged PR #1614, all five guided Build tours have now been compared against their implementation, tests, FR/EN explanations and Practice companions. PR #1618 consolidates the operations/block/model corrections and is awaiting its final Quarto/browser review. After that integration, the source-to-page audit of the five-tour Build route is complete. Manual screen-reader/native-breadcrumb review and the learner pilot remain separate evidence.
+
+
+## 2026-11-25: Build tour contract audit — generation
+
+**Scope.** Fifth and final guided Build tour: FR/EN generation walkthrough and Practice companion, `generate.py`, `test_generate.py`, and the top-k/top-p filters.
+
+### Findings and corrections
+
+- The `top_k` validation compared the supplied value with 1 before checking its type. A string such as `"3"` therefore raised an incidental `TypeError` instead of the documented `ValueError`.
+- Temperature validation passed booleans as numeric values and allowed text values to fail inside `np.isfinite`, rather than returning the named validation error.
+- PR #1617 moved both checks before the generation loop, rejects boolean/non-real temperatures and non-boolean/non-integer `top_k`, and preserves Python/NumPy integer support.
+- Regression tests cover string/list `top_k`, boolean/text temperatures, zero temperature in greedy mode, and non-finite temperatures in both decoding modes. The FR/EN walkthrough and source docstring now state the same contract.
+- PR #1617 merged after Python quality/type checks, the full test suite and the Quarto/browser workflow passed.
+
+### Evidence boundary
+
+This completes the source → claim → implementation → test comparison for all five guided Build tours. It does not close the independent screen-reader/native-breadcrumb review, full accessibility review, or learner pilot under #447.
