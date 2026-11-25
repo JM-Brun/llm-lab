@@ -226,6 +226,8 @@ Une étude de parole adressée à l'enfant rapporte les résultats suivants pour
 | Anglais britannique | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
 | Français | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
 
+Rappel : TTR = nombre de types / nombre d'occurrences.
+
 1. Quel corpus contient le plus d'occurrences et le plus de types ?
 2. Calculez le rapport types/occurrences (TTR) de chaque corpus. Pourquoi ce rapport ne suffit-il pas à conclure que le français serait lexicalement plus diversifié ?
 3. Les exposants $\alpha$ sont proches. Peut-on en déduire qu'ils sont des constantes propres aux langues ?
