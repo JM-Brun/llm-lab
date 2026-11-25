@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import lru_cache
+from functools import cache, lru_cache
 from pathlib import Path
 
 import yaml
@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXTRACTIONS = ROOT / "data" / "extractions"
 
 
-@lru_cache(maxsize=None)
+@cache
 def _load(path: Path) -> dict:
     """Load each immutable corpus document once during this test process."""
     with path.open(encoding="utf-8") as stream:
