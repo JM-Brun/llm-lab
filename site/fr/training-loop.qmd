@@ -79,7 +79,7 @@ Pour rendre le cycle concret, reprenons la cible « Vous » et la distribution i
 
 Le calcul précédent suit une seule cible. Avec la réduction utilisée ici, on dérive la [moyenne des pertes sur les positions valides](loss.qmd#de-la-perte-locale-à-la-loss-du-batch).
 
-Un batch fournit une estimation bruitée de la loss sur tout le jeu d'entraînement ; son gradient est donc une estimation bruitée du gradient complet. D'où le nom de descente de gradient *stochastique* : des batchs successifs tirent les paramètres dans des directions légèrement différentes, et c'est la tendance moyenne qui fait baisser la loss. Les conventions de comptage varient : un *pas* est une mise à jour des paramètres, une *époque* est un passage sur les données d'entraînement ; les deux dépendent de la taille du batch et du jeu de données.
+Un **mini-batch échantillonné** fournit une estimation bruitée de la loss et du gradient calculés sur tout le jeu d'entraînement. C'est le principe de la descente de gradient *stochastique* : les mini-batchs successifs peuvent tirer les paramètres dans des directions légèrement différentes, et c'est la tendance moyenne qui guide l'optimisation. À l'inverse, si chaque mise à jour utilise tous les exemples d'entraînement, on parle de descente de gradient par **batch complet**. Les conventions de comptage varient : un *pas* est une mise à jour des paramètres, une *époque* est un passage sur les données d'entraînement ; les deux dépendent de la taille du batch et du jeu de données.
 
 Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement vise à faire baisser cette loss ; avec des batchs stochastiques, les mesures peuvent fluctuer d'un pas à l'autre.
 
@@ -111,7 +111,7 @@ L'exemple ci-dessous rend ce phénomène visible avec le plus petit modèle de l
 
 Avec NumPy 2 et cette graine, l'exécution affiche une loss d'entraînement qui passe de 2,485 ($=\ln 12$) à environ 1,15, tandis que la loss de validation atteint un minimum près du pas 100 (environ 2,01) puis remonte à environ 2,16. La loss d'entraînement seule suggérerait de poursuivre. Parmi les checkpoints mesurés dans cette exécution, la loss de validation favorise celui du pas 100. Les valeurs exactes dépendent de la graine et de la version de la bibliothèque ; les assertions vérifient l'allure qualitative, pas les valeurs.
 
-Cet exemple est volontairement minuscule : une table de consultation, des mises à jour sur batch complet, une SGD simple et 60 tokens d'entraînement. Il montre la boucle et le diagnostic, pas le comportement d'un Transformer, et la même allure de courbe n'est pas garantie dans d'autres configurations. Réussir les assertions montre que cette configuration reproduit le phénomène ; ce n'est pas une preuve générale sur le surapprentissage.
+Cet exemple est volontairement minuscule : une table de consultation, des mises à jour par descente de gradient sur batch complet (les 60 tokens d'entraînement à chaque pas), et non des mini-batchs échantillonnés. Il montre la boucle et le diagnostic, pas le comportement d'un Transformer, et la même allure de courbe n'est pas garantie dans d'autres configurations. Réussir les assertions montre que cette configuration reproduit le phénomène ; ce n'est pas une preuve générale sur le surapprentissage.
 
 Pour comparer deux checkpoints, entraînez-vous à [agréger la loss de validation sur des lots qui n’ont pas le même nombre de tokens valides](exercises/loss.qmd#ex-validation-loss-by-token).
 
@@ -166,7 +166,7 @@ for step in range(301):
     g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V) : dLoss / dlogits
     g_W = np.zeros_like(W)
     np.add.at(g_W, x_tr, g_logits)                      # règle de chaîne à travers la lecture de ligne
-    W -= lr * g_W                                       # mise à jour SGD
+    W -= lr * g_W                                       # mise à jour par batch complet
 
 train = [h[1] for h in history]
 val = [h[2] for h in history]
@@ -181,7 +181,7 @@ for s, tr, va in history:
 
 ### Comparer les optimiseurs
 
-L'entraînement des modèles de langage emploie couramment des optimiseurs *adaptatifs* comme Adam et sa variante à décroissance des poids découplée, AdamW. Intuitivement, ils conservent des moyennes glissantes des gradients récents et de leurs carrés (leur second moment non centré), de sorte que chaque paramètre reçoit un pas adapté à son historique récent et non un pas global unique. Le gradient est le même ; seule la règle de mise à jour diffère. Le second moment des gradients conservé par Adam estime leur amplitude : ce n'est **pas** la matrice hessienne qui représente la courbure dans la méthode de Newton. Adam et AdamW sont donc des optimiseurs adaptatifs du premier ordre, et non des méthodes de Newton du second ordre. Leurs formules exactes, les plannings de taux d'apprentissage (échauffement, décroissance) et l'écrêtage des gradients sont des choix d'implémentation qui modifient la dynamique d'entraînement sans changer l'objectif ; ils sortent du périmètre de cette leçon, et les sources de la rubrique *Pour approfondir* les définissent.
+L'entraînement des modèles de langage emploie couramment des optimiseurs *adaptatifs* comme Adam et sa variante à décroissance des poids découplée, AdamW. Intuitivement, ils conservent des moyennes glissantes des gradients récents et de leurs carrés (leur second moment non centré), de sorte que chaque paramètre reçoit un pas adapté à son historique récent et non un pas global unique. Pour un même objectif de données et les mêmes paramètres, le gradient de cet objectif reste celui calculé par rétropropagation ; l'optimiseur détermine comment l'utiliser. **AdamW ajoute en plus une décroissance des poids découplée** : cette contribution à la mise à jour n'est pas le gradient de la loss de données. Le second moment des gradients conservé par Adam estime leur amplitude : ce n'est **pas** la matrice hessienne qui représente la courbure dans la méthode de Newton. Adam et AdamW sont donc des optimiseurs adaptatifs du premier ordre, et non des méthodes de Newton du second ordre. Leurs formules exactes, les plannings de taux d'apprentissage (échauffement, décroissance) et l'écrêtage des gradients sont des choix d'implémentation qui modifient la dynamique d'entraînement sans changer l'objectif ; ils sortent du périmètre de cette leçon, et les sources de la rubrique *Pour approfondir* les définissent.
 
 <figure id="fig-optimizer-comparison">
   <picture>
