@@ -123,7 +123,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 
 
-### Pourquoi l’auto-attention seule ne suffit-elle pas ?
+### Pourquoi l’auto-attention seule ne suffit-elle pas ? {#permutation-equivariance}
 
 Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
 
