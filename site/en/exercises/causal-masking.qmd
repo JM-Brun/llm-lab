@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:causal-masking-exerci
 
 ## Check your understanding
 
-[Extended exercises on this topic](../exercises.qmd#attention).
+**Related practice:** [Q/K/V and multi-head attention exercises](../exercises-attention.qmd#attention).
 
 1. A row of already-scaled scores is $(1,0)$. What do the weights become if the second position is forbidden by a causal mask? Why must the mask be applied before softmax?
 
@@ -38,6 +38,121 @@ The forbidden score is masked before softmax (conceptually set to $-\infty$): th
 </details>
 
 [Compare the effect of a change before or after a position](contextualized-representations.qmd#ex-contextualization-causal-boundary).
+
+<a id="ex-attention-causal-prefix-invariance"></a>
+## CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
+
+Consider four input tokens $x_0,x_1,x_2,x_3$. At query position $i$, causal self-attention allows only keys at positions $j\leq i$.
+
+1. Complete the matrix $A$ of **allowed** positions, defined by $A_{ij}=1$ when $j\leq i$, and $A_{ij}=0$ otherwise.
+2. Derive the matrix $B$ of **blocked** positions. What relation connects $A$ and $B$?
+3. With targets shifted by one token, position $i$ predicts $x_{i+1}$. Why must the diagonal of $A$ be allowed without revealing the target?
+4. Append $x_4$ to the sequence. Which outputs at positions $0,1,2,3$ must remain invariant? Is the output at position 4 subject to the same constraint?
+5. Distinguish the roles of a causal mask, a padding mask, a loss/target mask, and a document-boundary mask.
+6. The repository contains one test for the single-head attention primitive and another for the full GPT logits. What does each test establish, and what do neither test prove?
+
+<details>
+<summary>Hint 1 — Build the mask row by row</summary>
+
+For row i, mark columns 0 through i as allowed. All columns to the right are blocked.
+
+</details>
+
+<details>
+<summary>Hint 2 — Keep input and target positions distinct</summary>
+
+At input position i, the model has already received x_i. The target associated with that position is x_(i+1), so allowing the diagonal does not expose the target.
+
+</details>
+
+
+
+<details>
+<summary>Show the reasoned solution</summary>
+
+The allowed-position matrix is lower triangular:
+
+$$
+A=
+\begin{pmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&1&1&0\\
+1&1&1&1
+\end{pmatrix}.
+$$
+
+The blocked-position matrix is its complement:
+
+$$
+B=
+\begin{pmatrix}
+0&1&1&1\\
+0&0&1&1\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix},
+\qquad B_{ij}=1-A_{ij}.
+$$
+
+The diagonal is allowed because the input at position $i$ already contains $x_i$, and the model predicts the next token $x_{i+1}$. The input-target shift is essential: the model does not receive $x_{i+1}$ as input at that position. Without this shift, allowing the diagonal could expose the target.
+
+After appending $x_4$, outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
+
+The masks are not interchangeable:
+
+- **Causal:** prevents a query from attending to a future key.
+- **Padding:** generally prevents attention to key positions that contain only padding; handling padded query positions depends on the implementation.
+- **Loss/target:** excludes selected targets from the objective and its denominator; by itself it does not define attention visibility.
+- **Document boundary:** may prevent attention across concatenated documents; this is a data/attention policy, not a universal consequence of causal masking.
+
+The existing tests provide two complementary levels of evidence:
+
+- **test_scaled_dot_product_attention_causal_invariance** in **tests/unit/test_attention.py** perturbs a future key and value and checks that earlier-position outputs remain unchanged. It tests the attention primitive.
+- **test_prefix_invariance_future_tokens_do_not_change_earlier_logits** in **tests/unit/test_gpt.py** compares a prefix's logits with the corresponding logits from an extended sequence under the same GPT. It covers the full model path for this case.
+
+These tests are targeted checks, not formal proofs for every input, architecture, or implementation. They do not test padding masks or document boundaries. The reference GPT constructs its causal mask internally, and its `forward` interface does not expose a padding-mask argument; those policies are outside this implementation's scope. Run them with:
+
+~~~bash
+uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
+~~~
+
+
+**Optional standalone check — one attention head.** The following script isolates the mechanism: it perturbs a future key and value and checks that prefix outputs remain unchanged. It does not replace the complete-model tests above.
+
+```python
+import numpy as np
+
+T = 4
+mask = np.full((T, T), -np.inf)
+mask[np.tril_indices(T)] = 0.0
+
+rng = np.random.default_rng(42)
+Q = rng.standard_normal((T, 4))
+K = rng.standard_normal((T, 4))
+V = rng.standard_normal((T, 4))
+
+def causal_attention(q, k, v, additive_mask):
+    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + additive_mask
+    scores = scores - np.max(scores, axis=-1, keepdims=True)
+    weights = np.exp(scores)
+    weights[~np.isfinite(additive_mask)] = 0.0
+    weights /= weights.sum(axis=-1, keepdims=True)
+    return weights @ v
+
+reference = causal_attention(Q, K, V, mask)
+K_changed, V_changed = K.copy(), V.copy()
+K_changed[3] += 100.0
+V_changed[3] += 100.0
+altered = causal_attention(Q, K_changed, V_changed, mask)
+
+assert np.allclose(reference[:3], altered[:3])
+assert not np.allclose(reference[3], altered[3])
+```
+</details>
+
+**Self-check:** a complete answer constructs both matrices, explains the shifted target and allowed diagonal, predicts the invariant prefix outputs, distinguishes all four mask roles, and correctly scopes the two tests.
+
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/causal-masking.qmd) · [English](causal-masking.qmd)
