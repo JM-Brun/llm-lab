@@ -1926,3 +1926,21 @@ The move does not change implementation or scientific claims. Run the existing P
 ### Quarto anchor rendering detail
 
 When a legacy HTML `<a id="…"></a>` alias is immediately followed by a Markdown heading, the heading can be absorbed into the raw HTML block and its explicit heading ID will not appear in the rendered page. Keep a blank line between the alias and the heading, then verify the fragment against the rendered HTML. The CA-A transfer preserves both old fragments and the new canonical `#ca-a-prefix-invariance` target.
+
+
+## 2026-11-25: Q/K/V, attention and causal-masking Practice audit
+
+**Scope.** Source-level review of the FR/EN Q/K/V exercise collection and the dedicated scaled-dot-product-attention and causal-masking Practice companions. This extends the earlier Q/K/V lesson/source audit without repeating the three-source ingestion or the already completed causal-mask implementation audit. It checks exercise claims, worked arithmetic, prerequisite visibility and the lesson-to-Practice handoff; it is not learner-effectiveness evidence.
+
+### Findings
+
+- The Q/K/V exercise sequence covers the declared competencies: distinguish the roles of Q/K/V; reconstruct projections and tensor shapes; predict which quantities can change under a parameter intervention; explain indirect learning from the model loss; and transfer the provenance distinction to cross-attention. Separate tasks calculate weighted aggregation and distinguish a multi-head concatenation from an attention-weighted sum.
+- The worked calculations were checked: the scaled scores $(1,0)/\\sqrt{2}$ give weights approximately $(0.67,0.33)$ and output approximately $(6.7,6.6)$ for the stated values; the small matrix products in the projection intervention exercise give $q=(1,2)$, $k=(2,1)$, $v=(1,3)$ and $v'=(2,2)$. The stated invariants under a change to $W_V$ alone are correct.
+- The parameter-intervention answers correctly distinguish “can change” from “must change”: changing $W_Q$ or $W_K$ can alter scores and weights; changing $W_V$ alone leaves Q/K-derived weights fixed but can alter the aggregated content. The cross-attention equations correctly source Q from the querying stream and K/V from the queried stream.
+- The gradient-path exercise is scientifically consistent with the derivation in the optional Q/K/V deep dive. However, the collection's general preparation note did not expose that dependency: a learner could encounter a matrix-gradient question without being directed to the derivation. The FR/EN collection now links that specific question to the deep-dive section on gradient paths, while keeping the derivation optional for the other projection exercises.
+- The scaled-attention companion's numerical softmax, weighted-mixture counterexample and limiting one-hot explanation are correct. The causal-masking companion correctly handles the lower-triangular allowed relation, the shifted-target/diagonal convention, prefix invariance, and the distinct roles of causal, padding, loss and document-boundary masks. Its standalone NumPy check renormalizes only over allowed positions and its stated limitations match the described tests.
+- The FR/EN collections use corresponding stable exercise anchors and the same progression. No additional flashcards, new concepts, or new workflow are justified by this audit.
+
+### Change and boundary
+
+A targeted preparation link was added immediately before the Q/K/V gradient-path exercise in both languages. No scientific formula or worked answer required correction in this slice. This is a source-level exercise audit only: it does not establish that learners can transfer the reasoning, does not certify every attention exercise or every Practice collection, and does not replace the independent learner pilot. Advanced multi-head masking variants and broader invariants remain outside this bounded pass.
