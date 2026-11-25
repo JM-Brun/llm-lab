@@ -1,7 +1,7 @@
 ---
 title: "Pourquoi le mot « de » revient-il si souvent ?"
-subtitle: "Une loi statistique simple derrière une distribution de mots très inégale"
-description-meta: "Découvrir la loi de Zipf, les distributions à longue traîne et ce qu'elles impliquent — avec prudence — pour les données de langage."
+subtitle: "La loi de Zipf, du corpus d’Otis aux distributions de mots dans plusieurs langues"
+description-meta: "Construire un corpus, distinguer types et occurrences, observer la loi de Zipf, son histoire, ses usages et ses limites."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
@@ -10,9 +10,9 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/advent-calendar-story-day-01"
-summary: "Explore la distribution très inégale des fréquences de mots et l'approximation de Zipf par rang."
-scope: "Explique la loi rang-fréquence, les distributions à longue traîne, leurs limites empiriques et une conséquence pour les corpus d'entraînement."
-purpose: "Interpréter un rang et une fréquence, calculer une approximation de Zipf et éviter de prendre une droite log-log pour une loi universelle."
+summary: "Construit un corpus à partir de la tirade d’Otis pour comprendre les fréquences lexicales, la loi de Zipf et ses usages."
+scope: "Explique les unités de comptage, la relation rang-fréquence, les variantes de Zipf-Mandelbrot, les résultats multilingues, l’histoire, les applications et les limites empiriques."
+purpose: "Construire et normaliser un corpus, distinguer types et occurrences, interpréter un exposant estimé et évaluer ce que la loi permet réellement de faire."
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
@@ -20,111 +20,220 @@ suggested_route:
 hierarchy:
   parents: ["fr/deepen"]
   children: []
-related: ["fr/scientific-calendar","fr/text-data","fr/tokenization-strategies","fr/entropy","fr/language-modeling-math","fr/zipf-law-exercises", "fr/exercises-zipf-law"]
+related: ["fr/scientific-calendar","fr/text-data","fr/tokenization-strategies","fr/entropy","fr/language-modeling-math","fr/zipf-law-exercises","fr/exercises-zipf-law"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
-*Calendrier de l’Avent 2026 · Porte 1 · environ 10 minutes*
+*Calendrier de l’Avent 2026 · Porte 1 · environ 12 minutes*
 
-Cette version est publiée pour être lue et discutée. Les retours sont bienvenus ; la relecture par un lecteur non spécialiste reste à réaliser et pourra conduire à des améliorations.
+Cette leçon part d'un personnage et d'une tirade : Otis, le scribe d’*Astérix et Obélix : Mission Cléopâtre*. Nous allons transformer ce fil rouge en petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
 
-## Pourquoi certains mots semblent-ils partout ?
+Le passage ci-dessous est une **reformulation pédagogique originale de la situation d’Otis**, et non une transcription du dialogue du film. Elle permet de travailler sur un texte maîtrisé, dont nous pouvons expliciter exactement les conventions de comptage.
 
-Dans un texte français, des mots comme « de », « le », « et » ou « à » reviennent sans cesse. D'autres — « luciole », « catamaran », « néphrologie » — peuvent n'apparaître qu'une ou deux fois, voire pas du tout.
+## 1. Construire le corpus d’Otis
 
-Cette différence n'est pas un détail de vocabulaire. Si l'on compte les occurrences dans un grand corpus, on observe généralement une distribution très déséquilibrée : quelques mots sont extrêmement fréquents, tandis qu'une longue traîne de mots est beaucoup plus rare.
+Imaginons Otis racontant son travail de scribe :
 
-Comment décrire cette inégalité avec une formule simple ? Et que nous apprend-elle — ou ne nous apprend-elle pas — sur la langue ?
+> Otis est scribe. Dans son bureau, Otis écrit des textes sur des papyrus. Il raconte son travail, ses outils et ses journées. Le scribe copie des mots, relit les textes et classe les rouleaux. Pour Otis, écrire est un métier, mais aussi une manière de réfléchir. Chaque jour, il écrit, corrige et recommence. Les mots passent du papyrus au lecteur ; le travail du scribe ne s'arrête jamais.
 
-## Compter avant d'expliquer
+Ce paragraphe constitue notre **corpus miniature**. Il contient 67 occurrences lexicales et 46 formes distinctes, selon les conventions suivantes :
 
-Commençons par distinguer deux objets :
+- conversion en minuscules ;
+- suppression de la ponctuation comme unité de comptage ;
+- conservation des accents ;
+- conservation des formes fléchies distinctes : « écrit » et « écrire » sont deux formes ;
+- conservation de l'élision dans « s'arrête », comptée ici comme une seule forme.
 
-- Un **type** est une forme lexicale distincte dans le comptage choisi : par exemple le mot « maison ».
-- Un **token** est une occurrence de cette forme dans le texte. La phrase « la maison près de la maison » contient deux occurrences de « maison ».
+Ces choix ne sont pas neutres. Si nous décidions de lemmatiser le texte, de séparer les élisions ou de traiter différemment les majuscules, les nombres changeraient.
 
-Dans ce passage, *token* désigne donc une occurrence lexicale. Dans un LLM, le mot *token* désigne plutôt une unité produite par le tokenizer (mot entier ou sous-mot). Les deux usages sont liés, mais ne sont pas interchangeables.
+### Type, occurrence lexicale et token de tokenizer : trois notions à distinguer
 
-Dans un corpus, on compte les occurrences de chaque type, puis on classe les types du plus fréquent au moins fréquent. Le rang \(r=1\) désigne le type le plus fréquent, \(r=2\) le deuxième, etc. La fréquence \(f(r)\) est son nombre d'occurrences — ou sa fréquence relative, si l'on divise par le nombre total de tokens.
+La terminologie est source de confusion parce que le mot *token* est utilisé dans deux contextes proches, mais différents.
 
-Le classement dépend du corpus, de la langue, de la période, du genre de texte et des conventions de normalisation : majuscules, ponctuation, lemmatisation, formes fléchies, notamment. Il n'existe donc pas un classement unique valable pour tous les textes.
+| Notion | Définition | Exemple dans notre corpus |
+|---|---|---|
+| **Type lexical** (*word type*) | Une forme distincte, après application des règles de normalisation | « scribe » est un type |
+| **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « scribe » apparaît trois fois : trois occurrences |
+| **Token de tokenizer** (*model token*) | Une unité produite par un algorithme de tokenisation et représentée par un identifiant dans le vocabulaire du modèle | « scribe » peut correspondre à un token ou à plusieurs sous-mots selon le tokenizer |
 
-Prenons un petit corpus fictif dont les occurrences ont déjà été comptées. On classe les formes lexicales par fréquence décroissante :
+Les deux usages de *token* sont liés, mais ne sont pas interchangeables. Une occurrence lexicale est une position dans le texte ; un token de tokenizer est une unité de représentation. Un mot peut être découpé en plusieurs tokens de modèle, et un tokenizer peut aussi traiter la ponctuation, les espaces ou des fragments de mots comme des unités distinctes.
 
-| Forme | Occurrences | Rang |
+La différence apparaît aussi dans la notion de type. Dans notre convention orthographique, « écrit » et « écrire » sont deux types ; une lemmatisation pourrait les rattacher au même lemme. De même, « Otis » et « otis » sont confondus ici parce que nous avons choisi de passer le texte en minuscules.
+
+**À retenir :** avant de comparer des fréquences, il faut toujours préciser l'unité comptée et la normalisation appliquée.
+
+### Le comptage et le classement
+
+Comptons maintenant les occurrences de chaque type lexical, puis classons les types par fréquence décroissante.
+
+| Forme | Occurrences | Rang ou intervalle de rang |
 |---|---:|---:|
-| de | 12 | 1 |
-| et | 7 | 2 |
-| chat | 4 | 3 |
-| chien | 3 | 4 |
-| luciole | 1 | 5 |
+| Otis, scribe, des, et, les | 3 chacun | 1 à 5 |
+| est, son, écrit, textes, papyrus, il, travail, ses, le, mots, du | 2 chacun | 6 à 16 |
+| Les 30 autres formes | 1 chacune | 17 à 46 |
 
-Le rang n'est donc pas une propriété intrinsèque du mot : il résulte du comptage et du tri dans ce corpus précis. Ici, « de » occupe le rang 1 parce que c'est la forme la plus fréquente. Un autre corpus, ou une autre convention de comptage, pourrait produire un classement différent.
+Plusieurs formes ont la même fréquence. Il n'existe donc pas de rang unique à leur attribuer sans convention supplémentaire : on peut leur donner un ordre arbitraire, un rang moyen ou présenter un intervalle. Pour ce petit exemple, l'intervalle est le plus honnête.
 
-## La loi de Zipf : une approximation étonnamment compacte
+Le rang n'est pas une propriété intrinsèque d'un mot. Il dépend du corpus, de sa taille, de son contenu et des conventions de comptage. Dans un texte consacré à l'Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare.
 
-La loi de Zipf décrit une régularité empirique souvent observée dans les fréquences lexicales :
+Notre corpus sert à comprendre les opérations. Avec seulement 67 occurrences, il est beaucoup trop petit pour estimer sérieusement une loi de puissance : les égalités de fréquence et les effets du sujet dominent.
+
+## 2. La loi de Zipf : une approximation rang-fréquence
+
+Sur de grands corpus, on observe souvent une régularité : quelques formes sont très fréquentes, tandis qu'un grand nombre de formes sont rares. La loi de Zipf propose une approximation simple de cette distribution :
 
 $$
-f(r) \approx \frac{C}{r^\alpha},
-\qquad \alpha \approx 1.
+f(r) \propto \frac{1}{r^\alpha}
 $$
 
-- \(r\) est le rang du mot dans le classement ;
-- \(f(r)\) est sa fréquence ;
-- \(C\) dépend notamment de l'échelle de comptage et de la taille du corpus ;
-- \(\alpha\) est un exposant estimé à partir des données.
+où :
 
-Lorsque \(\alpha=1\), doubler le rang divise approximativement la fréquence par deux. Un mot de rang 10 est alors environ dix fois moins fréquent que le mot de rang 1 — dans ce modèle simplifié.
+- $r$ est le rang du type lexical dans le classement ;
+- $f(r)$ est sa fréquence, en nombre d'occurrences ou en fréquence relative ;
+- $\alpha$ est l'exposant de la loi, estimé à partir des données ;
+- le symbole $\propto$ signifie « proportionnel à ».
 
-Prenons un exemple volontairement artificiel. Si le mot de rang 1 apparaît 1 000 fois et si \(\alpha=1\), la formule donne :
+Dans la forme classique, on prend souvent $\alpha$ proche de 1. On peut alors écrire, pour une constante $C$ dépendant du corpus :
 
-| Rang \(r\) | Fréquence indicative \(C/r\) |
-|---:|---:|
-| 1 | 1 000 |
-| 2 | 500 |
-| 5 | 200 |
-| 10 | 100 |
-| 100 | 10 |
-| 1 000 | 1 |
+$$
+f(r) \approx \frac{C}{r}
+$$
 
-Ces nombres ne sont pas des mesures d'un corpus français. Ils illustrent seulement la conséquence arithmétique de l'approximation avec \(C=1000\) et \(\alpha=1\).
+Si le type le plus fréquent apparaît 1 000 fois, cette approximation prévoit 500 occurrences au rang 2, 200 au rang 5 et 100 au rang 10. Ce sont des valeurs théoriques illustratives, pas des mesures de notre corpus d’Otis.
+
+### Que signifie l'exposant ?
+
+L'exposant $\alpha$ règle la pente de la distribution :
+
+- un $\alpha$ plus grand correspond à une décroissance plus rapide : les premiers rangs dominent davantage ;
+- un $\alpha$ plus faible correspond à une décroissance plus progressive ;
+- $\alpha = 1$ donne la règle intuitive « doubler le rang divise approximativement la fréquence par deux ».
+
+L'exposant n'est pas une constante universelle de la langue française. Il doit être estimé pour un corpus et un modèle donnés. Sa valeur dépend notamment de la période, du genre, du registre, de la taille du corpus, de la définition des mots et de la méthode d'ajustement.
+
+### Pourquoi une droite sur un graphique logarithmique ?
+
+Partons de la forme générale :
+
+$$
+f(r) = C r^{-\alpha}
+$$
+
+En prenant le logarithme des deux côtés :
+
+$$
+\log f(r) = \log C - \alpha \log r
+$$
+
+Sur un graphique représentant $\log f(r)$ en fonction de $\log r$, cette relation devient une droite de pente $-\alpha$.
 
 ![Courbe rang-fréquence illustrative selon la loi de Zipf avec alpha égal à un.](../images/advent-zipf-rank-frequency-fr.svg){#fig-advent-zipf-rank-frequency fig-alt="Sur des axes logarithmiques, la courbe synthétique f(r)=1000/r descend de 1 000 occurrences au rang 1 à 1 occurrence au rang 1 000 ; sa pente vaut −1." width=95%}
 
-*Exemple synthétique : sur des axes logarithmiques, la relation \(f(r)=C/r\) devient une droite de pente \(-1\). Une vraie distribution de corpus n'est pas tenue de suivre exactement cette droite.*
+*Cette courbe est synthétique : elle montre la forme de la relation, pas une distribution mesurée dans un corpus réel.*
 
-## Pourquoi une droite sur un graphique logarithmique ?
+### Une extension utile : la loi de Zipf-Mandelbrot
 
-Partons de \(f(r)=C/r^\alpha\). En prenant le logarithme des deux côtés :
+La forme simple décrit imparfaitement certaines distributions, en particulier les tout premiers rangs. Mandelbrot a proposé une généralisation :
 
 $$
-\log f(r)=\log C-\alpha\log r.
+f(r) \propto \frac{1}{(r+\beta)^\alpha}
 $$
 
-C'est l'équation d'une droite si l'on représente \(\log f(r)\) en fonction de \(\log r\). Sa pente vaut \(-\alpha\).
+Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution observée. Cette extension est souvent appelée loi de Zipf-Mandelbrot. Elle rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
 
-Cette transformation rend lisible une relation qui couvre plusieurs ordres de grandeur : les premiers mots peuvent apparaître des milliers ou des millions de fois, tandis que de nombreux autres n'apparaissent que rarement.
+## 3. Que trouve-t-on dans plusieurs langues ?
 
-Mais attention : **une droite approximative sur un graphique log-log ne suffit pas à prouver qu'une loi de puissance explique le mécanisme qui produit les données**. Le choix des axes et la façon d'estimer les rangs comptent.
+La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
-## Une régularité réelle, mais pas une explication complète
+| Langue | Occurrences lexicales | Types | Exposant $\alpha$ | Corrélation observé / attendu |
+|---|---:|---:|---:|---:|
+| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 0,970 |
+| Français | 1 540 284 | 19 327 | 1,53 | 0,990 |
+| Allemand | 2 168 002 | 37 018 | 1,42 | 0,998 |
+| Espagnol | 353 104 | 10 057 | 1,39 | 0,994 |
+| Japonais | 941 006 | 25 648 | 1,30 | 0,993 |
 
-La loi porte le nom de George Kingsley Zipf, qui a popularisé cette régularité dans l'étude quantitative des langues. Elle est devenue un repère classique : peu de mots très fréquents, beaucoup de mots peu fréquents.
+*Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. La corrélation est celle entre fréquences observées et fréquences attendues par le modèle, et non une corrélation entre rang et fréquence.*
 
-Cependant, il serait excessif d'en conclure que toute distribution lexicale suit exactement une loi de puissance d'exposant 1. Les distributions observées présentent des écarts, notamment aux extrémités du classement. D'autres modèles peuvent mieux décrire certains corpus.
+Ces résultats montrent deux choses :
 
-Steven Piantadosi souligne un piège statistique important : si l'on estime le rang et la fréquence sur le même échantillon, leurs erreurs sont liées. Un mot surestimé par hasard gagne en fréquence mesurée et remonte dans le classement : ses deux coordonnées sont donc liées. Le graphique rang-fréquence traditionnel peut alors faire apparaître une régularité plus convaincante qu'elle ne l'est réellement, surtout pour les mots rares. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences réduit cette corrélation. Cela ne règle toutefois pas tous les biais d'estimation : des travaux ultérieurs montrent que les estimateurs de l'exposant peuvent rester biaisés, notamment lorsque les rangs empiriques sont incertains dans la traîne rare.
+1. Une distribution proche de Zipf-Mandelbrot est observée dans des langues de familles différentes.
+2. L'exposant estimé varie : il ne faut donc pas remplacer les données d'un corpus par une valeur universelle de $\alpha$.
 
-La loi de Zipf est donc une **approximation descriptive utile**, pas une explication universelle de l'origine du langage ni un mécanisme causal démontré. Plusieurs facteurs linguistiques et statistiques peuvent contribuer à la forme observée.
+**Attention à l'interprétation.** Ces chiffres concernent le langage adressé aux enfants, pas l'ensemble des textes écrits ou parlés de chaque langue. Les corpus n'ont ni la même taille ni exactement les mêmes propriétés. La comparaison illustre une régularité translinguistique dans un cadre expérimental précis ; elle ne permet pas de classer les langues selon une prétendue « conformité à Zipf ».
 
-## Pourquoi cela compte pour les modèles de langage
+L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment utilisé un seuil minimal de 100 000 occurrences pour leurs estimations principales. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre paragraphe de 67 occurrences.
 
-Un modèle entraîné sur du texte rencontre lui aussi des fréquences très inégales. Les formes fréquentes apparaissent dans de nombreux contextes et fournissent beaucoup d'exemples d'apprentissage. Les formes rares disposent de moins d'occurrences observées : leurs contextes sont plus difficiles à couvrir et leurs estimations peuvent être moins robustes.
+## 4. Une histoire plus ancienne que son nom
 
-Cela ne signifie pas qu'un modèle ne peut jamais produire un mot rare. Il peut exploiter sa structure, les contextes rencontrés et les régularités partagées avec d'autres exemples. Mais la fréquence des données influence les occasions d'apprentissage.
+La loi porte le nom de George Kingsley Zipf, mais l'histoire commence avant lui.
 
-Il faut aussi préciser l'unité comptée. Une étude lexicale peut compter des mots, alors qu'un modèle de langage prédit des **tokens** issus de son tokenizer. Un mot peut être représenté par un token ou par plusieurs sous-unités ; la distribution des fréquences de tokens n'est donc pas identique à celle des mots. Cette histoire porte sur les fréquences lexicales, pas sur les algorithmes de tokenisation.
+- **1916 — Jean-Baptiste Estoup.** Ce sténographe français décrit une régularité entre le rang et la fréquence des mots dans *Gammes sténographiques*. Des travaux historiques signalent des observations préparatoires dès 1912 ; 1916 constitue un repère bibliographique important.
+- **Années 1930 — George Kingsley Zipf.** Zipf étudie et popularise cette relation dans ses travaux sur la fréquence relative des mots, notamment *The Psycho-Biology of Language* (1935).
+- **1949 — Une diffusion plus large.** Dans *Human Behavior and the Principle of Least Effort*, Zipf étend son analyse à d'autres phénomènes humains et sociaux. C'est cet ouvrage qui contribue fortement à installer son nom dans la littérature.
+- **1953 — Benoît Mandelbrot.** Il développe une généralisation qui améliore l'ajustement de certaines distributions linguistiques, aujourd'hui connue sous le nom de loi de Zipf-Mandelbrot.
+
+L'appellation « loi de Zipf » est donc un raccourci historique : pour la statistique lexicale, « loi d'Estoup-Zipf » rend mieux compte de cette filiation.
+
+## 5. À quoi sert-elle concrètement ?
+
+La loi de Zipf n'est pas une étape de calcul exécutée par un modèle de langage. Un Transformer ne consulte pas une formule de Zipf à chaque prédiction. C'est avant tout un **modèle descriptif** qui aide à comprendre, contrôler et parfois dimensionner des systèmes fondés sur des données textuelles.
+
+### 5.1 Décrire et auditer un corpus
+
+On peut compter les formes, les classer, tracer la courbe rang-fréquence et comparer la distribution à un modèle de Zipf ou de Zipf-Mandelbrot. Cette analyse aide à :
+
+- comparer des corpus de genres, de périodes ou de langues différents ;
+- repérer une distribution anormale, par exemple à cause de doublons, de bruit ou de texte généré automatiquement ;
+- mesurer l'importance de la longue traîne et la part des formes très rares ;
+- vérifier comment la normalisation, la lemmatisation ou le filtrage modifient le vocabulaire.
+
+La loi sert ici de **référence statistique** : un écart peut être informatif, mais ne prouve pas à lui seul qu'un corpus est mauvais.
+
+### 5.2 Concevoir des systèmes de recherche d'information
+
+Dans un moteur de recherche, les termes n'apparaissent pas tous le même nombre de fois dans une collection de documents. Cette forte inégalité intervient dans la taille des index, la compression des listes de documents et les modèles de pondération des termes.
+
+La loi de Zipf fournit un modèle simple de la distribution des fréquences de collection. Des méthodes comme TF-IDF répondent à une question complémentaire : un terme est-il fréquent dans un document, mais suffisamment rare dans la collection pour aider à distinguer ce document ? TF-IDF n'est pas « la loi de Zipf » ; il exploite des statistiques de fréquence à une autre fin.
+
+### 5.3 Comprendre les difficultés d'apprentissage des modèles de langage
+
+Les corpus d'entraînement sont eux aussi très déséquilibrés :
+
+- les unités fréquentes fournissent de nombreux exemples ;
+- les unités rares disposent de moins d'observations ;
+- les mots inconnus ou les formes nouvelles posent un problème de couverture du vocabulaire ;
+- les choix de tokenisation déterminent comment cette longue traîne est répartie entre mots entiers et sous-mots.
+
+Cela aide à comprendre pourquoi les tokenizers modernes utilisent souvent des unités sous-lexicales : ils permettent de représenter des formes rares ou inédites à partir de fragments réutilisables. Mais la loi de Zipf ne détermine pas à elle seule l'algorithme de tokenisation ni la taille optimale du vocabulaire.
+
+### 5.4 Évaluer les distributions produites par un modèle
+
+On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération.
+
+Des travaux récents étudient même les liens entre distribution des tokens, choix de vocabulaire et performances en aval. Il s'agit d'un axe de recherche, pas encore d'une règle universelle de conception.
+
+**En résumé :** Zipf est utilisée pour caractériser des données, comparer des distributions et formuler des hypothèses sur les systèmes qui les exploitent. Elle n'est ni un algorithme d'apprentissage, ni une explication causale complète de la langue.
+
+## 6. Une régularité, pas une loi universelle
+
+Une droite approximative sur un graphique logarithmique ne suffit pas à démontrer qu'un mécanisme de loi de puissance produit les données. Plusieurs difficultés doivent être prises en compte :
+
+- **La dépendance entre rang et fréquence.** Si les deux sont estimés sur le même échantillon, une fluctuation aléatoire peut augmenter la fréquence observée d'un mot et le faire remonter dans le classement. Les deux axes ne sont alors pas indépendants.
+- **La longue traîne.** Les formes rares sont nombreuses, mais leurs fréquences sont difficiles à estimer avec précision dans un corpus fini.
+- **La non-stationnarité.** Un mot peut être très fréquent dans un corpus consacré à un sujet et rare dans un autre. Les fréquences agrégées mélangent des contextes différents.
+- **Les conventions linguistiques.** Les formes fléchies, les composés, les élisions, les caractères et les unités de segmentation changent le nombre de types et leur fréquence.
+- **Le choix du modèle.** Une loi de puissance simple, une loi de Zipf-Mandelbrot ou un autre modèle peuvent décrire différemment les extrémités de la distribution.
+
+Steven Piantadosi (2014) insiste sur le fait que les représentations classiques peuvent masquer une structure plus riche et que les explications causales proposées ne rendent pas compte de tous les phénomènes. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences est une manière de réduire un biais important, mais cela ne résout pas toutes les difficultés d'estimation.
+
+La conclusion raisonnable est donc la suivante : **les fréquences lexicales présentent souvent une régularité proche de Zipf, mais sa forme exacte dépend des données, des unités et de la méthode d'analyse.**
+
+## 7. Retour à Otis : ce que notre petit corpus nous a appris
+
+Nous avons construit un corpus, choisi une normalisation, distingué 67 occurrences de 46 types et établi un classement. Nous savons maintenant pourquoi ce classement n'est pas une propriété intrinsèque des mots, pourquoi les égalités de fréquence compliquent les rangs et pourquoi un texte si court ne permet pas d'estimer un exposant robuste.
+
+Sur un grand corpus, la même démarche devient une analyse statistique : compter, classer, estimer les paramètres, comparer les fréquences observées aux fréquences attendues, puis examiner les écarts. La formule devient utile seulement après ces choix méthodologiques.
 
 ## S’exercer
 
@@ -134,19 +243,25 @@ Les calculs, questions de transfert et corrigés sont regroupés dans une page d
 
 ## L'idée à retenir
 
-La langue n'utilise pas tous ses mots à la même fréquence. La loi de Zipf fournit une approximation compacte de cette inégalité : le rang et la fréquence sont souvent liés par une relation proche d'une loi de puissance. Cette régularité aide à décrire les données, mais elle ne suffit ni à expliquer leur origine ni à prédire exactement chaque mot.
+La loi de Zipf décrit une régularité fréquente dans les distributions de fréquences lexicales : quelques formes dominent, tandis qu'une longue traîne rassemble de nombreuses formes rares. Elle est utile pour analyser des corpus, comprendre certaines difficultés du traitement automatique des langues et étudier les distributions produites par les modèles. Mais elle ne dispense jamais de définir les unités, de décrire les données et de tester la qualité de l'ajustement.
 
 ## Pour aller plus loin
 
 - La leçon sur les [données textuelles](text-data.qmd) présente les représentations et unités manipulées dans le pipeline du LLM.
-- La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens. Elle traite d'une autre question que le comptage lexical de cette histoire.
+- La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens de modèle.
+- La page d'[exercices sur la loi de Zipf](exercises/zipf-law.qmd) permet de prolonger l'analyse par des calculs et des expériences.
 
 ### Sources
 
-- [Piantadosi (2014), *Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — approximation rang-fréquence, limites des ajustements simples et piège d'estimation sur le même corpus.
-- [Lestrade (2017), *Unzipping Zipf’s law*](https://doi.org/10.1371/journal.pone.0181987) — proposition d'un modèle où syntaxe et sémantique contribuent conjointement aux distributions observées.
-- [Pilgrim et Hills (2021), *Bias in Zipf’s law estimators*](https://doi.org/10.1038/s41598-021-96214-w) — montre que les estimateurs usuels peuvent rester biaisés sur des données linguistiques, même après certaines corrections.
-- [Zipf (1949), *Human Behavior and the Principle of Least Effort*](https://archive.org/details/humanbehaviorpri00zipf) — ouvrage historique qui a popularisé la loi dans l'étude du langage.
+- Estoup, J.-B. (1916), *Gammes sténographiques*, Institut sténographique de France — repère historique sur l'observation de la relation rang-fréquence.
+- Zipf, G. K. (1935), *The Psycho-Biology of Language* — formulation et diffusion de l'analyse des fréquences lexicales.
+- Zipf, G. K. (1949), *Human Behavior and the Principle of Least Effort* — ouvrage qui popularise largement cette régularité.
+- Mandelbrot, B. (1953), “An informational theory of the statistical structure of language” — généralisation de la relation rang-fréquence.
+- Petruszewycz, M. (1973), [*L'histoire de la loi d'Estoup-Zipf : documents*](https://www.numdam.org/item/MSH_1973__44__41_0/) — repères documentaires sur les origines de la loi.
+- Piantadosi, S. T. (2014), [*Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — revue critique des régularités, des méthodes d'estimation et des explications proposées.
+- Lavi-Rotbain, O. et Arnon, I. (2023), [*Zipfian Distributions in Child-Directed Speech*](https://doi.org/10.1162/opmi_a_00070) — étude multilingue des fréquences dans le langage adressé aux enfants.
+- Linders, G. M. et Louwerse, M. M. (2023), [*Zipf’s law revisited: Spoken dialog, linguistic units, parameters, and the principle of least effort*](https://doi.org/10.3758/s13423-022-02142-9) — extension de l'analyse à la conversation et à plusieurs unités linguistiques.
+- He, Y., Zeng, Q. et Jiang, M. (2025), [*Pre-trained Models Perform the Best When Token Distributions Follow Zipf’s Law*](https://aclanthology.org/2025.emnlp-main.1421/) — étude récente du lien entre distributions de tokens, taille du vocabulaire et performances.
 
 [Retour au calendrier de l’Avent](scientific-calendar.qmd).
 
