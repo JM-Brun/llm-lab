@@ -120,7 +120,11 @@ The exponent $\alpha$ controls the slope of the distribution:
 
 The exponent is not a universal constant of English or French. It must be estimated for a particular corpus and model. Its value depends on period, genre, register, corpus size, word definition and fitting method.
 
-### Why does a straight line appear on a logarithmic plot?
+The full form is $f(r)=C r^{-\alpha}$. **$C$ sets the vertical scale**: for a fixed exponent, doubling $C$ doubles every predicted frequency. Its value depends on the chosen scale (counts or relative frequencies) and the corpus. **$\alpha$ controls the decay**: it determines the slope on a log-log plot. It is not an immutable property of a language; it summarizes the fit of a model to a particular corpus and counting convention.
+
+### Why use logarithmic axes?
+
+Frequencies may range from thousands of occurrences down to one, while ranks extend from 1 to several thousand. On linear axes, the most frequent forms take up nearly all the space and the long tail becomes hard to inspect. A logarithmic scale makes multiplicative changes (for example, ×10) occupy equal distances.
 
 Starting from the general form:
 
@@ -148,7 +152,19 @@ $$
 f(r) \propto \frac{1}{(r+\beta)^\alpha}
 $$
 
-The parameter $\beta$ shifts the rank and can improve the fit to observed distributions. This extension is often called the Zipf-Mandelbrot law. It reminds us that an empirical law is a model to fit and evaluate, not a formula to apply without checking its assumptions.
+The parameter $\beta$ shifts the rank. When $\beta=0$, we recover classical Zipf. For $\beta>0$, the relative decline is less abrupt across the very first ranks; when $r$ becomes much larger than $\beta$, the tail approaches the same asymptotic slope governed by $-\alpha$. We can isolate this effect by comparing frequencies with the frequency at rank 1:
+
+$$
+\frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
+$$
+
+Thus, $\beta$ mainly changes the curvature around the first ranks; it is neither the number of function words nor a linguistic cause. It adds a parameter that can improve the fit to some datasets, but not necessarily all. Compare residuals and parameter stability, ideally on held-out data, rather than automatically preferring the more flexible model.
+
+![Synthetic comparison of the effects of exponent alpha and offset beta on a Zipf distribution.](../images/advent-zipf-parameter-effects.svg){#fig-advent-zipf-parameter-effects fig-alt="Two logarithmic plots. On the left, increasing alpha makes the decay steeper. On the right, increasing beta softens the curvature at the first ranks; the long-tail slope remains governed by alpha." width=100%}
+
+*These are synthetic curves normalized so that relative frequency at rank 1 equals 1. They isolate parameter effects; they are not fitted to a real corpus.*
+
+This extension is often called the Zipf-Mandelbrot law. It reminds us that an empirical law is a model to fit and evaluate, not a formula to apply without checking its assumptions.
 
 ## 3. What do we observe across languages?
 
@@ -216,9 +232,17 @@ Training corpora are also highly imbalanced:
 
 This helps explain why modern tokenizers often use subword units: they can represent rare or unseen forms using reusable fragments. But Zipf’s law alone does not determine the tokenization algorithm or the optimal vocabulary size.
 
+Most importantly, two distributions must be distinguished. A Zipf curve describes a **marginal frequency in a corpus**: how often each form or token appears across all contexts. An autoregressive model instead computes a distribution **conditioned on the context** at each position:
+
+$$
+p_\theta(x_t\mid x_{<t}).
+$$
+
+A token’s corpus frequency influences how many training examples are observed, but it is not the model’s predicted probability in a particular context. A globally rare token can be highly probable after a particular prefix; a globally frequent token can be unlikely in that same context.
+
 ### 5.4 Evaluate distributions produced by a model
 
-We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters. For the comparison to be interpretable, we must control for language, text length, tokenizer, normalization and sampling settings. A rank-frequency curve is never, by itself, a sufficient measure of text or model quality.
+We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters. For the comparison to be interpretable, we must control for language, text length, tokenizer, normalization and sampling settings. A rank-frequency curve is never, by itself, a sufficient measure of text or model quality. **It does not directly measure lexical richness.** It describes how frequencies are distributed across forms; two texts with comparable richness may have different curves because of length, topic, genre and normalization. Conversely, a Zipf-like curve does not guarantee a rich vocabulary. Lexical diversity requires complementary measures and protocols that control, in particular, for text length.
 
 Recent work even studies links between token distributions, vocabulary choice and downstream performance. This is a research direction, not yet a universal design rule. In particular, word distributions in a corpus must be distinguished from token distributions produced by a tokenizer: subword segmentation changes the statistical object being studied.
 
