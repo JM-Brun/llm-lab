@@ -225,10 +225,10 @@ De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)
 
 On considère une seule requête, deux clés et deux valeurs scalaires, sans masque :
 
-$
+$$
 q=1,\qquad k_1=\ln 3,\quad k_2=0,\qquad
 v_1=2,\quad v_2=4,\quad d_k=1.
-$
+$$
 
 La sortie est $O=AV$, et l'objectif jouet est $\mathcal L=O$. Il s'agit d'un signal amont scalaire choisi pour étudier la rétropropagation locale, pas d'une loss de langage.
 
@@ -244,18 +244,18 @@ La sortie est $O=AV$, et l'objectif jouet est $\mathcal L=O$. Il s'agit d'un sig
 1. Les scores valent $(\ln3,0)$. Leur softmax est $A=(3/4,1/4)$, donc $O=(3/4)2+(1/4)4=5/2$.
 2. Par $O=AV$, on obtient $G_V=A^\top G_O=(3/4,1/4)$ et $G_A=G_OV^\top=(2,4)$.
 3. La moyenne pondérée des composantes de $G_A$ vaut $(3/4)2+(1/4)4=5/2$. Ainsi,
-   $
+   $$
    G_S=A\odot\left(G_A-\frac52\right)
    =\left(-\frac38,\frac38\right).
-   $
+   $$
 4. Comme $d_k=1$ et $q=1$ :
-   $
+   $$
    \frac{\partial\mathcal L}{\partial q}
    =G_SK=-\frac38\ln3\approx-0{,}412,
    \qquad
    \frac{\partial\mathcal L}{\partial K}
    =G_S^\top q=\left(-\frac38,\frac38\right).
-   $
+   $$
 5. Les composantes de $G_S$ somment à zéro. Un décalage commun des scores ne change pas les poids softmax ; la dérivée dans cette direction doit donc être nulle.
 
 Le chemin vers V traverse directement l'agrégation $O=AV$. Les chemins vers Q et K traversent d'abord les scores, puis le softmax. Dans une couche complète, ces gradients locaux sont ensuite propagés aux matrices de projection et aux représentations d'entrée.

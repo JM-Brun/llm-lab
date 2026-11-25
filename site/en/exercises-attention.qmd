@@ -225,10 +225,10 @@ Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)
 
 Consider one query, two keys, and two scalar values, with no mask:
 
-$
+$$
 q=1,\qquad k_1=\ln 3,\quad k_2=0,\qquad
 v_1=2,\quad v_2=4,\quad d_k=1.
-$
+$$
 
 The output is $O=AV$, and the toy objective is $\mathcal L=O$. This is a scalar upstream signal chosen to study local backpropagation, not a language-model loss.
 
@@ -244,18 +244,18 @@ The output is $O=AV$, and the toy objective is $\mathcal L=O$. This is a scalar 
 1. The scores are $(\ln3,0)$. Their softmax is $A=(3/4,1/4)$, so $O=(3/4)2+(1/4)4=5/2$.
 2. From $O=AV$, we obtain $G_V=A^\top G_O=(3/4,1/4)$ and $G_A=G_OV^\top=(2,4)$.
 3. The weighted mean of the components of $G_A$ is $(3/4)2+(1/4)4=5/2$. Therefore,
-   $
+   $$
    G_S=A\odot\left(G_A-\frac52\right)
    =\left(-\frac38,\frac38\right).
-   $
+   $$
 4. Since $d_k=1$ and $q=1$:
-   $
+   $$
    \frac{\partial\mathcal L}{\partial q}
    =G_SK=-\frac38\ln3\approx-0.412,
    \qquad
    \frac{\partial\mathcal L}{\partial K}
    =G_S^\top q=\left(-\frac38,\frac38\right).
-   $
+   $$
 5. The components of $G_S$ sum to zero. A common shift of the scores does not change the softmax weights, so the derivative in that direction must be zero.
 
 The path to V goes directly through the aggregation $O=AV$. The paths to Q and K first pass through scores and then softmax. In a full layer, these local gradients are propagated further to the projection matrices and input representations.
