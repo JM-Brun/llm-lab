@@ -33,6 +33,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", 
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
+**Questions et exercices :** [Accéder à la page dédiée](exercises/causal-masking.qmd).
+
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
