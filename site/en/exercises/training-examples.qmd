@@ -1,7 +1,7 @@
 ---
 title: "Exercises — Training examples"
-subtitle: "Four self-check questions and their answers"
-description-meta: "Four self-check questions with answers, associated with the Training examples lesson."
+subtitle: "Six questions: alignment, causality, packing, and padding"
+description-meta: "Six progressive exercises with reasoned answers, associated with the Training examples lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples-exercises"
-summary: "Four self-check questions with answers, associated with the Training examples lesson."
-scope: "Collects four short self-check questions and their answers without duplicating the lesson’s conceptual explanation."
-purpose: "Check a few essential prerequisites: token alignment, causality, attention and loss masks, and the dimensions of logits."
+summary: "Six progressive exercises on alignment, teacher forcing, masks, packing, padding, and logits dimensions."
+scope: "Collects six questions and transfer scenarios without duplicating the lesson’s conceptual explanation."
+purpose: "Check token alignment, causality, mask roles, document boundaries, loss reduction, and logits dimensions."
 suggested_route:
   previous: null
   next: null
@@ -26,41 +26,168 @@ tags: ["type:exercise-hub", "destination:practice", "topic:training-examples-exe
 
 ## Check your understanding
 
-1. For stream `[4, 7, 2, 9]` and input length 3, what is the first input-target pair?
+### 1. Input-target shift
+
+For stream `[4, 7, 2, 9]` and input length 3, what is the first input-target pair?
 
 <details>
-<summary>Show answer</summary>
+<summary>Hint</summary>
 
-Input `[4, 7, 2]`, target `[7, 2, 9]`. Each target is the immediately following token at the corresponding prediction position.
+Each target is the token immediately following the input token at the same position.
 
 </details>
 
-2. Why does teacher forcing not expose future tokens?
-
 <details>
-<summary>Show answer</summary>
+<summary>Show the answer</summary>
 
-The model receives the observed prefix, but the causal mask restricts each position to previous tokens and the current token. Without that constraint, the target could leak into the computation.
+Input `[4, 7, 2]`, target `[7, 2, 9]`. Both sequences have the same length; the target is shifted by one index in the source stream.
 
 </details>
 
-3. How do attention masks and loss masks differ?
+### 2. Teacher forcing and causality
+
+Why does teacher forcing not expose future tokens?
 
 <details>
-<summary>Show answer</summary>
+<summary>Hint</summary>
 
-The former determines which positions may be attended to; the latter determines which targets contribute to the objective. They are not interchangeable.
+Distinguish the choice of prefix supplied to the model from the rule that determines which positions each token can access.
 
 </details>
 
-4. If logits have shape $[B,L,V]$, what do the three axes represent?
-
 <details>
-<summary>Show answer</summary>
+<summary>Show the answer</summary>
 
-Batch, sequence position, and candidate vocabulary token. Each position in each sequence has scores over all $V$ vocabulary tokens.
+Teacher forcing supplies the observed prefix from the data. The causal mask still restricts each position to previous tokens and the current token. Conditioning on reference data therefore does not remove the causal constraint; without it, a future target could leak into the computation.
 
 </details>
+
+### 3. Attention mask and loss mask
+
+How do attention masks and loss masks differ?
+
+<details>
+<summary>Hint</summary>
+
+One acts on the dependencies used to compute representations; the other acts on the terms aggregated into the objective.
+
+</details>
+
+<details>
+<summary>Show the answer</summary>
+
+An attention mask determines which positions may be consulted. A loss mask determines which targets contribute to the objective. They are distinct: masking a position in attention does not guarantee that its label is excluded from cross-entropy.
+
+</details>
+
+### 4. Logits axes
+
+If logits have shape $[B,L,V]$, what do the three axes represent?
+
+<details>
+<summary>Show the answer</summary>
+
+Batch, sequence position, and candidate vocabulary token. Each position in each sequence has a score for each of the $V$ candidate tokens.
+
+</details>
+
+## Apply the mechanisms
+
+### 5. Packing: is a document boundary enough?
+
+Two documents are concatenated:
+
+- Document A: `[A1, A2, EOS]`
+- Document B: `[B1, B2, EOS]`
+
+The packed stream is therefore `[A1, A2, EOS, B1, B2, EOS]`. Inputs and targets are constructed mechanically by shifting the stream by one token.
+
+1. Write the input and target sequences.
+2. With an ordinary causal mask, which positions can the representation at the `B1` position attend to?
+3. Does the `EOS` token by itself prevent access to document A?
+4. If the objective is to treat B as independent of A, what additional rules must be defined?
+
+<details>
+<summary>Hint</summary>
+
+Separate three mechanisms: target shifting, visibility defined by the attention mask, and inclusion of targets in the loss. A separator token is data in the sequence, not a masking rule.
+
+</details>
+
+<details>
+<summary>Show the reasoned answer</summary>
+
+The mechanical shift gives:
+
+- Input: `[A1, A2, EOS, B1, B2]`
+- Target: `[A2, EOS, B1, B2, EOS]`
+
+With an ordinary causal mask, the representation at the `B1` position can attend to earlier positions, including `A1`, `A2`, and `EOS` (as well as `B1` itself, under the usual causal convention). Causality prevents access to the future; it does not isolate documents.
+
+No: `EOS` marks a boundary in the stream, but does not by itself change the attention visibility matrix.
+
+To make B independent of A, define a block-diagonal attention mask so B positions cannot attend to A. If the positional mechanism uses absolute position IDs, also decide whether they reset at the document boundary; the attention mask alone does not specify that. Handle the target transition explicitly too: under the mechanical shift above, the output associated with A's `EOS` position is trained to predict `B1`. If that cross-document prediction is not part of the objective, exclude that target from the loss or define a target-construction/reset mechanism that respects the boundary.
+
+**Conclusion:** the marker, attention mask, and loss mask answer three different questions. Their combination depends on the objective; there is no universal packing or masking policy.
+
+</details>
+
+### 6. Padding: does the attention mask alone exclude PAD from the loss?
+
+Two examples of different lengths are batched and right-padded to five positions.
+
+| Example | `input_ids` | `targets` |
+|---|---|---|
+| A (3 tokens) | [11, 12, 13, PAD, PAD] | [12, 13, 14, PAD, PAD] |
+| B (5 tokens) | [21, 22, 23, 24, 25] | [22, 23, 24, 25, 26] |
+
+The padding component of the attention mask is `[1,1,1,0,0]` for A and `[1,1,1,1,1]` for B; the causal mask remains a separate constraint. The per-position losses before masking are:
+
+- A: $[0.2, 1.1, 0.7, 4.0, 3.0]$
+- B: $[0.5, 0.4, 0.6, 0.9, 0.6]$
+
+1. Construct the expected loss mask if only real targets should contribute.
+2. Calculate the valid-token mean.
+3. Calculate the naive mean over all ten positions and explain why it is incorrect for this objective.
+4. Is a correct attention mask sufficient if PAD labels are still passed to cross-entropy?
+
+<details>
+<summary>Hint</summary>
+
+There are three valid targets for A and five for B. For a valid-token mean, the denominator is the number of retained targets, not the total number of padded positions.
+
+</details>
+
+<details>
+<summary>Show the reasoned answer</summary>
+
+The loss mask is `[1,1,1,0,0]` for A and `[1,1,1,1,1]` for B. It retains eight targets.
+
+The sum of valid losses is:
+
+\[
+0.2+1.1+0.7+0.5+0.4+0.6+0.9+0.6=5.
+\]
+
+The valid-token mean is therefore:
+
+\[
+\mathcal{L}_{\mathrm{valid}}=\frac{5}{8}=0.625.
+\]
+
+The naive mean also includes the two PAD losses from A:
+
+\[
+\mathcal{L}_{\mathrm{naive}}=\frac{5+4+3}{10}=1.2.
+\]
+
+It optimizes a different objective, which here depends on the losses assigned to padding positions. The attention mask determines which positions may be consulted; it does not automatically remove PAD labels from the loss function. A consistent loss mask or explicit ignored-label convention is required, followed by reduction over the number of valid targets.
+
+</details>
+
+::: {.callout-note}
+**Scope of these exercises.** The scenarios are conceptual and illustrate possible policies. They do not prescribe a universal packing format, cross-document mask, or reduction convention; those choices must be defined by the training pipeline and objective.
+:::
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/training-examples.qmd) · [English](training-examples.qmd)
