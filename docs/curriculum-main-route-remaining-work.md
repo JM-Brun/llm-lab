@@ -233,3 +233,11 @@ The source-level findings and remaining tasks are recorded in [the audit report]
 - The lesson pages, guided route, graph registries, generated maps and `sliding_input_target_pairs` implementation remain unchanged. The exercises do not claim to implement a packer or collator.
 - The scope and pedagogical decisions are documented in `docs/audits/training-example-practice-transfer-2026-11-25.md`.
 - **Status:** PR open; the final-head Quarto/browser audit is queued. Do not treat the change as integrated until the final CI and rendered checks pass and the artifacts have been inspected. Manual screen-reader review and learner validation remain separate evidence.
+
+
+## Progress snapshot — 2026-11-25 (Q/K/V evidence and CA-A ownership)
+
+- #1618, #1619 and #1620 are merged. The five guided Build tours are source/page/test-audited; the current Q/K/V pages have post-merge Chromium evidence and the current GitHub Pages artifact has been inspected. #483 remains open only for manual full-keyboard, touch and screen-reader checks; #447 remains gated.
+- The CA-A causal-mask/prefix-invariance exercise was found in the shared Attention collection even though the causal-masking lesson linked to a dedicated Practice companion. The companion held only a short check. PR #1622 is merged after its Python CI, Quarto/browser review and secret scanning passed. PR #1626 moves CA-A into the dedicated companion, preserves the old collection anchors as link-only aliases, aligns the lesson's test-scope claims with the existing full-GPT test, and reconciles the roadmap status. No new implementation or test framework is needed.
+- After CA-A integration, the next exercise gap to inspect is the text-data transfer sequence: BPE merge tracing, shifted windows and leakage/document-boundary handling. The existing TR-A/B/C and training-example material must be compared first; do not duplicate their representation/shape activities.
+- Do not repeat the validated scoring/loss, gradient/training-loop, inference/context-use, text-input/representations, or Transformer/QKV/attention scientific audits. Reuse their evidence and only correct reproducible regressions.
