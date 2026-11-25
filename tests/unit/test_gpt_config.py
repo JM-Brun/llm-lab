@@ -28,6 +28,39 @@ def test_config_rejects_non_positive_dimensions() -> None:
         _config(mlp_hidden_dim=0)
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("vocab_size", 50.5),
+        ("context_length", 16.0),
+        ("embedding_dim", 16.0),
+        ("num_heads", True),
+        ("mlp_hidden_dim", 32.0),
+    ],
+)
+def test_config_rejects_non_integer_dimensions(field: str, value: object) -> None:
+    with pytest.raises(ValueError, match=f"{field} must be a positive integer"):
+        _config(**{field: value})
+
+
+@pytest.mark.parametrize("seed", [-1, 1.5, True])
+def test_config_rejects_invalid_seed(seed: object) -> None:
+    with pytest.raises(ValueError, match="seed must be a non-negative integer"):
+        _config(seed=seed)
+
+
+def test_config_accepts_numpy_integer_dimensions_and_seed() -> None:
+    import numpy as np
+
+    config = _config(
+        vocab_size=np.int64(50),
+        context_length=np.int64(16),
+        seed=np.int64(7),
+    )
+    assert config.vocab_size == 50
+    assert config.seed == 7
+
+
 def test_config_requires_divisible_head_count() -> None:
     with pytest.raises(ValueError, match="embedding_dim must be divisible by num_heads"):
         _config(embedding_dim=10, num_heads=3)
