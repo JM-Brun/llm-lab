@@ -29,7 +29,7 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 
 ## Parcours théorique — Understand
 
-On commence par observer ce que prédit un LLM, puis on reconstruit le calcul qui produit sa distribution prédictive. On examine ensuite la conception du contexte, avant de distinguer trois usages de cette même distribution : générer une continuation, évaluer une séquence observée et apprendre les paramètres. Les neuf étapes ci-dessous donnent un ordre de première lecture, pas une chaîne de prérequis stricte ; la carte des ressources permet d'explorer les relations au-delà de cet ordre.
+On commence par observer ce que prédit un LLM, puis on reconstruit le calcul qui produit sa distribution prédictive. Le parcours suit ensuite la boucle de génération, puis examine comment l’application prépare le contexte de chaque appel. Il revient enfin sur les deux autres usages de la même distribution : scorer une cible observée et apprendre les paramètres. Cet ordre est pédagogique : la conception du contexte agit en amont de chaque appel, même si elle est étudiée après la génération. Les neuf étapes donnent un ordre de première lecture, pas une chaîne de prérequis stricte.
 
 ### Squelette du parcours {#conceptual-route}
 
