@@ -261,7 +261,7 @@ You want to compare lexical distributions in French political-speech transcripts
 1. The corpora differ in size, number of speeches, topics and provenance. These factors can change frequencies without reflecting a stable difference in political style.
 2. Define one lexical unit consistently across both corpora. Document normalization, decide whether inflected forms remain distinct, and handle proper names, quotations, slogans and repeated segments consistently. Preserve the choices so the analysis can be reproduced.
 3. Compare subsets of similar length or use repeated subsampling at a fixed length (rarefaction); match or stratify speeches by period, topic and speaker; check sensitivity to repeated segments; publish metadata and exclusions. Do not remove function words without explaining how that changes the statistical object.
-4. The speech is usually the most defensible resampling unit: occurrences within one speech are not independent and share a topic, speaker and context. Resampling individual occurrences could underestimate this dependence.
+4. The speech is usually the most defensible resampling (bootstrap) unit: occurrences within one speech are not independent and share a topic, speaker and context. Resampling individual occurrences could underestimate this dependence.
 5. A difference in $\alpha$ proves neither an ideology, a persuasive strategy nor greater lexical richness. It describes a difference in rank-frequency concentration in these corpora under the chosen conventions. Further analyses are needed for linguistic or political interpretation.
 
 </details>
