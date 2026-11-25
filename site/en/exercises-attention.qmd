@@ -194,6 +194,8 @@ Justify each row from the functional dependencies.
 
 <a id="exercise-connect-the-projections-to-learning"></a>
 
+**Focused preparation:** this question uses the attention gradient paths. First consult the [Q/K/V deep dive, “Gradient paths through attention”](queries-keys-values-advanced.qmd#gradient-paths-through-attention). The other projection exercises do not require this derivation.
+
 ### Exercise — connect the projections to learning {#ex-attention-connect-projections-learning}
 
 In the standard mechanism, $W_Q$, $W_K$, and $W_V$ are trained from the model's final loss. Answer without assuming that separate Q, K, or V targets are provided.
