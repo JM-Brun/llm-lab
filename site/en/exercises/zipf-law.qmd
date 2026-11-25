@@ -43,7 +43,7 @@ Try to answer these questions before opening the answers.
 
 ## Extended practice
 
-The [Zipf’s law exercise collection](../exercises-zipf-law.qmd#zipf-law) contains seven worked exercises on rank-frequency calculations, log-log interpretation, lexical versus token frequencies, and empirical limitations.
+The [Zipf’s law exercise collection](../exercises-zipf-law.qmd#zipf-law) contains eleven worked exercises on rank-frequency calculations, log-log interpretation, lexical versus token frequencies, and empirical limitations.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/zipf-law.qmd) · [English](zipf-law.qmd)
