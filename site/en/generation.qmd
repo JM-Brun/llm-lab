@@ -163,7 +163,7 @@ An inference system does not treat the prompt the way it treats the tokens it ge
 
 *Decode* therefore names an execution phase, the one that follows prefill; *decoding* names the selection rule. The two words look alike and do not mean the same thing.
 
-Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
+Prefill and *teacher forcing* have a limited similarity: in both cases, the model receives tokens that are already known, and the causal mask prevents each position from seeing the future. But the terms describe different things. *Prefill* is an inference execution phase: the supplied prompt is processed to produce the distribution for the first generated token and, when KV caching is enabled, to populate that cache. *Teacher forcing* is a conditioning strategy used notably in training: reference corpus tokens are supplied as inputs, while the logits at each position are compared with shifted targets. In free-running generation, by contrast, each selected token is fed back and may differ from the reference token. The same conditioning on an observed prefix can also be used to score a continuation with fixed parameters ([training examples](training-examples.qmd)).
 
 The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
 
