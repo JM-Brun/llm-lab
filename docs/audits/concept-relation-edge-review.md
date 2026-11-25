@@ -1,7 +1,7 @@
 # Concept relation edge review
 
 **Date:** 2026-11-05  
-**Status:** source-semantic review covers 66 retained assertions; current registry has 124 assertions, leaving 58 outside this review. Rendered graph usability, browser/accessibility, and learner validation remain open  
+**Status:** source-semantic review covers all 122 current retained assertions (66 initial + 54 subsequent review + 2 audited on 2026-11-25). Rendered graph usability, browser/accessibility, and learner validation remain open  
 **Canonical data:** [`data/concepts.yml`](../data/concepts.yml)  
 **Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [merged validator PR #520](https://github.com/JM-Brun/llm-lab/pull/520)
 
@@ -312,3 +312,21 @@ The review uses the existing bilingual endpoint definitions and relation semanti
 - [Information-theory source review](../source-reviews/information-theory-wayland-zhang-2026-11.md)
 
 This closes the **source-semantic edge audit**. It does not close rendered FR/EN graph inspection, touch/keyboard/screen-reader evidence, or an independent learner task. Those remain human validation gates coordinated with #584 and #337. The registry remains a selected conceptual map, not a complete execution DAG.
+
+
+## 2026-11-25 delta review — lexical frequency concepts
+
+The current canonical registry contains **122 relation assertions**. The preceding review closed the 120 retained assertions then present; two later assertions are reviewed here against their bilingual endpoint definitions, the relation contract, and the FR/EN Zipf lesson.
+
+| Relation | Decision | Scope and rationale |
+|---|---|---|
+| `zipf-law → approximates → word-frequency-distribution` | **Accept, scoped** | The bilingual lesson defines Zipf's law as an approximate empirical rank–frequency regularity over lexical forms. The target is a corpus-dependent empirical distribution, not a universal or generative law. This edge asserts only an approximation of its rank–frequency structure; it does not assert an exact power law, a fixed exponent, or a causal explanation. |
+| `conditional-distribution → contrasts-with → word-frequency-distribution` | **Accept, scoped** | The first is a model-produced distribution over the next token conditioned on a preceding context; the second is an empirical marginal frequency distribution over lexical forms in a specified corpus and under specified counting conventions. They are distinct statistical objects, not mutually exclusive alternatives. |
+
+### Relation-contract clarification
+
+The previous bilingual description of `approximates` referred only to a computable or bounded construction. That wording did not cover an empirical law such as Zipf's law. The canonical description now explicitly includes models, empirical laws and bounded constructions, while requiring the scope and assumptions of the approximation to be stated. This preserves the existing AIXI(t,l) use and does not turn approximation into identity, causal explanation or a learning dependency.
+
+The two edges are not `prerequisite` relations and must not influence the guided route. The FR/EN lesson pair and the two exercise pages remain the explanatory resources; no duplicate concept or page relation is introduced.
+
+**Updated inventory:** 122 current edges, all source-semantically reviewed. The remaining gates are rendered graph inspection, touch/keyboard/screen-reader validation, and an independent learner task; this source audit does not close them.
