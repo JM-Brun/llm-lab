@@ -1,13 +1,13 @@
 # Day 01 source dossier — Zipf's law and lexical frequency
 
-**Status:** first draft for editorial and scientific review  
+**Status:** bilingual public-reading revision prepared in PR #1639; novice review and explicit editorial acceptance remain pending  
 **Date:** 2026-11-23  
 **Languages:** French and English  
-**Story question:** Why does the word “the” appear everywhere?
+**Story question:** FR — Pourquoi le mot « je » revient-il si souvent dans ce texte ? EN — Why does the word “I” appear so often in this text?
 
 ## Editorial angle
 
-The story explains the inequality of lexical frequencies through the rank-frequency relation commonly called Zipf's law. Its value for LLM readers is statistical: language corpora are highly imbalanced, and frequency affects the number of observed learning opportunities.
+The story starts from an original first-person text written for this demonstration. It asks why « je » / “I” appears frequently, then uses the resulting lexical counts to introduce the inequality of word frequencies and the rank-frequency relation commonly called Zipf's law. Its value for LLM readers is statistical: language corpora are highly imbalanced, and frequency affects the number of observed learning opportunities.
 
 This is not a tokenization tutorial and does not claim to explain the causal origin of Zipf's law.
 
@@ -74,7 +74,7 @@ Historical source for Zipf's popularization and broader framing. The draft does 
 
 ## Numerical example verification
 
-The new rank-construction example is deliberately a separate, fictional count table (de: 12, et: 7, chat: 4, chien: 3, luciole: 1 in French; the: 12, and: 7, cat: 4, dog: 3, firefly: 1 in English). It teaches that rank is obtained by sorting observed counts; it is not presented as an empirical corpus or as a fitted Zipf distribution.
+The exercise page's rank-construction example is deliberately a separate, fictional count table (de: 12, et: 7, chat: 4, chien: 3, luciole: 1 in French; the: 12, and: 7, cat: 4, dog: 3, firefly: 1 in English). It teaches that rank is obtained by sorting observed counts; it is not presented as an empirical corpus or as a fitted Zipf distribution.
 
 
 For the deliberately synthetic model \(f(r)=C/r\) with \(C=1000\):
@@ -95,7 +95,7 @@ All values are mathematical consequences of the toy model, not corpus measuremen
 
 ## Scope and non-claims
 
-- The word “the” is an English hook; the French story uses “de” as its natural counterpart. Neither is claimed to be the most frequent word in every corpus.
+- The first-person pronouns « je » and “I” are hooks arising from the deliberately first-person demonstration text. Their high frequency is a property of this text's viewpoint, not a universal claim about either language.
 - The draft distinguishes lexical word types/tokens from model tokenizer tokens, explicitly disambiguating the two meanings of *token*.
 - The story does not claim that Zipf's law is exact, universal, or a complete causal explanation.
 - The draft does not infer a model's tokenization strategy or rare-word capability from a lexical rank-frequency curve.
@@ -147,3 +147,13 @@ The public FR/EN pages now use an original, purpose-written first-person text. T
 - English: **196 lexical occurrences**, **127 distinct orthographic types**. The leading forms are: `I` (13), `a` (9), `the` (7), `that` (6), `and` (5), `my` and `what` (4 each).
 
 These counts are exact for the current page texts and stated orthographic convention. They are pedagogical corpus counts, not observations from a naturally occurring language corpus and not a basis for fitting a Zipf exponent.
+
+
+## Revision log — PR #1639
+
+- The public lesson no longer identifies or links to the cultural source. The easter-egg provenance and source trail remain in the repository-only archive section above.
+- The earlier “the” / “de” hook has been replaced by a first-person French/English text and the matching question. The original film monologue is not reproduced in the public page or duplicated in this dossier.
+- The current demonstration counts are computed from the quoted replacement text, excluding the question and surrounding explanatory prose. FR: 194 occurrences, 132 types, 111 singleton types and 10 types occurring twice. EN: 196 occurrences, 127 types, 98 singleton types and 16 types occurring twice.
+- The complete frequency tables now list every form occurring twice; rank intervals make ties explicit.
+- The generated FR/EN learning-map artifacts have been synchronized with the new titles, summaries and section headings.
+- The technical build and CI for the final revision are being checked in PR #1639. The novice-reader review and editorial acceptance gate remain separate and are not satisfied by CI.
