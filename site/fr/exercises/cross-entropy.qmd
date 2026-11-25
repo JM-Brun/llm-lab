@@ -28,6 +28,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy-exercis
 
 [Exercices approfondis sur ce thème](../exercises.qmd#fondations).
 
+Pour aller directement aux calculs pertinents : [des logits à la perte NLL](../exercises-foundations.qmd#ex-foundations-logits-to-loss) ; [cible souple et divergence KL](../exercises-foundations.qmd#ex-foundations-soft-targets-kl).
+
 1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
 2. Pourquoi faut-il préciser le dénominateur de la moyenne lorsque des tokens sont masqués ?
 3. Pourquoi la perplexité ne suffit-elle pas à mesurer la qualité globale d'un assistant ?
