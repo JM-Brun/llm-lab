@@ -74,7 +74,7 @@ Comptons maintenant les occurrences de chaque type lexical, puis classons les ty
 
 Plusieurs formes ont la même fréquence. Il n'existe donc pas de rang unique à leur attribuer sans convention supplémentaire : on peut leur donner un ordre arbitraire, un rang moyen ou présenter un intervalle. Pour ce petit exemple, l'intervalle est le plus honnête.
 
-Le rang n'est pas une propriété intrinsèque d'un mot. Il dépend du corpus, de sa taille, de son contenu et des conventions de comptage. Dans un texte consacré à l'Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare.
+Le rang n'est pas une propriété intrinsèque d'un mot. Il dépend du corpus, de la langue, de la période, du genre de texte, de sa taille, de son contenu et des conventions de normalisation. Dans un texte consacré à l'Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare.
 
 Notre corpus sert à comprendre les opérations. Avec seulement 67 occurrences, il est beaucoup trop petit pour estimer sérieusement une loi de puissance : les égalités de fréquence et les effets du sujet dominent.
 
