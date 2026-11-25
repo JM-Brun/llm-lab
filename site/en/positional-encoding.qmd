@@ -122,7 +122,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 
 
-### Why is self-attention alone not enough?
+### Why is self-attention alone not enough? {#permutation-equivariance}
 
 For content-only self-attention, with no positional bias or order-dependent mask, permuting the input rows permutes the output rows in the same way. If $P$ is a permutation matrix, then:
 
