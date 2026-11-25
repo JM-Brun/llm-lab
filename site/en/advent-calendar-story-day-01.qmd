@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 This lesson starts with a character and a monologue: Otis, the scribe in *Asterix and Obelix: Mission Cleopatra*. We will turn that thread into a small corpus, count its words, and then compare the exercise with real linguistic corpora.
 
+## 1. Build a corpus from the monologue
+
 The narrative thread is Otis’s reply in *Asterix and Obelix: Mission Cleopatra*: “You know, I don't believe there is such a thing as a good or a bad situation.” The monologue was largely improvised by Édouard Baer. The theatrical version lasts about 54 seconds; a longer alternative version (about 1 minute 20 seconds) was also shown around the restored re-release.
 
 Rather than replace the scene with an invented text, this lesson now uses an **online transcript of Otis’s monologue** as its corpus. The transcript is hosted by Happy Scribe. It is useful for a reproducible exercise, but it is an automated transcript, not a certified verbatim record of the film audio. The figures below therefore describe that transcript, not necessarily every word spoken in every edit of the scene.
