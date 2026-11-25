@@ -271,8 +271,10 @@ Le dossier de sources et le laboratoire ne couvrent pas à eux seuls tous les tr
 
 La répartition des responsabilités est la suivante :
 
-- **PR #1639** : provenance et remplacement du texte d'accroche ; ne vaut pas validation complète de la pédagogie de la leçon.
-- **PR #1608** (remplacement de #1601) : ingestion comparative des sources et enrichissement borné de la collection d'exercices ; les validations de cette branche doivent être considérées selon son état réel de fusion et de CI.
+- **PR #1639** : première révision bilingue remplaçant le texte culturel par un texte original ; fusionnée.
+- **PR #1648** : choix éditorial ultérieur, fusionné : le texte français fourni est conservé comme easter egg non attribué dans la page publique ; les informations de provenance restent dans le dossier. Le corpus anglais demeure indépendant.
+- **PR #1615** : intégration des sources et des exercices approfondis ; fusionnée. **PR #1628** complète la leçon bilingue et ses usages ; **PR #1631** termine l'audit des relations conceptuelles. **PR #1608** est fermée sans fusion et ne constitue pas l'état intégré.
+- **PR #1654** : lien entre ce dossier et l'issue de suivi #1653 ; fusionnée.
 - **Issue #1653** : cohérence FR/EN, définitions des unités, intuition des paramètres, visualisations, usages concrets, lien rigoureux aux LLM, ramifications Deepen et validation novice.
 - **Issue #1605** : laboratoire reproductible sur corpus (ELTeC, extraction TEI, comptages, rangs, estimation et robustesse). Ne pas dupliquer ce périmètre dans #1653.
 
