@@ -1864,3 +1864,37 @@ The source/test checks for the operations, block and assembled-model tours are c
 ### Evidence boundary
 
 This completes the source → claim → implementation → test comparison for all five guided Build tours. It does not close the independent screen-reader/native-breadcrumb review, full accessibility review, or learner pilot under #447.
+
+
+## 2026-11-25: text-data transfer exercises and training-example Practice gap
+
+**Scope.** Continue the earlier exercise-catalogue recommendation after the causal-mask work. Inspect the current FR/EN text-data extended collection, the training-examples concept bridge and its dedicated Practice companions, plus the narrow NumPy window-construction reference and tests. Do not repeat the already audited TR-A–TR-C representation tasks, the tokenization/BPE scientific review, or the source-level corpus-preparation review.
+
+### Status correction to the earlier catalogue recommendation
+
+The earlier 2026-11-09 recommendation described BPE merge tracing, shifted windows and leakage handling as not yet authored. That is now stale: the published bilingual Text data collection already contains six progressive exercises. The inventory's TR-A–TR-F labels are shorthand; the source pages use stable descriptive anchors:
+
+- TR-A: `ex-text-data-representation-pipeline`
+- TR-B: `ex-text-data-embedding-lookup`
+- TR-C: `ex-text-data-representation-context`
+- TR-D: `ex-text-data-training-windows`
+- TR-E: `ex-text-data-bpe-merges`
+- TR-F: `ex-text-data-data-leakage`
+
+### Checks completed
+
+- TR-D's matrices, shapes, valid start positions, corpus-tail reasoning and window-count formula were independently checked. For (N=7,L=3), the counts are 4, 2 and 2 for strides 1, 2 and 3 respectively. The target-copy bug is correctly distinguished from a shape-only check.
+- TR-E's occurrence counts and two successive merges were independently checked. (o+w) occurs 4 times, (l+o) 3 times; after the first merge (l+ow) occurs 3 times. Applying the learned merges to `lowest` yields `low · e · s · t · </w>`. The exercise clearly labels its word-level convention as pedagogical, not production byte-level BPE.
+- TR-F correctly distinguishes overlapping-window leakage, near-duplicate cross-partition leakage and an explicitly defined temporal-continuation protocol. The train-only tokenizer-fitting recommendation is correctly scoped to a conventional held-out experiment.
+- The three exercises' prompts, solutions, equations, limitations and success criteria match in substance in FR/EN. No correction is justified; do not rewrite them.
+- The training-examples lessons correctly separate teacher forcing from objective/loss/optimizer; packing from boundary-marker insertion and cross-document masking; padding from attention masks and loss masks; and shape compatibility from semantic alignment.
+- The illustrative valid-token mean is (2/3\approx0.667); the naive mean over all five positions is (1.8). The warning that attention masking alone does not ensure PAD targets are excluded from loss is explicit.
+- `sliding_input_target_pairs` and its tests cover the declared narrow window/shift contract. They intentionally do not implement corpus loading, packing, padding, collators or loss masks. No implementation expansion is warranted without a separately specified pipeline contract.
+
+### Remaining work
+
+The dedicated FR/EN training-examples Practice companions contain four short checks (shift, teacher forcing/causality, attention versus loss masks, logits axes). They do not yet contain a complete transfer scenario for document boundaries/packing or padded-batch loss reduction. Add a small number of progressive tasks to these existing companions: (1) two documents packed with an EOS/boundary marker, making the cross-document visibility policy explicit; (2) unequal-length examples with separate attention and loss masks and a stated valid-token denominator; (3) optionally, a target-alignment bug introduced by padding. Reuse the lesson's existing examples and keep the tasks conceptual unless a concrete packer/collator implementation exists. Do not duplicate TR-D's window arithmetic or TR-F's split-leakage cases.
+
+The detailed findings, checked arithmetic and acceptance boundary are in [the training-example Practice gap audit](audits/training-example-practice-gaps-2026-11-25.md).
+
+**Validation boundary:** this is a source-level and arithmetic audit, not rendered-page, assistive-technology or learner validation. Use the existing Quarto/browser workflow after any content changes; no new workflow is needed. Manual keyboard/touch/screen-reader checks remain under #483, and learner validation remains gated under #447.
