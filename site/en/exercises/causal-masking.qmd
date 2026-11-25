@@ -41,7 +41,9 @@ The forbidden score is masked before softmax (conceptually set to $-\infty$): th
 
 <a id="ex-attention-causal-prefix-invariance"></a>
 
-## CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
+<a id="ca-a-prefix-invariance"></a>
+
+## CA-A — Causal masking and prefix invariance
 
 Consider four input tokens $x_0,x_1,x_2,x_3$. At query position $i$, causal self-attention allows only keys at positions $j\leq i$.
 
