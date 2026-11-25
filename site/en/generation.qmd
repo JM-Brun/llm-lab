@@ -35,11 +35,7 @@ Return to the first prediction: after “What have the Romans ever done for us?�
 By repeating four moves: predict, select, feed back, then continue or stop. This loop is **autoregressive generation**. While it runs, the model's parameters do not change: producing a response is not learning.
 :::
 
-::: {.callout-note title="Running example: prompt versus continuation"}
-**Prefix supplied:** “What have the Romans ever done for us?” The question is already in the context when generation starts. The successive replies are spoken by several members of the group, so this is a context-and-response analogy, not a literal one-speaker generation trace.
-
-**Continuation followed here:** “They built roads between distant towns.” It is an original LLM Lab text, not a film quotation or a model output. Its tokens are appended afterwards, one at a time.
-:::
+**Prefix supplied:** “What have the Romans ever done for us?” The question is already in the context when generation starts. The successive replies are spoken by several members of the group, so this is a context-and-response analogy, not a literal one-speaker generation trace. **Continuation followed here:** “They built roads between distant towns.” This is an original LLM Lab text, not a film quotation or a model output; its tokens are appended one at a time.
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **The model computes, a rule chooses.** The model supplies a distribution over the next token. A decoding rule, outside the network, draws a single token from it.
