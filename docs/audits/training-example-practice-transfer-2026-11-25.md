@@ -14,7 +14,7 @@ The lesson pages and the NumPy reference implementation are intentionally unchan
 
 The four existing checks are retained and made slightly more diagnostic with hints. Two transfer scenarios are added in both languages:
 
-1. **Packed document boundaries.** Learners derive the mechanically shifted input/target pair for two concatenated documents, identify the visibility permitted by an ordinary causal mask, and distinguish an EOS marker from an attention policy. The solution also surfaces a subtle boundary condition: the output at the previous document's EOS position predicts the first token of the next document under mechanical shifting. If that transition is not part of the objective, target/loss construction must handle it explicitly in addition to any block-diagonal attention mask.
+1. **Packed document boundaries.** Learners derive the mechanically shifted input/target pair for two concatenated documents, identify the visibility permitted by an ordinary causal mask, and distinguish an EOS marker from an attention policy. The solution also surfaces two boundary conditions: the output at the previous document's EOS position predicts the first token of the next document under mechanical shifting, and absolute position IDs may need an explicit reset if standalone-document equivalence is intended. If the cross-document target transition is not part of the objective, target/loss construction must handle it explicitly in addition to any block-diagonal attention mask.
 2. **Padded batch and loss reduction.** Learners construct separate attention and loss masks for unequal-length examples, calculate the valid-token mean (5/8 = 0.625), compare it with the naive padded-position mean (12/10 = 1.2), and diagnose why an attention mask alone does not exclude PAD labels from cross-entropy.
 
 ## Pedagogical and technical boundaries
@@ -24,7 +24,7 @@ The four existing checks are retained and made slightly more diagnostic with hin
 - Do not expand `sliding_input_target_pairs`: the exercises do not claim that the repository implements packing, padding, collators, cross-document masks or loss masks.
 - Do not prescribe one universal packing or reduction policy. State the objective and boundary semantics before choosing masks.
 - Keep the FR/EN task structure, numerical data, calculations and conclusions equivalent.
-- No concept registry, guided-route, knowledge-graph or generated map change is required: the page identities and lesson-to-companion relationship are unchanged.
+- No concept registry, guided-route or knowledge-graph change is required: page identities and lesson-to-companion relations are unchanged. The generated bilingual map data must still be refreshed for the revised page summaries and section headings.
 
 ## Validation required
 
