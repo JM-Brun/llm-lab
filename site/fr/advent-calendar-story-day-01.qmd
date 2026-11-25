@@ -119,7 +119,11 @@ L'exposant $\alpha$ règle la pente de la distribution :
 
 L'exposant n'est pas une constante universelle de la langue française. Il doit être estimé pour un corpus et un modèle donnés. Sa valeur dépend notamment de la période, du genre, du registre, de la taille du corpus, de la définition des mots et de la méthode d'ajustement.
 
+La forme complète s'écrit $f(r)=C r^{-\alpha}$. **$C$ fixe l'échelle verticale** : à exposant identique, multiplier $C$ par deux double toutes les fréquences prévues. Sa valeur dépend de l'échelle choisie (comptages ou fréquences relatives) et du corpus. **$\alpha$ règle la décroissance** : il détermine la pente sur un graphique log-log. Il ne décrit pas une propriété immuable d'une langue ; il résume l'ajustement d'un modèle à un corpus et à une convention de comptage précis.
+
 ### Pourquoi une droite sur un graphique logarithmique ?
+
+Les fréquences peuvent aller de milliers d'occurrences à une seule, tandis que les rangs s'étendent de 1 à plusieurs milliers. Sur des axes linéaires, les premières formes occupent presque toute la place et la longue traîne devient difficile à lire. Une échelle logarithmique rend comparables les changements multiplicatifs (par exemple ×10), qui prennent alors des espacements égaux.
 
 Partons de la forme générale :
 
@@ -147,7 +151,19 @@ $$
 f(r) \propto \frac{1}{(r+\beta)^\alpha}
 $$
 
-Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution observée. Cette extension est souvent appelée loi de Zipf-Mandelbrot. Elle rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
+Le paramètre $\beta$ décale le rang. Lorsque $\beta=0$, on retrouve la loi de Zipf classique. Pour $\beta>0$, la décroissance relative est moins brutale entre les tout premiers rangs ; lorsque $r$ devient très supérieur à $\beta$, la queue retrouve une pente asymptotique gouvernée par $-\alpha$. On peut isoler cet effet en comparant les fréquences à celle du rang 1 :
+
+$$
+\frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
+$$
+
+Ainsi, $\beta$ modifie surtout la courbure autour des premiers rangs ; il ne représente ni le nombre de mots-outils, ni une cause linguistique. Il ajoute un paramètre qui peut améliorer l'ajustement de certaines données, mais pas nécessairement de toutes. Il faut comparer les résidus et la stabilité des paramètres, idéalement sur des données réservées, plutôt que préférer automatiquement le modèle le plus flexible.
+
+![Comparaison synthétique des effets de l’exposant alpha et du décalage beta sur une distribution de Zipf.](../images/advent-zipf-parameter-effects.svg){#fig-advent-zipf-parameter-effects fig-alt="Deux graphiques en échelle logarithmique. À gauche, augmenter alpha rend la décroissance plus rapide. À droite, augmenter beta adoucit la courbure des premiers rangs ; la pente de la longue traîne reste gouvernée par alpha." width=100%}
+
+*Courbes synthétiques normalisées pour que la fréquence relative au rang 1 vaille 1. Elles isolent l'effet des paramètres ; elles ne sont pas ajustées à un corpus réel.*
+
+Cette extension est souvent appelée loi de Zipf-Mandelbrot. Elle rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
 
 ## 3. Que trouve-t-on dans plusieurs langues ?
 
@@ -215,9 +231,17 @@ Les corpus d'entraînement sont eux aussi très déséquilibrés :
 
 Cela aide à comprendre pourquoi les tokenizers modernes utilisent souvent des unités sous-lexicales : ils permettent de représenter des formes rares ou inédites à partir de fragments réutilisables. Mais la loi de Zipf ne détermine pas à elle seule l'algorithme de tokenisation ni la taille optimale du vocabulaire.
 
+Il faut surtout distinguer deux distributions. La courbe de Zipf décrit une **fréquence marginale dans un corpus** : combien de fois chaque forme ou token apparaît, tous contextes confondus. Un modèle autorégressif calcule au contraire, à chaque position, une distribution **conditionnelle au contexte** :
+
+$$
+p_\theta(x_t\mid x_{<t}).
+$$
+
+La fréquence d'un token dans le corpus influence le nombre d'exemples observés pendant l'entraînement, mais elle n'est pas sa probabilité prédite dans un contexte donné. Un token globalement rare peut être très probable après un préfixe particulier ; un token globalement fréquent peut être improbable dans ce même contexte.
+
 ### 5.4 Évaluer les distributions produites par un modèle
 
-On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération. Pour que la comparaison soit interprétable, il faut contrôler la langue, la longueur des textes, le tokenizer, la normalisation et les paramètres d'échantillonnage. Une courbe rang-fréquence ne constitue jamais, à elle seule, une mesure suffisante de la qualité d'un texte ou d'un modèle.
+On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération. Pour que la comparaison soit interprétable, il faut contrôler la langue, la longueur des textes, le tokenizer, la normalisation et les paramètres d'échantillonnage. Une courbe rang-fréquence ne constitue jamais, à elle seule, une mesure suffisante de la qualité d'un texte ou d'un modèle. **Elle ne mesure pas directement la richesse lexicale.** Elle décrit comment les fréquences se répartissent entre les formes ; deux textes de richesse comparable peuvent avoir des courbes différentes selon leur longueur, leur sujet, leur genre et leur normalisation. Inversement, une courbe proche de Zipf ne garantit pas un vocabulaire riche. Pour étudier la diversité lexicale, il faut des mesures complémentaires et des protocoles qui contrôlent notamment la longueur des textes.
 
 Des travaux récents étudient même les liens entre distribution des tokens, choix de vocabulaire et performances en aval. Il s'agit d'un axe de recherche, pas encore d'une règle universelle de conception. Il faut en particulier distinguer la distribution des mots dans un corpus de celle des tokens produits par un tokenizer : le découpage en sous-mots change l'objet statistique étudié.
 
