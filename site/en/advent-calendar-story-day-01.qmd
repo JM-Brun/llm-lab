@@ -146,15 +146,15 @@ The parameter $\beta$ shifts the rank and can improve the fit to observed distri
 
 The regularity is not limited to English or French. To avoid comparing figures from incompatible corpora, the following table is drawn from a single study of *child-directed speech*. The authors aggregated conversational corpora and estimated the parameters of a Zipf-Mandelbrot distribution.
 
-| Language | Lexical occurrences | Types | Exponent $\alpha$ | Observed / expected correlation |
-|---|---:|---:|---:|---:|
-| British English | 6,311,249 | 27,476 | 1.57 | 0.970 |
-| French | 1,540,284 | 19,327 | 1.53 | 0.990 |
-| German | 2,168,002 | 37,018 | 1.42 | 0.998 |
-| Spanish | 353,104 | 10,057 | 1.39 | 0.994 |
-| Japanese | 941,006 | 25,648 | 1.30 | 0.993 |
+| Language | Lexical occurrences | Types | Exponent $\alpha$ | Shift $\beta$ | Observed / expected correlation |
+|---|---:|---:|---:|---:|---:|
+| British English | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
+| French | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
+| German | 2,168,002 | 37,018 | 1.42 | 12.69 | 0.998 |
+| Spanish | 353,104 | 10,057 | 1.39 | 9.96 | 0.994 |
+| Japanese | 941,006 | 25,648 | 1.30 | 7.12 | 0.993 |
 
-*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\\alpha$ is the exponent and $\\beta$ the shift in the Zipf-Mandelbrot law. The correlation is between observed and expected frequencies under the model, not a correlation between rank and frequency.*
+*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\alpha$ is the exponent and $\beta$ the shift in the Zipf-Mandelbrot law. The correlation is between observed and expected frequencies under the model, not a correlation between rank and frequency.*
 
 These results show two things:
 
