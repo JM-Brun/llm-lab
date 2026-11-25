@@ -232,7 +232,7 @@ The reasonable conclusion is therefore: **lexical frequencies often exhibit a Zi
 
 ## 7. Back to Otis: what our small corpus taught us
 
-We built a corpus, chose a normalization, distinguished 67 occurrences from 46 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
+We built a corpus, chose a normalization, distinguished 63 occurrences from 43 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
 
 On a large corpus, the same procedure becomes a statistical analysis: count, rank, estimate parameters, compare observed frequencies with expected frequencies, and then inspect the deviations. The formula becomes useful only after these methodological choices.
 
