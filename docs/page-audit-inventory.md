@@ -1771,3 +1771,34 @@ This is a source, metadata, route and exercise-ownership audit. It is not a new 
 ### Follow-up
 
 A focused content PR should move the prefix/continuation task to the Text and data companion, add consistent Practice headings to Embedding space and Contextualized representations, move optional panels outside Practice on Text and data and Positional encoding, and remove the empty Contextualized representations panel. Preserve every explanatory paragraph, diagram, citation and existing anchor.
+
+
+
+## 2026-11-25: representations → Transformer → Q/K/V → attention boundary audit
+
+**Scope.** Audit the reader hand-off from contextualized representations into the Transformer computation, and normalize the boundary between core Understand lessons and their dedicated Practice companions. Reuse the existing scientific audits for Transformer blocks, Q/K/V, scaled dot-product attention and causal masking; do not repeat derivations or alter validated equations.
+
+| Page | Existing role and companion | Audit finding and action |
+|---|---|---|
+| Transformer | Synthesis of the decoder-only GPT network and its forward flow; dedicated FR/EN companion at `exercises/transformer.qmd`. | **Normalize Practice ownership.** The lesson had a bare exercise link rather than a dedicated section. Move it into a link-only Practice section. Keep the GPT-2 interactive workshop optional: it is an observation/experiment resource, not a replacement for the growing question bank. Place it under Further exploration and describe its optional scope explicitly. |
+| Queries, keys and values | Explains the three learned projections and their complementary roles; dedicated FR/EN companion at `exercises/queries-keys-values.qmd`. | **Clarify section hierarchy.** The Practice link was already correct and link-only. Its mathematical/architectural deep dive was inside the supplementary panel immediately following Practice, but had no explicit parent section. Add Further exploration above that panel; preserve the equations, architecture comparisons and implementation links. |
+| Scaled dot-product attention | Owns the scores → scaling → optional mask → softmax → value aggregation calculation; dedicated FR/EN companion at `exercises/scaled-dot-product-attention.qmd`. | **Separate learning modes.** The Practice link was already correct. The optional Transformer-block walkthrough (Build) and FlashAttention material (hardware/algorithmic deepening) were structurally under Practice. Move the supplementary panel under Further exploration; do not move its content into the exercise bank or the main computation sequence. |
+| Causal masking | Defines the autoregressive information constraint and its relation to attention; dedicated FR/EN companion at `exercises/causal-masking.qmd`. | **Normalize navigation.** The companion link appeared near the chapter lead rather than in a Practice section. Move it to a link-only Practice section after the conceptual explanation. Keep API-specific boolean-mask conventions and reference implementation/tests under Further exploration. |
+
+### Cross-page decisions
+
+1. The reader hand-off remains: contextualized representations → Transformer block → Q/K/V projections → scaled dot-product attention → causal masking. The Transformer lesson locates the stack and the input to its first block; Q/K/V explains the projections from a common block input; attention and masking explain how the resulting scores are normalized and constrained.
+2. Keep the distinction between the representation entering a block and Q/K/V as learned projections internal to each block. Do not imply that Q/K/V are computed once after the final contextualized representation or that they form a separate post-Transformer stage.
+3. No new lesson, concept, stage, prerequisite or knowledge-graph edge is justified. Existing Q/K/V, attention and mask source reviews remain authoritative.
+4. Each core lesson now has a single link-only Practice section. Its dedicated companion remains the owner of self-check questions, worked answers and applied tasks.
+5. Further exploration owns optional architecture/math depth, implementation conventions, Build-path walkthroughs and hardware optimization. These remain accessible without being presented as required stages or as questions in the main lesson.
+6. Keep the GPT-2 interactive workshop as an optional exploration resource. It is a controlled-observation lab with its own purpose and should not be duplicated into the companion question bank.
+7. Preserve all existing explanatory text, equations, figures, citations, links and stable anchors. FR/EN structure and meaning should match; language-specific prose and anchors remain localized.
+
+### Validation boundary
+
+This is an article-level source and navigation audit. The change is structural and does not re-derive or claim new validation of Transformer, Q/K/V, attention, FlashAttention or causal-mask mathematics. Final Quarto render, local-link checks, browser review at desktop/mobile sizes and native disclosure keyboard checks are required on the final PR head. These do not replace manual screen-reader review or learner validation.
+
+### Follow-up
+
+After this migration is validated, continue the remaining unverified route boundaries from the existing inventory. Do not reopen the already audited scoring/loss, gradient/training-loop, inference/context-use or text-input/representations groups unless a concrete regression is found.

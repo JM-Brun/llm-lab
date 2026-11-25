@@ -164,6 +164,8 @@ La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
 
+## Approfondir
+
 :::: {.supplementary-resources}
 
 <details class="learning-resources">

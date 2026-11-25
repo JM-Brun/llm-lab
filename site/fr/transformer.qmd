@@ -130,7 +130,6 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <span id="observer-un-transformer-en-fonctionnement"></span>
 
 
-[Questions et exercices](exercises/transformer.qmd)
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 
@@ -138,14 +137,20 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
 :::
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
+
+## Approfondir
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
-  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+  <span class="learning-resources__description">Explorer l'atelier interactif facultatif et les ressources complémentaires de cette leçon.</span>
 </summary>
 <div class="learning-resources__content">
 
-<h3>Explorer en pratique</h3>
+<h3>Atelier interactif facultatif</h3>
 <p>L'<a href="transformer-explainer.qmd">atelier d'exploration de GPT-2</a> permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation. C'est un exercice d'analyse indépendant — utile, mais non nécessaire pour suivre cette leçon.</p>
 
 <h3 id="pour-approfondir">Pour approfondir</h3>

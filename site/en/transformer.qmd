@@ -130,7 +130,6 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 <span id="observe-a-transformer-in-action"></span>
 
 
-[Questions and exercises](exercises/transformer.qmd)
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 
@@ -138,14 +137,20 @@ For our example prefix with GPT-2's dimensions: each position leaves the final b
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 :::
 
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer.qmd).
+
+## Further exploration
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
-  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+  <span class="learning-resources__description">Explore the optional interactive workshop and further-reading resources for this lesson.</span>
 </summary>
 <div class="learning-resources__content">
 
-<h3>Explore in practice</h3>
+<h3>Optional interactive exploration</h3>
 <p>The <a href="transformer-explainer.qmd">GPT-2 exploration workshop</a> lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization.</p>
 
 <h3 id="further-reading">Further reading</h3>
