@@ -1020,8 +1020,8 @@ relation_types:
     inverse: null
     labels: {fr: "approxime", en: "approximates"}
     descriptions:
-      fr: "La source fournit une construction calculable ou bornée qui vise à reproduire certains comportements de la cible sans être identique à celle-ci."
-      en: "The source provides a computable or bounded construction intended to reproduce some behaviour of the target without being identical to it."
+      fr: "La source est un modèle, une loi empirique ou une construction bornée qui approxime certains aspects du comportement de la cible sans lui être identique ; la portée et les hypothèses de l’approximation doivent être explicites."
+      en: "The source is a model, empirical law, or bounded construction that approximates selected aspects of the target’s behaviour without being identical to it; the scope and assumptions of the approximation must be explicit."
 
 relations:
 
