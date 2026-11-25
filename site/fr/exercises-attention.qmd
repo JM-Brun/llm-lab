@@ -194,6 +194,8 @@ Justifiez chaque ligne à partir des dépendances fonctionnelles.
 
 <a id="exercice-relier-les-projections-a-l-apprentissage"></a>
 
+**Préparation ciblée :** cette question mobilise les chemins de gradient de l'attention. Consultez d'abord l'[approfondissement Q/K/V, section « Chemins de gradient dans l'attention »](queries-keys-values-advanced.qmd#chemins-de-gradient-dans-lattention). Les autres exercices de projection ne supposent pas cette dérivation.
+
 ### Exercice — relier les projections à l'apprentissage {#ex-attention-connect-projections-learning}
 
 Dans le mécanisme standard, les matrices $W_Q$, $W_K$ et $W_V$ sont entraînées à partir de la perte finale du modèle. Répondez sans supposer qu'une cible Q, K ou V est fournie directement.
