@@ -165,22 +165,21 @@ Le masque de perte est `[1,1,1,0,0]` pour A et `[1,1,1,1,1]` pour B. Il conserve
 
 La somme des pertes valides vaut :
 
-[
+\[
 0{,}2+1{,}1+0{,}7+0{,}5+0{,}4+0{,}6+0{,}9+0{,}6=5.
-]
+\]
 
 La moyenne par token valide est donc :
 
-[
+\[
 \mathcal{L}_{\mathrm{valide}}=\frac{5}{8}=0{,}625.
-]
+\]
 
 La moyenne naïve inclut aussi les deux pertes PAD de A :
 
-[
-\mathcal{L}_{\mathrm{naïve}}=
-\frac{5+4+3}{10}=1{,}2.
-]
+\[
+\mathcal{L}_{\mathrm{naïve}}=\frac{5+4+3}{10}=1{,}2.
+\]
 
 Elle optimise un objectif différent, qui dépend ici des pertes attribuées aux positions de padding. Le masque d'attention indique quelles positions peuvent être consultées ; il ne retire pas automatiquement les labels PAD de la fonction de perte. Il faut construire un masque de perte cohérent ou utiliser une convention explicite d'ignorance des labels, puis réduire sur le nombre de cibles valides.
 
