@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-e
 
 [← Back to the guided tour: Modèle GPT complet](../gpt-model-walkthrough.qmd)
 
-## Exercises
+## Check your understanding
 
 1. Why `position_embedding[:seq_len]` and not the whole `position_embedding`?
 2. With `V=50, T=16, d=16, H=2, L=2, hidden=32`, compute the total parameter count without running the code.
