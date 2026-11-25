@@ -523,7 +523,7 @@ Le teacher forcing permet ainsi de calculer en parallèle des prédictions condi
 
 </details>
 
-**Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié et l'erreur de copie entrée-cible est détectée par un invariant vérifiable.
+**Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié, l'erreur de copie entrée-cible est détectée par un invariant vérifiable et la différence entre préfixe de référence et réinjection des prédictions est correctement expliquée.
 
 **Pour aller plus loin :** les fuites entre partitions restent à traiter dans un exercice distinct. Le batching et les masques de perte sont des sujets séparés ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
 
