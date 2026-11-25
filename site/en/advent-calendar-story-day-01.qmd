@@ -202,7 +202,14 @@ The law is named after George Kingsley Zipf, but its history starts earlier.
 
 ## 5. What is it actually used for?
 
-Zipf’s law is not a computational step performed by a language model. A Transformer does not consult a Zipf formula at every prediction. It is primarily a **descriptive model** that helps us understand, inspect and sometimes size systems built on text data.
+Zipf’s law is not a computational step performed by a language model. A Transformer does not consult this formula at every prediction. It is primarily a **descriptive model**. To understand what it contributes, distinguish its direct use from methods that merely exploit frequency statistics.
+
+| Situation | Role of Zipf | What should not be attributed to it |
+|---|---|---|
+| Corpus analysis | Directly compare a rank-frequency distribution with a Zipf or Zipf-Mandelbrot model | A deviation does not by itself diagnose a corpus error or poor quality |
+| Document indexing and retrieval | Potentially provide a descriptive approximation of frequency inequality in a collection | TF-IDF, BM25 and index compression are not applications of the Zipf formula; they use frequency statistics in their own calculations |
+| Studying training data | Describe the long tail and frame the problem of rare units | Tokenization algorithms are not directly derived from Zipf’s law |
+| Comparing generated texts | Directly compare rank-frequency distributions with those of reference texts | A Zipf-like curve proves neither text quality nor lexical richness |
 
 ### 5.1 Describe and audit a corpus
 
@@ -217,9 +224,9 @@ Here, the law is a **statistical reference**: a deviation can be informative, bu
 
 ### 5.2 Design information-retrieval systems
 
-In a search engine, terms do not all occur equally often across a document collection. This inequality affects index size, compression of posting lists and term-weighting models.
+In a search engine, terms do not all occur equally often across a document collection. This frequency inequality is a property of the data that can sometimes be described by a Zipf approximation. It matters for index organization and size.
 
-Zipf’s law provides a simple model of collection-frequency distributions. Methods such as TF-IDF answer a complementary question: is a term frequent in one document but sufficiently rare in the collection to help distinguish that document? TF-IDF is not “Zipf’s law”; it uses frequency statistics for a different purpose.
+However, posting-list compression and result ranking rely on their own mechanisms. TF-IDF and BM25 use term and document-frequency statistics; they do not calculate Zipf’s law. The connection is therefore **statistical and indirect**: Zipf helps characterize the underlying distribution, while retrieval methods use frequency statistics for their own objectives.
 
 ### 5.3 Understand language-model training challenges
 
@@ -230,7 +237,7 @@ Training corpora are also highly imbalanced:
 - unknown words and new forms create a vocabulary-coverage problem;
 - tokenization choices determine how the long tail is distributed between whole words and subwords.
 
-This helps explain why modern tokenizers often use subword units: they can represent rare or unseen forms using reusable fragments. But Zipf’s law alone does not determine the tokenization algorithm or the optimal vocabulary size.
+The long tail helps frame the coverage problem: a system must represent forms that are rarely observed or entirely new. Subword units offer a practical response by reusing fragments. The connection to Zipf is nevertheless **indirect**: BPE and other tokenization methods construct segmentations from rules and statistics specific to their objectives; they do not apply Zipf’s formula. Zipf’s law therefore determines neither the tokenization algorithm nor the optimal vocabulary size.
 
 Most importantly, two distributions must be distinguished. A Zipf curve describes a **marginal frequency in a corpus**: how often each form or token appears across all contexts. An autoregressive model instead computes a distribution **conditioned on the context** at each position:
 
@@ -242,7 +249,7 @@ A token’s corpus frequency influences how many training examples are observed,
 
 ### 5.4 Evaluate distributions produced by a model
 
-We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters. For the comparison to be interpretable, we must control for language, text length, tokenizer, normalization and sampling settings. A rank-frequency curve is never, by itself, a sufficient measure of text or model quality. **It does not directly measure lexical richness.** It describes how frequencies are distributed across forms; two texts with comparable richness may have different curves because of length, topic, genre and normalization. Conversely, a Zipf-like curve does not guarantee a rich vocabulary. Lexical diversity requires complementary measures and protocols that control, in particular, for text length.
+We can directly compare the rank-frequency distributions of human-written and model-generated texts. A difference may indicate a different concentration of frequencies or a more or less pronounced long tail. To interpret this comparison, we must control for language, text length, tokenizer, normalization and sampling settings. A rank-frequency curve alone cannot establish excessive repetition, insufficient lexical diversity or lower quality. **It does not directly measure lexical richness.** It describes how frequencies are distributed across forms; two texts with comparable richness may have different curves because of length, topic, genre and normalization. Conversely, a Zipf-like curve does not guarantee a rich vocabulary. Lexical diversity requires complementary measures and protocols that control, in particular, for text length.
 
 Recent work even studies links between token distributions, vocabulary choice and downstream performance. This is a research direction, not yet a universal design rule. In particular, word distributions in a corpus must be distinguished from token distributions produced by a tokenizer: subword segmentation changes the statistical object being studied.
 
