@@ -147,10 +147,6 @@ A useful consequence of the causal rule is **prefix invariance**: with parameter
 **Language:** [Français](../fr/causal-masking.qmd) · [English](causal-masking.qmd)
 ::::
 
-## Practice
-
-
-
 ## Further exploration
 
 :::: {.supplementary-resources}
