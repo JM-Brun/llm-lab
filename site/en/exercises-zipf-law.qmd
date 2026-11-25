@@ -284,7 +284,7 @@ We want to compare Zipf's model $f(r)=Cr^{-\alpha}$ with the Zipf-Mandelbrot mod
 1. Fit both models by nonlinear least squares, minimizing the same sum of squared residuals on the raw frequencies.
 2. Record the estimated parameters and the sum of squared residuals for each model.
 3. Why should these results not be compared directly with a linear regression performed on logarithms?
-4. What does it mean that the second model recovers values close to $C=1,200$, $\alpha=1.1$ and $\beta=3$?
+4. What does it mean that the second model recovers values close to $C=1,200$, $\alpha=1.1$ and $\beta=3$? Why is $C$ not equal to $f(1)$ when $\beta>0$?
 
 <details>
 <summary>Show the solution</summary>
