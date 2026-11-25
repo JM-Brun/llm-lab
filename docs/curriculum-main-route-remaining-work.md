@@ -221,3 +221,5 @@ The next content task is narrower: expand the existing FR/EN Practice companions
 5. The existing Quarto/browser workflow validates both companions, links, math, disclosures, mobile layout and keyboard activation; no new workflow is created.
 
 The source-level findings and remaining tasks are recorded in [the audit report](audits/training-example-practice-gaps-2026-11-25.md) and the [page audit inventory](page-audit-inventory.md). Manual accessibility work remains under #483; learner validation remains gated under #447. CI and rendered checks do not establish comprehension.
+
+**Dependency not yet integrated:** the CA-A lesson/companion migration is still open in #1622 and #1623. Their Quarto/browser jobs passed, but their Test suite jobs were cancelled and need a successful final-head rerun before merge. Keep the causal-masking ownership item open until then; this training-example audit is a separate next slice.
