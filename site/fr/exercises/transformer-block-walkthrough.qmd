@@ -41,13 +41,13 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 </details>
 
 
-3. Un bloc possède 32 têtes Q. Comparez le nombre de têtes KV en MHA, MQA et GQA avec 8 groupes. À dimensions identiques, quel est le rapport entre leurs tailles de cache KV ?
-4. Une fenêtre glissante de 256 tokens et GQA avec 8 têtes KV optimisent-ils le même facteur ? Expliquez ce qui change dans chaque cas.
+4. Un bloc possède 32 têtes Q. Comparez le nombre de têtes KV en MHA, MQA et GQA avec 8 groupes. À dimensions identiques, quel est le rapport entre leurs tailles de cache KV ?
+5. Une fenêtre glissante de 256 tokens et GQA avec 8 têtes KV optimisent-ils le même facteur ? Expliquez ce qui change dans chaque cas.
 <details>
 <summary>Afficher les réponses et le raisonnement</summary>
 
-3. MHA : 32 têtes KV ; MQA : 1 ; GQA : 8. À longueur de contexte, nombre de couches, dimension de tête et précision identiques, le cache K/V est proportionnel au nombre de têtes KV : GQA utilise donc 1/4 du cache MHA, MQA 1/32.
-4. Non. GQA partage les états K/V entre plusieurs têtes Q et réduit le nombre de têtes KV stockées. La fenêtre limite les positions historiques consultées et modifie le motif de connexions. Les deux mécanismes peuvent être combinés ; leurs effets ne s'additionnent pas en un unique facteur universel.
+4. MHA : 32 têtes KV ; MQA : 1 ; GQA : 8. À longueur de contexte, nombre de couches, dimension de tête et précision identiques, le cache K/V est proportionnel au nombre de têtes KV : GQA utilise donc 1/4 du cache MHA, MQA 1/32.
+5. Non. GQA partage les états K/V entre plusieurs têtes Q et réduit le nombre de têtes KV stockées. La fenêtre limite les positions historiques consultées et modifie le motif de connexions. Les deux mécanismes peuvent être combinés ; leurs effets ne s'additionnent pas en un unique facteur universel.
 </details>
 
 ::: {.language-switch}
