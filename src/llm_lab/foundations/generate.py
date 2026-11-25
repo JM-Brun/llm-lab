@@ -71,13 +71,13 @@ def generate(
         prompt_ids: 1D integer array of prompt ids, with
             1 <= length <= context_length and values in [0, vocab_size).
         max_new_tokens: Number of tokens to generate (>= 0).
-        temperature: Finite sampling temperature (> 0); it only affects sampling,
-            but is validated in both modes so that a latent invalid value
-            cannot hide behind greedy decoding.
+        temperature: Finite real sampling temperature (> 0); booleans are
+            rejected. It only affects sampling, but is validated in both
+            modes so that a latent invalid value cannot hide behind greedy decoding.
         greedy: If True, select the argmax token at each step.
         top_k: Optional per-step truncation for sampling: keep only the
-            ``k`` most probable tokens (integer >= 1). Validated in both
-            modes but ignored when ``greedy`` is True.
+            ``k`` most probable tokens (integer >= 1, not a boolean). Validated
+            in both modes but ignored when ``greedy`` is True.
         top_p: Optional nucleus truncation for sampling: keep the smallest
             set whose cumulative mass reaches ``p`` (0 < p <= 1).
             Validated in both modes but ignored when ``greedy`` is True.
@@ -92,9 +92,9 @@ def generate(
     Raises:
         ValueError: If the prompt is not a non-empty 1D integer array
             within range, if max_new_tokens is not a non-negative integer, if
-            temperature <= 0, if top_k is provided and is not an integer
-            >= 1, if top_p is provided and lies outside (0, 1], or if
-            no rng is provided for sampling.
+            temperature is not a finite positive real number, if top_k is
+            provided and is not a non-boolean integer >= 1, if top_p is
+            provided and lies outside (0, 1], or if no rng is provided for sampling.
     """
     # Validate the prompt before touching the model: shape, dtype, range.
     ids = np.asarray(prompt_ids)
@@ -114,10 +114,23 @@ def generate(
         or max_new_tokens < 0
     ):
         raise ValueError("max_new_tokens must be a non-negative integer")
+    temperature_value: object = temperature
+    if isinstance(temperature_value, (bool, np.bool_)) or not isinstance(
+        temperature_value, (int, float, np.integer, np.floating)
+    ):
+        raise ValueError("temperature must be a finite real number > 0")
+    temperature = float(temperature_value)
     if not np.isfinite(temperature) or temperature <= 0:
-        raise ValueError("temperature must be strictly positive and finite")
-    if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
-        raise ValueError("top_k must be an integer >= 1 when provided")
+        raise ValueError("temperature must be a finite real number > 0")
+    top_k_value: object = top_k
+    if top_k_value is not None:
+        if (
+            isinstance(top_k_value, (bool, np.bool_))
+            or not isinstance(top_k_value, (int, np.integer))
+            or top_k_value < 1
+        ):
+            raise ValueError("top_k must be an integer >= 1 when provided")
+        top_k = int(top_k_value)
     if top_p is not None and (
         isinstance(top_p, (bool, np.bool_))
         or not isinstance(top_p, (int, float, np.integer, np.floating))

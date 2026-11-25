@@ -124,7 +124,7 @@ Ligne par ligne :
 - `np.append` : le token devient contexte ; la boucle recommence.
 
 ::: {.callout-note}
-**`temperature`, `top_k` et `top_p` sont validées même en mode glouton.** Un appel `greedy=True, temperature=0.0` ou `top_k=0` échoue : une valeur invalide cachée ne doit pas attendre qu'on bascule en échantillonnage pour se révéler.
+**`temperature`, `top_k` et `top_p` sont validées même en mode glouton.** La température doit être un réel fini strictement positif (pas un booléen), `top_k` un entier positif (pas un booléen ni une chaîne), et `top_p` un réel dans `(0, 1]`. Un appel `greedy=True, temperature=0.0` ou `top_k="3"` échoue avant la boucle : une valeur invalide cachée ne doit pas attendre le passage à l'échantillonnage.
 :::
 
 ## Deux limites assumées, pas deux oublis
@@ -138,7 +138,7 @@ Ligne par ligne :
 
 ## Ce que les tests vérifient
 
-[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; les troncations optionnelles suivent la chaîne température → top-k → top-p recalculée indépendamment, `top_k=1` (et un noyau `top_p` très serré) reproduisant la chaîne gloutonne ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé ; toutes les erreurs de validation sont nommées.
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; les troncations optionnelles suivent la chaîne température → top-k → top-p recalculée indépendamment ; les contrôles de type rejettent notamment les températures booléennes ou textuelles et les valeurs `top_k` textuelles ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé.
 
 ## Exercices
 
