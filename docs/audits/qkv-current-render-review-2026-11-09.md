@@ -79,3 +79,22 @@ The five-tour Build correction was merged in [PR #1618](https://github.com/JM-Br
 This is fresh rendered evidence for the exact merged source tree, produced by the PR's local Quarto/Chromium review (the report's base URL is `http://127.0.0.1:4173`), not a fresh browser session against the public Pages hostname. The earlier deployment-artifact inspection remains useful structural evidence, but the inspected deployed artifact predates the latest Q/K/V source edits; do not call it the current live screenshot. No manual screen-reader, mobile touch, or assistive-technology session was performed. The browser report's single Axe incomplete item is retained as a limitation; the report does not expose a detailed finding for it.
 
 **Disposition:** current bilingual rendered screenshots, responsive layout, MathJax, browser errors, localized image loading/alt attributes, route context and desktop Axe results are now evidenced for the merged source tree. Keep #483 open for live Pages verification after the updated site is deployed, manual keyboard/touch review, and screen-reader exposure of the diagrams. Keep #447 gated until those remaining accessibility/deployment checks are completed. Third-party media remain link-only/deferred under the existing asset audit; no source scan or asset recreation is warranted.
+
+
+## Published GitHub Pages artifact — 2026-11-25
+
+After #1619 merged, the main push at `76947990894396b4ee7781e7e2d0d6080785319d` triggered the existing `Publish Quarto site` workflow [45577505144](https://github.com/JM-Brun/llm-lab/actions/runs/45577505144). Both `Render Quarto site` and `Deploy to GitHub Pages` completed successfully. I downloaded and inspected the workflow's `github-pages` artifact [15003974584](https://github.com/JM-Brun/llm-lab/actions/runs/45577505144/artifacts/15003974584), including the current EN/FR Q/K/V HTML and associated SVG assets.
+
+### What the deployed artifact establishes
+
+- Both current pages are present and localized: `en/queries-keys-values.html` and `fr/queries-keys-values.html`.
+- The dedicated practice links resolve to existing companions: `../en/exercises/queries-keys-values.html` and `../fr/exercises/queries-keys-values.html`.
+- The Further exploration / Approfondir sections retain the expected advanced Q/K/V, attention-variant and Transformer-block links.
+- The EN/FR language-switch links are present.
+- The two project-owned diagrams per language have localized `alt` text; their mobile and desktop SVG assets are present in the deployment artifact.
+- A local-file and fragment-target check across the main lesson found 29 local links per language and zero missing file or fragment targets. The dedicated practice destinations exist.
+- The main content contains no visible `type:`, `destination:`, `topic:`, `level:` or `status:` editorial metadata strings.
+
+This closes the **deployment-artifact structural verification** that was still open in the previous section. It is not a live public-host browser session: the public URL fetch was not available from the inspection environment, and no live viewport screenshot was captured after deployment. The Chromium screenshots and visual inspection recorded above remain evidence for the same merged source tree, while the deployment artifact confirms that the published package contains the expected current pages and assets.
+
+**Remaining #483 gates:** live-host browser screenshot/visual confirmation if a reachable browser environment becomes available; manual full keyboard and touch-device review; and manual screen-reader verification of the diagram alternatives. Do not infer these from the successful deployment or from the HTML `alt` attributes. #447 remains gated until the outstanding accessibility review is completed.
