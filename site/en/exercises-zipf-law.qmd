@@ -221,10 +221,10 @@ These studies propose different frameworks; they do not establish one universall
 
 A study of child-directed speech reports the following results for two aggregated corpora:
 
-| Corpus | Word occurrences | Types | $\alpha$ | $\beta$ | Pearson correlation |
-|---|---:|---:|---:|---:|---:|
-| British English | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
-| French | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
+| Corpus | Child age | Number of corpora | Word occurrences | Types | $\alpha$ | $\beta$ | Pearson $r$ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| British English | 2–42 months | 12 | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
+| French | 11–42 months | 8 | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
 
 Recall: TTR = number of types / number of occurrences. The Pearson $r$ reported in the study correlates observed and model-expected frequencies; it is not the correlation between rank and frequency.
 
