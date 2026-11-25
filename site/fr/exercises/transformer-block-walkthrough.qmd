@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 
 [← Retour à la visite guidée : transformer-block-walkthrough](../transformer-block-walkthrough.qmd)
 
-## Exercices
+## Vérifier sa compréhension
 
 1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
 2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
