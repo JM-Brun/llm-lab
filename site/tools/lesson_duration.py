@@ -19,7 +19,10 @@ END_OF_CORE = re.compile(
     r"références|references|pour aller plus loin|further reading)\b.*$",
     re.IGNORECASE | re.MULTILINE,
 )
-FENCED_BLOCK = re.compile(r"^\s*(`{3,}|~{3,})([^\n]*)\n([\s\S]*?)^\s*\1\s*$", re.MULTILINE)
+FENCED_BLOCK = re.compile(
+    r"^\\s*(`{3,}|~{3,})([^\\n]*)\\n([\\s\\S]*?)^\\s*\\1\\s*$",
+    re.MULTILINE,
+)
 DISPLAY_MATH = re.compile(
     r"\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|"
     r"\\begin\{(?!array\b)[^}]+\}[\s\S]*?\\end\{[^}]+\}",
