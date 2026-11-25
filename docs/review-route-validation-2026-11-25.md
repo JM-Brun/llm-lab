@@ -81,7 +81,23 @@ Do not collapse these states into a numeric coverage score. A synthesis page, ty
 6. Search source bodies for inline card/deck structures before concluding that flashcards are absent.
 7. Keep the existing 62-page Understand/Build inventory as a separate dimension; do not add its counts to the Review denominator.
 
-**Current status:** the route mapping and three visual prompts are known; the per-format source inspection across all 20 synthesis pairs is not yet complete. The existing revision inventory is useful context but cannot substitute for this Review-specific pass.
+**Lot A source scan — completed first pass on 2026-11-25 (20/20 core lesson pairs, FR and EN):**
+
+| Source-level observation | Result | Interpretation |
+|---|---:|---|
+| Review companion pages resolved from canonical lesson contracts | 20 FR + 20 EN | All 20 core mappings have a language-specific published companion |
+| `revision-essentials` section | 40/40 pages | Every companion has a concise synthesis section |
+| `revision-check` section | 40/40 pages | Every companion has an active-recall question section |
+| Answer disclosure (`<details>`) | 40/40 pages | Each companion exposes an answer; the three visual-card pages have a second disclosure for the card correction |
+| Visual-recall block | 3/20 lesson pairs, both languages | Positional information, Q/K/V, and KV-cache decode |
+| Literal flashcard/deck marker in companion source | 0/40 pages | No explicitly labelled flashcard/deck structure found by this marker scan |
+| Explicit math delimiter marker | 3/20 pairs, both languages | Found on entropy, scaled-dot-product attention and causal masking; this is a prompt for semantic review, not proof that other pages need equations |
+
+The three visual blocks are not additional lessons and should remain attached to their existing review companions. The current pilot in `docs/visual-recall-pilot.md` already covers these same three prompts.
+
+**Limits of this first pass:** it classifies source structure and simple markers, not the pedagogical quality of each answer, completeness of definitions, correctness of every equation, or the need for a formula-recall prompt. A literal flashcard marker search cannot rule out a question that behaves like a flashcard without being labelled as one. The next audit pass must read the content of each companion against its lesson outcome and inspect any generic question/answer structures before declaring a support format missing.
+
+The existing revision inventory remains useful evidence about integrated support in the 62 Understand/Build pages, but it is not a substitute for this Review-specific content audit.
 
 **Deliverable:** extend the existing generated revision-coverage report or its existing audit tool with a Review-specific projection. Do not create a second hand-maintained matrix or a new registry. Keep authored pedagogical judgments separate from mechanically detected source markers.
 
