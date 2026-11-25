@@ -1,5 +1,5 @@
 ---
-title: "Why does the word “I” appear so often?"
+title: "Why does the word “je” appear so often?"
 subtitle: "Zipf’s law, from Otis’s monologue to word distributions across languages"
 description-meta: "Build a corpus, distinguish types from occurrences, explore Zipf’s law, its history, uses and limitations."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
@@ -171,7 +171,7 @@ These results show two things:
 
 **Caution when interpreting the table.** These figures concern speech addressed to children, not all written or spoken texts in each language. The corpora differ in size and are not identical in their properties. The comparison illustrates a cross-linguistic regularity in a specific empirical setting; it does not rank languages by some supposed “compliance with Zipf”.
 
-The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 67-occurrence paragraph.
+The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 216-occurrence transcript.
 
 ## 4. A history older than its name
 
