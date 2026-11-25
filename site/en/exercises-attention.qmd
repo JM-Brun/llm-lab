@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 **Q/K/V competencies assessed:** recognizing the roles, reconstructing projections, explaining how they are learned, predicting parameter-change effects, and transferring the reasoning to cross-attention. The existing weighted-sum task remains the aggregation calculation.
 
-**Current scope:** CA-A (causal masking, shifted targets and prefix invariance) is owned by the [dedicated Causal masking practice page](exercises/causal-masking.qmd#ca-a-prefix-invariance). This collection focuses on the Q/K/V and attention exercises: three progressive formative activities with stable IDs AT-A, AT-B and AT-C shared with the French version cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. AT-D derives raw-score variance under explicit independence assumptions and explains the role of 1/√dₖ; it is independent of the multi-head sequence. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A first, then AT-A, AT-B and AT-C.
+**Current scope:** CA-A (causal masking, shifted targets and prefix invariance) is owned by the [dedicated Causal masking practice page](exercises/causal-masking.qmd#ca-a-prefix-invariance). This collection focuses on the Q/K/V and attention exercises: three progressive formative activities with stable IDs AT-A, AT-B and AT-C shared with the French version cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. AT-D derives raw-score variance under explicit independence assumptions and explains the role of 1/√dₖ; AT-E is an optional extension that calculates gradients through one attention row, independent of the multi-head sequence. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A first, then AT-A, AT-B and AT-C.
 
 <a id="at-0-scores-to-output"></a>
 
@@ -216,6 +216,49 @@ $$
 $$
 
 Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ and $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. These are local linear-layer gradients; the gradients of Q, K, and V come from the complete attention and network computation.
+
+</details>
+
+<a id="exercise-backpropagate-through-one-attention-row"></a>
+
+### Exercise AT-E — Backpropagate through one attention row {#ex-attention-row-gradient}
+
+Consider one query, two keys, and two scalar values, with no mask:
+
+$$
+q=1,\qquad k_1=\ln 3,\quad k_2=0,\qquad
+v_1=2,\quad v_2=4,\quad d_k=1.
+$$
+
+The output is $O=AV$, and the toy objective is $\mathcal L=O$. This is a scalar upstream signal chosen to study local backpropagation, not a language-model loss.
+
+1. Compute the scores, weights $A$, and output $O$.
+2. Using $G_O=\partial\mathcal L/\partial O=1$, compute $G_V=\partial\mathcal L/\partial V$ and $G_A=\partial\mathcal L/\partial A$.
+3. Apply the row-wise softmax formula to obtain $G_S=\partial\mathcal L/\partial S$.
+4. Backpropagate through $S=qK^\top/\sqrt{d_k}$ to compute $\partial\mathcal L/\partial q$ and the two components of $\partial\mathcal L/\partial K$.
+5. Check that the components of $G_S$ sum to zero. Why is this consistent with softmax invariance to a common score shift?
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. The scores are $(\ln3,0)$. Their softmax is $A=(3/4,1/4)$, so $O=(3/4)2+(1/4)4=5/2$.
+2. From $O=AV$, we obtain $G_V=A^\top G_O=(3/4,1/4)$ and $G_A=G_OV^\top=(2,4)$.
+3. The weighted mean of the components of $G_A$ is $(3/4)2+(1/4)4=5/2$. Therefore,
+   $$
+   G_S=A\odot\left(G_A-\frac52\right)
+   =\left(-\frac38,\frac38\right).
+   $$
+4. Since $d_k=1$ and $q=1$:
+   $$
+   \frac{\partial\mathcal L}{\partial q}
+   =G_SK=-\frac38\ln3\approx-0.412,
+   \qquad
+   \frac{\partial\mathcal L}{\partial K}
+   =G_S^\top q=\left(-\frac38,\frac38\right).
+   $$
+5. The components of $G_S$ sum to zero. A common shift of the scores does not change the softmax weights, so the derivative in that direction must be zero.
+
+The path to V goes directly through the aggregation $O=AV$. The paths to Q and K first pass through scores and then softmax. In a full layer, these local gradients are propagated further to the projection matrices and input representations.
 
 </details>
 

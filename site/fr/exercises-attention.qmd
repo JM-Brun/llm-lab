@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 **Compétences Q/K/V évaluées :** reconnaître les rôles, reconstruire les projections, expliquer leur apprentissage, prédire les effets d'une modification de paramètres et transférer le raisonnement à l'attention croisée. La somme pondérée existante reste l'exercice de calcul de l'agrégation.
 
-**Périmètre actuel :** CA-A (masque causal, décalage des cibles et invariance de préfixe) appartient désormais à la [page d’exercices dédiée au masque causal](exercises/causal-masking.qmd#ca-a-prefix-invariance). Cette collection se concentre sur les exercices Q/K/V et attention : trois activités formatives progressives, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. AT-D dérive la variance des scores bruts sous hypothèses d'indépendance explicites et explique le rôle de 1/√dₖ ; il est indépendant de la progression multi-têtes. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A d'abord, puis AT-A, AT-B et AT-C.
+**Périmètre actuel :** CA-A (masque causal, décalage des cibles et invariance de préfixe) appartient désormais à la [page d’exercices dédiée au masque causal](exercises/causal-masking.qmd#ca-a-prefix-invariance). Cette collection se concentre sur les exercices Q/K/V et attention : trois activités formatives progressives, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. AT-D dérive la variance des scores bruts sous hypothèses d'indépendance explicites et explique le rôle de 1/√dₖ ; AT-E est un approfondissement facultatif du calcul de gradient à travers une ligne d'attention, indépendant de la progression multi-têtes. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A d'abord, puis AT-A, AT-B et AT-C.
 
 <a id="at-0-scores-to-output"></a>
 
@@ -216,6 +216,49 @@ $$
 $$
 
 De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ et $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. Ce sont des gradients locaux de la couche linéaire ; les gradients de Q, K et V proviennent du calcul complet de l'attention et du réseau.
+
+</details>
+
+<a id="exercice-gradient-a-travers-une-ligne-dattention"></a>
+
+### Exercice AT-E — Rétropropager à travers une ligne d'attention {#ex-attention-row-gradient}
+
+On considère une seule requête, deux clés et deux valeurs scalaires, sans masque :
+
+$$
+q=1,\qquad k_1=\ln 3,\quad k_2=0,\qquad
+v_1=2,\quad v_2=4,\quad d_k=1.
+$$
+
+La sortie est $O=AV$, et l'objectif jouet est $\mathcal L=O$. Il s'agit d'un signal amont scalaire choisi pour étudier la rétropropagation locale, pas d'une loss de langage.
+
+1. Calculez les scores, les poids $A$ et la sortie $O$.
+2. En utilisant $G_O=\partial\mathcal L/\partial O=1$, calculez $G_V=\partial\mathcal L/\partial V$ et $G_A=\partial\mathcal L/\partial A$.
+3. Appliquez la formule du softmax ligne par ligne pour obtenir $G_S=\partial\mathcal L/\partial S$.
+4. Faites remonter ce gradient dans $S=qK^\top/\sqrt{d_k}$ pour calculer $\partial\mathcal L/\partial q$ et les deux composantes de $\partial\mathcal L/\partial K$.
+5. Vérifiez que les composantes de $G_S$ somment à zéro. Pourquoi ce résultat est-il cohérent avec l'invariance du softmax à un décalage commun des scores ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. Les scores valent $(\ln3,0)$. Leur softmax est $A=(3/4,1/4)$, donc $O=(3/4)2+(1/4)4=5/2$.
+2. Par $O=AV$, on obtient $G_V=A^\top G_O=(3/4,1/4)$ et $G_A=G_OV^\top=(2,4)$.
+3. La moyenne pondérée des composantes de $G_A$ vaut $(3/4)2+(1/4)4=5/2$. Ainsi,
+   $$
+   G_S=A\odot\left(G_A-\frac52\right)
+   =\left(-\frac38,\frac38\right).
+   $$
+4. Comme $d_k=1$ et $q=1$ :
+   $$
+   \frac{\partial\mathcal L}{\partial q}
+   =G_SK=-\frac38\ln3\approx-0{,}412,
+   \qquad
+   \frac{\partial\mathcal L}{\partial K}
+   =G_S^\top q=\left(-\frac38,\frac38\right).
+   $$
+5. Les composantes de $G_S$ somment à zéro. Un décalage commun des scores ne change pas les poids softmax ; la dérivée dans cette direction doit donc être nulle.
+
+Le chemin vers V traverse directement l'agrégation $O=AV$. Les chemins vers Q et K traversent d'abord les scores, puis le softmax. Dans une couche complète, ces gradients locaux sont ensuite propagés aux matrices de projection et aux représentations d'entrée.
 
 </details>
 

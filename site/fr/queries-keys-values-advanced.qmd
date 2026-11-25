@@ -102,6 +102,14 @@ $$
 
 Le gradient par rapport aux scores passe ensuite par le Jacobien du softmax ligne par ligne. En notant $G_S=\partial\mathcal L/\partial S$ :
 
+Pour une ligne de requête $i$, la dérivée du softmax s'écrit explicitement :
+
+$$
+(G_S)_{ij}=A_{ij}\left((G_A)_{ij}-\sum_r A_{ir}(G_A)_{ir}\right),
+$$
+
+où $G_A=\partial\mathcal L/\partial A$. La somme porte sur les clés de la ligne. Avec un masque additif fixe, les positions interdites ont $A_{ij}=0$ et donc une dérivée nulle par rapport à leur score masqué.
+
 $$
 \frac{\partial\mathcal L}{\partial Q}
 =\frac{G_SK}{\sqrt{d_k}},
@@ -122,6 +130,8 @@ $$
 $$
 
 Ces expressions isolent les chemins locaux d'une tête : le gradient de V passe directement par l'agrégation pondérée ; ceux de Q et K passent par les scores puis le softmax. Dans le réseau complet, les gradients se propagent aussi à travers les projections de sortie, les connexions résiduelles, les normalisations et les couches précédentes. Les paramètres sont distincts, mais leurs mises à jour sont coordonnées par la même fonction de perte.
+
+Pour effectuer un calcul numérique de ce chemin inverse, voir l'[exercice AT-E sur une ligne d'attention](exercises-attention.qmd#ex-attention-row-gradient).
 
 ## Têtes multiples et partage des projections
 

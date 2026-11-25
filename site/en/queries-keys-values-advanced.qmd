@@ -102,6 +102,14 @@ $$
 
 The gradient with respect to scores then passes through the row-wise softmax Jacobian. Writing $G_S=\partial\mathcal L/\partial S$:
 
+For query row $i$, the softmax derivative can be written explicitly as:
+
+$$
+(G_S)_{ij}=A_{ij}\left((G_A)_{ij}-\sum_r A_{ir}(G_A)_{ir}\right),
+$$
+
+where $G_A=\partial\mathcal L/\partial A$. The sum runs over the keys in that row. With a fixed additive mask, forbidden positions have $A_{ij}=0$ and therefore zero derivative with respect to their masked score.
+
 $$
 \frac{\partial\mathcal L}{\partial Q}
 =\frac{G_SK}{\sqrt{d_k}},
@@ -122,6 +130,8 @@ $$
 $$
 
 These expressions isolate the local paths in one head: the gradient to V passes directly through weighted aggregation; gradients to Q and K pass through scores and softmax. In the full network, gradients also propagate through output projections, residual connections, normalization, and earlier layers. The parameters are distinct, but their updates are coordinated by the same loss.
+
+For a numerical reverse-mode calculation along this path, see [Practice exercise AT-E on one attention row](exercises-attention.qmd#ex-attention-row-gradient).
 
 ## Multiple heads and projection sharing
 
