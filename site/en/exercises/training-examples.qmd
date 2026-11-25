@@ -165,21 +165,20 @@ The loss mask is `[1,1,1,0,0]` for A and `[1,1,1,1,1]` for B. It retains eight t
 
 The sum of valid losses is:
 
-\\[
+\[
 0.2+1.1+0.7+0.5+0.4+0.6+0.9+0.6=5.
-\\]
+\]
 
 The valid-token mean is therefore:
 
-[
+\[
 \mathcal{L}_{\mathrm{valid}}=\frac{5}{8}=0.625.
-]
+\]
 
 The naive mean also includes the two PAD losses from A:
 
-[
-\mathcal{L}_{\mathrm{naive}}=
-\frac{5+4+3}{10}=1.2.
+\[
+\mathcal{L}_{\mathrm{naive}}=\frac{5+4+3}{10}=1.2.
 ]
 
 It optimizes a different objective, which here depends on the losses assigned to padding positions. The attention mask determines which positions may be consulted; it does not automatically remove PAD labels from the loss function. A consistent loss mask or explicit ignored-label convention is required, followed by reduction over the number of valid targets.
