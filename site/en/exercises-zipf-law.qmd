@@ -226,6 +226,8 @@ A study of child-directed speech reports the following results for two aggregate
 | British English | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
 | French | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
 
+Recall: TTR = number of types / number of occurrences.
+
 1. Which corpus contains more occurrences and more types?
 2. Calculate the type-token ratio (TTR) for each corpus. Why is this ratio insufficient to conclude that French is lexically more diverse?
 3. The exponents $\alpha$ are close. Can we infer that they are language-specific constants?
