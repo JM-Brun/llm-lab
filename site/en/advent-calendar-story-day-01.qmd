@@ -85,7 +85,7 @@ The word “I” comes first, but this is not mysterious: the account is told in
 
 Rank depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer. With only 196 occurrences, our text is also far too short to estimate a power-law exponent reliably.
 
-## 2. Zipf’s law## 2. Zipf’s law: a rank-frequency approximation
+## 2. Zipf’s law: a rank-frequency approximation
 
 In large corpora, we often observe a regularity: a few forms are very frequent, while many forms are rare. Zipf’s law proposes a simple approximation of this distribution:
 
