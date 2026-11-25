@@ -98,7 +98,7 @@ def test_generate_validation_errors() -> None:
         generate(model, np.array([1, 50], dtype=np.int64), 3)
     with pytest.raises(ValueError, match="max_new_tokens must be a non-negative integer"):
         generate(model, np.array([1, 2], dtype=np.int64), -1)
-    with pytest.raises(ValueError, match="temperature must be strictly positive"):
+    with pytest.raises(ValueError, match="temperature must be a finite real number > 0"):
         generate(
             model,
             np.array([1, 2], dtype=np.int64),
