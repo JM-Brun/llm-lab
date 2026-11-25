@@ -299,7 +299,7 @@ Avec un ajustement non linéaire borné sur les fréquences brutes, les valeurs 
 1. Les deux ajustements doivent utiliser la même fonction objectif, ici $\sum_i(f_i-\hat f(r_i))^2$ sur les fréquences brutes.
 2. Les valeurs peuvent varier légèrement selon l'optimiseur, les valeurs initiales et les tolérances numériques. Les résultats du modèle de Zipf–Mandelbrot retrouvent les paramètres ayant servi à générer les données, à l'arrondi près.
 3. Une régression sur les logarithmes minimise des écarts dans l'espace logarithmique : elle ne donne pas le même poids aux erreurs et ne minimise pas la même quantité. Les paramètres estimés dépendent donc de l'objectif choisi.
-4. Le jeu synthétique a été généré à partir d'une loi de Zipf–Mandelbrot avec ces paramètres. Cela vérifie que la procédure peut retrouver un modèle connu dans un cas contrôlé ; cela ne prouve pas que ce modèle convient à un corpus réel.
+4. Le jeu synthétique a été généré à partir d'une loi de Zipf–Mandelbrot avec ces paramètres. Cela vérifie que la procédure peut retrouver un modèle connu dans un cas contrôlé ; cela ne prouve pas que ce modèle convient à un corpus réel. Au rang 1, le dénominateur vaut (1 + β)^α : la fréquence est donc C/(1 + β)^α, et non C. C reste un paramètre d'échelle.
 
 </details>
 
