@@ -137,3 +137,13 @@ This section records the cultural reference that originally motivated the exerci
 ### Treatment decision
 
 The full monologue is not copied into this repository. Its source links and editorial rationale are retained here, while the public-facing lesson contains an original replacement text. The old corpus statistics (216 lexical occurrences and 125 orthographic types) described the earlier automated transcript under its former segmentation rules; they are historical and superseded. They must not be mixed with the current synthetic corpus statistics (French: 194 occurrences / 132 types; English: 196 / 127).
+
+
+### Current published demonstration corpus — reproducibility record
+
+The public FR/EN pages now use an original, purpose-written first-person text. The complete texts are maintained in the corresponding QMD files; this dossier does not duplicate them. Reproduce the counts by lowercasing, removing punctuation as a counted unit, preserving accented letters, retaining internal apostrophes as part of an orthographic unit, splitting on hyphens, and applying no lemmatization. The tokenizer used for this editorial count is equivalent to the Unicode pattern `[^\\W_]+(?:['’][^\\W_]+)*`.
+
+- French: **194 lexical occurrences**, **132 distinct orthographic types**. The leading frequency groups are: `je` (14), `que` and `une` (8 each), `et` and `le` (6 each), `de` (5), `peut` (4).
+- English: **196 lexical occurrences**, **127 distinct orthographic types**. The leading forms are: `I` (13), `a` (9), `the` (7), `that` (6), `and` (5), `my` and `what` (4 each).
+
+These counts are exact for the current page texts and stated orthographic convention. They are pedagogical corpus counts, not observations from a naturally occurring language corpus and not a basis for fitting a Zipf exponent.
