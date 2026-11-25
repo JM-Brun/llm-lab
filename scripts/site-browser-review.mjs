@@ -1224,7 +1224,7 @@ async function runCase(testCase, caseIndex) {
       const stageDisclosure = page.locator("main details").filter({
         hasText: lang === "fr" ? "Objectif de l'étape" : "Stage objective",
       }).first();
-      if (await stageDisclosure.count() !== 1) {
+      if (await stageDisclosure.count() < 1) {
         throw new Error("The Review route must expose the formal stage objective disclosure.");
       }
       const summary = stageDisclosure.locator("summary");
