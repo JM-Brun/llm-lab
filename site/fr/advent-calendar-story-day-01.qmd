@@ -153,9 +153,9 @@ $$
 
 Le paramètre $\beta$ décale le rang. Lorsque $\beta=0$, on retrouve la loi de Zipf classique. Pour $\beta>0$, la décroissance relative est moins brutale entre les tout premiers rangs ; lorsque $r$ devient très supérieur à $\beta$, la queue retrouve une pente asymptotique gouvernée par $-\alpha$. On peut isoler cet effet en comparant les fréquences à celle du rang 1 :
 
-$
+$$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$
+$$
 
 Ainsi, $\beta$ modifie surtout la courbure autour des premiers rangs ; il ne représente ni le nombre de mots-outils, ni une cause linguistique. Il ajoute un paramètre qui peut améliorer l'ajustement de certaines données, mais pas nécessairement de toutes. Il faut comparer les résidus et la stabilité des paramètres, idéalement sur des données réservées, plutôt que préférer automatiquement le modèle le plus flexible.
 
@@ -233,9 +233,9 @@ Cela aide à comprendre pourquoi les tokenizers modernes utilisent souvent des u
 
 Il faut surtout distinguer deux distributions. La courbe de Zipf décrit une **fréquence marginale dans un corpus** : combien de fois chaque forme ou token apparaît, tous contextes confondus. Un modèle autorégressif calcule au contraire, à chaque position, une distribution **conditionnelle au contexte** :
 
-$
+$$
 p_\theta(x_t\mid x_{<t}).
-$
+$$
 
 La fréquence d'un token dans le corpus influence le nombre d'exemples observés pendant l'entraînement, mais elle n'est pas sa probabilité prédite dans un contexte donné. Un token globalement rare peut être très probable après un préfixe particulier ; un token globalement fréquent peut être improbable dans ce même contexte.
 
