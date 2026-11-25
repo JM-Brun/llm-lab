@@ -284,7 +284,7 @@ On veut comparer le modèle de Zipf $f(r)=Cr^{-\alpha}$ et le modèle de Zipf–
 1. Ajustez les deux modèles par moindres carrés non linéaires, en minimisant dans les deux cas la même somme des carrés des résidus sur les fréquences brutes.
 2. Relevez les paramètres estimés et la somme des carrés des résidus pour chaque modèle.
 3. Pourquoi ne faut-il pas comparer directement ces résultats à une régression linéaire effectuée sur les logarithmes ?
-4. Que signifie le fait que le second modèle retrouve ici des paramètres proches de $C=1\,200$, $\alpha=1{,}1$ et $\beta=3$ ?
+4. Que signifie le fait que le second modèle retrouve ici des paramètres proches de $C=1\,200$, $\alpha=1{,}1$ et $\beta=3$ ? Pourquoi $C$ n'est-il pas égal à $f(1)$ lorsque $\beta>0$ ?
 
 <details>
 <summary>Afficher le corrigé</summary>
