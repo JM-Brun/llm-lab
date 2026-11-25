@@ -60,7 +60,7 @@ Parameters remain fixed during inference: no update takes place, no matter how m
 <details>
 <summary>Show the answer</summary>
 
-Prefill is an execution phase that processes the initial prompt as a sequence. Teacher forcing is a conditioning strategy that supplies the observed prefix as context during training (and some scoring uses). They are not two names for the same operation.
+*Prefill* is an inference phase: the known prompt is processed to produce the first generated-token distribution and, when enabled, populate the KV cache. *Teacher forcing* is a conditioning strategy: during training, the reference prefix is supplied as input and the logits are compared with shifted targets; in scoring, an observed prefix can be used to evaluate a continuation with fixed parameters. Both use known tokens under a causal mask, but prefill does not compute a training loss.
 
 </details>
 
