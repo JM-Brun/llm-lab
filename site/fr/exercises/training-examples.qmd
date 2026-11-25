@@ -1,7 +1,7 @@
 ---
 title: "Exercices — Exemples d'entraînement"
-subtitle: "Quatre questions de vérification et leurs réponses"
-description-meta: "Quatre questions de vérification avec réponses, associées à la leçon Exemples d'entraînement."
+subtitle: "Six questions : alignement, causalité, packing et padding"
+description-meta: "Six exercices progressifs avec réponses raisonnées, associés à la leçon Exemples d'entraînement."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-examples-exercises"
-summary: "Quatre questions de vérification avec réponses, associées à la leçon Exemples d'entraînement."
-scope: "Regroupe quatre questions courtes de vérification et leurs réponses, sans dupliquer l’explication conceptuelle de la leçon."
-purpose: "Vérifier quelques prérequis essentiels : alignement des tokens, causalité, masques d’attention et de perte, et dimensions des logits."
+summary: "Six exercices progressifs sur l'alignement, le teacher forcing, les masques, le packing, le padding et les dimensions des logits."
+scope: "Regroupe six questions et scénarios de transfert sans dupliquer l’explication conceptuelle de la leçon."
+purpose: "Vérifier l'alignement des tokens, la causalité, les rôles des masques, les frontières de documents, la réduction de perte et les dimensions des logits."
 suggested_route:
   previous: null
   next: null
@@ -26,41 +26,169 @@ tags: ["type:exercise-hub", "destination:practice", "topic:training-examples-exe
 
 ## Vérifier sa compréhension
 
-1. Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
+### 1. Décalage entrée-cible
+
+Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
+
+<details>
+<summary>Indice</summary>
+
+Chaque cible est le token situé immédiatement après le token d'entrée à la même position.
+
+</details>
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Chaque cible est le token immédiatement suivant à la même position de prédiction.
+Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Les deux séquences ont la même longueur ; la cible est décalée d'un indice dans le flux source.
 
 </details>
 
-2. Pourquoi le teacher forcing ne donne-t-il pas accès aux tokens futurs ?
+### 2. Teacher forcing et causalité
+
+Pourquoi le teacher forcing ne donne-t-il pas accès aux tokens futurs ?
+
+<details>
+<summary>Indice</summary>
+
+Distinguez le choix du préfixe fourni au modèle de la règle qui détermine quelles positions chaque token peut consulter.
+
+</details>
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Le modèle reçoit le préfixe observé, mais le masque causal limite chaque position aux tokens précédents et au token courant. Sans cette contrainte, la cible pourrait fuiter dans le calcul.
+Le teacher forcing fournit le préfixe observé issu des données. Le masque causal limite néanmoins chaque position aux tokens précédents et au token courant. Le conditionnement sur les données de référence ne supprime donc pas la contrainte causale ; sans elle, une cible future pourrait fuiter dans le calcul.
 
 </details>
 
-3. Quelle différence entre masque d'attention et masque de perte ?
+### 3. Masque d'attention et masque de perte
+
+Quelle différence entre masque d'attention et masque de perte ?
+
+<details>
+<summary>Indice</summary>
+
+L'un agit sur les dépendances utilisées pour calculer les représentations ; l'autre sur les termes agrégés dans l'objectif.
+
+</details>
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Le premier détermine quelles positions peuvent être consultées ; le second détermine quelles cibles contribuent à l'objectif. Ils ne sont pas interchangeables.
+Le masque d'attention détermine quelles positions peuvent être consultées. Le masque de perte détermine quelles cibles contribuent à l'objectif. Ils sont distincts : masquer une position dans l'attention ne garantit pas que son label soit exclu de la cross-entropie.
 
 </details>
 
-4. Si les logits ont la forme $[B,L,V]$, que représentent les trois axes ?
+### 4. Axes des logits
+
+Si les logits ont la forme $[B,L,V]$, que représentent les trois axes ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les $V$ tokens à chaque position de chaque séquence.
+Le lot, la position dans la séquence et le token candidat du vocabulaire. Chaque position de chaque séquence possède un score pour chacun des $V$ tokens candidats.
 
 </details>
+
+## Appliquer les mécanismes
+
+### 5. Packing : une frontière de document suffit-elle ?
+
+On concatène deux documents :
+
+- Document A : `[A1, A2, EOS]`
+- Document B : `[B1, B2, EOS]`
+
+Le flux packé est donc `[A1, A2, EOS, B1, B2, EOS]`. On construit mécaniquement les entrées et les cibles par décalage d'un token.
+
+1. Écrivez les séquences d'entrée et de cible.
+2. Avec un masque causal ordinaire, quelles positions peuvent être consultées par la représentation calculée à la position de `B1` ?
+3. Le token `EOS` empêche-t-il à lui seul l'accès au document A ?
+4. Si l'objectif est de traiter B comme indépendant de A, quelles règles supplémentaires faut-il définir ?
+
+<details>
+<summary>Indice</summary>
+
+Séparez trois mécanismes : le décalage des cibles, la visibilité définie par le masque d'attention et l'inclusion des cibles dans la loss. Un token de séparation est une donnée dans la séquence, pas une règle de masquage.
+
+</details>
+
+<details>
+<summary>Afficher la réponse raisonnée</summary>
+
+Le décalage mécanique donne :
+
+- Entrée : `[A1, A2, EOS, B1, B2]`
+- Cible : `[A2, EOS, B1, B2, EOS]`
+
+Avec un masque causal ordinaire, la représentation à la position de `B1` peut consulter les positions antérieures, donc aussi `A1`, `A2` et `EOS` (ainsi que `B1` lui-même, selon la convention causale usuelle). La causalité interdit le futur ; elle n'isole pas les documents.
+
+Non : `EOS` signale une frontière dans le flux, mais ne modifie pas à lui seul la matrice de visibilité de l'attention.
+
+Pour rendre B indépendant de A, il faut au minimum définir un masque d'attention par blocs qui interdit aux positions de B de consulter A. Il faut aussi traiter explicitement la transition de cible : dans le décalage mécanique ci-dessus, la sortie associée à la position `EOS` de A est entraînée à prédire `B1`. Si cette prédiction inter-document n'appartient pas à l'objectif, il faut exclure cette cible de la loss ou définir un mécanisme de construction/réinitialisation des cibles qui respecte la frontière.
+
+**Conclusion :** le marqueur, le masque d'attention et le masque de perte répondent à trois questions différentes. Leur combinaison dépend de l'objectif choisi ; aucune politique de packing ou de masquage n'est universelle.
+
+</details>
+
+### 6. Padding : le masque d'attention suffit-il à exclure PAD de la loss ?
+
+On regroupe deux exemples de longueurs différentes dans un batch et on applique un padding à droite jusqu'à cinq positions.
+
+| Exemple | `input_ids` | `targets` |
+|---|---|---|
+| A (3 tokens) | [11, 12, 13, PAD, PAD] | [12, 13, 14, PAD, PAD] |
+| B (5 tokens) | [21, 22, 23, 24, 25] | [22, 23, 24, 25, 26] |
+
+Le masque d'attention vaut `[1,1,1,0,0]` pour A et `[1,1,1,1,1]` pour B. Les pertes par position, avant masquage, sont :
+
+- A : $[0{,}2, 1{,}1, 0{,}7, 4{,}0, 3{,}0]$
+- B : $[0{,}5, 0{,}4, 0{,}6, 0{,}9, 0{,}6]$
+
+1. Construisez le masque de perte attendu si seules les cibles réelles doivent contribuer.
+2. Calculez la moyenne par token valide.
+3. Calculez la moyenne naïve sur les dix positions et expliquez pourquoi elle est incorrecte pour cet objectif.
+4. Un masque d'attention correct suffit-il si les labels PAD sont tout de même transmis à la cross-entropie ?
+
+<details>
+<summary>Indice</summary>
+
+Il y a trois cibles valides pour A et cinq pour B. Pour une moyenne par token valide, le dénominateur est le nombre de cibles conservées, pas le nombre total de positions paddées.
+
+</details>
+
+<details>
+<summary>Afficher la réponse raisonnée</summary>
+
+Le masque de perte est `[1,1,1,0,0]` pour A et `[1,1,1,1,1]` pour B. Il conserve huit cibles.
+
+La somme des pertes valides vaut :
+
+[
+0{,}2+1{,}1+0{,}7+0{,}5+0{,}4+0{,}6+0{,}9+0{,}6=5.
+]
+
+La moyenne par token valide est donc :
+
+[
+\mathcal{L}_{\mathrm{valide}}=\frac{5}{8}=0{,}625.
+]
+
+La moyenne naïve inclut aussi les deux pertes PAD de A :
+
+[
+\mathcal{L}_{\mathrm{naïve}}=
+\frac{5+4+3}{10}=1{,}2.
+]
+
+Elle optimise un objectif différent, qui dépend ici des pertes attribuées aux positions de padding. Le masque d'attention indique quelles positions peuvent être consultées ; il ne retire pas automatiquement les labels PAD de la fonction de perte. Il faut construire un masque de perte cohérent ou utiliser une convention explicite d'ignorance des labels, puis réduire sur le nombre de cibles valides.
+
+</details>
+
+::: {.callout-note}
+**Limite de ces exercices.** Les scénarios sont conceptuels et illustrent des politiques possibles. Ils ne prescrivent pas un format de packing, un masque inter-documents ou une convention de réduction universels ; ces choix doivent être définis par le pipeline et l'objectif d'entraînement.
+:::
 
 ::: {.language-switch}
 **Langue :** [Français](training-examples.qmd) · [English](../../en/exercises/training-examples.qmd)
