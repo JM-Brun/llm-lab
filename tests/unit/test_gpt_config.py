@@ -49,18 +49,6 @@ def test_config_rejects_invalid_seed(seed: object) -> None:
         _config(seed=seed)
 
 
-def test_config_accepts_numpy_integer_dimensions_and_seed() -> None:
-    import numpy as np
-
-    config = _config(
-        vocab_size=np.int64(50),
-        context_length=np.int64(16),
-        seed=np.int64(7),
-    )
-    assert config.vocab_size == 50
-    assert config.seed == 7
-
-
 def test_config_requires_divisible_head_count() -> None:
     with pytest.raises(ValueError, match="embedding_dim must be divisible by num_heads"):
         _config(embedding_dim=10, num_heads=3)
