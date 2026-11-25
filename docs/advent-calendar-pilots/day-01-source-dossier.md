@@ -157,3 +157,23 @@ These counts are exact for the current page texts and stated orthographic conven
 - The complete frequency tables now list every form occurring twice; rank intervals make ties explicit.
 - The generated FR/EN learning-map artifacts have been synchronized with the new titles, summaries and section headings.
 - The technical build and CI for the final revision are being checked in PR #1639. The novice-reader review and editorial acceptance gate remain separate and are not satisfied by CI.
+
+### CI diagnosis and repair — 2026-11-25
+
+The first CI rerun after the map-fragment syntax repair reported **831 passed, 1 failed, 1 skipped**. The only failure was `tests/knowledge/test_map_artifacts_freshness.py::test_tracked_interactive_map_matches_renderer[en]`: the English generated data fragment still contained the previous Day 01 title (with the French pronoun “je”) in its resource index. The French artifact matched the renderer. Python quality/domain checks, the Quarto site build and secret scanning all passed on that revision.
+
+The stale English resource title has now been synchronized in `site/includes/generated-map-data-en.qmd`. This is a generated artifact: the authoritative validation remains the freshness test against `site/tools/build_learning_map.py`, not a visual inspection or a hand-maintained copy. If the test reports another mismatch, regenerate both language artifacts with:
+
+```bash
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+```
+
+The new commit still requires a complete CI rerun; no claim of a green final CI is made until that run completes.
+
+### Remaining work before acceptance
+
+- [ ] Confirm all CI jobs pass on the latest PR head, especially the bilingual generated-map freshness test.
+- [ ] Inspect the rendered FR and EN pages at desktop and mobile widths; verify the question, full replacement text, frequency tables, tie intervals, links and exercise entry point.
+- [ ] Perform a novice-reader review: can a reader identify the counted text, reproduce the normalization, distinguish lexical occurrences/types from tokenizer tokens, and understand why this tiny text does not establish Zipf’s law?
+- [ ] Check that no cultural-source identifiers or source links leak into rendered pages, metadata, navigation, search summaries or generated map labels; keep provenance confined to this dossier.
+- [ ] Record explicit editorial acceptance (or concrete revisions) before treating Day 01 as closed and moving to Day 02.
