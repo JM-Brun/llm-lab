@@ -32,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 ::: {.chapter-lead}
 In the overview, the model predicts the next token from the prefix “What have the Romans ever done for us?” In what form does it receive that question?
 
-A **tokenizer** splits text into units called **tokens**. Its **vocabulary** maps each token to an integer identifier (ID). The model receives those IDs in text order.
+A **tokenizer** splits text into units called **tokens**. A token is not necessarily a whole word: it can be a word, a word fragment, a punctuation mark, or a fragment that includes a space. Its **vocabulary** maps each token to an integer identifier (ID). That ID is a label local to the tokenizer's vocabulary; it does not represent a meaningful numerical quantity. The model receives the IDs in text order.
 :::
 
 ## From the prefix to token IDs {#the-path-from-text-to-model}
@@ -63,7 +63,7 @@ Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below
 
 The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
 
-The split difference comes from pre-tokenization rules, not from vocabulary quality: `cl100k_base` splits the space from the number that follows and groups digits into chunks of at most three, hence the tokens reduced here to a single space (`␠`). GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` inserts no start-of-sequence token by default, while some libraries, for example `transformers` with GPT-2, prepend one; check this behavior before comparing your own traces.
+The split difference results from each tokenizer's pre-tokenization rules and learned merges; by itself, it does not establish that one vocabulary is better. `cl100k_base` splits the space from the number that follows and groups digits into chunks of at most three, hence the tokens reduced here to a single space (`␠`). GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` inserts no start-of-sequence token by default, while some libraries, for example `transformers` with GPT-2, prepend one; check this behavior before comparing your own traces.
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.

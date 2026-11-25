@@ -50,11 +50,11 @@ A model estimates a next-token distribution. It can be used to generate, score, 
 **Estimated reading time: 8–10 minutes.**
 
 **By the end of this page, you should be able to:**
-- explain next-token prediction and why a probable continuation is not necessarily true;
-- distinguish architecture, parameter learning, and model use;
-- tell generation, scoring, and training apart;
-- locate where information is stored, retrieved, supplied, and used;
-- explain why a general objective can support varied tasks without guaranteeing success.
+- trace two prediction-and-feedback steps with fixed parameters;
+- explain the roles of the prefix, the next-token distribution, and the parameters;
+- distinguish the three uses of that distribution: generation, observed-target scoring, and training.
+
+The sections on transfer, external information, and conversational systems then broaden the overview. To continue through the main path, first retain the prediction mechanism and the distinction between its three uses.
 :::
 
 ## What the model predicts {#what-model-predicts}
@@ -110,9 +110,9 @@ A computed distribution can be used to produce a continuation, score a known seq
 
 ![From context to the three uses of the predictive distribution: generation, scoring, and training, stacked vertically for readability on small screens.](../images/llm-shared-prediction-uses-en-mobile.svg){.d-md-none fig-alt="Mobile version of the diagram: context passes through the model to produce logits and probabilities. Three blocks then show generation, scoring, and training."}
 
-- **Generate:** select a token, append it to context, and repeat; *prefill* processes the prompt, *decode* produces tokens ([generation](generation.qmd)).
-- **Score:** calculate the probability of an observed sequence, its **likelihood** ([likelihood](likelihood.qmd)).
-- **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* uses the actual tokens ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
+- **Generate:** process the prompt first (*prefill*), then select a token, append it to context, and repeat during *decode* ([generation](generation.qmd)).
+- **Score:** at each position, condition on the observed prefix and read the probability of the target token to calculate the sequence **likelihood**; no token is selected and parameters stay fixed ([likelihood](likelihood.qmd)).
+- **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* supplies the observed previous tokens as context ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
 
 For a token with probability 0.6, surprisal is $-\ln(0.6)\approx 0.511$ nats. [Entropy](entropy.qmd) is expected surprisal. Scoring measures the likelihood of a target or sequence. Evaluation compares results on held-out examples. Only learning changes parameters.
 
@@ -148,6 +148,10 @@ Describing a model means answering three questions:
 
 **Pretraining** learns regularities from large corpora. For a GPT, the text tokens are the targets; this is generally *self-supervised* learning. The resulting model before adaptation is often called a *base model*. A **foundation model** is a broader notion: a model trained at scale on broad data and adaptable to many tasks, sometimes beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Post-training may then adapt behavior or parameters, but it is not mandatory ([post-training](post-training.qmd)).
 
+[Questions and exercises for this overview](exercises/llm-overview.qmd).
+
+::: {.callout-note collapse="true" title="Broaden the overview: transfer and applications"}
+
 ## Why can prediction support varied tasks? {#transformers-changed}
 
 Pretraining does not explicitly teach every task the model may later perform. Across large corpora, it learns language regularities, relationships, and representations that can be reused when a task is expressed in the input, examples are supplied, or parameters are adapted. This is **transfer learning**: a general objective can support tasks that were not explicit training objectives. Transfer nevertheless depends on the data, task, and evaluation; it is neither universal nor automatic ([LLM evolution](llm-evolution.qmd), [emergence](emergence.qmd), [limitations](llm-limits.qmd)).
@@ -175,18 +179,16 @@ A conversational assistant is a **system built around a model**. The application
 
 ## Choosing an approach {#choosing-an-approach}
 
-Depending on the task, one can use a general model as is, supply context and external documents, adapt parameters, or have the application call tools. These approaches can be combined. The choice depends on measured quality, robustness, information freshness, cost, latency, privacy, provenance, and maintenance. A few successful prompts are not an evaluation ([post-training](post-training.qmd), [RAG and memory](rag-memory-boundaries.qmd)).
-
 [Compare the roles of context and model parameters in the review plan](review-path.qmd#compare-prediction-uses).
 
-[Questions and exercises for this overview](exercises/llm-overview.qmd).
+Depending on the task, one can use a general model as is, supply context and external documents, adapt parameters, or have the application call tools. These approaches can be combined. The choice depends on measured quality, robustness, information freshness, cost, latency, privacy, provenance, and maintenance. A few successful prompts are not an evaluation ([post-training](post-training.qmd), [RAG and memory](rag-memory-boundaries.qmd)).
 
-::: {.callout-tip title="Go further"}
 - **History and architecture:** [history of Transformers](transformer-history.qmd) and [architecture comparison](transformer-architectures.qmd).
 - **Computation and learning:** [generation](generation.qmd), [mathematical foundations](mathematical-foundations.qmd), and [post-training](post-training.qmd).
 - **Context and external information:** [context engineering](context-engineering.qmd), [RAG and memory](rag-memory-boundaries.qmd), and [document retrieval](document-retrieval.qmd).
 - **Compression and information:** [entropy](entropy.qmd) and the [compression and LLM revision sheet](compression-revision.qmd).
 - **Watch an end-to-end overview:** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, English video, about 3 h 31); an orientation resource, not a replacement for the detailed lessons.
+
 :::
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}

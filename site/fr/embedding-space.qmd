@@ -90,6 +90,19 @@ $$
 - $d$ est la dimension des vecteurs d'embedding.
 - $E_{i,:}$ désigne toutes les composantes de la ligne $i$.
 
+Pour une séquence d'IDs $(i_1,\ldots,i_T)$, le lookup s'applique à chaque position, dans le même ordre :
+
+$$
+X = \begin{bmatrix}
+E_{i_1,:} \\
+\vdots \\
+E_{i_T,:}
+\end{bmatrix}
+\in \mathbb{R}^{T \times d}
+$$
+
+$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant l'ajout de l'information positionnelle.
+
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
 ## Du vecteur initial à la représentation contextualisée

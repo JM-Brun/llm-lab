@@ -32,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 ::: {.chapter-lead}
 Dans le panorama, le modèle prédit le prochain token à partir du préfixe « C'est une bonne situation, ça, scribe ? ». Sous quelle forme reçoit-il cette question ?
 
-Un **tokenizer** découpe le texte en unités appelées **tokens**. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Le modèle reçoit ces IDs dans l'ordre du texte.
+Un **tokenizer** découpe le texte en unités appelées **tokens**. Un token n'est pas nécessairement un mot entier : il peut être un mot, un fragment de mot, un signe de ponctuation ou un fragment qui inclut un espace. Son **vocabulaire** associe chaque token à un identifiant entier (ID). Cet ID est un identifiant local au vocabulaire du tokenizer ; il ne représente pas une quantité porteuse de sens. Le modèle reçoit les IDs dans l'ordre du texte.
 :::
 
 ## Du préfixe aux identifiants {#le-parcours-du-texte-au-modèle}
@@ -63,7 +63,7 @@ Gardons le texte `2 + 2 = 4` fixe et changeons de tokenizer. Dans les fragments 
 
 La [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace) reproduit le tableau avec `tiktoken==0.14.0` et vérifie que chaque liste d’IDs se décode en texte d’origine.
 
-La différence de découpage vient des règles de pré-tokenisation, pas de la qualité des vocabulaires : celle de `cl100k_base` sépare l’espace du nombre qui suit et regroupe les nombres par tranches d’au plus trois chiffres, d’où les tokens réduits à une seule espace (`␠`). Le BPE byte-level de GPT-2 fusionne directement l’espace avec l’opérateur ou le chiffre suivant. Ces listes ne contiennent aucun token spécial : `tiktoken` n’insère pas de token de début de séquence par défaut, alors que certaines bibliothèques, par exemple `transformers` avec GPT-2, préfixent un tel token ; vérifiez ce comportement avant de comparer vos propres traces.
+La différence de découpage résulte des règles de pré-tokenisation et des fusions apprises propres à chaque tokenizer ; elle ne permet pas, à elle seule, de classer leur qualité. `cl100k_base` sépare l’espace du nombre qui suit et regroupe les nombres par tranches d’au plus trois chiffres, d’où les tokens réduits à une seule espace (`␠`). Le BPE byte-level de GPT-2 fusionne directement l’espace avec l’opérateur ou le chiffre suivant. Ces listes ne contiennent aucun token spécial : `tiktoken` n’insère pas de token de début de séquence par défaut, alors que certaines bibliothèques, par exemple `transformers` avec GPT-2, préfixent un tel token ; vérifiez ce comportement avant de comparer vos propres traces.
 
 ::: {.callout-tip title="Token, ID et plongement" #revision-summary}
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
