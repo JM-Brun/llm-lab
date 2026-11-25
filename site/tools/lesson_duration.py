@@ -20,7 +20,7 @@ END_OF_CORE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 FENCED_BLOCK = re.compile(
-    r"^\\s*(`{3,}|~{3,})([^\\n]*)\\n([\\s\\S]*?)^\\s*\\1\\s*$",
+    r"^\s*(`{3,}|~{3,})([^\n]*)\n([\s\S]*?)^\s*\1\s*$",
     re.MULTILINE,
 )
 DISPLAY_MATH = re.compile(
