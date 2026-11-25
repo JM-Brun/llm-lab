@@ -102,6 +102,14 @@ $$
 
 The gradient with respect to scores then passes through the row-wise softmax Jacobian. Writing $G_S=\partial\mathcal L/\partial S$:
 
+For query row $i$, the softmax derivative can be written explicitly as:
+
+$
+(G_S)_{ij}=A_{ij}\left((G_A)_{ij}-\sum_r A_{ir}(G_A)_{ir}\right),
+$
+
+where $G_A=\partial\mathcal L/\partial A$. The sum runs over the keys in that row. With a fixed additive mask, forbidden positions have $A_{ij}=0$ and therefore zero derivative with respect to their masked score.
+
 $$
 \frac{\partial\mathcal L}{\partial Q}
 =\frac{G_SK}{\sqrt{d_k}},
