@@ -95,11 +95,24 @@ Do not collapse these states into a numeric coverage score. A synthesis page, ty
 
 The three visual blocks are not additional lessons and should remain attached to their existing review companions. The current pilot in `docs/visual-recall-pilot.md` already covers these same three prompts.
 
-**Limits of this first pass:** it classifies source structure and simple markers, not the pedagogical quality of each answer, completeness of definitions, correctness of every equation, or the need for a formula-recall prompt. A literal flashcard marker search cannot rule out a question that behaves like a flashcard without being labelled as one. The next audit pass must read the content of each companion against its lesson outcome and inspect any generic question/answer structures before declaring a support format missing.
+**Limits of the structural scan:** it classifies source structure and simple markers, not the pedagogical quality of each answer, completeness of definitions, correctness of every equation, or the need for a formula-recall prompt. A literal flashcard marker search cannot rule out a question that behaves like a flashcard without being labelled as one. The subsequent content-level review is recorded below; it does not amount to a line-by-line scientific re-review of every source lesson.
 
 The existing revision inventory remains useful evidence about integrated support in the 62 Understand/Build pages, but it is not a substitute for this Review-specific content audit.
 
-**Deliverable:** extend the existing generated revision-coverage report or its existing audit tool with a Review-specific projection. Do not create a second hand-maintained matrix or a new registry. Keep authored pedagogical judgments separate from mechanically detected source markers.
+**Lot A semantic pass — completed on 2026-11-25 (20 FR/EN lesson–companion pairs):**
+
+The 20 companion pairs were read against the canonical lesson `purpose`/`scope`, the companion scope, its three-to-four synthesis points, its recall prompt and correction, and its visible Practice handoff. This was a content-level review of the companion pages, not a line-by-line scientific re-review of every source lesson.
+
+- The synthesis points consistently cover the central mechanism and the distinctions needed to avoid the main conceptual confusions.
+- Every recall prompt has a correction. The prompts are deliberately selective: they test one representative retrieval operation rather than restating the full lesson outcome.
+- The larger outcomes are supported by the synthesis itself and, where needed, by visible handoffs to existing dedicated Practice pages. Cross-lesson exercises are retained where they test a genuine boundary (for example, lookup versus contextualization, or attention-position weights versus vocabulary probabilities). This pass did not revalidate every linked exercise body.
+- The three visual prompts are attached to the relevant existing pairs: positional encoding, Q/K/V, and prefill/decode with a KV cache. They complement rather than duplicate the text questions.
+- Calculation-oriented recall is already present where the target warrants it: scaled-dot-product attention, causal masking, entropy, likelihood, cross-entropy, loss and gradient descent. The remaining conceptual prompts do not need formulas merely to make the format uniform.
+- The bilingual versions preserve the tested concept and reasoning. Some running examples differ by language; this is acceptable when the mathematical or conceptual condition is explicit and unchanged.
+
+**Decision from this pass:** no additional flashcard deck, visual card, or mass-generated question set is justified. No clear scope/content mismatch was found that warrants changing one of the 20 companions on this evidence alone. This is not a claim that every possible question is exhaustive or that learner effectiveness has been demonstrated. A prompt that tests only one part of a broad outcome is not automatically a gap when the other parts are represented in the synthesis and Practice handoff.
+
+**Deliverable:** keep the existing generated revision-coverage report and its audit tool as the source for machine-detectable coverage. Record editorial judgments in this validation document or the existing source metadata; do not create a second hand-maintained matrix or a new registry. Keep authored pedagogical judgments separate from mechanically detected source markers.
 
 ### Lot B — Identify real gaps and add only justified support
 
@@ -126,76 +139,47 @@ Do not add a flashcard merely because a lesson has none. A missing format is not
 - `tests/knowledge/test_lesson_contracts.py` verifies those projections, required anchors, answer disclosures, stage grouping and FR/EN topic parity. It does not prove that the wording and actual content of a companion semantically cover the outcome, nor that every listed prerequisite is pedagogically indispensable.
 - The current Review index has no optional stops. Optional learning material remains outside the core Review traversal; no optional stop should be added unless an existing eligible resource and an explicit pedagogical target justify it.
 
-**Lot C initial result:** structural equivalence is substantially protected already. The remaining work is a bounded semantic audit of the 20 lesson outcomes against their companion scopes/content and the necessity of their prerequisite sets—not a new route schema or a copied objectives matrix.
+**Lot C first semantic pass — completed on 2026-11-25:** the 20 stage/lesson relationships were checked at metadata and synthesis level against the stage objectives, canonical lesson purposes/scopes and the 20 companion scopes/content. No inconsistency surfaced at this level that justifies changing stage membership or rewriting an outcome. This is not a full scientific re-review of each lesson body. The lesson purposes contribute to their stage objectives at the intended granularity: tokenization before lookup; initial and positional representations before contextualization; block computation before Q/K/V and attention; logits before vocabulary probabilities; generation and context design as separate uses; observed-target scoring before parameter optimization.
+
+The prerequisite chain also has a coherent conceptual rationale on first review: text IDs precede lookup; lookup and position precede contextualization; contextualized states precede block internals; Q/K precede attention weights and value aggregation; logits precede probabilities; probabilities precede entropy, generation and observed-target scoring; loss precedes gradients; gradients and loss precede the training loop. The training loop additionally depends on causal masking because shifted targets and teacher-forced prefixes must be interpreted correctly.
+
+One apparently missing edge is intentional, not a defect: `loss` does not declare `cross-entropy` as a prerequisite. The existing `observed-target-to-training-objective` boundary in `data/guided-route.yml` explicitly connects scoring to training **without making scoring a prerequisite**. Do not add that edge merely because the concepts are related. Similarly, `logits` depends on the Transformer output rather than the Q/K/V or attention lessons: its output projection can be understood without making every internal attention mechanism a prerequisite.
+
+This is a reviewed first-pass rationale, not a claim that every prerequisite is the only possible pedagogical choice. Any future change should be justified by an actual learner dependency and tested against the existing canonical route.
 
 **Remaining checks:**
 
-1. For each core lesson, compare the stage objective with the lesson's local outcome: the outcome must contribute to the stage objective without silently broadening or narrowing it.
-2. Compare the lesson outcome with the synthesis page's stated scope and actual content.
-3. Verify that every prerequisite is genuinely needed before the lesson, is earlier in the canonical route, and is represented in the Review context without becoming a new or reordered dependency.
-4. Check FR/EN semantic equivalence, not just identical IDs or balanced page counts.
-5. Record a concise rationale and evidence anchors for each discrepancy.
+1. Retain the first-pass rationale above and revisit only where a source lesson or stage objective changes.
+2. Check FR/EN semantic equivalence when either language's lesson purpose, scope or synthesis content changes.
+3. Reassess prerequisite necessity only when a lesson's content or its route position changes; do not mechanically add every related concept as a prerequisite.
+4. Record a concise rationale and evidence anchors for any future discrepancy.
 
 Do not require literal equality between stage objectives, lesson outcomes and revision scopes: they operate at different granularities. Add structural assertions only for properties that can be proven from metadata; retain semantic judgments as reviewed evidence rather than brittle string comparisons.
 
-### Lot D — Rendered Review-route validation
+### Lots D/E — Render, accessibility and responsive validation (deferred to the end)
 
-Reuse the current site-browser review tooling and existing CI jobs; do not create one workflow per check.
+**Priority decision (2026-11-25): these lots are explicitly out of the current content phase.**
 
-**Existing automation found in `scripts/site-browser-review.mjs`:**
+The project must first reach content and pedagogical stability: conceptual coverage, lesson correctness, explanations, examples, exercises, learning sequence, prerequisite logic, and the coherence of the knowledge model. Once that foundation is accepted, the site will undergo a deliberate, comprehensive visual redesign. Only against that new design should rendered presentation, accessibility and responsive/mobile behavior be assessed and improved.
 
-- The three known visual-recall pages are already included at FR/EN desktop (1440 px) and mobile (390 px).
-- Their dedicated checks verify one named diagram, no card/diagram/lane overflow, one answer disclosure, and keyboard opening with Enter and closing with Space on desktop.
-- The general browser audit records keyboard focus targets and runs Axe on its interactive desktop/light profile.
-- The fixed case matrix includes `learning-map.html`, but does **not** include `review-path.html`. Therefore the Review index itself is not yet covered by the fixed FR/EN desktop/mobile matrix.
-- The three-card checks do not constitute a screen-reader manual review, and the mobile cases are responsive/touch checks rather than a mobile keyboard test.
+Therefore:
 
-**First concrete D task:** add `review-path.html` to the existing `visualCases` matrix (not a new workflow), then assert the rendered route switch, nine stage anchors, 20 core synthesis destinations, language-correct links, and that optional resources are not presented as core stops. Keep the existing card checks unchanged. Review route-specific keyboard checks should cover the index navigation and stage disclosures, while the already existing three-card keyboard checks remain the card-level baseline.
+- Do not spend current effort extending browser coverage for the Review route, tuning viewport behavior, or validating visual presentation.
+- Do not treat the current design as the target baseline; it is expected to be replaced.
+- Do not run a premature mobile or accessibility remediation cycle against components that may be redesigned.
+- Preserve the existing browser and accessibility tooling. Reuse and adapt it during the final design phase rather than creating new workflows now.
+- Existing checks may continue to run as incidental CI safeguards, but their results are not a project acceptance gate for the current content phase.
+- Do not add a Review-specific case to `scripts/site-browser-review.mjs` as part of this work. The branch intentionally leaves that script unchanged.
 
-Minimum matrix:
+The existing browser tooling has been inventoried for future reuse: it already covers three visual-recall pages in FR/EN and desktop/mobile profiles, includes selected keyboard checks, and runs Axe in its interactive desktop/light profile. That inventory is retained as context, not as a current implementation task.
 
-| Dimension | Required cases |
-|---|---|
-| Language | FR and EN |
-| Viewport | Desktop and narrow mobile |
-| Route entry | Review index, a middle stage, first and last core lesson |
-| Navigation | Understand ↔ Review, stage anchors, lesson → synthesis, synthesis → lesson |
-| Context | Stage number, lesson position, prerequisite/outcome cues |
-| Keyboard | Tab order, visible focus, Enter/Space activation, disclosure open/close, no keyboard trap |
-| Responsive | No horizontal overflow, clipped cards, overlapping controls or unusable tap targets |
-| Localization | Correct destination language, labels, accessible names and language changes |
-
-Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
-
-Minimum matrix:
-
-| Dimension | Required cases |
-|---|---|
-| Language | FR and EN |
-| Viewport | Desktop and narrow mobile |
-| Route entry | Review index, a middle stage, first and last core lesson |
-| Navigation | Understand ↔ Review, stage anchors, lesson → synthesis, synthesis → lesson |
-| Context | Stage number, lesson position, prerequisite/outcome cues |
-| Keyboard | Tab order, visible focus, Enter/Space activation, disclosure open/close, no keyboard trap |
-| Responsive | No horizontal overflow, clipped cards, overlapping controls or unusable tap targets |
-| Localization | Correct destination language, labels, accessible names and language changes |
-
-Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
-
-### Lot E — Manual accessibility review
-
-Keep this separate from automated axe checks and browser assertions.
-
-- Test keyboard-only navigation in both languages, including focus visibility and disclosure controls.
-- Test with a real screen reader in FR and EN; inspect heading hierarchy, reading order, link purpose, diagram alternatives, disclosure state and language pronunciation.
-- Check contrast, zoom/reflow, touch target size and reduced-motion behavior where applicable.
-- Record environment, pages, steps, observed result and unresolved limitations. Mark anything not actually tested as **not verified**.
+**Deferred deliverable:** after content freeze and visual redesign, define one coherent FR/EN validation pass covering rendered routes, navigation, responsive breakpoints, keyboard use, screen readers, contrast, zoom/reflow, diagrams and localization. Capture the redesigned site's actual behavior; do not retrofit the old layout merely to satisfy the old matrix.
 
 ### Lot F — Independent learner pilot
 
 The existing pilot in `docs/visual-recall-pilot.md` already defines the three visual/text comparisons, delayed transfer prompts, scoring rubric and attrition accounting.
 
-Do not start it until the manual Q/K/V validation gate in [#483](https://github.com/JM-Brun/llm-lab/issues/483) is explicitly closed. Then follow [#447](https://github.com/JM-Brun/llm-lab/issues/447), freeze the materials and time budgets before recruitment, and report incomplete follow-ups separately from incorrect answers. A small pilot is diagnostic, not proof of a general learning effect.
+Treat this as a content-evaluation activity, not as a rendering/accessibility/mobile audit. Start it only once the relevant learning content and prompts are stable, and once the specific Q/K/V content-validation gate in [#483](https://github.com/JM-Brun/llm-lab/issues/483) is explicitly closed. Then follow [#447](https://github.com/JM-Brun/llm-lab/issues/447), freeze the pedagogical materials and time budgets before recruitment, and report incomplete follow-ups separately from incorrect answers. A small pilot is diagnostic, not proof of a general learning effect.
 
 ## 4. Execution order and gates
 
@@ -203,10 +187,11 @@ Do not start it until the manual Q/K/V validation gate in [#483](https://github.
 |---:|---|---|---|
 | 1 | A — source inventory | Existing canonical registries | All 20 core lesson/revision pairs inspected; source IDs/anchors recorded; no parallel matrix |
 | 2 | C — semantic equivalence | A and canonical route contracts | Objective/outcome/prerequisite discrepancies reviewed in FR/EN |
-| 3 | B — justified remediation | A and C | Only evidenced gaps receive new or revised support |
-| 4 | D — rendered validation | B plus stable content | FR/EN desktop/mobile captures and keyboard results |
-| 5 | E — manual accessibility | Stable rendered build | Manual test record in both languages |
-| 6 | F — learner pilot | Q/K/V gate #483 and stable cards | Independent delayed-transfer observations under #447 |
+| 3 | B — justified remediation | A and C | Only evidenced content gaps receive new or revised support |
+| 4 | Content completion | A, B and C | Lessons, explanations, examples, exercises and learning sequence are pedagogically stable |
+| 5 | F — learner pilot (if retained) | Stable pedagogical materials and Q/K/V content gate | Independent delayed-transfer observations under #447 |
+| 6 | Visual redesign | Content freeze | New design system and redesigned site |
+| 7 | D/E — rendered, responsive and accessibility validation | Visual redesign | One final FR/EN validation pass on the new design |
 
 The order deliberately places semantic equivalence before content additions: otherwise a new card could reinforce an outcome that is itself misaligned with the canonical lesson.
 
@@ -218,8 +203,9 @@ The order deliberately places semantic equivalence before content additions: oth
 - [ ] Optional resources are considered only when explicitly registered and pedagogically relevant; optionality is preserved.
 - [ ] Stage objectives, lesson outcomes, prerequisite relations and revision scopes have a documented FR/EN semantic review.
 - [ ] Any new support has a specific retrieval/transfer target, correction and reason existing support is insufficient.
-- [ ] Rendered desktop/mobile and keyboard checks are recorded for FR/EN.
-- [ ] Manual accessibility checks are recorded separately from automated checks.
+- [ ] Content is frozen before visual redesign begins.
+- [ ] After redesign, rendered desktop/mobile and keyboard checks are recorded for FR/EN.
+- [ ] After redesign, manual accessibility checks are recorded separately from automated checks.
 - [ ] The learner pilot is run only after #483, and its results are recorded under #447.
 
 ## 6. Explicit non-goals
@@ -230,4 +216,5 @@ The order deliberately places semantic equivalence before content additions: oth
 - No promotion of optional pages into the core Review route.
 - No copying of Practice exercises into Review.
 - No claim that `integrated_sufficient`, a passing test, or a rendered diagram proves learning effectiveness.
+- No current-phase browser, responsive/mobile or accessibility remediation against the pre-redesign interface.
 - No new GitHub Actions workflow where the existing browser/CI tooling can be extended.
