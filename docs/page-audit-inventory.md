@@ -1827,3 +1827,23 @@ After this migration is validated, continue the remaining unverified route bound
 ### Evidence boundary and next action
 
 This is a code/page/test contract audit, not a full audit of the remaining Build tours or a rendered browser review. The correction must pass the existing Python quality/test suite and full Quarto/browser workflow on its final PR head. Continue with `gpt_ops.py` and its tests next, then the block, assembled GPT and generation tours; reuse this same claim → page → implementation → test method. Do not treat the remaining tour pages as audited merely because they link to tested modules.
+
+
+## 2026-11-25: Build tour contract audit — operations, Transformer block and assembled GPT
+
+**Scope.** Second bounded source-to-page pass covering the FR/EN tours and Practice companions for `gpt_ops.py`, `transformer_block.py` and `gpt.py`, their implementation modules and unit tests. It reuses the scientific architecture audits already validated; it checks only that the implementation, tests, worked answers and stated evidence agree.
+
+### Findings and corrections
+
+| Area | Finding | Correction / evidence |
+|---|---|---|
+| Layer normalization | With epsilon inside the square root, the normalized variance is `variance / (variance + eps)`, slightly below 1. For a constant row, the centered numerator is zero, so the affine output is exactly `beta`, not the input mean. The walkthrough and one Practice answer were imprecise. | FR/EN explanation and worked answer corrected. Existing tests confirm epsilon is added to the variance and constant rows normalize to zero before affine parameters. |
+| GELU approximation | The prose described an error of order `1e-4`, while the test only allowed `1e-3` on its grid. | The claim is now scoped to the actual grid `[-3, 3]` with maximum absolute error about `4.73 × 10⁻⁴`; the test asserts `< 5 × 10⁻⁴`. |
+| GPT parameter count | The worked solution for `V=50, T=16, d=16, H=2, L=2, hidden=32` double-counted one `4d` normalization term in its intermediate sum. | FR/EN solution corrected: 2,224 parameters per block; 4,448 across two blocks; 6,386 total. The unit test now cross-checks the worked example's fixed total as well as the independently derived formula. |
+| Prefix-invariance test | An additional assertion compared logits at two different positions, which is not a causal invariant. The lesson's French wording also overstated a single fixture as a proof. | The irrelevant assertion was removed. The lesson now describes the test as targeted empirical evidence for the tested prefix/configuration, not a universal proof; the Practice answer already stated this limitation. |
+| Transformer-block Practice | The second exercise group restarted numbering at 3, duplicating the earlier Q/K/V question. | FR/EN numbering is continuous from 1 to 5. |
+| Practice companion contract | The browser review requires an explicit learner-facing self-check heading, not merely a generic “Exercises/Exercices” heading. | Touched FR/EN companions now use “Check your understanding” / “Vérifier sa compréhension”; generated learning-map projections were refreshed to match. |
+
+### Evidence boundary and next action
+
+The source/test checks for these three tours are complete. Python CI passed on the final corrected branch head; full Quarto rendering and browser review are required before integration. The final fifth tour, `generate.py`, remains a separate source-to-page pass and is tracked in the next correction. Manual screen-reader/native-breadcrumb review and the learner pilot remain separate evidence.
