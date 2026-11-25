@@ -1,7 +1,7 @@
 ---
 title: "Exercices — Loi de Zipf"
 subtitle: "Entraînement approfondi, corrigés détaillés et transfert"
-description-meta: "Exercices approfondis sur les calculs rang-fréquence, l'ajustement log-log, les fréquences lexicales et les limites empiriques."
+description-meta: "Onze exercices approfondis : comparaison de corpus français/anglais et de discours politiques, estimation de paramètres, critique des ajustements et limites empiriques."
 keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-law", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-zipf-law"
-summary: "Onze exercices formatifs sur les calculs rang-fréquence, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et les explications proposées."
-scope: "Propose un entraînement approfondi et corrigé sur les calculs rang-fréquence, les graphiques log-log, les comptes dépendant du tokenizer, l'incertitude des rangs empiriques, la stabilité des exposants et la distinction entre description et mécanisme."
+summary: "Onze exercices sur les calculs rang-fréquence, les unités lexicales et tokeniques, la comparaison de corpus, l'estimation des paramètres et la critique des ajustements."
+scope: "Propose des exercices corrigés sur les calculs rang-fréquence, les fréquences lexicales et tokeniques, la comparaison de corpus français/anglais et de discours politiques, l'estimation de C, alpha et beta, l'incertitude des rangs et la critique des ajustements."
 purpose: "Calculer, interpréter et évaluer de manière critique les régularités rang-fréquence sans confondre statistiques lexicales, statistiques de tokens et explications causales."
 suggested_route:
   previous: null
@@ -342,7 +342,7 @@ L'équipe choisit Zipf–Mandelbrot et conclut que « le langage suit la loi de 
 - [Piantadosi (2014)](https://doi.org/10.3758/s13423-014-0585-6) — erreurs corrélées et structure résiduelle.
 - [Pilgrim & Hills (2021)](https://doi.org/10.1038/s41598-021-96214-w) — rang empirique, rang probabiliste et biais des estimateurs.
 - [Linders & Louwerse (2023)](https://doi.org/10.3758/s13423-022-02142-9) — unités linguistiques et variation de l'exposant.
-- [Lestrade (2017)](https://doi.org/10.1371/journal.pone.0181987) — modèle syntaxe–sémantique proposé.
+- [Lestrade (2017)](https://doi.org/10.1371/journal.pone.0181987) — modèle syntaxe–sémantique proposé.\n- [Lavi-Rotbain et Arnon (2023)](https://doi.org/10.1162/opmi_a_00070) — données multilingues de parole adressée à l'enfant utilisées pour l'exercice comparatif.
 
 ::: {.language-switch}
 **Langue :** [Français](exercises-zipf-law.qmd#zipf-law) · [English](../en/exercises-zipf-law.qmd#zipf-law)
