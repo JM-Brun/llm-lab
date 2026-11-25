@@ -33,6 +33,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", 
 Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.
 :::
 
+**Questions and exercises:** [Open the dedicated practice page](exercises/causal-masking.qmd).
+
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
   <span class="epistemic-badge badge-status">Architecture: Autoregressive Decoder</span>
