@@ -75,7 +75,7 @@ We now count the occurrences of each lexical type and sort the types by decreasi
 
 Several forms have the same frequency. There is therefore no unique rank to assign without an additional convention: we could use an arbitrary order, an average rank, or show an interval. For this small example, the interval is the most honest choice.
 
-Rank is not an intrinsic property of a word. It depends on the corpus, its size, content and counting conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer.
+Rank is not an intrinsic property of a word. It depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer.
 
 Our corpus illustrates the operations. With only 63 occurrences, it is far too small for a serious power-law estimate: frequency ties and topic effects dominate.
 
