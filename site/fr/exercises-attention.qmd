@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 **Compétences Q/K/V évaluées :** reconnaître les rôles, reconstruire les projections, expliquer leur apprentissage, prédire les effets d'une modification de paramètres et transférer le raisonnement à l'attention croisée. La somme pondérée existante reste l'exercice de calcul de l'agrégation.
 
-**Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. AT-D dérive la variance des scores bruts sous hypothèses d'indépendance explicites et explique le rôle de 1/√dₖ ; il est indépendant de la progression multi-têtes. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
+**Périmètre actuel :** CA-A (masque causal, décalage des cibles et invariance de préfixe) appartient désormais à la [page d’exercices dédiée au masque causal](exercises/causal-masking.qmd#ca-a-prefix-invariance). Cette collection se concentre sur les exercices Q/K/V et attention : trois activités formatives progressives, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. AT-D dérive la variance des scores bruts sous hypothèses d'indépendance explicites et explique le rôle de 1/√dₖ ; il est indépendant de la progression multi-têtes. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A d'abord, puis AT-A, AT-B et AT-C.
 
 <a id="at-0-scores-to-output"></a>
 
@@ -243,100 +243,11 @@ $$
 </details>
 
 <a id="ca-a-prefix-invariance"></a>
+<a id="ex-attention-causal-prefix-invariance"></a>
 
 ### Exercice — Masque causal et invariance de préfixe {#ex-attention-causal-prefix-invariance}
 
-On considère quatre tokens d'entrée $x_0,x_1,x_2,x_3$. À la position de requête $i$, l'auto-attention causale n'autorise que les clés des positions $j\leq i$.
-
-1. Compléter la matrice $A$ des positions **autorisées**, définie par $A_{ij}=1$ si $j\leq i$, et $A_{ij}=0$ sinon.
-2. En déduire la matrice $B$ des positions **bloquées**. Quelle relation relie $A$ et $B$ ?
-3. Avec des cibles décalées d'un token, la position $i$ prédit $x_{i+1}$. Pourquoi la diagonale de $A$ doit-elle être autorisée sans révéler la cible ?
-4. On ajoute $x_4$ à la fin de la séquence. Quelles sorties aux positions $0,1,2,3$ doivent rester invariantes ? La sortie à la position 4 est-elle soumise à la même contrainte ?
-5. Distinguer le rôle d'un masque causal, d'un masque de padding, d'un masque de loss/cible et d'un masque de frontière de document.
-
-<details>
-<summary>Afficher le corrigé raisonné</summary>
-
-La matrice des positions autorisées est triangulaire inférieure :
-
-$$
-A=
-\begin{pmatrix}
-1&0&0&0\\
-1&1&0&0\\
-1&1&1&0\\
-1&1&1&1
-\end{pmatrix}.
-$$
-
-La matrice bloquée est son complément :
-
-$$
-B=
-\begin{pmatrix}
-0&1&1&1\\
-0&0&1&1\\
-0&0&0&1\\
-0&0&0&0
-\end{pmatrix},
-\qquad B_{ij}=1-A_{ij}.
-$$
-
-La diagonale est autorisée parce qu'à la position $i$, l'entrée contient déjà $x_i$ et le modèle prédit le token suivant $x_{i+1}$. Le décalage entrée-cible est essentiel : le modèle ne reçoit pas $x_{i+1}$ comme entrée à cette position. Sans ce décalage, autoriser la diagonale pourrait exposer la cible.
-
-Après ajout de $x_4$, les sorties des positions $0$ à $3$ doivent rester inchangées dans une auto-attention causale, à paramètres fixes et avec les mêmes entrées/positions pour le préfixe. Les clés et valeurs du futur token $x_4$ sont bloquées pour ces requêtes. La nouvelle position 4 peut, elle, consulter les positions $0$ à $4$ : sa sortie n'est pas tenue d'être identique à celle de la position 3.
-
-Les masques ne sont pas interchangeables :
-
-- **Causal :** interdit à une requête de consulter une clé future.
-- **Padding :** empêche généralement de consulter des positions de clé qui ne correspondent qu'au remplissage ; le traitement des positions de requête paddées dépend de l'implémentation.
-- **Loss/cible :** exclut certaines cibles de l'objectif et de son dénominateur ; il ne définit pas à lui seul la visibilité dans l'attention.
-- **Frontière de document :** peut empêcher l'attention entre documents concaténés ; c'est une politique de préparation/attention, pas une conséquence universelle du masque causal.
-
-Les tests existants apportent deux niveaux de preuve complémentaires :
-
-- **test_scaled_dot_product_attention_causal_invariance** dans **tests/unit/test_attention.py** perturbe une clé et une valeur futures et vérifie que les sorties des positions antérieures restent inchangées. Il teste le primitive d'attention.
-- **test_prefix_invariance_future_tokens_do_not_change_earlier_logits** dans **tests/unit/test_gpt.py** compare les logits d'un préfixe aux logits correspondants d'une séquence prolongée avec le même GPT. Il couvre le chemin complet du modèle pour ce cas.
-
-Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute entrée, architecture ou implémentation. Ils ne testent ni le masquage du padding ni les frontières de documents. Le GPT de référence construit son masque causal en interne et son interface `forward` n'expose pas de masque de padding ; ces politiques restent hors du périmètre de cette implémentation. Pour les exécuter :
-
-~~~bash
-uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
-~~~
-
-
-**Vérification autonome facultative — une tête d'attention.** Le script suivant isole le mécanisme : il perturbe une clé et une valeur futures et vérifie que les sorties du préfixe restent identiques. Il ne remplace pas les tests du modèle complet ci-dessus.
-
-```python
-import numpy as np
-
-T = 4
-mask = np.full((T, T), -np.inf)
-mask[np.tril_indices(T)] = 0.0
-
-rng = np.random.default_rng(42)
-Q = rng.standard_normal((T, 4))
-K = rng.standard_normal((T, 4))
-V = rng.standard_normal((T, 4))
-
-def causal_attention(q, k, v, additive_mask):
-    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + additive_mask
-    scores = scores - np.max(scores, axis=-1, keepdims=True)
-    weights = np.exp(scores)
-    weights[~np.isfinite(additive_mask)] = 0.0
-    weights /= weights.sum(axis=-1, keepdims=True)
-    return weights @ v
-
-reference = causal_attention(Q, K, V, mask)
-K_changed, V_changed = K.copy(), V.copy()
-K_changed[3] += 100.0
-V_changed[3] += 100.0
-altered = causal_attention(Q, K_changed, V_changed, mask)
-
-assert np.allclose(reference[:3], altered[:3])
-assert not np.allclose(reference[3], altered[3])
-```
-</details>
+Cet exercice se trouve désormais sur la [page d’exercices dédiée au masque causal](exercises/causal-masking.qmd#ca-a-prefix-invariance), qui centralise les questions, le corrigé et l’interprétation des tests.
 
 <a id="exercice-at-a-calculer-une-attention-multi-tetes-a-la-main"></a>
 
