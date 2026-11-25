@@ -155,7 +155,9 @@ Le paramètre $\beta$ décale le rang. Lorsque $\beta=0$, on retrouve la loi de 
 
 $$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$$
+$
+
+Le facteur d'échelle $C$ s'annule dans ce rapport : les courbes comparent la forme des distributions, indépendamment de leur niveau absolu de fréquence.
 
 Ainsi, $\beta$ modifie surtout la courbure autour des premiers rangs ; il ne représente ni le nombre de mots-outils, ni une cause linguistique. Il ajoute un paramètre qui peut améliorer l'ajustement de certaines données, mais pas nécessairement de toutes. Il faut comparer les résidus et la stabilité des paramètres, idéalement sur des données réservées, plutôt que préférer automatiquement le modèle le plus flexible.
 
