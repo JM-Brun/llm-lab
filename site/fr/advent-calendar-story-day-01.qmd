@@ -153,7 +153,7 @@ La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de
 | Espagnol | 353 104 | 10 057 | 1,39 | 0,994 |
 | Japonais | 941 006 | 25 648 | 1,30 | 0,993 |
 
-*Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. La corrélation est celle entre fréquences observées et fréquences attendues par le modèle, et non une corrélation entre rang et fréquence.*
+*Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. $\\alpha$ est l'exposant et $\\beta$ le décalage de la loi de Zipf-Mandelbrot. La corrélation est celle entre fréquences observées et fréquences attendues par le modèle, et non une corrélation entre rang et fréquence.*
 
 Ces résultats montrent deux choses :
 
