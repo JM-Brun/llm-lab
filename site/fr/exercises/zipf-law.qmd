@@ -43,7 +43,7 @@ Essayez de répondre à ces questions avant d'ouvrir les réponses.
 
 ## Entraînement approfondi
 
-La [collection d'exercices sur la loi de Zipf](../exercises-zipf-law.qmd#zipf-law) contient sept exercices corrigés sur les calculs rang-fréquence, l'interprétation log-log, les fréquences lexicales et tokeniques et les limites empiriques.
+La [collection d'exercices sur la loi de Zipf](../exercises-zipf-law.qmd#zipf-law) contient onze exercices corrigés sur les calculs rang-fréquence, l'interprétation log-log, les fréquences lexicales et tokeniques et les limites empiriques.
 
 ::: {.language-switch}
 **Langue :** [Français](zipf-law.qmd) · [English](../../en/exercises/zipf-law.qmd)
