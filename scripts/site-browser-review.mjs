@@ -1179,7 +1179,7 @@ async function runCase(testCase, caseIndex) {
             .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname)
             .filter(path => /\/revision-[^/]+\.html$/.test(path))
         )];
-        const revisionLanguages = revisionPaths.every(path => path.startsWith(`/${language}/`));
+        const revisionLanguages = revisionPaths.every(path => path.includes(`/${language}/revision-`));
         const learningMapPaths = [...document.querySelectorAll('main a[href*="learning-map.html"]')]
           .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname);
         const languagePaths = [...new Set(
