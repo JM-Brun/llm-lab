@@ -35,7 +35,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 La réponse se construit un token après l'autre. À partir du texte déjà écrit, le **modèle de langage** calcule des probabilités pour le prochain token. Une règle de décodage sélectionne un token, qui rejoint le texte avant le calcul suivant. Un modèle de langage entraîné à grande échelle est un **grand modèle de langage** (*large language model*, LLM).
 
-Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. Le LLM est le modèle qu’interroge [l’assistant conversationnel](#model-to-conversational-system). Le panorama commence par suivre le calcul du modèle.
+Le préfixe est « C'est une bonne situation, ça, scribe ? ». Pour suivre le mécanisme, prenons une continuation illustrative commençant par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Cette association sert de fil rouge pédagogique, pas de transcription d'une génération réelle. Les valeurs numériques qui suivent sont fictives. Le LLM est le modèle qu’interroge [l’assistant conversationnel](#model-to-conversational-system). Le panorama commence par suivre le calcul du modèle.
 :::
 
 ::: {.callout-tip title="L'idée à retenir" #revision-summary}
@@ -46,11 +46,11 @@ Un modèle estime une distribution du prochain token. Elle sert à générer, sc
 **Durée indicative : 8–10 minutes.**
 
 **À la fin de cette page, vous saurez :**
-- expliquer la prédiction du prochain token et pourquoi une suite probable n'est pas nécessairement vraie ;
-- distinguer architecture, apprentissage des paramètres et utilisation du modèle ;
-- différencier génération, scoring et apprentissage ;
-- repérer où l'information est conservée, récupérée, transmise et exploitée ;
-- expliquer pourquoi un objectif général peut soutenir plusieurs tâches, sans garantir leur réussite.
+- suivre deux tours de prédiction et de réinjection avec des paramètres fixes ;
+- expliquer le rôle du préfixe, de la distribution du prochain token et des paramètres ;
+- distinguer les trois usages de cette distribution : génération, scoring d'une cible observée et apprentissage.
+
+Les sections sur le transfert, l'information externe et les systèmes conversationnels élargissent ensuite le panorama. Pour poursuivre le parcours, retenez d'abord le mécanisme de prédiction et la distinction entre ses trois usages.
 :::
 
 ## Ce que le modèle prédit {#what-model-predicts}
@@ -106,9 +106,9 @@ Une distribution calculée peut servir à produire une suite, à scorer une suit
 
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
-- **Générer :** choisir un token, l'ajouter au contexte et recommencer ; le *prefill* traite le prompt, le *decode* produit les tokens ([génération](generation.qmd)).
-- **Scorer :** calculer la probabilité d'une séquence observée, sa **vraisemblance** ([vraisemblance](vraisemblance.qmd)).
-- **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* utilise les tokens réels ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
+- **Générer :** traiter d'abord le prompt (*prefill*), puis choisir un token, l'ajouter au contexte et recommencer pendant le décodage (*decode*) ([génération](generation.qmd)).
+- **Scorer :** à chaque position, conditionner le calcul sur le préfixe observé et lire la probabilité du token cible pour calculer la **vraisemblance** de la séquence ; aucun token n'est sélectionné et les paramètres restent fixes ([vraisemblance](vraisemblance.qmd)).
+- **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* fournit au modèle les tokens précédents observés comme contexte ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
 
 Pour une probabilité de 0,6, la surprise vaut $-\ln(0{,}6)\approx 0{,}511$ nat. L'[entropie](entropy.qmd) est la surprise moyenne attendue. Le scoring mesure la vraisemblance d'une cible ou d'une suite. L'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
 
@@ -144,6 +144,10 @@ Pour décrire un modèle, séparons trois questions :
 
 Le **pré-entraînement** apprend des régularités à partir de grands corpus. Pour un GPT, les tokens du texte servent de cibles : cet apprentissage est généralement *auto-supervisé*. Le modèle obtenu avant adaptation est souvent appelé *base model*. Un **modèle de fondation** (*foundation model*) est une notion plus large : un modèle entraîné à grande échelle sur des données générales et adaptable à de nombreuses tâches, parfois au-delà du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Le post-entraînement peut ensuite adapter le comportement ou les paramètres, mais il n'est pas obligatoire ([post-entraînement](post-training.qmd)).
 
+[Questions et exercices associés au panorama](exercises/llm-overview.qmd).
+
+::: {.callout-note collapse="true" title="Élargir le panorama : transfert et applications"}
+
 ## Pourquoi la prédiction peut-elle soutenir des tâches variées ? {#transformers-changed}
 
 Le pré-entraînement ne lui enseigne pas explicitement chaque tâche qu'il pourra ensuite réaliser. En parcourant de grands corpus, le modèle apprend des régularités de langue, des relations entre éléments et des représentations qui peuvent être réutilisées lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis ou lorsque les paramètres sont adaptés. C'est le **transfert d'apprentissage** : un objectif général peut soutenir des tâches qui n'étaient pas des objectifs explicites d'entraînement. Ce transfert dépend toutefois des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique ([évolution des LLM](llm-evolution.qmd), [émergence](emergence.qmd), [limites](llm-limits.qmd)).
@@ -171,18 +175,16 @@ Un assistant est un **système construit autour d'un modèle**. L'application fo
 
 ## Choisir une approche {#choosing-an-approach}
 
-Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir du contexte et des documents externes, adapter ses paramètres ou lui faire mobiliser des outils. Ces approches peuvent se combiner. Le choix dépend de critères mesurés : qualité, robustesse, fraîcheur des informations, coût, latence, confidentialité, provenance et maintenance. Quelques prompts réussis ne constituent pas une évaluation ([post-entraînement](post-training.qmd), [RAG et mémoire](rag-memory-boundaries.qmd)).
-
 [Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
 
-[Questions et exercices associés au panorama](exercises/llm-overview.qmd).
+Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir du contexte et des documents externes, adapter ses paramètres ou lui faire mobiliser des outils. Ces approches peuvent se combiner. Le choix dépend de critères mesurés : qualité, robustesse, fraîcheur des informations, coût, latence, confidentialité, provenance et maintenance. Quelques prompts réussis ne constituent pas une évaluation ([post-entraînement](post-training.qmd), [RAG et mémoire](rag-memory-boundaries.qmd)).
 
-::: {.callout-tip title="Pour approfondir"}
 - **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).
 - **Calcul et apprentissage :** [génération](generation.qmd), [fondements mathématiques](mathematical-foundations.qmd) et [post-entraînement](post-training.qmd).
 - **Contexte et information externe :** [ingénierie du contexte](context-engineering.qmd), [RAG et mémoire](rag-memory-boundaries.qmd) et [récupération documentaire](document-retrieval.qmd).
 - **Compression et information :** [entropie](entropy.qmd) et [fiche de révision sur compression et LLM](compression-revision.qmd).
 - **Voir une vue d'ensemble de bout en bout :** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, vidéo en anglais, environ 3 h 31) ; une ressource d'orientation, pas un substitut aux leçons détaillées.
+
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
