@@ -1,5 +1,5 @@
 ---
-title: "Why does the word “je” appear so often?"
+title: "Why does the word “I” appear so often?"
 subtitle: "Zipf’s law and word distributions across languages"
 description-meta: "Build a corpus, distinguish types from occurrences, explore Zipf’s law, its history, uses and limitations."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
