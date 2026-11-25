@@ -45,7 +45,7 @@ We use the following conventions:
 - convert to lowercase;
 - remove punctuation as a counted unit;
 - preserve accents and other letters;
-- retain internal apostrophes: “I’m” and “that’s” each count as one orthographic unit;
+- retain apostrophes inside contractions when they occur;
 - do not lemmatize: inflected forms remain distinct;
 - treat hyphens as separators.
 
