@@ -9,7 +9,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-zipf-law"
-summary: "Sept exercices formatifs sur les calculs rang-fréquence, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et les explications proposées."
+summary: "Onze exercices formatifs sur les calculs rang-fréquence, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et les explications proposées."
 scope: "Propose un entraînement approfondi et corrigé sur les calculs rang-fréquence, les graphiques log-log, les comptes dépendant du tokenizer, l'incertitude des rangs empiriques, la stabilité des exposants et la distinction entre description et mécanisme."
 purpose: "Calculer, interpréter et évaluer de manière critique les régularités rang-fréquence sans confondre statistiques lexicales, statistiques de tokens et explications causales."
 suggested_route:
@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-
 
 **Prérequis :** [la leçon sur la loi de Zipf](advent-calendar-story-day-01.qmd), [texte et données](text-data.qmd) et [stratégies de tokenisation](tokenization-strategies.qmd).
 
-**Périmètre :** sept exercices couvrent les calculs rang-fréquence, l'interprétation log-log, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et la comparaison d'explications.
+**Périmètre :** onze exercices couvrent les calculs rang-fréquence, l'interprétation log-log, les unités lexicales et tokeniques, l'incertitude sur les rangs, la qualité d'ajustement et la comparaison d'explications.
 
 ### Calculer une fréquence à partir du rang {#ex-zipf-rank-frequency}
 
@@ -214,6 +214,120 @@ La revue critique de Piantadosi (2014) souligne qu'aucune explication disponible
 6. Un terme trop général distingue mal les référents ; un terme trop spécifique ne s'applique qu'à peu de situations. Le modèle propose qu'un équilibre entre pouvoir discriminant et réutilisation contribue à la fréquence. C'est une hypothèse du modèle, pas une loi universelle.
 
 Ces deux travaux proposent des cadres différents ; ils ne constituent pas une explication consensuelle unique.
+
+</details>
+
+### Comparer deux corpus français et anglais sans comparer les langues {#ex-zipf-fr-en-corpora}
+
+Une étude de parole adressée à l'enfant rapporte les résultats suivants pour deux corpus agrégés :
+
+| Corpus | Occurrences | Types | $\alpha$ | $\beta$ | Corrélation de Pearson |
+|---|---:|---:|---:|---:|---:|
+| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
+| Français | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
+
+1. Quel corpus contient le plus d'occurrences et le plus de types ?
+2. Calculez le rapport types/occurrences (TTR) de chaque corpus. Pourquoi ce rapport ne suffit-il pas à conclure que le français serait lexicalement plus diversifié ?
+3. Les exposants $\alpha$ sont proches. Peut-on en déduire qu'ils sont des constantes propres aux langues ?
+4. La corrélation de Pearson est plus élevée pour le corpus français. Peut-on conclure qu'il suit « mieux » une loi de Zipf ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Le corpus anglais est plus grand et contient davantage de types en valeur absolue.
+2. Anglais : $27\\,476/6\\,311\\,249\\approx0{,}00435$, soit environ $0{,}44\\%$. Français : $19\\,327/1\\,540\\,284\\approx0{,}01255$, soit environ $1{,}25\\%$. Le TTR brut dépend fortement de la longueur : les corpus n'ont pas la même taille et ne sont pas des échantillons de longueur comparable. Il ne permet donc pas de classer directement leur diversité lexicale.
+3. Non. Les paramètres décrivent les distributions de ces corpus particuliers, dans un contexte de parole adressée à l'enfant. Ils dépendent aussi de la taille, de la composition et des conventions de comptage.
+4. Non. Une corrélation élevée ne prouve ni une loi exacte ni une meilleure adéquation selon tous les critères. Les valeurs ne suffisent pas à comparer les langues en général.
+
+**Conclusion :** on compare ici deux corpus d'un même protocole d'étude, pas deux langues dans leur totalité. Une comparaison défendable exige des corpus comparables et une analyse de sensibilité à leur taille et à leurs unités.
+
+</details>
+
+### Concevoir une comparaison de discours politiques {#ex-zipf-political-discourse}
+
+Vous souhaitez comparer les distributions lexicales de transcriptions de discours politiques français issus de deux campagnes électorales. Le corpus A contient 12 discours et environ 60 000 occurrences ; le corpus B contient 8 discours et environ 42 000 occurrences. Les campagnes, les thèmes dominants et les sources de transcription diffèrent.
+
+1. Pourquoi comparer directement les nombres de types ou les exposants estimés serait-il fragile ?
+2. Définissez les conventions de comptage à fixer avant l'analyse : unités, casse, ponctuation, apostrophes, lemmatisation, noms propres et citations.
+3. Proposez un protocole pour limiter les effets de longueur, de thème, de période et de locuteur.
+4. À quelle unité faut-il rééchantillonner pour estimer l'incertitude : occurrence, phrase ou discours ? Justifiez.
+5. Quelles conclusions seraient abusives à partir d'une différence de $\alpha$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Les corpus diffèrent en taille, en nombre de discours, en sujets et en provenance. Ces facteurs peuvent modifier les fréquences sans refléter une différence stable de style politique.
+2. Il faut définir une unité lexicale cohérente et identique dans les deux corpus. Il faut documenter la normalisation, décider si les formes fléchies restent distinctes, et traiter de la même façon les noms propres, citations, slogans et segments répétés. Les choix doivent être conservés pour permettre la reproduction.
+3. Comparer des sous-corpus de longueurs proches ou utiliser une rarefaction contrôlée ; apparier ou stratifier les discours par période, thème et locuteur ; vérifier la sensibilité aux segments répétés ; publier les métadonnées et les exclusions. Ne pas supprimer les mots-outils sans justifier ce changement d'objet statistique.
+4. Le discours est généralement l'unité de rééchantillonnage la plus défendable : les occurrences d'un même discours ne sont pas indépendantes et partagent un thème, un locuteur et un contexte. Un bootstrap par occurrence sous-estimerait potentiellement cette dépendance.
+5. Une différence de $\alpha$ ne prouve ni une idéologie, ni une stratégie persuasive, ni une richesse lexicale supérieure. Elle décrit une différence de concentration rang-fréquence dans les corpus et sous les conventions choisies. Il faut des analyses complémentaires pour soutenir une interprétation linguistique ou politique.
+
+</details>
+
+### Estimer les paramètres sur un jeu de données synthétique {#ex-zipf-estimate-parameters}
+
+Le tableau suivant contient des fréquences synthétiques arrondies. Il ne provient pas d'un corpus réel.
+
+| Rang $r$ | Fréquence $f(r)$ |
+|---:|---:|
+| 1 | 261,2 |
+| 2 | 204,3 |
+| 3 | 167,2 |
+| 5 | 121,8 |
+| 10 | 71,4 |
+| 20 | 38,1 |
+| 50 | 15,2 |
+| 100 | 7,3 |
+
+On veut comparer le modèle de Zipf $f(r)=Cr^{-\\alpha}$ et le modèle de Zipf–Mandelbrot $f(r)=C(r+\\beta)^{-\\alpha}$.
+
+1. Ajustez les deux modèles par moindres carrés non linéaires, en minimisant dans les deux cas la même somme des carrés des résidus sur les fréquences brutes.
+2. Relevez les paramètres estimés et la somme des carrés des résidus pour chaque modèle.
+3. Pourquoi ne faut-il pas comparer directement ces résultats à une régression linéaire effectuée sur les logarithmes ?
+4. Que signifie le fait que le second modèle retrouve ici des paramètres proches de $C=1\\,200$, $\alpha=1{,}1$ et $\beta=3$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Avec un ajustement non linéaire borné sur les fréquences brutes, les valeurs attendues sont approximativement :
+
+| Modèle | Paramètres estimés | Somme des carrés des résidus |
+|---|---|---:|
+| Zipf | $C\\approx277{,}7$, $\\alpha\\approx0{,}56$ | $1\\,556{,}6$ |
+| Zipf–Mandelbrot | $C\\approx1\\,201{,}5$, $\\alpha\\approx1{,}101$, $\\beta\\approx3{,}001$ | $0{,}0016$ |
+
+1. Les deux ajustements doivent utiliser la même fonction objectif, ici $\\sum_i(f_i-\\hat f(r_i))^2$ sur les fréquences brutes.
+2. Les valeurs peuvent varier légèrement selon l'optimiseur, les valeurs initiales et les tolérances numériques. Les résultats du modèle de Zipf–Mandelbrot retrouvent les paramètres ayant servi à générer les données, à l'arrondi près.
+3. Une régression sur les logarithmes minimise des écarts dans l'espace logarithmique : elle ne donne pas le même poids aux erreurs et ne minimise pas la même quantité. Les paramètres estimés dépendent donc de l'objectif choisi.
+4. Le jeu synthétique a été généré à partir d'une loi de Zipf–Mandelbrot avec ces paramètres. Cela vérifie que la procédure peut retrouver un modèle connu dans un cas contrôlé ; cela ne prouve pas que ce modèle convient à un corpus réel.
+
+</details>
+
+### Critiquer un ajustement avant de choisir un modèle {#ex-zipf-critique-fit}
+
+Une équipe ajuste deux modèles au même corpus, sur la même plage de rangs, par régression en coordonnées log-log :
+
+| Modèle | $R^2$ sur l'échantillon d'ajustement |
+|---|---:|
+| Zipf | 0,997 |
+| Zipf–Mandelbrot | 0,999 |
+
+L'équipe choisit Zipf–Mandelbrot et conclut que « le langage suit la loi de Zipf–Mandelbrot ».
+
+1. Que montre réellement la différence de $R^2$ ? Pourquoi l'ajout d'un paramètre peut-il améliorer mécaniquement l'ajustement sur l'échantillon ?
+2. Que faut-il examiner dans les résidus en fonction du rang ?
+3. Pourquoi faut-il documenter la plage de rangs retenue et traiter séparément la longue traîne ?
+4. Comment évaluer la stabilité des paramètres et la capacité de généralisation ?
+5. Quelle conclusion prudente peut-on tirer si les deux modèles ont des performances comparables sur des données de validation ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Le gain de $R^2$ indique seulement que le second modèle décrit un peu mieux les données transformées sur cet échantillon et avec cette fonction objectif. Un modèle plus flexible peut améliorer l'ajustement sans apporter une meilleure explication ni de meilleures prédictions.
+2. Des résidus structurés selon le rang signalent un défaut systématique : courbure non capturée, rupture de pente ou écart concentré dans les premiers rangs ou la queue. Une valeur globale de $R^2$ peut masquer ces motifs.
+3. Les premiers rangs et les rangs rares n'ont pas la même précision. Modifier la plage retenue peut changer les paramètres. Il faut annoncer le seuil, justifier le domaine d'ajustement et examiner la sensibilité aux rangs rares.
+4. Utiliser des intervalles d'incertitude, des rééchantillonnages adaptés à la structure du corpus et une validation sur des textes ou documents non utilisés pour l'ajustement. Vérifier également la sensibilité aux conventions de comptage et à la fonction objectif.
+5. Si le gain hors échantillon est négligeable, le modèle le plus simple peut être préférable par parcimonie. Il faut rapporter les limites et l'incertitude, pas transformer un ajustement empirique en loi universelle.
 
 </details>
 
