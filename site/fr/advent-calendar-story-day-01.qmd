@@ -145,15 +145,15 @@ Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution
 
 La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
-| Langue | Occurrences lexicales | Types | Exposant $\alpha$ | Corrélation observé / attendu |
-|---|---:|---:|---:|---:|
-| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 0,970 |
-| Français | 1 540 284 | 19 327 | 1,53 | 0,990 |
-| Allemand | 2 168 002 | 37 018 | 1,42 | 0,998 |
-| Espagnol | 353 104 | 10 057 | 1,39 | 0,994 |
-| Japonais | 941 006 | 25 648 | 1,30 | 0,993 |
+| Langue | Occurrences lexicales | Types | Exposant $\alpha$ | Décalage $\beta$ | Corrélation observé / attendu |
+|---|---:|---:|---:|---:|---:|
+| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
+| Français | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
+| Allemand | 2 168 002 | 37 018 | 1,42 | 12,69 | 0,998 |
+| Espagnol | 353 104 | 10 057 | 1,39 | 9,96 | 0,994 |
+| Japonais | 941 006 | 25 648 | 1,30 | 7,12 | 0,993 |
 
-*Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. $\\alpha$ est l'exposant et $\\beta$ le décalage de la loi de Zipf-Mandelbrot. La corrélation est celle entre fréquences observées et fréquences attendues par le modèle, et non une corrélation entre rang et fréquence.*
+*Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. $\alpha$ est l'exposant et $\beta$ le décalage de la loi de Zipf-Mandelbrot. La corrélation est celle entre fréquences observées et fréquences attendues par le modèle, et non une corrélation entre rang et fréquence.*
 
 Ces résultats montrent deux choses :
 
