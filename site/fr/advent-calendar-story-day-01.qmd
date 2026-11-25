@@ -1,5 +1,5 @@
 ---
-title: "Pourquoi le mot « de » revient-il si souvent ?"
+title: "Pourquoi le mot « je » revient-il si souvent ?"
 subtitle: "La loi de Zipf, du corpus d’Otis aux distributions de mots dans plusieurs langues"
 description-meta: "Construire un corpus, distinguer types et occurrences, observer la loi de Zipf, son histoire, ses usages et ses limites."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
@@ -83,7 +83,7 @@ Le tableau donne les groupes de fréquences les plus élevés. Les intervalles d
 | 15 formes | 2 | 23–37 |
 | 88 formes | 1 | 38–125 |
 
-La distribution est déjà très déséquilibrée : « je » apparaît 13 fois, alors que 88 types ne sont présents qu'une seule fois. C'est précisément le type d'asymétrie qui motive l'étude des distributions rang-fréquence. Mais 216 occurrences restent un échantillon minuscule pour estimer de manière fiable un exposant de loi de puissance.
+La distribution est déjà très déséquilibrée : « je » apparaît 13 fois, alors que 88 types ne sont présents qu'une seule fois. Mais il faut interpréter ce résultat : Otis parle de lui-même, à la première personne. La fréquence élevée de « je » reflète donc aussi le point de vue et le genre du passage, pas seulement une régularité générale du français. C'est un exemple concret de l'effet du corpus sur les rangs. Ces 216 occurrences restent par ailleurs un échantillon minuscule pour estimer de manière fiable un exposant de loi de puissance.
 
 Le rang n'est pas une propriété intrinsèque d'un mot. Il dépend du corpus, de la langue, de la période, du genre de texte, de sa taille, de son contenu et des conventions de normalisation. Dans un texte consacré à l'Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare.
 
@@ -218,7 +218,7 @@ Cela aide à comprendre pourquoi les tokenizers modernes utilisent souvent des u
 
 ### 5.4 Évaluer les distributions produites par un modèle
 
-On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération.
+On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération. Pour que la comparaison soit interprétable, il faut contrôler la langue, la longueur des textes, le tokenizer, la normalisation et les paramètres d'échantillonnage. Une courbe rang-fréquence ne constitue jamais, à elle seule, une mesure suffisante de la qualité d'un texte ou d'un modèle.
 
 Des travaux récents étudient même les liens entre distribution des tokens, choix de vocabulaire et performances en aval. Il s'agit d'un axe de recherche, pas encore d'une règle universelle de conception. Il faut en particulier distinguer la distribution des mots dans un corpus de celle des tokens produits par un tokenizer : le découpage en sous-mots change l'objet statistique étudié.
 
