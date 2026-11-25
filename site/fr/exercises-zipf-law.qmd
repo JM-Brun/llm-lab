@@ -235,7 +235,7 @@ Une étude de parole adressée à l'enfant rapporte les résultats suivants pour
 <summary>Afficher le corrigé</summary>
 
 1. Le corpus anglais est plus grand et contient davantage de types en valeur absolue.
-2. Anglais : $27\\,476/6\\,311\\,249\\approx0{,}00435$, soit environ $0{,}44\\%$. Français : $19\\,327/1\\,540\\,284\\approx0{,}01255$, soit environ $1{,}25\\%$. Le TTR brut dépend fortement de la longueur : les corpus n'ont pas la même taille et ne sont pas des échantillons de longueur comparable. Il ne permet donc pas de classer directement leur diversité lexicale.
+2. Anglais : $27\,476/6\,311\,249\approx0{,}00435$, soit environ $0{,}44\%$. Français : $19\,327/1\,540\,284\approx0{,}01255$, soit environ $1{,}25\%$. Le TTR brut dépend fortement de la longueur : les corpus n'ont pas la même taille et ne sont pas des échantillons de longueur comparable. Il ne permet donc pas de classer directement leur diversité lexicale.
 3. Non. Les paramètres décrivent les distributions de ces corpus particuliers, dans un contexte de parole adressée à l'enfant. Ils dépendent aussi de la taille, de la composition et des conventions de comptage.
 4. Non. Une corrélation élevée ne prouve ni une loi exacte ni une meilleure adéquation selon tous les critères. Les valeurs ne suffisent pas à comparer les langues en général.
 
@@ -279,12 +279,12 @@ Le tableau suivant contient des fréquences synthétiques arrondies. Il ne provi
 | 50 | 15,2 |
 | 100 | 7,3 |
 
-On veut comparer le modèle de Zipf $f(r)=Cr^{-\\alpha}$ et le modèle de Zipf–Mandelbrot $f(r)=C(r+\\beta)^{-\\alpha}$.
+On veut comparer le modèle de Zipf $f(r)=Cr^{-\alpha}$ et le modèle de Zipf–Mandelbrot $f(r)=C(r+\beta)^{-\alpha}$. Utilisez un optimiseur non linéaire borné avec $C>0$, $\alpha>0$ et $\beta\geq0$ ; pour rendre le calcul reproductible, initialisez Zipf en $(C,\alpha)=(200,1)$ et Zipf–Mandelbrot en $(C,\alpha,\beta)=(1\,000,1,1).
 
 1. Ajustez les deux modèles par moindres carrés non linéaires, en minimisant dans les deux cas la même somme des carrés des résidus sur les fréquences brutes.
 2. Relevez les paramètres estimés et la somme des carrés des résidus pour chaque modèle.
 3. Pourquoi ne faut-il pas comparer directement ces résultats à une régression linéaire effectuée sur les logarithmes ?
-4. Que signifie le fait que le second modèle retrouve ici des paramètres proches de $C=1\\,200$, $\alpha=1{,}1$ et $\beta=3$ ?
+4. Que signifie le fait que le second modèle retrouve ici des paramètres proches de $C=1\,200$, $\alpha=1{,}1$ et $\beta=3$ ?
 
 <details>
 <summary>Afficher le corrigé</summary>
@@ -293,10 +293,10 @@ Avec un ajustement non linéaire borné sur les fréquences brutes, les valeurs 
 
 | Modèle | Paramètres estimés | Somme des carrés des résidus |
 |---|---|---:|
-| Zipf | $C\\approx277{,}7$, $\\alpha\\approx0{,}56$ | $1\\,556{,}6$ |
-| Zipf–Mandelbrot | $C\\approx1\\,201{,}5$, $\\alpha\\approx1{,}101$, $\\beta\\approx3{,}001$ | $0{,}0016$ |
+| Zipf | $C\approx277{,}7$, $\alpha\approx0{,}56$ | $1\,556{,}6$ |
+| Zipf–Mandelbrot | $C\approx1\,201{,}5$, $\alpha\approx1{,}101$, $\beta\approx3{,}001$ | $0{,}0016$ |
 
-1. Les deux ajustements doivent utiliser la même fonction objectif, ici $\\sum_i(f_i-\\hat f(r_i))^2$ sur les fréquences brutes.
+1. Les deux ajustements doivent utiliser la même fonction objectif, ici $\sum_i(f_i-\hat f(r_i))^2$ sur les fréquences brutes.
 2. Les valeurs peuvent varier légèrement selon l'optimiseur, les valeurs initiales et les tolérances numériques. Les résultats du modèle de Zipf–Mandelbrot retrouvent les paramètres ayant servi à générer les données, à l'arrondi près.
 3. Une régression sur les logarithmes minimise des écarts dans l'espace logarithmique : elle ne donne pas le même poids aux erreurs et ne minimise pas la même quantité. Les paramètres estimés dépendent donc de l'objectif choisi.
 4. Le jeu synthétique a été généré à partir d'une loi de Zipf–Mandelbrot avec ces paramètres. Cela vérifie que la procédure peut retrouver un modèle connu dans un cas contrôlé ; cela ne prouve pas que ce modèle convient à un corpus réel.
