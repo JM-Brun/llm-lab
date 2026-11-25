@@ -71,13 +71,13 @@ def generate(
         prompt_ids: 1D integer array of prompt ids, with
             1 <= length <= context_length and values in [0, vocab_size).
         max_new_tokens: Number of tokens to generate (>= 0).
-        temperature: Finite sampling temperature (> 0); it only affects sampling,
-            but is validated in both modes so that a latent invalid value
-            cannot hide behind greedy decoding.
+        temperature: Finite real sampling temperature (> 0); booleans are
+            rejected. It only affects sampling, but is validated in both
+            modes so that a latent invalid value cannot hide behind greedy decoding.
         greedy: If True, select the argmax token at each step.
         top_k: Optional per-step truncation for sampling: keep only the
-            ``k`` most probable tokens (integer >= 1). Validated in both
-            modes but ignored when ``greedy`` is True.
+            ``k`` most probable tokens (integer >= 1, not a boolean). Validated
+            in both modes but ignored when ``greedy`` is True.
         top_p: Optional nucleus truncation for sampling: keep the smallest
             set whose cumulative mass reaches ``p`` (0 < p <= 1).
             Validated in both modes but ignored when ``greedy`` is True.
@@ -92,9 +92,9 @@ def generate(
     Raises:
         ValueError: If the prompt is not a non-empty 1D integer array
             within range, if max_new_tokens is not a non-negative integer, if
-            temperature <= 0, if top_k is provided and is not an integer
-            >= 1, if top_p is provided and lies outside (0, 1], or if
-            no rng is provided for sampling.
+            temperature is not a finite positive real number, if top_k is
+            provided and is not a non-boolean integer >= 1, if top_p is
+            provided and lies outside (0, 1], or if no rng is provided for sampling.
     """
     # Validate the prompt before touching the model: shape, dtype, range.
     ids = np.asarray(prompt_ids)
