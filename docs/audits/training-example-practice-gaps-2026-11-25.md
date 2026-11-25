@@ -28,12 +28,13 @@ The text/data lesson links to its short dedicated companion; that companion link
 
 For the published stream (s=[11,4,4,9,2,7,5]), context length (L=3), stride (S=2):
 
-[
-X=egin{bmatrix}11&4&4\\4&9&2end{bmatrix},qquad
-Y=egin{bmatrix}4&4&9\\9&2&7end{bmatrix}.
-]
+$$
+X=\begin{bmatrix}11&4&4\\4&9&2\end{bmatrix},\qquad
+Y=\begin{bmatrix}4&4&9\\9&2&7\end{bmatrix}.
+$$
 
-Both arrays have shape ((2,3)). Start (a=4) is invalid because the final input token has no successor. With (N=7,L=3), the documented count (1+\lfloor(N-L-1)/S\rfloor) gives 4 windows for (S=1), 2 for (S=2), and 2 for (S=3). The explanation correctly distinguishes stride (window-start displacement) from the one-token target shift.
+
+Both arrays have shape \((2,3)\). Start \(a=4\) is invalid because the final input token has no successor. With \(N=7, L=3\), the documented count \(1+\lfloor(N-L-1)/S\rfloor\) gives 4 windows for \(S=1\), 2 for \(S=2\), and 2 for \(S=3\). The explanation correctly distinguishes stride (window-start displacement) from the one-token target shift.
 
 The code-backed reference `sliding_input_target_pairs` implements this exact contract: one-dimensional integer stream, positive integer context length/stride, complete shifted targets only, no invented padding or EOS. The unit tests cover the worked example, target alignment, non-copied targets, overlap/no-overlap, the minimum complete stream, the count formula, determinism/non-mutation and invalid inputs. The source and tests do not claim to implement packing, padding, loss masks or corpus loading.
 
@@ -113,7 +114,7 @@ The source-level audit does not establish comprehension. Include these tasks in 
 
 ## 6. Integration dependency: causal-masking Practice
 
-The separate CA-A ownership migration is still represented by open PRs #1622 (lesson-side Practice entry points) and #1623 (expanded dedicated causal-masking companions). Their Quarto/browser checks have passed, but the Test suite jobs were cancelled by workflow concurrency and have not yet produced a successful final result. Do not treat the CA-A migration as integrated until the final PR heads have a successful CI result and the PRs are merged. This report does not include or duplicate those changes.
+PR #1622 (lesson-side Practice entry points) is merged after Python CI, Quarto/browser review and secret scanning passed. The expanded dedicated causal-masking companion is tracked by PR #1626; its final-head CI and Quarto/browser checks are still in progress. Do not treat the CA-A migration as integrated until #1626 passes and merges. This report does not include or duplicate those changes.
 
 ## 7. Evidence boundary
 
