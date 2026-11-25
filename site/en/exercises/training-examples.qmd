@@ -126,7 +126,7 @@ With an ordinary causal mask, the representation at the `B1` position can attend
 
 No: `EOS` marks a boundary in the stream, but does not by itself change the attention visibility matrix.
 
-To make B independent of A, at minimum define a block-diagonal attention mask that prevents B positions from attending to A. The target transition must also be handled explicitly: under the mechanical shift above, the output associated with A's `EOS` position is trained to predict `B1`. If that cross-document prediction is not part of the objective, exclude that target from the loss or define a target-construction/reset mechanism that respects the boundary.
+To make B independent of A, define a block-diagonal attention mask so B positions cannot attend to A. If the positional mechanism uses absolute position IDs, also decide whether they reset at the document boundary; the attention mask alone does not specify that. Handle the target transition explicitly too: under the mechanical shift above, the output associated with A's `EOS` position is trained to predict `B1`. If that cross-document prediction is not part of the objective, exclude that target from the loss or define a target-construction/reset mechanism that respects the boundary.
 
 **Conclusion:** the marker, attention mask, and loss mask answer three different questions. Their combination depends on the objective; there is no universal packing or masking policy.
 
@@ -141,7 +141,7 @@ Two examples of different lengths are batched and right-padded to five positions
 | A (3 tokens) | [11, 12, 13, PAD, PAD] | [12, 13, 14, PAD, PAD] |
 | B (5 tokens) | [21, 22, 23, 24, 25] | [22, 23, 24, 25, 26] |
 
-The attention mask is `[1,1,1,0,0]` for A and `[1,1,1,1,1]` for B. The per-position losses before masking are:
+The padding component of the attention mask is `[1,1,1,0,0]` for A and `[1,1,1,1,1]` for B; the causal mask remains a separate constraint. The per-position losses before masking are:
 
 - A: $[0.2, 1.1, 0.7, 4.0, 3.0]$
 - B: $[0.5, 0.4, 0.6, 0.9, 0.6]$
