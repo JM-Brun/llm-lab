@@ -182,7 +182,7 @@ The shape journey, line by line:
 5. Final normalization then `linear`: `(B, T, d) -> (B, T, V)`. Position `t` holds the scores of the token that may follow `t`.
 
 ::: {.callout-tip}
-**Causality is verified, not just declared.** The prefix-invariance test runs the model on a prefix, then on that same prefix extended: the earlier positions' logits must be **identical**. That is the experimental evidence the causal mask does its job.
+**Causality is verified, not just declared.** The prefix-invariance test runs the model on a prefix, then on that same prefix extended: the earlier positions' logits must be **identical**. This is targeted empirical evidence for the tested prefix and configuration, not a proof for every possible input.
 :::
 
 ## Counting parameters: explicit accounting
