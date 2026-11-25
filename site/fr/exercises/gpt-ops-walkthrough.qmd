@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exe
 
 [← Retour à la visite guidée : gpt-ops-walkthrough](../gpt-ops-walkthrough.qmd)
 
-## Exercices
+## Vérifier sa compréhension
 
 1. Un `x` de forme `(3, 7, 12)` traverse `linear` avec `weight` de forme `(8, 12)` : quelle est la forme de sortie ?
 2. Que se passe-t-il si l'on normalise une position dont les 16 activations sont identiques ? Quel rôle joue `eps` ?
