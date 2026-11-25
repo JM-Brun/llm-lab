@@ -292,3 +292,24 @@ The bilingual cosine-similarity pages now distinguish the mathematical definitio
 ### Focused bilingual audit — embedding-space language link (2026-10-28)
 
 A stale note in the English embedding-space lesson claimed that positional encoding/RoPE was available only in French, despite the English counterpart already existing. The lesson now links directly to its English counterpart. This is a targeted navigation correction; the full bilingual semantic and rendered-page reviews remain open.
+
+
+### Causal attention implementation status
+
+<a id="causal-attention-implementation-status"></a>
+
+**Status refresh — 2026-11-25.** The core NumPy reference and causal-invariance evidence are implemented. The 2026-10-28 “not yet demonstrated” list above is a historical snapshot and is superseded for causal attention by the evidence below.
+
+**Completed**
+1. `src/llm_lab/foundations/attention.py` provides `causal_mask` and a small NumPy `scaled_dot_product_attention` reference.
+2. The local contract is explicit: additive mask of exact shape `(T_q, T_k)`; the reference does not accept boolean masks or batch/head broadcasting. The bilingual lesson distinguishes allowed/blocked relations and the API-specific PyTorch boolean conventions.
+3. `tests/unit/test_attention.py` covers lower-triangular structure, invalid lengths and shapes, allowed-key normalization, masked probability mass, single-position behavior, fully masked rows, and future key/value perturbation at the attention-primitive level.
+4. `tests/unit/test_gpt.py::test_prefix_invariance_future_tokens_do_not_change_earlier_logits` checks the full reference GPT path by comparing logits for a prefix with the matching positions of a longer input under the same fixed model.
+5. The FR/EN causal-masking lessons link to the implementation and both test levels. The CA-A formative exercise connects the mask matrix, shifted targets, prefix invariance, mask-type distinctions and interpretation of the two tests; it is owned by the dedicated causal-masking Practice companion.
+
+**Remaining / intentionally deferred**
+- A direct numerical comparison of the local primitive with `torch.nn.functional.scaled_dot_product_attention` on matched inputs, additive-mask semantics, dtype and tolerances has not been added. The existing full-GPT parity test compares the NumPy model with Hugging Face GPT-2's eager attention path; it is not a direct SDPA primitive-parity test. Do not describe it as one.
+- Boolean-mask and batch/head broadcasting support remain outside the local reference API. Do not expand the API solely to match a framework.
+- No performance claim is made; the NumPy implementation is an inspectable reference.
+
+**Acceptance status:** the local mask and end-to-end GPT prefix-invariance checks are implemented and tested. Direct PyTorch SDPA primitive parity remains a separate optional comparison, not a missing prerequisite for the current pedagogical reference. Revisit it only if a concrete cross-framework question requires it.
