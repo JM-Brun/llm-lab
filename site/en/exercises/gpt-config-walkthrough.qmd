@@ -24,13 +24,14 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 
 [← Back to the guided tour: Configuration du GPT](../gpt-config-walkthrough.qmd)
 
-## Exercises
+## Check your understanding
 
 1. What error do you get with `embedding_dim=10, num_heads=4`? And with `embedding_dim=12, num_heads=4`?
 2. How many entries does the position table of a `context_length=256, embedding_dim=64` configuration have?
 
 
 3. For a configuration with `vocab_size=50`, `context_length=32`, `embedding_dim=64`, `num_heads=4`, `num_layers=6`, and `mlp_hidden_dim=256`, match each field to what it controls. What does `seed` change?
+4. Why should `embedding_dim=16.0` and `seed=-1` be rejected even though the first value is numerically integral?
 <details>
 <summary>Show answers and reasoning</summary>
 
@@ -39,6 +40,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 
 
 3. `vocab_size` sets the token-table rows and the last logits dimension (`V`); `context_length` sets the maximum sequence length and position table; `embedding_dim` sets the residual-stream width `d` and projection widths; `num_heads` splits that width into `H` heads of `d/H` columns; `num_layers` sets the number of blocks; `mlp_hidden_dim` sets the MLP's intermediate width. `seed` changes initial values, not shapes or architecture.
+
+4. `16.0` is still a float: an `int` annotation neither converts nor validates a value at runtime. The seed must be a non-negative integer accepted by `default_rng`; `-1` is invalid and should fail at construction.
 </details>
 
 ::: {.language-switch}

@@ -184,3 +184,13 @@ The representations → computation boundary is now audited at article level in 
 After this migration is validated, continue with the next unverified stage boundary from docs/page-audit-inventory.md. Do not reopen the already audited scoring/loss, gradient/training-loop, inference/context-use or text-input/representations groups without a concrete regression.
 
 **Evidence boundary:** successful CI and browser checks validate technical and rendered-page contracts, not comprehension. Manual screen-reader/native-breadcrumb review and the independent learner pilot owned by #447 remain separate work.
+
+
+## Progress snapshot — 2026-11-25 (Build contract audit)
+
+- PR #1611 is merged: text-input → representations Practice ownership is normalized in FR/EN; its Python CI and full Quarto/browser review passed.
+- PR #1613 is merged: representations → Transformer/Q/K/V/attention/causal-mask Practice and Further exploration boundaries are normalized; its final-head Python CI and full Quarto/browser review passed.
+- The next bounded audit now follows the existing 2026-11-08 Build-tour inventory recommendation: compare each guided code tour with its actual source and unit tests.
+- The first configuration-tour pass found a real contract mismatch: `GPTConfig` claimed positive integer dimensions but accepted positive floats at construction, and it deferred invalid seed errors to NumPy's RNG. A focused correction is under validation on branch `audit/build-config-validation-contract`, including FR/EN page and Practice alignment. It is not integrated until final-head CI and Quarto/browser checks pass.
+- Remaining Build audit scope: `gpt_ops.py` → `transformer_block.py` → `gpt.py` → `generate.py`, including their code excerpts, tests, exercises and stated implementation limits. Do not repeat the earlier scientific or architecture audits; check only source-to-page consistency and uncovered test contracts.
+- Manual screen-reader/native-breadcrumb review and the independent learner pilot under #447 remain separate evidence and are not closed by automated checks.

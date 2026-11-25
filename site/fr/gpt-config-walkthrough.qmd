@@ -165,8 +165,10 @@ class GPTConfig:
             "mlp_hidden_dim": self.mlp_hidden_dim,
         }
         for name, value in dimensions.items():
-            if value <= 0:
+            if type(value) is not int or value <= 0:
                 raise ValueError(f"{name} must be a positive integer")
+        if type(self.seed) is not int or self.seed < 0:
+            raise ValueError("seed must be a non-negative integer")
         if self.embedding_dim % self.num_heads != 0:
             raise ValueError("embedding_dim must be divisible by num_heads")
 ```
@@ -175,7 +177,9 @@ Ligne par ligne :
 
 - `__post_init__` est appelé **automatiquement à la fin du constructeur** généré : c'est le dernier moment où l'appelant sait encore quelle valeur est fausse.
 - Le dictionnaire `dimensions` associe chaque valeur à **son nom de champ** ; sans lui, il faudrait six vérications presque identiques.
+- Le type est vérifié explicitement : une annotation `int` ne valide pas une valeur à l'exécution. Seuls les entiers Python sont acceptés ; les flottants positifs, même `16.0`, et les booléens sont rejetés avant d'atteindre NumPy.
 - `raise ValueError(f"{name} ...")` : le message nomme le coupable (`"vocab_size must be a positive integer"`), au lieu d'un `shapes not aligned` lointain.
+- La graine est elle aussi validée : elle doit être un entier non négatif, conformément au contrat de `default_rng`.
 - La **divisibilité** est vérifiée séparément : l'attention multi-têtes découpe le flux résiduel en `H` tranches égales de `d/H` colonnes. Un `d` non divisible rendrait le découpage impossible — l'erreur serait une erreur de forme au milieu de la première passe avant.
 
 ::: {.callout-warning}
@@ -184,7 +188,7 @@ Ligne par ligne :
 
 ## Ce que les tests vérifient
 
-[`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) vérifie exactement les promesses de ce fichier : les dimensions nulles ou négatives sont rejetées avec le bon message, la divisibilité est exigée, l'objet est réellement immuable (`FrozenInstanceError`), et la graine vaut `0` par défaut.
+[`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) vérifie les promesses de ce fichier : les dimensions non entières, nulles ou négatives sont rejetées avec le bon message, la divisibilité est exigée, les graines négatives, non entières ou booléennes sont rejetées, l'objet est réellement immuable (`FrozenInstanceError`), et la graine vaut `0` par défaut.
 
 ## Exercices
 

@@ -1802,3 +1802,28 @@ This is an article-level source and navigation audit. The change is structural a
 ### Follow-up
 
 After this migration is validated, continue the remaining unverified route boundaries from the existing inventory. Do not reopen the already audited scoring/loss, gradient/training-loop, inference/context-use or text-input/representations groups unless a concrete regression is found.
+
+
+## 2026-11-25: Build tour contract audit — GPT configuration
+
+**Scope.** First bounded source-to-page audit of the five guided Build code tours. This entry covers only the first tour pair (`gpt-config-walkthrough.qmd`), its Practice companions, `gpt_config.py` and `test_gpt_config.py`. The remaining four tours are not yet certified by this pass.
+
+### Contract comparison
+
+| Claim / learning outcome | Page and exercise evidence | Implementation and test evidence | Result |
+|---|---|---|---|
+| Six architecture dimensions are positive integers; `embedding_dim` is divisible by `num_heads`. | The FR/EN tour explains the six dimensions, divisibility and early failure. The exercise checks an incompatible and a compatible head split. | `GPTConfig.__post_init__` originally checked only `value <= 0` and divisibility. `test_gpt_config.py` covered zero dimensions and divisibility, but not runtime types. | **Gap found:** positive floats such as `embedding_dim=16.0` passed construction because Python type annotations are not runtime checks. The failure could then occur later when NumPy needs integer dimensions. The original “positive integer” promise was stronger than the actual validator. |
+| `seed` controls initialization values, not model shapes; default is zero. | Both tours and their exercises describe the seed as an initialization control with a default of zero. | `GPT` passes `config.seed` to `np.random.default_rng`; the configuration originally did not validate seed type or non-negativity. | **Gap found:** a negative or non-integer seed was not rejected by `GPTConfig` itself; it failed later when the RNG was constructed. |
+| Configuration is immutable. | Both tours state that the object is frozen. | `@dataclass(frozen=True)` and `test_config_is_immutable` confirm this contract. | **Confirmed.** |
+| Field-to-shape mapping. | The interactive dimension map and table connect V, T, d, H, L and MLP width to model arrays and operations. | `GPTConfig`, `TransformerBlock` and `GPT` use the corresponding dimensions; the block slices d into H heads and the model constructs `(V,d)` and `(T,d)` embeddings. | **Confirmed for the inspected contracts.** |
+
+### Correction applied in the focused branch
+
+- `GPTConfig` now validates all six dimensions as positive integral values at construction, explicitly rejecting booleans and floats (including `16.0`). The runtime check uses exact Python `int` values, matching the declared field types; booleans and NumPy scalar types are not silently coerced.
+- `seed` is now validated as a non-negative integral value, excluding booleans, before it reaches `default_rng`.
+- Unit tests cover positive floats, booleans, negative/non-integer seeds, and accepted NumPy integer scalars.
+- FR/EN tour excerpts, explanations, test descriptions and dedicated Practice companions now state and exercise the same runtime contract.
+
+### Evidence boundary and next action
+
+This is a code/page/test contract audit, not a full audit of the remaining Build tours or a rendered browser review. The correction must pass the existing Python quality/test suite and full Quarto/browser workflow on its final PR head. Continue with `gpt_ops.py` and its tests next, then the block, assembled GPT and generation tours; reuse this same claim → page → implementation → test method. Do not treat the remaining tour pages as audited merely because they link to tested modules.
