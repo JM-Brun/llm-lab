@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import lru_cache
 from pathlib import Path
 
 import yaml
@@ -8,14 +9,18 @@ ROOT = Path(__file__).resolve().parents[1]
 EXTRACTIONS = ROOT / "data" / "extractions"
 
 
+@lru_cache(maxsize=None)
 def _load(path: Path) -> dict:
+    """Load each immutable corpus document once during this test process."""
     with path.open(encoding="utf-8") as stream:
         value = yaml.safe_load(stream)
     assert isinstance(value, dict)
     return value
 
 
+@lru_cache(maxsize=1)
 def _corpus():
+    """Share the parsed source, extraction, and concept corpus across tests."""
     sources_doc = _load(ROOT / "data" / "sources.yml")
     concepts_doc = _load(ROOT / "data" / "concepts.yml")
     sources = {source["id"]: source for source in sources_doc["sources"]}
@@ -25,6 +30,8 @@ def _corpus():
         if (record := _load(path)).get("source_id")
     }
     return sources, extractions, concepts_doc
+
+
 
 
 def test_historical_scan_blocks_pair_with_source_history_without_lossy_assumptions() -> None:
