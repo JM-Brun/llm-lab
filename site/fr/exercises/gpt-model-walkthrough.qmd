@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-e
 
 [← Retour à la visite guidée : gpt-model-walkthrough](../gpt-model-walkthrough.qmd)
 
-## Exercices
+## Vérifier sa compréhension
 
 1. Pourquoi `position_embedding[:seq_len]` et non `position_embedding` tout court ?
 2. Avec `V=50, T=16, d=16, H=2, L=2, hidden=32`, calculez le nombre total de paramètres sans exécuter le code.
