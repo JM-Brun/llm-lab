@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
 
+> **Prérequis** — aucune connaissance préalable en linguistique quantitative n'est nécessaire. Les notions de corpus, de type et d'occurrence sont introduites ici ; les logarithmes sont rappelés au moment où ils deviennent utiles.
+
 ## 1. Une question, un texte, un corpus
 
 **Question : pourquoi le mot « je » revient-il si souvent dans ce texte ?**
