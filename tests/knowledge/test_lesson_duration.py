@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import warnings
+from pathlib import Path
 
 import pytest
-from pathlib import Path
 
 from strict_yaml import load_yaml
 
