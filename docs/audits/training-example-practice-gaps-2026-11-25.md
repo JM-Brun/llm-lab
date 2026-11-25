@@ -111,6 +111,10 @@ The source-level audit does not establish comprehension. Include these tasks in 
 - Adding another exercise registry, new page-map concepts, or per-concept GitHub Actions.
 - Treating the current four-question companion as defective merely because it is short; the gap is specifically the absence of transfer scenarios for packing/boundaries and padding/loss reduction.
 
-## 6. Evidence boundary
+## 6. Integration dependency: causal-masking Practice
+
+The separate CA-A ownership migration is still represented by open PRs #1622 (lesson-side Practice entry points) and #1623 (expanded dedicated causal-masking companions). Their Quarto/browser checks have passed, but the Test suite jobs were cancelled by workflow concurrency and have not yet produced a successful final result. Do not treat the CA-A migration as integrated until the final PR heads have a successful CI result and the PRs are merged. This report does not include or duplicate those changes.
+
+## 7. Evidence boundary
 
 This is a source-level audit of the published bilingual exercises, the lesson's worked example, and the reference implementation/tests. It does not certify rendered screenshots, screen-reader behavior, touch usability or learner outcomes. Existing manual accessibility work remains tracked under #483; the learner pilot remains gated under #447.
