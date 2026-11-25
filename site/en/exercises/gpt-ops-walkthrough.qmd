@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exe
 
 [← Back to the guided tour: Opérations numériques du GPT](../gpt-ops-walkthrough.qmd)
 
-## Exercises
+## Check your understanding
 
 1. An `x` of shape `(3, 7, 12)` passes through `linear` with `weight` of shape `(8, 12)`: what is the output shape?
 2. What happens when normalizing a position whose 16 activations are all identical? What role does `eps` play?
