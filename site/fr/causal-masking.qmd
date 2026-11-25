@@ -33,6 +33,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", 
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
+**Questions et exercices :** [Accéder à la page dédiée](exercises/causal-masking.qmd).
+
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
@@ -127,9 +129,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 </div>
 </details>
 
-::: {.callout-note collapse="true" title="Vérifier l'invariance en pratique"}
-La règle causale se formule aussi comme une propriété de préfixe : à paramètres et préfixe inchangés, ajouter ou modifier des tokens futurs ne doit pas changer les sorties déjà calculées pour ce préfixe. L'[exercice CA-A](exercises-attention.qmd#ca-a-prefix-invariance) fait construire le masque, examiner le décalage des cibles et interpréter les tests d'invariance du code de référence. Il distingue également le test d'une opération élémentaire d'attention de celui du modèle complet.
-:::
+Une conséquence utile de la règle causale est **l'invariance de préfixe** : à paramètres et préfixe inchangés, ajouter ou modifier des tokens futurs ne doit pas changer les sorties déjà calculées pour ce préfixe. Cette propriété peut être testée ; vérifier uniquement la matrice du masque ne suffit pas à établir que tous les chemins d'un modèle complet sont causaux.
 
 ## Liens avec les autres concepts
 
@@ -149,7 +149,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
+
 
 ## Approfondir
 
@@ -171,11 +171,12 @@ En code, **la polarité d'un masque booléen dépend de l'API**. Dans [l'attenti
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
-Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
+Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. Les tests apportent deux niveaux de preuve complémentaires : `tests/unit/test_attention.py` vérifie l'opération d'attention à une tête, tandis que `tests/unit/test_gpt.py` compare les logits d'un préfixe aux logits correspondants d'une entrée prolongée, avec le même GPT. Ce sont des tests de régression ciblés, pas des preuves formelles pour toute architecture ou entrée. Le test du modèle complet n'ajoute pas de prise en charge des masques de padding ; l'interface `GPT.forward` de référence n'expose pas d'argument de masque de padding.
 
 - [Implémentation du masque causal](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+- [Tests de l'attention à une tête](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py)
+- [Test d'invariance de préfixe du GPT complet](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py)
+- [Statut de l'implémentation et décision sur la parité](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#causal-attention-implementation-status)
 :::
 
 :::
