@@ -1,7 +1,7 @@
 ---
 title: "Zipf’s law exercises"
 subtitle: "Extended practice, worked solutions, and transfer"
-description-meta: "Extended exercises on rank-frequency calculations, lexical versus token frequencies, estimator uncertainty, fit quality, and explanatory hypotheses."
+description-meta: "Eleven extended exercises: French/English corpus and political-speech comparisons, parameter estimation, fit criticism, and empirical limitations."
 keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-law", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,8 +9,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-zipf-law"
-summary: "Eleven formative exercises on rank-frequency calculations, lexical/token units, rank uncertainty, fit quality, and proposed explanations."
-scope: "Provides extended, worked practice on rank-frequency calculations, log-log plots, tokenizer-dependent counts, empirical-rank uncertainty, exponent stability, and the distinction between description and mechanism."
+summary: "Eleven exercises on rank-frequency calculations, lexical/token units, corpus comparisons, parameter estimation, and fit criticism."
+scope: "Provides worked practice on rank-frequency calculations, lexical/token frequencies, French/English and political-speech corpus comparisons, estimation of C, alpha and beta, rank uncertainty, and fit criticism."
 purpose: "Calculate, interpret, and critically assess rank-frequency regularities without confusing lexical statistics, token statistics, and causal explanations."
 suggested_route:
   previous: null
@@ -342,7 +342,7 @@ The team chooses Zipf-Mandelbrot and concludes that “language follows the Zipf
 - [Piantadosi (2014)](https://doi.org/10.3758/s13423-014-0585-6) — correlated errors and residual structure.
 - [Pilgrim & Hills (2021)](https://doi.org/10.1038/s41598-021-96214-w) — empirical rank, probability rank, and estimator bias.
 - [Linders & Louwerse (2023)](https://doi.org/10.3758/s13423-022-02142-9) — linguistic units and exponent variation.
-- [Lestrade (2017)](https://doi.org/10.1371/journal.pone.0181987) — proposed syntax–semantics model.
+- [Lestrade (2017)](https://doi.org/10.1371/journal.pone.0181987) — proposed syntax–semantics model.\n- [Lavi-Rotbain and Arnon (2023)](https://doi.org/10.1162/opmi_a_00070) — multilingual child-directed-speech data used in the corpus-comparison exercise.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/exercises-zipf-law.qmd#zipf-law) · [English](exercises-zipf-law.qmd#zipf-law)
