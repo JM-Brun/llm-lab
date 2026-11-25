@@ -1961,3 +1961,21 @@ A targeted preparation link was added immediately before the Q/K/V gradient-path
 ### Change and boundary
 
 The cross-entropy Practice companions now link directly to the existing shared exercises for (1) logits → softmax → one-hot NLL and (2) soft targets → cross-entropy/KL. The broader Foundations collection remains the owner of those calculations; no duplicate exercise was added. This is a source-level and arithmetic audit, not a learner study or a complete audit of every scoring/training resource.
+
+
+## 2026-11-25: prefill, teacher forcing and free-running generation audit
+
+**Scope.** Bounded FR/EN review of the generation lesson, its Practice hub and GE-D prefill/decode exercise, alongside the Build G2 training-examples lesson and the text-data Practice collection. The purpose was to verify that three related but non-equivalent ideas are not collapsed: inference prefill, teacher-forced conditioning on observed/reference tokens, and free-running autoregressive feedback.
+
+### Findings
+
+- The generation collection contains **eight** formative exercises (GE-A–GE-H), including a prefill/decode trace and a later prefix-caching/continuous-batching exercise. No additional generic prefill exercise is needed.
+- The Build G2 lesson correctly defines shifted pairs $x=[t_0,\ldots,t_{L-1}]$ and $y=[t_1,\ldots,t_L]$, explains the causal restriction at each position, and explicitly says teacher forcing is a conditioning strategy rather than the objective, loss or optimizer. It correctly distinguishes the reference window-builder from an actual trainable forward pass.
+- The existing GE-D exercise's answer was too compressed: it described teacher forcing as conditioning on an observed prefix (also used for scoring) but did not make explicit the key training distinction—reference tokens remain inputs even when the model would have predicted something else, and training compares position-wise logits with shifted targets. This could leave the conceptual difference from prefill underspecified.
+- The generation lesson's previous phrase “prefill resembles teacher forcing” was directionally useful but risked implying equivalence. Both can process known tokens under a causal mask; however, prefill is an inference execution phase that obtains the first next-token distribution and may populate a KV cache, while teacher forcing is a conditioning regime using reference tokens (with shifted targets and loss in training). Scoring may also condition on an observed prefix with fixed parameters. Free-running generation instead feeds back selected tokens.
+- The text-data Practice collection already exercises the construction of shifted windows, complete-target boundaries, window counts and alignment bugs. It did not explicitly test whether learners understand that teacher forcing does not feed back the model's own predictions. A targeted fourth stage now tests that counterfactual and contrasts it with free-running generation, then points to the existing prefill/decode exercise.
+- The FR/EN generation lesson, GE-D answer, self-check answer and new Practice stage now use the same three-way distinction and cross-link the complementary material. No training implementation is introduced; the existing prerequisite gate on G8 remains untouched.
+
+### Changes and boundary
+
+The bilingual generation lesson now states the limited similarity and the operational distinction. GE-D and the generation self-check give a more precise explanation. The text-data Practice collection gains one targeted teacher-forcing-versus-free-running exercise, and GE-D links to it. This is a source-level pedagogical correction; it does not validate learner mastery, implement pretraining, or replace the separate G8 prerequisite review.

@@ -501,7 +501,27 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 
 </details>
 
-**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
+**Stage 4 — Distinguish teacher forcing from free-running generation.**
+
+Consider the reference sequence $[A,B,C,D]$. With input length 3, the shifted examples are $x=[A,B,C]$ and $y=[B,C,D]$.
+
+1. Which prefix is available at each position to predict $B$, $C$, and $D$, respectively?
+2. Suppose the model predicts $X$ rather than $B$ at the first position. Which token is still supplied as input at the second position under teacher forcing?
+3. During free-running generation from prompt $[A]$, if the model selects $X$, which context is used for the next prediction?
+4. Why does teacher forcing not feed the model's own predictions back as inputs?
+
+<details>
+<summary>Show the worked solution</summary>
+
+The observed prefixes are $[A]$, then $[A,B]$, then $[A,B,C]$; they predict $B$, $C$, and $D$, respectively. The causal mask lets each position use its prefix but not future positions.
+
+Even if the model predicts $X$ at the first position, the input at the second position remains $B$, because teacher forcing uses the reference prefix supplied by the data. The prediction $X$ is not fed back into this forward pass. During free-running generation, by contrast, the selected token is appended to the context: after selecting $X$ from $[A]$, the next context is $[A,X]$.
+
+Teacher forcing therefore allows predictions conditioned on reference prefixes to be computed in parallel and compared with shifted targets. Free-running generation constructs its own trajectory, one selection at a time. [Prefill/decode](exercises-generation.qmd#ex-generation-prefill-incremental-decode) is yet another distinction: it names inference execution phases, not the source of the input tokens.
+
+</details>
+
+**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, the input-target copy bug is detected by a checkable invariant, and the difference between a reference prefix and feedback of model predictions is explained correctly.
 
 **Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
 

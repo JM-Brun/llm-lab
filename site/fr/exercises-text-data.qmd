@@ -501,7 +501,27 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 
 </details>
 
-**Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié et l'erreur de copie entrée-cible est détectée par un invariant vérifiable.
+**Étape 4 — Distinguer teacher forcing et génération libre.**
+
+On considère une séquence de référence $[A,B,C,D]$. Pour une longueur d'entrée de 3, les exemples décalés sont $x=[A,B,C]$ et $y=[B,C,D]$.
+
+1. Quel préfixe est disponible à chaque position pour prédire respectivement $B$, $C$ et $D$ ?
+2. Supposons que le modèle prédise $X$ plutôt que $B$ à la première position. Quel token sert malgré tout d'entrée à la deuxième position pendant le teacher forcing ?
+3. En génération libre à partir du prompt $[A]$, si le modèle sélectionne $X$, quel contexte sert à la prédiction suivante ?
+4. Pourquoi le teacher forcing ne consiste-t-il pas à réinjecter les prédictions du modèle ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les préfixes observés disponibles sont $[A]$, puis $[A,B]$, puis $[A,B,C]$ ; ils prédisent respectivement $B$, $C$ et $D$. Le masque causal autorise chaque position à consulter son préfixe, mais pas les positions futures.
+
+Même si le modèle prédit $X$ à la première position, l'entrée de la deuxième position reste $B$, car le teacher forcing utilise le préfixe de référence fourni par les données. La prédiction $X$ n'est pas réinjectée dans cette passe avant. En génération libre, au contraire, le token sélectionné est ajouté au contexte : après avoir choisi $X$ depuis $[A]$, le contexte suivant est $[A,X]$.
+
+Le teacher forcing permet ainsi de calculer en parallèle des prédictions conditionnées par les préfixes de référence, puis de les comparer aux cibles décalées. La génération libre construit sa propre trajectoire, une sélection après l'autre. Le [prefill/decode](exercises-generation.qmd#ex-generation-prefill-incremental-decode) est encore une autre distinction : il désigne les phases d'exécution de l'inférence, pas la provenance des tokens d'entrée.
+
+</details>
+
+**Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié, l'erreur de copie entrée-cible est détectée par un invariant vérifiable et la différence entre préfixe de référence et réinjection des prédictions est correctement expliquée.
 
 **Pour aller plus loin :** les fuites entre partitions restent à traiter dans un exercice distinct. Le batching et les masques de perte sont des sujets séparés ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
 

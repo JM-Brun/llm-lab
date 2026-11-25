@@ -60,7 +60,7 @@ Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lie
 <details>
 <summary>Afficher la réponse</summary>
 
-Le prefill est une phase d'exécution qui traite le prompt initial comme une séquence. Le teacher forcing est une stratégie de conditionnement qui fournit le préfixe observé comme contexte pendant l'entraînement (et certains usages de scoring). Ce ne sont pas deux noms pour la même opération.
+Le *prefill* est une phase d'inférence : le prompt connu est traité pour produire la distribution du premier token généré et, si activé, remplir le cache KV. Le *teacher forcing* est une stratégie de conditionnement : pendant l'entraînement, le préfixe de référence sert d'entrée et les logits sont comparés aux cibles décalées. Un calcul de scoring peut lui aussi utiliser un préfixe observé pour évaluer une continuation à paramètres fixes. Les deux usages conditionnent les prédictions sur des tokens connus sous masque causal, mais le prefill est une phase d'inférence et ne calcule pas de perte d'entraînement.
 
 </details>
 
