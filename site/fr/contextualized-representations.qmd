@@ -46,7 +46,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis dans « de bonne ou de mauvaise situation ». Le premier emploi désigne un poste ; le second, les circonstances. En supposant un ID commun et une position simplifiée identique, le lookup initial est le même. **Le Transformer construit ensuite des états cachés contextualisés à partir du contexte.**
 :::
 
-**Questions et exercices :** [Accéder à la page dédiée](exercises/contextualized-representations.qmd).
+
 
 ## Ce qui reste identique
 
@@ -153,25 +153,13 @@ Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) as
 
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
+
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
 :::
 
-:::: {.supplementary-resources}
-
-<details class="learning-resources">
-<summary>
-  <span class="learning-resources__title">Ressources complémentaires</span>
-  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
-</summary>
-::: {.learning-resources__content}
-
-
-
-:::
-
-</details>
-
-::::

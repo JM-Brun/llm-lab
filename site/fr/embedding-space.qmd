@@ -102,15 +102,21 @@ La position et le contexte interviennent ensuite, selon l'architecture. Les couc
 Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans l'espace. La matrice d'embeddings $E\in\mathbb{R}^{V\times d}$ associe à chaque ID un vecteur initial de dimension $d$. Deux occurrences du même ID partagent ce vecteur de lookup ; les couches du Transformer peuvent produire des états contextualisés différents selon la position et le contexte.
 :::
 
-[Exercices sur les plongements](exercises/embedding-space.qmd).
+
 
 Ces deux occurrences lisent le même vecteur. L’[encodage positionnel](positional-encoding.qmd) explique comment leur rang intervient dans le calcul. Les blocs Transformer intègrent les informations du préfixe accessible pour produire des [représentations contextualisées](contextualized-representations.qmd).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)
 :::
+
+## Approfondir
 
 :::: {.supplementary-resources}
 
