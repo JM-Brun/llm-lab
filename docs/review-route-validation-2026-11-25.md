@@ -118,6 +118,16 @@ Do not add a flashcard merely because a lesson has none. A missing format is not
 
 **Existing structural contract:** stage objectives and overviews come from `data/guided-route.yml`; lesson outcomes and scopes come from the canonical lesson-page metadata; prerequisite topic IDs and synthesis targets come from `lesson_contracts`; the Review page exposes the resolved outcome, prerequisites and revision scope.
 
+**Code-level audit of the existing implementation:**
+
+- `resolve_lesson_contracts()` in `site/tools/build_learning_map.py` requires the lesson-contract keys to match the core route topics exactly, resolves one same-language synthesis page with an explicit `revision_of` link, rejects duplicate prerequisites, and verifies that each prerequisite was acquired earlier in the core route.
+- The resolved lesson outcome is currently taken from the source lesson's `purpose`; the lesson scope comes from its `scope`; the Review companion's displayed coverage comes from the synthesis page's `scope`.
+- `render_lesson_contracts()` presents the stage objective/overview, prior-learning links, lesson outcome and revision scope. It does not author a separate objective or prerequisite chain for Review.
+- `tests/knowledge/test_lesson_contracts.py` verifies those projections, required anchors, answer disclosures, stage grouping and FR/EN topic parity. It does not prove that the wording and actual content of a companion semantically cover the outcome, nor that every listed prerequisite is pedagogically indispensable.
+- The current Review index has no optional stops. Optional learning material remains outside the core Review traversal; no optional stop should be added unless an existing eligible resource and an explicit pedagogical target justify it.
+
+**Lot C initial result:** structural equivalence is substantially protected already. The remaining work is a bounded semantic audit of the 20 lesson outcomes against their companion scopes/content and the necessity of their prerequisite sets—not a new route schema or a copied objectives matrix.
+
 **Remaining checks:**
 
 1. For each core lesson, compare the stage objective with the lesson's local outcome: the outcome must contribute to the stage objective without silently broadening or narrowing it.
