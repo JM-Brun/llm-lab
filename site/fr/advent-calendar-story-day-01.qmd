@@ -165,7 +165,9 @@ Ainsi, $\beta$ modifie surtout la courbure autour des premiers rangs ; il ne rep
 
 *Courbes synthétiques normalisées pour que la fréquence relative au rang 1 vaille 1. Elles isolent l'effet des paramètres ; elles ne sont pas ajustées à un corpus réel.*
 
-Cette extension est souvent appelée loi de Zipf-Mandelbrot. Elle rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
+Par exemple, au rang 10 avec $\beta=0$, les valeurs $\alpha=0{,}7$, $1$ et $1{,}3$ donnent des fréquences relatives d'environ $0{,}20$, $0{,}10$ et $0{,}05$. Au rang 2 avec $\alpha=1$, les valeurs $\beta=0$, $5$ et $20$ donnent environ $0{,}50$, $0{,}86$ et $0{,}95$. Toutes les courbes valent 1 au rang 1 ; $\beta$ modifie surtout les premiers rangs, tandis que $\alpha$ gouverne la pente de la longue traîne.
+
+Cette extension rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
 
 ## 3. Que trouve-t-on dans plusieurs langues ?
 
