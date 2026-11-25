@@ -179,7 +179,7 @@ The naive mean also includes the two PAD losses from A:
 
 \[
 \mathcal{L}_{\mathrm{naive}}=\frac{5+4+3}{10}=1.2.
-\\]
+\]
 
 It optimizes a different objective, which here depends on the losses assigned to padding positions. The attention mask determines which positions may be consulted; it does not automatically remove PAD labels from the loss function. A consistent loss mask or explicit ignored-label convention is required, followed by reduction over the number of valid targets.
 
