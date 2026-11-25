@@ -1177,7 +1177,7 @@ async function runCase(testCase, caseIndex) {
         const revisionPaths = [...new Set(
           [...document.querySelectorAll("main a[href]")]
             .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname)
-            .filter(path => /\\/revision-[^/]+\\.html$/.test(path))
+            .filter(path => /\/revision-[^/]+\.html$/.test(path))
         )];
         const revisionLanguages = revisionPaths.every(path => path.startsWith(`/${language}/`));
         const learningMapPaths = [...document.querySelectorAll('main a[href*="learning-map.html"]')]
@@ -1185,7 +1185,7 @@ async function runCase(testCase, caseIndex) {
         const languagePaths = [...new Set(
           [...document.querySelectorAll("main a[href]")]
             .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname)
-            .filter(path => /\\/(fr|en)\\/review-path\\.html$/.test(path))
+            .filter(path => /\/(fr|en)\/review-path\.html$/.test(path))
         )];
         return {
           stageCount: stageHeadings.filter(Boolean).length,
