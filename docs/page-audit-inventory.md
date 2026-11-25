@@ -1819,7 +1819,7 @@ After this migration is validated, continue the remaining unverified route bound
 
 ### Correction applied in the focused branch
 
-- `GPTConfig` now validates all six dimensions as positive integral values at construction, explicitly rejecting booleans and floats (including `16.0`). It uses `numbers.Integral`, so Python and NumPy integer scalars remain accepted.
+- `GPTConfig` now validates all six dimensions as positive integral values at construction, explicitly rejecting booleans and floats (including `16.0`). The runtime check uses exact Python `int` values, matching the declared field types; booleans and NumPy scalar types are not silently coerced.
 - `seed` is now validated as a non-negative integral value, excluding booleans, before it reaches `default_rng`.
 - Unit tests cover positive floats, booleans, negative/non-integer seeds, and accepted NumPy integer scalars.
 - FR/EN tour excerpts, explanations, test descriptions and dedicated Practice companions now state and exercise the same runtime contract.
