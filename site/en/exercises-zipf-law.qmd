@@ -9,7 +9,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-zipf-law"
-summary: "Seven formative exercises on rank-frequency calculations, lexical/token units, rank uncertainty, fit quality, and proposed explanations."
+summary: "Eleven formative exercises on rank-frequency calculations, lexical/token units, rank uncertainty, fit quality, and proposed explanations."
 scope: "Provides extended, worked practice on rank-frequency calculations, log-log plots, tokenizer-dependent counts, empirical-rank uncertainty, exponent stability, and the distinction between description and mechanism."
 purpose: "Calculate, interpret, and critically assess rank-frequency regularities without confusing lexical statistics, token statistics, and causal explanations."
 suggested_route:
@@ -28,7 +28,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-zipf-
 
 **Preparation:** [the Zipf’s law lesson](advent-calendar-story-day-01.qmd), [text and data](text-data.qmd), and [tokenization strategies](tokenization-strategies.qmd).
 
-**Scope:** seven exercises cover rank-frequency calculations, log-log interpretation, lexical versus token units, rank uncertainty, fit quality, and competing explanations.
+**Scope:** eleven exercises cover rank-frequency calculations, log-log interpretation, lexical versus token units, rank uncertainty, fit quality, and competing explanations.
 
 ### Calculate a frequency from rank {#ex-zipf-rank-frequency}
 
@@ -214,6 +214,120 @@ Piantadosi's (2014) critical review argues that no available account straightfor
 6. A term that is too general poorly distinguishes referents; a term that is too specific applies to very few situations. The model proposes that a balance between discriminative power and reuse contributes to frequency. This is a hypothesis of the model, not a universal law.
 
 These studies propose different frameworks; they do not establish one universally accepted explanation.
+
+</details>
+
+### Compare French and English corpora without comparing whole languages {#ex-zipf-fr-en-corpora}
+
+A study of child-directed speech reports the following results for two aggregated corpora:
+
+| Corpus | Word occurrences | Types | $\alpha$ | $\beta$ | Pearson correlation |
+|---|---:|---:|---:|---:|---:|
+| British English | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
+| French | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
+
+1. Which corpus contains more occurrences and more types?
+2. Calculate the type-token ratio (TTR) for each corpus. Why is this ratio insufficient to conclude that French is lexically more diverse?
+3. The exponents $\alpha$ are close. Can we infer that they are language-specific constants?
+4. Pearson's correlation is higher for the French corpus. Can we conclude that it follows Zipf's law “better”?
+
+<details>
+<summary>Show the solution</summary>
+
+1. The English corpus is larger and contains more types in absolute terms.
+2. English: $27,476/6,311,249\approx0.00435$, or about $0.44\\%$. French: $19,327/1,540,284\approx0.01255$, or about $1.25\\%$. Raw TTR depends strongly on text length: the corpora are not the same size or comparable-length samples. It cannot directly rank their lexical diversity.
+3. No. The parameters describe the distributions of these particular corpora in a child-directed-speech setting. They also depend on corpus size, composition and counting conventions.
+4. No. A high correlation proves neither an exact law nor a better fit under every criterion. These values do not suffice to compare languages in general.
+
+**Conclusion:** these are two corpora from one study protocol, not two entire languages. A defensible comparison requires comparable corpora and sensitivity analyses for size and linguistic units.
+
+</details>
+
+### Design a comparison of political speeches {#ex-zipf-political-discourse}
+
+You want to compare lexical distributions in French political-speech transcripts from two election campaigns. Corpus A contains 12 speeches and about 60,000 occurrences; corpus B contains 8 speeches and about 42,000 occurrences. The campaigns, dominant topics and transcription sources differ.
+
+1. Why would directly comparing type counts or estimated exponents be fragile?
+2. Define the counting conventions to fix before analysis: units, case, punctuation, apostrophes, lemmatization, proper names and quotations.
+3. Propose a protocol to limit the effects of length, topic, period and speaker.
+4. At which level should you resample to estimate uncertainty: occurrence, sentence or speech? Explain.
+5. Which conclusions would be unwarranted from a difference in $\alpha$?
+
+<details>
+<summary>Show the solution</summary>
+
+1. The corpora differ in size, number of speeches, topics and provenance. These factors can change frequencies without reflecting a stable difference in political style.
+2. Define one lexical unit consistently across both corpora. Document normalization, decide whether inflected forms remain distinct, and handle proper names, quotations, slogans and repeated segments consistently. Preserve the choices so the analysis can be reproduced.
+3. Compare subsets of similar length or use controlled rarefaction; match or stratify speeches by period, topic and speaker; check sensitivity to repeated segments; publish metadata and exclusions. Do not remove function words without explaining how that changes the statistical object.
+4. The speech is usually the most defensible resampling unit: occurrences within one speech are not independent and share a topic, speaker and context. Resampling individual occurrences could underestimate this dependence.
+5. A difference in $\alpha$ proves neither an ideology, a persuasive strategy nor greater lexical richness. It describes a difference in rank-frequency concentration in these corpora under the chosen conventions. Further analyses are needed for linguistic or political interpretation.
+
+</details>
+
+### Estimate parameters on a synthetic dataset {#ex-zipf-estimate-parameters}
+
+The following table contains rounded synthetic frequencies. It does not come from a real corpus.
+
+| Rank $r$ | Frequency $f(r)$ |
+|---:|---:|
+| 1 | 261.2 |
+| 2 | 204.3 |
+| 3 | 167.2 |
+| 5 | 121.8 |
+| 10 | 71.4 |
+| 20 | 38.1 |
+| 50 | 15.2 |
+| 100 | 7.3 |
+
+We want to compare Zipf's model $f(r)=Cr^{-\\alpha}$ with the Zipf-Mandelbrot model $f(r)=C(r+\\beta)^{-\\alpha}$.
+
+1. Fit both models by nonlinear least squares, minimizing the same sum of squared residuals on the raw frequencies.
+2. Record the estimated parameters and the sum of squared residuals for each model.
+3. Why should these results not be compared directly with a linear regression performed on logarithms?
+4. What does it mean that the second model recovers values close to $C=1,200$, $\alpha=1.1$ and $\beta=3$?
+
+<details>
+<summary>Show the solution</summary>
+
+With bounded nonlinear fitting on raw frequencies, the expected values are approximately:
+
+| Model | Estimated parameters | Sum of squared residuals |
+|---|---|---:|
+| Zipf | $C\approx277.7$, $\alpha\approx0.56$ | $1,556.6$ |
+| Zipf-Mandelbrot | $C\approx1,201.5$, $\alpha\approx1.101$, $\beta\approx3.001$ | $0.0016$ |
+
+1. Both fits must use the same objective function, here $\sum_i(f_i-\hat f(r_i))^2$ on raw frequencies.
+2. Values may vary slightly with the optimizer, initial values and numerical tolerances. The Zipf-Mandelbrot fit recovers the parameters used to generate the data, up to rounding.
+3. Regression on logarithms minimizes errors in log space: it weights errors differently and does not minimize the same quantity. Estimated parameters therefore depend on the chosen objective.
+4. This synthetic dataset was generated from a Zipf-Mandelbrot law with those parameters. It checks that the fitting procedure can recover a known model in a controlled case; it does not prove that the model fits a real corpus.
+
+</details>
+
+### Critique a fit before choosing a model {#ex-zipf-critique-fit}
+
+A team fits two models to the same corpus and rank range, using regression in log-log coordinates:
+
+| Model | $R^2$ on the fitting sample |
+|---|---:|
+| Zipf | 0.997 |
+| Zipf-Mandelbrot | 0.999 |
+
+The team chooses Zipf-Mandelbrot and concludes that “language follows the Zipf-Mandelbrot law”.
+
+1. What does the difference in $R^2$ actually show? Why can adding a parameter mechanically improve the in-sample fit?
+2. What should be examined in residuals as a function of rank?
+3. Why must the selected rank range be documented, with the long tail treated carefully?
+4. How can parameter stability and generalization be assessed?
+5. What cautious conclusion is appropriate if both models perform similarly on validation data?
+
+<details>
+<summary>Show the solution</summary>
+
+1. The increase in $R^2$ only indicates that the second model describes the transformed data slightly better on this sample and under this objective. A more flexible model can improve fit without providing a better explanation or better predictions.
+2. Residual patterns by rank reveal systematic misspecification: unmodelled curvature, a slope break, or deviations concentrated in the first ranks or the tail. A single global $R^2$ can hide these patterns.
+3. The first ranks and rare ranks have different levels of precision. Changing the selected range can change the parameters. State and justify the fitting range, and inspect sensitivity to rare ranks.
+4. Use uncertainty intervals, resampling methods that respect the corpus structure, and validation on texts or documents not used for fitting. Also check sensitivity to counting conventions and the objective function.
+5. If the out-of-sample gain is negligible, the simpler model may be preferable on grounds of parsimony. Report limitations and uncertainty rather than turning an empirical fit into a universal law.
 
 </details>
 
