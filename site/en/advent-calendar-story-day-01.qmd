@@ -156,7 +156,9 @@ The parameter $\beta$ shifts the rank. When $\beta=0$, we recover classical Zipf
 
 $$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$$
+$
+
+The scale factor $C$ cancels in this ratio: the curves compare distribution shapes independently of their absolute frequency level.
 
 Thus, $\beta$ mainly changes the curvature around the first ranks; it is neither the number of function words nor a linguistic cause. It adds a parameter that can improve the fit to some datasets, but not necessarily all. Compare residuals and parameter stability, ideally on held-out data, rather than automatically preferring the more flexible model.
 
