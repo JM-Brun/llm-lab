@@ -58,7 +58,7 @@ Le mot *token* est utilisé dans deux contextes proches, mais différents.
 | Notion | Définition | Exemple |
 |---|---|---|
 | **Type lexical** (*word type*) | Une forme orthographique distincte après normalisation | « je » est un type |
-| **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « je » apparaît 14 fois : 14 occurrences |
+| **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « je » apparaît 13 fois : 13 occurrences |
 | **Token de tokenizer** (*model token*) | Une unité produite par un tokenizer et représentée par un identifiant dans le vocabulaire du modèle | « aujourd'hui » peut être un token ou plusieurs sous-mots selon le tokenizer |
 
 Les deux usages de *token* sont liés, mais ne sont pas interchangeables. Une occurrence lexicale est une position dans le texte ; un token de tokenizer est une unité de représentation. Un mot peut être découpé en plusieurs tokens de modèle, et un tokenizer peut aussi traiter la ponctuation, les espaces ou des fragments de mots comme des unités distinctes.
@@ -84,7 +84,7 @@ Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieu
 
 Plusieurs formes ont la même fréquence. Elles occupent alors un intervalle de rangs : « que » et « une » sont aux rangs 2 et 3, sans qu’il y ait de raison substantielle de privilégier l’une plutôt que l’autre. Le tableau indique donc des intervalles pour les ex æquo.
 
-Notre petit texte montre déjà une distribution très inégale : « je » apparaît 13 fois, tandis que 86 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 194 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
+Notre petit texte montre déjà une distribution très inégale : « je » apparaît 13 fois, tandis que 86 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 217 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
 
 ## 2. La loi de Zipf : une approximation rang-fréquence
 
@@ -239,7 +239,7 @@ La conclusion raisonnable est donc la suivante : **les fréquences lexicales pr�
 
 ## 7. Retour sur notre corpus : ce que ce petit texte nous a appris
 
-Nous avons construit un corpus, choisi une normalisation, distingué 194 occurrences de 132 types et établi un classement. Nous savons maintenant pourquoi ce classement n'est pas une propriété intrinsèque des mots, pourquoi les égalités de fréquence compliquent les rangs et pourquoi un texte si court ne permet pas d'estimer un exposant robuste.
+Nous avons construit un corpus, choisi une normalisation, distingué 217 occurrences de 125 types et établi un classement. Nous savons maintenant pourquoi ce classement n'est pas une propriété intrinsèque des mots, pourquoi les égalités de fréquence compliquent les rangs et pourquoi un texte si court ne permet pas d'estimer un exposant robuste.
 
 Sur un grand corpus, la même démarche devient une analyse statistique : compter, classer, estimer les paramètres, comparer les fréquences observées aux fréquences attendues, puis examiner les écarts. La formule devient utile seulement après ces choix méthodologiques.
 
