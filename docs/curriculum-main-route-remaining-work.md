@@ -203,3 +203,23 @@ After this migration is validated, continue with the next unverified stage bound
 - The generation-tour correction is merged in PR #1617: `top_k` and `temperature` now receive fail-fast runtime validation; regression tests and the FR/EN walkthrough agree with the contract.
 - All five guided Build tours have now been compared against implementation, tests, FR/EN explanations and Practice companions. PR #1618 carries the operations/block/model corrections and is awaiting final Quarto/browser checks. Once it merges, mark this bounded source-to-page audit complete; do not repeat the already-validated Transformer/QKV/attention scientific audit.
 - Next independent evidence: manual screen-reader/native-breadcrumb and accessibility review, then the learner pilot under #447. Automated browser checks do not close either item.
+
+
+## Next bounded Practice audit — training-example transfer (2026-11-25)
+
+The previous recommendation to author BPE/window/leakage exercises is superseded: the bilingual Text data collection already contains TR-D (shifted windows), TR-E (BPE merge trace) and TR-F (split/tokenizer leakage). Their calculations and FR/EN solutions were independently checked in this pass; no correction or duplication is warranted. TR-A–TR-C remain the existing representation/lookup/context sequence. These labels are inventory shorthand; the pages use descriptive stable anchors.
+
+The next content task is narrower: expand the existing FR/EN Practice companions for **training examples** with one or two transfer scenarios covering document-boundary/packing policy and padding/loss reduction. The current four self-checks already cover input-target shift, teacher forcing/causality, attention-vs-loss masks and logits axes. The lesson itself explains packing, EOS/boundary markers, cross-document attention, dynamic padding, and the distinction between attention and loss masks; the companion does not yet ask learners to apply these decisions to a concrete packed/padded batch.
+
+**Implementation boundary:** keep `sliding_input_target_pairs` as the narrow window constructor. Its source and tests match the documented contract; it does not implement packing, padding, collators or loss masks. Do not add those features or tests until a concrete pipeline contract is selected. Exercises should remain conceptual and use the existing worked examples.
+
+**Acceptance criteria for the next PR:**
+1. FR/EN companions add the same task structure and equivalent worked reasoning, with stable descriptive anchors.
+2. Learners distinguish the EOS/boundary marker from the cross-document attention policy and from target alignment.
+3. Learners construct attention-valid positions and loss-valid targets separately, calculate a stated valid-token reduction, and diagnose the case where an attention mask is present but PAD labels still enter the loss.
+4. No duplication of TR-D window-count arithmetic or TR-F leakage/split protocols.
+5. The existing Quarto/browser workflow validates both companions, links, math, disclosures, mobile layout and keyboard activation; no new workflow is created.
+
+The source-level findings and remaining tasks are recorded in [the audit report](audits/training-example-practice-gaps-2026-11-25.md) and the [page audit inventory](page-audit-inventory.md). Manual accessibility work remains under #483; learner validation remains gated under #447. CI and rendered checks do not establish comprehension.
+
+**Dependency not yet integrated:** the CA-A lesson/companion migration is still open in #1622 and #1623. Their Quarto/browser jobs passed, but their Test suite jobs were cancelled and need a successful final-head rerun before merge. Keep the causal-masking ownership item open until then; this training-example audit is a separate next slice.
