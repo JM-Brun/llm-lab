@@ -1,13 +1,13 @@
 # Day 01 source dossier — Zipf's law and lexical frequency
 
-**Status:** first draft for editorial and scientific review  
+**Status:** bilingual public-reading revision prepared in PR #1639; novice review and explicit editorial acceptance remain pending  
 **Date:** 2026-11-23  
 **Languages:** French and English  
-**Story question:** Why does the word “the” appear everywhere?
+**Story question:** FR — Pourquoi le mot « je » revient-il si souvent dans ce texte ? EN — Why does the word “I” appear so often in this text?
 
 ## Editorial angle
 
-The story explains the inequality of lexical frequencies through the rank-frequency relation commonly called Zipf's law. Its value for LLM readers is statistical: language corpora are highly imbalanced, and frequency affects the number of observed learning opportunities.
+The story starts from an original first-person text written for this demonstration. It asks why « je » / “I” appears frequently, then uses the resulting lexical counts to introduce the inequality of word frequencies and the rank-frequency relation commonly called Zipf's law. Its value for LLM readers is statistical: language corpora are highly imbalanced, and frequency affects the number of observed learning opportunities.
 
 This is not a tokenization tutorial and does not claim to explain the causal origin of Zipf's law.
 
@@ -74,7 +74,7 @@ Historical source for Zipf's popularization and broader framing. The draft does 
 
 ## Numerical example verification
 
-The new rank-construction example is deliberately a separate, fictional count table (de: 12, et: 7, chat: 4, chien: 3, luciole: 1 in French; the: 12, and: 7, cat: 4, dog: 3, firefly: 1 in English). It teaches that rank is obtained by sorting observed counts; it is not presented as an empirical corpus or as a fitted Zipf distribution.
+The exercise page's rank-construction example is deliberately a separate, fictional count table (de: 12, et: 7, chat: 4, chien: 3, luciole: 1 in French; the: 12, and: 7, cat: 4, dog: 3, firefly: 1 in English). It teaches that rank is obtained by sorting observed counts; it is not presented as an empirical corpus or as a fitted Zipf distribution.
 
 
 For the deliberately synthetic model \(f(r)=C/r\) with \(C=1000\):
@@ -95,7 +95,7 @@ All values are mathematical consequences of the toy model, not corpus measuremen
 
 ## Scope and non-claims
 
-- The word “the” is an English hook; the French story uses “de” as its natural counterpart. Neither is claimed to be the most frequent word in every corpus.
+- The first-person pronouns « je » and “I” are hooks arising from the deliberately first-person demonstration text. Their high frequency is a property of this text's viewpoint, not a universal claim about either language.
 - The draft distinguishes lexical word types/tokens from model tokenizer tokens, explicitly disambiguating the two meanings of *token*.
 - The story does not claim that Zipf's law is exact, universal, or a complete causal explanation.
 - The draft does not infer a model's tokenization strategy or rare-word capability from a lexical rank-frequency curve.
@@ -120,3 +120,60 @@ The file site/images/advent-zipf-rank-frequency.svg is an original vector diagra
 - [ ] Record explicit editorial acceptance before drafting Day 02.
 
 **Post-preview source correction:** a literal escaped newline before the Pilgrim and Hills (2021) bibliography item was found in both QMD files during a final source review. It has been replaced by a real Markdown line break. Re-run the PR preview after this correction before closing technical review.
+
+
+## Editorial archive — hidden Easter-egg provenance (repository only)
+
+This section records the cultural reference that originally motivated the exercise. **It is repository metadata, not lesson content. Do not copy it into either published language page, page metadata, navigation, search snippets, or public-facing captions.** The published demonstration now uses an original text written for this lesson; it preserves the first-person narrative and the statistical teaching purpose without reproducing the protected monologue.
+
+### Reference and source trail
+
+- Character: Otis, the scribe in *Astérix et Obélix : Mission Cléopâtre* (2002), portrayed by Édouard Baer.
+- Recognizable opening line used during the initial editorial exploration: « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. » This short identification cue is retained here only to document the source of the easter egg; do not publish it as part of the teaching text.
+- Online transcript consulted for the earlier corpus: [Happy Scribe — Le scribe, Astérix : Mission Cléopâtre](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre). It is an automated transcript, not a certified verbatim transcript of the film audio.
+- Context, duration and history of the scene: [Le Parisien, 4 July 2023 — Ressortie d’« Astérix et Obélix : Mission Cléopâtre » : le monologue d’Otis encore plus interminable](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+- The theatrical cut is approximately 54 seconds; a longer alternative version of approximately 1 minute 20 seconds was reported around the restored re-release. These durations refer to different edits and should not be conflated.
+
+### Treatment decision
+
+The full monologue is not copied into this repository. Its source links and editorial rationale are retained here, while the public-facing lesson contains an original replacement text. The old corpus statistics (216 lexical occurrences and 125 orthographic types) described the earlier automated transcript under its former segmentation rules; they are historical and superseded. They must not be mixed with the current synthetic corpus statistics (French: 194 occurrences / 132 types; English: 196 / 127).
+
+
+### Current published demonstration corpus — reproducibility record
+
+The public FR/EN pages now use an original, purpose-written first-person text. The complete texts are maintained in the corresponding QMD files; this dossier does not duplicate them. Reproduce the counts by lowercasing, removing punctuation as a counted unit, preserving accented letters, retaining internal apostrophes as part of an orthographic unit, splitting on hyphens, and applying no lemmatization. The tokenizer used for this editorial count is equivalent to the Unicode pattern `[^\\W_]+(?:['’][^\\W_]+)*`.
+
+- French: **194 lexical occurrences**, **132 distinct orthographic types**. The leading frequency groups are: `je` (14), `que` and `une` (8 each), `et` and `le` (6 each), `de` (5), `peut` (4).
+- English: **196 lexical occurrences**, **127 distinct orthographic types**. The leading forms are: `I` (13), `a` (9), `the` (7), `that` (6), `and` (5), `my` and `what` (4 each).
+
+These counts are exact for the current page texts and stated orthographic convention. They are pedagogical corpus counts, not observations from a naturally occurring language corpus and not a basis for fitting a Zipf exponent.
+
+
+## Revision log — PR #1639
+
+- The public lesson no longer identifies or links to the cultural source. The easter-egg provenance and source trail remain in the repository-only archive section above.
+- The earlier “the” / “de” hook has been replaced by a first-person French/English text and the matching question. The original film monologue is not reproduced in the public page or duplicated in this dossier.
+- The current demonstration counts are computed from the quoted replacement text, excluding the question and surrounding explanatory prose. FR: 194 occurrences, 132 types, 111 singleton types and 10 types occurring twice. EN: 196 occurrences, 127 types, 98 singleton types and 16 types occurring twice.
+- The complete frequency tables now list every form occurring twice; rank intervals make ties explicit.
+- The generated FR/EN learning-map artifacts have been synchronized with the new titles, summaries and section headings.
+- The technical build and CI for the final revision are being checked in PR #1639. The novice-reader review and editorial acceptance gate remain separate and are not satisfied by CI.
+
+### CI diagnosis and repair — 2026-11-25
+
+The first CI rerun after the map-fragment syntax repair reported **831 passed, 1 failed, 1 skipped**. The only failure was `tests/knowledge/test_map_artifacts_freshness.py::test_tracked_interactive_map_matches_renderer[en]`: the English generated data fragment still contained the previous Day 01 title (with the French pronoun “je”) in its resource index. The French artifact matched the renderer. Python quality/domain checks, the Quarto site build and secret scanning all passed on that revision.
+
+The stale English resource title has now been synchronized in `site/includes/generated-map-data-en.qmd`. This is a generated artifact: the authoritative validation remains the freshness test against `site/tools/build_learning_map.py`, not a visual inspection or a hand-maintained copy. If the test reports another mismatch, regenerate both language artifacts with:
+
+```bash
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+```
+
+The new commit still requires a complete CI rerun; no claim of a green final CI is made until that run completes.
+
+### Remaining work before acceptance
+
+- [ ] Confirm all CI jobs pass on the latest PR head, especially the bilingual generated-map freshness test.
+- [ ] Inspect the rendered FR and EN pages at desktop and mobile widths; verify the question, full replacement text, frequency tables, tie intervals, links and exercise entry point.
+- [ ] Perform a novice-reader review: can a reader identify the counted text, reproduce the normalization, distinguish lexical occurrences/types from tokenizer tokens, and understand why this tiny text does not establish Zipf’s law?
+- [ ] Check that no cultural-source identifiers or source links leak into rendered pages, metadata, navigation, search summaries or generated map labels; keep provenance confined to this dossier.
+- [ ] Record explicit editorial acceptance (or concrete revisions) before treating Day 01 as closed and moving to Day 02.

@@ -1,6 +1,6 @@
 ---
 title: "Pourquoi le mot « je » revient-il si souvent ?"
-subtitle: "La loi de Zipf, du corpus d’Otis aux distributions de mots dans plusieurs langues"
+subtitle: "La loi de Zipf et les distributions de mots dans plusieurs langues"
 description-meta: "Construire un corpus, distinguer types et occurrences, observer la loi de Zipf, son histoire, ses usages et ses limites."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
@@ -10,7 +10,7 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/advent-calendar-story-day-01"
-summary: "Construit un corpus à partir de la tirade d’Otis pour comprendre les fréquences lexicales, la loi de Zipf et ses usages."
+summary: "Construit un petit corpus, étudie les fréquences lexicales et découvre la loi de Zipf, ses usages et ses limites."
 scope: "Explique les unités de comptage, la relation rang-fréquence, les variantes de Zipf-Mandelbrot, les résultats multilingues, l’histoire, les applications et les limites empiriques."
 purpose: "Construire et normaliser un corpus, distinguer types et occurrences, interpréter un exposant estimé et évaluer ce que la loi permet réellement de faire."
 domain: "probabilistic-foundations-training"
@@ -26,31 +26,30 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 *Calendrier de l’Avent 2026 · Porte 1 · environ 12 minutes*
 
-Cette leçon part d'un personnage et d'une tirade : Otis, le scribe d’*Astérix et Obélix : Mission Cléopâtre*. Nous allons transformer ce fil rouge en petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
+Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
 
-## 1. Construire un corpus à partir de la tirade
+## 1. Une question, un texte, un corpus
 
-Le fil rouge est cette réplique d’Otis, dans *Astérix et Obélix : Mission Cléopâtre* : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. » Le monologue est largement improvisé par Édouard Baer. La version cinéma dure environ 54 secondes ; une version alternative plus longue (environ 1 min 20) a également été diffusée lors de la ressortie restaurée du film.
+**Question : pourquoi le mot « je » revient-il si souvent dans ce texte ?**
 
-Pour ne pas remplacer la tirade par un texte inventé, le corpus de cette leçon est désormais fondé sur une **transcription en ligne du monologue d’Otis**. La transcription est fournie par Happy Scribe ; elle est utile pour l’exercice, mais reste une transcription automatique et ne doit pas être présentée comme un verbatim certifié du son du film. Les chiffres ci-dessous décrivent donc précisément cette transcription, pas nécessairement chaque mot prononcé dans toutes les versions du montage.
+Lisez ce court récit avant de regarder les nombres :
 
-- [Consulter la transcription du monologue](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre) ;
-- [Contexte, durée et histoire de la scène — *Le Parisien*, 4 juillet 2023](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+> Vous savez, je me suis souvent demandé pourquoi certaines journées semblent si longues et d’autres disparaissent presque aussitôt. Je pars le matin avec une idée très précise de ce que je vais faire. Je prépare une liste, je range mes affaires, je vérifie l’heure, et je me dis que cette fois tout va se passer comme prévu. Puis quelqu’un me pose une question, un objet manque, le téléphone sonne, et voilà que le programme change. Je pourrais m’énerver, bien sûr. Je pourrais aussi prétendre que tout cela était prévu. Mais je préfère regarder ce qui se passe réellement. On découvre alors que les petits détours ne sont pas toujours inutiles. Une conversation peut donner une idée, une erreur peut révéler un problème, et une attente peut laisser le temps de réfléchir. Je ne dis pas qu’il faut renoncer à organiser ses journées. Je dis seulement qu’un plan décrit une intention, pas le monde entier. Et quand je raconte ma journée, je parle beaucoup de moi, de mes choix et de ce que j’ai remarqué. C’est peut-être pour cela que certains mots reviennent sans cesse : ils suivent le chemin que mon récit a choisi.
 
-Nous analysons uniquement la prise de parole d’Otis, en incluant son amorce « Mais vous savez… », sans inclure la question de Panoramix ni les répliques précédentes. Nous ne reproduisons pas ici la transcription intégrale : l’objectif est d’étudier ses propriétés statistiques, pas de republier le dialogue.
+Ce texte constitue notre corpus de travail. Il a été écrit pour cette démonstration ; il ne s’agit pas d’un extrait de corpus linguistique réel. Seul le récit entre guillemets est compté : la question introductive et les explications qui l’entourent sont exclues. Nous allons le normaliser, compter ses unités lexicales, classer les formes selon leur fréquence, puis comparer ce petit échantillon aux régularités observées dans des corpus beaucoup plus vastes.
 
-### Construire un corpus à partir de la transcription
+### Construire le corpus : quelles unités compter ?
 
-Le corpus est constitué à partir du texte transcrit, avec les règles suivantes :
+Nous appliquons les conventions suivantes :
 
 - passage en minuscules ;
 - suppression de la ponctuation comme unité de comptage ;
 - conservation des accents ;
-- apostrophes internes conservées : « c'est », « j'ai » et « qu'il » sont chacun comptés comme une unité orthographique ;
+- apostrophes internes conservées : « qu’il » et « j’ai » sont chacun comptés comme une unité orthographique ;
 - aucune lemmatisation : les formes fléchies restent distinctes ;
-- les traits d’union sont traités comme des séparateurs lorsqu’ils apparaissent dans la transcription.
+- les traits d’union sont traités comme des séparateurs.
 
-Avec ces conventions, on obtient **216 occurrences lexicales et 125 types orthographiques distincts**. Ce résultat est reproductible à partir de la transcription liée ci-dessus et des règles indiquées. Une correction manuelle de la transcription, une autre version du montage ou une autre convention de segmentation modifierait ces nombres.
+Avec ces conventions, le texte contient **194 occurrences lexicales et 132 types orthographiques distincts**. Ces nombres sont reproductibles à partir du texte ci-dessus et des règles indiquées.
 
 ### Type, occurrence lexicale et token de tokenizer : trois notions à distinguer
 
@@ -59,7 +58,7 @@ Le mot *token* est utilisé dans deux contextes proches, mais différents.
 | Notion | Définition | Exemple |
 |---|---|---|
 | **Type lexical** (*word type*) | Une forme orthographique distincte après normalisation | « je » est un type |
-| **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « je » apparaît 13 fois : 13 occurrences |
+| **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « je » apparaît 14 fois : 14 occurrences |
 | **Token de tokenizer** (*model token*) | Une unité produite par un tokenizer et représentée par un identifiant dans le vocabulaire du modèle | « aujourd'hui » peut être un token ou plusieurs sous-mots selon le tokenizer |
 
 Les deux usages de *token* sont liés, mais ne sont pas interchangeables. Une occurrence lexicale est une position dans le texte ; un token de tokenizer est une unité de représentation. Un mot peut être découpé en plusieurs tokens de modèle, et un tokenizer peut aussi traiter la ponctuation, les espaces ou des fragments de mots comme des unités distinctes.
@@ -70,22 +69,22 @@ La notion de type dépend elle aussi de la convention. Ici, « chante » et « c
 
 ### Le comptage et le classement
 
-Le tableau donne les groupes de fréquences les plus élevés. Les intervalles de rang tiennent compte des ex æquo : aucune forme de même fréquence n'est arbitrairement déclarée plus fréquente qu'une autre.
-
 | Forme(s) | Occurrences par forme | Rang(s) |
 |---|---:|---:|
-| je | 13 | 1 |
-| de | 9 | 2 |
-| la, le | 7 | 3–4 |
-| à | 5 | 5 |
-| goût, moi, ne, pas, qui, vie | 4 | 6–11 |
-| 11 formes (dont « mais », « vous », « aujourd'hui ») | 3 | 12–22 |
-| 15 formes | 2 | 23–37 |
-| 88 formes | 1 | 38–125 |
+| je | 14 | 1 |
+| que, une | 8 | 2–3 |
+| et, le | 6 | 4–5 |
+| de | 5 | 6 |
+| peut | 4 | 7 |
+| ce, dis, me, pas | 3 | 8–11 |
+| cela, idée, journées, mes, ne, pourrais, prévu, se, tout, un | 2 chacune | 12–21 |
+| 111 formes | 1 | 22–132 |
 
-La distribution est déjà très déséquilibrée : « je » apparaît 13 fois, alors que 88 types ne sont présents qu'une seule fois. Mais il faut interpréter ce résultat : Otis parle de lui-même, à la première personne. La fréquence élevée de « je » reflète donc aussi le point de vue et le genre du passage, pas seulement une régularité générale du français. C'est un exemple concret de l'effet du corpus sur les rangs. Ces 216 occurrences restent par ailleurs un échantillon minuscule pour estimer de manière fiable un exposant de loi de puissance.
+Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieux : le récit est raconté à la première personne. La fréquence dépend donc du sujet, du point de vue et du genre du texte. C’est précisément ce que cet exemple permet de voir : un rang n’est pas une propriété intrinsèque d’un mot.
 
-Le rang n'est pas une propriété intrinsèque d'un mot. Il dépend du corpus, de la langue, de la période, du genre de texte, de sa taille, de son contenu et des conventions de normalisation. Dans un texte consacré à l'Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare.
+Plusieurs formes ont la même fréquence. Elles occupent alors un intervalle de rangs : « que » et « une » sont aux rangs 2 et 3, sans qu’il y ait de raison substantielle de privilégier l’une plutôt que l’autre. Le tableau indique donc des intervalles pour les ex æquo.
+
+Notre petit texte montre déjà une distribution très inégale : « je » apparaît 14 fois, tandis que 111 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 194 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
 
 ## 2. La loi de Zipf : une approximation rang-fréquence
 
@@ -108,7 +107,7 @@ $$
 f(r) \approx \frac{C}{r}
 $$
 
-Si le type le plus fréquent apparaît 1 000 fois, cette approximation prévoit 500 occurrences au rang 2, 200 au rang 5 et 100 au rang 10. Ce sont des valeurs théoriques illustratives, pas des mesures de notre corpus d’Otis.
+Si le type le plus fréquent apparaît 1 000 fois, cette approximation prévoit 500 occurrences au rang 2, 200 au rang 5 et 100 au rang 10. Ce sont des valeurs théoriques illustratives, pas des mesures de notre petit corpus.
 
 ### Que signifie l'exposant ?
 
@@ -171,7 +170,7 @@ Ces résultats montrent deux choses :
 
 **Attention à l'interprétation.** Ces chiffres concernent le langage adressé aux enfants, pas l'ensemble des textes écrits ou parlés de chaque langue. Les corpus n'ont ni la même taille ni exactement les mêmes propriétés. La comparaison illustre une régularité translinguistique dans un cadre expérimental précis ; elle ne permet pas de classer les langues selon une prétendue « conformité à Zipf ».
 
-L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre transcription de 216 occurrences.
+L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre texte de 194 occurrences.
 
 ## 4. Une histoire plus ancienne que son nom
 
@@ -238,9 +237,9 @@ Steven Piantadosi (2014) insiste sur le fait que les représentations classiques
 
 La conclusion raisonnable est donc la suivante : **les fréquences lexicales présentent souvent une régularité proche de Zipf, mais sa forme exacte dépend des données, des unités et de la méthode d'analyse.**
 
-## 7. Retour à Otis : ce que notre petit corpus nous a appris
+## 7. Retour sur notre corpus : ce que ce petit texte nous a appris
 
-Nous avons construit un corpus, choisi une normalisation, distingué 216 occurrences de 125 types et établi un classement. Nous savons maintenant pourquoi ce classement n'est pas une propriété intrinsèque des mots, pourquoi les égalités de fréquence compliquent les rangs et pourquoi un texte si court ne permet pas d'estimer un exposant robuste.
+Nous avons construit un corpus, choisi une normalisation, distingué 194 occurrences de 132 types et établi un classement. Nous savons maintenant pourquoi ce classement n'est pas une propriété intrinsèque des mots, pourquoi les égalités de fréquence compliquent les rangs et pourquoi un texte si court ne permet pas d'estimer un exposant robuste.
 
 Sur un grand corpus, la même démarche devient une analyse statistique : compter, classer, estimer les paramètres, comparer les fréquences observées aux fréquences attendues, puis examiner les écarts. La formule devient utile seulement après ces choix méthodologiques.
 
