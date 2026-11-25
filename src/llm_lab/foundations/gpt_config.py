@@ -84,8 +84,9 @@ class GPTConfig:
             initialize the parameters.
 
     Raises:
-        ValueError: If a dimension is not a positive integer, or if
-            ``embedding_dim`` is not divisible by ``num_heads``.
+        ValueError: If a dimension is not a positive integer, if
+            ``embedding_dim`` is not divisible by ``num_heads``, or if
+            ``seed`` is not a non-negative integer.
     """
 
     vocab_size: int
