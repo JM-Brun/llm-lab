@@ -131,6 +131,8 @@ $$
 
 These expressions isolate the local paths in one head: the gradient to V passes directly through weighted aggregation; gradients to Q and K pass through scores and softmax. In the full network, gradients also propagate through output projections, residual connections, normalization, and earlier layers. The parameters are distinct, but their updates are coordinated by the same loss.
 
+For a numerical reverse-mode calculation along this path, see [Practice exercise AT-E on one attention row](exercises-attention.qmd#ex-attention-row-gradient).
+
 ## Multiple heads and projection sharing
 
 In standard multi-head attention, each head has sub-projections that produce its own Q, K, and V. Head outputs are concatenated and transformed by an output projection. Implementations may store these sub-projections in large fused matrices rather than three separate modules: the memory layout does not change the mathematical contract.

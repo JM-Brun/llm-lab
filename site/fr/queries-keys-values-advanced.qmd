@@ -131,6 +131,8 @@ $$
 
 Ces expressions isolent les chemins locaux d'une tête : le gradient de V passe directement par l'agrégation pondérée ; ceux de Q et K passent par les scores puis le softmax. Dans le réseau complet, les gradients se propagent aussi à travers les projections de sortie, les connexions résiduelles, les normalisations et les couches précédentes. Les paramètres sont distincts, mais leurs mises à jour sont coordonnées par la même fonction de perte.
 
+Pour effectuer un calcul numérique de ce chemin inverse, voir l'[exercice AT-E sur une ligne d'attention](exercises-attention.qmd#ex-attention-row-gradient).
+
 ## Têtes multiples et partage des projections
 
 Dans une attention multi-tête classique, chaque tête dispose de sous-projections qui produisent ses propres Q, K et V. Les sorties des têtes sont concaténées puis transformées par une projection de sortie. Les implémentations peuvent stocker ces sous-projections dans de grandes matrices fusionnées plutôt que dans trois modules séparés : la disposition mémoire ne change pas le contrat mathématique.

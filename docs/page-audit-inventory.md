@@ -2008,3 +2008,11 @@ The FR/EN training-loop lessons now distinguish sampled mini-batch SGD from full
 - Verify the repository's actual autodiff/backward tests and the implementation evidence claimed by the Build milestones. The small NumPy example is not a Transformer backward pass.
 - Keep the end-to-end training loop, optimizer integration, gradient clearing/accumulation semantics, checkpointing and validation executor behind the existing G8 prerequisite gate. This audit does not clear that gate.
 - Learner transfer remains unmeasured: source correctness and arithmetic checks do not establish that readers can independently derive or debug parameter gradients.
+
+### Attention-gradient continuation — 2026-11-25
+
+The bilingual Q/K/V deep dive now makes the row-wise softmax backward rule explicit: $(G_S)_{ij}=A_{ij}((G_A)_{ij}-\sum_r A_{ir}(G_A)_{ir})$. The fixed additive mask is not differentiated; forbidden positions have zero softmax weight and therefore zero score gradient, provided the row has at least one accessible key.
+
+The existing Q/K/V learning exercise asked learners to identify gradient paths and projection-gradient forms, but did not require a numerical reverse-mode calculation through attention. The bilingual Practice collection now adds optional exercise AT-E: one query, two keys and values, a scalar upstream objective, and a worked calculation of $G_V$, $G_A$, $G_S$, $G_Q$ and $G_K$. Its arithmetic was independently checked. This is a local single-row exercise; it does not validate batched/multi-head backward code or establish learner mastery.
+
+Still open: finite-difference verification of the full attention path; shared-parameter accumulation across positions/batch items and heads; backward tests for the full Transformer block; and the gated G8 training loop in issue #656. Do not start G8 implementation before its separate prerequisite review.
