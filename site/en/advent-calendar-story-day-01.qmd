@@ -160,7 +160,7 @@ The parameter $\beta$ shifts the rank. When $\beta=0$, we recover classical Zipf
 
 $$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$
+$$
 
 The scale factor $C$ cancels in this ratio: the curves compare distribution shapes independently of their absolute frequency level.
 
