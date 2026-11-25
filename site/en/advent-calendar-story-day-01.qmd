@@ -154,9 +154,9 @@ $$
 
 The parameter $\beta$ shifts the rank. When $\beta=0$, we recover classical Zipf. For $\beta>0$, the relative decline is less abrupt across the very first ranks; when $r$ becomes much larger than $\beta$, the tail approaches the same asymptotic slope governed by $-\alpha$. We can isolate this effect by comparing frequencies with the frequency at rank 1:
 
-$
+$$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$
+$$
 
 Thus, $\beta$ mainly changes the curvature around the first ranks; it is neither the number of function words nor a linguistic cause. It adds a parameter that can improve the fit to some datasets, but not necessarily all. Compare residuals and parameter stability, ideally on held-out data, rather than automatically preferring the more flexible model.
 
@@ -234,9 +234,9 @@ This helps explain why modern tokenizers often use subword units: they can repre
 
 Most importantly, two distributions must be distinguished. A Zipf curve describes a **marginal frequency in a corpus**: how often each form or token appears across all contexts. An autoregressive model instead computes a distribution **conditioned on the context** at each position:
 
-$
+$$
 p_\theta(x_t\mid x_{<t}).
-$
+$$
 
 A token’s corpus frequency influences how many training examples are observed, but it is not the model’s predicted probability in a particular context. A globally rare token can be highly probable after a particular prefix; a globally frequent token can be unlikely in that same context.
 
