@@ -129,9 +129,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 </div>
 </details>
 
-::: {.callout-note collapse="true" title="Check prefix invariance in practice"}
-The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises-attention.qmd#ca-a-prefix-invariance) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
-:::
+A useful consequence of the causal rule is **prefix invariance**: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. This is a testable property of the computation; a mask-matrix check alone does not establish that every path through a complete model is causal.
 
 ## Connections to other concepts
 
@@ -151,7 +149,7 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 
 ## Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+
 
 ## Further exploration
 
@@ -173,11 +171,12 @@ In code, **boolean-mask polarity is API-specific**. In [PyTorch 2.15 scaled dot-
 :::
 
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
-A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
+A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The tests provide two complementary levels of evidence: `tests/unit/test_attention.py` checks the single-head attention primitive, while `tests/unit/test_gpt.py` compares prefix logits with the corresponding logits from an extended input under the same GPT. These are targeted regression checks, not formal proofs for every architecture or input. The full-model test does not add padding-mask support; the reference `GPT.forward` interface has no padding-mask argument.
 
 - [Causal mask implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Temporal invariance unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Planned acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+- [Single-head attention tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py)
+- [Full-GPT prefix-invariance test](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py)
+- [Implementation status and remaining parity decision](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#causal-attention-implementation-status)
 :::
 
 :::
