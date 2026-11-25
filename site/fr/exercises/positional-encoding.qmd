@@ -77,7 +77,7 @@ B voit les mêmes trois tokens dans les deux cas. Les paires clé-valeur associ�
 
 </details>
 
-[Reprendre la comparaison avec B au milieu](../positional-encoding.qmd#position-permutation)
+[Voir la propriété générale d’équivariance par permutation](../positional-encoding.qmd#permutation-equivariance)
 
 ::: {.language-switch}
 **Langue :** [Français](positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)
