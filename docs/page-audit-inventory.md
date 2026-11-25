@@ -1926,3 +1926,20 @@ The move does not change implementation or scientific claims. Run the existing P
 ### Quarto anchor rendering detail
 
 When a legacy HTML `<a id="…"></a>` alias is immediately followed by a Markdown heading, the heading can be absorbed into the raw HTML block and its explicit heading ID will not appear in the rendered page. Keep a blank line between the alias and the heading, then verify the fragment against the rendered HTML. The CA-A transfer preserves both old fragments and the new canonical `#ca-a-prefix-invariance` target.
+
+
+## 2026-11-25: observed-target scoring and loss Practice audit
+
+**Scope.** Source-level review of the FR/EN Practice companions for likelihood, cross-entropy and loss, plus the shared mathematical-foundations exercises they reference. The pass checks probability factorization, numerical answers, target alignment, masking, aggregation and the distinction between generation and scoring. It does not re-audit the underlying implementation or establish learner effectiveness.
+
+### Findings
+
+- The likelihood exercises correctly apply the chain rule: the running continuation has likelihood $0.6\\times0.5=0.3$, log-likelihood approximately $-1.204$ nats and NLL approximately $1.204$ nats. The explanation explicitly avoids an independence assumption between successive tokens. The transfer task correctly distinguishes an observed path with likelihood $0.30\\times0.90=0.27$ from the greedy path with likelihood $0.60\\times0.40=0.24$: greedy decoding maximizes each local conditional choice, not necessarily the probability of the resulting multi-token sequence.
+- The cross-entropy lesson's core one-hot calculation is correctly expressed as $-\\log p(y)$; the numerical loss and logit-gradient exercises already exist in the shared Foundations collection. Its soft-target task correctly uses $H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)$ with the order of the KL arguments preserved. The dedicated cross-entropy companion's short conceptual checks are therefore complemented by existing numerical tasks; duplicating those tasks would be unnecessary.
+- The loss exercise correctly distinguishes a token visible as an input from the same token's earlier target being excluded from the loss. Its row-2 query can see the observed prefix $(A,B)$ but not the future input $C$. Changing the future token can change the observed target's probability and loss without changing that row's prediction distribution.
+- The valid-target reduction arithmetic is correct: with losses $\\ln2,\\ln4,\\ln8$, the mean over three valid positions is $2\\ln2\\approx1.386$ nats. Including the ignored position in the denominator would change the objective. The checkpoint exercise also correctly distinguishes a global valid-token mean (X: 1.0; Y: 1.4) from an unweighted mean of batch means (X: 1.75; Y: 1.25), which can reverse the ranking when batch sizes differ.
+- The corresponding FR/EN exercise anchors and intended reasoning are aligned. No correction to the mathematical answers was found in this bounded group.
+
+### Change and boundary
+
+The cross-entropy Practice companions now link directly to the existing shared exercises for (1) logits → softmax → one-hot NLL and (2) soft targets → cross-entropy/KL. The broader Foundations collection remains the owner of those calculations; no duplicate exercise was added. This is a source-level and arithmetic audit, not a learner study or a complete audit of every scoring/training resource.
