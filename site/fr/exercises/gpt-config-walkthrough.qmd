@@ -30,6 +30,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 
 
 3. Pour une configuration avec `vocab_size=50`, `context_length=32`, `embedding_dim=64`, `num_heads=4`, `num_layers=6` et `mlp_hidden_dim=256`, associez chaque champ à ce qu'il contrôle. Que change `seed` ?
+4. Pourquoi `embedding_dim=16.0` et `seed=-1` doivent-ils être rejetés, même si la première valeur est numériquement entière ?
 <details>
 <summary>Afficher les réponses et le raisonnement</summary>
 
@@ -38,6 +39,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 
 
 3. `vocab_size` fixe les lignes de la table de tokens et la dernière dimension des logits (`V`) ; `context_length` fixe la longueur maximale et la table de positions ; `embedding_dim` fixe la largeur `d` du flux et des projections ; `num_heads` découpe cette largeur en `H` têtes de `d/H` colonnes ; `num_layers` fixe le nombre de blocs ; `mlp_hidden_dim` fixe la largeur intermédiaire du MLP. `seed` change les valeurs initiales, pas les formes ni l'architecture.
+
+4. `16.0` reste un flottant : une annotation `int` ne convertit ni ne valide la valeur à l'exécution. La graine doit être un entier non négatif accepté par `default_rng` ; `-1` est donc invalide et doit échouer dès la construction.
 </details>
 
 ::: {.language-switch}
