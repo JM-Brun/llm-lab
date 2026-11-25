@@ -29,7 +29,7 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 
 ## Theory path — Understand
 
-We first observe what an LLM predicts, then reconstruct the computation that produces its predictive distribution. We next examine context design before distinguishing three uses of that same distribution: generating a continuation, scoring an observed sequence, and learning the parameters. The nine stages below provide a first-reading order, not a strict prerequisite chain; the resource map lets you explore relationships beyond that order.
+We first observe what an LLM predicts, then reconstruct the computation that produces its predictive distribution. The route next follows the generation loop, then examines how the application assembles the context for each call. It finally returns to the distribution’s other two uses: scoring an observed target and learning the parameters. This is a pedagogical order: context design acts upstream of each call, even though the route studies it after generation. The nine stages provide a first-reading order, not a strict prerequisite chain.
 
 ### Learning path skeleton {#conceptual-route}
 
