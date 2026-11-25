@@ -36,7 +36,7 @@ Imagine Otis describing his work as a scribe:
 
 > Otis is a scribe. In his office, Otis writes texts on papyrus. He talks about his work, his tools and his days. The scribe copies words, rereads texts and sorts scrolls. For Otis, writing is a profession, but also a way to think. Every day, he writes, corrects and starts again. Words pass from papyrus to the reader; the scribe’s work never stops.
 
-This paragraph is our **miniature corpus**. It contains 63 lexical occurrences and 43 distinct forms under the following conventions:
+This paragraph is our **miniature corpus**. It contains 63 lexical occurrences and 43 distinct forms under the following conventions. This is an adapted English version of the French teaching passage; its counts are recomputed rather than copied from the French version:
 
 - convert to lowercase;
 - remove punctuation as a counted unit;
@@ -154,7 +154,7 @@ The regularity is not limited to English or French. To avoid comparing figures f
 | Spanish | 353,104 | 10,057 | 1.39 | 0.994 |
 | Japanese | 941,006 | 25,648 | 1.30 | 0.993 |
 
-*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. The correlation is between observed and expected frequencies under the model, not a correlation between rank and frequency.*
+*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\\alpha$ is the exponent and $\\beta$ the shift in the Zipf-Mandelbrot law. The correlation is between observed and expected frequencies under the model, not a correlation between rank and frequency.*
 
 These results show two things:
 
