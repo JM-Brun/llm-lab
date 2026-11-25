@@ -41,7 +41,9 @@ Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : le
 
 <a id="ex-attention-causal-prefix-invariance"></a>
 
-## CA-A — Masque causal et invariance de préfixe {#ca-a-prefix-invariance}
+<a id="ca-a-prefix-invariance"></a>
+
+## CA-A — Masque causal et invariance de préfixe
 
 On considère quatre tokens d'entrée $x_0,x_1,x_2,x_3$. À la position de requête $i$, l'auto-attention causale n'autorise que les clés des positions $j\leq i$.
 
