@@ -501,8 +501,6 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 
 </details>
 
-
-
 **Stage 4 — Distinguish teacher forcing from free-running generation.**
 
 Consider the reference sequence $[A,B,C,D]$. With input length 3, the shifted examples are $x=[A,B,C]$ and $y=[B,C,D]$.
