@@ -1922,3 +1922,7 @@ The detailed findings, checked arithmetic and acceptance boundary are in [the tr
 ### Evidence boundary and next action
 
 The move does not change implementation or scientific claims. Run the existing Python suite and full Quarto/browser workflow on the final head of PR #1626; verify the companion pages at desktop/mobile widths and confirm both legacy anchors resolve. Manual screen-reader/touch review remains under #483, and learner evidence remains under #447. The next exercise-development gap from the 2026-11-08 catalogue audit is the text-data transfer sequence (BPE merge tracing, shifted windows and leakage/boundary handling); inspect the current TR-A/B/C and training-example pages before adding anything, to avoid duplication.
+
+### Quarto anchor rendering detail
+
+When a legacy HTML `<a id="…"></a>` alias is immediately followed by a Markdown heading, the heading can be absorbed into the raw HTML block and its explicit heading ID will not appear in the rendered page. Keep a blank line between the alias and the heading, then verify the fragment against the rendered HTML. The CA-A transfer preserves both old fragments and the new canonical `#ca-a-prefix-invariance` target.
