@@ -223,3 +223,13 @@ The next content task is narrower: expand the existing FR/EN Practice companions
 The source-level findings and remaining tasks are recorded in [the audit report](audits/training-example-practice-gaps-2026-11-25.md) and the [page audit inventory](page-audit-inventory.md). Manual accessibility work remains under #483; learner validation remains gated under #447. CI and rendered checks do not establish comprehension.
 
 **Dependency not yet integrated:** the CA-A lesson/companion migration is still open in #1622 and #1623. Their Quarto/browser jobs passed, but their Test suite jobs were cancelled and need a successful final-head rerun before merge. Keep the causal-masking ownership item open until then; this training-example audit is a separate next slice.
+
+
+## Progress snapshot — 2026-11-25 (training-example Practice transfer)
+
+- The bounded follow-up identified by the 2026-11-25 audit is implemented in PR [#1625](https://github.com/JM-Brun/llm-lab/pull/1625): the FR/EN training-examples Practice companions retain their four existing checks and add two transfer scenarios for packed document boundaries and padded-batch loss reduction.
+- The packing exercise makes the three separate decisions explicit: target shift, cross-document attention visibility, and whether the first token after a boundary contributes to loss. It avoids implying that EOS itself blocks attention.
+- The padding exercise constructs attention and loss masks separately and checks the valid-token mean (0.625) against the naive padded-position mean (1.2).
+- The lesson pages, guided route, graph registries, generated maps and `sliding_input_target_pairs` implementation remain unchanged. The exercises do not claim to implement a packer or collator.
+- The scope and pedagogical decisions are documented in `docs/audits/training-example-practice-transfer-2026-11-25.md`.
+- **Status:** PR open; the final-head Quarto/browser audit is queued. Do not treat the change as integrated until the final CI and rendered checks pass and the artifacts have been inspected. Manual screen-reader review and learner validation remain separate evidence.
