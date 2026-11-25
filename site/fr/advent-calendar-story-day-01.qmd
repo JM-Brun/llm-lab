@@ -32,11 +32,11 @@ Cette leçon part d’une question simple : pourquoi certaines formes reviennent
 
 **Question : pourquoi le mot « je » revient-il si souvent dans ce texte ?**
 
-Lisez ce court récit avant de regarder les nombres :
+Lisez ce texte avant de regarder les nombres :
 
 > Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. Moi, si je devais résumer ma vie aujourd'hui avec vous, je dirais que c'est d'abord des rencontres. Des gens qui m'ont tendu la main, peut-être à un moment où je ne pouvais pas, où j'étais seul chez moi. Et c'est assez curieux de se dire que les hasards, les rencontres, forgent une destinée... Parce que quand on a le goût de la chose, quand on a le goût de la chose bien faite, le beau geste, parfois on ne trouve pas l'interlocuteur en face je dirais, le miroir qui vous aide à avancer. Alors ça n'est pas mon cas, comme je disais là, puisque moi au contraire, j'ai pu : et je dis merci à la vie, je lui dis merci, je chante la vie, je danse la vie... je ne suis qu'amour ! Et finalement, quand beaucoup de gens me disent aujourd'hui « Mais comment fais-tu pour avoir cette humanité ? », et bien je leur réponds très simplement, je leur dis que c'est ce goût de l'amour ce goût donc qui m'a poussé aujourd'hui à entreprendre une construction mécanique, mais demain qui sait ? Peut-être simplement à me mettre au service de la communauté, à faire le don, le don de soi...
 
-Ce texte constitue notre corpus de travail. Il a été écrit pour cette démonstration ; il ne s’agit pas d’un extrait de corpus linguistique réel. Seul le récit entre guillemets est compté : la question introductive et les explications qui l’entourent sont exclues. Nous allons le normaliser, compter ses unités lexicales, classer les formes selon leur fréquence, puis comparer ce petit échantillon aux régularités observées dans des corpus beaucoup plus vastes.
+Ce texte constitue notre corpus de travail. Il s’agit d’un monologue scénarisé, et non d’un échantillon représentatif de la langue française. Seul le récit entre guillemets est compté : la question introductive et les explications qui l’entourent sont exclues. Nous allons le normaliser, compter ses unités lexicales, classer les formes selon leur fréquence, puis comparer ce petit échantillon aux régularités observées dans des corpus beaucoup plus vastes.
 
 ### Construire le corpus : quelles unités compter ?
 
@@ -82,7 +82,7 @@ La notion de type dépend elle aussi de la convention. Ici, « chante » et « c
 
 Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieux : le texte est raconté à la première personne. La fréquence dépend donc du sujet, du point de vue et du genre du texte. C’est précisément ce que cet exemple permet de voir : un rang n’est pas une propriété intrinsèque d’un mot.
 
-Plusieurs formes ont la même fréquence. Elles occupent alors un intervalle de rangs : « que » et « une » sont aux rangs 2 et 3, sans qu’il y ait de raison substantielle de privilégier l’une plutôt que l’autre. Le tableau indique donc des intervalles pour les ex æquo.
+Plusieurs formes ont la même fréquence. Elles occupent alors un intervalle de rangs : « à » et « le » sont aux rangs 4 et 5, sans qu’il y ait de raison substantielle de privilégier l’une plutôt que l’autre. Le tableau indique donc des intervalles pour les ex æquo.
 
 Notre petit texte montre déjà une distribution très inégale : « je » apparaît 13 fois, tandis que 86 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 217 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
 
