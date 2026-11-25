@@ -28,56 +28,62 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 This lesson starts with a character and a monologue: Otis, the scribe in *Asterix and Obelix: Mission Cleopatra*. We will turn that thread into a small corpus, count its words, and then compare the exercise with real linguistic corpora.
 
-The passage below is an **original educational paraphrase of Otis’s situation**, not a transcription of the film dialogue. It gives us a controlled text whose counting conventions can be made explicit.
+The narrative thread is Otis’s reply in *Asterix and Obelix: Mission Cleopatra*: “You know, I don't believe there is such a thing as a good or a bad situation.” The monologue was largely improvised by Édouard Baer. The theatrical version lasts about 54 seconds; a longer alternative version (about 1 minute 20 seconds) was also shown around the restored re-release.
 
-## 1. Build Otis’s corpus
+Rather than replace the scene with an invented text, this lesson now uses an **online transcript of Otis’s monologue** as its corpus. The transcript is hosted by Happy Scribe. It is useful for a reproducible exercise, but it is an automated transcript, not a certified verbatim record of the film audio. The figures below therefore describe that transcript, not necessarily every word spoken in every edit of the scene.
 
-Imagine Otis describing his work as a scribe:
+- [Consult the transcript of the monologue](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre) ;
+- [Background, duration and history of the scene — *Le Parisien*, 4 July 2023](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
-> Otis is a scribe. In his office, Otis writes texts on papyrus. He talks about his work, his tools and his days. The scribe copies words, rereads texts and sorts scrolls. For Otis, writing is a profession, but also a way to think. Every day, he writes, corrects and starts again. Words pass from papyrus to the reader; the scribe’s work never stops.
+We analyse Otis’s speech only, beginning with “You know…”, excluding Panoramix’s question and the preceding dialogue. The full transcript is not reproduced here: the purpose is to study its statistical properties, not republish the dialogue.
 
-This paragraph is our **miniature corpus**. It contains 63 lexical occurrences and 43 distinct forms under the following conventions. This is an adapted English version of the French teaching passage; its counts are recomputed rather than copied from the French version:
+### Building a corpus from the transcript
+
+The corpus is based on the French transcript, using these conventions:
 
 - convert to lowercase;
 - remove punctuation as a counted unit;
 - preserve accents;
-- keep inflected forms distinct: “writes” and “writing” are separate forms;
-- keep the apostrophe in “scribe’s”, counted here as one form.
+- retain internal apostrophes: “c'est”, “j'ai” and “qu'il” each count as one orthographic unit;
+- do not lemmatize: inflected forms remain distinct;
+- treat hyphens as separators when they occur in the transcript.
 
-These choices are not neutral. If we lemmatized the text, split contractions, or treated capitalization differently, the counts would change.
+Under these conventions, the transcript contains **216 lexical occurrences and 125 distinct orthographic types**. These figures can be reproduced from the linked transcript and the rules above. Manually correcting the transcript, using another edit of the scene or changing the segmentation conventions would change the counts.
 
 ### Type, lexical occurrence and tokenizer token: three distinct notions
 
-The terminology is confusing because *token* is used in two related but different contexts.
+The word *token* is used in two related but different contexts.
 
-| Notion | Definition | Example in our corpus |
+| Notion | Definition | Example |
 |---|---|---|
-| **Lexical type** (*word type*) | A distinct form after applying the chosen normalization rules | “scribe” is a type |
-| **Lexical occurrence** (*word token*) | One concrete appearance of a form in the text | “scribe” appears three times: three occurrences |
-| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | “scribe” may map to one token or several subwords, depending on the tokenizer |
+| **Lexical type** (*word type*) | A distinct orthographic form after normalization | “je” is a type |
+| **Lexical occurrence** (*word token*) | One concrete appearance of a form in the text | “je” appears 13 times: 13 occurrences |
+| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | “aujourd'hui” may map to one token or several subwords, depending on the tokenizer |
 
 The two uses of *token* are related, but they are not interchangeable. A lexical occurrence is a position in the text; a tokenizer token is a representation unit. A word may be split into several model tokens, and a tokenizer may also treat punctuation, spaces or word fragments as separate units.
 
-The notion of type also depends on the convention. Under our orthographic convention, “writes” and “writing” are two types; lemmatization could group them under one lemma. Likewise, “Otis” and “otis” are merged here because we chose to lowercase the text.
+The notion of type also depends on the convention. Here, “chante” and “chanter” would be two types; lemmatization could group them under one lemma. Lowercasing also merges variants that differ only in capitalization.
 
-**Takeaway:** before comparing frequencies, always specify the counted unit and the normalization procedure.
+**Takeaway:** before comparing frequencies, always specify the counted unit, the text source and the normalization procedure.
 
 ### Count and rank
 
-We now count the occurrences of each lexical type and sort the types by decreasing frequency.
+The table shows the most frequent groups. Rank intervals preserve ties: forms with the same frequency are not arbitrarily ordered.
 
-| Form | Occurrences | Rank or rank interval |
+| Form(s) | Occurrences per form | Rank(s) |
 |---|---:|---:|
-| his | 4 | 1 |
-| Otis, a, and, the | 3 each | 2 to 5 |
-| is, scribe, writes, texts, papyrus, he, work, words, to | 2 each | 6 to 14 |
-| The other 29 forms | 1 each | 15 to 43 |
+| je | 13 | 1 |
+| de | 9 | 2 |
+| la, le | 7 | 3–4 |
+| à | 5 | 5 |
+| goût, moi, ne, pas, qui, vie | 4 | 6–11 |
+| 11 forms (including “mais”, “vous”, “aujourd'hui”) | 3 | 12–22 |
+| 15 forms | 2 | 23–37 |
+| 88 forms | 1 | 38–125 |
 
-Several forms have the same frequency. There is therefore no unique rank to assign without an additional convention: we could use an arbitrary order, an average rank, or show an interval. For this small example, the interval is the most honest choice.
+The distribution is already highly uneven: “je” occurs 13 times, while 88 types occur only once. This is precisely the kind of asymmetry that motivates the study of rank-frequency distributions. But 216 occurrences are still far too few to estimate a power-law exponent reliably.
 
 Rank is not an intrinsic property of a word. It depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer.
-
-Our corpus illustrates the operations. With only 63 occurrences, it is far too small for a serious power-law estimate: frequency ties and topic effects dominate.
 
 ## 2. Zipf’s law: a rank-frequency approximation
 
@@ -154,7 +160,7 @@ The regularity is not limited to English or French. To avoid comparing figures f
 | Spanish | 353,104 | 10,057 | 1.39 | 9.96 | 0.994 |
 | Japanese | 941,006 | 25,648 | 1.30 | 7.12 | 0.993 |
 
-*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\alpha$ is the exponent and $\beta$ the shift in the Zipf-Mandelbrot law. The correlation is between observed and expected frequencies under the model, not a correlation between rank and frequency.*
+*Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\alpha$ is the exponent and $\beta$ the shift in the Zipf-Mandelbrot law. r is Pearson’s correlation between the observed and expected frequencies under the model. It is neither an exponent nor proof that the distribution follows an exact power law.*
 
 These results show two things:
 
@@ -163,7 +169,7 @@ These results show two things:
 
 **Caution when interpreting the table.** These figures concern speech addressed to children, not all written or spoken texts in each language. The corpora differ in size and are not identical in their properties. The comparison illustrates a cross-linguistic regularity in a specific empirical setting; it does not rank languages by some supposed “compliance with Zipf”.
 
-The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. This is another reason not to draw general conclusions from our 67-occurrence paragraph.
+The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 67-occurrence paragraph.
 
 ## 4. A history older than its name
 
@@ -212,7 +218,7 @@ This helps explain why modern tokenizers often use subword units: they can repre
 
 We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters.
 
-Recent work even studies links between token distributions, vocabulary choice and downstream performance. This is a research direction, not yet a universal design rule.
+Recent work even studies links between token distributions, vocabulary choice and downstream performance. This is a research direction, not yet a universal design rule. In particular, word distributions in a corpus must be distinguished from token distributions produced by a tokenizer: subword segmentation changes the statistical object being studied.
 
 **In short:** Zipf is used to characterize data, compare distributions and formulate hypotheses about systems that use them. It is neither a training algorithm nor a complete causal explanation of language.
 
@@ -232,7 +238,7 @@ The reasonable conclusion is therefore: **lexical frequencies often exhibit a Zi
 
 ## 7. Back to Otis: what our small corpus taught us
 
-We built a corpus, chose a normalization, distinguished 63 occurrences from 43 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
+We built a corpus, chose a normalization, distinguished 216 occurrences from 125 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
 
 On a large corpus, the same procedure becomes a statistical analysis: count, rank, estimate parameters, compare observed frequencies with expected frequencies, and then inspect the deviations. The formula becomes useful only after these methodological choices.
 
