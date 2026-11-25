@@ -263,3 +263,21 @@ Le catalogue relie chaque source à un fichier d'extraction unique. Les identifi
 | `data/extractions/roda-wolfram-zipf-natural-languages-2024.yml` | `interactive-rank-frequency-workbench` |
 
 Les items sont paraphrasés, localisés et bornés par leur niveau d'inspection. Leur disposition (`integrate`, `already-covered` ou `defer`) et sa justification sont enregistrées dans chaque extraction. Ces décisions éditoriales ne valent ni validation scientifique indépendante ni preuve d'efficacité pédagogique ; les vérifications restantes sont listées à la section 7.
+
+
+## 10. Suivi éditorial complémentaire — 2026-11-25
+
+Le dossier de sources et le laboratoire ne couvrent pas à eux seuls tous les travaux éditoriaux de la leçon. Le suivi transversal de la leçon Day 01 et de ses prolongements est centralisé dans [l'issue #1653 — clarification de la leçon Zipf et organisation des approfondissements](https://github.com/JM-Brun/llm-lab/issues/1653).
+
+La répartition des responsabilités est la suivante :
+
+- **PR #1639** : provenance et remplacement du texte d'accroche ; ne vaut pas validation complète de la pédagogie de la leçon.
+- **PR #1608** (remplacement de #1601) : ingestion comparative des sources et enrichissement borné de la collection d'exercices ; les validations de cette branche doivent être considérées selon son état réel de fusion et de CI.
+- **Issue #1653** : cohérence FR/EN, définitions des unités, intuition des paramètres, visualisations, usages concrets, lien rigoureux aux LLM, ramifications Deepen et validation novice.
+- **Issue #1605** : laboratoire reproductible sur corpus (ELTeC, extraction TEI, comptages, rangs, estimation et robustesse). Ne pas dupliquer ce périmètre dans #1653.
+
+L'architecture éditoriale retenue comporte trois espaces : une leçon principale concise et autonome ; des approfondissements Deepen facultatifs, créés progressivement lorsqu'une notion mérite une page autonome ; une pratique séparée, accessible depuis la leçon par un lien discret. Le graphe conceptuel, le graphe computationnel et le parcours pédagogique restent trois représentations distinctes.
+
+Les candidates de prolongement (Zipf–Mandelbrot, loi de Heaps, hapax, diversité lexicale, comparaisons de corpus et lien aux distributions de tokens des LLM) ne sont pas des pages promises ni des concepts à enregistrer automatiquement. Leur création dépend d'un apport pédagogique autonome, de sources suffisantes et d'une modélisation cohérente. Les expériences comparatives, notamment entre langues ou discours politiques, relèvent des pages de pratique et doivent contrôler genre, période, taille, normalisation et unité de comptage.
+
+**Important :** l'issue #1653 est un plan de travail, pas une preuve que les points sont déjà corrigés. Les statuts d'implémentation, de validation technique et de validation pédagogique doivent rester distincts.
