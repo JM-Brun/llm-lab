@@ -166,7 +166,9 @@ Thus, $\beta$ mainly changes the curvature around the first ranks; it is neither
 
 *These are synthetic curves normalized so that relative frequency at rank 1 equals 1. They isolate parameter effects; they are not fitted to a real corpus.*
 
-This extension is often called the Zipf-Mandelbrot law. It reminds us that an empirical law is a model to fit and evaluate, not a formula to apply without checking its assumptions.
+For example, at rank 10 with $\beta=0$, values $\alpha=0.7$, $1$ and $1.3$ give relative frequencies of about $0.20$, $0.10$ and $0.05$. At rank 2 with $\alpha=1$, values $\beta=0$, $5$ and $20$ give about $0.50$, $0.86$ and $0.95$. All curves equal 1 at rank 1; $\beta$ mainly changes the first ranks, while $\alpha$ governs the long-tail slope.
+
+This extension reminds us that an empirical law is a model to fit and evaluate, not a formula to apply without checking its assumptions.
 
 ## 3. What do we observe across languages?
 
