@@ -1,5 +1,5 @@
 ---
-title: "Why does the word “the” appear everywhere?"
+title: "Why does the word “I” appear so often?"
 subtitle: "Zipf’s law, from Otis’s monologue to word distributions across languages"
 description-meta: "Build a corpus, distinguish types from occurrences, explore Zipf’s law, its history, uses and limitations."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
@@ -83,7 +83,7 @@ The table shows the most frequent groups. Rank intervals preserve ties: forms wi
 | 15 forms | 2 | 23–37 |
 | 88 forms | 1 | 38–125 |
 
-The distribution is already highly uneven: “je” occurs 13 times, while 88 types occur only once. This is precisely the kind of asymmetry that motivates the study of rank-frequency distributions. But 216 occurrences are still far too few to estimate a power-law exponent reliably.
+The distribution is already highly uneven: “je” occurs 13 times, while 88 types occur only once. But this result needs interpretation: Otis is talking about himself in the first person. The high frequency of “je” therefore also reflects the viewpoint and genre of the passage, not just a general regularity of French. This is a concrete example of how the corpus affects ranks. Moreover, 216 occurrences are far too few to estimate a power-law exponent reliably.
 
 Rank is not an intrinsic property of a word. It depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer.
 
@@ -218,7 +218,7 @@ This helps explain why modern tokenizers often use subword units: they can repre
 
 ### 5.4 Evaluate distributions produced by a model
 
-We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters.
+We can compare word or token frequencies in human-written texts and model-generated texts. Differences may reveal reduced lexical diversity, excessive repetition or behavior that depends on generation parameters. For the comparison to be interpretable, we must control for language, text length, tokenizer, normalization and sampling settings. A rank-frequency curve is never, by itself, a sufficient measure of text or model quality.
 
 Recent work even studies links between token distributions, vocabulary choice and downstream performance. This is a research direction, not yet a universal design rule. In particular, word distributions in a corpus must be distinguished from token distributions produced by a tokenizer: subword segmentation changes the statistical object being studied.
 
