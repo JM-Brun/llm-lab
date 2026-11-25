@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import warnings
+
+import pytest
 from pathlib import Path
 
 from strict_yaml import load_yaml
@@ -44,10 +46,10 @@ title: Example
 
 A sentence with an equation $x = y$.
 
-\`\`\`python
+```python
 x = 1
 y = 2
-\`\`\`
+```
 
 ## Exercises
 
