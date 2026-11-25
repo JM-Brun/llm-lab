@@ -501,8 +501,6 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 
 </details>
 
-
-
 **Étape 4 — Distinguer teacher forcing et génération libre.**
 
 On considère une séquence de référence $[A,B,C,D]$. Pour une longueur d'entrée de 3, les exemples décalés sont $x=[A,B,C]$ et $y=[B,C,D]$.
