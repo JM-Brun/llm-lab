@@ -1898,3 +1898,31 @@ The dedicated FR/EN training-examples Practice companions contain four short che
 The detailed findings, checked arithmetic and acceptance boundary are in [the training-example Practice gap audit](audits/training-example-practice-gaps-2026-11-25.md).
 
 **Validation boundary:** this is a source-level and arithmetic audit, not rendered-page, assistive-technology or learner validation. Use the existing Quarto/browser workflow after any content changes; no new workflow is needed. Manual keyboard/touch/screen-reader checks remain under #483, and learner validation remains gated under #447.
+
+
+## 2026-11-25: causal-masking exercise ownership and prefix-invariance evidence
+
+**Scope.** Reconcile the published CA-A exercise with the lesson-specific Practice companion, the shared Attention collection, the current NumPy implementation/tests and the roadmap. Reuse the completed technical audit in #81; do not add another mask implementation, duplicate test, or workflow.
+
+### Findings
+
+- The causal-masking lesson already linked to a dedicated companion page, but that companion contained only one short softmax check. The substantive CA-A exercise (mask construction, shifted targets, prefix invariance and mask-type distinctions) lived in the shared Attention collection. The lesson also linked directly to that collection from a supplementary callout. This split ownership did not match the project convention that the lesson points to its own expandable Practice page.
+- The full exercise is already technically supported. `tests/unit/test_attention.py::test_scaled_dot_product_attention_causal_invariance` perturbs future keys/values and checks earlier outputs at the single-head primitive level. `tests/unit/test_gpt.py::test_prefix_invariance_future_tokens_do_not_change_earlier_logits` compares prefix logits with the corresponding logits from a longer input under the same GPT. These are complementary targeted regression tests, not formal proofs for all architectures.
+- The Further exploration text on both causal lessons incorrectly said that the tests did not cover a complete GPT. It now distinguishes the primitive-level test from the full-GPT logits test and links to both.
+- The roadmap's deferred causal-attention section understated the current implementation. It now records the NumPy reference, additive 2D mask contract, local and full-model invariance tests, bilingual lesson links, and the one direct comparison still deferred: numerical parity of the primitive against PyTorch SDPA. The existing Hugging Face GPT-2 eager parity test is not described as an SDPA primitive-parity test.
+
+### Changes in merged PR #1622 and focused PR #1626
+
+- Move the full CA-A task and its worked solution from the shared Attention collection to the dedicated FR/EN causal-masking Practice companions.
+- Add two progressive hints, an explicit test-interpretation prompt, and a compact self-check criterion while preserving the existing worked matrices, mask distinctions, command and optional standalone code.
+- Keep both previous collection anchors as link-only aliases to the dedicated page, so existing inbound links do not break. Update the collection overview to describe CA-A as owned by the causal-masking companion.
+- Keep the core prefix-invariance explanation in the concept page, remove the inline link to CA-A from the conceptual explanation, and expose one prominent link to the dedicated Practice companion near the beginning of the lesson.
+- Refresh the generated bilingual learning-map section-heading projections for the newly added CA-A heading.
+
+### Evidence boundary and next action
+
+The move does not change implementation or scientific claims. Run the existing Python suite and full Quarto/browser workflow on the final head of PR #1626; verify the companion pages at desktop/mobile widths and confirm both legacy anchors resolve. Manual screen-reader/touch review remains under #483, and learner evidence remains under #447. The next exercise-development gap from the 2026-11-08 catalogue audit is the text-data transfer sequence (BPE merge tracing, shifted windows and leakage/boundary handling); inspect the current TR-A/B/C and training-example pages before adding anything, to avoid duplication.
+
+### Quarto anchor rendering detail
+
+When a legacy HTML `<a id="…"></a>` alias is immediately followed by a Markdown heading, the heading can be absorbed into the raw HTML block and its explicit heading ID will not appear in the rendered page. Keep a blank line between the alias and the heading, then verify the fragment against the rendered HTML. The CA-A transfer preserves both old fragments and the new canonical `#ca-a-prefix-invariance` target.
