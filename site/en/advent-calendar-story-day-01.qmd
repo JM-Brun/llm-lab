@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its words, and then compare the exercise with real linguistic corpora.
 
+> **Prerequisites** — no prior knowledge of quantitative linguistics is needed. Corpus, type and occurrence are introduced here; logarithms are recalled when they become useful.
+
 ## 1. A question, a text, a corpus
 
 **Question: why does the word “I” appear so often in this text?**
