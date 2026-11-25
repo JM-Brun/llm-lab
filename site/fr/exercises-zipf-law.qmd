@@ -221,10 +221,10 @@ Ces deux travaux proposent des cadres différents ; ils ne constituent pas une e
 
 Une étude de parole adressée à l'enfant rapporte les résultats suivants pour deux corpus agrégés :
 
-| Corpus | Occurrences | Types | $\alpha$ | $\beta$ | Corrélation de Pearson |
-|---|---:|---:|---:|---:|---:|
-| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
-| Français | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
+| Corpus | Âge des enfants | Nombre de corpus | Occurrences | Types | $\alpha$ | $\beta$ | Pearson $r$ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Anglais britannique | 2–42 mois | 12 | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
+| Français | 11–42 mois | 8 | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
 
 Rappel : TTR = nombre de types / nombre d'occurrences. Le Pearson $r$ rapporté dans l'étude corrèle les fréquences observées et celles attendues par le modèle ; ce n'est pas la corrélation entre rang et fréquence.
 
