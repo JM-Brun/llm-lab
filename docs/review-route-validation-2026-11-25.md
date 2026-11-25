@@ -99,7 +99,20 @@ The three visual blocks are not additional lessons and should remain attached to
 
 The existing revision inventory remains useful evidence about integrated support in the 62 Understand/Build pages, but it is not a substitute for this Review-specific content audit.
 
-**Deliverable:** extend the existing generated revision-coverage report or its existing audit tool with a Review-specific projection. Do not create a second hand-maintained matrix or a new registry. Keep authored pedagogical judgments separate from mechanically detected source markers.
+**Lot A semantic pass — completed on 2026-11-25 (20 FR/EN lesson–companion pairs):**
+
+The 20 companion pairs were read against the canonical lesson `purpose`/`scope`, the companion scope, its three-to-four synthesis points, its recall prompt and correction, and its visible Practice handoff. This was a content-level review of the companion pages, not a line-by-line scientific re-review of every source lesson.
+
+- The synthesis points consistently cover the central mechanism and the distinctions needed to avoid the main conceptual confusions.
+- Every recall prompt has a correction. The prompts are deliberately selective: they test one representative retrieval operation rather than restating the full lesson outcome.
+- The larger outcomes are supported by the synthesis itself and, where needed, by links to the existing dedicated Practice pages. Cross-lesson exercises are retained where they test a genuine boundary (for example, lookup versus contextualization, or attention-position weights versus vocabulary probabilities).
+- The three visual prompts are attached to the relevant existing pairs: positional encoding, Q/K/V, and prefill/decode with a KV cache. They complement rather than duplicate the text questions.
+- Calculation-oriented recall is already present where the target warrants it: scaled-dot-product attention, causal masking, entropy, likelihood, cross-entropy, loss and gradient descent. The remaining conceptual prompts do not need formulas merely to make the format uniform.
+- The bilingual versions preserve the tested concept and reasoning. Some running examples differ by language; this is acceptable when the mathematical or conceptual condition is explicit and unchanged.
+
+**Decision from this pass:** no additional flashcard deck, visual card, or mass-generated question set is justified. No clear scope/content mismatch was found that warrants changing one of the 20 companions on this evidence alone. This is not a claim that every possible question is exhaustive or that learner effectiveness has been demonstrated. A prompt that tests only one part of a broad outcome is not automatically a gap when the other parts are represented in the synthesis and Practice handoff.
+
+**Deliverable:** keep the existing generated revision-coverage report and its audit tool as the source for machine-detectable coverage. Record editorial judgments in this validation document or the existing source metadata; do not create a second hand-maintained matrix or a new registry. Keep authored pedagogical judgments separate from mechanically detected source markers.
 
 ### Lot B — Identify real gaps and add only justified support
 
@@ -154,20 +167,7 @@ Reuse the current site-browser review tooling and existing CI jobs; do not creat
 
 Minimum matrix:
 
-| Dimension | Required cases |
-|---|---|
-| Language | FR and EN |
-| Viewport | Desktop and narrow mobile |
-| Route entry | Review index, a middle stage, first and last core lesson |
-| Navigation | Understand ↔ Review, stage anchors, lesson → synthesis, synthesis → lesson |
-| Context | Stage number, lesson position, prerequisite/outcome cues |
-| Keyboard | Tab order, visible focus, Enter/Space activation, disclosure open/close, no keyboard trap |
-| Responsive | No horizontal overflow, clipped cards, overlapping controls or unusable tap targets |
-| Localization | Correct destination language, labels, accessible names and language changes |
 
-Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
-
-Minimum matrix:
 
 | Dimension | Required cases |
 |---|---|
@@ -181,6 +181,8 @@ Minimum matrix:
 | Localization | Correct destination language, labels, accessible names and language changes |
 
 Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
+
+
 
 ### Lot E — Manual accessibility review
 
