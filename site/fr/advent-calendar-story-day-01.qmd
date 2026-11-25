@@ -152,13 +152,13 @@ Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution
 
 La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
-| Langue | Occurrences lexicales | Types | Exposant $\alpha$ | Décalage $\beta$ | Corrélation observé / attendu |
-|---|---:|---:|---:|---:|---:|
-| Anglais britannique | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
-| Français | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
-| Allemand | 2 168 002 | 37 018 | 1,42 | 12,69 | 0,998 |
-| Espagnol | 353 104 | 10 057 | 1,39 | 9,96 | 0,994 |
-| Japonais | 941 006 | 25 648 | 1,30 | 7,12 | 0,993 |
+| Langue | Âge des enfants | Corpus | Occurrences | Types | $\\alpha$ | $\\beta$ | Pearson $r$ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Anglais britannique | 2–42 mois | 12 | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
+| Français | 11–42 mois | 8 | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
+| Allemand | 5–42 mois | 7 | 2 168 002 | 37 018 | 1,42 | 12,69 | 0,998 |
+| Espagnol | 11–42 mois | 12 | 353 104 | 10 057 | 1,39 | 9,96 | 0,994 |
+| Japonais | 6–42 mois | 6 | 941 006 | 25 648 | 1,30 | 7,12 | 0,993 |
 
 *Source : Lavi-Rotbain et Arnon (2023), étude 1. « Occurrences » traduit ici le nombre de mots comptés dans les transcriptions ; les types sont les formes orthographiques distinctes. $\alpha$ est l'exposant et $\beta$ le décalage de la loi de Zipf-Mandelbrot. r est la corrélation de Pearson entre les fréquences observées et les fréquences attendues par le modèle. Ce n’est ni un exposant, ni une preuve que la distribution suit une loi de puissance stricte.*
 
@@ -169,7 +169,7 @@ Ces résultats montrent deux choses :
 
 **Attention à l'interprétation.** Ces chiffres concernent le langage adressé aux enfants, pas l'ensemble des textes écrits ou parlés de chaque langue. Les corpus n'ont ni la même taille ni exactement les mêmes propriétés. La comparaison illustre une régularité translinguistique dans un cadre expérimental précis ; elle ne permet pas de classer les langues selon une prétendue « conformité à Zipf ».
 
-L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre paragraphe de 67 occurrences.
+L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre transcription de 216 occurrences.
 
 ## 4. Une histoire plus ancienne que son nom
 
