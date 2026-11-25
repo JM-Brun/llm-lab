@@ -120,3 +120,20 @@ The file site/images/advent-zipf-rank-frequency.svg is an original vector diagra
 - [ ] Record explicit editorial acceptance before drafting Day 02.
 
 **Post-preview source correction:** a literal escaped newline before the Pilgrim and Hills (2021) bibliography item was found in both QMD files during a final source review. It has been replaced by a real Markdown line break. Re-run the PR preview after this correction before closing technical review.
+
+
+## Editorial archive — hidden Easter-egg provenance (repository only)
+
+This section records the cultural reference that originally motivated the exercise. **It is repository metadata, not lesson content. Do not copy it into either published language page, page metadata, navigation, search snippets, or public-facing captions.** The published demonstration now uses an original text written for this lesson; it preserves the first-person narrative and the statistical teaching purpose without reproducing the protected monologue.
+
+### Reference and source trail
+
+- Character: Otis, the scribe in *Astérix et Obélix : Mission Cléopâtre* (2002), portrayed by Édouard Baer.
+- Recognizable opening line used during the initial editorial exploration: « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. » This short identification cue is retained here only to document the source of the easter egg; do not publish it as part of the teaching text.
+- Online transcript consulted for the earlier corpus: [Happy Scribe — Le scribe, Astérix : Mission Cléopâtre](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre). It is an automated transcript, not a certified verbatim transcript of the film audio.
+- Context, duration and history of the scene: [Le Parisien, 4 July 2023 — Ressortie d’« Astérix et Obélix : Mission Cléopâtre » : le monologue d’Otis encore plus interminable](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+- The theatrical cut is approximately 54 seconds; a longer alternative version of approximately 1 minute 20 seconds was reported around the restored re-release. These durations refer to different edits and should not be conflated.
+
+### Treatment decision
+
+The full monologue is not copied into this repository. Its source links and editorial rationale are retained here, while the public-facing lesson contains an original replacement text. The old corpus statistics (216 lexical occurrences and 125 orthographic types) described the earlier automated transcript under its former segmentation rules; they are historical and superseded. They must not be mixed with the current synthetic corpus statistics (French: 194 occurrences / 132 types; English: 196 / 127).
