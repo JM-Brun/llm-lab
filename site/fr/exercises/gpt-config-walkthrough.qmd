@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 
 [← Retour à la visite guidée : gpt-config-walkthrough](../gpt-config-walkthrough.qmd)
 
-## Exercices
+## Vérifier sa compréhension
 
 1. Quelle erreur obtient-on avec `embedding_dim=10, num_heads=4` ? Et avec `embedding_dim=12, num_heads=4` ?
 2. Combien de lignes a la table de positions d'une configuration `context_length=256, embedding_dim=64` ?
