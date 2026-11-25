@@ -31,7 +31,7 @@ INLINE_MATH = re.compile(r"(?<!\\)\$(?!\$)(?:\\.|[^$\n])+?(?<!\\)\$")
 IMAGE = re.compile(r"!\[([^\]]*)\]\([^)]*\)")
 LINK = re.compile(r"\[([^\]]+)\]\([^)]*\)")
 HTML_TAG = re.compile(r"<[^>]+>")
-WORD = re.compile(r"[\w]+(?:['’][\w]+)*", re.UNICODE)
+WORD = re.compile(r"[\\w]+(?:[\\u2019'][\\w]+)*", re.UNICODE)
 
 # Deliberately conservative rates for technical educational material.
 WORDS_PER_MINUTE = 140
