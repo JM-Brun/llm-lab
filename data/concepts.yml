@@ -866,6 +866,24 @@ concepts:
     domains: [mathematical-tools-geometry, architectures-mechanisms]
     resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence, fr/llm-computational-complexity, en/llm-computational-complexity]
 
+
+  - id: word-frequency-distribution
+    importance: supporting
+    labels: {fr: "Distribution des fréquences lexicales", en: "Lexical frequency distribution"}
+    definitions:
+      fr: "Distribution empirique des nombres d'occurrences des formes lexicales dans un corpus défini, sous des conventions explicites de segmentation et de normalisation. Elle dépend du corpus et de l'unité comptée ; elle ne doit pas être confondue avec la distribution conditionnelle du prochain token prédite par un modèle."
+      en: "Empirical distribution of occurrence counts for lexical forms in a defined corpus, under explicit segmentation and normalization conventions. It depends on the corpus and counted unit; it must not be confused with a model's conditional distribution over the next token."
+    domains: [probabilistic-foundations-training, text-tokenization]
+    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law, fr/text-data, en/text-data]
+  - id: zipf-law
+    importance: supporting
+    labels: {fr: "Loi de Zipf", en: "Zipf's law"}
+    definitions:
+      fr: "Régularité empirique approximative selon laquelle, dans une distribution de fréquences lexicales classées par fréquence décroissante, la fréquence f(r) du rang r suit souvent une relation de puissance f(r) ∝ r^{-α}, avec α proche de 1 dans certains corpus. L'exposant et la qualité de l'ajustement dépendent du corpus, de l'unité et de la méthode d'estimation ; la relation ne constitue pas en elle-même une explication causale."
+      en: "Approximate empirical regularity in which, for lexical frequencies ordered from highest to lowest, the frequency f(r) at rank r often follows a power relation f(r) ∝ r^{-α}, with α near 1 in some corpora. The exponent and fit depend on corpus, unit, and estimation method; the relation is not itself a causal explanation."
+    domains: [probabilistic-foundations-training, text-tokenization]
+    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+
 relation_types:
   represented-by:
     direction: directed
@@ -1195,3 +1213,16 @@ relations:
   - {from: sequential-decision-theory, type: contributes-to, to: aixi}
   - {from: aixi-tl, type: approximates, to: aixi}
   - {from: resource-bounded-computation, type: constrains, to: aixi-tl}
+
+  - from: zipf-law
+    type: approximates
+    to: word-frequency-distribution
+    rationale:
+      fr: "La loi de Zipf fournit une approximation rang-fréquence de la distribution empirique des formes lexicales ; elle n'en est ni une identité exacte ni une explication générative."
+      en: "Zipf's law provides a rank-frequency approximation to the empirical distribution of lexical forms; it is neither an exact identity nor a generative explanation."
+  - from: conditional-distribution
+    type: contrasts-with
+    to: word-frequency-distribution
+    rationale:
+      fr: "La distribution conditionnelle représente les probabilités du prochain token conditionnées par un contexte ; la distribution lexicale décrit les fréquences marginales observées dans un corpus."
+      en: "The conditional distribution represents next-token probabilities given a context; the lexical distribution describes marginal frequencies observed in a corpus."
