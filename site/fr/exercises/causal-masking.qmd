@@ -40,6 +40,7 @@ Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : le
 [Comparer l'effet d'un changement avant ou après une position](contextualized-representations.qmd#ex-contextualization-causal-boundary).
 
 <a id="ex-attention-causal-prefix-invariance"></a>
+
 ## CA-A — Masque causal et invariance de préfixe {#ca-a-prefix-invariance}
 
 On considère quatre tokens d'entrée $x_0,x_1,x_2,x_3$. À la position de requête $i$, l'auto-attention causale n'autorise que les clés des positions $j\leq i$.
