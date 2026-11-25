@@ -116,6 +116,31 @@ Do not require literal equality between stage objectives, lesson outcomes and re
 
 Reuse the current site-browser review tooling and existing CI jobs; do not create one workflow per check.
 
+**Existing automation found in `scripts/site-browser-review.mjs`:**
+
+- The three known visual-recall pages are already included at FR/EN desktop (1440 px) and mobile (390 px).
+- Their dedicated checks verify one named diagram, no card/diagram/lane overflow, one answer disclosure, and keyboard opening with Enter and closing with Space on desktop.
+- The general browser audit records keyboard focus targets and runs Axe on its interactive desktop/light profile.
+- The fixed case matrix includes `learning-map.html`, but does **not** include `review-path.html`. Therefore the Review index itself is not yet covered by the fixed FR/EN desktop/mobile matrix.
+- The three-card checks do not constitute a screen-reader manual review, and the mobile cases are responsive/touch checks rather than a mobile keyboard test.
+
+**First concrete D task:** add `review-path.html` to the existing `visualCases` matrix (not a new workflow), then assert the rendered route switch, nine stage anchors, 20 core synthesis destinations, language-correct links, and that optional resources are not presented as core stops. Keep the existing card checks unchanged. Review route-specific keyboard checks should cover the index navigation and stage disclosures, while the already existing three-card keyboard checks remain the card-level baseline.
+
+Minimum matrix:
+
+| Dimension | Required cases |
+|---|---|
+| Language | FR and EN |
+| Viewport | Desktop and narrow mobile |
+| Route entry | Review index, a middle stage, first and last core lesson |
+| Navigation | Understand ↔ Review, stage anchors, lesson → synthesis, synthesis → lesson |
+| Context | Stage number, lesson position, prerequisite/outcome cues |
+| Keyboard | Tab order, visible focus, Enter/Space activation, disclosure open/close, no keyboard trap |
+| Responsive | No horizontal overflow, clipped cards, overlapping controls or unusable tap targets |
+| Localization | Correct destination language, labels, accessible names and language changes |
+
+Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
+
 Minimum matrix:
 
 | Dimension | Required cases |
