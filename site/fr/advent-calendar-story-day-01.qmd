@@ -37,7 +37,7 @@ Pour ne pas remplacer la tirade par un texte inventé, le corpus de cette leçon
 - [Consulter la transcription du monologue](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre) ;
 - [Contexte, durée et histoire de la scène — *Le Parisien*, 4 juillet 2023](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
-Nous analysons uniquement la prise de parole d’Otis, à partir de « Vous savez… », sans inclure la question de Panoramix ni les répliques précédentes. Nous ne reproduisons pas ici la transcription intégrale : l’objectif est d’étudier ses propriétés statistiques, pas de republier le dialogue.
+Nous analysons uniquement la prise de parole d’Otis, en incluant son amorce « Mais vous savez… », sans inclure la question de Panoramix ni les répliques précédentes. Nous ne reproduisons pas ici la transcription intégrale : l’objectif est d’étudier ses propriétés statistiques, pas de republier le dialogue.
 
 ### Construire un corpus à partir de la transcription
 
@@ -154,7 +154,7 @@ Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution
 
 La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
-| Langue | Âge des enfants | Corpus | Occurrences | Types | $\\alpha$ | $\\beta$ | Pearson $r$ |
+| Langue | Âge des enfants | Corpus | Occurrences lexicales | Types | $\\alpha$ | $\\beta$ | Pearson $r$ |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Anglais britannique | 2–42 mois | 12 | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
 | Français | 11–42 mois | 8 | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
