@@ -1220,6 +1220,24 @@ async function runCase(testCase, caseIndex) {
       if (reviewStructure.horizontalOverflow) {
         throw new Error("Review route has horizontal overflow.");
       }
+
+      const stageDisclosure = page.locator("main details").filter({
+        hasText: lang === "fr" ? "Objectif de l'étape" : "Stage objective",
+      }).first();
+      if (await stageDisclosure.count() !== 1) {
+        throw new Error("The Review route must expose the formal stage objective disclosure.");
+      }
+      const summary = stageDisclosure.locator("summary");
+      await summary.focus();
+      await summary.press("Enter");
+      if (!await stageDisclosure.evaluate(node => node.open)) {
+        throw new Error("The stage objective disclosure did not open with Enter.");
+      }
+      await summary.press("Space");
+      if (await stageDisclosure.evaluate(node => node.open)) {
+        throw new Error("The stage objective disclosure did not close with Space.");
+      }
+      item.reviewPath.keyboardDisclosure = true;
     }
 
     if (kind === "learning-map") {
