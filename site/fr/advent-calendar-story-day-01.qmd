@@ -159,7 +159,7 @@ Le paramètre $\beta$ décale le rang. Lorsque $\beta=0$, on retrouve la loi de 
 
 $$
 \frac{f(r)}{f(1)}=\left(\frac{1+\beta}{r+\beta}\right)^\alpha.
-$
+$$
 
 Le facteur d'échelle $C$ s'annule dans ce rapport : les courbes comparent la forme des distributions, indépendamment de leur niveau absolu de fréquence.
 
