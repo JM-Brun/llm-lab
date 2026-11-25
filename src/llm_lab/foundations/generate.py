@@ -114,10 +114,23 @@ def generate(
         or max_new_tokens < 0
     ):
         raise ValueError("max_new_tokens must be a non-negative integer")
+    temperature_value: object = temperature
+    if isinstance(temperature_value, (bool, np.bool_)) or not isinstance(
+        temperature_value, (int, float, np.integer, np.floating)
+    ):
+        raise ValueError("temperature must be a finite real number > 0")
+    temperature = float(temperature_value)
     if not np.isfinite(temperature) or temperature <= 0:
-        raise ValueError("temperature must be strictly positive and finite")
-    if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
-        raise ValueError("top_k must be an integer >= 1 when provided")
+        raise ValueError("temperature must be a finite real number > 0")
+    top_k_value: object = top_k
+    if top_k_value is not None:
+        if (
+            isinstance(top_k_value, (bool, np.bool_))
+            or not isinstance(top_k_value, (int, np.integer))
+            or top_k_value < 1
+        ):
+            raise ValueError("top_k must be an integer >= 1 when provided")
+        top_k = int(top_k_value)
     if top_p is not None and (
         isinstance(top_p, (bool, np.bool_))
         or not isinstance(top_p, (int, float, np.integer, np.floating))
