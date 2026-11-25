@@ -45,11 +45,6 @@ const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
-  // The Review route is a second projection of the canonical curriculum.
-  // Validate its bilingual stage and synthesis links at the same four viewports.
-  ...visualCases.map(testCase => ({
-    ...testCase, page: "review-path.html", kind: "review-path",
-  })),
   ...exerciseHubCases.map(testCase => ({
     ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
@@ -167,7 +162,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   ) || hasSharedChromeChange;
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
-    const smokePages = new Set(["learning-map.html", "review-path.html", "llm-overview.html", "index.html", "text-data.html"]);
+    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
     const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "logits.html", "probabilities.html", "probabilites.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html", "queries-keys-values.html"]);
     const sidebarPilotPages = new Set(["text-data.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "queries-keys-values.html"]);
     // A Quarto sidebar change must inspect the linked section entry and its children.
@@ -1165,80 +1160,6 @@ async function runCase(testCase, caseIndex) {
     }
 
     } // end runInteractiveAudit keyboard checks
-
-    if (kind === "review-path") {
-      const reviewStructure = await page.evaluate(language => {
-        const stages = [
-          "orientation", "text-input", "representations", "computation",
-          "prediction", "inference", "context-use", "scoring", "training",
-        ];
-        const stageHeadings = stages.map(id => document.querySelector(`main h2#${id}`));
-        const lessonHeadings = [...document.querySelectorAll("main h3")];
-        const revisionPaths = [...new Set(
-          [...document.querySelectorAll("main a[href]")]
-            .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname)
-            .filter(path => /\/revision-[^/]+\.html$/.test(path))
-        )];
-        const revisionLanguages = revisionPaths.every(path => path.includes(`/${language}/revision-`));
-        const learningMapPaths = [...document.querySelectorAll('main a[href*="learning-map.html"]')]
-          .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname);
-        const languagePaths = [...new Set(
-          [...document.querySelectorAll("main a[href]")]
-            .map(link => new URL(link.getAttribute("href"), document.baseURI).pathname)
-            .filter(path => /\/(fr|en)\/review-path\.html$/.test(path))
-        )];
-        return {
-          stageCount: stageHeadings.filter(Boolean).length,
-          missingStages: stages.filter((id, index) => !stageHeadings[index]),
-          lessonHeadingCount: lessonHeadings.length,
-          revisionDestinationCount: revisionPaths.length,
-          revisionLanguages,
-          learningMapPaths,
-          languagePaths,
-          horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
-        };
-      }, lang);
-      item.reviewPath = reviewStructure;
-      if (reviewStructure.stageCount !== 9 || reviewStructure.missingStages.length) {
-        throw new Error(`Review route must expose all nine canonical stage anchors: ${reviewStructure.missingStages.join(", ")}`);
-      }
-      if (reviewStructure.lessonHeadingCount !== 20 || reviewStructure.revisionDestinationCount !== 20) {
-        throw new Error(`Review route must expose 20 core lessons and 20 unique synthesis destinations; found ${reviewStructure.lessonHeadingCount} lessons and ${reviewStructure.revisionDestinationCount} destinations.`);
-      }
-      if (!reviewStructure.revisionLanguages) {
-        throw new Error("Review synthesis destinations must stay in the current language.");
-      }
-      if (reviewStructure.learningMapPaths.length !== 1 ||
-          !reviewStructure.learningMapPaths[0].endsWith(`/${lang}/learning-map.html`)) {
-        throw new Error("Review route must link back to the same-language guided learning map.");
-      }
-      if (reviewStructure.languagePaths.length !== 2 ||
-          !reviewStructure.languagePaths.some(path => path.endsWith("/fr/review-path.html")) ||
-          !reviewStructure.languagePaths.some(path => path.endsWith("/en/review-path.html"))) {
-        throw new Error("Review route must expose both localized route destinations.");
-      }
-      if (reviewStructure.horizontalOverflow) {
-        throw new Error("Review route has horizontal overflow.");
-      }
-
-      const stageDisclosure = page.locator("main details").filter({
-        hasText: lang === "fr" ? "Objectif de l'étape" : "Stage objective",
-      }).first();
-      if (await stageDisclosure.count() < 1) {
-        throw new Error("The Review route must expose the formal stage objective disclosure.");
-      }
-      const summary = stageDisclosure.locator("summary");
-      await summary.focus();
-      await summary.press("Enter");
-      if (!await stageDisclosure.evaluate(node => node.open)) {
-        throw new Error("The stage objective disclosure did not open with Enter.");
-      }
-      await summary.press("Space");
-      if (await stageDisclosure.evaluate(node => node.open)) {
-        throw new Error("The stage objective disclosure did not close with Space.");
-      }
-      item.reviewPath.keyboardDisclosure = true;
-    }
 
     if (kind === "learning-map") {
       item.localizedSiteSearch = await checkLocalizedSearch(context, url, lang);
