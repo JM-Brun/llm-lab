@@ -156,55 +156,30 @@ This is a reviewed first-pass rationale, not a claim that every prerequisite is 
 
 Do not require literal equality between stage objectives, lesson outcomes and revision scopes: they operate at different granularities. Add structural assertions only for properties that can be proven from metadata; retain semantic judgments as reviewed evidence rather than brittle string comparisons.
 
-### Lot D — Rendered Review-route validation
+### Lots D/E — Render, accessibility and responsive validation (deferred to the end)
 
-Reuse the current site-browser review tooling and existing CI jobs; do not create one workflow per check.
+**Priority decision (2026-11-25): these lots are explicitly out of the current content phase.**
 
-**Existing automation found in `scripts/site-browser-review.mjs`:**
+The project must first reach content and pedagogical stability: conceptual coverage, lesson correctness, explanations, examples, exercises, learning sequence, prerequisite logic, and the coherence of the knowledge model. Once that foundation is accepted, the site will undergo a deliberate, comprehensive visual redesign. Only against that new design should rendered presentation, accessibility and responsive/mobile behavior be assessed and improved.
 
-- The three known visual-recall pages are already included at FR/EN desktop (1440 px) and mobile (390 px).
-- Their dedicated checks verify one named diagram, no card/diagram/lane overflow, one answer disclosure, and keyboard opening with Enter and closing with Space on desktop.
-- The general browser audit records keyboard focus targets and runs Axe on its interactive desktop/light profile.
-- The original fixed case matrix included `learning-map.html`, but omitted `review-path.html`. This gap is now addressed in the current work branch; the change is not yet a rendered browser sign-off.
-- The three-card checks do not constitute a screen-reader manual review, and the mobile cases are responsive/touch checks rather than a mobile keyboard test.
+Therefore:
 
-**D implementation now in the current work branch:** `review-path.html` is added to the existing four-case FR/EN desktop/mobile `visualCases` matrix. The existing browser script now asserts nine canonical stage anchors, 20 lesson headings, 20 unique same-language synthesis destinations, both language-switch destinations, the same-language link back to the guided map, and no horizontal overflow. It also opens and closes the formal stage-objective disclosure with Enter and Space. The existing three visual-card checks remain unchanged; no workflow has been added.
+- Do not spend current effort extending browser coverage for the Review route, tuning viewport behavior, or validating visual presentation.
+- Do not treat the current design as the target baseline; it is expected to be replaced.
+- Do not run a premature mobile or accessibility remediation cycle against components that may be redesigned.
+- Preserve the existing browser and accessibility tooling. Reuse and adapt it during the final design phase rather than creating new workflows now.
+- Existing checks may continue to run as incidental CI safeguards, but their results are not a project acceptance gate for the current content phase.
+- Do not add a Review-specific case to `scripts/site-browser-review.mjs` as part of this work. The branch intentionally leaves that script unchanged.
 
-**Still pending:** run the updated script through CI against the rendered site and inspect its screenshots/results. The script's assertions are source changes until that run passes. Manual screen-reader checks remain Lot E.
+The existing browser tooling has been inventoried for future reuse: it already covers three visual-recall pages in FR/EN and desktop/mobile profiles, includes selected keyboard checks, and runs Axe in its interactive desktop/light profile. That inventory is retained as context, not as a current implementation task.
 
-Minimum matrix:
-
-
-
-| Dimension | Required cases |
-|---|---|
-| Language | FR and EN |
-| Viewport | Desktop and narrow mobile |
-| Route entry | Review index, a middle stage, first and last core lesson |
-| Navigation | Understand ↔ Review, stage anchors, lesson → synthesis, synthesis → lesson |
-| Context | Stage number, lesson position, prerequisite/outcome cues |
-| Keyboard | Tab order, visible focus, Enter/Space activation, disclosure open/close, no keyboard trap |
-| Responsive | No horizontal overflow, clipped cards, overlapping controls or unusable tap targets |
-| Localization | Correct destination language, labels, accessible names and language changes |
-
-Capture the tested commit, viewport, browser, screenshots and test output. A successful Quarto render or structural test alone is not a rendered UX sign-off.
-
-
-
-### Lot E — Manual accessibility review
-
-Keep this separate from automated axe checks and browser assertions.
-
-- Test keyboard-only navigation in both languages, including focus visibility and disclosure controls.
-- Test with a real screen reader in FR and EN; inspect heading hierarchy, reading order, link purpose, diagram alternatives, disclosure state and language pronunciation.
-- Check contrast, zoom/reflow, touch target size and reduced-motion behavior where applicable.
-- Record environment, pages, steps, observed result and unresolved limitations. Mark anything not actually tested as **not verified**.
+**Deferred deliverable:** after content freeze and visual redesign, define one coherent FR/EN validation pass covering rendered routes, navigation, responsive breakpoints, keyboard use, screen readers, contrast, zoom/reflow, diagrams and localization. Capture the redesigned site's actual behavior; do not retrofit the old layout merely to satisfy the old matrix.
 
 ### Lot F — Independent learner pilot
 
 The existing pilot in `docs/visual-recall-pilot.md` already defines the three visual/text comparisons, delayed transfer prompts, scoring rubric and attrition accounting.
 
-Do not start it until the manual Q/K/V validation gate in [#483](https://github.com/JM-Brun/llm-lab/issues/483) is explicitly closed. Then follow [#447](https://github.com/JM-Brun/llm-lab/issues/447), freeze the materials and time budgets before recruitment, and report incomplete follow-ups separately from incorrect answers. A small pilot is diagnostic, not proof of a general learning effect.
+Treat this as a content-evaluation activity, not as a rendering/accessibility/mobile audit. Start it only once the relevant learning content and prompts are stable, and once the specific Q/K/V content-validation gate in [#483](https://github.com/JM-Brun/llm-lab/issues/483) is explicitly closed. Then follow [#447](https://github.com/JM-Brun/llm-lab/issues/447), freeze the pedagogical materials and time budgets before recruitment, and report incomplete follow-ups separately from incorrect answers. A small pilot is diagnostic, not proof of a general learning effect.
 
 ## 4. Execution order and gates
 
@@ -212,10 +187,11 @@ Do not start it until the manual Q/K/V validation gate in [#483](https://github.
 |---:|---|---|---|
 | 1 | A — source inventory | Existing canonical registries | All 20 core lesson/revision pairs inspected; source IDs/anchors recorded; no parallel matrix |
 | 2 | C — semantic equivalence | A and canonical route contracts | Objective/outcome/prerequisite discrepancies reviewed in FR/EN |
-| 3 | B — justified remediation | A and C | Only evidenced gaps receive new or revised support |
-| 4 | D — rendered validation | B plus stable content | FR/EN desktop/mobile captures and keyboard results |
-| 5 | E — manual accessibility | Stable rendered build | Manual test record in both languages |
-| 6 | F — learner pilot | Q/K/V gate #483 and stable cards | Independent delayed-transfer observations under #447 |
+| 3 | B — justified remediation | A and C | Only evidenced content gaps receive new or revised support |
+| 4 | Content completion | A, B and C | Lessons, explanations, examples, exercises and learning sequence are pedagogically stable |
+| 5 | F — learner pilot (if retained) | Stable pedagogical materials and Q/K/V content gate | Independent delayed-transfer observations under #447 |
+| 6 | Visual redesign | Content freeze | New design system and redesigned site |
+| 7 | D/E — rendered, responsive and accessibility validation | Visual redesign | One final FR/EN validation pass on the new design |
 
 The order deliberately places semantic equivalence before content additions: otherwise a new card could reinforce an outcome that is itself misaligned with the canonical lesson.
 
@@ -227,8 +203,9 @@ The order deliberately places semantic equivalence before content additions: oth
 - [ ] Optional resources are considered only when explicitly registered and pedagogically relevant; optionality is preserved.
 - [ ] Stage objectives, lesson outcomes, prerequisite relations and revision scopes have a documented FR/EN semantic review.
 - [ ] Any new support has a specific retrieval/transfer target, correction and reason existing support is insufficient.
-- [ ] Rendered desktop/mobile and keyboard checks are recorded for FR/EN.
-- [ ] Manual accessibility checks are recorded separately from automated checks.
+- [ ] Content is frozen before visual redesign begins.
+- [ ] After redesign, rendered desktop/mobile and keyboard checks are recorded for FR/EN.
+- [ ] After redesign, manual accessibility checks are recorded separately from automated checks.
 - [ ] The learner pilot is run only after #483, and its results are recorded under #447.
 
 ## 6. Explicit non-goals
@@ -239,4 +216,5 @@ The order deliberately places semantic equivalence before content additions: oth
 - No promotion of optional pages into the core Review route.
 - No copying of Practice exercises into Review.
 - No claim that `integrated_sufficient`, a passing test, or a rendered diagram proves learning effectiveness.
+- No current-phase browser, responsive/mobile or accessibility remediation against the pre-redesign interface.
 - No new GitHub Actions workflow where the existing browser/CI tooling can be extended.
