@@ -34,7 +34,7 @@ Cette leçon part d’une question simple : pourquoi certaines formes reviennent
 
 Lisez ce court récit avant de regarder les nombres :
 
-> Vous savez, je me suis souvent demandé pourquoi certaines journées semblent si longues et d’autres disparaissent presque aussitôt. Je pars le matin avec une idée très précise de ce que je vais faire. Je prépare une liste, je range mes affaires, je vérifie l’heure, et je me dis que cette fois tout va se passer comme prévu. Puis quelqu’un me pose une question, un objet manque, le téléphone sonne, et voilà que le programme change. Je pourrais m’énerver, bien sûr. Je pourrais aussi prétendre que tout cela était prévu. Mais je préfère regarder ce qui se passe réellement. On découvre alors que les petits détours ne sont pas toujours inutiles. Une conversation peut donner une idée, une erreur peut révéler un problème, et une attente peut laisser le temps de réfléchir. Je ne dis pas qu’il faut renoncer à organiser ses journées. Je dis seulement qu’un plan décrit une intention, pas le monde entier. Et quand je raconte ma journée, je parle beaucoup de moi, de mes choix et de ce que j’ai remarqué. C’est peut-être pour cela que certains mots reviennent sans cesse : ils suivent le chemin que mon récit a choisi.
+> Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. Moi, si je devais résumer ma vie aujourd'hui avec vous, je dirais que c'est d'abord des rencontres. Des gens qui m'ont tendu la main, peut-être à un moment où je ne pouvais pas, où j'étais seul chez moi. Et c'est assez curieux de se dire que les hasards, les rencontres, forgent une destinée... Parce que quand on a le goût de la chose, quand on a le goût de la chose bien faite, le beau geste, parfois on ne trouve pas l'interlocuteur en face je dirais, le miroir qui vous aide à avancer. Alors ça n'est pas mon cas, comme je disais là, puisque moi au contraire, j'ai pu : et je dis merci à la vie, je lui dis merci, je chante la vie, je danse la vie... je ne suis qu'amour ! Et finalement, quand beaucoup de gens me disent aujourd'hui « Mais comment fais-tu pour avoir cette humanité ? », et bien je leur réponds très simplement, je leur dis que c'est ce goût de l'amour ce goût donc qui m'a poussé aujourd'hui à entreprendre une construction mécanique, mais demain qui sait ? Peut-être simplement à me mettre au service de la communauté, à faire le don, le don de soi...
 
 Ce texte constitue notre corpus de travail. Il a été écrit pour cette démonstration ; il ne s’agit pas d’un extrait de corpus linguistique réel. Seul le récit entre guillemets est compté : la question introductive et les explications qui l’entourent sont exclues. Nous allons le normaliser, compter ses unités lexicales, classer les formes selon leur fréquence, puis comparer ce petit échantillon aux régularités observées dans des corpus beaucoup plus vastes.
 
@@ -49,7 +49,7 @@ Nous appliquons les conventions suivantes :
 - aucune lemmatisation : les formes fléchies restent distinctes ;
 - les traits d’union sont traités comme des séparateurs.
 
-Avec ces conventions, le texte contient **194 occurrences lexicales et 132 types orthographiques distincts**. Ces nombres sont reproductibles à partir du texte ci-dessus et des règles indiquées.
+Avec ces conventions, le texte contient **217 occurrences lexicales et 125 types orthographiques distincts**. Ces nombres sont reproductibles à partir du texte ci-dessus et des règles indiquées.
 
 ### Type, occurrence lexicale et token de tokenizer : trois notions à distinguer
 
@@ -71,20 +71,20 @@ La notion de type dépend elle aussi de la convention. Ici, « chante » et « c
 
 | Forme(s) | Occurrences par forme | Rang(s) |
 |---|---:|---:|
-| je | 14 | 1 |
-| que, une | 8 | 2–3 |
-| et, le | 6 | 4–5 |
-| de | 5 | 6 |
-| peut | 4 | 7 |
-| ce, dis, me, pas | 3 | 8–11 |
-| cela, idée, journées, mes, ne, pourrais, prévu, se, tout, un | 2 chacune | 12–21 |
-| 111 formes | 1 | 22–132 |
+| je | 13 | 1 |
+| de | 9 | 2 |
+| la | 7 | 3 |
+| à, le | 6 chacune | 4–5 |
+| et, goût, moi, ne, pas, que, qui, vie | 4 chacune | 6–13 |
+| aujourd'hui, c'est, dis, on, quand, vous | 3 chacune | 14–19 |
+| a, au, bien, ce, chose, des, dirais, don, gens, les, leur, mais, me, merci, où, peut, rencontres, simplement, une, être | 2 chacune | 20–39 |
+| 86 formes | 1 | 40–125 |
 
-Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieux : le récit est raconté à la première personne. La fréquence dépend donc du sujet, du point de vue et du genre du texte. C’est précisément ce que cet exemple permet de voir : un rang n’est pas une propriété intrinsèque d’un mot.
+Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieux : le texte est raconté à la première personne. La fréquence dépend donc du sujet, du point de vue et du genre du texte. C’est précisément ce que cet exemple permet de voir : un rang n’est pas une propriété intrinsèque d’un mot.
 
 Plusieurs formes ont la même fréquence. Elles occupent alors un intervalle de rangs : « que » et « une » sont aux rangs 2 et 3, sans qu’il y ait de raison substantielle de privilégier l’une plutôt que l’autre. Le tableau indique donc des intervalles pour les ex æquo.
 
-Notre petit texte montre déjà une distribution très inégale : « je » apparaît 14 fois, tandis que 111 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 194 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
+Notre petit texte montre déjà une distribution très inégale : « je » apparaît 13 fois, tandis que 86 formes n’apparaissent qu’une fois. Mais cela ne suffit pas à établir une loi de Zipf. Le rang dépend du corpus, de la langue, de la période, du genre, de la taille du texte, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 194 occurrences, notre échantillon est beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
 
 ## 2. La loi de Zipf : une approximation rang-fréquence
 
