@@ -57,3 +57,25 @@ The existing asset audit already gives an explicit conservative disposition for 
 - LLM Lab: retain the independently authored bilingual project SVGs; no third-party artwork is embedded.
 
 **Disposition:** the media-reuse decision is explicit (link-only/deferred wherever provenance or permission is incomplete). The rendered-page gate is partially advanced by the inspected deployment artifact, but remains open for current browser screenshots/visual review and manual assistive-technology/touch verification. Do not close #483 or unblock #447 on the basis of this artifact alone.
+
+
+## Current Quarto/Chromium rendered review — 2026-11-25
+
+The five-tour Build correction was merged in [PR #1618](https://github.com/JM-Brun/llm-lab/pull/1618) at merge commit `225f312fca4aa68431355609d2157843af9457a2`. Its required full-site Quarto/browser workflow completed successfully on the exact PR head `2d073c2e57121179efc9319e3bf0f2f3d259501e` (run [45574557862](https://github.com/JM-Brun/llm-lab/actions/runs/45574557862), browser artifact [15003897316](https://github.com/JM-Brun/llm-lab/actions/runs/45574557862/artifacts/15003897316)). The artifact was downloaded and its four Q/K/V screenshots and `report.json` inspected on 2026-11-25.
+
+### Exact Q/K/V cases inspected
+
+- Chromium, light theme, English and French, desktop 1440 × 1000 and mobile 390 × 844.
+- All four page responses were HTTP 200. The report records no browser console errors or page errors.
+- No horizontal document overflow at any of the four viewports. The two project-owned diagrams load in each language; desktop image width is 810 px and mobile image width is 313 px. Both localized image `alt` descriptions are present.
+- All 15 MathJax spans render in each case; no raw/unrendered math delimiters are reported.
+- Desktop Axe: zero violations in both languages (31 passes and one incomplete item per page). Axe is not run on mobile in this profile.
+- Desktop keyboard probe: 94 observed focus targets and 94 with visible focus in each language. The disclosure toggles with Enter. The automated traversal did not complete a full tab cycle, so this is not evidence of complete keyboard-path coverage.
+- The native Quarto breadcrumb is unique (one native breadcrumb, no custom duplicate). The learning-path context is separately labelled, its stage anchor resolves, and the previous/next links point to Transformer and scaled dot-product attention in the expected language.
+- Manual screenshot inspection found no clipping or layout break in the desktop or mobile captures. The mobile-specific vertical Q/K/V and score/weight/output diagrams fit the viewport; their fine labels remain smaller than on desktop and should be considered when planning a touch/screen-reader review.
+
+### Interpretation and remaining boundary
+
+This is fresh rendered evidence for the exact merged source tree, produced by the PR's local Quarto/Chromium review (the report's base URL is `http://127.0.0.1:4173`), not a fresh browser session against the public Pages hostname. The earlier deployment-artifact inspection remains useful structural evidence, but the inspected deployed artifact predates the latest Q/K/V source edits; do not call it the current live screenshot. No manual screen-reader, mobile touch, or assistive-technology session was performed. The browser report's single Axe incomplete item is retained as a limitation; the report does not expose a detailed finding for it.
+
+**Disposition:** current bilingual rendered screenshots, responsive layout, MathJax, browser errors, localized image loading/alt attributes, route context and desktop Axe results are now evidenced for the merged source tree. Keep #483 open for live Pages verification after the updated site is deployed, manual keyboard/touch review, and screen-reader exposure of the diagrams. Keep #447 gated until those remaining accessibility/deployment checks are completed. Third-party media remain link-only/deferred under the existing asset audit; no source scan or asset recreation is warranted.
