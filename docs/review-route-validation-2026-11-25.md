@@ -95,7 +95,7 @@ Do not collapse these states into a numeric coverage score. A synthesis page, ty
 
 The three visual blocks are not additional lessons and should remain attached to their existing review companions. The current pilot in `docs/visual-recall-pilot.md` already covers these same three prompts.
 
-**Limits of this first pass:** it classifies source structure and simple markers, not the pedagogical quality of each answer, completeness of definitions, correctness of every equation, or the need for a formula-recall prompt. A literal flashcard marker search cannot rule out a question that behaves like a flashcard without being labelled as one. The next audit pass must read the content of each companion against its lesson outcome and inspect any generic question/answer structures before declaring a support format missing.
+**Limits of the structural scan:** it classifies source structure and simple markers, not the pedagogical quality of each answer, completeness of definitions, correctness of every equation, or the need for a formula-recall prompt. A literal flashcard marker search cannot rule out a question that behaves like a flashcard without being labelled as one. The subsequent content-level review is recorded below; it does not amount to a line-by-line scientific re-review of every source lesson.
 
 The existing revision inventory remains useful evidence about integrated support in the 62 Understand/Build pages, but it is not a substitute for this Review-specific content audit.
 
@@ -139,15 +139,20 @@ Do not add a flashcard merely because a lesson has none. A missing format is not
 - `tests/knowledge/test_lesson_contracts.py` verifies those projections, required anchors, answer disclosures, stage grouping and FR/EN topic parity. It does not prove that the wording and actual content of a companion semantically cover the outcome, nor that every listed prerequisite is pedagogically indispensable.
 - The current Review index has no optional stops. Optional learning material remains outside the core Review traversal; no optional stop should be added unless an existing eligible resource and an explicit pedagogical target justify it.
 
-**Lot C initial result:** structural equivalence is substantially protected already. The remaining work is a bounded semantic audit of the 20 lesson outcomes against their companion scopes/content and the necessity of their prerequisite sets—not a new route schema or a copied objectives matrix.
+**Lot C first semantic pass — completed on 2026-11-25:** the 20 stage/lesson relationships were checked against the canonical lesson purposes and the 20 companion scopes/content. No contradiction was found that justifies changing stage membership or rewriting an outcome. The lesson purposes contribute to their stage objectives at the intended granularity: tokenization before lookup; initial and positional representations before contextualization; block computation before Q/K/V and attention; logits before vocabulary probabilities; generation and context design as separate uses; observed-target scoring before parameter optimization.
+
+The prerequisite chain also has a coherent conceptual rationale on first review: text IDs precede lookup; lookup and position precede contextualization; contextualized states precede block internals; Q/K precede attention weights and value aggregation; logits precede probabilities; probabilities precede entropy, generation and observed-target scoring; loss precedes gradients; gradients and loss precede the training loop. The training loop additionally depends on causal masking because shifted targets and teacher-forced prefixes must be interpreted correctly.
+
+One apparently missing edge is intentional, not a defect: `loss` does not declare `cross-entropy` as a prerequisite. The existing `observed-target-to-training-objective` boundary in `data/guided-route.yml` explicitly connects scoring to training **without making scoring a prerequisite**. Do not add that edge merely because the concepts are related. Similarly, `logits` depends on the Transformer output rather than the Q/K/V or attention lessons: its output projection can be understood without making every internal attention mechanism a prerequisite.
+
+This is a reviewed first-pass rationale, not a claim that every prerequisite is the only possible pedagogical choice. Any future change should be justified by an actual learner dependency and tested against the existing canonical route.
 
 **Remaining checks:**
 
-1. For each core lesson, compare the stage objective with the lesson's local outcome: the outcome must contribute to the stage objective without silently broadening or narrowing it.
-2. Compare the lesson outcome with the synthesis page's stated scope and actual content.
-3. Verify that every prerequisite is genuinely needed before the lesson, is earlier in the canonical route, and is represented in the Review context without becoming a new or reordered dependency.
-4. Check FR/EN semantic equivalence, not just identical IDs or balanced page counts.
-5. Record a concise rationale and evidence anchors for each discrepancy.
+1. Retain the first-pass rationale above and revisit only where a source lesson or stage objective changes.
+2. Check FR/EN semantic equivalence when either language's lesson purpose, scope or synthesis content changes.
+3. Reassess prerequisite necessity only when a lesson's content or its route position changes; do not mechanically add every related concept as a prerequisite.
+4. Record a concise rationale and evidence anchors for any future discrepancy.
 
 Do not require literal equality between stage objectives, lesson outcomes and revision scopes: they operate at different granularities. Add structural assertions only for properties that can be proven from metadata; retain semantic judgments as reviewed evidence rather than brittle string comparisons.
 
@@ -160,10 +165,12 @@ Reuse the current site-browser review tooling and existing CI jobs; do not creat
 - The three known visual-recall pages are already included at FR/EN desktop (1440 px) and mobile (390 px).
 - Their dedicated checks verify one named diagram, no card/diagram/lane overflow, one answer disclosure, and keyboard opening with Enter and closing with Space on desktop.
 - The general browser audit records keyboard focus targets and runs Axe on its interactive desktop/light profile.
-- The fixed case matrix includes `learning-map.html`, but does **not** include `review-path.html`. Therefore the Review index itself is not yet covered by the fixed FR/EN desktop/mobile matrix.
+- The original fixed case matrix included `learning-map.html`, but omitted `review-path.html`. This gap is now addressed in the current work branch; the change is not yet a rendered browser sign-off.
 - The three-card checks do not constitute a screen-reader manual review, and the mobile cases are responsive/touch checks rather than a mobile keyboard test.
 
-**First concrete D task:** add `review-path.html` to the existing `visualCases` matrix (not a new workflow), then assert the rendered route switch, nine stage anchors, 20 core synthesis destinations, language-correct links, and that optional resources are not presented as core stops. Keep the existing card checks unchanged. Review route-specific keyboard checks should cover the index navigation and stage disclosures, while the already existing three-card keyboard checks remain the card-level baseline.
+**D implementation now in the current work branch:** `review-path.html` is added to the existing four-case FR/EN desktop/mobile `visualCases` matrix. The existing browser script now asserts nine canonical stage anchors, 20 lesson headings, 20 unique same-language synthesis destinations, both language-switch destinations, the same-language link back to the guided map, and no horizontal overflow. It also opens and closes the formal stage-objective disclosure with Enter and Space. The existing three visual-card checks remain unchanged; no workflow has been added.
+
+**Still pending:** run the updated script through CI against the rendered site and inspect its screenshots/results. The script's assertions are source changes until that run passes. Manual screen-reader checks remain Lot E.
 
 Minimum matrix:
 
