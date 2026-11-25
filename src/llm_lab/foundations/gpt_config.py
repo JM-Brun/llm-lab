@@ -37,6 +37,7 @@ Related concept pages (decoder-only architecture):
 """
 
 from dataclasses import dataclass
+from numbers import Integral
 
 
 @dataclass(frozen=True)
@@ -109,11 +110,13 @@ class GPTConfig:
             "mlp_hidden_dim": self.mlp_hidden_dim,
         }
         for name, value in dimensions.items():
-            # A zero or negative dimension would create empty arrays or
-            # degenerate loops much later; rejecting it here keeps the
-            # error message next to its cause.
-            if value <= 0:
+            # Type annotations are not runtime validation: reject floats
+            # (including 16.0) and booleans before they reach NumPy shapes.
+            if isinstance(value, bool) or not isinstance(value, Integral) or value <= 0:
                 raise ValueError(f"{name} must be a positive integer")
+        # NumPy's default_rng accepts only non-negative integer seeds.
+        if isinstance(self.seed, bool) or not isinstance(self.seed, Integral) or self.seed < 0:
+            raise ValueError("seed must be a non-negative integer")
         # Multi-head attention splits the residual stream into H equal
         # slices of d/H columns. A width not divisible by H makes the
         # split impossible; catching it here avoids a shape error in the
