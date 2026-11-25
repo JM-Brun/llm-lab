@@ -35,13 +35,7 @@ Reprenons le premier tour de la prédiction : après « C'est une bonne situatio
 En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continuer ou s'arrêter. Cette boucle est la **génération autorégressive**. Pendant qu'elle tourne, les paramètres du modèle ne changent pas : produire une réponse n'est pas apprendre.
 :::
 
-::: {.callout-note title="Préfixe et continuation"}
-**Préfixe fourni :** « C'est une bonne situation, ça, scribe ? »
-
-**Continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… »
-
-Les probabilités présentées ci-dessous sont fictives et ne prétendent pas reproduire la sortie d'un modèle.
-:::
+Le préfixe fourni est « C'est une bonne situation, ça, scribe ? ». La continuation illustrative suivie ici est « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les probabilités ci-dessous sont fictives et ne prétendent pas reproduire la sortie d'un modèle.
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Le modèle calcule, une règle choisit.** Le modèle fournit une distribution sur le prochain token. Une règle de décodage, extérieure au réseau, en tire un seul token.
