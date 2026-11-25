@@ -229,6 +229,12 @@ def test_generate_truncation_validation_errors() -> None:
         generate(model, prompt, 2, greedy=False, top_k=-3, rng=rng)
     with pytest.raises(ValueError, match="top_k must be an integer >= 1"):
         generate(model, prompt, 2, greedy=False, top_k=2.5, rng=rng)
+    with pytest.raises(ValueError, match="top_k must be an integer >= 1"):
+        generate(model, prompt, 2, greedy=False, top_k="3", rng=rng)
+    with pytest.raises(ValueError, match="top_k must be an integer >= 1"):
+        generate(model, prompt, 2, greedy=False, top_k=[3], rng=rng)
+    with pytest.raises(ValueError, match="temperature must be"):
+        generate(model, prompt, 2, temperature=0.0)
     with pytest.raises(ValueError, match="top_p must be"):
         generate(model, prompt, 2, greedy=False, top_p=0.0, rng=rng)
     with pytest.raises(ValueError, match="top_p must be"):
@@ -247,6 +253,21 @@ def test_generate_truncation_validation_errors() -> None:
         generate(model, prompt, 2, top_p="0.5")
     with pytest.raises(ValueError, match="top_p must be"):
         generate(model, prompt, 2, top_p=10**100)
+
+
+@pytest.mark.parametrize("temperature", [True, np.bool_(True), "1.0"])
+@pytest.mark.parametrize("greedy", [True, False])
+def test_generate_rejects_non_real_temperature(temperature: object, greedy: bool) -> None:
+    model = GPT(_small_config())
+    with pytest.raises(ValueError, match="temperature must be"):
+        generate(
+            model,
+            np.array([1]),
+            0,
+            temperature=temperature,  # type: ignore[arg-type]
+            greedy=greedy,
+            rng=np.random.default_rng(0),
+        )
 
 
 @pytest.mark.parametrize("temperature", [np.nan, np.inf, -np.inf])
