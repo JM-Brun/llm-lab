@@ -77,7 +77,7 @@ B sees the same three tokens in both cases. The key-value pairs for A and C swit
 
 </details>
 
-[Return to the comparison with B in the middle](../positional-encoding.qmd#position-permutation)
+[See the general permutation-equivariance property](../positional-encoding.qmd#permutation-equivariance)
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](positional-encoding.qmd)
