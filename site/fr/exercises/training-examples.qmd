@@ -126,7 +126,7 @@ Avec un masque causal ordinaire, la représentation à la position de `B1` peut 
 
 Non : `EOS` signale une frontière dans le flux, mais ne modifie pas à lui seul la matrice de visibilité de l'attention.
 
-Pour rendre B indépendant de A, il faut au minimum définir un masque d'attention par blocs qui interdit aux positions de B de consulter A. Il faut aussi traiter explicitement la transition de cible : dans le décalage mécanique ci-dessus, la sortie associée à la position `EOS` de A est entraînée à prédire `B1`. Si cette prédiction inter-document n'appartient pas à l'objectif, il faut exclure cette cible de la loss ou définir un mécanisme de construction/réinitialisation des cibles qui respecte la frontière.
+Pour rendre B indépendant de A, définissez un masque d'attention par blocs qui interdit aux positions de B de consulter A. Si le mécanisme positionnel utilise des identifiants de position absolus, décidez aussi s'ils sont réinitialisés à la frontière du document ; le masque d'attention ne définit pas cette règle. Traitez également la transition de cible : dans le décalage mécanique ci-dessus, la sortie associée à la position `EOS` de A est entraînée à prédire `B1`. Si cette prédiction inter-document n'appartient pas à l'objectif, excluez cette cible de la loss ou définissez un mécanisme de construction/réinitialisation des cibles qui respecte la frontière.
 
 **Conclusion :** le marqueur, le masque d'attention et le masque de perte répondent à trois questions différentes. Leur combinaison dépend de l'objectif choisi ; aucune politique de packing ou de masquage n'est universelle.
 
@@ -141,7 +141,7 @@ On regroupe deux exemples de longueurs différentes dans un batch et on applique
 | A (3 tokens) | [11, 12, 13, PAD, PAD] | [12, 13, 14, PAD, PAD] |
 | B (5 tokens) | [21, 22, 23, 24, 25] | [22, 23, 24, 25, 26] |
 
-Le masque d'attention vaut `[1,1,1,0,0]` pour A et `[1,1,1,1,1]` pour B. Les pertes par position, avant masquage, sont :
+La composante padding du masque d'attention vaut `[1,1,1,0,0]` pour A et `[1,1,1,1,1]` pour B ; le masque causal reste une contrainte distincte. Les pertes par position, avant masquage, sont :
 
 - A : $[0{,}2, 1{,}1, 0{,}7, 4{,}0, 3{,}0]$
 - B : $[0{,}5, 0{,}4, 0{,}6, 0{,}9, 0{,}6]$
