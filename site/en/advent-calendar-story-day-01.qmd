@@ -289,7 +289,6 @@ Zipf’s law describes a frequent regularity in lexical-frequency distributions:
 
 - The [text-data lesson](text-data.qmd) introduces the representations and units handled in the LLM pipeline.
 - The [tokenization lesson](tokenization-strategies.qmd) explains how a string is split into model tokens.
-- The [Zipf’s law exercises](exercises/zipf-law.qmd) extend the analysis with calculations and experiments.
 
 ### Sources
 
