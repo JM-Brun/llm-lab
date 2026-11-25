@@ -105,7 +105,7 @@ def estimate_lesson_duration(markdown: str) -> LessonDuration:
         + diagrams * DIAGRAM_MINUTES
     )
     # Half-minute granularity avoids false precision in a heuristic estimate.
-    rounded_minutes = round((minutes + 0.249999) * 2) / 2
+    rounded_minutes = max(0.5, round(minutes * 2) / 2)
     return LessonDuration(
         minutes=rounded_minutes,
         prose_words=prose_words,
