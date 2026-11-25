@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 Cette leçon part d'un personnage et d'une tirade : Otis, le scribe d’*Astérix et Obélix : Mission Cléopâtre*. Nous allons transformer ce fil rouge en petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
 
+## 1. Construire un corpus à partir de la tirade
+
 Le fil rouge est cette réplique d’Otis, dans *Astérix et Obélix : Mission Cléopâtre* : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. » Le monologue est largement improvisé par Édouard Baer. La version cinéma dure environ 54 secondes ; une version alternative plus longue (environ 1 min 20) a également été diffusée lors de la ressortie restaurée du film.
 
 Pour ne pas remplacer la tirade par un texte inventé, le corpus de cette leçon est désormais fondé sur une **transcription en ligne du monologue d’Otis**. La transcription est fournie par Happy Scribe ; elle est utile pour l’exercice, mais reste une transcription automatique et ne doit pas être présentée comme un verbatim certifié du son du film. Les chiffres ci-dessous décrivent donc précisément cette transcription, pas nécessairement chaque mot prononcé dans toutes les versions du montage.
