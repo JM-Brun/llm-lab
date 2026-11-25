@@ -1979,3 +1979,32 @@ The cross-entropy Practice companions now link directly to the existing shared e
 ### Changes and boundary
 
 The bilingual generation lesson now states the limited similarity and the operational distinction. GE-D and the generation self-check give a more precise explanation. The text-data Practice collection gains one targeted teacher-forcing-versus-free-running exercise, and GE-D links to it. This is a source-level pedagogical correction; it does not validate learner mastery, implement pretraining, or replace the separate G8 prerequisite review.
+
+## 2026-11-25: gradient-to-parameter-update audit
+
+**Scope.** Bounded FR/EN source review of the loss, gradients and training-loop lessons; the dedicated gradient and training-loop Practice pages; the maintained NumPy cross-entropy implementation; and the numerical training-loop example. The pass checks representative derivatives, tensor/parameter relationships, update arithmetic, optimizer terminology and exercise coverage. It does not certify every backward operation in a Transformer, run a framework-level autodiff suite, or clear the G8 implementation gate.
+
+### Findings
+
+- For a one-hot target, the derivative of softmax cross-entropy with respect to logits is correctly stated as p − y. Its components sum to zero, consistently with softmax invariance to a common logit shift. For the unweighted mean over valid target positions, the additional factor 1/|M| and zero direct derivative at ignored logit positions are correctly included.
+- The lesson correctly distinguishes a zero derivative at an ignored position's logits from a zero gradient throughout the computation graph: that position's representation may still influence valid logits through allowed attention dependencies. The loss mask and attention mask are not interchangeable.
+- The chain-rule expression ∇θL = (∂z/∂θ)ᵀ ∇zL is dimensionally coherent when z is the flattened collection of logits involved in the objective. The explanation correctly notes that reverse-mode backpropagation applies the transposed Jacobian without materializing the full Jacobian.
+- For an affine output head z = Wh + b, the outer-product derivative ∂ℓ/∂W = g_z hᵀ is correct. The worked SGD step with h = (1,−1), η = 0.1 and p = (0.6,0.2,0.1,0.1) yields a new target probability of approximately 0.6261, consistent with the displayed 0.626.
+- The paired equal-loss exercise is arithmetically correct: both distributions assign probability 1/2 to the observed target and therefore have loss ln 2, but their non-target bias gradients differ. Recomputed target probabilities after the update are approximately 0.53743 and 0.54048, consistent with the rounded answers.
+- The NumPy cross-entropy-gradient implementation returns the gradient of the batch-mean cross-entropy. The training example correctly accumulates repeated input-token row contributions with np.add.at; the resulting parameter gradient is the chain rule through the lookup of a row of W.
+- Re-executing the documented deterministic NumPy example with seed 0 reproduces the reported qualitative behavior and rounded values: training loss 2.4849 at initialization and 1.1467 at step 300; validation loss reaches its lowest recorded value, 2.0059, at step 100 and rises to 2.1621 at step 300.
+- **Terminology correction:** the micro-example uses all 60 training examples for every update. It is full-batch gradient descent, not stochastic/mini-batch SGD. The general explanation of stochastic gradient descent remains valid for sampled mini-batches, but the example and its code comment were too loosely labelled. The bilingual lesson now distinguishes these cases explicitly.
+- **Optimizer precision:** the prior wording that Adam and AdamW differ only in their update rule was too compressed for AdamW. The bilingual lesson now states that AdamW adds decoupled weight decay to the update, separate from the gradient of the data loss. Its second moment remains distinct from a Hessian or a curvature estimate.
+- The dedicated FR/EN gradient exercises cover the cross-entropy logit derivative, finite-difference diagnosis, learning-rate overshoot, and a parameter-level update. The training-loop exercises cover the distinction between gradient and update, validation without parameter mutation, checkpoint choice, and end-to-end transfer. No additional duplicate exercise is justified by this pass.
+
+### Changes and boundary
+
+The FR/EN training-loop lessons now distinguish sampled mini-batch SGD from full-batch gradient descent, accurately label the deterministic 60-example implementation, and qualify the AdamW weight-decay contribution. The existing exercises and numerical examples were retained; no duplicate tasks or training implementation were added.
+
+### Remaining work
+
+- Independently verify the finite-difference guidance against a concrete deterministic function and documented tolerances; this pass inspected the explanation but did not run PyTorch gradcheck.
+- Audit gradients through at least one earlier Transformer operation (for example, a Q/K/V projection and attention aggregation), not only the final affine output head. Include shape checks and distinguish shared-parameter accumulation across positions/batch items.
+- Verify the repository's actual autodiff/backward tests and the implementation evidence claimed by the Build milestones. The small NumPy example is not a Transformer backward pass.
+- Keep the end-to-end training loop, optimizer integration, gradient clearing/accumulation semantics, checkpointing and validation executor behind the existing G8 prerequisite gate. This audit does not clear that gate.
+- Learner transfer remains unmeasured: source correctness and arithmetic checks do not establish that readers can independently derive or debug parameter gradients.

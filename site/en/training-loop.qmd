@@ -79,7 +79,7 @@ For the first step of the Romans example, if the current distribution is $(0.6,0
 
 The calculation above follows one target. Under the reduction used here, differentiate the [mean loss over valid positions](loss.qmd#from-local-penalty-to-batch-loss).
 
-A batch gives a noisy estimate of the loss over the whole training set, so its gradient is a noisy estimate of the full gradient. This is why the method is called *stochastic* gradient descent: successive batches pull the parameters in slightly different directions, and the average trend is what lowers the loss. Counting conventions vary: a *step* is one parameter update, and an *epoch* is one pass over the training data; both depend on the batch size and dataset.
+A **sampled mini-batch** gives a noisy estimate of the loss and gradient over the full training set. This is the principle of *stochastic* gradient descent: successive mini-batches can pull the parameters in slightly different directions, and the average trend guides optimization. By contrast, if each update uses every training example, the method is called **full-batch gradient descent**. Counting conventions vary: a *step* is one parameter update, and an *epoch* is one pass over the training data; both depend on the batch size and dataset.
 
 A freshly initialized model assigns roughly uniform probabilities, so its loss is near $\ln V$ for a vocabulary of size $V$ (a near-uniform start is a sanity check, not a guarantee: initialization scale matters). Training aims to lower this loss; with stochastic batches, measurements can fluctuate from one step to the next.
 
@@ -111,7 +111,7 @@ The example below makes this visible with the smallest possible language model: 
 
 With NumPy 2 and this seed, the run prints a training loss that falls from 2.485 ($=\ln 12$) to about 1.15, while the validation loss reaches a minimum near step 100 (about 2.01) and then rises to about 2.16. The training loss alone would suggest continuing. Among the checkpoints measured in this run, validation loss favors step 100. The exact numbers depend on the seed and library version; the assertions check the qualitative pattern, not the values.
 
-This example is deliberately tiny: a lookup table, full-batch updates, plain SGD and 60 training tokens. It demonstrates the loop and the diagnosis, not the behaviour of a Transformer, and the same curve shape is not guaranteed in other setups. Passing the assertions shows that this configuration reproduces the pattern; it is not a general proof about overfitting.
+This example is deliberately tiny: a lookup table and full-batch gradient-descent updates over all 60 training tokens at every step, not sampled mini-batches. It demonstrates the loop and the diagnosis, not the behaviour of a Transformer, and the same curve shape is not guaranteed in other setups. Passing the assertions shows that this configuration reproduces the pattern; it is not a general proof about overfitting.
 
 To compare two checkpoints, try [aggregating validation loss over batches with different numbers of valid tokens](exercises/loss.qmd#ex-validation-loss-by-token).
 
@@ -166,7 +166,7 @@ for step in range(301):
     g_logits = cross_entropy_gradient(W[x_tr], y_tr)    # (60, V): dLoss / dlogits
     g_W = np.zeros_like(W)
     np.add.at(g_W, x_tr, g_logits)                      # chain rule through the row lookup
-    W -= lr * g_W                                       # SGD update
+    W -= lr * g_W                                       # full-batch gradient-descent update
 
 train = [h[1] for h in history]
 val = [h[2] for h in history]
@@ -181,7 +181,7 @@ for s, tr, va in history:
 
 ### Compare optimizers
 
-Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and squared gradients (their uncentred second moment), so that each parameter receives a step scaled to its own recent history, not one global step size. The gradient is the same; the update rule differs. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
+Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and squared gradients (their uncentred second moment), so that each parameter receives a step scaled to its own recent history, not one global step size. For the same data objective and parameters, the gradient of that objective is still the one computed by backpropagation; the optimizer determines how to use it. **AdamW additionally applies decoupled weight decay**: this contribution to the update is not the gradient of the data loss. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
 
 <figure id="fig-optimizer-comparison">
   <picture>
