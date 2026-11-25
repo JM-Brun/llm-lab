@@ -299,7 +299,7 @@ With bounded nonlinear fitting on raw frequencies, the expected values are appro
 1. Both fits must use the same objective function, here $\sum_i(f_i-\hat f(r_i))^2$ on raw frequencies.
 2. Values may vary slightly with the optimizer, initial values and numerical tolerances. The Zipf-Mandelbrot fit recovers the parameters used to generate the data, up to rounding.
 3. Regression on logarithms minimizes errors in log space: it weights errors differently and does not minimize the same quantity. Estimated parameters therefore depend on the chosen objective.
-4. This synthetic dataset was generated from a Zipf-Mandelbrot law with those parameters. It checks that the fitting procedure can recover a known model in a controlled case; it does not prove that the model fits a real corpus.
+4. This synthetic dataset was generated from a Zipf-Mandelbrot law with those parameters. It checks that the fitting procedure can recover a known model in a controlled case; it does not prove that the model fits a real corpus. At rank 1, the denominator is (1 + β)^α, so the frequency is C/(1 + β)^α, not C. C remains a scale parameter.
 
 </details>
 
