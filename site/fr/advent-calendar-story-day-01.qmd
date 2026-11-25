@@ -84,7 +84,7 @@ Le mot « je » arrive en tête, mais cette observation n’a rien de mystérieu
 
 Le rang dépend du corpus, de la langue, de la période, du genre de texte, de sa taille, de son contenu et des conventions de normalisation. Dans un texte consacré à l’Égypte antique, « papyrus » pourrait remonter dans le classement ; dans une conversation ordinaire, il serait probablement beaucoup plus rare. Avec seulement 194 occurrences, notre texte est par ailleurs beaucoup trop court pour estimer de manière fiable un exposant de loi de puissance.
 
-## 2. La loi de Zipf## 2. La loi de Zipf : une approximation rang-fréquence
+## 2. La loi de Zipf : une approximation rang-fréquence
 
 Sur de grands corpus, on observe souvent une régularité : quelques formes sont très fréquentes, tandis qu'un grand nombre de formes sont rares. La loi de Zipf propose une approximation simple de cette distribution :
 
