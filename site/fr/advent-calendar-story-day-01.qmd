@@ -154,7 +154,7 @@ Le paramètre $\beta$ décale le rang et permet de mieux ajuster la distribution
 
 La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
-| Langue | Âge des enfants | Corpus | Occurrences lexicales | Types | $\\alpha$ | $\\beta$ | Pearson $r$ |
+| Langue | Âge des enfants | Corpus | Occurrences lexicales | Types | $\alpha$ | $\beta$ | Pearson $r$ |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Anglais britannique | 2–42 mois | 12 | 6 311 249 | 27 476 | 1,57 | 19,48 | 0,970 |
 | Français | 11–42 mois | 8 | 1 540 284 | 19 327 | 1,53 | 17,98 | 0,990 |
