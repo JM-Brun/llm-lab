@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 
 [← Back to the guided tour: Bloc Transformer](../transformer-block-walkthrough.qmd)
 
-## Exercises
+## Check your understanding
 
 1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
 2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
