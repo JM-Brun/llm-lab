@@ -1,0 +1,221 @@
+schema_version: 1
+source_id: piantadosi-zipf-word-frequency-2014
+scan:
+  accessed_at: "2026-11-24"
+  retrieval_method: author-hosted-pdf-and-publisher-metadata
+  author_text:
+    status: partial
+    coverage: "PDF text inspected for the abstract, introduction, rank-frequency and Zipf–Mandelbrot definitions, correlated-error critique, independent-split method, selected empirical phenomena, and conclusion."
+    notes: ["The PDF exposes the full paper text, but this extraction pass is selective rather than a systematic section-by-section review."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["Figure captions and in-text references were visible; original figure assets were not retrieved and visually inspected."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No independent reproduction or corpus reanalysis was performed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Publisher/PMC records and cited methodological context were checked."
+    notes: ["The full cited literature was not exhaustively followed."]
+  metadata:
+    status: partial
+    coverage: "Author, title, journal, volume, pages, DOI and publication date verified from publisher/PMC records."
+    notes: []
+  rights:
+    status: unknown
+    coverage: "The retrieved author-hosted PDF carries a Psychonomic Society copyright notice; no reuse permission for figures was established."
+    notes: ["Use links and paraphrase; do not copy figures."]
+  unresolved_questions:
+    - "A systematic review of every empirical subsection and the full reference chain remains."
+    - "Figure-level visual inspection and rights verification remain outstanding."
+items:
+  - id: piantadosi-zipf-word-frequency-2014:rank-frequency-form
+    kind: definition
+    summary: "The paper defines the near-Zipfian rank-frequency relation as f(r) proportional to r raised to -alpha, with alpha often near 1. It uses 'near-Zipfian' for approximate fits rather than treating the simple formula as an exact identity."
+    locator: {type: section, value: "Introduction, Eq. 1", label: "Rank-frequency law"}
+    evidence:
+      kind: author-formalization
+      confidence: established
+      scope: "Frequency of lexical word types ordered by empirical frequency rank in natural-language corpora."
+      assumptions: ["The counted units and corpus-specific ranking are held fixed for the analysis."]
+      limitations: ["The exponent and fit depend on corpus and measurement choices; the formula is an approximation."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Primary review source; independent specialist validation not performed in this ingestion pass."
+      corroborating_sources: [pilgrim-hills-bias-zipf-estimators-2021]
+    pedagogical_profile:
+      learner_question: "What does Zipf's law actually state?"
+      explanatory_lens: mathematical rank-frequency description
+      teaching_form: [definition, equation, worked-rank-example]
+      abstraction_level: introductory-to-intermediate
+      prerequisites: ["frequency counts", "sorting and rank"]
+      distinctive_value: "Provides the canonical equation and frames it as an approximate empirical relation."
+      limitations: ["Does not explain why language generates the distribution."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The published Day 01 lesson already presents the equation and rank interpretation."}
+      complementarity: {level: moderate, rationale: "The review's explicit use of near-Zipfian and its Mandelbrot parameterization can support more careful terminology in an advanced note."}
+      pedagogical_value: {level: moderate, rationale: "Helps learners distinguish the empirical pattern from a strict mathematical identity."}
+      applicability: {level: moderate, rationale: "Potential reference note in the existing lesson or Deepen page, not a second introductory explanation."}
+      redundancy: {level: moderate, rationale: "The central equation and variable definitions already appear in the current bilingual lesson."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed theoretical review with explicit equations and corpus discussion."}
+    classification:
+      tags: [topic:zipfs-law, topic:word-frequency]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The equation and rank interpretation are already taught in the bilingual Day 01 lesson; this item remains the primary source record, not a reason to duplicate the explanation."
+  - id: piantadosi-zipf-word-frequency-2014:zipf-mandelbrot-variant
+    kind: definition
+    summary: "The review presents the Zipf–Mandelbrot generalization, which shifts the empirical rank by a parameter beta: f(r) is proportional to (r + beta) raised to -alpha. The extra parameter can improve description of the head of some rank-frequency distributions, but its fitted value is corpus-dependent."
+    locator: {type: section, value: "Introduction, Eq. 2", label: "Zipf–Mandelbrot generalization"}
+    evidence:
+      kind: author-formalization
+      confidence: established
+      scope: "The shifted-rank form discussed by the review for lexical word-frequency distributions."
+      assumptions: ["The same lexical units and corpus-specific rank definition are used."]
+      limitations: ["The additional parameter improves flexibility but does not identify a generative mechanism or establish universal parameter values."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Formal definition recorded from the primary review; no independent model comparison performed."
+      corroborating_sources: []
+    pedagogical_profile:
+      learner_question: "Why might a simple inverse-rank curve need an additional parameter?"
+      explanatory_lens: model flexibility and head-of-distribution adjustment
+      teaching_form: [equation, model-comparison]
+      abstraction_level: advanced
+      prerequisites: ["Zipf rank-frequency law", "parameter estimation"]
+      distinctive_value: "Shows that the familiar inverse-rank equation is not the only useful descriptive form."
+      limitations: ["The extra parameter can make model comparison harder and should not be introduced before the simple law is understood."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current Day 01 lesson does not introduce the shifted-rank variant."}
+      complementarity: {level: moderate, rationale: "Adds an optional refinement to the descriptive model without changing the introductory intuition."}
+      pedagogical_value: {level: moderate, rationale: "Useful for readers who ask why empirical curves deviate from the simplest inverse-rank form."}
+      applicability: {level: moderate, rationale: "Could support a later Deepen comparison of rank-frequency models."}
+      redundancy: {level: low, rationale: "No Zipf–Mandelbrot equation appears in the current lesson or exercises."}
+      evidence_quality: {level: high, rationale: "Explicitly formalized in a peer-reviewed critical review."}
+    classification:
+      tags: [topic:zipfs-law, method:rank-frequency]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: []
+      concepts: [word-frequency-distribution, zipf-law]
+      route_ids: []
+    disposition: defer
+    disposition_rationale: "The shifted-rank variant is useful optional depth but is not required for the current introductory lesson or seven-exercise collection."
+  - id: piantadosi-zipf-word-frequency-2014:correlated-rank-frequency-errors
+    kind: limitation
+    summary: "Estimating a word's frequency and its rank from the same corpus sample creates correlated measurement errors: a word over-counted by chance is also promoted in the empirical ranking. The resulting rank-frequency plot can look more regular than the underlying relation, especially in the rare-word tail."
+    locator: {type: section, value: "Section 2, discussion of correlated errors and Fig. 1", label: "The word frequency distribution is complex"}
+    evidence:
+      kind: methodological-analysis
+      confidence: well-supported
+      scope: "The standard construction of rank-frequency plots when ranks and counts are estimated from the same sample."
+      assumptions: ["Observed word counts are noisy estimates of underlying usage frequencies."]
+      limitations: ["This is a specific visualization/estimation pitfall; it does not imply that every observed Zipf-like pattern is spurious."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Methodological argument recorded from the primary review; later estimator analysis is separately extracted."
+      corroborating_sources: [pilgrim-hills-bias-zipf-estimators-2021]
+    pedagogical_profile:
+      learner_question: "Why can a convincing log-log plot be misleading?"
+      explanatory_lens: measurement-error coupling
+      teaching_form: [counterexample, methodological-warning]
+      abstraction_level: advanced
+      prerequisites: ["sampling variability", "empirical ranking"]
+      distinctive_value: "Explains that both plotted coordinates are estimated from the same noisy observations, rather than treating rank as error-free."
+      limitations: ["The independent-split remedy is not a complete solution to every rank-estimation problem."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current Day 01 lesson includes this warning, but the source provides a more explicit statistical mechanism."}
+      complementarity: {level: high, rationale: "It supplies a concrete explanation for why ordinary rank-frequency plots may overstate regularity."}
+      pedagogical_value: {level: high, rationale: "Addresses a common inferential error: interpreting visual linearity as evidence of a generative power law."}
+      applicability: {level: high, rationale: "Could underpin an exercise asking learners to reason about shared sampling error."}
+      redundancy: {level: moderate, rationale: "The current lesson already summarizes the pitfall; additional detail belongs in practice or optional depth."}
+      evidence_quality: {level: high, rationale: "Explicit statistical argument and worked visualization in a peer-reviewed review."}
+    classification:
+      tags: [topic:statistical-estimation, method:sample-splitting]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The same-sample rank/count error coupling is explained in the Day 01 lesson and its existing critical-reading exercise."
+  - id: piantadosi-zipf-word-frequency-2014:structure-beyond-simple-law
+    kind: result
+    summary: "After separating the samples used to estimate ranks and frequencies, the review reports interpretable residual structure beyond the Zipf–Mandelbrot fit, including systematic deviations among frequent words. The simple law captures substantial large-scale variation but not the complete lexical frequency distribution."
+    locator: {type: section, value: "Section 2, Fig. 1 and discussion of residual structure", label: "Residuals beyond the fitted curve"}
+    evidence:
+      kind: reported-empirical-analysis
+      confidence: well-supported
+      scope: "The American National Corpus analysis presented in the review and its interpretation of residuals."
+      assumptions: ["The split-sample construction is used to reduce correlated rank/count errors."]
+      limitations: ["The reported residual pattern is tied to the examined corpus and analysis; it should not be generalized as an identical shape for every corpus."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Source result recorded; no independent replication performed."
+      corroborating_sources: []
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The lesson currently states that real distributions deviate but does not show structured residuals."}
+      complementarity: {level: high, rationale: "Adds a useful visual/statistical distinction between a broad trend and local structure."}
+      pedagogical_value: {level: moderate, rationale: "Can motivate why model fit and residual analysis matter beyond a log-log straight line."}
+      applicability: {level: moderate, rationale: "Potential advanced figure description or optional analysis activity."}
+      redundancy: {level: low, rationale: "Residual structure is not yet explored in the short introductory lesson."}
+      evidence_quality: {level: high, rationale: "The review describes a concrete corpus analysis and residual diagnostics."}
+    classification:
+      tags: [topic:word-frequency, method:residual-analysis]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
+      concepts: []
+      route_ids: []
+    disposition: defer
+    disposition_rationale: "The lesson notes deviations and competing models, but a residual-analysis treatment would add advanced statistical detail not yet taught."
+  - id: piantadosi-zipf-word-frequency-2014:theory-underdetermination
+    kind: limitation
+    summary: "The review surveys multiple mechanisms that can generate Zipf-like distributions and argues that deriving the curve alone is weak evidence for a psychological explanation. A credible account must also explain other empirical properties and test its assumptions through independent predictions."
+    locator: {type: section, value: "Introduction and Section 4; conclusion and forward directions", label: "Evaluating explanatory accounts"}
+    evidence:
+      kind: critical-literature-review
+      confidence: well-supported
+      scope: "The theoretical accounts and empirical phenomena reviewed in the paper."
+      assumptions: ["A causal account should make testable predictions beyond reproducing the rank-frequency curve."]
+      limitations: ["The article is a 2014 review; later work may add or revise particular models."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Synthesis of the author's critical review; later literature requires separate evaluation."
+      corroborating_sources: [lestrade-unzipping-zipfs-law-2017, linders-louwerse-zipf-spoken-dialog-2023]
+    pedagogical_profile:
+      learner_question: "Does the observed curve explain why language has this distribution?"
+      explanatory_lens: underdetermination of causal models by descriptive fit
+      teaching_form: [contrast, misconception-correction]
+      abstraction_level: intermediate-to-advanced
+      prerequisites: ["empirical law versus causal mechanism"]
+      distinctive_value: "Separates a compact statistical description from the much harder problem of identifying its generative cause."
+      limitations: ["Does not settle which later explanatory model is best."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The Day 01 lesson states that the law is not a causal explanation; this source broadens the range of candidate mechanisms."}
+      complementarity: {level: high, rationale: "Provides a framework for comparing competing explanations without selecting one prematurely."}
+      pedagogical_value: {level: high, rationale: "Prevents the common mistake of treating a successful fit as a causal theory."}
+      applicability: {level: high, rationale: "Useful as the organizing principle for a later comparison of explanatory models."}
+      redundancy: {level: moderate, rationale: "The central warning exists already; the comparative framework is new."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed critical review that explicitly evaluates the empirical reach of proposed explanations."}
+    classification:
+      tags: [topic:zipfs-law, topic:causal-explanation]
+      concept_ids: [word-frequency-distribution, zipf-law]
+    candidate_destinations:
+      pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
+      concepts: []
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "The new bilingual explanatory-model exercise asks learners to distinguish the observed regularity from proposed mechanisms."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Phase B partial. The simple rank-frequency form and shared-error caution are already covered in the Day 01 lesson; the Zipf–Mandelbrot variant and residual-structure analysis are deferred to optional statistical depth. The theory-underdetermination item is now exercised through the bilingual question on evidence needed to distinguish descriptive regularity from causal explanation. The two canonical concepts are registered centrally; no new relation or guided-route edge is proposed."

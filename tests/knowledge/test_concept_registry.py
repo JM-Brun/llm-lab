@@ -494,7 +494,11 @@ def test_2026_concept_relation_review_corrections_are_preserved() -> None:
     assert ("cross-entropy", "prerequisite", "knowledge-distillation") not in edges
     assert ("cross-entropy", "contributes-to", "knowledge-distillation") in edges
     assert ("score-function", "prerequisite", "score-centering") in edges
-    assert len(edges) == 120
+    # Zipf is an empirical approximation over corpus frequencies, distinct from
+    # the context-conditioned next-token distribution used by a language model.
+    assert ("zipf-law", "approximates", "word-frequency-distribution") in edges
+    assert ("conditional-distribution", "contrasts-with", "word-frequency-distribution") in edges
+    assert len(edges) == 122
 
     relation_by_key = {(item["from"], item["type"], item["to"]): item for item in data["relations"]}
     scoped_edges = {
