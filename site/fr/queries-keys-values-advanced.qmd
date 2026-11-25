@@ -104,9 +104,9 @@ Le gradient par rapport aux scores passe ensuite par le Jacobien du softmax lign
 
 Pour une ligne de requête $i$, la dérivée du softmax s'écrit explicitement :
 
-$
+$$
 (G_S)_{ij}=A_{ij}\left((G_A)_{ij}-\sum_r A_{ir}(G_A)_{ir}\right),
-$
+$$
 
 où $G_A=\partial\mathcal L/\partial A$. La somme porte sur les clés de la ligne. Avec un masque additif fixe, les positions interdites ont $A_{ij}=0$ et donc une dérivée nulle par rapport à leur score masqué.
 
