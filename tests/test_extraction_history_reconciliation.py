@@ -32,8 +32,6 @@ def _corpus():
     return sources, extractions, concepts_doc
 
 
-
-
 def test_historical_scan_blocks_pair_with_source_history_without_lossy_assumptions() -> None:
     sources, extractions, _ = _corpus()
     scan_records = {
