@@ -235,7 +235,7 @@ A study of child-directed speech reports the following results for two aggregate
 <summary>Show the solution</summary>
 
 1. The English corpus is larger and contains more types in absolute terms.
-2. English: $27,476/6,311,249\approx0.00435$, or about $0.44\\%$. French: $19,327/1,540,284\approx0.01255$, or about $1.25\\%$. Raw TTR depends strongly on text length: the corpora are not the same size or comparable-length samples. It cannot directly rank their lexical diversity.
+2. English: $27,476/6,311,249\approx0.00435$, or about $0.44\%$. French: $19,327/1,540,284\approx0.01255$, or about $1.25\%$. Raw TTR depends strongly on text length: the corpora are not the same size or comparable-length samples. It cannot directly rank their lexical diversity.
 3. No. The parameters describe the distributions of these particular corpora in a child-directed-speech setting. They also depend on corpus size, composition and counting conventions.
 4. No. A high correlation proves neither an exact law nor a better fit under every criterion. These values do not suffice to compare languages in general.
 
@@ -279,7 +279,7 @@ The following table contains rounded synthetic frequencies. It does not come fro
 | 50 | 15.2 |
 | 100 | 7.3 |
 
-We want to compare Zipf's model $f(r)=Cr^{-\\alpha}$ with the Zipf-Mandelbrot model $f(r)=C(r+\\beta)^{-\\alpha}$.
+We want to compare Zipf's model $f(r)=Cr^{-\alpha}$ with the Zipf-Mandelbrot model $f(r)=C(r+\beta)^{-\alpha}$. Use a bounded nonlinear optimizer with $C>0$, $\alpha>0$ and $\beta\geq0$; for reproducibility, initialize Zipf at $(C,\alpha)=(200,1)$ and Zipf-Mandelbrot at $(C,\alpha,\beta)=(1,000,1,1).
 
 1. Fit both models by nonlinear least squares, minimizing the same sum of squared residuals on the raw frequencies.
 2. Record the estimated parameters and the sum of squared residuals for each model.
