@@ -182,7 +182,7 @@ Le voyage des formes, ligne par ligne :
 5. Normalisation finale puis `linear` : `(B, T, d) → (B, T, V)`. La position `t` porte les scores du token susceptible de suivre `t`.
 
 ::: {.callout-tip}
-**La causalité se vérifie, pas seulement se déclare.** Le test d'invariance de préfixe exécute le modèle sur un préfixe, puis sur ce même préfixe prolongé : les logits des positions antérieures doivent être **identiques**. C'est la preuve expérimentale que le masque causal fait son travail.
+**La causalité se vérifie, pas seulement se déclare.** Le test d'invariance de préfixe exécute le modèle sur un préfixe, puis sur ce même préfixe prolongé : les logits des positions antérieures doivent être **identiques**. C'est un indice expérimental ciblé pour ce préfixe et cette configuration ; ce test ne constitue pas une preuve générale pour toute entrée possible.
 :::
 
 ## Compter les paramètres : une comptabilité explicite

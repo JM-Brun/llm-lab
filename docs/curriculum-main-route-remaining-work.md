@@ -194,3 +194,12 @@ After this migration is validated, continue with the next unverified stage bound
 - The first configuration-tour pass found a real contract mismatch: `GPTConfig` claimed positive integer dimensions but accepted positive floats at construction, and it deferred invalid seed errors to NumPy's RNG. A focused correction is under validation on branch `audit/build-config-validation-contract`, including FR/EN page and Practice alignment. It is not integrated until final-head CI and Quarto/browser checks pass.
 - Remaining Build audit scope: `gpt_ops.py` → `transformer_block.py` → `gpt.py` → `generate.py`, including their code excerpts, tests, exercises and stated implementation limits. Do not repeat the earlier scientific or architecture audits; check only source-to-page consistency and uncovered test contracts.
 - Manual screen-reader/native-breadcrumb review and the independent learner pilot under #447 remain separate evidence and are not closed by automated checks.
+
+
+## Progress snapshot — 2026-11-25 (Build operations and model audit)
+
+- The GPT configuration audit and correction are merged in PR #1614. Runtime integer validation, seed validation, tests, FR/EN tour and Practice alignment, generated map projection and browser self-check contract all passed final CI and Quarto/browser review.
+- The operations / Transformer block / assembled GPT audit is carried forward on branch `audit/build-ops-model-precision-v2` after #1614 changed the shared generated-map files. It corrects the LayerNorm epsilon nuance, GELU error bound, GPT worked parameter count (6,386), prefix-invariance evidence scope, and duplicate exercise numbering. Its source/test suite passed; final Quarto/browser checks are running on the rebased content.
+- The generation-tour correction is merged in PR #1617: `top_k` and `temperature` now receive fail-fast runtime validation; regression tests and the FR/EN walkthrough agree with the contract.
+- All five guided Build tours have now been compared against implementation, tests, FR/EN explanations and Practice companions. PR #1618 carries the operations/block/model corrections and is awaiting final Quarto/browser checks. Once it merges, mark this bounded source-to-page audit complete; do not repeat the already-validated Transformer/QKV/attention scientific audit.
+- Next independent evidence: manual screen-reader/native-breadcrumb and accessibility review, then the learner pilot under #447. Automated browser checks do not close either item.

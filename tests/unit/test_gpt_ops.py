@@ -71,6 +71,7 @@ def test_gelu_is_zero_at_zero_and_close_to_exact_erf_definition() -> None:
     assert gelu(np.array([0.0]))[0] == 0.0
     exact = 0.5 * x * (1.0 + np.array([math.erf(v / math.sqrt(2.0)) for v in x]))
     np.testing.assert_allclose(out, exact, atol=1e-3)
+    assert np.max(np.abs(out - exact)) < 5e-4
 
 
 def test_init_linear_returns_weight_shape_and_zero_bias() -> None:

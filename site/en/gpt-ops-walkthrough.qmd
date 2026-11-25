@@ -72,7 +72,7 @@ The whole package exchanges **float64** arrays: results stay exact enough to han
 <g data-wf-part="lin"><path d="M106 174 H144" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
 <g data-wf-part="lin"><rect x="150" y="124" width="180" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="240" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">linear</text><text x="240" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">y = x @ W&#7511; + b</text><text x="240" y="194" text-anchor="middle" font-size="11" fill="#475569">(..., in) &#8594; (..., out)</text><text x="240" y="212" text-anchor="middle" font-size="11" fill="#475569">the bias broadcasts on the last axis</text></g>
 <g data-wf-part="lin"><path d="M330 174 H374" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
-<g data-wf-part="ln"><rect x="380" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">layer_norm</text><text x="480" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">axis = -1</text><text x="480" y="190" text-anchor="middle" font-size="11" fill="#475569">mean 0, variance 1</text><text x="480" y="208" text-anchor="middle" font-size="11" fill="#475569">then &#215; &#947; + &#946;</text></g>
+<g data-wf-part="ln"><rect x="380" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">layer_norm</text><text x="480" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">axis = -1</text><text x="480" y="190" text-anchor="middle" font-size="11" fill="#475569">mean 0, var. ≈1</text><text x="480" y="208" text-anchor="middle" font-size="11" fill="#475569">then &#215; &#947; + &#946;</text></g>
 <g data-wf-part="ln"><path d="M580 174 H624" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
 <g data-wf-part="gelu"><rect x="630" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="730" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">gelu</text><text x="730" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">0.5x(1+tanh(&#8230;))</text><text x="730" y="194" text-anchor="middle" font-size="11" fill="#475569">element-wise</text></g>
 <g data-wf-part="gelu"><path d="M830 174 H874" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
@@ -153,8 +153,8 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 
 - **`axis=-1`**: the statistics cover each position's `d`-dimensional vector, independent of batch and sequence — that is what makes the operation *per-position*, unlike batch normalization.
 - **`keepdims=True`**: mean and variance keep shape `(..., 1)` and broadcast back over the embedding axis with no reshaping.
-- **`eps` inside the sqrt**: if a position's activations were constant, the variance would be zero and the division would explode; `eps` caps the denominator at `sqrt(eps)`. A numerical guard, not a modelling choice.
-- **Learned `gamma` and `beta`**: normalization forces zero mean and unit variance; the affine pair gives the model back the freedom to temper that constraint. They start at identity (ones and zeros).
+- **`eps` inside the sqrt**: if a position's activations were constant, the variance would be zero; `eps` then keeps the denominator at `sqrt(eps)` and avoids division by zero. For non-zero variance, the normalized variance is `variance / (variance + eps)`: slightly below 1, but close to 1 when `eps` is small.
+- **`gamma` and `beta`** are the affine parameters applied after normalization. In a trained model they are learned; here they are initialized to identity (ones and zeros) and remain fixed, because this module does not implement training.
 
 ## Activating: approximate GELU
 
@@ -164,7 +164,7 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 ```
 
 - The exact definition, `x * Phi(x)` with the normal CDF, needs `erf` — absent from base NumPy (SciPy would be required).
-- The **tanh approximation** is the one GPT-2 used: it differs from the exact function by a 1e-4-order amount for moderate inputs, and it is the formula learners meet in real GPT-2 source code.
+- The **tanh approximation** is the one GPT-2 used: on the test grid `[-3, 3]`, its maximum absolute error against the exact definition is about `4.73 × 10⁻⁴`; it is the formula learners meet in real GPT-2 source code.
 - Unlike ReLU, GELU is **smooth**: near zero, a small negative input passes with a small weight instead of being clipped to exactly zero.
 
 ::: {.callout-warning}

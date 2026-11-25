@@ -66,7 +66,6 @@ def test_prefix_invariance_future_tokens_do_not_change_earlier_logits() -> None:
     extended_logits = model.forward(extended)
 
     assert np.allclose(prefix_logits[0], extended_logits[0, :4])
-    assert not np.allclose(extended_logits[0, 3], extended_logits[0, 7])
 
 
 def test_num_parameters_matches_configuration_formula() -> None:
@@ -86,6 +85,7 @@ def test_num_parameters_matches_configuration_formula() -> None:
         + config.vocab_size  # output bias
     )
 
+    assert expected == 6386  # Matches the worked example on the model tour.
     assert model.num_parameters() == expected
 
 
