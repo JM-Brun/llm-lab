@@ -7,9 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from strict_yaml import load_yaml
-
 from lesson_duration import DURATION_EXCEPTIONS, estimate_lesson_duration
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -91,7 +90,7 @@ def test_core_route_lessons_stay_within_the_editorial_duration_budget(
     )
     if out_of_target:
         warnings.warn(
-            "Core lessons outside the 10–15 minute target (review for balance): "
+            "Core lessons outside the 10-15 minute target (review for balance): "
             + ", ".join(out_of_target),
             UserWarning,
             stacklevel=1,
