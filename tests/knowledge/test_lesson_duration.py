@@ -6,7 +6,6 @@ import warnings
 from pathlib import Path
 
 import pytest
-
 from lesson_duration import DURATION_EXCEPTIONS, estimate_lesson_duration
 from strict_yaml import load_yaml
 
