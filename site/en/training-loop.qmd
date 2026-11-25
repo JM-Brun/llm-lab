@@ -79,7 +79,7 @@ For the first step of the Romans example, if the current distribution is $(0.6,0
 
 The calculation above follows one target. Under the reduction used here, differentiate the [mean loss over valid positions](loss.qmd#from-local-penalty-to-batch-loss).
 
-An **sampled mini-batch** gives a noisy estimate of the loss and gradient over the full training set. This is the principle of *stochastic* gradient descent: successive mini-batches can pull the parameters in slightly different directions, and the average trend guides optimization. By contrast, if each update uses every training example, the method is called **full-batch gradient descent**. Counting conventions vary: a *step* is one parameter update, and an *epoch* is one pass over the training data; both depend on the batch size and dataset.
+A **sampled mini-batch** gives a noisy estimate of the loss and gradient over the full training set. This is the principle of *stochastic* gradient descent: successive mini-batches can pull the parameters in slightly different directions, and the average trend guides optimization. By contrast, if each update uses every training example, the method is called **full-batch gradient descent**. Counting conventions vary: a *step* is one parameter update, and an *epoch* is one pass over the training data; both depend on the batch size and dataset.
 
 A freshly initialized model assigns roughly uniform probabilities, so its loss is near $\ln V$ for a vocabulary of size $V$ (a near-uniform start is a sanity check, not a guarantee: initialization scale matters). Training aims to lower this loss; with stochastic batches, measurements can fluctuate from one step to the next.
 
