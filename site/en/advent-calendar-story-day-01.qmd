@@ -59,7 +59,7 @@ The word *token* is used in two related but different contexts.
 |---|---|---|
 | **Lexical type** (*word type*) | A distinct orthographic form after normalization | “I” is a type |
 | **Lexical occurrence** (*word token*) | One concrete appearance of a form in the text | “I” appears 13 times: 13 occurrences |
-| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | “today” may map to one token or several subwords, depending on the tokenizer |
+| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | The form “I” may be encoded as one or more model tokens, depending on the tokenizer |
 
 The two uses of *token* are related, but they are not interchangeable. A lexical occurrence is a position in the text; a tokenizer token is a representation unit. A word may be split into several model tokens, and a tokenizer may also treat punctuation, spaces or word fragments as separate units.
 

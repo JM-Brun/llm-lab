@@ -59,7 +59,7 @@ Le mot *token* est utilisé dans deux contextes proches, mais différents.
 |---|---|---|
 | **Type lexical** (*word type*) | Une forme orthographique distincte après normalisation | « je » est un type |
 | **Occurrence lexicale** (*word token*) | Une apparition concrète d'une forme dans le texte | « je » apparaît 13 fois : 13 occurrences |
-| **Token de tokenizer** (*model token*) | Une unité produite par un tokenizer et représentée par un identifiant dans le vocabulaire du modèle | « aujourd'hui » peut être un token ou plusieurs sous-mots selon le tokenizer |
+| **Token de tokenizer** (*model token*) | Une unité produite par un tokenizer et représentée par un identifiant dans le vocabulaire du modèle | La forme « je » peut être encodée par un ou plusieurs tokens de modèle selon le tokenizer |
 
 Les deux usages de *token* sont liés, mais ne sont pas interchangeables. Une occurrence lexicale est une position dans le texte ; un token de tokenizer est une unité de représentation. Un mot peut être découpé en plusieurs tokens de modèle, et un tokenizer peut aussi traiter la ponctuation, les espaces ou des fragments de mots comme des unités distinctes.
 
