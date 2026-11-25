@@ -222,7 +222,7 @@ The next content task is narrower: expand the existing FR/EN Practice companions
 
 The source-level findings and remaining tasks are recorded in [the audit report](audits/training-example-practice-gaps-2026-11-25.md) and the [page audit inventory](page-audit-inventory.md). Manual accessibility work remains under #483; learner validation remains gated under #447. CI and rendered checks do not establish comprehension.
 
-**Dependency not yet integrated:** the CA-A lesson/companion migration is still open in #1622 and #1623. Their Quarto/browser jobs passed, but their Test suite jobs were cancelled and need a successful final-head rerun before merge. Keep the causal-masking ownership item open until then; this training-example audit is a separate next slice.
+**Dependency status:** PR #1622 is merged after its Python CI, Quarto/browser review and secret scanning passed. The CA-A companion expansion is open in PR #1626; its final-head CI and Quarto/browser checks are still pending. This training-example work is a separate slice and does not depend on #1626.
 
 
 ## Progress snapshot — 2026-11-25 (training-example Practice transfer)
