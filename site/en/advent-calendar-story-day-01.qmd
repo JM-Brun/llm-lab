@@ -1,6 +1,6 @@
 ---
 title: "Why does the word “je” appear so often?"
-subtitle: "Zipf’s law, from Otis’s monologue to word distributions across languages"
+subtitle: "Zipf’s law and word distributions across languages"
 description-meta: "Build a corpus, distinguish types from occurrences, explore Zipf’s law, its history, uses and limitations."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 lang: en
@@ -10,7 +10,7 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/advent-calendar-story-day-01"
-summary: "Builds a corpus from Otis’s monologue to understand lexical frequencies, Zipf’s law and its uses."
+summary: "Builds a small corpus, studies lexical frequencies, and explores Zipf’s law, its uses and limitations."
 scope: "Explains counting units, the rank-frequency relation, Zipf-Mandelbrot variants, multilingual findings, history, applications and empirical limitations."
 purpose: "Build and normalize a corpus, distinguish types from occurrences, interpret an estimated exponent and evaluate what the law can actually do."
 domain: "probabilistic-foundations-training"
@@ -26,31 +26,30 @@ tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overvie
 
 *LLM Lab Advent Calendar 2026 · Door 1 · about 12 minutes*
 
-This lesson starts with a character and a monologue: Otis, the scribe in *Asterix and Obelix: Mission Cleopatra*. We will turn that thread into a small corpus, count its words, and then compare the exercise with real linguistic corpora.
+This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its words, and then compare the exercise with real linguistic corpora.
 
-## 1. Build a corpus from the monologue
+## 1. A question, a text, a corpus
 
-The narrative thread is Otis’s reply in *Asterix and Obelix: Mission Cleopatra*: “You know, I don't believe there is such a thing as a good or a bad situation.” The monologue was largely improvised by Édouard Baer. The theatrical version lasts about 54 seconds; a longer alternative version (about 1 minute 20 seconds) was also shown around the restored re-release.
+**Question: why does the word “I” appear so often in this text?**
 
-Rather than replace the scene with an invented text, this lesson now uses an **online transcript of Otis’s monologue** as its corpus. The transcript is hosted by Happy Scribe. It is useful for a reproducible exercise, but it is an automated transcript, not a certified verbatim record of the film audio. The figures below therefore describe that transcript, not necessarily every word spoken in every edit of the scene.
+Read this short account before looking at the numbers:
 
-- [Consult the transcript of the monologue](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre) ;
-- [Background, duration and history of the scene — *Le Parisien*, 4 July 2023](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+> You know, I have often wondered why some days seem to last forever while others almost disappear. I leave home in the morning with a very clear idea of what I am going to do. I make a list, put my things in order, check the time, and tell myself that this time everything will go as planned. Then someone asks me a question, something goes missing, the phone rings, and the plan changes. I could get annoyed, of course. I could also pretend that this was exactly what I had intended. But I would rather look at what actually happens. Then we discover that small detours are not always useless. A conversation can give us an idea, a mistake can reveal a problem, and a pause can leave us time to think. I am not saying that we should stop organizing our days. I am only saying that a plan describes an intention, not the whole world. And when I tell the story of my day, I talk a lot about myself, my choices, and what I noticed. Perhaps that is why certain words keep coming back: they follow the path chosen by my story.
 
-We analyse Otis’s speech only, including its opening “Mais vous savez…” (“But you know…”), and excluding Panoramix’s question and the preceding dialogue. The full transcript is not reproduced here: the purpose is to study its statistical properties, not republish the dialogue.
+This text is our working corpus. It was written for this demonstration; it is not an excerpt from a real linguistic corpus. We will normalize it, count its lexical units, rank the forms by frequency, and then compare this small sample with regularities observed in much larger corpora.
 
-### Building a corpus from the transcript
+### Building the corpus: which units should we count?
 
-The corpus is based on the French transcript, using these conventions:
+We use the following conventions:
 
 - convert to lowercase;
 - remove punctuation as a counted unit;
-- preserve accents;
-- retain internal apostrophes: “c'est”, “j'ai” and “qu'il” each count as one orthographic unit;
+- preserve accents and other letters;
+- retain internal apostrophes: “I’m” and “that’s” each count as one orthographic unit;
 - do not lemmatize: inflected forms remain distinct;
-- treat hyphens as separators when they occur in the transcript.
+- treat hyphens as separators.
 
-Under these conventions, the transcript contains **216 lexical occurrences and 125 distinct orthographic types**. These figures can be reproduced from the linked transcript and the rules above. Manually correcting the transcript, using another edit of the scene or changing the segmentation conventions would change the counts.
+Under these conventions, the text contains **196 lexical occurrences and 127 distinct orthographic types**. These figures can be reproduced from the text above and the rules just stated.
 
 ### Type, lexical occurrence and tokenizer token: three distinct notions
 
@@ -58,36 +57,35 @@ The word *token* is used in two related but different contexts.
 
 | Notion | Definition | Example |
 |---|---|---|
-| **Lexical type** (*word type*) | A distinct orthographic form after normalization | “je” is a type |
-| **Lexical occurrence** (*word token*) | One concrete appearance of a form in the text | “je” appears 13 times: 13 occurrences |
-| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | “aujourd'hui” may map to one token or several subwords, depending on the tokenizer |
+| **Lexical type** (*word type*) | A distinct orthographic form after normalization | “I” is a type |
+| **Lexical occurrence** (*word token*) | One concrete appearance of a form in the text | “I” appears 13 times: 13 occurrences |
+| **Tokenizer token** (*model token*) | A unit produced by a tokenizer and represented by an ID in the model vocabulary | “today” may map to one token or several subwords, depending on the tokenizer |
 
 The two uses of *token* are related, but they are not interchangeable. A lexical occurrence is a position in the text; a tokenizer token is a representation unit. A word may be split into several model tokens, and a tokenizer may also treat punctuation, spaces or word fragments as separate units.
 
-The notion of type also depends on the convention. Here, “chante” and “chanter” would be two types; lemmatization could group them under one lemma. Lowercasing also merges variants that differ only in capitalization.
+The notion of type also depends on the convention. Here, “talk” and “talking” are two types; lemmatization could group them under one lemma. Lowercasing also merges variants that differ only in capitalization.
 
 **Takeaway:** before comparing frequencies, always specify the counted unit, the text source and the normalization procedure.
 
 ### Count and rank
 
-The table shows the most frequent groups. Rank intervals preserve ties: forms with the same frequency are not arbitrarily ordered.
-
 | Form(s) | Occurrences per form | Rank(s) |
 |---|---:|---:|
-| je | 13 | 1 |
-| de | 9 | 2 |
-| la, le | 7 | 3–4 |
-| à | 5 | 5 |
-| goût, moi, ne, pas, qui, vie | 4 | 6–11 |
-| 11 forms (including “mais”, “vous”, “aujourd'hui”) | 3 | 12–22 |
-| 15 forms | 2 | 23–37 |
-| 88 forms | 1 | 38–125 |
+| I | 13 | 1 |
+| a | 9 | 2 |
+| the | 7 | 3 |
+| that | 6 | 4 |
+| and | 5 | 5 |
+| my, what | 4 | 6–7 |
+| 6 forms (including “am”, “can”, “not”, “of”, “time” and “to”) | 3 | 8–13 |
+| 16 forms | 2 | 14–29 |
+| 98 forms | 1 | 30–127 |
 
-The distribution is already highly uneven: “je” occurs 13 times, while 88 types occur only once. But this result needs interpretation: Otis is talking about himself in the first person. The high frequency of “je” therefore also reflects the viewpoint and genre of the passage, not just a general regularity of French. This is a concrete example of how the corpus affects ranks. Moreover, 216 occurrences are far too few to estimate a power-law exponent reliably.
+The word “I” comes first, but this is not mysterious: the account is told in the first person. Frequency therefore also reflects the topic, viewpoint and genre of a text. That is exactly what this example helps us see: rank is not an intrinsic property of a word.
 
-Rank is not an intrinsic property of a word. It depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer.
+Rank depends on the corpus, language, period, text genre, size, content and normalization conventions. In a text about ancient Egypt, “papyrus” might move up the ranking; in an ordinary conversation, it would probably be much rarer. With only 196 occurrences, our text is also far too short to estimate a power-law exponent reliably.
 
-## 2. Zipf’s law: a rank-frequency approximation
+## 2. Zipf’s law## 2. Zipf’s law: a rank-frequency approximation
 
 In large corpora, we often observe a regularity: a few forms are very frequent, while many forms are rare. Zipf’s law proposes a simple approximation of this distribution:
 
@@ -108,7 +106,7 @@ $$
 f(r) \approx \frac{C}{r}
 $$
 
-If the most frequent type occurs 1,000 times, this approximation predicts 500 occurrences at rank 2, 200 at rank 5 and 100 at rank 10. These are illustrative theoretical values, not measurements from our Otis corpus.
+If the most frequent type occurs 1,000 times, this approximation predicts 500 occurrences at rank 2, 200 at rank 5 and 100 at rank 10. These are illustrative theoretical values, not measurements from our small corpus.
 
 ### What does the exponent mean?
 
@@ -171,7 +169,7 @@ These results show two things:
 
 **Caution when interpreting the table.** These figures concern speech addressed to children, not all written or spoken texts in each language. The corpora differ in size and are not identical in their properties. The comparison illustrates a cross-linguistic regularity in a specific empirical setting; it does not rank languages by some supposed “compliance with Zipf”.
 
-The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 216-occurrence transcript.
+The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 196-occurrence text.
 
 ## 4. A history older than its name
 
@@ -238,9 +236,9 @@ Steven Piantadosi (2014) emphasizes that classical visualizations can hide riche
 
 The reasonable conclusion is therefore: **lexical frequencies often exhibit a Zipf-like regularity, but their exact shape depends on the data, units and analysis method.**
 
-## 7. Back to Otis: what our small corpus taught us
+## 7. Back to our corpus: what this small text taught us
 
-We built a corpus, chose a normalization, distinguished 216 occurrences from 125 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
+We built a corpus, chose a normalization, distinguished 196 occurrences from 127 types and established a ranking. We now know why that ranking is not an intrinsic property of words, why frequency ties complicate ranks and why such a short text cannot provide a robust exponent estimate.
 
 On a large corpus, the same procedure becomes a statistical analysis: count, rank, estimate parameters, compare observed frequencies with expected frequencies, and then inspect the deviations. The formula becomes useful only after these methodological choices.
 
