@@ -203,3 +203,11 @@ After this migration is validated, continue with the next unverified stage bound
 - The generation-tour correction is merged in PR #1617: `top_k` and `temperature` now receive fail-fast runtime validation; regression tests and the FR/EN walkthrough agree with the contract.
 - All five guided Build tours have now been compared against implementation, tests, FR/EN explanations and Practice companions. PR #1618 carries the operations/block/model corrections and is awaiting final Quarto/browser checks. Once it merges, mark this bounded source-to-page audit complete; do not repeat the already-validated Transformer/QKV/attention scientific audit.
 - Next independent evidence: manual screen-reader/native-breadcrumb and accessibility review, then the learner pilot under #447. Automated browser checks do not close either item.
+
+
+## Progress snapshot — 2026-11-25 (Q/K/V evidence and CA-A ownership)
+
+- #1618, #1619 and #1620 are merged. The five guided Build tours are source/page/test-audited; the current Q/K/V pages have post-merge Chromium evidence and the current GitHub Pages artifact has been inspected. #483 remains open only for manual full-keyboard, touch and screen-reader checks; #447 remains gated.
+- The CA-A causal-mask/prefix-invariance exercise was found in the shared Attention collection even though the causal-masking lesson linked to a dedicated Practice companion. The companion held only a short check. PR #1623 moves CA-A into that companion, preserves the old collection anchors as link-only aliases, aligns the lesson's test-scope claims with the existing full-GPT test, and reconciles the roadmap status. PR #1622 places the lesson-to-Practice link near the beginning of the FR/EN lessons. No new implementation or test framework is needed.
+- After CA-A integration, the next exercise gap to inspect is the text-data transfer sequence: BPE merge tracing, shifted windows and leakage/document-boundary handling. The existing TR-A/B/C and training-example material must be compared first; do not duplicate their representation/shape activities.
+- Do not repeat the validated scoring/loss, gradient/training-loop, inference/context-use, text-input/representations, or Transformer/QKV/attention scientific audits. Reuse their evidence and only correct reproducible regressions.
