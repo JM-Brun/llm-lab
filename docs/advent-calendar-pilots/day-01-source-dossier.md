@@ -124,26 +124,27 @@ The file site/images/advent-zipf-rank-frequency.svg is an original vector diagra
 
 ## Editorial archive — hidden Easter-egg provenance (repository only)
 
-This section records the cultural reference that originally motivated the exercise. **It is repository metadata, not lesson content. Do not copy it into either published language page, page metadata, navigation, search snippets, or public-facing captions.** The published demonstration now uses an original text written for this lesson; it preserves the first-person narrative and the statistical teaching purpose without reproducing the protected monologue.
+This section records the cultural reference that originally motivated the exercise. **It is repository metadata, not lesson content. Do not copy it into either published language page, page metadata, navigation, search snippets, or public-facing captions.** The published French demonstration uses the complete text supplied by the project maintainer. The public page intentionally contains no character, film, transcript, or source attribution; the source trail is retained only in this repository dossier.
 
 ### Reference and source trail
 
 - Character: Otis, the scribe in *Astérix et Obélix : Mission Cléopâtre* (2002), portrayed by Édouard Baer.
 - Recognizable opening line used during the initial editorial exploration: « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. » This short identification cue is retained here only to document the source of the easter egg; do not publish it as part of the teaching text.
-- Online transcript consulted for the earlier corpus: [Happy Scribe — Le scribe, Astérix : Mission Cléopâtre](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre). It is an automated transcript, not a certified verbatim transcript of the film audio.
+- Source URL supplied by the project maintainer for the current text: [IMDb — Astérix & Obélix: Mission Cléopâtre, Otis quotes](https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/#quotes). The page could not be independently fetched during this revision (HTTP 403); the public lesson therefore reproduces the text as supplied by the maintainer, without asserting independent transcript verification.
+- Earlier exploratory transcript: [Happy Scribe — Le scribe, Astérix : Mission Cléopâtre](https://podcasts.happyscribe.com/happy-scribe-s-favorites/le-scribe-asterix-mission-cleopatre). It is an automated transcript, not a certified verbatim transcript of the film audio.
 - Context, duration and history of the scene: [Le Parisien, 4 July 2023 — Ressortie d’« Astérix et Obélix : Mission Cléopâtre » : le monologue d’Otis encore plus interminable](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 - The theatrical cut is approximately 54 seconds; a longer alternative version of approximately 1 minute 20 seconds was reported around the restored re-release. These durations refer to different edits and should not be conflated.
 
 ### Treatment decision
 
-The full monologue is not copied into this repository. Its source links and editorial rationale are retained here, while the public-facing lesson contains an original replacement text. The old corpus statistics (216 lexical occurrences and 125 orthographic types) described the earlier automated transcript under its former segmentation rules; they are historical and superseded. They must not be mixed with the current synthetic corpus statistics (French: 194 occurrences / 132 types; English: 196 / 127).
+The full text supplied by the project maintainer is used in the French public lesson as an unattributed Easter egg. The public page contains no source name or link. This dossier retains the source URL for internal provenance only; it is not intended for publication. The old corpus statistics (216 lexical occurrences and 125 orthographic types) described the earlier automated transcript under its former segmentation rules; they are historical and superseded. Under the current stated orthographic convention, the supplied French text contains 217 lexical occurrences and 125 distinct types. The English page remains an independently written demonstration corpus (196 occurrences / 127 types); it is not a translation of the French monologue.
 
 
 ### Current published demonstration corpus — reproducibility record
 
-The public FR/EN pages now use an original, purpose-written first-person text. The complete texts are maintained in the corresponding QMD files; this dossier does not duplicate them. Reproduce the counts by lowercasing, removing punctuation as a counted unit, preserving accented letters, retaining internal apostrophes as part of an orthographic unit, splitting on hyphens, and applying no lemmatization. The tokenizer used for this editorial count is equivalent to the Unicode pattern `[^\\W_]+(?:['’][^\\W_]+)*`.
+The French public page uses the complete user-supplied first-person text as an unattributed Easter egg; the English page retains its independently written demonstration text. The complete texts are maintained in their corresponding QMD files; this dossier does not duplicate them. Reproduce the counts by lowercasing, removing punctuation as a counted unit, preserving accented letters, retaining internal apostrophes as part of an orthographic unit, splitting on hyphens, and applying no lemmatization. The tokenizer used for this editorial count is equivalent to the Unicode pattern `[^\\W_]+(?:['’][^\\W_]+)*`.
 
-- French: **194 lexical occurrences**, **132 distinct orthographic types**. The leading frequency groups are: `je` (14), `que` and `une` (8 each), `et` and `le` (6 each), `de` (5), `peut` (4).
+- French: **217 lexical occurrences**, **125 distinct orthographic types**. The leading frequency groups are: `je` (13), `de` (9), `la` (7), `à` and `le` (6 each), then `et`, `goût`, `moi`, `ne`, `pas`, `que`, `qui` and `vie` (4 each). There are 86 singleton types and 20 types occurring twice.
 - English: **196 lexical occurrences**, **127 distinct orthographic types**. The leading forms are: `I` (13), `a` (9), `the` (7), `that` (6), `and` (5), `my` and `what` (4 each).
 
 These counts are exact for the current page texts and stated orthographic convention. They are pedagogical corpus counts, not observations from a naturally occurring language corpus and not a basis for fitting a Zipf exponent.
@@ -151,9 +152,8 @@ These counts are exact for the current page texts and stated orthographic conven
 
 ## Revision log — PR #1639
 
-- The public lesson no longer identifies or links to the cultural source. The easter-egg provenance and source trail remain in the repository-only archive section above.
-- The earlier “the” / “de” hook has been replaced by a first-person French/English text and the matching question. The original film monologue is not reproduced in the public page or duplicated in this dossier.
-- The current demonstration counts are computed from the quoted replacement text, excluding the question and surrounding explanatory prose. FR: 194 occurrences, 132 types, 111 singleton types and 10 types occurring twice. EN: 196 occurrences, 127 types, 98 singleton types and 16 types occurring twice.
+- The public French lesson contains the complete user-supplied monologue as an unattributed Easter egg; no source name, character, film, or source link appears on the page. Provenance is confined to this dossier.
+- The French question remains focused on the frequency of « je ». Counts are computed from the complete quoted text, excluding the question and surrounding explanatory prose: FR: 217 occurrences, 125 types, 86 singleton types and 20 types occurring twice. EN remains independent: 196 occurrences, 127 types, 98 singleton types and 16 types occurring twice.
 - The complete frequency tables now list every form occurring twice; rank intervals make ties explicit.
 - The generated FR/EN learning-map artifacts have been synchronized with the new titles, summaries and section headings.
 - The technical build and CI for the final revision are being checked in PR #1639. The novice-reader review and editorial acceptance gate remain separate and are not satisfied by CI.
