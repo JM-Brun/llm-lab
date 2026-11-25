@@ -152,13 +152,13 @@ The parameter $\beta$ shifts the rank and can improve the fit to observed distri
 
 The regularity is not limited to English or French. To avoid comparing figures from incompatible corpora, the following table is drawn from a single study of *child-directed speech*. The authors aggregated conversational corpora and estimated the parameters of a Zipf-Mandelbrot distribution.
 
-| Language | Lexical occurrences | Types | Exponent $\alpha$ | Shift $\beta$ | Observed / expected correlation |
-|---|---:|---:|---:|---:|---:|
-| British English | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
-| French | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
-| German | 2,168,002 | 37,018 | 1.42 | 12.69 | 0.998 |
-| Spanish | 353,104 | 10,057 | 1.39 | 9.96 | 0.994 |
-| Japanese | 941,006 | 25,648 | 1.30 | 7.12 | 0.993 |
+| Language | Child age | Corpora | Occurrences | Types | $\\alpha$ | $\\beta$ | Pearson $r$ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| British English | 2–42 months | 12 | 6,311,249 | 27,476 | 1.57 | 19.48 | 0.970 |
+| French | 11–42 months | 8 | 1,540,284 | 19,327 | 1.53 | 17.98 | 0.990 |
+| German | 5–42 months | 7 | 2,168,002 | 37,018 | 1.42 | 12.69 | 0.998 |
+| Spanish | 11–42 months | 12 | 353,104 | 10,057 | 1.39 | 9.96 | 0.994 |
+| Japanese | 6–42 months | 6 | 941,006 | 25,648 | 1.30 | 7.12 | 0.993 |
 
 *Source: Lavi-Rotbain and Arnon (2023), Study 1. “Occurrences” refers to the number of words counted in the transcripts; types are distinct orthographic forms. $\alpha$ is the exponent and $\beta$ the shift in the Zipf-Mandelbrot law. r is Pearson’s correlation between the observed and expected frequencies under the model. It is neither an exponent nor proof that the distribution follows an exact power law.*
 
@@ -169,7 +169,7 @@ These results show two things:
 
 **Caution when interpreting the table.** These figures concern speech addressed to children, not all written or spoken texts in each language. The corpora differ in size and are not identical in their properties. The comparison illustrates a cross-linguistic regularity in a specific empirical setting; it does not rank languages by some supposed “compliance with Zipf”.
 
-The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 67-occurrence paragraph.
+The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 67-occurrence paragraph.
 
 ## 4. A history older than its name
 
