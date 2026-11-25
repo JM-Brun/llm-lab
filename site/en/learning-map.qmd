@@ -29,18 +29,7 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 
 ## Theory path — Understand
 
-::: {.callout-note title="The path in brief"}
-You can remember the route in **six movements** before exploring the nine detailed stages:
-
-1. **Place the system** — understand what an LLM is and what it predicts.
-2. **Observe** — follow a complete generation as a black box, from context to next token.
-3. **Explain the computation** — connect text and tokens, representations, the Transformer, and the predictive distribution.
-4. **Use and design context** — see how [supplied examples](in-context-learning.qmd) affect predictions and how the application [chooses the context](context-engineering.qmd) for each call, with fixed parameters.
-5. **Understand the uses** — distinguish generation, scoring an observed target, and parameter learning. These are three uses of predictive computation, not successive steps in one generation loop.
-6. **Explore** — then choose to build, practice, deepen, or consult references.
-
-The nine stages below unpack this overview without making every page a strict prerequisite.
-:::
+We first observe what an LLM predicts, then reconstruct the computation that produces its predictive distribution. We next examine context design before distinguishing three uses of that same distribution: generating a continuation, scoring an observed sequence, and learning the parameters. The nine stages below provide a first-reading order, not a strict prerequisite chain; the resource map lets you explore relationships beyond that order.
 
 ### Learning path skeleton {#conceptual-route}
 
