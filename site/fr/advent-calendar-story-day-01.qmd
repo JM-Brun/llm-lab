@@ -186,7 +186,7 @@ Ces résultats montrent deux choses :
 
 **Attention à l'interprétation.** Ces chiffres concernent le langage adressé aux enfants, pas l'ensemble des textes écrits ou parlés de chaque langue. Les corpus n'ont ni la même taille ni exactement les mêmes propriétés. La comparaison illustre une régularité translinguistique dans un cadre expérimental précis ; elle ne permet pas de classer les langues selon une prétendue « conformité à Zipf ».
 
-L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre texte de 194 occurrences.
+L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre texte de 217 occurrences.
 
 ## 4. Une histoire plus ancienne que son nom
 
@@ -201,7 +201,14 @@ L'appellation « loi de Zipf » est donc un raccourci historique : pour la stati
 
 ## 5. À quoi sert-elle concrètement ?
 
-La loi de Zipf n'est pas une étape de calcul exécutée par un modèle de langage. Un Transformer ne consulte pas une formule de Zipf à chaque prédiction. C'est avant tout un **modèle descriptif** qui aide à comprendre, contrôler et parfois dimensionner des systèmes fondés sur des données textuelles.
+La loi de Zipf n'est pas une étape de calcul exécutée par un modèle de langage. Un Transformer ne consulte pas cette formule à chaque prédiction. C'est avant tout un **modèle descriptif**. Pour comprendre ce qu'elle apporte réellement, distinguons son usage direct des méthodes qui exploitent seulement des statistiques de fréquence.
+
+| Situation | Rôle de Zipf | Ce qu'il ne faut pas lui attribuer |
+|---|---|---|
+| Analyser un corpus | Comparer directement une distribution rang–fréquence à une loi de Zipf ou de Zipf–Mandelbrot | Un écart ne diagnostique pas à lui seul une erreur ou une mauvaise qualité du corpus |
+| Indexer et rechercher des documents | Fournir éventuellement une approximation descriptive de l'inégalité des fréquences dans une collection | TF-IDF, BM25 et la compression d'index ne sont pas des applications de la formule de Zipf : ces méthodes exploitent des statistiques de fréquence pour leurs propres calculs |
+| Étudier les données d'entraînement | Décrire la longue traîne et situer le problème des unités rares | Les algorithmes de tokenisation ne dérivent pas directement de la loi de Zipf |
+| Comparer des textes générés | Comparer directement leurs distributions rang–fréquence à celles de textes de référence | Une courbe proche de Zipf ne prouve ni la qualité du texte ni sa richesse lexicale |
 
 ### 5.1 Décrire et auditer un corpus
 
@@ -216,9 +223,9 @@ La loi sert ici de **référence statistique** : un écart peut être informatif
 
 ### 5.2 Concevoir des systèmes de recherche d'information
 
-Dans un moteur de recherche, les termes n'apparaissent pas tous le même nombre de fois dans une collection de documents. Cette forte inégalité intervient dans la taille des index, la compression des listes de documents et les modèles de pondération des termes.
+Dans un moteur de recherche, les termes n'apparaissent pas tous le même nombre de fois dans une collection de documents. Cette inégalité des fréquences est une propriété des données que l'on peut parfois décrire par une approximation de Zipf. Elle compte pour l'organisation et la taille des index.
 
-La loi de Zipf fournit un modèle simple de la distribution des fréquences de collection. Des méthodes comme TF-IDF répondent à une question complémentaire : un terme est-il fréquent dans un document, mais suffisamment rare dans la collection pour aider à distinguer ce document ? TF-IDF n'est pas « la loi de Zipf » ; il exploite des statistiques de fréquence à une autre fin.
+En revanche, la compression des listes de documents et le classement des résultats reposent sur des mécanismes spécifiques. TF-IDF et BM25 exploitent notamment des fréquences de termes et de documents ; ils ne calculent pas une loi de Zipf. Le lien est donc **statistique et indirect** : Zipf aide à caractériser la distribution sous-jacente, tandis que les méthodes de recherche utilisent ces statistiques selon leurs propres objectifs.
 
 ### 5.3 Comprendre les difficultés d'apprentissage des modèles de langage
 
@@ -229,7 +236,7 @@ Les corpus d'entraînement sont eux aussi très déséquilibrés :
 - les mots inconnus ou les formes nouvelles posent un problème de couverture du vocabulaire ;
 - les choix de tokenisation déterminent comment cette longue traîne est répartie entre mots entiers et sous-mots.
 
-Cela aide à comprendre pourquoi les tokenizers modernes utilisent souvent des unités sous-lexicales : ils permettent de représenter des formes rares ou inédites à partir de fragments réutilisables. Mais la loi de Zipf ne détermine pas à elle seule l'algorithme de tokenisation ni la taille optimale du vocabulaire.
+La longue traîne aide à formuler le problème de couverture : un système doit pouvoir représenter des formes peu observées ou inédites. Les unités sous-lexicales apportent une réponse pratique en réutilisant des fragments. Le lien avec Zipf reste toutefois **indirect** : BPE et les autres méthodes de tokenisation construisent leur segmentation à partir de règles et de statistiques propres à leur objectif ; elles n'appliquent pas la formule de Zipf. Celle-ci ne détermine donc ni l'algorithme de tokenisation ni la taille optimale du vocabulaire.
 
 Il faut surtout distinguer deux distributions. La courbe de Zipf décrit une **fréquence marginale dans un corpus** : combien de fois chaque forme ou token apparaît, tous contextes confondus. Un modèle autorégressif calcule au contraire, à chaque position, une distribution **conditionnelle au contexte** :
 
@@ -241,7 +248,7 @@ La fréquence d'un token dans le corpus influence le nombre d'exemples observés
 
 ### 5.4 Évaluer les distributions produites par un modèle
 
-On peut enfin comparer les fréquences des mots ou des tokens dans des textes humains et dans des textes générés par un modèle. Une différence peut révéler une diversité lexicale trop faible, une répétition excessive ou un comportement dépendant des paramètres de génération. Pour que la comparaison soit interprétable, il faut contrôler la langue, la longueur des textes, le tokenizer, la normalisation et les paramètres d'échantillonnage. Une courbe rang-fréquence ne constitue jamais, à elle seule, une mesure suffisante de la qualité d'un texte ou d'un modèle. **Elle ne mesure pas directement la richesse lexicale.** Elle décrit comment les fréquences se répartissent entre les formes ; deux textes de richesse comparable peuvent avoir des courbes différentes selon leur longueur, leur sujet, leur genre et leur normalisation. Inversement, une courbe proche de Zipf ne garantit pas un vocabulaire riche. Pour étudier la diversité lexicale, il faut des mesures complémentaires et des protocoles qui contrôlent notamment la longueur des textes.
+On peut comparer directement les distributions rang–fréquence des textes humains et des textes générés par un modèle. Une différence peut signaler une concentration différente des fréquences ou une longue traîne plus ou moins marquée. Pour interpréter cette comparaison, il faut contrôler la langue, la longueur des textes, le tokenizer, la normalisation et les paramètres d'échantillonnage. Une courbe rang–fréquence ne permet cependant pas, à elle seule, de conclure à une répétition excessive, à une diversité lexicale insuffisante ou à une qualité moindre. **Elle ne mesure pas directement la richesse lexicale.** Elle décrit comment les fréquences se répartissent entre les formes ; deux textes de richesse comparable peuvent avoir des courbes différentes selon leur longueur, leur sujet, leur genre et leur normalisation. Inversement, une courbe proche de Zipf ne garantit pas un vocabulaire riche. Pour étudier la diversité lexicale, il faut des mesures complémentaires et des protocoles qui contrôlent notamment la longueur des textes.
 
 Des travaux récents étudient même les liens entre distribution des tokens, choix de vocabulaire et performances en aval. Il s'agit d'un axe de recherche, pas encore d'une règle universelle de conception. Il faut en particulier distinguer la distribution des mots dans un corpus de celle des tokens produits par un tokenizer : le découpage en sous-mots change l'objet statistique étudié.
 
