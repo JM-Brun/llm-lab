@@ -523,7 +523,7 @@ Teacher forcing therefore allows predictions conditioned on reference prefixes t
 
 </details>
 
-**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
+**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, the input-target copy bug is detected by a checkable invariant, and the difference between a reference prefix and feedback of model predictions is explained correctly.
 
 **Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
 
