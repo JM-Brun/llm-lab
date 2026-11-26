@@ -2,11 +2,21 @@
 
 > **Mise à jour de migration — 24 novembre 2026.** La PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) est fusionnée et le rendu complet ainsi que le déploiement GitHub Pages post-fusion ont réussi. Les pages principales FR/EN pointent maintenant vers le calendrier scientifique. La PR de nettoyage remplace les huit anciennes pages du prototype par des redirections vers la nouvelle collection, retire leurs mini-leçons du graphe pédagogique et supprime le CSS spécifique devenu inutilisé. Les histoires indépendantes `advent-calendar-story-day-01` et `day-06` sont conservées. Cette mise à jour supersède les consignes de transition antérieures qui demandaient d'attendre le déploiement.
 
-**Last updated:** 2026-11-24  
-**Status:** PR #1593 prepares the bilingual Day 01 Zipf story for public reading and links it from both scientific-calendar landing pages. Publication is distinct from editorial acceptance: the non-specialist reader review, observed reading time, comprehension evidence and explicit accept/revise decision remain pending. PR #1594 adds the companion exercise pages; PR #1596 contains a Day 02 preview but must not advance to publication or merge before the Day 01 acceptance gate is satisfied. Production order is chronological; reader navigation remains non-linear.  
+**Last updated:** 2026-11-26  
+**Status:** PRs #1593 (Day 01 public reading release), #1594 (Zipf practice pages), #1596 (Day 02 preview) and #1695 (15-minute redistribution of the first three stories) are merged. Day 01 is public as a reading version, but its editorial acceptance remains pending a real non-specialist read-through. Day 02 remains a public preview, not an accepted story. PR #1703 is the current follow-up for Day 01 wording and bilingual calendar consistency. Production order is chronological; reader navigation remains non-linear.  
 **Parent decision:** PR [#1551](https://github.com/JM-Brun/llm-lab/pull/1551) — merged into `main`.
 
-This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
+This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and approved 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
+
+## Current snapshot — 2026-11-26
+
+- **Day 01:** published in FR/EN for reading; the post-redistribution story targets about 15 minutes. The corpus counts and worked rank–frequency example remain intact. Its non-specialist review, observed reading time, comprehension record and explicit accept/revise decision are still missing.
+- **Day 02:** the surprisal story is accessible as a preview. Its scientific and pedagogical acceptance remains pending; do not present the preview as a finished calendar story.
+- **Day 03:** the tokenizer story has been redistributed around the vocabulary-size / sequence-length / cost trade-off. Its reuse audit and acceptance remain separate work.
+- **PR #1695:** merged the first-three-story redistribution, the two companion deep dives, Practice ownership and related bilingual metadata/navigation updates.
+- **PR #1703:** follow-up wording and collection-consistency pass. It aligns Day 01 metadata and LLM implications, clarifies that guided practice lives on dedicated pages, and synchronizes all 24 bilingual door titles with the canonical manifest. Its CI and rendered-page audit must pass before merge.
+
+**Next actions:** validate PR #1703; then obtain a real non-specialist Day 01 read-through and record time, comprehension evidence and confusion points. Revise and retest only where observations warrant it. Do not treat source review, author self-review or CI as a substitute for learner validation.
 
 
 
@@ -32,7 +42,7 @@ The concept registry, computational graph, guided-route optional pages, page map
 - [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) remains open and mergeable. Do not merge until the latest CI and Quarto/browser runs pass and the novice review has an explicit acceptance decision.
 
 The tracked generated fragments are committed. If a later source edit changes page-map metadata or section headings, regenerate the bilingual outputs with `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py`.
-## 1. Current state — verified (updated 2026-11-24)
+## Historical state snapshot — 2026-11-24 (superseded by the current snapshot above)
 
 ### Completed
 
