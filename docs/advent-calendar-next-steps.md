@@ -23,14 +23,14 @@ A follow-up implementation is being prepared in the [PR #1695](https://github.co
 The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target.
 
 **Validation status (2026-11-26):**
-- Python quality and page-metadata validation pass.
-- Full Quarto site rendering and local-link checks passed in [run #45803272644](https://github.com/JM-Brun/llm-lab/actions/runs/45803272644). The FR/EN browser review was interrupted when the branch was synchronized and must be rerun.
-- The test suite produced 828 passes and 6 failures, all caused by stale tracked generated map-list, map-data, and guided-route fragments. The Quarto run produced refreshed fragments as an Actions artifact; they still need to be committed.
-- Python quality and page-metadata validation passed.
+- Python quality, page-metadata, concept-registry, and domain checks pass.
+- The first full test run found six stale generated map-list, map-data, and guided-route fragments. The guided-route and map-list differences were traced to the authored navigation; the tracked fallback lists and interactive-map data have since been synchronized with the current page metadata and section headings.
+- Two subsequent test runs narrowed the remaining failures to stale map-data fields for the revised Zipf story, surprisal story, and tokenizer-design page. Those generated entries have now been updated bilingually. The next full CI run must confirm that the map-artifact freshness tests and complete test suite pass.
+- A full Quarto render and local-link audit passed on an earlier branch revision. The current branch still requires a fresh full render and FR/EN browser audit after the latest generated-data updates.
 - No novice-reader timing or comprehension review has yet been performed. The displayed 15-minute estimates remain editorial estimates, not observed measurements.
-- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) has been returned to draft until the generated fragments are refreshed and the full validation suite passes.
+- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) remains open; do not merge it until the current test suite and Quarto/browser review pass.
 
-Do not mark #1695 ready for review or merge until the generated fragments are committed and CI/browser review passes.
+The generated fragments are now committed in the branch. If a subsequent source edit changes page-map metadata or section headings, regenerate them with `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py` and commit the resulting bilingual outputs.
 
 ## 1. Current state — verified (updated 2026-11-24)
 
