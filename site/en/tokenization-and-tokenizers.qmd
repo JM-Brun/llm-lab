@@ -12,7 +12,6 @@ id: "en/tokenization-and-tokenizers"
 summary: "Organizes deep dives on text representation, segmentation mechanisms, tokenizer design, and evaluation."
 scope: "An editorial map of the domain. Distinguishes encoding an input with a fixed tokenizer from learning or fitting a tokenizer from a corpus; routes readers to specialist pages without reproducing their content."
 purpose: "Choose a deep dive according to the question, understand the relationships between Unicode, segmentation, vocabulary, corpus, and evaluation, and identify prerequisites and practical continuations."
-domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
