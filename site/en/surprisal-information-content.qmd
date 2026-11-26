@@ -24,7 +24,7 @@ related: ["en/entropy", "en/likelihood", "en/cross-entropy", "en/language-modeli
 tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:en", "status:published"]
 -->
 
-*LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
+*LLM Lab Advent Calendar 2026 · Door 2 · about 15 minutes*
 
 ## Surprise is not an emotion
 
@@ -153,6 +153,23 @@ $$
 
 The six bits describe this sequence's score under the model being considered. They are not the entropy of the model's distribution.
 
+## The same event can have different surprisal in different contexts
+
+Surprisal is not a property attached to a token alone. It depends on the probability the model assigns to it **in a particular context**.
+
+Consider the token `Paris` in two fictional contexts. The values below are chosen for explanation; they are not outputs from a real model.
+
+| Context | Predicted probability of `Paris` | Surprisal |
+|---|---:|---:|
+| “The capital of France is…” | $0.80$ | $-\log_2(0.80)\approx0.32$ bits |
+| “The capital of Japan is…” | $0.01$ | $-\log_2(0.01)\approx6.64$ bits |
+
+The token is the same, but its information content differs sharply because the conditional distributions differ. We therefore cannot assign `Paris` one unique surprisal independently of context.
+
+This also explains why global frequency is insufficient to predict local surprisal. A word that is common in a corpus may be unexpected after a particular prefix; a globally rare form may be strongly expected in a specialized construction.
+
+
+
 ## Observed surprisal and predictive entropy: two different questions
 
 Fix a context $c$. A language model produces a distribution over possible tokens:
@@ -176,6 +193,43 @@ Surprisal is a value associated with an observed outcome. Entropy is an expectat
 
 For this distinction, see the [Entropy: uncertainty over the next token](entropy.qmd) lesson. [Likelihood](likelihood.qmd) formalizes the score of an observed sequence, while [cross-entropy](cross-entropy.qmd) connects a target distribution to a predicted distribution.
 
+## From logits to surprisal: the calculation inside an LLM
+
+In an autoregressive Transformer, the context is first transformed into internal representations. The final position produces a vector of **logits**: unnormalized real-valued scores, one per vocabulary token. Softmax turns them into probabilities:
+
+$$
+p_\theta(v\mid c)=\frac{\exp(z_v)}{\sum_{u\in\mathcal V}\exp(z_u)}.
+$$
+
+The surprisal of the observed target $y$ is then computed from its probability:
+
+$$
+I_\theta(y\mid c)=-\log_2 p_\theta(y\mid c).
+$$
+
+The conceptual path is therefore:
+
+$$
+\text{context}\rightarrow\text{logits}\rightarrow\text{softmax}\rightarrow
+\text{target probability}\rightarrow\text{surprisal}.
+$$
+
+Logits are not probabilities: they may be negative, positive, or shifted by a constant without changing the softmax distribution. Surprisal depends on the normalized probability, not on the raw logit value in isolation. For the mechanics of score computation, see [Logits: from scores to a distribution](logits.qmd).
+
+## Comparing sequences: sum, average, and tokenization unit
+
+The sum of conditional surprisals gives the total surprisal of a sequence and corresponds, up to sign, to its log-likelihood. But a longer sequence generally accumulates more contributions. To compare sequences of different lengths, one sometimes examines average surprisal per token:
+
+$$
+\overline I(x_{1:T})=\frac{1}{T}\sum_{t=1}^{T}-\log_2 p_\theta(x_t\mid x_{<t}).
+$$
+
+This average facilitates some comparisons, but it does not solve everything. Different tokenizers may split the same text into different numbers and units; average surprisal “per token” is then not directly comparable. The tokenizer, normalization, evaluated positions, and, where relevant, character- or byte-normalized measures must be specified.
+
+We must also distinguish sequence surprisal, average cross-entropy over a dataset, and perplexity. These quantities are related, but answer questions at different levels. The [Cross-entropy](cross-entropy.qmd) page covers average model evaluation over examples; here, we have studied the information cost of one observation under a conditional distribution.
+
+
+
 ## What surprisal does — and does not — tell us about an LLM
 
 In an autoregressive model, the conditional surprisal of an observed token is one local contribution to the sequence's negative log-likelihood, using the chosen logarithm base. Adding these contributions gives the sequence score, subject to the conventions used for the evaluated positions.
@@ -194,6 +248,16 @@ But surprisal is not a direct measure of answer quality. A false statement that 
 The [Experiment — Entropy, KL, and predictive compression](experience-information-theory.qmd) page lets you manipulate synthetic distributions and verify relationships between entropy, cross-entropy, KL divergence, and code lengths.
 
 For further practice, compare the surprisal of several events under one distribution, then change the distribution while keeping the observed event fixed. You will see that surprisal depends on the chosen probabilistic model.
+
+### Three simple experiments
+
+1. **Change the target probability.** Keep the context and observed token fixed, then vary its probability from $0.8$ to $0.4$, $0.1$, and $0.01$. Surprisal should increase each time the probability decreases.
+2. **Change the context.** Keep the target token identical, but change the prefix and therefore the conditional distribution. Surprisal can change even though the token does not.
+3. **Change the probabilities of the other tokens.** If the target probability remains fixed, redistributing the remaining probability mass among other candidates does not change its surprisal. It may, however, change the distribution's total entropy.
+
+These experiments separate three objects that are often conflated: the observed event, the context that conditions its probability, and the full distribution of possible outcomes.
+
+
 
 ## Takeaways
 
