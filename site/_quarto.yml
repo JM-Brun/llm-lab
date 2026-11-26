@@ -573,56 +573,61 @@ website:
         - section: "Approfondir"
           contents:
             - fr/deepen.qmd
-            - section: "Attention, position et architectures"
+            - section: "Modélisation du langage"
               contents:
-                - fr/attention-score-scaling.qmd
-                - fr/contextualized-representations-advanced.qmd
-                - fr/queries-keys-values-advanced.qmd
-                - fr/cross-attention.qmd
-                - fr/transformer-architectures.qmd
-                - fr/multimodal-architectures.qmd
-                - fr/rope.qmd
-                - fr/sinusoidal-positional-encoding.qmd
-                - fr/hybrid-llm-architectures.qmd
-                - fr/next-concept-modeling.qmd
-            - section: "Texte et tokenisation"
-              contents:
-                - section: "Tokenisation et tokenizers"
-                  href: fr/tokenization-and-tokenizers.qmd
+                - section: "Attention, position et architectures"
                   contents:
-                    - fr/tokenization-strategies.qmd
-                    - fr/unicode-text.qmd
-                    - fr/tokenizer-design-evaluation.qmd
-                    - fr/tokenizer-multilingual-evaluation.qmd
+                    - fr/attention-score-scaling.qmd
+                    - fr/contextualized-representations-advanced.qmd
+                    - fr/queries-keys-values-advanced.qmd
+                    - fr/cross-attention.qmd
+
+                    - fr/multimodal-architectures.qmd
+                    - fr/rope.qmd
+                    - fr/sinusoidal-positional-encoding.qmd
+                    - fr/hybrid-llm-architectures.qmd
+                    - fr/next-concept-modeling.qmd
+                - section: "Texte, corpus et tokenisation"
+                  contents:
+                    - section: "Tokenisation et tokenizers"
+                      href: fr/tokenization-and-tokenizers.qmd
+                      contents:
+                        - fr/tokenization-strategies.qmd
+                        - fr/unicode-text.qmd
+                        - fr/tokenizer-design-evaluation.qmd
+                        - fr/tokenizer-multilingual-evaluation.qmd
+                    - section: "Statistiques du langage"
+                      contents:
+                        - fr/advent-calendar-story-day-01.qmd
+                        - fr/zipf-law-deep-dive.qmd
+                - section: "Formalisation probabiliste et chaîne de l’entraînement"
+                  contents:
+                    - fr/surprisal-information-content.qmd
+                    - fr/language-modeling-math.qmd
+                    - fr/mathematical-foundations.qmd
+                    - fr/score-centering.qmd
+
+                - section: "Inférence et efficacité"
+                  contents:
+                    - fr/decoding-strategies.qmd
+                    - fr/llm-computational-complexity.qmd
+                    - fr/compression-revision.qmd
+                    - fr/rag-memory-boundaries.qmd
+                    - fr/document-retrieval.qmd
+                - section: "Échelle et questions de recherche"
+                  contents:
+                    - fr/scaling-laws.qmd
+                    - fr/emergence.qmd
+
+                    - fr/llm-evolution.qmd
+                    - fr/jepa-platonic-representation.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/embeddings-deep-dive.qmd
                 - fr/tensors.qmd
                 - fr/cosine-similarity.qmd
                 - fr/linearite-embeddings.qmd
-            - section: "Formalisation probabiliste et chaîne de l’entraînement"
-              contents:
-                - fr/surprisal-information-content.qmd
-                - fr/zipf-law-deep-dive.qmd
-                - fr/language-modeling-math.qmd
-                - fr/mathematical-foundations.qmd
                 - fr/universal-artificial-intelligence.qmd
-                - fr/score-centering.qmd
-                - fr/post-training.qmd
-            - section: "Inférence et efficacité"
-              contents:
-                - fr/decoding-strategies.qmd
-                - fr/llm-computational-complexity.qmd
-                - fr/compression-revision.qmd
-                - fr/rag-memory-boundaries.qmd
-                - fr/document-retrieval.qmd
-            - section: "Échelle et questions de recherche"
-              contents:
-                - fr/scaling-laws.qmd
-                - fr/emergence.qmd
-                - fr/llm-limits.qmd
-                - fr/llm-evolution.qmd
-                - fr/jepa-platonic-representation.qmd
         - section: "Glossaire et histoire"
           contents:
             - fr/glossary.qmd
@@ -830,56 +835,61 @@ website:
         - section: "Deepen your understanding"
           contents:
             - en/deepen.qmd
-            - section: "Attention, position, and architectures"
+            - section: "Language modeling"
               contents:
-                - en/attention-score-scaling.qmd
-                - en/contextualized-representations-advanced.qmd
-                - en/queries-keys-values-advanced.qmd
-                - en/cross-attention.qmd
-                - en/transformer-architectures.qmd
-                - en/multimodal-architectures.qmd
-                - en/rope.qmd
-                - en/sinusoidal-positional-encoding.qmd
-                - en/hybrid-llm-architectures.qmd
-                - en/next-concept-modeling.qmd
-            - section: "Text and tokenization"
-              contents:
-                - section: "Tokenization and tokenizers"
-                  href: en/tokenization-and-tokenizers.qmd
+                - section: "Attention, position, and architectures"
                   contents:
-                    - en/tokenization-strategies.qmd
-                    - en/unicode-text.qmd
-                    - en/tokenizer-design-evaluation.qmd
-                    - en/tokenizer-multilingual-evaluation.qmd
+                    - en/attention-score-scaling.qmd
+                    - en/contextualized-representations-advanced.qmd
+                    - en/queries-keys-values-advanced.qmd
+                    - en/cross-attention.qmd
+
+                    - en/multimodal-architectures.qmd
+                    - en/rope.qmd
+                    - en/sinusoidal-positional-encoding.qmd
+                    - en/hybrid-llm-architectures.qmd
+                    - en/next-concept-modeling.qmd
+                - section: "Text, corpora, and tokenization"
+                  contents:
+                    - section: "Tokenization and tokenizers"
+                      href: en/tokenization-and-tokenizers.qmd
+                      contents:
+                        - en/tokenization-strategies.qmd
+                        - en/unicode-text.qmd
+                        - en/tokenizer-design-evaluation.qmd
+                        - en/tokenizer-multilingual-evaluation.qmd
+                    - section: "Language statistics"
+                      contents:
+                        - en/advent-calendar-story-day-01.qmd
+                        - en/zipf-law-deep-dive.qmd
+                - section: "Probabilistic formalization and the training chain"
+                  contents:
+                    - en/surprisal-information-content.qmd
+                    - en/language-modeling-math.qmd
+                    - en/mathematical-foundations.qmd
+                    - en/score-centering.qmd
+
+                - section: "Inference and efficiency"
+                  contents:
+                    - en/decoding-strategies.qmd
+                    - en/llm-computational-complexity.qmd
+                    - en/compression-revision.qmd
+                    - en/rag-memory-boundaries.qmd
+                    - en/document-retrieval.qmd
+                - section: "Scale and research questions"
+                  contents:
+                    - en/scaling-laws.qmd
+                    - en/emergence.qmd
+
+                    - en/llm-evolution.qmd
+                    - en/jepa-platonic-representation.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/embeddings-deep-dive.qmd
                 - en/tensors.qmd
                 - en/cosine-similarity.qmd
                 - en/embedding-linearity.qmd
-            - section: "Probabilistic formalization and the training chain"
-              contents:
-                - en/surprisal-information-content.qmd
-                - en/zipf-law-deep-dive.qmd
-                - en/language-modeling-math.qmd
-                - en/mathematical-foundations.qmd
                 - en/universal-artificial-intelligence.qmd
-                - en/score-centering.qmd
-                - en/post-training.qmd
-            - section: "Inference and efficiency"
-              contents:
-                - en/decoding-strategies.qmd
-                - en/llm-computational-complexity.qmd
-                - en/compression-revision.qmd
-                - en/rag-memory-boundaries.qmd
-                - en/document-retrieval.qmd
-            - section: "Scale and research questions"
-              contents:
-                - en/scaling-laws.qmd
-                - en/emergence.qmd
-                - en/llm-limits.qmd
-                - en/llm-evolution.qmd
-                - en/jepa-platonic-representation.qmd
         - section: "Glossary and history"
           contents:
             - en/glossary.qmd
