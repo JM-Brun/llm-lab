@@ -22,6 +22,7 @@ calendar:
 days:
   - day: 1
     id: zipf-law
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1653"
     door:
       fr: "Pourquoi le mot « de » revient-il si souvent ?"
       en: "Why does the word “the” appear everywhere?"
@@ -40,6 +41,7 @@ days:
     experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
   - day: 2
     id: information-and-surprisal
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1666"
     door:
       fr: "Combien de bits contient la surprise d’un événement ?"
       en: "How many bits of surprise does an event contain?"
@@ -58,6 +60,7 @@ days:
     experiment: "Comparer la surprise de plusieurs événements sous des distributions construites."
   - day: 3
     id: tokenizer-as-compression-engineer
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1667"
     door:
       fr: "Le tokenizer, ingénieur de compression"
       en: "The tokenizer as a compression engineer"
@@ -73,6 +76,7 @@ days:
     experiment: "Comparer plusieurs segmentations d’un même corpus et mesurer les longueurs obtenues."
   - day: 4
     id: geometry-of-meaning
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1668"
     door:
       fr: "Le sens peut-il avoir une direction ?"
       en: "Can meaning have a direction?"
@@ -88,6 +92,7 @@ days:
     experiment: "Comparer des directions et des similarités en explicitant les limites de l’interprétation."
   - day: 5
     id: contextual-meaning
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1669"
     door:
       fr: "Le même mot, deux mondes différents"
       en: "The same word, two different worlds"
