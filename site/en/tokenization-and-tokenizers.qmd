@@ -56,13 +56,13 @@ Corpus preparation and tokenizer training belong to the [Build path](build-path.
 
 ## Map of questions
 
-| If your question is… | Read… | What the page contributes |
-|---|---|---|
-| How is a character string represented before segmentation? | [Unicode, UTF-8, and normalization](unicode-text.qmd) | Distinguish characters, code points, bytes, and normalized forms. |
-| Why can the same text produce different sequences? | [Tokenization strategies](tokenization-strategies.qmd) | Compare granularities, pipeline components, BPE, WordPiece, and Unigram. |
-| How should vocabulary size and tokenizer choices be compared? | [Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd) | Connect length, budgets, system costs, metrics, and downstream quality. |
-| How should data be prepared and a model's tokenizer fitted? | [Corpus preparation](corpus-preparation.qmd) | Cover sources, filtering, deduplication, splitting, and fitting in the Build context. |
-| How do IDs become training examples? | [Training examples](training-examples.qmd) | Move from an ID stream to windows, shifted targets, masks, and packed sequences. |
+| Question | Page | Useful prerequisites | Specific contribution |
+|---|---|---|---|
+| How is a character string represented before segmentation? | [Unicode, UTF-8, and normalization](unicode-text.qmd) | None; [From text to tokens](text-data.qmd) provides the LLM context. | Distinguish abstract characters, code points, bytes, and normalized forms. |
+| Why can the same text produce different sequences? | [Tokenization strategies](tokenization-strategies.qmd) | [From text to tokens](text-data.qmd); Unicode helps with edge cases. | Compare granularities, pipeline components, BPE, WordPiece, and Unigram. |
+| How should vocabulary size and tokenizer choices be compared? | [Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd) | [Tokenization strategies](tokenization-strategies.qmd); basic measurement and experimental evaluation. | Connect length, budgets, system costs, metrics, and downstream quality. |
+| How should data be prepared and a model's tokenizer fitted? | [Corpus preparation](corpus-preparation.qmd) | The [Build path](build-path.qmd), especially corpus and data-splitting concepts. | Cover sources, filtering, deduplication, splitting, and fitting in the Build context. |
+| How do IDs become training examples? | [Training examples](training-examples.qmd) | The [Build path](build-path.qmd) and the text → IDs interface. | Move from an ID stream to windows, shifted targets, masks, and packed sequences. |
 
 ## Routes by objective
 
