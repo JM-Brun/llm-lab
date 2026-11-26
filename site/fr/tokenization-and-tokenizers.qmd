@@ -1,0 +1,83 @@
+---
+title: "Tokenisation et tokenizers : carte du domaine"
+subtitle: "Comprendre les unités, les mécanismes, la conception et l’évaluation"
+description-meta: "Carte des approfondissements sur la tokenisation : représentation du texte, segmentation, familles d’algorithmes, entraînement des tokenizers et évaluation."
+lang: fr
+keywords: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:fr", "status:published"]
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/tokenization-and-tokenizers"
+summary: "Organise les approfondissements sur la représentation du texte, les mécanismes de segmentation, la conception des tokenizers et leur évaluation."
+scope: "Carte éditoriale du domaine. Distingue l'encodage d'une entrée avec un tokenizer fixé de l'apprentissage ou de l'ajustement d'un tokenizer à partir d'un corpus ; oriente vers les pages spécialisées sans en recopier le contenu."
+purpose: "Choisir un approfondissement selon la question à résoudre, comprendre les relations entre Unicode, segmentation, vocabulaire, corpus et évaluation, et identifier les prérequis et prolongements pratiques."
+domain: "text-tokenization"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/deepen"]
+  children: ["fr/tokenization-strategies", "fr/unicode-text", "fr/tokenizer-design-evaluation"]
+related: ["fr/text-data", "fr/corpus-preparation", "fr/training-examples", "fr/exercises-text-data", "fr/tokenization-strategies-exercises"]
+tags: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:fr", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-fr-tokenization-and-tokenizers.qmd >}}
+
+# Par où approfondir la tokenisation ?
+
+Dans le parcours principal, [Du texte aux tokens](text-data.qmd) établit le contrat minimal : le texte est converti en tokens, puis en IDs compatibles avec le tokenizer associé aux poids du modèle. Cette page n'ajoute pas une étape obligatoire. Elle sert de **carte de navigation** lorsque l'on veut comprendre les choix qui se cachent derrière cette interface, construire un tokenizer ou évaluer ses conséquences.
+
+Le domaine relie plusieurs objets qu'il faut garder distincts : la chaîne de caractères, ses représentations Unicode et UTF-8, les unités produites par la segmentation, le vocabulaire et ses IDs, le corpus qui sert éventuellement à ajuster le tokenizer, puis les métriques qui évaluent le résultat.
+
+## Deux opérations différentes : encoder et apprendre
+
+Un tokenizer intervient dans deux contextes qui ne doivent pas être confondus :
+
+- **Encoder une entrée** : appliquer un tokenizer déjà fixé à un prompt ou à un texte pour obtenir une séquence ordonnée d'IDs. C'est l'interface utilisée à l'inférence.
+- **Construire ou ajuster un tokenizer** : préparer un corpus, choisir les données et apprendre ou ajuster un vocabulaire et des règles de segmentation, avant de fixer le tokenizer avec le modèle.
+
+```{mermaid}
+flowchart TB
+  subgraph build["Construction — parcours Build"]
+    A["Corpus"] --> B["Préparation et filtrage"]
+    B --> C["Apprentissage / ajustement du tokenizer"]
+    C --> D["Vocabulaire et règles fixés"]
+  end
+  subgraph encode["Utilisation — entrée du modèle"]
+    E["Texte d'entrée"] --> F["Prétraitement éventuel"]
+    F --> G["Segmentation"]
+    G --> H["Tokens"]
+    H --> I["IDs"]
+    I --> J["Lookup des embeddings"]
+  end
+  D -. "tokenizer compatible" .-> G
+```
+
+La préparation du corpus et l'entraînement du tokenizer relèvent du parcours [Build](build-path.qmd). L'encodage d'un prompt, lui, ne réapprend pas le vocabulaire à chaque requête.
+
+## Carte des questions
+
+| Si votre question est… | Lisez… | Ce que cette page apporte |
+|---|---|---|
+| Comment une chaîne de caractères est-elle représentée avant la segmentation ? | [Unicode, UTF-8 et normalisation](unicode-text.qmd) | Distinguer caractères, points de code, octets et formes normalisées. |
+| Pourquoi un même texte produit-il plusieurs séquences possibles ? | [Stratégies de tokenisation](tokenization-strategies.qmd) | Comparer granularités, pipeline, BPE, WordPiece et Unigramme. |
+| Comment choisir une taille de vocabulaire et comparer des tokenizers ? | [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) | Relier longueur, budgets, coûts système, métriques et qualité en aval. |
+| Comment préparer les données et ajuster le tokenizer d'un modèle ? | [Préparation du corpus](corpus-preparation.qmd) | Traiter sources, filtrage, déduplication, partitionnement et fitting dans le contexte de Build. |
+| Comment les IDs deviennent-ils des exemples d'apprentissage ? | [Exemples d'entraînement](training-examples.qmd) | Passer du flux d'IDs aux fenêtres, cibles décalées, masques et séquences packées. |
+
+## Itinéraires selon l'objectif
+
+- **Comprendre les mécanismes** : partir de [Du texte aux tokens](text-data.qmd), puis lire [Stratégies de tokenisation](tokenization-strategies.qmd). Ouvrir Unicode lorsque les octets, les caractères ou la normalisation deviennent importants.
+- **Comprendre les différences entre chaînes et octets** : lire [Unicode, UTF-8 et normalisation](unicode-text.qmd), puis revenir aux stratégies pour suivre leurs effets sur la segmentation.
+- **Évaluer un choix de tokenizer** : comprendre les mécanismes dans [Stratégies de tokenisation](tokenization-strategies.qmd), puis construire une comparaison dans [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd).
+- **Préparer un entraînement** : suivre le parcours [Build](build-path), en particulier [Préparation du corpus](corpus-preparation.qmd), puis [Exemples d'entraînement](training-examples.qmd).
+
+Ces itinéraires sont des suggestions, pas une séquence universelle. Le choix dépend de la question posée et des connaissances déjà acquises.
+
+## S'exercer et expérimenter
+
+Les exercices restent séparés des leçons : retrouvez la [trace texte → IDs → embeddings](exercises-text-data.qmd#tokenizer-embedding-trace) et les [exercices sur les stratégies de tokenisation](exercises/tokenization-strategies.qmd). Ils permettent de vérifier les mécanismes sans alourdir les pages d'explication.
+
+**Point de retour :** après un approfondissement, reprenez le [parcours Understand à partir du texte](text-data.qmd), puis poursuivez vers les [embeddings](embedding-space.qmd).
