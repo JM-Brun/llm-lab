@@ -48,7 +48,7 @@ The tokenization collection now distinguishes source-specific meta-representatio
 | Karpathy minbpe | [Structured extraction](../../data/extractions/karpathy-minbpe.yml) |
 | Google SentencePiece | [Structured extraction](../../data/extractions/google-sentencepiece-documentation.yml) |
 
-Use the cross-source synthesis for the comparative concept spine. The extraction records retain source-local graphs and teaching routes; the canonical concept registry remains a separate project-level model. Existing reviews remain the representation of record where a new extraction would duplicate already-audited claims or exceed the evidence.
+The current concept model adds 21 tokenization-specific concepts and typed relations; five new source extractions complement the existing Karpathy extraction and the source-specific Hugging Face/tiktoken reviews. Use the cross-source synthesis for the comparative concept spine. The extraction records retain source-local graphs and teaching routes; the canonical concept registry remains a separate project-level model. Existing reviews remain the representation of record where a new extraction would duplicate already-audited claims or exceed the evidence.
 
 ## Introductory overviews and social-media explainers
 
