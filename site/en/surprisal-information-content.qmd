@@ -170,6 +170,26 @@ This also explains why global frequency is insufficient to predict local surpris
 
 
 
+### Calculate the entropy of our toy distribution
+
+We can now calculate the entropy of the distribution from the opening example. Multiply each outcome's surprisal by its probability, then add the contributions:
+
+| Token | Probability | Surprisal | Contribution $p(x)I(x)$ |
+|---|---:|---:|---:|
+| `Paris` | $0.80$ | $0.32$ bits | $0.26$ bits |
+| `Lyon` | $0.10$ | $3.32$ bits | $0.33$ bits |
+| `Marseille` | $0.05$ | $4.32$ bits | $0.22$ bits |
+| `Lille` | $0.05$ | $4.32$ bits | $0.22$ bits |
+
+Therefore,
+
+$
+H(X\mid c)\approx0.26+0.33+0.22+0.22
+\approx1.02\text{ bits}.
+$
+
+Entropy is lower than the surprisal of the observed outcome `Lyon` (about 3.32 bits). There is no contradiction: entropy is the probability-weighted average over all possible outcomes, whereas Lyon's surprisal concerns one particular outcome. Rare events can contribute substantially, but their contributions are weighted by their low probabilities.
+
 ## Observed surprisal and predictive entropy: two different questions
 
 Fix a context $c$. A language model produces a distribution over possible tokens:
