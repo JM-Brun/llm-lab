@@ -91,6 +91,7 @@ To compare two tokenizers:
 
 **Reading rule:** token count measures length under a given tokenizer; it does not directly measure linguistic quality, model quality, or total system cost.
 
+<span id="related-work-and-resources"></span>
 ### Thematic bibliography and complementary resources
 
 This bibliography brings together complementary references while distinguishing each work's question, contribution, and limitations. The study table remains the basis of the analysis; this list guides further reading without conflating different protocols.
@@ -108,6 +109,8 @@ This bibliography brings together complementary references while distinguishing 
 - **Multilingual measures — Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/).** Question: how can intrinsic metrics and their association with benchmarks be compared? Contribution: six metrics, 24 tokenizers, and 15 languages, with separate English and MMLU-ProX analyses. Limitation: observational associations, distinct samples, and whitespace-based metrics that do not capture linguistic word segmentation in Chinese, Japanese, and Thai.
 
 - **Practitioner perspective — Catherine Arnett (2024), [article on tokenizer recycling](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling).** Question: why can reusing a pretrained tokenizer without checking it penalize some texts? Contribution: practical examples involving pre-tokenization and fertility disparities. Limitation: a community article and practitioner observations, not a controlled benchmark.
+
+<span id="additional-research-references"></span>
 
 <!-- Legacy anchors: visual and mechanism resources now live on tokenization-strategies. -->
 <span id="recommended-visual-resources"></span>
