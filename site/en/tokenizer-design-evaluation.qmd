@@ -64,6 +64,8 @@ Take two occurrences of the same word: **unbelievable unbelievable**. To isolate
 | Subwords A | `un · believable` × 2 | 4 | 2 |
 | Subwords B | `un · believ · able` × 2 | 6 | 3 |
 
+![The same string can be represented by two or three fragments depending on the segmentation. Explanatory diagram, not an identified production tokenizer.](../images/tokenization-language-cost.svg){fig-alt="The text unbelievable is segmented as un plus believable in segmentation A, and as un plus believ plus able in segmentation B." fig-cap="For the same source text, the number of positions depends on the vocabulary and segmentation strategy." width=95%}
+
 Character-level segmentation uses few distinct entries but produces a long sequence. Subwords shorten the sequence by adding vocabulary units. This example measures neither bit-level compression nor model quality: it makes a representation trade-off visible.
 
 In a Transformer, fewer positions can reduce sequence-processing cost, including attention cost. A larger vocabulary, however, increases the size of the embedding tables and, depending on the architecture, the output projection. **Reducing the token count therefore does not automatically make the whole system cheaper.**
@@ -111,34 +113,14 @@ Research on multilingual tokenization costs does not always use the same metrics
 
 For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
 
-## 3. Evaluate without reducing everything to one score
+## 3. Choosing under constraints
 
-A useful comparison separates four dimensions:
+Imagine an assistant that processes documents in several languages, with a limited context window and a latency constraint. The tokenizer that produces the fewest tokens on average is not necessarily the best choice: we need to know which cost decreases, which cost increases, and for which users.
 
-- **Representation efficiency:** how many tokens, characters, or bytes represent the same content? The denominator must be explicit.
-- **Downstream performance:** does segmentation change results on a defined task? Measure this; do not infer it from token count.
-- **Multilingual equity:** comparable content may produce different sequence lengths across languages. This can affect context budgets and cost, but does not by itself prove a difference in quality.
-- **Reproducibility:** document the tokenizer, revision, preprocessing, corpus, software versions, and metrics.
-
-Intrinsic metrics answer different questions: tokens per text, fertility (tokens per reference unit, often a whitespace-delimited word), characters or bytes per token, and coverage. They are comparable only when their denominators and conventions are explicit.
-
-A shorter sequence may reduce some costs, but it guarantees neither a better-performing model nor a faster system. Multilingual studies and experimental findings are examined in [the tokenizer evaluation deep dive](tokenizer-multilingual-evaluation.qmd).
-
-## 4. Making a decision under constraints
-
-Imagine an assistant that processes documents in several languages, with a context budget and a latency constraint. The tokenizer that produces the fewest tokens on an average corpus is not necessarily the best choice.
-
-1. **Define the use cases.** Build a representative corpus of the languages, domains, formats, and lengths actually expected.
-2. **Measure representation.** Compare several metrics by language and text type; do not hide disparities behind one global average.
-3. **Measure the system.** Evaluate memory, latency, throughput, and cost with the same architecture and controlled conditions.
-4. **Measure the task.** Compare downstream quality under comparable budgets and protocols.
-5. **Inspect trade-offs.** A gain for one language may coincide with a regression for another; a shorter sequence may shift cost to the vocabulary or output projection.
-
-The final choice depends on the distribution of actual use cases and operational constraints. It cannot be reduced to minimizing average token count.
+Start by isolating two measurable effects on the same corpus: the number of positions to process and the size of vocabulary-dependent tables. The following example is deliberately simplified; it helps reason about the relevant quantities, not predict a model's total cost.
 
 
-
-## 5. A design decision: fewer positions, a larger vocabulary
+### Worked example: fewer positions, larger vocabulary
 
 Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
 
@@ -153,7 +135,7 @@ These values are a **constructed example**, not benchmark results. They isolate 
 
 We cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
 
-### Which budget is held fixed?
+#### Which budget is held fixed?
 
 The comparison changes with the experimental constraint:
 
@@ -163,7 +145,7 @@ The comparison changes with the experimental constraint:
 
 A study that merely says “same data” therefore does not establish a fair comparison. It must specify what is held fixed: raw text, tokens, optimization steps, FLOPs, elapsed time, or financial budget.
 
-### Build a defensible decision
+#### Build a defensible decision
 
 A tokenizer choice should state the priority constraints and accepted trade-offs:
 
