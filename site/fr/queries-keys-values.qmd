@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
 summary: "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé."
 scope: "Distingue les trois projections apprises d’un état de bloc et leur rôle dans une tête d’auto-attention."
-purpose: "Prédire ce qu’un changement des valeurs peut modifier dans une tête d’attention lorsque requêtes, clés et masque restent fixes."
+purpose: "Expliquer pourquoi l’auto-attention projette l’état d’entrée du bloc en Q, K et V, distinguer la compatibilité (Q/K) du contenu agrégé (V), et prévoir les effets d’une modification isolée de projection."
 suggested_route:
   previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"
@@ -115,7 +115,7 @@ Le schéma fait apparaître deux chemins : l'un détermine la pondération, l'au
 
 ## Pourquoi trois projections à partir de la même entrée ? {#pourquoi-trois-projections-à-partir-de-la-même-entrée}
 
-En auto-attention, Q, K et V sont trois transformations apprises du même flux de représentations. Appelons $H_{\mathrm{in}}$ l’entrée du bloc : dans le premier bloc, elle provient des embeddings de tokens et du mécanisme d’entrée propre à l’architecture. Dans les blocs suivants, elle contient des états déjà contextualisés. Dans le GPT de référence de ce projet, les embeddings positionnels absolus appris sont **additionnés** aux embeddings de tokens avant le premier bloc ([embeddings positionnels](positional-encoding.qmd)). Avec [RoPE](rope.qmd), les requêtes et clés reçoivent une rotation positionnelle après la projection linéaire. Les équations ci-dessous décrivent les projections avant cette rotation.
+En auto-attention, Q, K et V sont trois transformations apprises du même flux de représentations. Appelons $H_{\mathrm{in}}$ l’entrée du bloc : dans le premier bloc, elle provient des embeddings de tokens et du mécanisme d’entrée propre à l’architecture. Dans les blocs suivants, elle contient des états déjà contextualisés. Dans une pile de blocs Transformer, ces projections sont recalculées à l’intérieur de chaque sous-couche d’attention, à partir de l’état d’entrée du bloc concerné. Elles contribuent à produire les états transmis au bloc suivant ; elles ne constituent pas une opération placée après les représentations contextualisées finales. Dans le GPT de référence de ce projet, les embeddings positionnels absolus appris sont **additionnés** aux embeddings de tokens avant le premier bloc ([embeddings positionnels](positional-encoding.qmd)). Avec [RoPE](rope.qmd), les requêtes et clés reçoivent une rotation positionnelle après la projection linéaire. Les équations ci-dessous décrivent les projections avant cette rotation.
 
 Dans le [bloc pré-LN du GPT de référence](transformer.qmd), une LayerNorm s’applique position par position avant les projections. L’entrée commune des projections est donc $X=\operatorname{LN}_1(H_{\mathrm{in}})$. Le chemin résiduel reçoit $H_{\mathrm{in}}$.
 

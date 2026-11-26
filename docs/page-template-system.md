@@ -115,6 +115,11 @@ For a small revision, update only the affected decisions. For a new or substanti
 | Source synthesis | Which sources support each substantive claim or teaching choice, and where do they disagree? | Retained complementary perspectives, evidence boundaries, unresolved questions and claim-level provenance. |
 | Misconceptions and limits | Which plausible interpretation would be wrong, and under what conditions does the explanation stop applying? | Material caveats beside the claims they qualify, plus counterexamples or failure cases where useful. |
 | Transfer and companions | What later reasoning or construction should this understanding enable? | Relevant Build connections, Deepen topics, revision resources and dedicated Practice companions—or an explicit decision that a companion is not warranted. |
+| Metadata contract | Does the hidden page metadata describe the same learning job as the core explanation? | `purpose` states an observable outcome taught by this page; `summary` describes its actual content; neither promises a numerical exercise, implementation or outcome delegated to a companion page. Keep FR/EN semantics aligned. |
+
+### When a lesson belongs to a series or page group
+
+Do not expand an individual page blueprint into a full series plan. First write a provisional group contract (shared purpose, reader journey, page roles, transitions, boundaries and cross-page coverage), then review it with the existing [page-group-audit skill](../.agents/skills/page-group-audit/SKILL.md). Give each substantial page its own concise blueprint. A group-level plan coordinates the pages; it does not create a parallel route or imply that every page is a prerequisite for the next.
 
 ### The worked thread is a teaching device, not a decorative example
 
@@ -135,6 +140,8 @@ A blueprint is ready when a reviewer can answer:
 - Are the sources, disagreements and claim boundaries understood well enough to write original synthesis rather than concatenate source explanations?
 - Does the worked thread (if any) genuinely support the mechanism and remain checkable?
 - Are Build, Deepen, revision and Practice connections correctly distinguished?
+- Does hidden `purpose` metadata describe the core lesson outcome rather than a task that is only assessed on the Practice companion?
+- If this page belongs to a series, is its role and transition consistent with the group-level page map?
 - What scientific, bilingual, navigation and rendered evidence will be needed at validation?
 
 Do not start drafting merely because the source list is long or the page outline looks complete. If a key claim, contradiction, technical convention or ownership decision remains unresolved, return to the relevant earlier stage.

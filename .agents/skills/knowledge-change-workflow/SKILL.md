@@ -19,7 +19,7 @@ This is an **orchestration skill**, not a replacement for specialist work. Its n
 | Integrate already-extracted source items | `knowledge-and-learning-integration` | `scientific-content-audit`, `visual-asset-audit`, `rendered-site-audit` for distinct unresolved checks |
 | Create a new reader-facing page | `new-learning-page` | `knowledge-and-learning-integration` for concept/source/graph updates |
 | Improve one existing page | `page-content-audit` | `scientific-content-audit` if technical correctness is central |
-| Reorganize several pages or resolve overlap | `page-group-audit` and/or `editorial-boundary-audit` | `knowledge-architecture-audit` for canonical graph or route changes |
+| Create, extend, audit or reorganize a series / coherent multi-page group; resolve overlap | `page-group-audit` and/or `editorial-boundary-audit` | `new-learning-page` for genuinely new page owners; `knowledge-and-learning-integration` for source/concept changes; `knowledge-architecture-audit` for canonical graph or route changes |
 | Add concepts, typed relations, domains or graph projections | `knowledge-architecture-audit` | `knowledge-and-learning-integration` for the learning-content decision |
 | Validate the rendered learning experience | `rendered-site-audit` | Page/group skill for pedagogical implications |
 
