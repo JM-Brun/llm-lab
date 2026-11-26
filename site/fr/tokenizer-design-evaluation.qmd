@@ -15,7 +15,7 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["fr/deepen"]
+  parents: ["fr/tokenization-and-tokenizers"]
   children: []
 related: ["fr/tokenization-strategies", "fr/text-data", "fr/unicode-text", "fr/embedding-space", "fr/scaling-laws"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:fr", "status:published"]
