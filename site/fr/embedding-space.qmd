@@ -101,7 +101,7 @@ E_{i_T,:}
 \in \mathbb{R}^{T \times d}
 $$
 
-$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant l'ajout de l'information positionnelle.
+$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant tout traitement dépendant de la position propre à l'architecture.
 
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
