@@ -44,6 +44,7 @@ def _page_paths(items: list[Any]) -> list[str]:
             paths.extend(_page_paths(item.get("contents", [])))
     return paths
 
+
 def _direct_page_paths(items: list[Any]) -> list[str]:
     """Collect only direct page entries, excluding optional nested sections."""
     paths: list[str] = []
@@ -107,9 +108,7 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
         else "Architecture comparison (optional)"
     )
     optional_sections = [
-        item
-        for item in understand["contents"]
-        if isinstance(item, dict) and "section" in item
+        item for item in understand["contents"] if isinstance(item, dict) and "section" in item
     ]
     assert optional_sections == [
         {
