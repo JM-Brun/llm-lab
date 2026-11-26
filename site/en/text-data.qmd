@@ -166,7 +166,7 @@ The tokenizer paired with the model encodes the prompt at inference and the corp
 
 ### Further reading {#boundaries-between-pages}
 
-To choose a reading route by question—mechanisms, Unicode representation, or evaluation—use the [tokenization section of the deep-dive map](deepen.qmd#text-and-tokenization). The specialist pages below remain optional.
+To choose a reading route by question—mechanisms, Unicode representation, or evaluation—use the [tokenization and tokenizers domain map](tokenization-and-tokenizers.qmd). The specialist pages below remain optional.
 
 - [Unicode, UTF-8, and normalization](unicode-text.qmd) traces the string to its bytes.
 - [Tokenization strategies](tokenization-strategies.qmd) compares segmentation options.
