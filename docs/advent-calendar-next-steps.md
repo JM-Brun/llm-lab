@@ -12,7 +12,7 @@ This document is an operational handoff for future sessions. It records what is 
 
 ## 2026-11-26 — first-three-story duration and redistribution pass
 
-The editorial contract now targets **about 15 minutes per story**, with 10–20 minutes accepted only when the subject justifies the deviation. This supersedes the former 10-minute target. The story itself should retain the central question, essential reasoning, a coherent worked example, and a conclusion. Optional derivations, research surveys, historical context, implementation caveats, and resource catalogues should move to an existing canonical page or a focused companion; exercises remain on dedicated practice pages. Prefer redistribution to deletion and preserve citations, figures, anchors, and navigation.
+The editorial contract now targets **about 15 minutes per story**, with 10–20 minutes accepted only when the subject justifies the deviation. A story below 10 minutes triggers a structural diagnosis, not an automatic instruction to add words: determine whether the topic is too narrow or weak for an independent story, or whether the treatment omits reasoning steps, worked examples, explanatory visuals, or a meaningful conclusion. Restructure and deepen where the topic has real potential; combine closely related ideas only when they form one coherent investigation. Replace or fold in a topic that cannot sustain a substantive story. Any sub-10-minute exception requires explicit editorial justification. For stories above 20 minutes, redistribute secondary material. Keep exercises on dedicated practice pages and prefer redistribution to deletion, preserving citations, figures, anchors, and navigation.
 
 A follow-up implementation is being prepared in the [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695). It redistributes the first three stories in FR/EN:
 
@@ -124,7 +124,7 @@ A story is not ready merely because it renders or the CI passes.
 | Scientific quality | Equations, assumptions, terminology, and claims checked |
 | Sources | Primary/authoritative references for central claims; provenance/licence notes for reused visuals |
 | Pedagogy | Narrative hook, one central question, worked example, limitation/counterexample, challenge and solution |
-| Timing | Approximately 10 minutes, checked with a reader rather than estimated from word count alone |
+| Timing | Approximately 15 minutes, checked with a reader rather than estimated from word count alone |
 | Language parity | FR and EN carry the same ideas, equations, caveats, and examples |
 | Rendering | Actual Quarto output inspected on desktop and mobile |
 | Accessibility | Semantic structure, keyboard operation, visible focus, contrast, alt text, no horizontal overflow |
