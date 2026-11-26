@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; la page d'exercices dédiée vérifie l'ordre, RoPE, le masque causal et les limites d'extrapolation."
+      note: "Le rappel et l’expérience de permutation distinguent contenu, ordre et visibilité causale ; le schéma situe l’ajout absolu et l’injection de RoPE sans dériver leurs formules."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
