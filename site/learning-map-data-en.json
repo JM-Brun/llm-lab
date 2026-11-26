@@ -2480,17 +2480,21 @@
       "type": "deep-dive",
       "topic": "tokenizer-design-evaluation",
       "domain": "text-tokenization",
-      "scope": "Explains trade-offs between vocabulary size, sequence length, model cost, and training budgets; builds a reproducible comparison and a constrained design decision, then links to detailed empirical findings.",
+      "scope": "Evaluates the trade-off between representation length, vocabulary size, training and inference costs, and downstream quality; compares budgets and metrics with their denominators, then builds a constrained comparison protocol and decision. Detailed multilingual empirical findings remain in the dedicated deep dive.",
       "summary": "",
       "purpose": "Evaluate vocabulary and sequence trade-offs, build a reproducible comparison, and make a constrained design decision without conflating representation cost, system cost, and downstream quality.",
       "covered_stages": [],
       "section_headings": [
         "One text, three segmentations",
         "1. Vocabulary size: architecture and budget",
-        "2. Reproducible comparison",
+        "2. System cost: sequences, vocabulary, and compute",
+        "Worked example: fewer positions, larger vocabulary",
+        "Which budget is held fixed?",
+        "3. Quality: what the metrics can establish",
+        "Measuring representation without conflating length and quality",
+        "4. Comparing and deciding under constraints",
         "Reproduce an inspection with a real tokenizer",
-        "Measuring a tokenizer without reducing quality to token count",
-        "3. Choosing under constraints"
+        "Build a defensible decision"
       ],
       "route": {
         "previous": null,
@@ -2504,6 +2508,7 @@
       ],
       "related": [
         "en/tokenization-strategies",
+        "en/tokenizer-multilingual-evaluation",
         "en/text-data",
         "en/unicode-text",
         "en/exercises-text-data"
