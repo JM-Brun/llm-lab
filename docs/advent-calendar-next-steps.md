@@ -14,7 +14,7 @@ This document is an operational handoff for future sessions. It records what is 
 
 The editorial contract now targets **about 15 minutes per story**, with 10–20 minutes accepted only when the subject justifies the deviation. This supersedes the former 10-minute target. The story itself should retain the central question, essential reasoning, a coherent worked example, and a conclusion. Optional derivations, research surveys, historical context, implementation caveats, and resource catalogues should move to an existing canonical page or a focused companion; exercises remain on dedicated practice pages. Prefer redistribution to deletion and preserve citations, figures, anchors, and navigation.
 
-A follow-up implementation is being prepared in the successor PR (link to be added). It redistributes the first three stories in FR/EN:
+A follow-up implementation is being prepared in the [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695). It redistributes the first three stories in FR/EN:
 
 - **Day 01 — Zipf:** the main story is approximately 2,600 words in French (about 15 minutes including figures/tables). Detailed Zipf–Mandelbrot material, cross-linguistic data, history, and extended applications move to zipf-law-deep-dive.qmd; exercises remain in the existing Zipf exercise page.
 - **Day 02 — Surprisal:** adds a context-sensitive worked example, the logits → softmax → probability → surprisal chain, sequence sum/average distinctions, an explicit entropy calculation, and guided experiments. The existing information-theory experiment remains the practical companion.
