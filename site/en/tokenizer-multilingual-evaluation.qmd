@@ -91,12 +91,23 @@ To compare two tokenizers:
 
 **Reading rule:** token count measures length under a given tokenizer; it does not directly measure linguistic quality, model quality, or total system cost.
 
-### Related work and resources
+### Thematic bibliography and complementary resources
 
-- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — earlier study of tokenization costs across languages.
-- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — linguistic variation and the role of the pre-tokenizer.
-- [TokLens — paper and resources](https://aclanthology.org/2026.acl-srw.18/) — inspect as a tool/method, checking its metrics and protocol.
-- [Catherine Arnett (2024), tokenizer-recycling community article](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling) — practitioner observations on tokenizer reuse and pre-tokenization; not a substitute for controlled research evidence.
+This bibliography brings together complementary references while distinguishing each work's question, contribution, and limitations. The study table remains the basis of the analysis; this list guides further reading without conflating different protocols.
+
+- **Cross-language representation cost — Ahia et al. (2023), [*Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/).** Question: do languages incur comparable tokenization costs? Contribution: compares 22 languages and discusses API implications. Limitation: the measured costs alone do not establish generation quality.
+
+- **Linguistic variation — Wegmann et al. (2025), [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/).** Question: how do within-language variations affect segmentation? Contribution: analyses linguistic variation and the role of the pre-tokenizer. Limitation: findings depend on the languages, phenomena, and tokenizers studied; they do not provide a universal ranking.
+
+- **Tokenizer choice during training — Ali et al. (2024), [*Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/).** Question: does tokenizer choice change training cost and downstream performance? Contribution: compares 24 configurations on English-only and multilingual corpora. Limitation: five European Latin-script languages, one seed, zero-shot evaluation, and no per-tokenizer hyperparameter search.
+
+- **Cross-lingual disparities — Arnett et al. (2025), [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html).** Question: why do tokenization costs differ across languages? Contribution: distinguishes differences among monolingual tokenizers from effects of a shared multilingual tokenizer and tests design factors. Limitation: the compression study does not establish downstream quality effects; CTC and token premium are not interchangeable with TokLens parity.
+
+- **Sequence length and runtime — Petrov et al. (2023), [*Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/).** Question: can segmentation differences create cross-language cost disparities? Contribution: relates tokenized length to runtime in the studied setup. Limitation: an experimental association, not a general causal law or direct measure of generation quality; figure provenance and licence are documented above.
+
+- **Multilingual measures — Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/).** Question: how can intrinsic metrics and their association with benchmarks be compared? Contribution: six metrics, 24 tokenizers, and 15 languages, with separate English and MMLU-ProX analyses. Limitation: observational associations, distinct samples, and whitespace-based metrics that do not capture linguistic word segmentation in Chinese, Japanese, and Thai.
+
+- **Practitioner perspective — Catherine Arnett (2024), [article on tokenizer recycling](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling).** Question: why can reusing a pretrained tokenizer without checking it penalize some texts? Contribution: practical examples involving pre-tokenization and fertility disparities. Limitation: a community article and practitioner observations, not a controlled benchmark.
 
 <!-- Legacy anchors: visual and mechanism resources now live on tokenization-strategies. -->
 <span id="recommended-visual-resources"></span>
