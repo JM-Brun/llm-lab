@@ -22,8 +22,6 @@ related: ["fr/text-data", "fr/corpus-preparation", "fr/training-examples", "fr/e
 tags: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-tokenization-and-tokenizers.qmd >}}
-
 # Par où approfondir la tokenisation ?
 
 Dans le parcours principal, [Du texte aux tokens](text-data.qmd) établit le contrat minimal : le texte est converti en tokens, puis en IDs compatibles avec le tokenizer associé aux poids du modèle. Cette page n'ajoute pas une étape obligatoire. Elle sert de **carte de navigation** lorsque l'on veut comprendre les choix qui se cachent derrière cette interface, construire un tokenizer ou évaluer ses conséquences.
