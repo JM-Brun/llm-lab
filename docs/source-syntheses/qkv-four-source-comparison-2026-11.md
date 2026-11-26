@@ -167,7 +167,57 @@ A new source should trigger a canonical change only when it adds a learner quest
 | New generic Q/K/V quiz | Not justified before learner evidence |
 | Third-party figure reuse | Not approved; inspection and rights unresolved |
 
-## 9. Related records
+## 9. Page-production workflow pilot — 2026-11-26
+
+This Q/K/V lesson pair is the first end-to-end application of the seven-stage page-production workflow. The pilot reuses the existing four-source comparison, complementary-perspectives synthesis, source reviews, extraction records, page pair, advanced deep dive, Practice companion and recent rendering evidence. It does not reopen source ingestion or create a new page/registry.
+
+### 9.1 Page blueprint
+
+| Blueprint dimension | Decision for the Q/K/V lesson |
+|---|---|
+| Learner problem | A learner can follow the Transformer overview but may still conflate the representations used to calculate attention weights with the representations whose content is aggregated. |
+| Learner value | Understanding this separation makes the attention calculation, parameter interventions, cross-attention and implementation trace intelligible. |
+| Observable outcomes | Explain the roles of Q, K and V; reconstruct the shared-input projections and their shapes; distinguish self-attention from cross-attention provenance; predict what can and cannot change under an isolated projection intervention. |
+| Scope / owner | The core Understand page owns the functional roles, shared-input projection rationale, block-input provenance and basic dimensions for self-attention. The scaled-dot-product-attention page owns the score, scaling, mask, softmax and weighted-sum derivation. |
+| Non-goals | Do not duplicate the full score/softmax derivation, advanced gradient geometry, multi-head variants, KV-cache behavior or implementation details owned by the advanced Q/K/V, attention and Transformer-block pages. |
+| Prerequisites / route | Transformer overview is the previous Understand page; scaled dot-product attention is next. Contextualized representations and tensor conventions are useful references, not additional mandatory route steps. |
+| Mathematical contract | For the shared block input $X\in\mathbb{R}^{T\times d_{model}}$, $Q=XW_Q$, $K=XW_K$, $V=XW_V$; $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Biases and post-projection positional transformations are stated as architecture-dependent qualifications. |
+| Worked-example decision | Do not force one end-to-end numerical trace into this lesson. Its role is to explain projection provenance and functional separation. The existing Q/K/V Practice companion already carries projection calculations and parameter-intervention tasks; numerical score/softmax/aggregation work belongs to the next lesson and its Practice resources. Keep linguistic examples explicitly illustrative, not empirical evidence about a trained head. |
+| Source synthesis | Retain the four-source comparison (Nishanthan, Neha KK, Codefinity, Brenndoerfer) and its complementary explanatory lenses. The Jose Parreño recommendation-system analogy remains a bounded optional intuition, not a new mechanism. Vaswani et al. remains the primary mechanism reference. |
+| Misconceptions / limits | Q/K are not universal semantic-similarity measures; dot product is not cosine similarity; attention is soft weighting, not hard nearest-neighbour lookup; weights alone are not causal explanations; a linguistic example does not prove that one head performs coreference; self-attention and cross-attention have different input provenance. |
+| Companions | Keep the dedicated Q/K/V Practice page for assessment and exercises; the advanced Q/K/V page for gradients and geometry; scaled attention for the numerical mechanism; Transformer-block walkthrough for implementation. No new flashcard set, concept node, route step or exercise page is justified. |
+| Validation evidence | Use source-level exercise checks, bilingual source review, the 25 November Chromium/browser review and published-artifact inspection. Keep manual accessibility/deployment and learner-effectiveness gates separate. |
+
+### 9.2 Seven-stage workflow evaluation
+
+| Stage | Evidence in this pilot | Result / remaining work |
+|---|---|---|
+| 1. Ingest | Four tutorial sources are recorded in the Q/K/V source collection; the Jose Parreño article has its own review. Primary Vaswani reference is linked. | Reuse existing records. The four tutorial scans remain partial where noted; do not imply that uninspected media were reviewed. |
+| 2. Model sources | Source records, extraction dossiers and source-local pedagogical models distinguish claims, teaching moves, evidence limits and asset status. | Sufficient for this page decision. Source-local nodes must not be promoted automatically into canonical concepts. |
+| 3. Synthesize | Four-source comparison and complementary-perspectives synthesis distinguish convergence, unique teaching value, contradictions and boundaries. | Sufficient. No new technical mechanism or additional canonical source synthesis is required. |
+| 4. Blueprint | The table above makes learner contract, scope, ownership, route, mathematical contract, example strategy and companions explicit. | Complete for this bounded revision. The blueprint belongs in this existing synthesis record; no standalone blueprint file is needed. |
+| 5. Write | The bilingual pages already contain the functional distinction, projection equations, dimensions, architecture qualifications, analogy boundaries and contextual examples. | Two targeted corrections are applied in this pilot: align the hidden `purpose` with the actual lesson outcomes, and explicitly state that Q/K/V are recomputed inside each block from that block's input states. |
+| 6. Derive companions | Dedicated Practice page, advanced Q/K/V deep dive, scaled-attention lesson and Transformer-block Build walkthrough already exist. | Preserve the current separation. The gradient exercise now exposes its focused deep-dive prerequisite; no new exercise is warranted. |
+| 7. Validate | #1649 records source-level exercise and arithmetic checks; #1619 records EN/FR desktop/mobile Chromium review; #1620 records published-artifact inspection. | These are distinct evidence types. #483 still tracks live deployment/manual keyboard, touch and screen-reader checks; #447 learner pilot remains gated. No learner-effectiveness claim is made. |
+
+### 9.3 Findings and decisions
+
+1. **Metadata contract:** the previous `purpose` described only a W_V intervention, while the page teaches the full role/projection distinction. The FR/EN purpose fields now describe the actual lesson outcome and retain parameter-intervention prediction as a transfer capability.
+2. **Computational placement:** the page already identified the block input and later contextualized states, but the repeated per-block computation was implicit. The new sentence makes explicit that Q/K/V are recomputed inside each attention sublayer from the current block input; they do not follow the final contextualized representations.
+3. **Page ownership:** keep the current division: Q/K/V projections and roles here; score → scale → mask → softmax → value aggregation in scaled dot-product attention; gradient paths and advanced variants in the deep dive; code trace in Build.
+4. **Evidence boundary:** recent browser and artifact reviews support rendering, localization, responsive layout and link structure for the inspected source tree. They do not establish manual assistive-technology coverage or learner mastery.
+5. **No graph or route change:** no stable new concept, typed semantic relation, computational node or guided-route step is justified by this pilot.
+
+### 9.4 Remaining work
+
+- Complete #483's live-host verification where possible, full keyboard traversal, touch-device review and manual screen-reader check of the diagrams.
+- Run the #447 learner pilot only after its accessibility/deployment gate is satisfied; measure the declared transfer outcomes rather than asking only for role recall.
+- Revisit the page only if learner evidence identifies a specific misconception not already covered by the current Practice tasks.
+- Keep the four-source scan limitations and third-party asset rights status visible; do not infer visual inspection or permission from a textual inventory.
+
+This pilot demonstrates the workflow's hand-offs and non-duplication decisions. It does not validate the workflow's effectiveness across all page archetypes; a second pilot should use a materially different page type, preferably a mathematical or implementation-heavy lesson.
+
+## 10. Related records
 
 - [Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 - [Pedagogical coverage matrix](qkv-pedagogical-coverage-matrix-2026-11.md)

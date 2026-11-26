@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/scaled-dot-product-attention"
 summary: "Déroule le calcul d’attention de bout en bout : compatibilité entre Q et K, mise à l’échelle, normalisation des scores et agrégation pondérée de V."
 scope: "Suit le calcul d’une ligne d’attention, de la comparaison Q–K aux valeurs pondérées."
-purpose: "Calculer une sortie d’attention sur un petit exemple et expliquer l’effet de la mise à l’échelle avant le softmax."
+purpose: "Expliquer et reconstruire le calcul d’une ligne d’attention — scores, mise à l’échelle, masque, softmax et agrégation — et justifier les dimensions et la normalisation des intermédiaires."
 suggested_route:
   previous: "fr/queries-keys-values"
   next: "fr/causal-masking"
@@ -75,7 +75,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Les scores bruts $S=QK^\top$, les scores mis à l’échelle $S'=S/\sqrt{d_k}$, les scores masqués $S''=S'+M$ et les poids $A=\operatorname{softmax}(S'')$ ont tous la forme $T\times T$, comme le masque facultatif $M$. Pour chaque requête, le [softmax](probabilites.qmd#des-logits-à-une-distribution-catégorielle) divise l’exponentielle du score de chaque clé accessible par la somme des exponentielles sur ces clés. Enfin, $O=AV$ est de forme $T\times d_v$.
+Les scores bruts $S=QK^\top$, les scores mis à l’échelle $S'=S/\sqrt{d_k}$, les scores masqués $S''=S'+M$ et les poids $A=\operatorname{softmax}(S'')$ ont tous la forme $T\times T$, comme le masque facultatif $M$. Avec la convention matricielle par lignes adoptée ici, la ligne $i$ correspond à la requête de la position $i$ et la colonne $j$ à la clé de la position $j$ : le softmax est appliqué sur l’axe des clés, indépendamment pour chaque requête. Pour chaque requête, le [softmax](probabilites.qmd#des-logits-à-une-distribution-catégorielle) divise l’exponentielle du score de chaque clé accessible par la somme des exponentielles sur ces clés. Enfin, $O=AV$ est de forme $T\times d_v$.
 
 Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Dans ce calcul, le masque additif s’applique aux scores mis à l’échelle **avant** le softmax. La leçon suivante, sur le [masque causal](causal-masking.qmd), explique comment construire ce masque et déduire les positions accessibles.
 
@@ -120,7 +120,7 @@ Le produit $O=AV$ prend les poids $A$ de forme $T\times T$ et les valeurs $V$ de
 
 Suivez la dernière position du préfixe. Son état d'entrée fournit la requête de cette ligne ; les positions de la séquence fournissent les clés et les valeurs. Le softmax de l'attention pondère ces **positions**. Le [softmax appliqué plus tard aux logits de sortie](exercises/logits.qmd#ex-attention-vocabulary-softmax) normalise les scores des **tokens du vocabulaire**. Dans l'atelier, essayez le cas où la cible suivante figure dans la séquence d'entraînement et où le [masque causal](causal-masking.qmd) bloque son accès.
 
-[Calculer les scores, les poids et la sortie pour une requête](exercises-attention.qmd#ex-attention-scores-to-output).
+[Calculer les scores, les poids et la sortie sur la page d’exercices dédiée](exercises/scaled-dot-product-attention.qmd#calcul-complet-scores-poids-sortie).
 
 {{< include ../includes/attention-intervention-fr.qmd >}}
 
