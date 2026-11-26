@@ -69,7 +69,7 @@ La préparation du corpus et l'entraînement du tokenizer relèvent du parcours 
 - **Comprendre les mécanismes** : partir de [Du texte aux tokens](text-data.qmd), puis lire [Stratégies de tokenisation](tokenization-strategies.qmd). Ouvrir Unicode lorsque les octets, les caractères ou la normalisation deviennent importants.
 - **Comprendre les différences entre chaînes et octets** : lire [Unicode, UTF-8 et normalisation](unicode-text.qmd), puis revenir aux stratégies pour suivre leurs effets sur la segmentation.
 - **Évaluer un choix de tokenizer** : comprendre les mécanismes dans [Stratégies de tokenisation](tokenization-strategies.qmd), puis construire une comparaison dans [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd).
-- **Préparer un entraînement** : suivre le parcours [Build](build-path), en particulier [Préparation du corpus](corpus-preparation.qmd), puis [Exemples d'entraînement](training-examples.qmd).
+- **Préparer un entraînement** : suivre le parcours [Build](build-path.qmd), en particulier [Préparation du corpus](corpus-preparation.qmd), puis [Exemples d'entraînement](training-examples.qmd).
 
 Ces itinéraires sont des suggestions, pas une séquence universelle. Le choix dépend de la question posée et des connaissances déjà acquises.
 
