@@ -9,7 +9,7 @@ on:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
   pull-requests: read
 
 concurrency:
@@ -336,33 +336,6 @@ jobs:
       - name: Generate learning-map data and guided-route Markdown
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_learning_map == 'true')))
         run: .venv/bin/python site/tools/build_learning_map.py
-
-      # TEMPORARY: regenerate and commit the canonical map artifacts on the PR branch.
-      - name: Commit canonical learning-map artifacts
-        if: github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git fetch origin "$PR_HEAD_REF"
-          worktree="$RUNNER_TEMP/llm-lab-pr-head"
-          git worktree add "$worktree" FETCH_HEAD
-          git config --global --add safe.directory "$worktree"
-          "$GITHUB_WORKSPACE/.venv/bin/python" "$worktree/site/tools/build_learning_map.py"
-          git -C "$worktree" add \
-            site/includes/generated-map-data-fr.qmd \
-            site/includes/generated-map-data-en.qmd \
-            site/includes/generated-map-list-fr.qmd \
-            site/includes/generated-map-list-en.qmd
-          if git -C "$worktree" diff --cached --quiet; then
-            echo "Canonical map artifacts already match the generator."
-          else
-            git -C "$worktree" config user.name "github-actions[bot]"
-            git -C "$worktree" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git -C "$worktree" commit -m "fix: regenerate canonical learning map artifacts"
-            git -C "$worktree" push origin "HEAD:refs/heads/$PR_HEAD_REF"
-          fi
 
       - name: Generate bilingual computational-graph fragments
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_computational_graph == 'true')))
