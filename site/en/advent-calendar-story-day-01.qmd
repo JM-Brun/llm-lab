@@ -186,7 +186,7 @@ $$
 p_\theta(x_t\mid x_{<t}).
 $$
 
-Consider the prefix “The capital of France is…”. The model computes a distribution over the next token; the probability of the continuation that spells “Paris” depends on this prefix and on the tokenizer’s segmentation. It cannot be read from the overall frequency of “Paris” in a corpus. A form that is rare across texts can therefore be a highly probable continuation in a particular context.
+Consider the prefix “The capital of France is…”. The model computes a distribution over the next token; the probability of the continuation that spells “Paris” depends on this prefix and on the tokenizer’s segmentation. It cannot be read from the overall frequency of “Paris” in a corpus.
 
 A token that is rare across the corpus may be highly probable after a particular prefix. Conversely, a globally frequent token may be unlikely in that context. These distributions answer different questions.
 
