@@ -229,18 +229,14 @@ Zipf’s law describes a frequent regularity in lexical-frequency distributions:
 - The [text-data lesson](text-data.qmd) introduces the representations and units handled in the LLM pipeline.
 - The [tokenization lesson](tokenization-strategies.qmd) explains how a string is split into model tokens.
 
-### Sources
+### Essential sources
 
-- Estoup, J.-B. (1916), *Gammes sténographiques*, Institut sténographique de France — historical landmark for the observation of the rank-frequency relation.
-- Zipf, G. K. (1935), *The Psycho-Biology of Language* — formulation and dissemination of lexical-frequency analysis.
-- Zipf, G. K. (1949), *Human Behavior and the Principle of Least Effort* — book that widely popularized this regularity.
-- Mandelbrot, B. (1953), “An informational theory of the statistical structure of language” — generalization of the rank-frequency relation.
-- Petruszewycz, M. (1973), [*L'histoire de la loi d'Estoup-Zipf : documents*](https://www.numdam.org/item/MSH_1973__44__41_0/) — documentary landmarks on the law’s origins.
-- Piantadosi, S. T. (2014), [*Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — critical review of regularities, estimation methods and proposed explanations.
-- Lavi-Rotbain, O. and Arnon, I. (2023), [*Zipfian Distributions in Child-Directed Speech*](https://doi.org/10.1162/opmi_a_00070) — multilingual study of frequencies in child-directed speech.
-- Linders, G. M. and Louwerse, M. M. (2023), [*Zipf’s law revisited: Spoken dialog, linguistic units, parameters, and the principle of least effort*](https://doi.org/10.3758/s13423-022-02142-9) — extends the analysis to conversation and multiple linguistic units.
-- He, Y., Zeng, Q. and Jiang, M. (2025), [*Pre-trained Models Perform the Best When Token Distributions Follow Zipf’s Law*](https://aclanthology.org/2025.emnlp-main.1421/) — recent study of the link between token distributions, vocabulary size and performance.
+- Zipf, G. K. (1935), *The Psycho-Biology of Language* — formulation and dissemination of lexical frequency analysis.
+- Mandelbrot, B. (1953), “An informational theory of the statistical structure of language” — extension of the rank-frequency relation.
+- Piantadosi, S. T. (2014), [*Zipf’s word frequency law in natural language: A critical review and future directions*](https://doi.org/10.3758/S13423-014-0585-6) — critical review of regularities and estimation methods.
+- Lavi-Rotbain, O. and Arnon, I. (2023), [*Zipfian Distributions in Child-Directed Speech*](https://doi.org/10.1162/opmi_a_00070) — multilingual study used in the comparison.
 
+Historical bibliography and additional studies are collected in the [Zipf's law deep dive](zipf-law-deep-dive.qmd#sources).
 [Back to the Advent Calendar](scientific-calendar.qmd).
 
 ::: {.language-switch}
