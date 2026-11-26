@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/scaled-dot-product-attention"
 summary: "Follows attention computation end to end: Q–K compatibility, score scaling, normalization, and weighted aggregation of V."
 scope: "Traces one attention row from Q–K comparisons to a weighted combination of values."
-purpose: "Compute an attention output on a small example and explain what scaling does before softmax."
+purpose: "Explain and reconstruct one attention row — scores, scaling, masking, softmax, and aggregation — and justify the shapes and normalization of its intermediate quantities."
 suggested_route:
   previous: "en/queries-keys-values"
   next: "en/causal-masking"
@@ -75,7 +75,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-The raw scores $S=QK^\top$, the scaled scores $S'=S/\sqrt{d_k}$, the masked scores $S''=S'+M$ and the weights $A=\operatorname{softmax}(S'')$ all have shape $T\times T$, as does the optional mask $M$. For each query, [softmax](probabilities.qmd#from-logits-to-a-categorical-distribution) divides the exponential of each accessible key’s score by the sum of the exponentials over those keys. Finally, $O=AV$ has shape $T\times d_v$.
+The raw scores $S=QK^\top$, the scaled scores $S'=S/\sqrt{d_k}$, the masked scores $S''=S'+M$ and the weights $A=\operatorname{softmax}(S'')$ all have shape $T\times T$, as does the optional mask $M$. With the row-oriented matrix convention used here, row $i$ corresponds to the query at position $i$ and column $j$ to the key at position $j$: softmax is applied along the key axis, independently for each query. For each query, [softmax](probabilities.qmd#from-logits-to-a-categorical-distribution) divides the exponential of each accessible key’s score by the sum of the exponentials over those keys. Finally, $O=AV$ has shape $T\times d_v$.
 
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). In this computation, the additive mask is applied to scaled scores **before** softmax. The next lesson, on [causal masking](causal-masking.qmd), explains how to construct the mask and identify accessible positions.
 
@@ -120,7 +120,7 @@ The product $O=AV$ takes weights $A$ of shape $T\times T$ and values $V$ of shap
 
 Follow the final position of the prefix. Its input state supplies the query for this row; the sequence positions supply the keys and values. Attention softmax weights these **positions**. Later, the [softmax applied to the output logits](exercises/logits.qmd#ex-attention-vocabulary-softmax) normalizes scores over **vocabulary tokens**. In the workshop, try the case where the training sequence includes the next target and the [causal mask](causal-masking.qmd) blocks access to it.
 
-[Compute the scores, weights, and output for one query](exercises-attention.qmd#ex-attention-scores-to-output).
+[Compute the scores, weights, and output on the dedicated practice page](exercises/scaled-dot-product-attention.qmd#full-calculation-scores-weights-output).
 
 {{< include ../includes/attention-intervention-en.qmd >}}
 
