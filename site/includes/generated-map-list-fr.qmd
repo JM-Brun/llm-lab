@@ -75,49 +75,49 @@
   - [Explorer et comparer des Transformers](transformer-explainer.html)
   - [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)
 - **Approfondir**
-  - Attention, position et architectures
-    - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
-    - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.html)
-    - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.html)
-    - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
-    - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
-    - [Architectures multimodales : comprendre et générer](multimodal-architectures.html)
-    - [RoPE : géométrie, dérivation et limites](rope.html)
-    - [Encodages positionnels sinusoïdaux : fréquences, géométrie et limites](sinusoidal-positional-encoding.html)
-    - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
-    - [Next-Concept Modeling : générer par niveaux de représentation](next-concept-modeling.html)
-  - Texte et tokenisation
-    - Tokenisation et tokenizers
-      - [Tokenisation et tokenizers : carte du domaine](tokenization-and-tokenizers.html)
-      - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
-      - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
-      - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
-      - [Évaluer les tokenizers : coûts, performances et équité multilingue](tokenizer-multilingual-evaluation.html)
+  - Modélisation du langage
+    - Attention, position et architectures
+      - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
+      - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.html)
+      - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.html)
+      - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
+      - [Architectures multimodales : comprendre et générer](multimodal-architectures.html)
+      - [RoPE : géométrie, dérivation et limites](rope.html)
+      - [Encodages positionnels sinusoïdaux : fréquences, géométrie et limites](sinusoidal-positional-encoding.html)
+      - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
+      - [Next-Concept Modeling : générer par niveaux de représentation](next-concept-modeling.html)
+    - Texte, corpus et tokenisation
+      - Tokenisation et tokenizers
+        - [Tokenisation et tokenizers : carte du domaine](tokenization-and-tokenizers.html)
+        - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
+        - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
+        - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
+        - [Évaluer les tokenizers : coûts, performances et équité multilingue](tokenizer-multilingual-evaluation.html)
+      - Statistiques du langage
+        - [Pourquoi le mot « je » revient-il si souvent ?](advent-calendar-story-day-01.html)
+        - [Au-delà de la loi de Zipf : données, usages et limites](zipf-law-deep-dive.html)
+    - Formalisation probabiliste et chaîne de l’entraînement
+      - [Combien de bits contient la surprise d’un événement ?](surprisal-information-content.html)
+      - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.html)
+      - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
+      - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
+    - Inférence et efficacité
+      - [Stratégies avancées de décodage](decoding-strategies.html)
+      - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
+      - [Fiche de révision — Compression et LLM](compression-revision.html)
+      - [RAG, mémoire et transmission au contexte](rag-memory-boundaries.html)
+      - [Récupération documentaire : indexer, retrouver, classer](document-retrieval.html)
+    - Échelle et questions de recherche
+      - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
+      - [Émergence des capacités : que change l’échelle ?](emergence.html)
+      - [De GPT-2 aux systèmes LLM contemporains](llm-evolution.html)
+      - [Des observations partagées aux représentations partagées : JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.html)
   - Outils mathématiques et géométrie
     - [Embeddings : des représentations vectorielles aux espaces de recherche](embeddings-deep-dive.html)
     - [Tenseurs dans un Transformer : formes et axes](tensors.html)
     - [La similarité cosinus mesure-t-elle la similarité sémantique ?](cosine-similarity.html)
     - [L'hypothèse de linéarité dans les espaces de représentations](linearite-embeddings.html)
-  - Formalisation probabiliste et chaîne de l’entraînement
-    - [Combien de bits contient la surprise d’un événement ?](surprisal-information-content.html)
-    - [Au-delà de la loi de Zipf : données, usages et limites](zipf-law-deep-dive.html)
-    - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.html)
-    - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
     - [Complexité de Kolmogorov, AIXI et limites du calcul](universal-artificial-intelligence.html)
-    - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
-    - [D'un modèle de base à un assistant : le post-entraînement](post-training.html)
-  - Inférence et efficacité
-    - [Stratégies avancées de décodage](decoding-strategies.html)
-    - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
-    - [Fiche de révision — Compression et LLM](compression-revision.html)
-    - [RAG, mémoire et transmission au contexte](rag-memory-boundaries.html)
-    - [Récupération documentaire : indexer, retrouver, classer](document-retrieval.html)
-  - Échelle et questions de recherche
-    - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
-    - [Émergence des capacités : que change l’échelle ?](emergence.html)
-    - [Objectif d'entraînement : garanties et limites](llm-limits.html)
-    - [De GPT-2 aux systèmes LLM contemporains](llm-evolution.html)
-    - [Des observations partagées aux représentations partagées : JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.html)
   - [Carte des approfondissements](deepen.html)
 - **Glossaire et histoire**
   - [Glossaire des LLM et des Transformers](glossary.html)
