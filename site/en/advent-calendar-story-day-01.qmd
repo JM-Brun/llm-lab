@@ -166,7 +166,7 @@ The rank-frequency relation is not limited to English or French. Lavi-Rotbain an
 
 The estimated parameters vary across languages and corpora. They also depend on sample size, the linguistic unit, and counting conventions. These findings illustrate a cross-linguistic regularity in a specific empirical setting; they do not rank languages by their supposed “compliance with Zipf”.
 
-For the data, parameter estimates, and comparison caveats, see [the multilingual observations and Zipf-Mandelbrot deep dive](zipf-law-deep-dive.qmd#what-do-we-observe-across-languages).
+For the data, parameter estimates, and comparison caveats, see [the multilingual observations and Zipf-Mandelbrot deep dive](zipf-law-deep-dive.qmd#cross-linguistic-observations).
 
 ## 4. Why does this regularity matter for language science and LLMs?
 
