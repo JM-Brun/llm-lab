@@ -1,7 +1,7 @@
 ---
 title: "Why does the word “I” appear so often?"
-subtitle: "Zipf’s law and word distributions across languages"
-description-meta: "Build a corpus, distinguish types from occurrences, explore Zipf’s law, its history, uses and limitations."
+subtitle: "From lexical frequencies to a statistical regularity"
+description-meta: "Build a small corpus, read a rank–frequency relation, and understand what it does—and does not—allow us to conclude."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
@@ -32,7 +32,7 @@ This is authoring metadata; it is intentionally not rendered to readers.
 
 *LLM Lab Advent Calendar 2026 · Door 1 · about 15 minutes*
 
-This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its words, and then compare the exercise with real linguistic corpora.
+This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its forms, and place the result alongside observations from much larger linguistic corpora.
 
 > **Prerequisites** — no prior knowledge of quantitative linguistics is needed. Corpus, type and occurrence are introduced here; logarithms are recalled when they become useful.
 
@@ -180,7 +180,7 @@ Zipf is primarily a **descriptive model**. It helps characterize frequency distr
 
 - **Corpora:** the rank-frequency curve describes how forms are concentrated and how long the rare-form tail is. A deviation does not prove that a corpus is defective.
 - **Information retrieval:** term frequencies affect indexing and ranking. TF-IDF and BM25 use these statistics through their own mechanisms; they do not calculate Zipf's law.
-- **Language models:** frequent units provide more observations than rare ones. Tokenization redistributes this long tail between words and subwords, but BPE is not derived from Zipf's formula.
+- **Language models:** with the corpus and tokenizer held fixed, frequent units provide more opportunities for observation during training than rare ones. This describes a difference in exposure, not a guarantee of better representations or better performance. After tokenization, model units do not necessarily coincide with the lexical forms counted here. BPE is not derived from Zipf's formula.
 
 One distinction is essential. Zipf describes a **marginal frequency** in a corpus: how often a form appears across all contexts. An autoregressive model estimates a **context-conditional probability**:
 
