@@ -146,6 +146,39 @@ $h_t^{(0)}$ désigne l'entrée initiale à la position $t$. Chaque bloc produit 
 
 Le vecteur n'est pas remplacé par une étiquette de sens. Il est transformé par des opérations apprises qui intègrent progressivement l'information autorisée par l'architecture et le masque.
 
+## 6. Ce que les études empiriques permettent d'affirmer
+
+Les études sur les représentations contextualisées apportent des éléments complémentaires, mais elles ne mesurent pas toutes le même objet et ne portent pas sur la même architecture.
+
+### Des représentations dépendantes de la séquence avant les Transformers
+
+Peters et al. (2018) introduisent ELMo (*Embeddings from Language Models*), dont les représentations de mots sont des fonctions apprises des états internes d'un modèle de langue bidirectionnel à LSTM. Le travail établit l'intérêt de représentations sensibles au contexte avant l'adoption des Transformers. Il ne décrit donc pas le mécanisme d'auto-attention d'un GPT.
+
+### Une mesure de la contextualité et ses limites géométriques
+
+Ethayarajh (2019) étudie ELMo, BERT et GPT-2. Dans les configurations étudiées, les représentations du même mot dans des contextes différents restent en moyenne plus proches entre elles que celles de mots différents, mais cette auto-similarité diminue dans les couches supérieures. L'auteur rapporte également qu'en moyenne moins de 5 % de la variance des représentations contextualisées est expliquée par une représentation statique du mot.
+
+Deux précautions sont essentielles :
+
+- ce résultat est une mesure agrégée sur les modèles, couches et données étudiés en 2019 ; ce n'est pas une constante universelle applicable à tout LLM ;
+- les représentations sont anisotropes : une similarité cosinus élevée entre deux vecteurs ne suffit donc pas à établir qu'ils portent le même sens.
+
+La mesure confirme que le contexte contribue fortement aux représentations observées dans ces modèles ; elle ne prouve pas que chaque sens humain corresponde à une région géométrique distincte.
+
+### Des informations linguistiques réparties entre les couches
+
+Tenney, Das et Pavlick (2019) utilisent des tâches de *probing* pour étudier où certaines informations linguistiques sont accessibles dans BERT. Ils observent, en moyenne, une progression allant des catégories grammaticales vers la syntaxe, les entités nommées, les rôles sémantiques et la coréférence. Leur analyse qualitative montre toutefois que le modèle peut réviser des décisions de niveau inférieur à la lumière d'informations contextuelles plus élevées.
+
+Un résultat de *probing* indique qu'une information est décodable depuis une représentation avec un protocole donné. Il ne démontre pas, à lui seul, que le modèle utilise cette information comme un humain, qu'une couche possède une fonction exclusive, ou qu'une tête donnée réalise une opération linguistique identifiable.
+
+**À retenir :** les états sont bien dépendants du contexte dans les modèles étudiés, mais leur contenu, leur géométrie et leur organisation entre couches dépendent de l'architecture, de l'objectif d'entraînement, du modèle et de la méthode de mesure.
+
+Références primaires :
+
+- Peters et al. (2018), [*Deep Contextualized Word Representations*](https://aclanthology.org/N18-1202/).
+- Ethayarajh (2019), [*How Contextual are Contextualized Word Representations?*](https://aclanthology.org/D19-1006/).
+- Tenney, Das et Pavlick (2019), [*BERT Rediscovers the Classical NLP Pipeline*](https://aclanthology.org/P19-1452/).
+
 ## Limites de cette formalisation
 
 - Les états cachés sont des vecteurs appris ; cette notation ne leur attribue pas une interprétation sémantique unique.
