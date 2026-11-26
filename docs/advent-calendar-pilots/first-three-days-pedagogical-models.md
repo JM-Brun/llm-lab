@@ -161,20 +161,44 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 
 **Question directrice.** Quel compromis existe entre taille du vocabulaire et longueur des séquences, et dans quelles conditions peut-on parler de compression ?
 
-**Intention pédagogique.** Partir d'un même texte et d'un même budget de données, comparer des segmentations reproductibles, puis montrer pourquoi la longueur en tokens est un indicateur utile mais insuffisant pour choisir un tokenizer.
+**Intention pédagogique.** Faire émerger un compromis à partir d'une décision concrète : deux tokenizers représentent les mêmes textes avec des longueurs différentes, mais la longueur seule ne suffit pas à choisir. La page doit conduire du problème à une comparaison reproductible, sans transformer le récit en catalogue d'algorithmes.
+
+**Progression actuellement observée dans la page (avant révision).**
+
+| Ordre actuel | Idées / notions | Fonction actuelle |
+|---|---|---|
+| 1. Mécanismes détaillés | WordPiece, score de paires, plus-long-match, Unigramme, Viterbi | Comparer les mécanismes de segmentation ; la page Stratégies de tokenisation porte déjà l'introduction générale |
+| 2. Taille et budget | taille du vocabulaire, matrice d'embedding, projection de sortie, tokens vs époques | Montrer le compromis entre séquence et coût du modèle |
+| 3. Protocole | corpus, versions, normalisation, tokens spéciaux, langues, qualité, latence et mémoire | Définir une comparaison reproductible |
+| 4. Mesures | nombre de tokens, fertilité, caractères/octets par token, couverture, qualité aval | Éviter de réduire la décision à une métrique |
+| 5. Évaluation empirique | études comparatives, équité multilingue, variation linguistique, limites des résultats | Contextualiser les preuves et leurs dénominateurs |
+| 6. Ressources | travaux, figures, vidéo, documentation et code | Donner des pistes facultatives après l'argument principal |
+
+**Progression narrative cible pour la porte.**
 
 | Étape | Idées / notions | Fonction dans le raisonnement |
 |---|---|---|
-| 1. Problème concret | texte, budget de contexte, coût de représentation | Faire apparaître le compromis à mesurer |
-| 2. Représentation | Unicode, points de code, UTF-8, octets, alphabet de base | Comprendre ce que le tokenizer reçoit et les unités possibles |
-| 3. Pipeline | normalisation, pré-tokenisation, modèle, post-traitement | Rendre visibles les décisions qui bornent la segmentation |
-| 4. Construction | vocabulaire, fréquence de paires, fusions BPE, alternatives WordPiece/Unigram | Expliquer les mécanismes seulement lorsqu'ils éclairent le compromis |
-| 5. Encodage | segmentation, séquence d'IDs, décodage | Relier le vocabulaire appris à la représentation du texte |
-| 6. Mesure intrinsèque | nombre de tokens, taux de compression, taille de vocabulaire | Définir les unités de comparaison et les métriques |
-| 7. Coûts système | matrice d'embedding/output, mémoire, calcul, budget de contexte | Montrer que moins de tokens n'est pas un gain gratuit |
-| 8. Évaluation extrinsèque | qualité en aval, tâche, taille de modèle, budget d'entraînement | Séparer compression et performance |
-| 9. Dimension multilingue | langue, script, normalisation, équité, coût par langue | Éviter une moyenne globale qui masque des écarts |
-| 10. Décision | protocole contrôlé, limites et reproductibilité | Conclure qu'il n'existe pas de meilleur tokenizer indépendamment de l'objectif |
+| 1. Décision concrète | même corpus, deux segmentations, budget de contexte | Faire apparaître la tentation « moins de tokens = meilleur » |
+| 2. Mesure juste | texte identique, normalisation, versions, dénominateur | Définir ce qui peut être comparé |
+| 3. Pourquoi les résultats diffèrent | pipeline, vocabulaire, BPE/WordPiece/Unigramme | Expliquer les mécanismes à partir des différences observées |
+| 4. Coûts couplés | longueur, taille du vocabulaire, embeddings, sortie, calcul | Montrer que le gain local peut déplacer le coût |
+| 5. Évaluation | qualité aval, langues, scripts, tâches et budgets | Distinguer efficacité intrinsèque et utilité réelle |
+| 6. Décision bornée | protocole, incertitude, reproductibilité, limites | Conclure selon un objectif explicite, pas par classement universel |
+
+Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers les pages canoniques lorsque leur rappel n'est pas nécessaire à l'argument ; ils ne sont pas enseignés en détail dans cette page Deepen.
+
+**Relations principales :**
+
+- normalisation et pré-tokenisation contraignent les unités candidates ;
+- l'algorithme d'apprentissage construit un vocabulaire et des règles/paramètres de segmentation ;
+- l'encodage transforme un texte en séquence d'IDs ;
+- taille du vocabulaire et longueur de séquence ont des effets distincts sur les coûts ;
+- compression, mémoire, calcul et qualité en aval sont des axes distincts ;
+- les résultats dépendent du corpus, de la langue, du tokenizer, du modèle, du budget et de la tâche.
+
+**Résultat attendu.** Le lecteur peut concevoir une comparaison contrôlée, expliquer pourquoi les longueurs diffèrent et interpréter le compromis sans assimiler compression et qualité.
+
+**Décision éditoriale.** Conserver `tokenizer-design-evaluation` comme page canonique de la porte 03 : elle contient déjà le protocole, les études et les mécanismes avancés nécessaires. Ne pas créer une seconde leçon calendrier. En revanche, l'ordre actuel commence trop tôt par les détails WordPiece/Unigramme ; l'ouverture narrative ajoutée dans la PR #1693 met désormais en scène le compromis avant la matière technique. La suite doit vérifier le flux argumentatif complet et, si nécessaire, déplacer le bloc mécanistique après l'introduction du problème et des coûts.
 
 **Relations principales :**
 
