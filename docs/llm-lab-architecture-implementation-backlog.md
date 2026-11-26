@@ -65,6 +65,22 @@ The distinction is intentional:
 
 No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. The existing page-based `revision_role`/`revision_of` contract and generated Review route remain revision semantics within the Main learning path; `review` is not a page `destination` value.
 
+## 1.3 Epistemic and pedagogical entity classification — 2026-11-26
+
+The shared-foundation inventory now separates the following roles rather than treating them as interchangeable record types:
+
+- **Concept / notion:** durable, reusable referent owned by `data/concepts.yml`; “notion” is a prose synonym.
+- **Idea:** informal umbrella term, not a canonical record kind. Resolve it into a concept, claim, mechanism, derivation, pedagogical contribution, open question, or another explicit extraction kind.
+- **Intuition / mental model / analogy:** source-local pedagogical contribution, retained in extraction items and source-local pedagogical models; it is not automatically a concept, claim or evidence.
+- **Claim:** attributed proposition retained as a source-scoped extraction item with locator, scope, voice/provenance where needed, evidence fields and separate verification. No general-purpose canonical claim registry is established.
+- **Evidence:** material grounding or challenging a claim, retained with type, locator, confidence, scope and provenance. It is distinct from the claim, and citation is not corroboration.
+- **Relation:** family-owned typed assertion between identified endpoints. Concept, page, source-local, source-lineage, route, computation, Build, revision and Practice relations keep distinct semantics; no universal edge registry.
+- **Pedagogical objective / outcome:** owned by the relevant experience or source reconstruction. Understand objectives/outcomes live in the guided route, Build goals/evidence in the Build path, and source-local outcomes retain `declared`/`inferred` status. None proves learner mastery.
+
+[PR #1712](https://github.com/JM-Brun/llm-lab/pull/1712) consolidates this classification in `docs/knowledge-architecture-interoperability.md`. The architecture table was aligned in this branch to separate extracted claims from evidence and to avoid assigning aliases/provenance fields to the current concept schema.
+
+**No new registry or schema is justified by this classification.** Remaining specialist boundaries stay with #512 (claim provenance/interoperability), #1233 (typed cross-graph bridges), #416 (concept relation semantics), #1541 (revision route), #1512 (Practice), and #78 (Build). Reconcile the handoff after #1712 is reviewed; do not create duplicate tasks or promote source-local records automatically.
+
 ## 2. Priority summary
 
 | Priority | Workstream | Outcome |
