@@ -382,4 +382,6 @@ The route does not pass merely because every page contains an image. It passes w
 
 ## Applied audit records
 
+- [Understand route visual audit status (2026-11-26)](understand-route-visual-audit-status-2026-11-26.md): consolidated 20-page coverage matrix, applied PRs and closure criteria.
+
 - [Fourth Understand visual audit pilot (2026-11-26)](visual-audit-fourth-pilot-2026-11-26.md): logits, probabilities, entropy, generation and in-context learning.
