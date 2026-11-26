@@ -28,22 +28,22 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 ## Une surprise n'est pas une émotion
 
-Après le préfixe « La capitale de la France est… », imaginons qu'un modèle attribue les probabilités suivantes aux continuations possibles. Ces nombres sont **construits pour l'explication** : ils ne proviennent pas d'un modèle réel.
+Après le préfixe « La capitale de la France est… », imaginons qu'un modèle attribue les probabilités suivantes aux continuations possibles. Ces nombres sont **construits pour l'explication** : ils ne proviennent pas d'un modèle réel. Dans ce vocabulaire jouet, chaque étiquette représente exactement un token ; un tokenizer réel peut découper ces chaînes autrement.
 
 | Token candidat | Probabilité prédite |
 |---|---:|
 | `Paris` | $0{,}80$ |
 | `Lyon` | $0{,}10$ |
 | `Marseille` | $0{,}05$ |
-| Autre token | $0{,}05$ |
+| `Lille` | $0{,}05$ |
 
-![Distribution prédictive illustrative : Paris reçoit 80 % de la probabilité, Lyon 10 %, Marseille et les autres tokens 5 % chacun. La cible observée Lyon a un surprisal de 3,32 bits, tandis que l'entropie de la distribution vaut environ 1,02 bit.](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution width=95%}
+![Distribution prédictive illustrative : Paris reçoit 80 % de la probabilité, Lyon 10 %, Marseille et Lille 5 % chacun. La cible observée Lyon a un surprisal de 3,32 bits, tandis que l'entropie de la distribution vaut environ 1,02 bit.](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution width=95%}
 
 Supposons que le texte observé continue pourtant par `Lyon`. Le modèle avait attribué à ce token une probabilité de $0{,}10$. Son surprisal vaut :
 
-$
+$$
 I(\text{Lyon}\mid c)=-\log_2(0{,}10)\approx 3{,}32\text{ bits}.
-$
+$$
 
 Ce nombre décrit **l'issue qui s'est produite**. Il ne décrit pas, à lui seul, l'incertitude moyenne de la distribution avant de connaître l'issue. Cette seconde question est celle de l'entropie, que nous calculerons plus loin.
 
