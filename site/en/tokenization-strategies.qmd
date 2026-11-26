@@ -306,7 +306,7 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 
 ### Visualizing merges and the pipeline
 
-- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): follow candidate pairs and merges on a small corpus.
+- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): follow candidate pairs and merges on a small corpus. The resource is linked rather than copied; reuse terms for its figures have not been established here.
 - [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): structured explanation of BPE training.
 - [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
 - [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): a progression from Unicode and UTF-8 to BPE, whitespace, and special tokens.
@@ -328,7 +328,7 @@ These are navigation aids, not a substitute for checking implementation details 
 ### Educational code and suggested reading order
 
 1. Watch the relevant parts of Karpathy's video on Unicode, merges, pre-tokenization, and special tokens.
-2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
+2. Follow merges with the visualizer listed above.
 3. Inspect the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) or [minbpe](https://github.com/karpathy/minbpe); these make mechanisms inspectable but are not interchangeable with production paths.
 4. Compare conventions in the documentation for [tiktoken](https://github.com/openai/tiktoken), [SentencePiece](https://github.com/google/sentencepiece), and [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index).
 5. Return to [Raschka's Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2) and its [associated code](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect tokenization, IDs, and training-example preparation.
@@ -339,11 +339,9 @@ These are navigation aids, not a substitute for checking implementation details 
 
 The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
 
-## External tools
+<span id="external-tools"></span>
 
-- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
-- [SentencePiece](https://github.com/google/sentencepiece)
-- [tiktoken](https://github.com/openai/tiktoken)
+The Hugging Face Tokenizers, SentencePiece, and tiktoken documentation links are grouped in the [mechanism and implementation resources](#mechanism-resources-and-implementations).
 
 
 
