@@ -155,9 +155,7 @@ The next lessons examine separately the objects this page has just distinguished
 
 
 
-### Two uses, two paths {#two-uses-two-paths}
-
-At inference, the tokenizer is already fixed with the model and encodes the prompt. To build a model, [corpus preparation](corpus-preparation.qmd) documents the data and split protocol; [training examples](training-examples.qmd) then show how the ID stream becomes windows, shifted targets, and masks. These are Build-path steps, distinct from encoding a request.
+<span id="two-uses-two-paths"></span>
 
 ### Further reading {#boundaries-between-pages}
 
