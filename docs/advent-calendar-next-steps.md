@@ -8,6 +8,20 @@
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
 
+
+
+## 2026-11-26 — first-three-story duration and redistribution pass
+
+The editorial contract now targets **about 15 minutes per story**, with 10–20 minutes accepted only when the subject justifies the deviation. This supersedes the former 10-minute target. The story itself should retain the central question, essential reasoning, a coherent worked example, and a conclusion. Optional derivations, research surveys, historical context, implementation caveats, and resource catalogues should move to an existing canonical page or a focused companion; exercises remain on dedicated practice pages. Prefer redistribution to deletion and preserve citations, figures, anchors, and navigation.
+
+A follow-up implementation is being prepared in the successor PR (link to be added). It redistributes the first three stories in FR/EN:
+
+- **Day 01 — Zipf:** the main story is approximately 2,600 words in French (about 15 minutes including figures/tables). Detailed Zipf–Mandelbrot material, cross-linguistic data, history, and extended applications move to zipf-law-deep-dive.qmd; exercises remain in the existing Zipf exercise page.
+- **Day 02 — Surprisal:** adds a context-sensitive worked example, the logits → softmax → probability → surprisal chain, sequence sum/average distinctions, an explicit entropy calculation, and guided experiments. The existing information-theory experiment remains the practical companion.
+- **Day 03 — Tokenizer:** keeps the core vocabulary/sequence/cost decision in the story and adds a worked cost comparison. Research tables, multilingual metrics, and external resources move to tokenizer-multilingual-evaluation.qmd. Detailed WordPiece/Unigram mechanisms are integrated into the existing tokenization-strategies.qmd rather than duplicated.
+
+The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target. Quarto rendering, browser inspection, and novice-reader timing still need to be run before acceptance.
+
 ## 1. Current state — verified (updated 2026-11-24)
 
 ### Completed
