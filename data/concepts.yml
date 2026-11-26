@@ -8,7 +8,7 @@ concepts:
       fr: "Unité discrète produite par la tokenisation et consommée par le modèle."
       en: "Discrete unit produced by tokenization and consumed by the model."
     domains: [text-tokenization]
-    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation, fr/tokenizer-multilingual-evaluation, en/tokenizer-multilingual-evaluation]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
   - id: token-embedding
     importance: core
     labels: {fr: "Plongement initial du token", en: "Initial token embedding"}
