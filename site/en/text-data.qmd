@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/text-data"
-summary: "Traces the transformation from source text to the discrete context supplied to the model: preprocessing, tokens, IDs, and embedding lookup. Distinguishes prompt encoding from training-corpus preparation."
-scope: "Turns text into tokens and then IDs. Locates lookup at the handoff from tokenization to the network."
-purpose: "Trace how text becomes IDs and explain why the number and identity of its tokens depend on the tokenizer."
+summary: "Follows an occurrence from text to its token ID and the initial vector selected from the embedding table. Locates tokenization in the input pipeline without detailing its algorithms."
+scope: "Covers the path from text to tokens, tokens to IDs, and IDs to embedding lookup. Distinguishes prompt encoding from corpus preparation; segmentation algorithms belong to the dedicated deep dive."
+purpose: "Explain the text → tokens → IDs → initial vectors chain, and identify what depends on the tokenizer rather than on the text’s meaning."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/embedding-space"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes the token, its ID in the vocabulary, and the embedding from the table. It explains why a repeated ID reads the same initial vector twice with fixed parameters."
+      note: "The recap and single-occurrence experiment distinguish token, ID, and initial vector, then separate the effects of the tokenizer, vocabulary indexing, and context."
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
@@ -52,18 +52,9 @@ The space before `world` is part of the second token. Across the two examples, s
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
 
-### One text, two tokenizations {#compare-tokenizers}
+### Why do two tokenizers produce different sequences?
 
-Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below, `␠` stands for a space in the input. Each fragment matches the ID at the same position.
-
-| Tokenizer | Fragments in order | IDs in the same order | Total |
-|---|---|---|---:|
-| `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
-| `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
-
-The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
-
-The split difference results from each tokenizer's pre-tokenization rules and learned merges; by itself, it does not establish that one vocabulary is better. `cl100k_base` splits the space from the number that follows and groups digits into chunks of at most three, hence the tokens reduced here to a single space (`␠`). GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` inserts no start-of-sequence token by default, while some libraries, for example `transformers` with GPT-2, prepend one; check this behavior before comparing your own traces.
+The same text can produce different sequences because pre-tokenization rules and learned vocabularies differ. A reproducible example with exact IDs is available in the [deep dive on tokenization strategies](tokenization-strategies.qmd#comparison-of-two-tokenizers). For the core learning path, remember that each ID sequence must be interpreted with the tokenizer that produced it.
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
