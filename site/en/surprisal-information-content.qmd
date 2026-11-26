@@ -275,16 +275,6 @@ The [Experiment — Entropy, KL, and predictive compression](experience-informat
 
 For further practice, compare the surprisal of several events under one distribution, then change the distribution while keeping the observed event fixed. You will see that surprisal depends on the chosen probabilistic model.
 
-### Three simple experiments
-
-1. **Change the target probability.** Keep the context and observed token fixed, then vary its probability from $0.8$ to $0.4$, $0.1$, and $0.01$. Surprisal should increase each time the probability decreases.
-2. **Change the context.** Keep the target token identical, but change the prefix and therefore the conditional distribution. Surprisal can change even though the token does not.
-3. **Change the probabilities of the other tokens.** If the target probability remains fixed, redistributing the remaining probability mass among other candidates does not change its surprisal. It may, however, change the distribution's total entropy.
-
-These experiments separate three objects that are often conflated: the observed event, the context that conditions its probability, and the full distribution of possible outcomes.
-
-
-
 ## Takeaways
 
 - An event's self-information is $I(x)=-\log p(x)$.
