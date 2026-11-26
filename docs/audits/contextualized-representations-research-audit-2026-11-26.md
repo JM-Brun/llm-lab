@@ -65,6 +65,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 
 - Ajout de quatre cartes de révision sur les pages Practice FR/EN : identité du lookup, dépendance des états cachés, frontière causale et différence entre distribution et perte locale.
 - Ajout d'une synthèse empirique sourcée dans les pages Deepen FR/EN, avec portée et limites propres à chaque étude.
+- Ingestion canonique engagée dans Wiki Knowledge : trois fiches source, un concept, une synthèse, index, registre, taxonomie et journal dans la PR #199.
 - Mise à jour de revision_support sur les leçons FR/EN pour signaler explicitement les cartes et le compagnon Practice.
 - Conservation de la page principale, de ses exemples localisés, des illustrations et des exercices existants.
 
@@ -72,7 +73,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 
 Les trois publications ont été examinées à partir de leurs pages bibliographiques primaires (ACL Anthology). La vérification de l'index et du registre de Wiki Knowledge n'a pas révélé de fiches source correspondantes. Cette passe constitue donc une **revue documentaire externe et une compilation éditoriale pour LLM Lab**, pas encore une ingestion canonique complète dans JM-Brun/wiki-knowledge.
 
-Le suivi de cette ingestion est ouvert dans [Wiki Knowledge #198](https://github.com/JM-Brun/wiki-knowledge/issues/198). À faire avec le workflow wk-ingest et ses artefacts canoniques : créer/réutiliser les identités de source, enregistrer les métadonnées de provenance, extraire les claims avec localisateurs précis, résoudre les concepts existants, puis produire un ChangePlan. Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
+Le suivi est ouvert dans [Wiki Knowledge #198](https://github.com/JM-Brun/wiki-knowledge/issues/198). Les trois fiches source, le concept canonique et la synthèse comparative ont maintenant été créés dans la branche `ingest/contextualized-representations-papers`, proposée dans la [PR #199](https://github.com/JM-Brun/wiki-knowledge/pull/199). Il s'agit de fiches metadata-only : aucun PDF n'est déclaré archivé. La PR reste en brouillon jusqu'à l'exécution de `wk-sync --registry-only`, `wk-validate`, `wk-lint` et du rapport de provenance. Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
 
 ## 7. Validation et limites
 
