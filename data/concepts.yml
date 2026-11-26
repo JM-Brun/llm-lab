@@ -33,6 +33,22 @@ concepts:
       en: "Ordered, configurable set of operations transforming text into an encoding, including normalization, pre-tokenization, segmentation model and post-processing."
     domains: [text-tokenization]
     resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-encoding
+    importance: core
+    labels: {fr: "Encodage des tokens", en: "Token encoding"}
+    definitions:
+      fr: "Application d'un tokenizer à un texte pour produire une séquence de tokens et leurs identifiants selon un vocabulaire et des conventions déterminés."
+      en: "Application of a tokenizer to text to produce a token sequence and its IDs according to a defined vocabulary and conventions."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-post-processing
+    importance: supporting
+    labels: {fr: "Post-traitement du tokenizer", en: "Tokenizer post-processing"}
+    definitions:
+      fr: "Étape qui transforme l'encodage obtenu, par exemple en ajoutant des tokens de séquence ou des éléments structurants."
+      en: "Stage that transforms the resulting encoding, for example by adding sequence tokens or structural elements."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
   - id: text-normalization
     importance: supporting
     labels: {fr: "Normalisation du texte", en: "Text normalization"}
@@ -1203,6 +1219,10 @@ relations:
       fr: "Les identifiants doivent être interprétés avec le vocabulaire et les conventions du tokenizer associés aux poids du modèle avant de sélectionner les vecteurs d'embedding."
       en: "Identifiers must be interpreted with the vocabulary and tokenizer conventions paired with the model weights before selecting embedding vectors."
   - {from: tokenization, type: produces, to: token}
+  - {from: token-encoding, type: produces, to: token-id}
+  - {from: token-post-processing, type: part-of, to: tokenizer-pipeline}
+  - {from: token-post-processing, type: contributes-to, to: special-token}
+  - {from: subword-tokenization, type: part-of, to: tokenizer-pipeline}
 
 
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
