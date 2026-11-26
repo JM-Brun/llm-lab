@@ -27,7 +27,7 @@ The audit selected four figures because each addresses a distinct learner diffic
 
 ### Loss
 
-- Use a small 3×3 causal visibility matrix and a distinct four-position target mask with three valid targets and one ignored PAD position.
+- Use a small 3×3 causal visibility matrix with rows labelled as queries and columns as keys, plus a distinct four-position target mask with three valid targets and one ignored PAD position.
 - Show the valid-position mean explicitly: (ℓ₁ + ℓ₂ + ℓ₃) / 3.
 - State that the loss mask excludes an ignored target from the numerator and denominator.
 - Preserve the page's scientific caveat: a zero/directly ignored loss contribution does not by itself prove that the token's representation cannot influence another valid position. Attention visibility is a separate dependency.
@@ -66,6 +66,7 @@ No external illustration was copied. The artwork is newly authored for these les
 - Source pages inspected in both languages.
 - Existing figures and visual register inspected to avoid duplicating the one-token cross-entropy illustration or the existing training-loop optimizer visual.
 - Each diagram checked against the relevant page's formulas and terminology at source level.
+- The causal-mask matrix explicitly labels rows as queries and columns as keys, including in the mobile layout.
 - Desktop and mobile SVG variants created for all four lessons.
 - Page references, captions and alternative text added to all eight FR/EN lesson pages.
 - English decimal notation checked in the likelihood figure.
