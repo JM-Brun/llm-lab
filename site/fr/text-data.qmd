@@ -111,6 +111,8 @@ Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace repr
 
 [Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
+Ne confondez pas **encoder un prompt** et **préparer un tokenizer**. À l'inférence, le tokenizer est déjà choisi et fixé avec les poids du modèle : il convertit le prompt en IDs. Lors de la construction du modèle, on prépare le corpus puis on entraîne ou ajuste le tokenizer avant de fixer cette interface. Cette préparation ne se répète pas à chaque requête ; elle relève du parcours Build ([préparer un corpus](corpus-preparation.qmd)).
+
 Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenizer de GPT-2 et sa table associée, l'ID `5633` indique quelle ligne lire. [Que contient cette ligne et comment le modèle s'en sert-il ?](embedding-space.qmd)
 
 {{< include ../includes/generated-suggested-route-fr-text-data.qmd >}}
