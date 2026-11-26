@@ -191,7 +191,7 @@ days:
     tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1676"
     door:
       fr: "Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?"
-      en: "Why do deep networks keep a residual stream?"
+      en: "Why do deep networks keep residual connections?"
     question:
       fr: "Comment un chemin identité modifie-t-il la propagation du signal et des gradients ?"
       en: "How does an identity path change signal and gradient propagation?"
@@ -367,7 +367,7 @@ days:
     tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1687"
     door:
       fr: "Les grands modèles deviennent-ils prévisibles ?"
-      en: "Do bigger models become predictable?"
+      en: "Do larger models become predictable?"
     question:
       fr: "Que permettent réellement d’extrapoler les lois d’échelle empiriques ?"
       en: "What can empirical scaling laws actually let us extrapolate?"

@@ -78,14 +78,14 @@ La première histoire est publiée ; la deuxième est accessible sous forme d’
   <div class="advent-door advent-door--planned advent-door--language" aria-label="Jour 13, en préparation : Perplexité : à quel point le modèle est-il surpris ?">
   <span class="advent-door__top"><span>13 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">13</span><span class="advent-door__title">Perplexité : à quel point le modèle est-il surpris ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Mesure probabiliste</span></span>
   </div>
-  <div class="advent-door advent-door--planned advent-door--research" aria-label="Jour 14, en préparation : La température rend-elle vraiment les réponses plus créatives ?">
-  <span class="advent-door__top"><span>14 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">14</span><span class="advent-door__title">La température rend-elle vraiment les réponses plus créatives ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Généralisation & systèmes</span><span>Décodage · Entropie</span></span>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Jour 14, en préparation : Température : créativité ou distribution simplement plus plate ?">
+  <span class="advent-door__top"><span>14 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">14</span><span class="advent-door__title">Température : créativité ou distribution simplement plus plate ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Généralisation & systèmes</span><span>Décodage · Entropie</span></span>
   </div>
   <div class="advent-door advent-door--planned advent-door--research" aria-label="Jour 15, en préparation : Top-k et top-p : où couper la queue de probabilité ?">
   <span class="advent-door__top"><span>15 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">15</span><span class="advent-door__title">Top-k et top-p : où couper la queue de probabilité ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Généralisation & systèmes</span><span>Échantillonnage</span></span>
   </div>
-  <div class="advent-door advent-door--planned advent-door--research" aria-label="Jour 16, en préparation : Pourquoi le token le plus probable peut-il produire une moins bonne phrase ?">
-  <span class="advent-door__top"><span>16 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">16</span><span class="advent-door__title">Pourquoi le token le plus probable peut-il produire une moins bonne phrase ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Généralisation & systèmes</span><span>Recherche de séquence</span></span>
+  <div class="advent-door advent-door--planned advent-door--research" aria-label="Jour 16, en préparation : Pourquoi le token le plus probable peut-il produire une phrase moins bonne ?">
+  <span class="advent-door__top"><span>16 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">16</span><span class="advent-door__title">Pourquoi le token le plus probable peut-il produire une phrase moins bonne ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Généralisation & systèmes</span><span>Recherche de séquence</span></span>
   </div>
   <div class="advent-door advent-door--planned advent-door--language" aria-label="Jour 17, en préparation : L’entropie croisée comme longueur de code">
   <span class="advent-door__top"><span>17 décembre</span><span class="advent-door__status">En préparation</span></span><span class="advent-door__number">17</span><span class="advent-door__title">L’entropie croisée comme longueur de code</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Codage · Cross-entropy</span></span>
@@ -128,7 +128,7 @@ Les quatre couleurs discrètes repèrent les grands rayons thématiques ; elles 
 - **Mécanismes, calcul et optimisation** : attention, causalité, résidus, normalisation et rétropropagation.
 - **Recherche, généralisation et systèmes** : décodage, double descente, lois d’échelle, RAG et quantification.
 
-Chaque histoire part d’une question singulière, rend le raisonnement visible, examine ses limites et propose une expérience à emporter. Comptez environ **15 minutes par histoire**, hors lectures complémentaires.
+Chaque histoire part d’une question singulière, rend le raisonnement visible et examine ses limites. Les calculs, exercices et expériences guidées sont regroupés dans des pages de pratique dédiées. Comptez environ **15 minutes par histoire**, hors lectures complémentaires.
 
 ## Où en est l’édition ?
 
