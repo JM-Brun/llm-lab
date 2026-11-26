@@ -89,7 +89,7 @@ The 2026 mapping is maintained in `data/calendars/advent-2026.yml`. Each entry r
 
 ## 3. The daily reading contract
 
-**Target: approximately 10 minutes per language version**, excluding optional links.
+**Target: approximately 15 minutes per language version**, with a justified 10–20 minute range; optional deep dives and exercise pages are outside the story's reading-time estimate.
 
 A typical entry should contain 1,000–1,400 words in French (adjust after testing), with mathematical and visual material contributing to understanding rather than padding the word count.
 
@@ -122,7 +122,7 @@ The four groups below are **editorial shelves**, not acts in a learning sequence
 
 | Day | Working title | Narrative hook / story | Main mathematical or LLM connection | Distinct value beyond the main path |
 |---:|---|---|---|---|
-| 01 | **Why does the word “the” appear everywhere?** | A journey through word-frequency rankings and the surprising regularity of natural language. | Zipf's law, rank-frequency distributions, heavy tails, token-frequency imbalance. | Explains why language data are statistically uneven and why rare tokens are difficult; not a tokenization lesson. |
+| 01 | **Why does the word “I” appear so often?** | A journey through word-frequency rankings and the surprising regularity of natural language. | Zipf's law, rank-frequency distributions, heavy tails, token-frequency imbalance. | Explains why language data are statistically uneven and why rare tokens are difficult; not a tokenization lesson. |
 | 02 | **How many bits does a sentence surprise us with?** | Shannon's information problem: how to quantify uncertainty before knowing the outcome. | Self-information, entropy, conditional entropy, surprisal. | Builds an information-theoretic lens for language, not a softmax/probability walkthrough. |
 | 03 | **The tokenizer as a compression engineer** | Why a vocabulary must balance reusable chunks against sequence length; how pair-merging became a practical strategy. | Byte-pair encoding, greedy merges, compression trade-offs, vocabulary size. | A design trade-off and miniature tokenizer experiment, not a basic segmentation tutorial. |
 | 04 | **Can meaning have a direction?** | The geometric surprise of vector representations and the famous analogy experiments, followed by their limits. | Vector spaces, cosine similarity, linear offsets, distributional semantics. | Critical geometric interpretation rather than embedding lookup. |
