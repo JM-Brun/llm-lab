@@ -37,7 +37,7 @@ Consider the toy ID sequence $[17,42,8,17]$, with zero-based sequence positions.
 <details>
 <summary>Show the answer</summary>
 
-The rows read are $E_{17,:}$, $E_{42,:}$, $E_{8,:}$, and $E_{17,:}$, in that order. Both occurrences of ID 17 retrieve the same initial vector. In the toy exercise, that vector is fixed at $(2,-1)$; the other values are not needed to establish the order.
+The rows read are $E_{17,:}$, $E_{42,:}$, $E_{8,:}$, and $E_{17,:}$, in that order. Both occurrences of ID 17 retrieve the same initial vector. In the [first-block-input exercise](exercises/text-data.qmd#ex-token-to-block-input), that vector is fixed at $(2,-1)$; the other values are not needed to establish the order.
 
 IDs 41 and 42 do not necessarily have nearby vectors: proximity between vocabulary indices places no constraint on the geometry of the learned rows.
 
