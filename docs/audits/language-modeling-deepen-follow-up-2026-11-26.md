@@ -235,3 +235,82 @@ Les audits éditoriaux globaux décrits aux sections 3 à 6 restent importants, 
 - audit bilingue des métadonnées, ancres, relations et liens vers les concepts canoniques.
 
 **Règle de reprise :** commencer par établir l'état réel de la PR et valider son dernier commit. Ne pas élargir la PR à un audit éditorial global tant que ce point n'est pas clos.
+
+
+## 11. Diagnostic du dernier contrôle CI — commit `ef9dc472c2e588f3c8109aeb741df9a3aa510fa4`
+
+Cette section prévaut sur les états antérieurs des sections 2, 8 et 10 pour le diagnostic du dernier contrôle observé.
+
+### 11.1 État vérifié
+
+La PR #1707 est toujours ouverte et non fusionnée. Sa tête est `ef9dc472c2e588f3c8109aeb741df9a3aa510fa4`, basée sur `4152d7bd31a5a1836c169e64f92f44a32437377a`. GitHub indique `mergeable: true`, mais `mergeable_state: unstable` pendant les contrôles.
+
+Exécutions déclenchées pour cette tête :
+
+- [CI — run 45894687167](https://github.com/JM-Brun/llm-lab/actions/runs/45894687167)
+- [Quarto — run 45894687145](https://github.com/JM-Brun/llm-lab/actions/runs/45894687145)
+- [Secret scanning — run 45894687212](https://github.com/JM-Brun/llm-lab/actions/runs/45894687212)
+
+Résultats observés :
+- Python quality and domain checks : **réussi**.
+- Secret scanning : **réussi**.
+- Test suite : **échoué**, avec **2 échecs, 832 réussites et 1 test ignoré**.
+- Quarto site & browser audit : **encore en cours** au dernier relevé ; ne pas le considérer comme réussi.
+
+### 11.2 Cause précise des deux échecs
+
+Les deux échecs sont les variantes FR et EN de :
+
+`tests/knowledge/test_map_artifacts_freshness.py::test_tracked_interactive_map_matches_renderer`
+
+Le générateur de référence attend `domain: "text-tokenization"` pour les enregistrements :
+- `fr/zipf-law-deep-dive` dans `site/includes/generated-map-data-fr.qmd` ;
+- `en/zipf-law-deep-dive` dans `site/includes/generated-map-data-en.qmd`.
+
+Or les artefacts suivis dans la branche contiennent encore `probabilistic-foundations-training` pour ces deux enregistrements. Les pages sources FR/EN déclarent bien `text-tokenization`. Le problème est donc un écart entre la source canonique et les données interactives générées, pas une erreur du schéma de domaine des pages sources.
+
+**Correction antérieure insuffisante :** les enregistrements générés avaient été modifiés ponctuellement et les rubriques de la carte réconciliées par fusion de champs. Cela n'a pas produit une sortie identique à celle du générateur. La mention précédente d'une régénération complète ne doit donc pas être interprétée comme une validation de fraîcheur sur la tête actuelle. Le test de fraîcheur reste l'arbitre.
+
+### 11.3 Actions immédiates restantes
+
+1. Depuis la racine du dépôt, exécuter le générateur canonique avec l'environnement attendu par les tests :
+
+   ```bash
+   uv run --no-project --with-requirements docs/requirements-history-validation.txt \
+     --python 3.12 python site/tools/build_learning_map.py
+   ```
+
+2. Examiner le diff des quatre artefacts suivis :
+   - `site/includes/generated-map-list-fr.qmd`
+   - `site/includes/generated-map-list-en.qmd`
+   - `site/includes/generated-map-data-fr.qmd`
+   - `site/includes/generated-map-data-en.qmd`
+
+   Ne pas reconstruire les JSON à la main et ne pas recopier uniquement le champ `domain`. Conserver toutes les sorties produites par le générateur ; vérifier que les modifications restent cohérentes avec les pages sources FR/EN et la structure éditoriale de cette PR.
+
+3. Exécuter localement, si l'environnement le permet, les tests ciblés de fraîcheur :
+
+   ```bash
+   uv run pytest tests/knowledge/test_map_artifacts_freshness.py
+   ```
+
+   Puis exécuter la suite complète.
+
+4. Committer les artefacts réellement générés et mettre à jour la PR. Une nouvelle exécution CI doit porter sur la nouvelle tête, pas sur `ef9dc47`.
+
+5. Relever le résultat final de Quarto/browser audit sur le dernier commit. Si le run actuel échoue, diagnostiquer son log avant d'ajouter une correction. S'il réussit sur `ef9dc47`, il ne valide pas automatiquement le commit ultérieur contenant les artefacts régénérés : vérifier si un nouveau run est nécessaire selon le SHA contrôlé.
+
+6. Confirmer sur le même SHA :
+   - tests complets verts ;
+   - Python quality/domain checks verts ;
+   - Quarto full render et browser audit verts ;
+   - secret scanning vert ;
+   - PR sans conflit et diff final limité au périmètre prévu.
+
+**Ne pas fusionner avant ces contrôles.**
+
+### 11.4 Hors blocage immédiat
+
+L'avertissement de `test_lesson_duration.py` liste des leçons sous la cible éditoriale de 10–15 minutes et quelques leçons au-dessus. Il n'est pas à l'origine de l'échec de la suite (le test a émis un avertissement, pas un échec). Le traiter dans un audit éditorial séparé ; ne pas élargir la réparation CI de #1707 à une réécriture des durées.
+
+Les audits éditoriaux globaux des sections 3 à 6 restent également hors du périmètre de réparation immédiate.
