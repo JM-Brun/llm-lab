@@ -48,6 +48,7 @@ The question “What have the Romans ever done for us?” and a reply such as �
 
 **Questions and exercises:** [Open the dedicated practice page](exercises/contextualized-representations.qmd).
 
+To isolate the effect of context, we now keep the parameters, the studied token ID, and its position fixed. Only the accessible prefix varies. The previous lesson varied position; this one holds position fixed to examine what the blocks can do with context.
 
 ## Start with what stays the same
 
@@ -122,8 +123,8 @@ Comparing these objects prepares you to read the Transformer. In the computation
 
 1. The tokenizer maps text to token IDs.
 2. The embedding table maps each ID to an initial vector.
-3. The architecture introduces positional information according to its design.
-4. Transformer layers produce context-dependent hidden states.
+3. The architecture handles position where its mechanism requires it: in the input representation or inside attention.
+4. Transformer blocks use that mechanism to produce context-dependent hidden states.
 5. Later layers and the output head use those states to predict the next token.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="From embeddings to contextualized representations, depending on positional handling"}
