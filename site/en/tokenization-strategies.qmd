@@ -257,6 +257,20 @@ This table poses questions to test, not exact outputs. To report a result, recor
 Vocabulary size, training budgets, and comparative tokenizer evaluation raise questions about cost, quality, and multilingual equity. These design choices go beyond understanding the segmentation mechanism; see the [advanced guide to tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 :::
 
+
+### Reproducible comparison of two tokenizers {#comparison-of-two-tokenizers}
+
+Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below, `␠` stands for a space in the input. Each fragment matches the ID at the same position.
+
+| Tokenizer | Fragments in order | IDs in the same order | Total |
+|---|---|---|---:|
+| `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
+| `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
+
+The [Python trace](exercises/text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
+
+The difference comes from tokenizer-specific pre-tokenization rules and learned merges; it does not, by itself, rank their quality. Here `cl100k_base` separates the space from the following number, while GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` does not insert a start-of-sequence token by default, although some libraries may add one. Check this behaviour before comparing your own traces.
+
 ## 6. Counterexamples
 
 - **Fewer tokens = a better model.** No: it first demonstrates a length difference, not quality.
