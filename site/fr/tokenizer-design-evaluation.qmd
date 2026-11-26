@@ -64,6 +64,8 @@ Prenons deux occurrences du même mot : **unbelievable unbelievable**. Pour isol
 | Sous-mots A | `un · believable` × 2 | 4 | 2 |
 | Sous-mots B | `un · believ · able` × 2 | 6 | 3 |
 
+![Une même chaîne peut être représentée par deux fragments ou trois selon le découpage. Schéma explicatif, sans tokenizer de production identifié.](../images/tokenization-language-cost-fr.svg){fig-alt="Le texte unbelievable est découpé en un + believable dans la segmentation A, et en un + believ + able dans la segmentation B." fig-cap="À texte source identique, le nombre de positions dépend du vocabulaire et de la stratégie de segmentation." width=95%}
+
 Le découpage en caractères utilise peu d'entrées différentes, mais produit une séquence longue. Les sous-mots raccourcissent la séquence en ajoutant des unités au vocabulaire. Cet exemple ne mesure ni une compression en bits ni la qualité d'un modèle : il rend visible un compromis de représentation.
 
 Dans un Transformer, moins de positions peut réduire le coût de traitement de la séquence, notamment celui de l'attention. En revanche, un vocabulaire plus grand augmente la taille des tables d'embeddings et, selon l'architecture, celle de la projection de sortie. **Réduire le nombre de tokens ne rend donc pas automatiquement le système moins coûteux.**
@@ -111,34 +113,14 @@ Les études sur les coûts multilingues n'emploient pas toujours les mêmes mét
 
 Pour une comparaison équitable, rapportez les métriques par langue et type de texte, et gardez séparés **coût de représentation**, **coût système** et **qualité de la tâche**. Une baisse de longueur est un résultat réel, mais elle ne suffit pas à démontrer une amélioration globale.
 
-## 3. Évaluer sans réduire à un score
+## 3. Choisir sous contraintes
 
-Une comparaison utile sépare quatre dimensions :
+Imaginons un assistant destiné à traiter des documents en plusieurs langues, avec une fenêtre de contexte limitée et une contrainte de latence. Le tokenizer qui produit le moins de tokens en moyenne n'est pas nécessairement le meilleur choix : il faut savoir quel coût diminue, quel coût augmente et pour quels utilisateurs.
 
-- **Efficacité de représentation :** combien de tokens, de caractères ou d'octets représentent le même contenu ? Le dénominateur doit être explicite.
-- **Performances en aval :** la segmentation change-t-elle les résultats sur une tâche définie ? Il faut les mesurer, pas les déduire du nombre de tokens.
-- **Équité multilingue :** un contenu comparable peut produire des longueurs différentes selon la langue. Cela affecte potentiellement le budget de contexte et le coût, sans prouver à lui seul une différence de qualité.
-- **Reproductibilité :** tokenizer, révision, prétraitement, corpus, versions et métriques doivent être documentés.
-
-Les métriques intrinsèques répondent à des questions différentes : nombre de tokens par texte, fertilité (tokens par unité de référence, souvent un mot séparé par espaces), caractères ou octets par token, couverture. Elles ne sont comparables que si leurs dénominateurs et conventions sont explicités.
-
-Une séquence plus courte peut réduire certains coûts, mais ne garantit ni un modèle plus performant ni un système plus rapide. Les études multilingues et les résultats expérimentaux sont analysés dans [l'approfondissement sur l'évaluation des tokenizers](tokenizer-multilingual-evaluation.qmd).
-
-## 4. Prendre une décision sous contraintes
-
-Imaginons un assistant destiné à traiter des documents en plusieurs langues, avec un budget de contexte et une contrainte de latence. Le tokenizer qui produit le moins de tokens sur un corpus moyen n'est pas nécessairement le meilleur choix.
-
-1. **Définir les usages.** Constituer un corpus représentatif des langues, domaines, formats et longueurs réellement attendus.
-2. **Mesurer la représentation.** Comparer plusieurs métriques par langue et type de texte, sans masquer les écarts derrière une moyenne globale.
-3. **Mesurer le système.** Évaluer mémoire, latence, débit et coût avec la même architecture et des conditions contrôlées.
-4. **Mesurer la tâche.** Comparer la qualité en aval avec des budgets et protocoles comparables.
-5. **Examiner les compromis.** Un gain sur une langue peut s'accompagner d'une régression sur une autre ; une séquence plus courte peut déplacer le coût vers le vocabulaire ou la projection de sortie.
-
-Le choix final dépend donc de la distribution des usages et des contraintes opérationnelles. Il ne se réduit pas à minimiser le nombre moyen de tokens.
+Commençons par isoler deux effets mesurables sur le même corpus : le nombre de positions à traiter et la taille des tables liées au vocabulaire. L'exemple suivant est volontairement simplifié ; il sert à raisonner sur les ordres de grandeur, pas à prédire le coût complet d'un modèle.
 
 
-
-## 5. Exemple de décision : gagner des positions, agrandir le vocabulaire
+### Exemple chiffré : moins de positions, vocabulaire plus grand
 
 Considérons deux tokenizers fictifs appliqués au même ensemble de textes et associés à la même dimension cachée $d$ :
 
@@ -153,7 +135,7 @@ Ces nombres sont **un exemple construit**, pas les résultats d'un benchmark. Il
 
 On ne peut pas conclure que B est globalement moins cher. Le coût total dépend aussi de la dimension cachée, des couches, du partage des poids, de l'implémentation de l'attention, du débit matériel et du nombre de tokens traités pendant l'entraînement. Le tableau sert à repérer les termes qui changent, pas à additionner des coûts incomparables.
 
-### Quel budget tient-on constant ?
+#### Quel budget tient-on constant ?
 
 La comparaison change selon la contrainte expérimentale :
 
@@ -163,7 +145,7 @@ La comparaison change selon la contrainte expérimentale :
 
 Une étude qui annonce simplement « mêmes données » ne suffit donc pas à établir une comparaison équitable. Il faut préciser ce qui est fixé : texte brut, tokens, étapes d'optimisation, FLOPs, temps ou budget financier.
 
-### Construire une décision défendable
+#### Construire une décision défendable
 
 Un choix de tokenizer doit expliciter les contraintes prioritaires et les compromis acceptés :
 
