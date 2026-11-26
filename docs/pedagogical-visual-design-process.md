@@ -379,3 +379,7 @@ A route-wide audit is complete only when:
 - residual work is recorded with priorities and canonical owners.
 
 The route does not pass merely because every page contains an image. It passes when each visual earns its place and the visual language helps the learner build one coherent, scientifically correct mental model.
+
+## Applied audit records
+
+- [Fourth Understand visual audit pilot (2026-11-26)](visual-audit-fourth-pilot-2026-11-26.md): logits, probabilities, entropy, generation and in-context learning.
