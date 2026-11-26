@@ -78,7 +78,7 @@ La distinction devient importante lorsqu'on modifie une seule chose :
 
 **À retenir :** le tokenizer définit l'interface symbolique entre le texte et le modèle ; la table d'embeddings transforme ensuite les IDs en vecteurs. La contextualisation appartient aux calculs ultérieurs du réseau, pas au tokenizer.
 
-Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace reproductible du tokenizer et du lookup](exercises/text-data.qmd#ex-text-to-embedding-lookup), puis l'exercice qui suit un ID jusqu'à sa ligne dans la table.
+Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace reproductible du tokenizer et du lookup](exercises-text-data.qmd#tokenizer-embedding-trace), puis l'exercice qui suit un ID jusqu'à sa ligne dans la table.
 
 <div class="pipeline-stepper" role="group" aria-label="Du texte aux représentations du modèle">
   <span class="step-item">1. Texte source</span>
