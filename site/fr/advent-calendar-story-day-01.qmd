@@ -1,7 +1,7 @@
 ---
 title: "Pourquoi le mot « je » revient-il si souvent ?"
-subtitle: "La loi de Zipf et les distributions de mots dans plusieurs langues"
-description-meta: "Construire un petit corpus, interpréter une relation rang-fréquence et comprendre pourquoi elle n’est pas universelle."
+subtitle: "Des fréquences lexicales à une régularité statistique"
+description-meta: "Construire un petit corpus, lire une relation rang–fréquence et comprendre ce qu’elle permet — ou non — de conclure."
 keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
@@ -32,7 +32,7 @@ This is authoring metadata; it is intentionally not rendered to readers.
 
 *Calendrier de l’Avent 2026 · Porte 1 · environ 15 minutes*
 
-Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
+Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses formes, puis situer ce résultat par rapport à des observations réalisées sur des corpus linguistiques beaucoup plus vastes.
 
 > **Prérequis** — aucune connaissance préalable en linguistique quantitative n'est nécessaire. Les notions de corpus, de type et d'occurrence sont introduites ici ; les logarithmes sont rappelés au moment où ils deviennent utiles.
 
@@ -179,7 +179,7 @@ Zipf est avant tout un **modèle descriptif**. Il aide à caractériser la distr
 
 - **Corpus :** la courbe rang–fréquence décrit la concentration des formes et la longue traîne. Elle peut guider une analyse, mais un écart à la courbe ne prouve pas qu'un corpus est défectueux.
 - **Recherche d'information :** les fréquences des termes influencent l'indexation et le classement. TF-IDF et BM25 exploitent ces statistiques selon leurs propres mécanismes ; ils ne calculent pas la loi de Zipf.
-- **Modèles de langage :** les unités fréquentes fournissent davantage d'observations que les unités rares. La tokenisation redistribue cette longue traîne entre mots et sous-mots, mais BPE ne dérive pas de la formule de Zipf.
+- **Modèles de langage :** à corpus et tokenizer fixés, les unités fréquentes offrent davantage d’occasions d’observation pendant l’entraînement que les unités rares. Cela décrit une différence d’exposition, pas une garantie de meilleure représentation ni de meilleure performance. Après tokenisation, les unités du modèle ne coïncident d’ailleurs pas nécessairement avec les formes lexicales comptées ici. BPE ne dérive pas de la formule de Zipf.
 
 Une distinction est essentielle. Zipf décrit une **fréquence marginale** dans un corpus : combien de fois une forme apparaît, tous contextes confondus. Un modèle autorégressif estime une probabilité **conditionnelle au contexte** :
 
