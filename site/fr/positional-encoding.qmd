@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
-scope: "Explique où l’ordre des tokens intervient, avec un signal absolu à l’entrée et un signal relatif dans la comparaison en attention."
-purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les deux mécanismes présentés."
+summary: "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale."
+scope: "Présente le rôle de l’information positionnelle et situe les encodages absolus et mécanismes relatifs dans le calcul. La dérivation de RoPE et les propriétés des sinusoïdes sont réservées aux approfondissements."
+purpose: "Expliquer pourquoi l’ordre doit être représenté, distinguer position et visibilité causale, et situer les principaux points d’injection."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; la page d'exercices dédiée vérifie l'ordre, RoPE, le masque causal et les limites d'extrapolation."
+      note: "Le rappel et l’expérience de permutation distinguent contenu, ordre et visibilité causale ; le schéma situe l’ajout absolu et l’injection de RoPE sans dériver leurs formules."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -49,6 +49,24 @@ Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tok
   - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
 
 La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
+
+### Une permutation suffit à révéler le problème
+
+Considérons les deux séquences :
+
+- « Le chat poursuit le chien. »
+- « Le chien poursuit le chat. »
+
+Elles contiennent les mêmes tokens, mais pas dans le même ordre. Si l'on ne fournit que leurs embeddings de contenu à une auto-attention sans information positionnelle ni masque dépendant de l'ordre, permuter les entrées permute simplement les sorties : le calcul ne dispose d'aucun repère lui permettant d'attribuer un rôle à la première ou à la dernière position.
+
+Un mécanisme positionnel rend l'ordre exploitable. Il ne « comprend » pas à lui seul la phrase : il donne au réseau une information supplémentaire qu'il pourra combiner avec le contenu.
+
+Cette expérience sépare deux questions souvent confondues :
+
+- **Où se trouve le token ?** C'est le rôle du mécanisme positionnel (position absolue ou relation entre positions).
+- **Quels tokens cette position peut-elle consulter ?** C'est notamment le rôle du masque causal dans un GPT.
+
+Le masque causal ne remplace donc pas l'encodage positionnel. Il impose une règle de visibilité ; le mécanisme positionnel fournit un signal d'ordre ou de distance.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
 ::: {.meta-flow__source}
@@ -79,7 +97,7 @@ Dans le cas additif de l’exercice, la table jouet donne le même plongement $(
 :::
 
 ::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
-La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
+Un mécanisme peut calculer un signal pour une position sans que le modèle sache bien généraliser à cette longueur de contexte. **Pouvoir représenter une position n'est pas garantir la performance à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) examinent les limites et les techniques associées.
 :::
 
 Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).

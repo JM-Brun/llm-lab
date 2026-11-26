@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/revision-positional-encoding"
-scope: "Occurrence order and the distinction between an absolute input position and relative information in attention."
-purpose: "Recall the key ideas from this lesson and apply them to the review question."
+scope: "A recall sheet on the role of order, positional insertion points, and their distinction from causal visibility."
+purpose: "Distinguish what position and causal masking specify, then predict the effect of a permutation."
 revision_role: synthesis
 revision_of: ["en/positional-encoding"]
 suggested_route:
@@ -38,6 +38,17 @@ After tokenization, swap the positions of two IDs in the sequence. Do their rows
 <summary>Show the answer</summary>
 
 No, their IDs select the same rows. Their sequence positions change, which can affect the resulting contextual states.
+
+</details>
+
+### A second question to check the distinction
+
+Does the causal mask tell the model the absolute position of each token?
+
+<details>
+<summary>Show the answer</summary>
+
+No. It determines which positions may be accessed. A positional mechanism supplies order or offset information. The two roles are complementary.
 
 </details>
 

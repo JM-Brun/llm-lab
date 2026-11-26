@@ -134,6 +134,12 @@ Dans un décodeur causal, la différence de représentation à cette position pe
 
 Cette comparaison est un dispositif pédagogique contrôlé, pas une affirmation selon laquelle le modèle encode les sens humains dans des régions géométriques nettement séparées.
 
+## 4 bis. Une dépendance entre positions : la référence pronominale
+
+Considérons : « L'animal était fatigué parce qu'il avait couru. » Le pronom « il » renvoie à « l'animal ». Il ne s'agit pas de désambiguïser deux sens d'un même token, mais de traiter une relation entre des positions distinctes.
+
+La représentation du pronom peut intégrer des informations issues de son préfixe accessible. Cet exemple motive l'étude des interactions entre positions ; il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence.
+
 ## 5. Suivre une position à travers les couches
 
 $h_t^{(0)}$ désigne l'entrée initiale à la position $t$. Chaque bloc produit un nouvel état, $h_t^{(1)}$, puis $h_t^{(2)}$, et ainsi de suite. L'indice $t$ reste fixe : c'est la représentation de cette position que l'on suit à travers la profondeur du réseau.
