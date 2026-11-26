@@ -93,8 +93,6 @@ The trade-off becomes concrete when sequence length is considered alongside voca
 
 ### Worked example: fewer positions, larger vocabulary
 
-Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
-
 | | Tokenizer A | Tokenizer B |
 |---|---:|---:|
 | Vocabulary size | $V$ | $4V$ |
