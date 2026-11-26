@@ -32,6 +32,7 @@ scan:
     - "The released tokenizers and training/evaluation code need independent inspection before reproducibility claims."
     - "No language models were trained with the experimental tokenizers, so downstream model-quality effects remain untested."
 items:
+items:
   - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:token-premium-and-ctc
     kind: definition
     summary: "The paper defines token premiums as relative token-count differences for content-matched texts across languages and operationalizes compression with corpus token count (CTC) over parallel FLORES text; it avoids fertility because whitespace-delimited wordhood is not comparable across many languages."
@@ -54,7 +55,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced bilingual lesson already distinguishes fertility, parity and corpus-level compression; this record preserves the paper-specific rationale and denominator."
@@ -80,7 +81,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, byte-pair-encoding, unigram-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, byte-pair-encoding, unigram-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds a useful controlled monolingual research design to the advanced comparison, without implying that its results directly rank multilingual production tokenizers."
@@ -106,7 +107,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, pre-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, pre-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A useful mechanism-level explanation connecting pre-tokenization boundaries to cross-language compression, already compatible with the project's pipeline lesson."
@@ -132,7 +133,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, token-vocabulary]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds a concrete counterexample to the simplistic rule 'larger vocabulary fixes inequity'; keep as an advanced research intervention."
@@ -160,7 +161,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, pre-tokenization, byte-pair-encoding]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, pre-tokenization, byte-pair-encoding]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current deep dive already records the lack of downstream LM evaluation; the extraction adds the important measured-versus-estimated distinction."

@@ -32,6 +32,7 @@ scan:
     - "Reproducibility requires independent inspection of training code, data and evaluation scripts."
     - "The single-seed design does not quantify seed variance."
 items:
+items:
   - id: ali-tokenizer-choice-llm-training-2024:intrinsic-extrinsic-evaluation
     kind: definition
     summary: "The paper distinguishes intrinsic tokenizer evaluation (fertility, parity and vocabulary overlap) from extrinsic evaluation of the downstream model trained with that tokenizer."
@@ -52,7 +53,7 @@ items:
       concept_ids: [tokenizer-evaluation, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, token-fertility]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced bilingual evaluation lesson already distinguishes intrinsic measures from downstream evaluation."
@@ -79,7 +80,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A useful concrete protocol, already summarized in the advanced comparison."
@@ -106,7 +107,7 @@ items:
       concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The bilingual deep dive already records this finding with experimental scope."
@@ -132,7 +133,7 @@ items:
       concept_ids: [tokenizer-evaluation, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, token-fertility]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current deep dive already expresses this caveat."
@@ -156,7 +157,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current documentation already scopes the number to a specific training-compute comparison."

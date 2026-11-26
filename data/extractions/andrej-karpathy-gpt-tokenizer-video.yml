@@ -214,6 +214,7 @@ pedagogical_model:
       - "Bilingual page navigation and project learning path"
 
 items:
+items:
   - id: andrej-karpathy-gpt-tokenizer-video:unicode-bytes
     kind: definition
     summary: "Unicode code points, UTF-8 bytes and visible characters are different representational units; a code point may encode to multiple bytes."
@@ -246,7 +247,7 @@ items:
       concept_ids: [byte-level-encoding]
     candidate_destinations:
       pages: [en/unicode-text, fr/unicode-text, en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [byte-level-encoding]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The canonical Unicode page is the stronger owner; retain the source as an optional walkthrough."
@@ -283,7 +284,7 @@ items:
       concept_ids: [byte-pair-encoding, tokenizer-training, token-encoding, token-id, token-decoding, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [byte-pair-encoding, tokenizer-training, token-encoding, token-id, token-decoding, token-vocabulary]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful alternate walkthrough; do not duplicate the canonical worked trace."
@@ -321,7 +322,7 @@ items:
       concept_ids: [pre-tokenization, tokenizer-pipeline]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [pre-tokenization, tokenizer-pipeline]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The general mechanism is covered; exact GPT regex variants remain an optional implementation-level topic."
@@ -359,7 +360,7 @@ items:
       concept_ids: [special-token]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [special-token]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current bilingual special-token section is more explicit about API-specific behavior."
@@ -396,7 +397,7 @@ items:
       concept_ids: [tokenizer]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [tokenizer]
+      concepts: []
       route_ids: []
     disposition: defer
     disposition_rationale: "Multimodal tokenization is intentionally outside the current text-only learning slice."

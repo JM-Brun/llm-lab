@@ -34,6 +34,7 @@ scan:
     - "Does the live visualizer remain available and accessible with keyboard and mobile interaction?"
     - "Can the metric definitions and aggregation choices be independently reproduced from the code and sample data?"
 items:
+items:
   - id: varis-stephen-libovicky-tokcollate-2026:two-stage-evaluation-architecture
     kind: mechanism
     summary: "TokCollate separates evaluation from exploration: a Python evaluation script consumes already-tokenized text files and emits metadata plus result matrices; a web visualizer then loads those outputs for interactive inspection. The paper explicitly says the current tool does not execute tokenization itself."
@@ -54,7 +55,7 @@ items:
       concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A concrete external example of separating tokenizer execution, metric computation and result exploration. It adds operational specificity, but does not warrant a new canonical pipeline or implementation."
@@ -78,7 +79,7 @@ items:
       concept_ids: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The canonical advanced lesson already explains that token count, fertility, compression and downstream quality are distinct; the paper is useful as a concrete tool reference rather than another metric catalogue."
@@ -102,7 +103,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization, token-vocabulary]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful complementary operational detail for researchers; adding another list to the learner-facing core would duplicate the existing advanced metric discussion."
@@ -126,7 +127,7 @@ items:
       concept_ids: [multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: defer
     disposition_rationale: "The metadata lineage is important for an advanced research review but is too implementation-specific for the current canonical explanation; revisit only if the tool is selected for a hands-on lab."
@@ -150,7 +151,7 @@ items:
       concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "This is a key existing canonical caveat; the new source reinforces rather than changes the lesson."
@@ -174,7 +175,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: link
     disposition_rationale: "Potential optional teaching resource; keep as a link-only candidate until the live interface is inspected and a learner task is designed. Do not claim that the visualizer improves learning."

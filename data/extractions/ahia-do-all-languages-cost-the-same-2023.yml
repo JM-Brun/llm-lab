@@ -32,6 +32,7 @@ scan:
     - "The reported API cost ratios should not be presented as current prices or current model behaviour."
     - "A reproducibility pass requires identifying the exact tokenizer/API snapshots and inspecting the linked code and evaluation data."
 items:
+items:
   - id: ahia-do-all-languages-cost-the-same-2023:token-count-as-cost-unit
     kind: definition
     summary: "The paper treats the number of processed and generated tokens as the operational billing unit for commercial LM APIs and measures fragmentation as average tokens per sentence on parallel text, rather than fertility, to compare equivalent content without requiring language-specific word segmenters."
@@ -54,7 +55,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds the economic/billing interpretation of sequence length to the existing tokenizer evaluation comparison; keep its measurement distinct from the other corpus metrics."
@@ -80,7 +81,7 @@ items:
       concept_ids: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced lesson already includes the finding that tokenizer disparity is not reducible to language data volume; this extraction preserves the controlled experiment's scope."
@@ -107,7 +108,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A concrete example of how tokenizer sequence length propagates into user-facing economic cost; numbers should remain explicitly historical."
@@ -134,7 +135,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "This is a useful connection from tokenizer output to context-window utilization and few-shot capacity; retain as an advanced application example, not a general causal law."
@@ -162,7 +163,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds a distinct social-accessibility perspective that is not captured by tokenizer compression metrics alone; preserve its ecological and historical scope."
@@ -189,7 +190,7 @@ items:
       concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [tokenizer-evaluation, multilingual-tokenization]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced lesson already treats the results as historically scoped; the extraction adds the exact reproducibility caveats."
