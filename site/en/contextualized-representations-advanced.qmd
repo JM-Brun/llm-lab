@@ -156,14 +156,16 @@ Peters et al. (2018) introduce ELMo (*Embeddings from Language Models*), whose w
 
 ### Measuring contextuality and its geometric limits
 
-Ethayarajh (2019) studies ELMo, BERT, and GPT-2. In the configurations examined, representations of the same word in different contexts remain more similar to one another on average than representations of different words, but this self-similarity decreases in upper layers. The paper also reports that, on average, less than 5% of the variance in contextualized representations is explained by a static representation of the word.
+Ethayarajh (2019) studies ELMo, BERT, and GPT-2. After adjusting for anisotropy, representations of the same word in different contexts remain more similar to one another on average than representations of different words, but this self-similarity decreases in upper layers.
+
+The paper also reports an **average Maximum Explainable Variance (MEV) below 5%** across the studied layers after anisotropy adjustment. MEV estimates the proportion of a word's representation variance explained by its first principal component; in this protocol, it gives an upper bound on what a single static vector could explain. It is therefore neither a raw variance measure nor a direct comparison with any arbitrary pretrained static embedding.
 
 Two qualifications matter:
 
 - this is an aggregate result over the models, layers, and data studied in 2019, not a universal constant for every LLM;
-- the representations are anisotropic, so a high cosine similarity between two vectors is not sufficient to establish that they carry the same meaning.
+- contextualized representations are anisotropic: a high raw cosine similarity can arise from this geometry and does not by itself establish that two vectors carry the same meaning.
 
-The measurement supports a substantial contextual contribution in the studied models; it does not prove that every human word sense corresponds to a distinct geometric region.
+Under this measurement protocol, a static vector explains little of the variability across a word's occurrences; this does not prove that every human word sense corresponds to a distinct geometric region.
 
 ### Linguistic information across layers
 
