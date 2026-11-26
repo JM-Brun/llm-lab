@@ -111,6 +111,8 @@ The **token** is the unit produced by the split. The **ID** is its reference num
 
 [Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
+Do not confuse **encoding a prompt** with **preparing a tokenizer**. At inference time, the tokenizer has already been selected and fixed with the model weights: it converts the prompt into IDs. When building a model, the corpus is prepared first, then the tokenizer is trained or fitted before this interface is frozen. That preparation is not repeated for every request; it belongs to the Build path ([prepare a corpus](corpus-preparation.qmd)).
+
 In the next lesson, return to the last token of the prefix. With the GPT-2 tokenizer and its corresponding table, ID `30` tells the model which row to read. [What does that row contain, and how does the model use it?](embedding-space.qmd)
 
 {{< include ../includes/generated-suggested-route-en-text-data.qmd >}}
