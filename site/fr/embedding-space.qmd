@@ -101,7 +101,7 @@ $$
 
 Pour une séquence d'IDs $(i_0,\ldots,i_{T-1})$, le lookup s'applique à chaque position $t$, dans le même ordre :
 
-$
+$$
 X = \begin{bmatrix}
 E_{i_0,:} \\
 E_{i_1,:} \\
@@ -109,7 +109,7 @@ E_{i_1,:} \\
 E_{i_{T-1},:}
 \end{bmatrix}
 \in \mathbb{R}^{T \times d}
-$
+$$
 
 $T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Pour l’exemple $[17,42,8,17]$, $T=4$ et la sortie a donc la forme $(4,d)$. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant tout traitement positionnel. La position $t$, l’ID $i_t$ et le vecteur $E_{i_t,:}$ désignent trois objets distincts.
 
