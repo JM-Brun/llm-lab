@@ -1,0 +1,201 @@
+# Audit ciblé du parcours principal : couverture des sources et longueur des pages
+
+**Date :** 2026-11-26  
+**Périmètre :** pages françaises du parcours principal défini dans `data/guided-route.yml`  
+**Nature :** audit documentaire et éditorial ; aucune page pédagogique ni métadonnée n'a été modifiée dans le cadre de cet audit.
+
+## 1. Objectif et méthode
+
+L'audit répond à deux questions distinctes :
+
+1. Quelle page du parcours principal possède le moins de sources reliées dans le catalogue canonique ?
+2. Quelle page est la plus courte, et mérite-t-elle pour autant davantage de contenu ?
+
+La sélection des pages doit provenir de `data/guided-route.yml`, et non d'une recherche approximative dans tous les fichiers du site. Les pages optionnelles, d'approfondissement, d'exercices et de navigation sont exclues.
+
+Trois indicateurs doivent rester distincts :
+
+- **Sources du catalogue** : entrées de `data/sources.yml` dont `related.pages` contient la page.
+- **Références visibles** : références bibliographiques ou liens externes effectivement présents dans le contenu de la page.
+- **Longueur éditoriale** : volume de texte pédagogique, sans front matter, commentaires de métadonnées, blocs de code ou blocs mathématiques.
+
+Le comptage de mots est heuristique : les shortcodes, composants Quarto, tableaux et éléments HTML peuvent rendre le résultat légèrement différent du texte effectivement perçu par le lecteur. Il sert à classer les candidates, pas à fixer une norme de longueur.
+
+## 2. Pages candidates
+
+### 2.1 Plus faible couverture du catalogue : Logits
+
+Page : [Logits : les scores avant normalisation](https://jm-brun.github.io/llm-lab/fr/logits.html)
+
+Constat vérifié dans le registre consulté :
+
+- aucune entrée de `data/sources.yml` ne relie actuellement cette page via `related.pages` ;
+- la page contient néanmoins un lien direct vers la documentation PyTorch `CrossEntropyLoss` ;
+- la page explique déjà la projection de sortie, la dimension du vocabulaire, les scores, le classement et la distinction entre logits et probabilités ;
+- les concepts canoniques `output-projection` et `logits` référencent tous deux cette page dans `data/concepts.yml`.
+
+**Interprétation :** le zéro du catalogue n'indique pas que la page est dépourvue de références ou de contenu. Il révèle surtout une lacune de traçabilité entre les références de la page et le catalogue central.
+
+#### Source complémentaire examinée : The Illustrated GPT-2
+
+Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+
+Cette ressource propose une représentation visuelle de la sortie du modèle et de la projection vers le vocabulaire. Elle peut aider à relier l'état final du Transformer à la liste des scores candidats.
+
+Le registre contient déjà `jay-alammar-illustrated-gpt2`, mais cette entrée est actuellement marquée `integration_status: deferred`, n'associe pas la page Logits dans `related.pages` et ne relie pas les concepts `logits` / `output-projection` dans sa classification. L'inspection précédemment consignée porte sur le texte de l'article, pas sur une nouvelle vérification des droits de réutilisation de ses illustrations.
+
+La documentation GPT-2 de Hugging Face constitue un complément technique utile pour vérifier les formes de tenseurs et les conventions propres à cette architecture : [GPT-2 documentation](https://huggingface.co/docs/transformers/model_doc/gpt2). La documentation PyTorch déjà citée sur la page reste la référence directe pour l'interface de loss qui reçoit des logits non normalisés.
+
+#### Décision éditoriale
+
+Ne pas ajouter une longue section à la page principale. La page couvre déjà le mécanisme attendu.
+
+Un complément court peut être pertinent pour distinguer :
+
+- **projection de sortie liée (*weight tying*)** : partage des poids entre table d'embeddings d'entrée et projection de sortie ;
+- **projection indépendante (*untied*)** : matrice de sortie distincte.
+
+Cette distinction doit être présentée comme une variante de paramétrisation, et non comme une propriété universelle des LLM. Le GPT pédagogique de LLM Lab utilise actuellement une tête de sortie indépendante ; cette observation est vérifiable dans [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+
+**Destination recommandée :** encadré facultatif ou ressource complémentaire. Les détails d'implémentation et les variantes de modèles restent dans Build / Deepen.
+
+### 2.2 Page la plus courte : Apprentissage en contexte (ICL)
+
+Page : [Apprentissage en contexte](https://jm-brun.github.io/llm-lab/fr/in-context-learning.html).
+
+Le comptage heuristique effectué sur les pages candidates place cette page au bas du classement, autour de 950 mots de contenu. Ce chiffre est un ordre de grandeur, pas une métrique éditoriale normative.
+
+La page est déjà structurée autour de :
+- la définition de l'ICL et les configurations zero-shot / one-shot / few-shot ;
+- la distinction entre ICL, préentraînement, fine-tuning et RAG ;
+- les informations fournies par le prompt ;
+- les limites de généralisation et la sensibilité aux exemples ;
+- des approfondissements séparés sur les hypothèses mécanistes et les protocoles expérimentaux.
+
+Sa bibliographie visible contient quatre références : Brown et al. (2020), Olsson et al. (2022), Xie et al. (2022) et Min et al. (2022). Aucune de ces références n'était reliée à la page dans `data/sources.yml` lors de l'audit.
+
+**Interprétation :** la page est courte mais n'est pas sous-documentée dans son contenu visible. Son potentiel d'amélioration vient d'une nuance empirique importante, pas d'un besoin d'allonger la définition.
+
+#### Source complémentaire principale : Min et al. (2022)
+
+Sewon Min et al., [Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?](https://aclanthology.org/2022.emnlp-main.759/), EMNLP 2022.
+
+Les auteurs rapportent, sur un ensemble de tâches de classification et de choix multiple et douze modèles, que remplacer aléatoirement les labels des démonstrations peut n'entraîner qu'une faible dégradation dans leurs configurations expérimentales. Ils identifient notamment comme contributions des démonstrations l'information sur l'espace des labels, la distribution des textes d'entrée et le format global de la séquence.
+
+Cette source est déjà citée sur la page : l'apport consiste à mieux exploiter et nuancer ce résultat, pas à ajouter une référence redondante.
+
+#### Contrepoint indispensable : Yoo et al. (2022)
+
+Kang Min Yoo et al., [Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations](https://aclanthology.org/2022.emnlp-main.155/), EMNLP 2022.
+
+Les auteurs réexaminent l'importance des correspondances entrée-label. Ils montrent que l'effet des labels corrects varie selon la configuration expérimentale, et mettent notamment en évidence le rôle de la verbosité des templates et de la taille du modèle dans la robustesse au bruit.
+
+Ce travail empêche de transformer le résultat de Min et al. en affirmation générale selon laquelle les labels corrects seraient inutiles. Les deux études doivent être présentées comme des résultats empiriques dépendants du protocole, non comme deux vérités contradictoires à départager abstraitement.
+
+#### Source à réserver à l'approfondissement : Xiang et al. (2024)
+
+Yanzheng Xiang et al., [Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models](https://aclanthology.org/2024.findings-acl.386/), Findings of ACL 2024.
+
+Cette étude rapporte une sensibilité à l'ordre des démonstrations plus forte pour les modèles causaux que pour les modèles PrefixLM dans les expériences considérées. Les auteurs relient ce phénomène aux masques d'attention autorégressifs et aux champs réceptifs différents selon les positions.
+
+Le lien avec le masque causal est intéressant, mais son explication détaillée mobilise les représentations par position et les mécanismes d'attention. Ce niveau de détail dépasse le besoin de la page d'introduction.
+
+**Destination recommandée :** Deepen, avec éventuellement un lien depuis la phrase existante sur la sensibilité à l'ordre. Ne pas introduire cette explication mécaniste dans le corps principal.
+
+#### Proposition d'intégration dans la page principale
+
+Ajouter un seul paragraphe dans « Ce que l'ICL permet — et ses limites », après la présentation des facteurs dont dépendent les résultats :
+
+> Les démonstrations ne servent pas uniquement à montrer au modèle les bonnes réponses. Dans certaines expériences, Min et al. (2022) observent que remplacer les labels des exemples par des valeurs aléatoires dégrade relativement peu les performances : les démonstrations fournissent aussi des indications sur l'espace des labels, la distribution des entrées et le format attendu. Ce résultat n'est toutefois pas universel. Yoo et al. (2022) montrent que l'effet des labels corrects varie selon la configuration expérimentale, notamment selon la verbosité du template et la taille du modèle. Une démonstration fournit donc plusieurs types d'information, dont l'importance dépend de la tâche et du protocole.
+
+Cet ajout apporte une intuition empirique et une limite explicite, sans créer une nouvelle notion ni une nouvelle section. Il doit rester compact et être intégré dans les versions française et anglaise.
+
+## 3. Décisions de modélisation documentaire
+
+### 3.1 Pages et concepts
+
+Aucun nouveau concept canonique n'est requis.
+
+- Logits : réutiliser `logits` et `output-projection`.
+- ICL : réutiliser `in-context-learning`.
+- Ne pas créer de concepts dédiés uniquement à « label correctness sensitivity », « demonstration order » ou « induction heads » dans le cadre de cet enrichissement.
+
+Les relations de concepts existantes doivent être conservées. L'ajout d'une source ne justifie pas à lui seul une modification du graphe de connaissances.
+
+### 3.2 Registre des sources
+
+Pour Logits :
+- réexaminer l'entrée existante `jay-alammar-illustrated-gpt2` ;
+- si l'apport est retenu, ajouter `fr/logits` et `en/logits` à `related.pages` ;
+- ajouter `logits` et `output-projection` aux concepts pertinents de la classification ;
+- ne pas déclarer la source entièrement intégrée tant que son statut de scan, les limites d'inspection et la décision d'intégration ne sont pas cohérents ;
+- ne pas réutiliser ses figures sans vérification spécifique de provenance et de droits.
+
+Pour ICL :
+- créer ou réconcilier les entrées canoniques des références Brown, Olsson, Xie et Min déjà présentes dans la bibliographie ;
+- créer l'entrée de Yoo et al. (2022) après vérification bibliographique ;
+- relier les sources retenues à `fr/in-context-learning` et `en/in-context-learning` dans `related.pages` ;
+- associer le concept existant `in-context-learning` ;
+- distinguer le statut de consultation de celui d'intégration effective ;
+- conserver Xiang et al. comme source d'approfondissement si la page principale ne reprend pas son mécanisme.
+
+Ne pas supposer qu'une référence visible est une source ingérée, ni qu'une source cataloguée est automatiquement intégrée à une page.
+
+### 3.3 Métadonnées de page
+
+Les pages disposent déjà de leur classification de leçon principale et de leur destination `understand`. Les concepts canoniques et les ressources sont déjà reliés.
+
+Aucun changement de tags `type`, `destination`, `topic` ou `level` n'est justifié par cet audit. L'enrichissement proposé ne change ni le niveau pédagogique ni la destination des pages.
+
+Les éventuelles références vers Deepen doivent être portées par les liens de ressources et les relations de page appropriées, pas par la création artificielle d'un nouveau concept.
+
+## 4. Automatisation à documenter
+
+Le dépôt dispose déjà de :
+- `site/tools/report_source_coverage.py` pour les indicateurs sources / extractions / concepts / destinations ;
+- `site/tools/audit_page_metadata.py` pour les relations de pages et la topologie du parcours.
+
+Il est préférable d'étendre ces rapports ou d'ajouter un mode de rapport ciblé, plutôt que de créer un workflow GitHub Actions par page ou par concept.
+
+Le rapport de classement souhaité devrait :
+
+1. lire les pages principales depuis `data/guided-route.yml` ;
+2. exclure les `optional_pages` ;
+3. dédupliquer les pages et calculer séparément FR et EN ;
+4. compter les sources cataloguées par identifiant source unique via `related.pages` ;
+5. compter séparément les références bibliographiques visibles ;
+6. calculer une longueur éditoriale avec une méthode explicitée et testée ;
+7. signaler les liens bibliographiques présents sur une page mais absents du catalogue ;
+8. présenter les classements comme des alertes de revue, jamais comme des défauts automatiques ;
+9. garder le résultat déterministe et exploitable en local, sans ajouter une action CI dédiée.
+
+Les tests doivent couvrir au minimum : exclusion des pages optionnelles, déduplication, liens multiples vers une même source, référence visible non cataloguée, blocs de code et mathématiques, commentaires de métadonnées, pages bilingues et page sans bibliographie.
+
+## 5. Plan d'action proposé
+
+| Priorité | Action | Critère d'acceptation |
+|---|---|---|
+| P0 | Réconcilier les références ICL existantes avec `data/sources.yml` | Chaque référence bibliographique retenue possède une entrée canonique et une liaison à la page |
+| P0 | Cataloguer Yoo et al. (2022) | Métadonnées bibliographiques vérifiées, source et extraction qualifiées |
+| P1 | Ajouter le paragraphe Min / Yoo dans ICL FR et EN | Même nuance scientifique dans les deux langues, sans allongement disproportionné |
+| P1 | Classer Xiang et al. en approfondissement | Lien facultatif depuis la discussion sur l'ordre, sans explication mécaniste dans le tronc principal |
+| P1 | Réexaminer Jay Alammar pour Logits | Décision d'intégration explicite, liaison aux concepts et pages si retenue |
+| P2 | Étendre le rapport de couverture | Classements sources / références / longueur reproductibles depuis le parcours principal |
+| P2 | Ajouter les tests du rapport | Les cas limites listés ci-dessus sont vérifiés |
+
+## 6. Limites de cet audit
+
+- Les nombres de mots sont des estimations issues d'un comptage heuristique et doivent être recalculés par un outil versionné avant toute comparaison future.
+- Le nombre de sources du catalogue mesure la traçabilité documentaire, pas la qualité d'une page.
+- L'inspection des articles et les résultats empiriques cités ne permettent pas de généraliser au-delà des tâches, modèles et protocoles étudiés par les auteurs.
+- Aucune modification de page, de registre de sources, de concept ou de graphe n'est incluse dans ce document.
+- La vérification des licences et des droits de réutilisation des figures doit être effectuée séparément avant toute reprise d'illustration.
+
+## 7. Sources de l'audit
+
+- Min et al. (2022), [Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?](https://aclanthology.org/2022.emnlp-main.759/).
+- Yoo et al. (2022), [Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations](https://aclanthology.org/2022.emnlp-main.155/).
+- Xiang et al. (2024), [Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models](https://aclanthology.org/2024.findings-acl.386/).
+- Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+- Hugging Face, [GPT-2 model documentation](https://huggingface.co/docs/transformers/model_doc/gpt2).
+- PyTorch, [CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
