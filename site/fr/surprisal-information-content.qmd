@@ -24,6 +24,12 @@ related: ["fr/entropy", "fr/vraisemblance", "fr/cross-entropy", "fr/language-mod
 tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:fr", "status:published"]
 -->
 
+<!--
+Editorial model: docs/advent-calendar-pilots/first-three-days-pedagogical-models.md#porte-02--combien-de-bits-contient-la-surprise-dun-evenement
+Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1666
+This is authoring metadata; it is intentionally not rendered to readers.
+-->
+
 *Calendrier de l’Avent 2026 · Porte 2 · environ 10 minutes*
 
 *Version de lecture en cours de revue scientifique et pédagogique — retours bienvenus.*
