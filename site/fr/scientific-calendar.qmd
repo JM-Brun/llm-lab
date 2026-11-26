@@ -26,7 +26,7 @@ tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "l
   <p class="advent-hero__eyebrow">LLM LAB · ÉDITION 2026</p>
   <p class="advent-hero__statement">Une question par jour. <span>Vingt-quatre façons de regarder les LLM autrement.</span></p>
   <p class="advent-hero__description">Ouvrez une porte, suivez une idée, mettez-la à l’épreuve. Des régularités du langage aux choix d’architecture, chaque histoire propose une enquête autonome, avec son raisonnement, ses exemples et ses limites.</p>
-  <div class="advent-hero__facts" aria-label="Repères de l’édition"><span><strong>24</strong> histoires</span><span><strong>4</strong> rayons thématiques</span><span><strong>≈ 10 min</strong> par histoire</span></div>
+  <div class="advent-hero__facts" aria-label="Repères de l’édition"><span><strong>24</strong> histoires</span><span><strong>4</strong> rayons thématiques</span><span><strong>≈ 15 min</strong> par histoire</span></div>
 </div>
 
 ## Ouvrir une case
@@ -39,8 +39,8 @@ La première histoire est publiée ; la deuxième est accessible sous forme d’
 </div>
 
 <div class="advent-calendar-grid" aria-label="Calendrier de l’Avent 2026, 24 cases numérotées dans l’ordre des jours">
-  <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Jour 1, disponible : Pourquoi le mot « de » revient-il si souvent ?">
-  <span class="advent-door__top"><span>1er décembre</span><span class="advent-door__status">Disponible</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Pourquoi le mot « de » revient-il si souvent ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Loi de Zipf · 10 min</span><strong>Ouvrir ↗</strong></span>
+  <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Jour 1, disponible : Pourquoi le mot « je » revient-il si souvent ?">
+  <span class="advent-door__top"><span>1er décembre</span><span class="advent-door__status">Disponible</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Pourquoi le mot « de » revient-il si souvent ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Loi de Zipf · 15 min</span><strong>Ouvrir ↗</strong></span>
   </a>
   <a class="advent-door advent-door--open advent-door--language" href="surprisal-information-content.qmd" aria-label="Jour 2, aperçu disponible : Combien de bits contient la surprise d’un événement ?">
   <span class="advent-door__top"><span>2 décembre</span><span class="advent-door__status">Aperçu · relecture à venir</span></span><span class="advent-door__number">02</span><span class="advent-door__title">Combien de bits contient la surprise d’un événement ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Information propre · Surprisal</span></span>
