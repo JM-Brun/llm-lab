@@ -29,7 +29,9 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data"
 - Le tokenizer segmente ou encode le texte en unités de son vocabulaire. Un token peut correspondre à un morceau de mot, un espace, un symbole ou une partie de leur représentation en octets.
 - Le vocabulaire associe chaque token à un ID entier. Le nombre lui-même sert de référence dans ce vocabulaire.
 - La segmentation et les IDs dépendent du tokenizer. Deux tokenizers peuvent encoder le même texte avec des longueurs différentes.
-- Les IDs sélectionnent ensuite des plongements dans le modèle. Encoder un prompt fournit son entrée immédiate. Préparer un corpus ajoute des choix de nettoyage et de construction des exemples d’entraînement.
+- Les IDs sélectionnent ensuite des plongements dans le modèle. À paramètres fixes, deux occurrences du même ID lisent le même vecteur initial ; leur position et leur contexte peuvent ensuite produire des états différents.
+- Encoder un prompt applique un tokenizer déjà fixé. Préparer un corpus et ajuster un tokenizer relèvent de la construction du modèle, pas de chaque requête.
+- Une séquence plus longue consomme davantage de budget de contexte et peut augmenter le calcul. Le nombre de tokens, seul, ne mesure ni la qualité linguistique ni la qualité aval.
 
 ## Vérifier de mémoire {#revision-check}
 
