@@ -40,7 +40,7 @@ La première histoire est publiée ; la deuxième est accessible sous forme d’
 
 <div class="advent-calendar-grid" aria-label="Calendrier de l’Avent 2026, 24 cases numérotées dans l’ordre des jours">
   <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Jour 1, disponible : Pourquoi le mot « je » revient-il si souvent ?">
-  <span class="advent-door__top"><span>1er décembre</span><span class="advent-door__status">Disponible</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Pourquoi le mot « de » revient-il si souvent ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Loi de Zipf · 15 min</span><strong>Ouvrir ↗</strong></span>
+  <span class="advent-door__top"><span>1er décembre</span><span class="advent-door__status">Disponible</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Pourquoi le mot « je » revient-il si souvent ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Loi de Zipf · 15 min</span><strong>Ouvrir ↗</strong></span>
   </a>
   <a class="advent-door advent-door--open advent-door--language" href="surprisal-information-content.qmd" aria-label="Jour 2, aperçu disponible : Combien de bits contient la surprise d’un événement ?">
   <span class="advent-door__top"><span>2 décembre</span><span class="advent-door__status">Aperçu · relecture à venir</span></span><span class="advent-door__number">02</span><span class="advent-door__title">Combien de bits contient la surprise d’un événement ?</span><span class="advent-door__bottom"><span class="advent-door__topic">Langage & information</span><span>Information propre · Surprisal · 15 min</span></span>
@@ -128,7 +128,7 @@ Les quatre couleurs discrètes repèrent les grands rayons thématiques ; elles 
 - **Mécanismes, calcul et optimisation** : attention, causalité, résidus, normalisation et rétropropagation.
 - **Recherche, généralisation et systèmes** : décodage, double descente, lois d’échelle, RAG et quantification.
 
-Chaque histoire part d’une question singulière, rend le raisonnement visible, examine ses limites et propose une expérience à emporter. Comptez environ **10 minutes par histoire**, hors lectures complémentaires.
+Chaque histoire part d’une question singulière, rend le raisonnement visible, examine ses limites et propose une expérience à emporter. Comptez environ **15 minutes par histoire**, hors lectures complémentaires.
 
 ## Où en est l’édition ?
 
