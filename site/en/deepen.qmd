@@ -41,18 +41,27 @@ Each entry answers a more specific question: why a mechanism works, under which 
 
 | Your question | Domain |
 |---|---|
+| How do language models represent, predict, and generate text? | [Language modeling](#language-modeling) |
 | How does a specialized architecture change information flow? | [Attention, position, and architectures](#architectures-and-mechanisms) |
-| How can text representation be designed and evaluated? | [Text and tokenization](#text-and-tokenization) |
+| How do corpora and tokenizers shape model inputs? | [Text, corpora, and tokenization](#text-and-tokenization) |
 | Which mathematical tools help analyze representations? | [Mathematical tools and geometry](#mathematical-tools-and-geometry) |
-| How are probabilities, the learning objective, and gradients connected? | [Probabilistic formalization and the training chain](#probabilistic-foundations-and-training) |
+| How are probabilities, objectives, and optimization connected? | [Probabilistic formalization and the training chain](#probabilistic-foundations-and-training) |
 | How are outputs produced, and what resources do they require? | [Inference and efficiency](#inference-and-efficiency) |
 | What can evidence tell us about scale and model capabilities? | [Scale and research questions](#scale-and-research-questions) |
 
-## Attention, position, and architectures {#architectures-and-mechanisms}
+## Language modeling {#language-modeling}
+
+This collection brings together deep dives into language models: text representation, architectures, probabilistic formalization, learning, inference, and research findings. It includes two kinds of pages: technical companions to selected calendar stories, and standalone investigations whose question, depth, or empirical scope does not fit a fifteen-minute story.
+
+The calendar keeps one central, self-contained story; it should not absorb long derivations, research comparisons, or reference dossiers. Those materials remain available here, with a link from the story when they extend it. The categories below are discovery areas, not a mandatory reading order.
+
+### Attention, position, and architectures {#architectures-and-mechanisms}
 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
 **Start here:** begin with [scaled dot-product attention](scaled-dot-product-attention.qmd); the variants and derivations below are optional extensions.
+
+**Related core lesson:** [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.qmd) — compares the three main configurations and their information flow; this Understand lesson is not a specialist deep dive.
 
 - [Why scale attention scores?](attention-score-scaling.qmd) — dot-product variance under Gaussian assumptions, softmax concentration, and the limits of the $\sqrt{d_k}$ factor.
 - [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.qmd) — formalizing accessible context, masks, and hidden-state evolution.
@@ -66,31 +75,31 @@ Each entry answers a more specific question: why a mechanism works, under which 
 
 Specialized variants do not enter the core route merely because a recent model uses them. Their necessity for general understanding must be demonstrated.
 
-### Resources focused on sinusoidal positional encodings
+#### Resources focused on sinusoidal positional encodings
 
 - [Vaswani et al. (2017), section 3.5](https://arxiv.org/abs/1706.03762) — primary source for the formula, frequencies, and mathematical motivation.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) — visualization of positional signals; distinguish the initial concatenated illustration from the paper's interleaved formula.
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/) — annotated PyTorch code connecting the formula to its implementation.
 - [Stanford — *Transformers for Signal Prediction*](https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf) — signal-oriented treatment of logarithmic frequencies and wavelengths.
 
-### Complementary resources for understanding Transformers {#transformer-resources}
+#### Complementary resources for understanding Transformers {#transformer-resources}
 
 These resources offer visual explanations, the original architectural formulation, or implementation examples. They complement LLM Lab's conceptual lessons; they are neither a parallel learning path nor prerequisites.
 
-#### Building intuition with visualizations
+##### Building intuition with visualizations
 
 - [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/): an animated explanation of the system, from embeddings through Transformer blocks to logits and generation.
 - [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/): a focused visual explanation of attention, masking, multiple heads, and cross-attention.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): a step-by-step visual explanation of the **original encoder–decoder Transformer**. It illuminates the 2017 design but does not represent all modern GPTs.
 - [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): a visual presentation more directly related to decoder-only GPT-style models.
 
-#### Connecting equations to an implementation
+##### Connecting equations to an implementation
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the primary paper describing the original Transformer formulation. It presents an encoder–decoder architecture; GPT is a later decoder-only family.
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/): an executable, annotated implementation tied to the original paper. It helps connect equations to code, but its architecture and training choices do not define all modern LLMs.
 - [PyTorch — scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): the API contract of one operation, not a full explanation or implementation of a Transformer.
 
-#### Optional books and courses
+##### Optional books and courses
 
 - [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [the source repository](https://github.com/rasbt/LLMs-from-scratch): a book with accompanying code covering data, attention, GPT implementation, pretraining, and fine-tuning. Use it as a substantial reference, not as the mandatory order of this site.
 - [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): advice on first building a big-picture understanding, then reading alongside code.
@@ -98,7 +107,7 @@ These resources offer visual explanations, the original architectural formulatio
 
 These resources are complementary, not interchangeable: visualizations build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract.
 
-## Text and tokenization
+### Text, corpora, and tokenization {#text-and-tokenization}
 
 **Guiding question:** how does a character string become a discrete sequence compatible with a model, and how should representation choices be evaluated?
 
@@ -108,9 +117,58 @@ The main learning path starts with [From text to tokens](text-data.qmd). The map
 
 ### Language statistics
 
-- [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — rank-frequency distributions, long tails, empirical fitting, and limits of interpretation.
+- [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — the calendar story: build a corpus, read a rank–frequency relation, and understand its limits.
+- [Beyond Zipf’s law: data, uses, and limits](zipf-law-deep-dive.qmd) — its companion deep dive: Zipf–Mandelbrot, cross-linguistic comparisons, history, applications, and interpretive caveats.
 
-These routes are reading suggestions, not prerequisites. The strategies page owns the mechanism explanations; the design-and-evaluation page owns comparative criteria and evidence.
+### Tokenization and evaluation
+
+- [Unicode, UTF-8, and text normalization](unicode-text.qmd) — code points, bytes, and normalization before tokenization.
+- [Tokenization strategies](tokenization-strategies.qmd) — BPE, WordPiece, Unigram, and encoding conventions.
+- [Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd) — vocabulary, sequence-length, and system-cost trade-offs.
+- [Evaluating tokenizers: costs, performance, and multilingual equity](tokenizer-multilingual-evaluation.qmd) — empirical findings, metrics, cross-language comparisons, and protocol limitations.
+
+These routes are reading suggestions, not prerequisites. Mechanism, design, and evaluation pages have distinct scopes; their links do not imply that one metric or strategy is sufficient to select a tokenizer.
+
+### Probabilistic formalization and the training chain {#probabilistic-foundations-and-training}
+
+**Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
+
+**Start here:** begin with [likelihood](likelihood.qmd) and [loss](loss.qmd); the deep dives connect these objects without conflating them.
+
+- [Self-information and surprisal](surprisal-information-content.qmd) — event information, conditional surprisal, and the chain rule; distinguish an observed score from predictive entropy.
+- [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
+- [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
+- [Score centering in off-policy RL](score-centering.qmd) — correcting policy-gradient drift when sampler and trainer distributions differ.
+
+**Related core lesson:** [From a base model to an assistant: post-training](post-training.qmd) — an Understand lesson on parameter adaptation, distinct from the mathematical deep dives above.
+
+The core route's canonical pages remain responsible for local definitions of likelihood, entropy, cross-entropy, loss, and gradients. These deep dives connect or generalize those concepts without replacing them.
+
+### Inference and efficiency {#inference-and-efficiency}
+
+**Guiding question:** how does a model use context, select outputs, and consume resources?
+
+**Start here:** begin with [autoregressive generation](generation.qmd); explore advanced strategies and costs only when your question calls for them.
+
+- [Advanced decoding strategies](decoding-strategies.qmd) — distribution transformations and sequence search.
+- [Computational complexity and parallelism in LLMs](llm-computational-complexity.qmd) — compute, memory, and parallelism in training, prefill, and decoding.
+- [RAG, memory, and context transmission](rag-memory-boundaries.qmd) — trace external information through to model use.
+- [Document retrieval: indexing, retrieval, and ranking](document-retrieval.qmd) — compare retriever families, visual search, and ranking methods.
+
+The core route introduces autoregressive generation and its minimum operations. This category covers strategies and costs not needed for that first understanding.
+
+### Scale and research questions {#scale-and-research-questions}
+
+**Guiding question:** which empirical regularities and capability claims are supported by evidence?
+
+**Start here:** begin with the [LLM overview](llm-overview.qmd) and its discussion of [limitations](llm-limits.qmd) before examining research results and empirical scaling laws.
+
+- [From GPT-2 to contemporary LLM systems](llm-evolution.qmd) — a cross-cutting synthesis from scale and post-training to reasoning and tool-using systems.
+- [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.
+- [Emergence](emergence.qmd) — gradual improvement, metric-induced thresholds, and genuine discontinuities.
+- [From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis](jepa-platonic-representation.qmd) — positive-pair graphs, good versus bad views, a conditional convergence theorem, and a qualified reading of cross-modal alignment evidence.
+
+Always distinguish observations, explanatory hypotheses, and conclusions that depend on the protocol.
 
 ## Mathematical tools and geometry {#mathematical-tools-and-geometry}
 
@@ -122,6 +180,7 @@ These routes are reading suggestions, not prerequisites. The strategies page own
 - [Tensors](tensors.qmd) — dimensions, operations, and conventions.
 - [Cosine similarity](cosine-similarity.qmd) — angular measure and interpretation limits.
 - [Embedding linearity](embedding-linearity.qmd) — assumptions and empirical evidence behind linear relations in representation spaces.
+- [Kolmogorov complexity, AIXI, and computational limits](universal-artificial-intelligence.qmd) — descriptive complexity, universal induction, and decision-making under resource bounds.
 
 ### Historical perspective: from static vectors to contextualized representations
 
@@ -158,45 +217,6 @@ It is also important to distinguish three levels: a **token embedding** is the i
 For measurement tools, see [cosine similarity](cosine-similarity.qmd); for geometric relations and their empirical evidence, see [embedding linearity](embedding-linearity.qmd). For a visual introduction to a GPT input pipeline, also see [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
 
 These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
-
-## Probabilistic formalization and the training chain {#probabilistic-foundations-and-training}
-
-**Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
-
-**Start here:** begin with [likelihood](likelihood.qmd) and [loss](loss.qmd); the deep dives connect these objects without conflating them.
-
-- [Self-information and surprisal](surprisal-information-content.qmd) — event information, conditional surprisal, and the chain rule; distinguish an observed score from predictive entropy.
-- [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
-- [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
-- [Score centering in off-policy RL](score-centering.qmd) — correcting policy-gradient drift when sampler and trainer distributions differ.
-
-The core route's canonical pages remain responsible for local definitions of likelihood, entropy, cross-entropy, loss, and gradients. These deep dives connect or generalize those concepts without replacing them.
-
-## Inference and efficiency {#inference-and-efficiency}
-
-**Guiding question:** how does a model use context, select outputs, and consume resources?
-
-**Start here:** begin with [autoregressive generation](generation.qmd); explore advanced strategies and costs only when your question calls for them.
-
-- [Advanced decoding strategies](decoding-strategies.qmd) — distribution transformations and sequence search.
-- [Computational complexity and parallelism in LLMs](llm-computational-complexity.qmd) — compute, memory, and parallelism in training, prefill, and decoding.
-- [RAG, memory, and context transmission](rag-memory-boundaries.qmd) — trace external information through to model use.
-- [Document retrieval: indexing, retrieval, and ranking](document-retrieval.qmd) — compare retriever families, visual search, and ranking methods.
-
-The core route introduces autoregressive generation and its minimum operations. This category covers strategies and costs not needed for that first understanding.
-
-## Scale and research questions {#scale-and-research-questions}
-
-**Guiding question:** which empirical regularities and capability claims are supported by evidence?
-
-**Start here:** begin with the [LLM overview](llm-overview.qmd) and its discussion of [limitations](llm-limits.qmd) before examining research results and empirical scaling laws.
-
-- [From GPT-2 to contemporary LLM systems](llm-evolution.qmd) — a cross-cutting synthesis from scale and post-training to reasoning and tool-using systems.
-- [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.
-- [Emergence](emergence.qmd) — gradual improvement, metric-induced thresholds, and genuine discontinuities.
-- [From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis](jepa-platonic-representation.qmd) — positive-pair graphs, good versus bad views, a conditional convergence theorem, and a qualified reading of cross-modal alignment evidence.
-
-Always distinguish observations, explanatory hypotheses, and conclusions that depend on the protocol.
 
 ## Classifying a new topic
 
