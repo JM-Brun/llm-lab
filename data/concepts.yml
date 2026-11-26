@@ -685,7 +685,7 @@ concepts:
       fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité."
       en: "Information associated with an observed event, equal to the negative logarithm of its probability."
     domains: [probabilistic-foundations-training]
-    resources: [fr/surprisal-information-content, en/surprisal-information-content, fr/experience-information-theory, en/experience-information-theory, fr/entropy, en/entropy, fr/revision-entropy, en/revision-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
+    resources: [fr/entropy, en/entropy, fr/revision-entropy, en/revision-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
   - id: predictive-compression
     importance: supporting
     labels: {fr: "Compression prédictive", en: "Predictive compression"}
