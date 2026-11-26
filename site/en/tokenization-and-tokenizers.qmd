@@ -52,7 +52,7 @@ flowchart TB
   D -. "compatible tokenizer" .-> G
 ```
 
-Corpus preparation and tokenizer training belong to the [Build path](build-path.qmd). Encoding a prompt does not relearn the vocabulary on every request.
+Corpus preparation and tokenizer training belong to the [Build path](build-path.qmd). Encoding a prompt does not relearn the vocabulary on every request. **Training a tokenizer is not training the LLM's weights**: it fits a discrete representation from a corpus and then freezes it; neural-model training subsequently uses that interface.
 
 ## Map of questions
 
