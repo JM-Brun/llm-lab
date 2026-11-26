@@ -85,6 +85,16 @@ items:
       assumptions: []
       limitations: ["Exact output depends on the tokenizer and its configuration; the examples are not universal tokenization outputs."]
     technical_assessment: {status: not-reviewed, rationale: "The extraction records the reviewed pedagogical role; no new source verification.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Why can intuitive word boundaries differ from tokenizer boundaries?"
+      explanatory_lens: "Contrastive examples using ordinary and non-prose text."
+      teaching_form: [counterexample, worked-example]
+      novelty: {level: moderate, rationale: "The examples make familiar token-boundary edge cases salient."}
+      complementarity: {level: high, rationale: "They add concrete example families to the algorithm-focused sources."}
+      pedagogical_value: {level: moderate, rationale: "They motivate inspecting actual tokenizer output."}
+      applicability: {level: high, rationale: "Useful in the introductory and strategy lessons if outputs are versioned and reproducible."}
+      redundancy: {level: moderate, rationale: "Spaces and punctuation are already covered in the canonical lesson."}
+      evidence_quality: {level: moderate, rationale: "Based on the selective pedagogical review in #147."}
     classification:
       primary_theme: text-tokenization
       tags: [topic:token-boundaries, topic:whitespace, topic:punctuation]
@@ -107,6 +117,16 @@ items:
       assumptions: []
       limitations: ["No quantitative comparison or causal experiment is supplied by this extraction."]
     technical_assessment: {status: qualified, rationale: "The project audit explicitly qualifies overly categorical causal explanations.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "How should language-dependent token counts be interpreted?"
+      explanatory_lens: "Examples that motivate measurement, paired with an explicit causal caveat."
+      teaching_form: [comparison, misconception]
+      novelty: {level: moderate, rationale: "The source supplies an accessible motivation for multilingual tokenization."}
+      complementarity: {level: high, rationale: "It motivates the research literature without replacing it."}
+      pedagogical_value: {level: high, rationale: "The caution prevents a naive language ranking or unsupported causal story."}
+      applicability: {level: high, rationale: "Useful as a bridge to controlled tokenizer evaluation."}
+      redundancy: {level: moderate, rationale: "The advanced lesson already treats multilingual evaluation."}
+      evidence_quality: {level: moderate, rationale: "The review is selective and no quantitative experiment is extracted."}
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation]
