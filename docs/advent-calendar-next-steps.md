@@ -24,11 +24,13 @@ The concept registry, computational graph, guided-route optional pages, page map
 
 **Validation status (2026-11-26):**
 - Python quality and page-metadata validation pass.
-- Full Quarto site rendering and local-link checks pass in [run #45803272644](https://github.com/JM-Brun/llm-lab/actions/runs/45803272644); the FR/EN browser review is still running.
-- The test suite currently has 828 passing tests and 6 failures, all caused by stale tracked generated map-list, map-data, and guided-route fragments. The same Quarto run has produced the refreshed fragments as an Actions artifact; they must be committed before CI can pass.
+- Full Quarto site rendering and local-link checks passed in [run #45803272644](https://github.com/JM-Brun/llm-lab/actions/runs/45803272644). The FR/EN browser review was interrupted when the branch was synchronized and must be rerun.
+- The test suite produced 828 passes and 6 failures, all caused by stale tracked generated map-list, map-data, and guided-route fragments. The Quarto run produced refreshed fragments as an Actions artifact; they still need to be committed.
+- Python quality and page-metadata validation passed.
 - No novice-reader timing or comprehension review has yet been performed. The displayed 15-minute estimates remain editorial estimates, not observed measurements.
+- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) has been returned to draft until the generated fragments are refreshed and the full validation suite passes.
 
-Do not merge #1695 until the generated fragments are refreshed and the complete CI/browser review passes.
+Do not mark #1695 ready for review or merge until the generated fragments are committed and CI/browser review passes.
 
 ## 1. Current state — verified (updated 2026-11-24)
 
