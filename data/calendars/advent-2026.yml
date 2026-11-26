@@ -24,8 +24,8 @@ days:
     id: zipf-law
     tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1653"
     door:
-      fr: "Pourquoi le mot « de » revient-il si souvent ?"
-      en: "Why does the word “the” appear everywhere?"
+      fr: "Pourquoi le mot « je » revient-il si souvent ?"
+      en: "Why does the word “I” appear so often?"
     question:
       fr: "Quelle régularité statistique se cache derrière le classement des fréquences lexicales ?"
       en: "What statistical regularity hides behind word-frequency rankings?"
