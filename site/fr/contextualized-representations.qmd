@@ -116,8 +116,8 @@ Fixons une position $i$, les paramètres du modèle et le token présent à cett
 | Expérience | Modification | L'état à la position $i$ peut-il changer ? |
 |---|---|---|
 | A — référence | Aucun changement | Non : c'est le point de comparaison |
-| B — passé modifié | Un token situé strictement avant $i$ change | Oui : le contenu accessible à (i) est modifié |
-| C — futur modifié | Un token situé strictement après (i) change | Non, dans un GPT causal correctement masqué |
+| B — passé modifié | Un token situé strictement avant $i$ change | Oui, potentiellement : une entrée consultable a changé |
+| C — futur modifié | Un token situé strictement après $i$ change | Non, dans un GPT causal correctement masqué |
 
 Cette comparaison est plus précise que dire simplement que « le contexte change le sens ». Elle identifie **quel contexte** peut intervenir dans le calcul d'un état donné. Le résultat suppose que l'on compare la même position, avec les mêmes paramètres et le même mécanisme causal.
 
