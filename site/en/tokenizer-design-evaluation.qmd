@@ -87,8 +87,6 @@ Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on Engl
 
 ## 2. System cost: sequences, vocabulary, and compute
 
-## 3. Choosing under constraints
-
 Imagine an assistant that processes documents in several languages, with a limited context window and a latency constraint. The tokenizer that produces the fewest tokens on average is not necessarily the best choice: we need to know which cost decreases, which cost increases, and for which users.
 
 The trade-off becomes concrete when sequence length is considered alongside vocabulary-dependent cost. Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
