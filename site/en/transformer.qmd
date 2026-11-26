@@ -72,7 +72,7 @@ This second diagram answers a different question: it places the network in the c
 
 ## 1. From input IDs to the first block
 
-The previous lessons established how text becomes a sequence of IDs, then how those IDs become vectors to which the architecture adds positional information. The first block therefore receives a sequence of representations, not raw text. In the reference GPT, token and positional embeddings are added; with RoPE, positional information enters through transformations of queries and keys. The details remain in the lessons on [embeddings](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd).
+The previous lessons established how text becomes a sequence of IDs, then how those IDs become vectors to which the architecture adds positional information. The first block therefore receives a sequence of representations, not raw text. In the project GPT with additive absolute positional embeddings, token and position embeddings are added before the first block. This is not a universal rule: with RoPE, positional information acts on queries and keys after projection, inside attention. The details remain in the lessons on [embeddings](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd).
 
 token IDs → initial representations → first-block input
 
