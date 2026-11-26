@@ -155,9 +155,7 @@ La suite du parcours examine séparément les objets que cette leçon vient de d
 
 
 
-### Deux usages, deux parcours {#deux-usages-deux-parcours}
-
-À l'inférence, le tokenizer est déjà fixé avec le modèle et encode le prompt. Pour construire un modèle, la [préparation du corpus](corpus-preparation.qmd) documente les données et le protocole de partitionnement ; les [exemples d'entraînement](training-examples.qmd) montrent ensuite comment le flux d'IDs devient des fenêtres, des cibles décalées et des masques. Ce sont des étapes du parcours Build, distinctes de l'encodage d'une requête.
+<span id="deux-usages-deux-parcours"></span>
 
 ### Choisir un approfondissement {#frontières-entre-les-pages}
 
