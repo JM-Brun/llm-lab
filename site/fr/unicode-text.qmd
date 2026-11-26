@@ -15,7 +15,7 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["fr/deepen"]
+  parents: ["fr/tokenization-and-tokenizers"]
   children: []
 related: ["fr/text-data"]
 tags: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:fr", "status:published"]
