@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, la page d'exercices dédiée et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
+      note: "Le rappel, le tableau des représentations et la comparaison contrôlée passé/futur distinguent lookup, position et contexte accessible ; les détails des sous-couches et l’enquête SAE restent dans l’approfondissement."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
