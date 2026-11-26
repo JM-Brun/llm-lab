@@ -52,7 +52,7 @@ Non. Le masque causal interdit à cette position de consulter le futur. Une modi
 
 </details>
 
-[Prévoir quel changement de token peut modifier l’état courant et la perte](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+[Prévoir quels changements peuvent modifier l’état courant](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). La dernière question de l’exercice, consacrée au scoring et à la perte, est à reprendre après les leçons correspondantes.
 
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
