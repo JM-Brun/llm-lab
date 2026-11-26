@@ -1,7 +1,7 @@
 # LLM Lab architecture — implementation backlog and session handoff
 
-**Status:** canonical inventory reconciled in this branch; specialist implementation and learner-validation work remains  
-**Date:** 2026-11-23  
+**Status:** canonical inventory reconciled; five-space vocabulary aligned; specialist implementation and learner-validation work remains  
+**Date:** 2026-11-26  
 **Parent architecture:** [LLM Lab knowledge and learning ecosystem architecture](llm-lab-knowledge-learning-architecture.md)
 
 This document translates the architecture into bounded work. It is deliberately not a claim that every item is missing: existing contracts, code and open issues must be inspected before duplicate work is created. Update this handoff as tasks are completed, superseded or linked to existing issues/PRs.
@@ -21,7 +21,7 @@ Do not treat “not found in this bounded review” as proof of absence.
 
 ## 1.1 Verified implementation update — 2026-11-23
 
-This snapshot is reconciled against current `main`, the cited merged PRs, current specialist issues, and the open Q/K/V practice pilot. It supersedes the initial architecture-only status table.
+This is the historical inventory snapshot at main `f820869` (2026-11-23). Its mutable counts are superseded by the direct current-main refresh in §1.4; its implementation and ownership notes remain useful where not superseded.
 
 | Area | Canonical owner / verified implementation | Current maturity and remaining boundary |
 |---|---|---|
@@ -33,28 +33,81 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 | Practice & experiment | 45 dedicated exercise pages per language; existing practice catalogue/navigation; page-level related links and explicit heading anchors. #1512 owns the complete lesson↔companion audit. | The Q/K/V pilot is documented in [practice-activity-model-pilot.md](practice-activity-model-pilot.md) and merged in PR #1558: bilingual `page_id#anchor` identities, lesson→hub→collection navigation and regression tests. Python quality, test suite, Quarto render/browser audit and secret scanning pass on the final PR head; the targeted browser harness covers nested companion pages, visible return/collection links, the learner-facing self-check heading and keyboard disclosure. The French typographic-apostrophe false negative was fixed and the fresh full-site/browser audit passed. This validates the technical pilot, not learner value or scale. The full 45-pair visibility/content/parity audit and learner validation remain open. No global activity registry is justified by this pilot. |
 | Build | `docs/learning-path.md`, G0–G9 milestones, implementation modules/tests and `data/resources.yml`. | Code/resource identity and module tests exist. There is no single canonical machine-readable cross-graph Build dependency model or complete milestone-to-evidence validator. Do not infer Build dependencies from Understand order. #78 retains ownership. |
 | Computation | `data/computational-graph.yml`, canonical computational-spine document, graph validator/tests and rendered Mermaid/JSON projections. | Implemented as a distinct graph. The shared conditional prediction and generation/scoring/training branches remain separate; Q/K/V and attention remain inside each Transformer block. Remaining reader-facing evidence is tracked in #584. |
-| Sources and provenance | `data/sources.yml`, `data/extractions/*.yml`, source catalogue validator and source-lineage documentation; opt-in ProjectIndex evidence adapter and `cross_graph_query.py`. | Verified against main snapshot and source-coverage report recorded in #1306 (2026-11-21): 142 unique source records, 100 extraction YAML files, 520 atomic extraction items, zero extraction filenames absent from the catalogue, and 42 catalogue IDs without a matching extraction filename. The earlier 489-item figure belongs to the 2026-11-19 / 96-file snapshot and is superseded. There are 44 explicit collection decisions (42 non-empty memberships and 2 explicit empty lists) and 98 undecided. The item count is not a substitute for the separate full-corpus locator-quality audit. These are different queues; neither gap count is an instruction to create empty extractions or infer membership. |
+| Sources and provenance | `data/sources.yml`, `data/extractions/*.yml`, source catalogue validator and source-lineage documentation; opt-in ProjectIndex evidence adapter and `cross_graph_query.py`. | Direct read of main `f8e45989` (2026-11-26): 150 source records and 4 declared collection identities. The source file has 50 explicit collection decisions (48 non-empty, 2 explicit empty) and 100 records without a decision. The last independently verified extraction/join snapshot remains #1306 (2026-11-21): 100 extraction YAML files, 520 atomic items, zero extraction filenames absent from the catalogue and 42 catalogue IDs without a matching extraction filename. Do not present those dated extraction/join counts as refreshed for current main. The full-corpus locator-quality audit remains separate. These queues must not be conflated or used to infer missing extractions or collection membership. |
 | Historical genealogy | `data/history-pilot.yml`, history validator, renderer and rendered checks. | Bilingual historical projection is implemented. Historical events are not yet traversable through `cross_graph_query.py`; chronology must not be treated as causal influence. |
 | Editorial collections | 2026 independent-story editorial contract and bilingual Quarto story sources. PR #1551 approved the redesign; PR #1560 merged the reusable story template, Day 06 FR/EN source drafts, source dossier and original SVG; PR #1563 corrected the math notation and sharpened frequency/source-scope definitions. | Day 06 remains `status:planned` and outside the render list. The pilot has not passed Quarto rendering, desktop/mobile visual review, accessibility or novice review. No generalized edition manifest or membership validator exists; do not create one before pilots pass. |
 | Project Intelligence | Read-only `ProjectIndex`; lightweight default and opt-in evidence adapter; concept coverage matrix, Markdown/JSON report and concept-centred `cross_graph_query.py`. PR #1535 validates five real concept paths and explicit evidence gaps. | Partial. The matrix has an explicit state vocabulary (`present`, `missing`, `not_applicable`, `not_registered`, `needs_review`; revision adds `not_assessed`) but does not cover every graph family. Source/computation adapters are opt-in; complete Build/computation/source/Practice concept mappings remain `not_registered`. Diagnostics are limited to bilingual association findings and explicit evidence gaps; a general `stale`/freshness model, history/decision traversal, generic cross-family impact analysis and recommendations are not implemented. #1233 owns broader evidence-aware discovery and decision traceability. |
 | Linked-data export | Derived JSON-LD from concepts, pages and resources; export tests and rendered checks. | Bounded export only. It is not a serialization of every graph family and does not provide complete claim-level PROV-O provenance. |
 
-**Additional verified registry counts at main `f820869` (2026-11-23):** 102 concepts, 12 relation types and 124 typed concept edges; 6 domains; 57 computational nodes, 75 computational edges, 7 branches and 8 named views; 9 Understand stages; 5 non-page implementation resources; 17 historical events and 20 historical source records. Page-level migration counts remain scoped to PR #1550: 184 associated page records, 760 affected page-graph edges, 5 associated non-page resources and 102 associated concept IDs, with zero unresolved IDs. These counts describe distinct registries and projections and must not be added together as if they shared a grain.
+**Historical counts at main `f820869` (2026-11-23), superseded where refreshed below:** 102 concepts, 12 relation types and 124 typed concept edges; 6 domains; 57 computational nodes, 75 computational edges, 7 branches and 8 named views; 9 Understand stages; 5 non-page implementation resources; 17 historical events and 20 historical source records. Page-level migration counts remain scoped to PR #1550: 184 associated page records, 760 affected page-graph edges, 5 associated non-page resources and 102 associated concept IDs, with zero unresolved IDs. These counts describe distinct registries and projections and must not be added together as if they shared a grain.
 
 **Counting and evidence rule:** resolved references and passing structural validators prove integrity only. They do not prove that an explanation is complete, a source supports a claim, an activity is pedagogically sufficient, or a calendar story is independent and understandable.
 
 **Status vocabulary:** use `implemented and validated`, `implemented; validation incomplete`, `documented/proposed`, `deferred`, `superseded` and `not assessed`. Never use a single “complete” label for source inspection, CI, rendering, accessibility and learner outcomes.
 
+## 1.2 Five-space vocabulary reconciliation — 2026-11-26
+
+The architecture now uses one consistent product-level vocabulary:
+
+1. **Main learning path (Understand)** — the guided conceptual route and its attached revision/retrieval resources.
+2. **Build from scratch (Build)** — implementation milestones, code, tests and implementation evidence.
+3. **Practice & experiment** — dedicated questions, exercises, coding tasks and experiments.
+4. **Deepen** — optional, non-linear mathematical, scientific, architectural and research extensions.
+5. **Stories** — independent editorial stories and bounded collections/editions.
+
+**Review is not a sixth top-level space.** It is the consolidation/retrieval dimension of the Main learning path. Its specialized aid→lesson relations, coverage assessments and stage-by-stage reader-facing projection remain intact and continue to be owned by #1541. This vocabulary change does not remove the Review projection or weaken its acceptance criteria.
+
+The distinction is intentional:
+- **Top-level space** answers where a learner goes and what kind of experience is offered.
+- **Route** describes a recommended progression inside a space (for example, the nine-stage Understand route).
+- **Resource/revision role** describes material that supports a lesson (for example, a flashcard or synthesis).
+- **Projection** is a generated reader-facing view of canonical records (for example, the Review route).
+
+No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. The existing page-based `revision_role`/`revision_of` contract and generated Review route remain revision semantics within the Main learning path; `review` is not a page `destination` value.
+
+## 1.3 Epistemic and pedagogical entity classification — 2026-11-26
+
+The shared-foundation inventory now separates the following roles rather than treating them as interchangeable record types:
+
+- **Concept / notion:** durable, reusable referent owned by `data/concepts.yml`; “notion” is a prose synonym.
+- **Idea:** informal umbrella term, not a canonical record kind. Resolve it into a concept, claim, mechanism, derivation, pedagogical contribution, open question, or another explicit extraction kind.
+- **Intuition / mental model / analogy:** source-local pedagogical contribution, retained in extraction items and source-local pedagogical models; it is not automatically a concept, claim or evidence.
+- **Claim:** attributed proposition retained as a source-scoped extraction item with locator, scope, voice/provenance where needed, evidence fields and separate verification. No general-purpose canonical claim registry is established.
+- **Evidence:** material grounding or challenging a claim, retained with type, locator, confidence, scope and provenance. It is distinct from the claim, and citation is not corroboration.
+- **Relation:** family-owned typed assertion between identified endpoints. Concept, page, source-local, source-lineage, route, computation, Build, revision and Practice relations keep distinct semantics; no universal edge registry.
+- **Pedagogical objective / outcome:** owned by the relevant experience or source reconstruction. Understand objectives/outcomes live in the guided route, Build goals/evidence in the Build path, and source-local outcomes retain `declared`/`inferred` status. None proves learner mastery.
+
+[PR #1712](https://github.com/JM-Brun/llm-lab/pull/1712) merged this classification into `docs/knowledge-architecture-interoperability.md`. The architecture table was aligned in this branch to separate extracted claims from evidence and to avoid assigning aliases/provenance fields to the current concept schema.
+
+**No new registry or schema is justified by this classification.** Remaining specialist boundaries stay with #512 (claim provenance/interoperability), #1233 (typed cross-graph bridges), #416 (concept relation semantics), #1541 (revision route), #1512 (Practice), and #78 (Build). Use the merged classification as the boundary for subsequent work; do not create duplicate tasks or promote source-local records automatically.
+
+## 1.4 Current canonical count refresh — 2026-11-26
+
+Direct reads of the canonical YAML files on main `6eaedf` give the following current record counts. They are structural counts, not quality or completeness scores.
+
+| Canonical owner | Current count | Qualification |
+|---|---:|---|
+| `data/concepts.yml` | 125 concepts; 147 typed edges; 12 declared relation types | The concept validator remains the semantic integrity boundary; edge review and scientific correctness are separate. |
+| `data/domains.yml` | 6 domains | Concept membership is many-to-many classification, not a semantic relation. |
+| `data/computational-graph.yml` | 7 branches; 57 nodes; 67 edges; 8 views | The computational graph is distinct from the concept graph and learning route. |
+| `data/guided-route.yml` | 9 stages; 20 lesson contracts | The Understand route remains separate from Build dependencies and other graph families. |
+| `data/resources.yml` | 5 non-page resources | Current seed remains implementation resources only. |
+| `data/sources.yml` | 150 source records | Direct YAML count; extraction coverage has not been refreshed against this expanded catalogue. |
+| `data/source-collections.yml` | 4 collection identities | Source records currently contain 50 explicit membership decisions (48 non-empty, 2 explicit empty) and 100 records without a decision. This is a direct field count, not a replacement for #1306's validator/report ownership. |
+| `data/history-pilot.yml` | 17 events; 20 source records | Historical pilot, not an exhaustive chronology. |
+
+The last independently verified extraction inventory remains the #1306 snapshot at commit `14d8c7e` (2026-11-21): 100 extraction files and 520 atomic items. It also recorded 42 catalogue IDs without matching extraction files and zero orphan extraction filenames. Since the source catalogue now contains 150 records, those extraction/join counts must be refreshed before being described as current. The locator-quality audit remains a separate gate.
+
 ## 2. Priority summary
 
 | Priority | Workstream | Outcome |
 |---|---|---|
-| P0 | Reconcile architecture documentation and status | One accurate entry point; no stale claims |
+| P0 | Reconcile architecture documentation and status | One accurate entry point; five top-level spaces and nested revision dimension |
 | P0 | Inventory and audit canonical registries | Verified ownership, IDs, relations and migrations |
-| P1 | Revision model | Enforced aid-to-lesson relations and honest coverage status |
+| P1 | Main-path revision support | Enforced aid-to-lesson relations and honest coverage status, surfaced within the Main learning path |
 | P1 | Practice model | Stable activity identities and explicit links without bloating lessons |
 | P1 | Cross-graph interoperability | Consistent relation contracts and referential validation |
-| P1 | Calendar/collection model | Reusable edition model independent of Understand |
+| P1 | Stories / collection model | Reusable edition model independent of the Main learning path |
 | P1 | Project intelligence | Explainable multi-system coverage diagnostics |
 | P2 | Build/resource model expansion | Add resource kinds only when concrete use cases require them |
 | P2 | Learner-facing projections | Accessible cross-system discovery and useful views |
@@ -70,8 +123,10 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 - [x] Update the architecture validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence.
 - [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
 - [x] Define and use a clear status vocabulary: implemented and validated, implemented with validation incomplete, documented/proposed, deferred, superseded and not assessed.
+- [x] Align the product-level vocabulary on five top-level spaces: Main learning path, Build from scratch, Practice & experiment, Deepen and Stories; nest Review/revision under the Main learning path while preserving its specialized contracts and #1541 ownership.
+- [x] Separate canonical concepts, source-scoped extracted claims/contributions, evidence/verification and experience-specific pedagogical objectives in the shared-foundation inventory; do not create generic idea, claim, evidence or relation registries.
 
-**Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model.
+**Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model; the architecture does not describe Review as a sixth top-level space.
 
 ### P0 — Verify the shared knowledge foundation
 
@@ -128,7 +183,7 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 **Acceptance:** graph inventory and cross-reference validator; tests demonstrate that one concept can be referenced by several graph families without conflating edge semantics.
 
-### P1 — Generalize editorial collections and calendar editions
+### P1 — Generalize Stories collections and calendar editions
 
 - [x] Reconcile the old 2026 calendar prototype with the independent-story editorial decision; preserve the old material as historical and keep the new Day 06 draft source-only.
 - [ ] Complete the inventory/migration map required by docs/advent-calendar-next-steps.md.
@@ -235,7 +290,7 @@ The architecture program is not complete merely because graph families have name
 
 ### Deferred validation commands
 
-The standard CI workflow skips the opt-in full-corpus extraction locator inventory and concept-registry scale benchmark. The source-coverage report records 520 atomic items across 100 extraction files (#1306), but a current full-corpus locator-quality run remains to be completed or retrieved. Do not reuse the historical 489-item / 96-file locator report as current evidence.
+The standard CI workflow skips the opt-in full-corpus extraction locator inventory and concept-registry scale benchmark. The last independently verified source-coverage report records 520 atomic items across 100 extraction files (#1306, 2026-11-21). The catalogue now contains 150 source records on main, so refresh extraction coverage, source/extraction joins and locator quality before asserting current corpus totals. Do not reuse the historical 489-item / 96-file locator report.
 
 ### Merge and migration guardrails
 

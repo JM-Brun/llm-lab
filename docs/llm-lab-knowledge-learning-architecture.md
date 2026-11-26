@@ -1,7 +1,7 @@
 # LLM Lab knowledge and learning ecosystem architecture
 
 **Status:** architectural synthesis and target contract  
-**Date:** 2026-11-23  
+**Date:** 2026-11-26  
 **Scope:** shared knowledge foundation, specialized learning systems, graph interoperability, reader-facing experiences and editorial projects.
 
 **Parent documents:** [Information architecture](information-architecture.md), [Knowledge architecture interoperability](knowledge-architecture-interoperability.md), [Knowledge graph standards](knowledge-graph-standards.md), [Project intelligence layer](project-intelligence-layer.md).
@@ -10,16 +10,17 @@ This document explains how the repository's existing systems fit together. It is
 
 ## 1. Product definition
 
-LLM Lab is a bilingual, self-contained learning and experimentation environment about large language models. It combines several complementary products:
+LLM Lab is a bilingual, self-contained learning and experimentation environment about large language models. Its reader-facing structure has **five top-level spaces** over one shared knowledge foundation:
 
-1. **Understand:** a curated learning journey synthesizing strong existing explanations and sources.
-2. **Review:** a system for consolidating and retrieving knowledge through summaries, revision sheets, flashcards, visual recall and self-assessment.
-3. **Practice & experiment:** a growing collection of questions, exercises, coding tasks and controlled experiments.
-4. **Build:** an implementation-oriented path for inspecting, testing and progressively constructing a small LLM.
-5. **Deepen:** a non-linear knowledge wiki for mathematical, scientific, architectural and research-level extensions.
-6. **Editorial projects:** independent collections such as seasonal/advent calendars, potentially recurring with new editions and themes.
+1. **Main learning path (Understand):** the curated, coherent journey that develops the learner's mental model of LLMs from foundations to generation and learning. Revision and retrieval resources (summaries, revision sheets, flashcards, visual recall and self-assessment) support this path; they are not a sixth top-level space or a parallel curriculum.
+2. **Build from scratch (Build):** the implementation-oriented path for inspecting, testing and progressively constructing a small LLM.
+3. **Practice & experiment:** the dedicated space for questions, exercises, coding tasks and controlled experiments.
+4. **Deepen:** the non-linear knowledge wiki for mathematical, scientific, architectural and research-level extensions.
+5. **Stories:** independent editorial stories and bounded collections such as seasonal/advent calendars, potentially recurring with new editions and themes.
 
-These are distinct learner experiences over a shared knowledge foundation. They are not six names for the same curriculum, and they should not be forced into one reading order.
+These five spaces are distinct experiences over the same shared foundation. They have different purposes and progression semantics; they must not be forced into one reading order.
+
+**Vocabulary rule:** `Understand` names the guided route within the Main learning path. `Review` names a consolidation/retrieval dimension and its supporting resources and reader-facing projection within that same space. Keep the specialized revision contracts and aid→lesson relations; do not present Review as an independent top-level destination.
 
 The repository should remain useful as a book-like, independently navigable resource. No private repository or external service is a build-time or reading dependency.
 
@@ -41,12 +42,15 @@ The shared foundation provides reusable referents. It does not own every activit
 
 | Entity | Canonical identity / current owner | Responsibility |
 |---|---|---|
-| Concept or notion | concept_id, data/concepts.yml | Language-independent meaning, bilingual labels/definitions, aliases and typed semantic relations |
+| Concept / notion | `concept_id`, `data/concepts.yml` | Durable language-independent referent; bilingual labels/definitions, project importance, domain memberships and published page references; typed concept relations are declared in the registry |
 | Knowledge domain | domain_id, data/domains.yml | Controlled scientific classification; concepts may belong to multiple domains |
 | Published page | page_id, LLM-LAB-PAGE-MAP v1 | Stable page identity, editorial metadata, language, purpose and page-level relations |
 | Non-page resource | resource_id, data/resources.yml | Independently identified artifacts such as implementation modules |
 | External source | source_id, source catalogue | Source identity, version and discovery metadata |
-| Extracted claim/evidence | extraction records and source-lineage model | Traceable statements, supporting material and integration candidates |
+| Extracted claim / contribution | `data/extractions/<source-id>.yml` item | Source-located proposition, definition, mechanism, derivation, result, limitation or pedagogical contribution, with attribution, scope and an item-level disposition where reviewed; not a canonical concept and remains source-scoped unless explicitly synthesized into published content. |
+| Evidence / verification | Extraction-item evidence and verification fields; source inspection records; source-lineage evidence pointers (target architecture) | Evidence kind, locator, confidence, scope, assumptions, limitations and, where applicable, independent verification; evidence is not the claim, and inspection completeness, evidence confidence and scientific validity are distinct. |
+| Typed relation | Owner-specific record/edge in each specialized graph family | A typed connection with family-specific endpoint kinds, direction, meaning and applicable evidence/constraint rules; there is no universal relation registry. |
+| Pedagogical objective / outcome | `data/guided-route.yml`, `docs/learning-path.md`, source-local pedagogical model | Experience-specific stage objectives, lesson outcomes, Build goals and source-declared/inferred learning outcomes; not concepts, and not evidence of learner mastery. |
 | Activity | target: stable activity_id | A question, exercise, coding task, experiment or assessment; not a concept or lesson |
 | Collection / edition | target: stable collection and edition IDs | An editorially bounded collection, such as one annual calendar edition |
 
@@ -72,17 +76,17 @@ Owns learning objectives, expected outcomes, recommended stage order, transition
 
 Canonical route: data/guided-route.yml, with page identities and metadata in the existing page map. The route is not the knowledge graph, page hierarchy or implementation dependency graph.
 
-### 4.2 Review — retrieval and consolidation
+### 4.2 Revision and retrieval — support for the Main learning path
 
-**Purpose:** help learners reconstruct, retain and check knowledge already introduced.
+**Purpose:** help learners reconstruct, retain and check knowledge introduced by the Main learning path. This is the revision dimension of that space, not a sixth top-level experience.
 
-Resource roles may include synthesis/summary, revision sheet, flashcard/active-recall prompt, visual reconstruction, retrieval question and self-assessment.
+Resource roles may include synthesis/summary, revision sheet, flashcard/active-recall prompt, visual reconstruction, retrieval question and self-assessment. These resources complement the primary lesson; they do not replace it or duplicate the dedicated Practice space.
 
 The canonical relation is an explicit aid-to-supported-lesson relation. One aid may support several lessons; one lesson may have several aids. Reverse lesson-to-aid views should be generated. Coverage sufficiency is a separate assessment from link existence. Missing assessment metadata means **not assessed**, not **no support**.
 
-The proposed contract in [revision-resource-contract.md](revision-resource-contract.md) is the starting point; its status and implementation must be reconciled before it is treated as a fully enforced schema.
+The contract in [revision-resource-contract.md](revision-resource-contract.md) and the implemented page-based ProjectIndex validation are the starting point. Non-page revision aids remain unsupported; do not imply that the contract covers them.
 
-Review is not a duplicate copy of Understand. It is a different activity over the same concepts and lessons.
+The reader-facing Review route is a projection of the same nine-stage Understand curriculum, not a second curriculum. Preserve its stage/lesson traversal, primary synthesis aids, optional stops and aid→lesson semantics under #1541.
 
 ### 4.3 Practice & experiment — application and transfer
 
@@ -112,7 +116,7 @@ May contain mathematical derivations, alternative architectures, assumptions, li
 
 Deepen is organized for discovery by question/domain, not as a second mandatory curriculum. Its page-level primary discovery domain must not be confused with multi-valued concept membership in data/domains.yml.
 
-### 4.6 Editorial collections — calendars and future projects
+### 4.6 Stories — editorial collections, calendars and future projects
 
 **Purpose:** provide a bounded editorial experience with its own theme, format, selection and navigation.
 
@@ -132,11 +136,11 @@ LLM Lab should have an ecosystem of interoperable graph families, not one univer
 | Page/navigation graph | Published pages; route, hierarchy and related-page edges | Page-map metadata; generated bilingual learning-map projection |
 | Pedagogical route graph | Lessons/stages; recommended order and justified learning prerequisites | data/guided-route.yml, docs/learning-path.md; separate from concept relations |
 | Revision relations | Page-based aids → lessons; typed role and separate lesson coverage assessment | `ProjectIndex` validates page-aid relations and assessments; `audit_revision_coverage.py` derives both directions and runs in CI. Non-page revision aids remain unsupported. See the revision-resource contract. |
-| Review route | A reader-facing projection of the same nine-stage curriculum, using primary synthesis destinations and revision aids | `guided-route.yml` + `lesson_contracts`; generated bilingual review plan and peer sidebar (PR #1549). Optional revision stops, complete flashcard inventory and manual rendered/learner review remain incomplete. |
+| Revision route (Main learning path projection) | A reader-facing consolidation projection of the same nine-stage Understand curriculum, using primary synthesis aids and revision aids; not a separate top-level space | `guided-route.yml` + `lesson_contracts`; generated bilingual review plan and peer sidebar (PR #1549). Optional revision stops, complete flashcard inventory and manual rendered/learner review remain incomplete. |
 | Practice graph | Per-lesson exercise hubs, shared collections and anchored activities; page-level lesson associations | 45 exercise pages per language are catalogued/rendered. The Q/K/V activity pilot (PR #1558, merged after Python, Quarto/browser and secret-scan success) validates bilingual `page_id#anchor` identities and lesson→hub→collection navigation. Its 120-case browser audit checks the nested FR/EN hub at desktop/mobile, including links and keyboard disclosure. Learner validation and the complete 45-pair audit remain open; no global activity registry or complete per-activity concept mapping is established. |
 | Build dependency graph | G0–G9 implementation milestones, modules, code evidence and verification dependencies | docs/learning-path.md, implementation modules and data/resources.yml. Resource/code validators exist, but no single canonical cross-graph Build dependency validator is established. |
 | Computational graph | Operations, state/data artifacts and typed computational flow | `data/computational-graph.yml`; `check_computational_graph.py` and tests/site/test_computational_graph.py; opt-in ProjectIndex evidence adapter. The shared-spine design issue #575 is closed; remaining manual screen-reader/rendered-content review is tracked in #584. |
-| Source/provenance graph | Source records, scan/integration status, extraction items, locators and evidence mappings | `check_source_catalogue.py`; opt-in `cross_graph_evidence.py` adapter and `cross_graph_query.py`. Main/source-coverage snapshot recorded in #1306 (2026-11-21): 142 source records, 100 extraction files and 520 atomic items; 42 catalogue IDs have no matching extraction filename and there are zero orphan filenames. There are 44 explicit collection decisions (42 non-empty, 2 empty) and 98 undecided. The 489-item count belongs to the earlier 96-file snapshot and is superseded. A current 100-file locator-quality audit remains separate. |
+| Source/provenance graph | Source records, scan/integration status, extraction items, locators and evidence mappings | `check_source_catalogue.py`; opt-in `cross_graph_evidence.py` adapter and `cross_graph_query.py`. Direct read of main `6eaedf` (2026-11-26) shows 150 source records and 4 declared collection identities; 50 source records have an explicit `collections` field (48 non-empty, 2 empty) and 100 have no decision. The last independently verified extraction snapshot remains #1306 (2026-11-21): 100 files and 520 items, with 42 catalogue IDs lacking an extraction filename and zero orphan filenames. Those extraction/join counts are dated evidence, not a refreshed 2026-11-26 report. A current extraction coverage and locator-quality run remains necessary. |
 | Editorial graph | Collections, editions, stories and editorial membership/order | The independent-story redesign and Day 06 FR/EN source-only draft/template are merged (PRs #1551 and #1560). The story pages remain `planned` and outside the render list; no generalized manifest or membership validator exists. |
 | Historical graph | Events, sources, dated evidence and historical relations | data/history-pilot.yml; check_history_pilot.py, render_history_pilot.py and rendered timeline checks. Not yet traversed by cross_graph_query.py. |
 
@@ -161,7 +165,7 @@ Use controlled vocabularies by entity type, with shared governance and validatio
 | Facet | Applies to | Example / owner |
 |---|---|---|
 | Editorial page type | Page | type, page metadata schema |
-| Destination / experience | Page | understand, build, deepen, practice; review only where explicitly supported |
+| Destination / experience | Page | orient, understand, build, deepen, practice, reference; revision roles are represented by `revision_role`/`revision_of`, not by a destination value |
 | Page topic key | Page | topic:<id>; page grouping key, not a concept entity |
 | Page level/status/language | Page | Existing controlled page metadata |
 | Scientific domain | Concept | domains in data/concepts.yml referencing data/domains.yml |
@@ -204,7 +208,7 @@ The following foundations should be preserved and extended:
 - docs/knowledge-architecture-interoperability.md: technology-neutral and cross-repository boundaries.
 - data/concepts.yml, data/domains.yml: shared semantic foundation.
 - LLM-LAB-PAGE-MAP v1: page identity and page graph.
-- data/guided-route.yml, docs/learning-path.md: Understand route and implementation learning path.
+- data/guided-route.yml, docs/learning-path.md: Understand route within the Main learning path, and the separate Build implementation learning path.
 - data/resources.yml: current non-page implementation resources.
 - docs/revision-resource-contract.md: partially implemented page-based aid-to-lesson relations and lesson coverage assessments; non-page revision aids remain unsupported.
 - data/computational-graph.yml, docs/canonical-computational-spine.md: computation model and branches.
@@ -221,14 +225,14 @@ The canonical owner and its validator must be explicit. A cross-graph adapter ma
 
 | Family | Canonical owner | Integrity validator / regression tests | Current projection or bridge | Explicit boundary |
 |---|---|---|---|---|
-| Concepts and domains | data/concepts.yml, data/domains.yml | site/tools/check_concept_registry.py; tests/knowledge/test_concept_registry.py | ProjectIndex, learning-map concept view, export_knowledge_graph.py | Snapshot at main `f820869` (2026-11-23): 102 concepts, 6 domains, 12 relation types and 124 typed concept edges. Typed concept relations and multi-domain membership; page tags are not concepts. |
+| Concepts and domains | data/concepts.yml, data/domains.yml | site/tools/check_concept_registry.py; tests/knowledge/test_concept_registry.py | ProjectIndex, learning-map concept view, export_knowledge_graph.py | Direct read of main `6eaedf` (2026-11-26): 125 concepts, 6 domains, 12 declared relation types and 147 typed concept edges. Typed concept relations and multi-domain membership; page tags are not concepts. |
 | Page/navigation | LLM-LAB-PAGE-MAP v1 in site/**/*.qmd | site/tools/check_page_metadata.py | page_index.py, ProjectIndex, build_learning_map.py | Hierarchy, related and suggested-route edges remain page relations; they do not imply concept semantics or prerequisites. |
 | Understand route | data/guided-route.yml and lesson_contracts | Strict Pydantic models in build_learning_map.py; guided_route_transitions.py; tests/knowledge/test_lesson_contracts.py and test_flat_curriculum_sidebar.py | Generated bilingual guided route, conceptual-focus groups and peer Review navigation | Snapshot: 9 canonical stages and 20 core lesson contracts. Route focus is a pedagogical association, not a direct concept→computation edge. |
 | Revision | Page-map revision_role, revision_of and revision_support fields | ProjectIndex._load_revision_relations; tests/knowledge/test_project_index.py; CI-invoked audit_revision_coverage.py | Generated reverse aid/lesson indexes, 50 typed aid links across 40 pages, and a coverage inventory for 46 Understand + 16 Build pages | All 62 pages currently declare integrated_sufficient with section evidence; 6 Understand pages have integrated support without a page aid and all 16 Build pages use integrated support. This is an authored assessment, not learner validation. Non-page revision aids are not supported by resources.yml. |
 | Practice | Published pages tagged destination:practice; authored related links and explicit heading anchors | check_page_metadata.py; ProjectIndex page-edge checks; bilingual page tests | Per-lesson exercise hubs, shared collections and Q/K/V activity pilot | No global activity registry. Page-level related links do not imply that every activity maps to every lesson or concept. |
 | Build | docs/learning-path.md, implementation modules/tests and data/resources.yml | check_resource_registry.py plus module-specific tests; no single Build graph validator identified | Build milestones and code/resource references | The milestone dependency model is not yet a unified machine-readable cross-graph owner. Do not infer implementation dependencies from lesson order. |
-| Computation | data/computational-graph.yml | site/tools/check_computational_graph.py; tests/site/test_computational_graph.py | render_computational_graph.py; ProjectIndex evidence adapter | Snapshot: 57 nodes, 75 computational edges, 7 branches and 8 named views. Edges describe data/operation flow; page-mediated and route-focus associations remain distinct from direct concept edges. |
-| Sources and extraction evidence | data/sources.yml and data/extractions/*.yml | site/tools/check_source_catalogue.py | include_evidence=True adapter in cross_graph_evidence.py; cross_graph_query.py; tests/knowledge/test_cross_graph_query.py | Source-coverage snapshot #1306 (2026-11-21): 142 source records, 100 extraction files and 520 atomic items; 42 catalogue IDs have no matching extraction filename and there are zero orphan extraction filenames. The current catalogue has 44 explicit collection decisions (42 non-empty, 2 explicit empty) and 98 undecided. The 489-item count belongs to the earlier 96-file snapshot. A current 100-file locator-quality audit remains separate. Only explicit item-level concept mappings create source-evidence paths. |
+| Computation | data/computational-graph.yml | site/tools/check_computational_graph.py; tests/site/test_computational_graph.py | render_computational_graph.py; ProjectIndex evidence adapter | Direct read of main `6eaedf` (2026-11-26): 57 nodes, 67 computational edges, 7 branches and 8 named views. Edges describe data/operation flow; page-mediated and route-focus associations remain distinct from direct concept edges. |
+| Sources and extraction evidence | data/sources.yml and data/extractions/*.yml | site/tools/check_source_catalogue.py | include_evidence=True adapter in cross_graph_evidence.py; cross_graph_query.py; tests/knowledge/test_cross_graph_query.py | Direct read of main `6eaedf` (2026-11-26): 150 source records, 4 declared collection identities and 50 explicit collection decisions (48 non-empty, 2 empty; 100 records without a decision). The last independently verified extraction/join snapshot remains #1306 (2026-11-21): 100 extraction files, 520 atomic items, 42 catalogue IDs without matching extraction filenames and zero orphan filenames. These are dated figures, not a refreshed current-main report. A current extraction coverage and locator-quality run remains separate. Only explicit item-level concept mappings create source-evidence paths. |
 | Non-page resources | data/resources.yml | site/tools/check_resource_registry.py; tests/knowledge/test_resource_registry.py | ProjectIndex resource associations and JSON-LD export | Snapshot: 5 implementation resources. This is not a generic activity, revision-aid or source-extraction registry. |
 | Historical genealogy | data/history-pilot.yml | site/tools/check_history_pilot.py; site/tools/render_history_pilot.py; site/tools/check_history_rendered.py | Bilingual historical timeline | Snapshot: 17 events and 20 historical source records. Chronology is not causal influence. Historical paths are not yet part of cross_graph_query.py. |
 | Editorial collections | Calendar editorial documents and authored story pages | No generalized editorial membership validator established | 2026 calendar and story pages | Calendar membership/order is editorial, not a new curriculum or concept graph. |
