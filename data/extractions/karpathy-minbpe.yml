@@ -26,6 +26,16 @@ pedagogical_model:
         description: "GPT4Tokenizer reconstructs merges and byte handling for a pretrained tiktoken encoding."
         locator: "minbpe, GPT4Tokenizer"
         inferred: false
+      - id: src-special-token-policy
+        kind: constraint
+        description: "The exercise adds explicit handling and authorization choices for reserved special tokens."
+        locator: "exercise.md, step 4"
+        inferred: false
+      - id: src-family-comparison
+        kind: comparison
+        description: "The final exercise compares byte-level BPE with other tokenizer families and points to SentencePiece."
+        locator: "exercise.md, step 5"
+        inferred: false
     edges:
       - from: src-basic-tokenizer
         type: extended-by
@@ -35,6 +45,14 @@ pedagogical_model:
         type: specialized-by
         to: src-gpt4-tokenizer
         inferred: true
+      - from: src-gpt4-tokenizer
+        type: followed-by
+        to: src-special-token-policy
+        inferred: false
+      - from: src-special-token-policy
+        type: followed-by
+        to: src-family-comparison
+        inferred: false
     interpretation: "The variants are pedagogical implementation layers, not a universal tokenizer architecture or a claim of production compatibility."
   learning_outcomes:
     - status: inferred
@@ -57,6 +75,14 @@ pedagogical_model:
       section: "GPT4Tokenizer"
       function: compatibility-case
       moves: ["Inspect the extra conventions needed to reproduce a pretrained encoding."]
+    - order: 4
+      section: "Special tokens"
+      function: control-token-policy
+      moves: ["Distinguish reserved tokens from ordinary text and make authorization policy explicit."]
+    - order: 5
+      section: "Compare tokenizer families"
+      function: transfer-and-boundary
+      moves: ["Compare byte-level BPE with other segmentation families without treating the library name as an algorithm."]
   pedagogical_strengths:
     - "Makes implementation layers and added conventions explicit."
     - "Shows why a minimal BPE core is not a complete GPT tokenizer."
@@ -92,6 +118,28 @@ items:
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "This is a useful contrast for the implementation caveat: the BPE core is only one part of tokenizer behavior."
+
+  - id: karpathy-minbpe:special-token-policy
+    kind: mechanism
+    summary: "The exercise adds reserved special-token handling as a distinct layer after the byte-level merge mechanism, with explicit choices about which special tokens may be encoded."
+    locator: {type: section, value: "exercise.md, step 4; minbpe RegexTokenizer.encode", label: "Special-token handling"}
+    evidence:
+      kind: static-code-and-exercise-inspection
+      confidence: established
+      scope: "The pinned minbpe exercise and implementation files recorded in the 2026-11-19 audit."
+      assumptions: []
+      limitations: ["The policy is specific to the inspected implementation and should not be generalized to all tokenizer APIs."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing static audit reused; no code execution.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:special-token, topic:tokenizer-pipeline]
+      concept_ids: [special-token, tokenizer]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [special-token, tokenizer]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The exercise makes explicit that reserved tokens require a policy distinct from ordinary BPE merges."
 
 canonical_mapping:
   proposed_concepts: []
