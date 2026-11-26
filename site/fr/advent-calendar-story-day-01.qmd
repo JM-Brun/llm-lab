@@ -40,7 +40,7 @@ Lisez ce texte avant de regarder les nombres :
 
 Un **corpus** est un ensemble de textes réunis pour une étude selon des critères explicites — par exemple une langue, un genre, une période et une source.
 
-Ce texte constitue notre corpus de travail. Sa narration à la première personne rend visible la fréquence de « je », mais il ne s’agit pas d’un échantillon représentatif de la langue française. Seul le récit entre guillemets est compté : la question introductive et les explications qui l’entourent sont exclues. Nous allons le normaliser, compter ses unités lexicales, classer les formes selon leur fréquence, puis comparer ce petit échantillon aux régularités observées dans des corpus beaucoup plus vastes.
+Ce récit à la première personne rend visible la fréquence de « je ». Il constitue un exemple parlant, mais pas un échantillon représentatif du français. Nous allons définir les unités comptées, établir le classement, puis confronter ce résultat aux régularités observées dans de grands corpus.
 
 ### Construire le corpus : quelles unités compter ?
 
