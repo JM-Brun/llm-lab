@@ -208,6 +208,7 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Concern | Canonical reference |
 |---|---|
 | Overall information architecture | This document |
+| Theoretical and mathematical Foundations component | [Foundations architecture](foundations-theoretical-mathematical-architecture.md) |
 | Project-wide metadata queries, coverage, diagnostics and recommendations | [Project intelligence layer](project-intelligence-layer.md) |
 | Knowledge graph implementation audit | [Implementation audit](knowledge-graph-implementation-audit.md) |
 | Domain/concept/resource knowledge graph | `data/concepts.yml`; `data/domains.yml`; `data/resources.yml` |
