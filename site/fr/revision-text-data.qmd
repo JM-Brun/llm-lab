@@ -22,7 +22,7 @@ related: []
 tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data", "level:core", "language:fr", "status:published"]
 -->
 
-[Revenir à la leçon](text-data.qmd) · [Exercices et expériences](exercises-text-data.qmd) · [Approfondir la tokenisation](tokenization-and-tokenizers.qmd) · [Plan du parcours](review-path.qmd#text-input)
+[Revenir à la leçon](text-data.qmd) · [Exercices et expériences](exercises/text-data.qmd) · [Approfondir la tokenisation](tokenization-and-tokenizers.qmd) · [Plan du parcours](review-path.qmd#text-input)
 
 ## À retenir {#revision-essentials}
 
