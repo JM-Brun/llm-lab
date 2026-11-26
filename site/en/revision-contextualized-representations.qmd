@@ -52,7 +52,7 @@ No. The causal mask prevents that position from accessing the future. A change t
 
 </details>
 
-[Predict which token changes can affect the current state and the loss](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary).
+[Predict which changes can affect the current state](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Revisit the exercise’s final scoring-and-loss question after the corresponding lessons.
 
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
