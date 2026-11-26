@@ -73,6 +73,11 @@ Record:
 
 Do not use a page's editorial role, destination, primary Deepen domain, concept-domain memberships and guided-route stage as interchangeable metadata.
 
+
+Before drafting, complete the applicable [learning-page blueprint](../../../docs/page-template-system.md#learning-page-blueprint). Make the learner problem and value, observable outcome, scope/ownership, prerequisites, curriculum position, explanatory sequence, mathematical contract, source synthesis, misconceptions and validation evidence explicit. Decide whether a worked thread genuinely helps; keep its inputs, conventions and intermediate results consistent and checkable. For revisions, update only affected decisions.
+
+Understand and Build are independent learning paths: Understand orders conceptual understanding; Build orders implementation by executable dependencies. Cross-links are contextual references, not automatic prerequisites or a requirement for one-to-one paired pages.
+
 ## Gate 3 — choose the correct place and depth
 
 Keep the existing four destinations distinct:
@@ -89,11 +94,11 @@ A new Deepen page should have a bounded purpose, correct existing primary domain
 
 1. Select the existing archetype and page template. Templates are soft guidance; include only sections that serve the learner contract.
 2. Create stable page identity and metadata according to `docs/page-metadata-schema.md`. IDs are durable and language-aware as the schema requires; do not derive them from mutable titles.
-3. Draft the explanation in original project language. Define terms before use; state assumptions; distinguish mechanism, interpretation and analogy; bound analogies.
+3. Draft the explanation in original project language, following the approved blueprint. Define terms before use; state assumptions; distinguish mechanism, interpretation and analogy; bound analogies.
 4. Use one canonical owner for each substantial explanation. Other pages may recap briefly and link.
 5. Include examples, equations, figures, code or experiments only when they serve the declared outcome. Verify the actual asset and rights before reuse; never infer licence from attribution.
 6. Add claim-level citations/links and preserve source locators in the relevant dossier. A bibliography alone does not establish provenance for individual claims.
-7. Add a summary, check or exercise when it materially tests the outcome; avoid generic filler and duplicated practice.
+7. Add a summary or revision aid only when it materially supports the outcome. Keep learner questions, exercises and learner-directed experiments on the dedicated companion Practice page, following the shared editorial contract and [issue #1512](https://github.com/JM-Brun/llm-lab/issues/1512).
 8. Provide a concise bridge to adjacent pages that names the actual unresolved question, not a generic “read next” paragraph.
 
 ## Gate 5 — integrate metadata, graph and navigation
