@@ -158,6 +158,10 @@ This is an original, simplified illustration, not a reproduction of Rushang Chau
 
 :::
 
+::: {.callout-note title="Where do Q/K/V fit?"}
+Q, K, and V are not a stage that comes after contextualized representations. They are projections computed **inside the self-attention sublayer** of each Transformer block; the repeated blocks progressively build contextualized states. See the dedicated [Q/K/V page](queries-keys-values.qmd).
+:::
+
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
 For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
