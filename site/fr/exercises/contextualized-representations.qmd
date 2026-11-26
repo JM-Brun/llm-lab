@@ -47,7 +47,7 @@ Dans un GPT causal aux paramètres fixes, considérez trois séquences d'identif
 1. Quelles séquences donnent le même vecteur d'embedding de base en `X` ?
 2. Dans quelle comparaison un bloc peut-il changer l'état de `X` ? Par quelle opération ?
 3. Dans quelle comparaison l'état de `X` doit-il rester identique à chaque couche ? Quelle règle l'impose ?
-4. Pour `[A, X, U]`, la distribution obtenue à la position de `X` après projection et softmax attribue $1/2$ à `U` et $1/4$ à `V`. En passant à `[A, X, V]`, quelle distribution lit-on à la position de `X` ? Pour chaque séquence, quel token sert de cible à cette position et quelle est sa perte locale avec une cible one-hot ?
+4. **À reprendre après les leçons sur les logits, la distribution et l’entropie croisée.** Pour `[A, X, U]`, la distribution obtenue à la position de `X` après projection et softmax attribue $1/2$ à `U` et $1/4$ à `V`. En passant à `[A, X, V]`, quelle distribution lit-on à la position de `X` ? Pour chaque séquence, quel token sert de cible à cette position et quelle est sa perte locale avec une cible one-hot ?
 
 <details>
 <summary>Afficher le corrigé</summary>

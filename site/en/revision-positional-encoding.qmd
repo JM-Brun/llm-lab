@@ -32,12 +32,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 ## Recall from memory {#revision-check}
 
-After tokenization, swap the positions of two IDs in the sequence. Do their rows in the embedding table change?
+Do not retokenize the text: reorder an already-tokenized ID sequence by swapping two positions. Do the swapped IDs select new rows in the embedding table? In what order do the vectors then appear?
 
 <details>
 <summary>Show the answer</summary>
 
-No, their IDs select the same rows. Their sequence positions change, which can affect the resulting contextual states.
+No. Each ID still selects the same row: neither the vocabulary nor the table changes. The order of vectors in the sequence follows the reordered IDs, however; their positions change, so positional processing can alter the representations entering the network.
 
 </details>
 

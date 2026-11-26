@@ -48,6 +48,7 @@ The question “What have the Romans ever done for us?” and a reply such as �
 
 **Questions and exercises:** [Open the dedicated practice page](exercises/contextualized-representations.qmd).
 
+To isolate the effect of context, we now keep the parameters, the studied token ID, and its position fixed. Only the accessible prefix varies. The previous lesson varied position; this one holds position fixed to examine what the blocks can do with context.
 
 ## Start with what stays the same
 

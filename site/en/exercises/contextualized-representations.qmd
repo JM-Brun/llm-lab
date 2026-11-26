@@ -47,7 +47,7 @@ In a causal GPT with fixed parameters, consider three sequences of token IDs: `[
 1. Which sequences give the same base embedding vector at `X`?
 2. In which comparison can a block change the hidden state of `X`? Which operation allows this?
 3. In which comparison must the state of `X` stay the same at every layer? What enforces that property?
-4. For `[A, X, U]`, the distribution at position `X` after projection and softmax assigns $1/2$ to `U` and $1/4$ to `V`. On switching to `[A, X, V]`, which distribution do you read at the position of `X`? For each sequence, which token is the target there, and what is the local loss with a one-hot target?
+4. **Revisit this after the lessons on logits, distributions, and cross-entropy.** For `[A, X, U]`, the distribution at position `X` after projection and softmax assigns $1/2$ to `U` and $1/4$ to `V`. On switching to `[A, X, V]`, which distribution do you read at the position of `X`? For each sequence, which token is the target there, and what is the local loss with a one-hot target?
 
 <details>
 <summary>Show the worked answer</summary>
