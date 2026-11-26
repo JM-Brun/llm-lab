@@ -9,7 +9,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/tokenizer-design-evaluation"
-scope: "Explique les compromis de conception entre taille du vocabulaire, longueur des séquences, coûts du modèle et budget d’entraînement ; présente un protocole de comparaison et renvoie les résultats empiriques détaillés vers un approfondissement."
+scope: "Explique les compromis entre taille du vocabulaire, longueur des séquences, coûts du modèle et budgets ; construit une comparaison reproductible et une décision sous contraintes, puis renvoie les résultats empiriques détaillés vers un approfondissement."
 purpose: "Évaluer un choix de tokenizer en reliant taille du vocabulaire, longueur, coûts et usages ; construire une comparaison reproductible sans confondre métriques intrinsèques et qualité en aval."
 domain: "text-tokenization"
 suggested_route:
@@ -64,6 +64,47 @@ Le budget d'entraînement change également le sens de la comparaison :
 Takase et al. ont étudié des vocabulaires unigrammes SentencePiece de 5 000 à 500 000 unités en anglais et en japonais, avec un budget fixé en tokens puis un budget fixé en époques. Les vocabulaires plus grands ont obtenu de meilleurs résultats dans ces expériences ; à nombre d'époques fixé, les petits vocabulaires produisaient beaucoup plus de tokens d'entraînement, particulièrement en japonais. Ces résultats concernent les modèles, langues, données et protocoles étudiés : ils ne prouvent pas que le vocabulaire le plus grand est toujours préférable. Voir [Takase et al. (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/).
 
 **Règle pratique :** choisir la taille du vocabulaire conjointement avec l'architecture du modèle, le mélange de langues, la distribution des données et le budget de calcul. Comparer la qualité du modèle et le coût total du système ; le seul nombre de tokens ne suffit pas.
+
+## 5. Exemple de décision : gagner des positions, agrandir le vocabulaire
+
+Considérons deux tokenizers fictifs appliqués au même ensemble de textes et associés à la même dimension cachée $d$ :
+
+| | Tokenizer A | Tokenizer B |
+|---|---:|---:|
+| Taille du vocabulaire | $V$ | $4V$ |
+| Longueur moyenne d'une séquence | 120 positions | 80 positions |
+| Paramètres de la table d'embeddings | $Vd$ | $4Vd$ |
+| Nombre de paires de positions dans l'attention dense | $120^2$ | $80^2$ |
+
+Ces nombres sont **un exemple construit**, pas les résultats d'un benchmark. Ils isolent deux effets. B réduit la longueur moyenne d'un tiers. Pour une attention dense standard, le nombre de paires de positions passe de $120^2$ à $80^2$, soit un rapport de $4/9$. Mais la table d'embeddings de B contient quatre fois plus de paramètres ; une projection de sortie non liée aux embeddings peut ajouter un coût analogue.
+
+On ne peut pas conclure que B est globalement moins cher. Le coût total dépend aussi de la dimension cachée, des couches, du partage des poids, de l'implémentation de l'attention, du débit matériel et du nombre de tokens traités pendant l'entraînement. Le tableau sert à repérer les termes qui changent, pas à additionner des coûts incomparables.
+
+### Quel budget tient-on constant ?
+
+La comparaison change selon la contrainte expérimentale :
+
+- À **nombre de tokens d'entraînement identique**, les deux modèles voient le même nombre de positions, mais pas nécessairement le même nombre de passages sur le corpus brut.
+- À **nombre d'époques identique**, ils parcourent le même corpus, mais B peut produire moins de positions à traiter.
+- À **budget de calcul identique**, le nombre de mises à jour, de tokens vus et la quantité de texte consommée peuvent différer.
+
+Une étude qui annonce simplement « mêmes données » ne suffit donc pas à établir une comparaison équitable. Il faut préciser ce qui est fixé : texte brut, tokens, étapes d'optimisation, FLOPs, temps ou budget financier.
+
+### Construire une décision défendable
+
+Un choix de tokenizer doit expliciter les contraintes prioritaires et les compromis acceptés :
+
+| Contrainte dominante | Mesures à examiner en priorité | Vérification indispensable |
+|---|---|---|
+| Fenêtre de contexte limitée | Tokens par document et par langue | Le contenu utile reste-t-il dans la fenêtre après prétraitement ? |
+| Mémoire du modèle | Taille du vocabulaire, embeddings et tête de sortie | Les poids d'entrée et de sortie sont-ils partagés ? |
+| Latence et débit | Longueur des séquences, temps de tokenisation et temps du modèle | Mesurer sur le matériel et le batch réellement visés |
+| Service multilingue | Métriques ventilées par langue et type de texte | Ne pas laisser la moyenne globale masquer les écarts |
+| Qualité d'une tâche | Scores en aval, par tâche et langue | Comparer à budgets et protocoles comparables |
+
+La bonne décision n'est donc pas « choisir le tokenizer qui compresse le mieux », mais **choisir celui dont les compromis correspondent au système et aux usages visés**, puis vérifier empiriquement que ces compromis tiennent.
+
+
 
 ## 2. Comparaison reproductible
 
