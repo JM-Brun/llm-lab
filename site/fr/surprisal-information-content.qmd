@@ -275,16 +275,6 @@ La page [Expérience — Entropie, KL et compression prédictive](experience-inf
 
 Pour aller plus loin dans la pratique, comparez le surprisal de plusieurs événements sous une même distribution, puis modifiez la distribution sans changer l'événement observé. Vous verrez que le surprisal dépend du modèle probabiliste choisi.
 
-### Trois expériences simples à mener
-
-1. **Modifier la probabilité de la cible.** Gardez le contexte et le token observé fixes, puis faites varier sa probabilité de $0{,}8$ à $0{,}4$, $0{,}1$ et $0{,}01$. Le surprisal doit augmenter à chaque diminution de probabilité.
-2. **Modifier le contexte.** Gardez le token cible identique, mais changez le préfixe et donc la distribution conditionnelle. Le surprisal peut changer sans que le token change.
-3. **Modifier les probabilités des autres tokens.** Si la probabilité de la cible reste identique, redistribuer le reste de la masse entre les autres candidats ne change pas son surprisal. En revanche, cela peut changer l'entropie totale de la distribution.
-
-Ces expériences séparent trois objets souvent confondus : l'événement observé, le contexte qui conditionne sa probabilité et la distribution complète des issues possibles.
-
-
-
 ## À retenir
 
 - L'information propre d'un événement est $I(x)=-\log p(x)$.
