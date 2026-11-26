@@ -107,6 +107,7 @@ The shared-foundation inventory now separates the following roles rather than tr
 - [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
 - [x] Define and use a clear status vocabulary: implemented and validated, implemented with validation incomplete, documented/proposed, deferred, superseded and not assessed.
 - [x] Align the product-level vocabulary on five top-level spaces: Main learning path, Build from scratch, Practice & experiment, Deepen and Stories; nest Review/revision under the Main learning path while preserving its specialized contracts and #1541 ownership.
+- [x] Separate canonical concepts, source-scoped extracted claims/contributions, evidence/verification and experience-specific pedagogical objectives in the shared-foundation inventory; do not create generic idea, claim, evidence or relation registries.
 
 **Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model; the architecture does not describe Review as a sixth top-level space.
 
