@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:adva
 Un tokenizer doit découper le même texte en unités que le modèle pourra traiter. Des unités plus longues réduisent souvent le nombre de positions à traiter, mais elles agrandissent le vocabulaire et peuvent augmenter d'autres coûts. Le bon choix n'est donc pas celui qui produit le moins de tokens à tout prix : c'est celui qui équilibre représentation, ressources de calcul et qualité sur les usages visés.
 :::
 
+*Calendrier de l’Avent 2026 · Porte 3 · environ 15 minutes*
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - expliquer comment la taille du vocabulaire interagit avec les paramètres et les budgets d'entraînement ;
