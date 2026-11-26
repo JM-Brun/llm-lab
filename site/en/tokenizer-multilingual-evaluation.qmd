@@ -122,15 +122,6 @@ This bibliography brings together complementary references while distinguishing 
 Visualizers, Karpathy video timestamps, and the pipeline illustration are now grouped beside the mechanism explanations in [Tokenization strategies](tokenization-strategies.qmd#mechanism-resources-and-implementations).
 :::
 
-### Additional research references
-
-- [Ali et al. (2024), *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/): examines tokenizer choice effects on cost and performance, noting that intrinsic metrics do not always predict downstream results.
-- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/): analyses linguistic variation and the role of the pre-tokenizer.
-- [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): studies cross-language cost differences and design factors such as vocabulary size and pre-tokenization.
-- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/): compares tokenization cost across 22 languages and discusses API implications.
-- [Petrov et al. (2023), *Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/): studies cross-language tokenization-length and runtime disparities; consult the paper for the experimental setup.
-- [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/): a multilingual measurement toolkit to inspect as a method and software, not as evidence that one intrinsic metric is sufficient.
-
 <!-- Legacy anchor: educational code resources now live on tokenization-strategies. -->
 <span id="educational-code-and-historical-reference"></span>
 
