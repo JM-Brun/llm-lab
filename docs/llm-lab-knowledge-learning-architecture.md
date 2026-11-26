@@ -42,12 +42,14 @@ The shared foundation provides reusable referents. It does not own every activit
 
 | Entity | Canonical identity / current owner | Responsibility |
 |---|---|---|
-| Concept or notion | concept_id, data/concepts.yml | Language-independent meaning, bilingual labels/definitions, aliases and typed semantic relations |
+| Concept / notion | `concept_id`, `data/concepts.yml` | Durable language-independent referent; bilingual labels/definitions, project importance, domain memberships and published page references; typed concept relations are declared in the registry |
 | Knowledge domain | domain_id, data/domains.yml | Controlled scientific classification; concepts may belong to multiple domains |
 | Published page | page_id, LLM-LAB-PAGE-MAP v1 | Stable page identity, editorial metadata, language, purpose and page-level relations |
 | Non-page resource | resource_id, data/resources.yml | Independently identified artifacts such as implementation modules |
 | External source | source_id, source catalogue | Source identity, version and discovery metadata |
-| Extracted claim/evidence | extraction records and source-lineage model | Traceable statements, supporting material and integration candidates |
+| Extracted claim / contribution | `data/extractions/<source-id>.yml` item | Source-located proposition, definition, mechanism, derivation, result, limitation or pedagogical contribution, with attribution, scope and item-level disposition | Not a canonical concept; remains source-scoped unless explicitly synthesized into published content. |
+| Evidence / verification | Extraction-item evidence and verification fields; source inspection records; source-lineage evidence pointers (target architecture) | Evidence kind, locator, confidence, scope, assumptions, limitations and, where applicable, independent verification | Evidence is not the claim; inspection completeness, evidence confidence and scientific validity are distinct. |
+| Pedagogical objective / outcome | `data/guided-route.yml`, `docs/learning-path.md`, source-local pedagogical model | Experience-specific stage objectives, lesson outcomes, Build goals and source-declared/inferred learning outcomes | Not a concept; an intended or reconstructed outcome is not evidence of learner mastery. |
 | Activity | target: stable activity_id | A question, exercise, coding task, experiment or assessment; not a concept or lesson |
 | Collection / edition | target: stable collection and edition IDs | An editorially bounded collection, such as one annual calendar edition |
 
