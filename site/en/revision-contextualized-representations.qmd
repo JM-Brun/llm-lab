@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/revision-contextualized-representations"
-scope: "The progression from an initial embedding to a hidden state for each occurrence, and then to a prediction."
-purpose: "Recall the key ideas from this lesson and apply them to the review question."
+scope: "A recall sheet on initial lookup, position-wise hidden states, and the causal boundary of accessible context."
+purpose: "Predict which prefix changes can affect the state at a given position."
 revision_role: synthesis
 revision_of: ["en/contextualized-representations"]
 suggested_route:
@@ -38,6 +38,17 @@ Can two occurrences of “bank” have the same initial embedding and different 
 <summary>Show the answer</summary>
 
 Yes. If they have the same ID, their lookup is identical. Different prefixes can lead the layers to produce different final states.
+
+</details>
+
+### A second question to check causality
+
+With parameters and position fixed, can changing a token after the studied position change its hidden state in a causal GPT?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The causal mask prevents that position from accessing the future. A change to the accessible prefix can change its state.
 
 </details>
 
