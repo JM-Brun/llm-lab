@@ -23,15 +23,15 @@ A follow-up implementation is being prepared in the [PR #1695](https://github.co
 The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target.
 
 **Validation status (2026-11-26):**
-- Python quality, page-metadata, concept-registry, and domain checks pass.
-- The first full test run found six stale generated map-list, map-data, and guided-route fragments. The guided-route and map-list differences were traced to the authored navigation; the tracked fallback lists and interactive-map data have since been synchronized with the current page metadata and section headings.
-- Two subsequent test runs narrowed the remaining failures to stale map-data fields for the revised Zipf story, surprisal story, and tokenizer-design page. Those generated entries have now been updated bilingually. The next full CI run must confirm that the map-artifact freshness tests and complete test suite pass.
-- A full Quarto render and local-link audit passed on an earlier branch revision. The current branch still requires a fresh full render and FR/EN browser audit after the latest generated-data updates.
-- No novice-reader timing or comprehension review has yet been performed. The displayed 15-minute estimates remain editorial estimates, not observed measurements.
-- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) remains open; do not merge it until the current test suite and Quarto/browser review pass.
+- The branch has been merged with the latest `main` history (#1696 and #1697); it is now up to date and GitHub reports the PR as mergeable.
+- Python quality, page metadata, concept registry, and domain checks pass. The complete suite passed **834 tests, with 1 skipped and 1 warning** in [run #45817756001](https://github.com/JM-Brun/llm-lab/actions/runs/45817756001). The warning lists existing core lessons outside their 10–15 minute target; none of the three calendar stories is listed.
+- The full Quarto render, interactive learning-map checks, computational-graph export, timeline parity, and local-link audit passed. The FR/EN browser audit reviewed 138 cases with no blocking failures in [run #45817755969](https://github.com/JM-Brun/llm-lab/actions/runs/45817755969). It nevertheless exposed one critical Axe `image-alt` issue on the surprisal distribution figure in both languages: Quarto had dropped the Markdown alt text from the rendered `img`. The source now sets `fig-alt` explicitly; the latest Quarto audit must confirm the rendered HTML has the alternative text.
+- A scientific review of the tokenizer cost example identified a missing term: the output projection's training computation scales as `T × V × d`. The bilingual example now shows the factor `8/3` for the constructed A/B comparison and distinguishes tied parameter storage from the computation that remains necessary. The latest CI and Quarto runs must validate these final edits.
+- The generated learning-map data now combines the revised bilingual page records with the latest 125 tokenization concepts and 147 typed relations from `main`; the two new calendar deep dives remain in the page map and navigation.
+- No novice-reader timing or comprehension review has yet been performed. The advertised 15-minute durations remain editorial estimates, not observed measurements.
+- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) remains open and mergeable. Do not merge until the latest CI and Quarto/browser runs pass and the novice review has an explicit acceptance decision.
 
-The generated fragments are now committed in the branch. If a subsequent source edit changes page-map metadata or section headings, regenerate them with `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py` and commit the resulting bilingual outputs.
-
+The tracked generated fragments are committed. If a later source edit changes page-map metadata or section headings, regenerate the bilingual outputs with `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py`.
 ## 1. Current state — verified (updated 2026-11-24)
 
 ### Completed
