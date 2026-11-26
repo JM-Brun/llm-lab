@@ -344,9 +344,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git fetch origin "$PR_HEAD_REF"
           worktree="$RUNNER_TEMP/llm-lab-pr-head"
           git worktree add "$worktree" FETCH_HEAD
+          git config --global --add safe.directory "$worktree"
           "$GITHUB_WORKSPACE/.venv/bin/python" "$worktree/site/tools/build_learning_map.py"
           git -C "$worktree" add \
             site/includes/generated-map-data-fr.qmd \
