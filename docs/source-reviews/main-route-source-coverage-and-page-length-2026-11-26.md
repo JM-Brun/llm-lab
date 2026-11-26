@@ -326,21 +326,27 @@ Les pages Logits, Probabilités, ICL et Gradients ont une base textuelle sous ou
 
 ### 9.2 Première lecture des déséquilibres
 
-**Pages à examiner pour confirmer le périmètre du tronc principal :**
+**Leçons proches de la cible :**
 
-- **Génération (2 302 mots visibles, 15–18 min de lecture textuelle)** : le contenu de base est déjà dans la cible. Les 943 mots supplémentaires sont dans des callouts repliés, dont le développement sur TTFT / ITL, le service multi-requêtes, le continuous batching et le prefix caching. La page de complexité traite déjà prefill, decode et mémoire du cache KV. Ne pas scinder la leçon sur la base du volume total ; conserver le caractère facultatif des optimisations de serving et vérifier les liens avec la page de complexité.
-- **Training loop (2 321 mots visibles, 15–18 min)** : le tronc principal est également dans la cible. Les 691 mots hors tronc correspondent aux approfondissements, comparaisons d'optimiseurs, ressources et workflows. Ne pas raccourcir le noyau. Vérifier seulement que la frontière entre explication conceptuelle et implémentation est visible.
-- **Cross-entropy (1 977 mots visibles, 13–16 min)** : sa durée est proche de la cible. Les exemples de formes, de décalage causal, de masques, de perplexité et le lien au gradient donnent une progression cohérente. Les cibles souples / KL et les implémentations méritent une revue de niveau (Understand vs Build / Deepen), mais il n'y a pas de justification à les déplacer sur le seul critère de durée.
-- **Vue d'ensemble (2 041 mots visibles, 14–16 min)** : cohérente avec la cible ; contrôler les recouvrements avec les leçons détaillées plutôt que la raccourcir automatiquement.
-- **Attention à produit scalaire (1 368 mots visibles, 9–11 min)** et **masquage causal (1 371, 9–11 min)** : les callouts repliés sont volumineux. Vérifier que le tronc visible donne un exemple complet et une compréhension suffisante, mais conserver les approfondissements repliés hors de la durée principale.
+- **Génération (1 978 mots de prose visibles, base textuelle 13–16 min)** : le contenu de base est proche de la cible. Les développements sur TTFT / ITL, le service multi-requêtes, le continuous batching et le prefix caching sont dans un callout replié. La page de complexité traite déjà prefill, decode et mémoire du cache KV. Ne pas scinder la leçon sur la base du volume total ; conserver le caractère facultatif des optimisations de serving et vérifier les liens avec la page de complexité.
+- **Training loop (1 997 mots, 13–16 min)** : le tronc principal est proche de la cible. Les comparaisons d'optimiseurs, workflows et détails d'implémentation sont dans la partie approfondissement. Ne pas raccourcir le noyau ; vérifier seulement que la frontière entre explication conceptuelle et implémentation est visible.
+- **Cross-entropy (1 727 mots, 12–14 min)** : sa base textuelle est déjà proche de la cible. Les exemples de formes, de décalage causal, de masques, de perplexité et le lien au gradient donnent une progression cohérente. Les cibles souples / KL et les implémentations méritent une revue de niveau (Understand vs Build / Deepen), mais il n'y a pas de justification à les déplacer sur le seul critère de durée.
+- **Vue d'ensemble (1 997 mots, 13–16 min)** : cohérente avec la cible ; contrôler les recouvrements avec les leçons détaillées plutôt que la raccourcir automatiquement.
 
-**Pages courtes ou proches du seuil à examiner sans présumer qu'elles sont insuffisantes :**
+**Leçons courtes ou proches du seuil à examiner :**
 
-- **ICL (785 mots visibles, 5–7 min)** : candidate la plus nette à une revue sous le seuil. La page contient déjà un exemple, un schéma et deux approfondissements repliés. Avant d'ajouter du texte, vérifier si l'exemple permet réellement de comparer zero-shot, one-shot et few-shot et d'identifier les différentes informations apportées par les démonstrations. Un exemple travaillé comparant ces configurations pourrait apporter de la valeur ; le paragraphe Min / Yoo ne doit pas servir de remplissage.
-- **Probabilités (944 mots, 6–8 min)** et **Gradients (918 mots, 6–8 min)** : pages à la frontière. Les formules, exemples et schémas doivent être pris en compte avant toute décision. Ne pas ajouter du texte si la durée réelle, exercices exclus, atteint déjà 7 minutes.
-- **Logits (1 092 mots, 7–9 min)** et **Vraisemblance (1 164, 8–9 min)** : formats resserrés plausibles pour des unités conceptuelles précises.
+- **ICL (785 mots de prose visible, base 5–7 min)** : candidate la plus nette à une revue sous le seuil. La page contient déjà un exemple, un schéma et deux approfondissements repliés. Avant d'ajouter du texte, vérifier si l'exemple permet réellement de comparer zero-shot, one-shot et few-shot et d'identifier les différentes informations apportées par les démonstrations. Un exemple travaillé comparant ces configurations pourrait apporter de la valeur ; le paragraphe Min / Yoo ne doit pas servir de remplissage.
+- **Logits (804 mots, base 5–7 min)** : le fil est précis et les exemples numériques et visuels ajoutent un effort de lecture non compté. Vérifier le temps réel avant toute extension ; ne pas ajouter une section uniquement pour la durée.
+- **Probabilités (855 mots, base 6–7 min)** : la softmax, la température et l'interprétation de la distribution doivent être comprises à partir des exemples et des formules. Vérifier la durée réelle avec ces éléments.
+- **Gradients (771 mots, base 5–6 min)** : le comptage textuel est bas, mais la page contient plusieurs équations et des explications mathématiques. C'est la priorité pour une estimation incluant la lecture mathématique ; si elle reste sous 7 minutes, revoir si un exemple numérique de calcul et d'interprétation du gradient manque au tronc.
+- **Attention à produit scalaire (1 077 mots, base 7–9 min)** et **Masquage causal (1 190, base 8–10 min)** : les callouts repliés sont volumineux. Vérifier que le tronc visible donne un exemple complet et une compréhension suffisante, mais conserver les approfondissements repliés hors de la durée principale.
+- **Encodage positionnel (1 050 mots), Espace des embeddings (1 058 mots), Vraisemblance (978 mots)** : leur base textuelle se situe autour de 7–9 minutes. Les exemples, figures et équations doivent être pris en compte avant de décider d'un enrichissement.
+
+**Traçabilité des sources :**
+
 - **Logits** n'a aucune source catalogue reliée à ce jour, mais contient une référence PyTorch visible. Il faut réconcilier cette référence avant de conclure à un défaut de sources.
-- **ICL** a une source catalogue reliée (vidéo générale Karpathy), mais ses quatre articles visibles ne sont pas encore représentés comme des entrées dédiées dans le registre. La priorité est la traçabilité bibliographique, non l'augmentation mécanique du volume de texte.
+- **ICL** a une source catalogue reliée (vidéo générale Karpathy), mais ses quatre articles visibles ne sont pas encore représentés comme des entrées dédiées dans le registre.
+- Les autres pages à zéro source catalogue ont aussi des références visibles (voir la section 10) : la priorité est la réconciliation bibliographique, non l'ajout de contenu.
 
 ### 9.3 Conséquences éditoriales provisoires
 
