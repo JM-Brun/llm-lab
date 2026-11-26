@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap, representation table, and controlled past/future comparison distinguish lookup, position, and accessible context; sub-layer details and SAE investigation remain in the deep dive."
+      note: "The one-minute recap distinguishes lookup, position, and accessible context; the Practice page adds four recall cards and a controlled past/future comparison. Sublayer details, empirical findings, and the SAE investigation remain in the deep dive."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
