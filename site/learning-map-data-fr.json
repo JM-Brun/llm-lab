@@ -2483,17 +2483,21 @@
       "type": "deep-dive",
       "topic": "tokenizer-design-evaluation",
       "domain": "text-tokenization",
-      "scope": "Explique les compromis entre taille du vocabulaire, longueur des séquences, coûts du modèle et budgets ; construit une comparaison reproductible et une décision sous contraintes, puis renvoie les résultats empiriques détaillés vers un approfondissement.",
+      "scope": "Évalue le compromis entre longueur de représentation, taille du vocabulaire, coûts d'entraînement et d'inférence, et qualité en aval ; compare les budgets et métriques avec leurs dénominateurs, puis construit un protocole et une décision sous contraintes. Les résultats empiriques multilingues détaillés restent dans l'approfondissement dédié.",
       "summary": "",
       "purpose": "Évaluer un choix de tokenizer en reliant taille du vocabulaire, longueur, coûts et usages ; construire une comparaison reproductible sans confondre métriques intrinsèques et qualité en aval.",
       "covered_stages": [],
       "section_headings": [
         "Un même texte, trois segmentations",
-        "1. La taille du vocabulaire : architecture et budget",
-        "2. Comparaison reproductible",
+        "1. Taille du vocabulaire : architecture et budget",
+        "2. Coût système : séquences, vocabulaire et calcul",
+        "Exemple chiffré : moins de positions, vocabulaire plus grand",
+        "Quel budget tient-on constant ?",
+        "3. Qualité : ce que les métriques permettent de conclure",
+        "Mesurer la représentation sans confondre longueur et qualité",
+        "4. Comparer et décider sous contraintes",
         "Reproduire une inspection sur un tokenizer réel",
-        "Mesurer un tokenizer sans réduire la qualité au nombre de tokens",
-        "3. Choisir sous contraintes"
+        "Construire une décision défendable"
       ],
       "route": {
         "previous": null,
@@ -2507,6 +2511,7 @@
       ],
       "related": [
         "fr/tokenization-strategies",
+        "fr/tokenizer-multilingual-evaluation",
         "fr/text-data",
         "fr/unicode-text",
         "fr/exercises-text-data"
