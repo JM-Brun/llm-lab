@@ -512,3 +512,17 @@ The Apple Embedding Atlas activity in the Practice page is a separate tool and a
 
 **Decision:** keep the current core route and page boundaries. The immediate learner-facing change is limited to making the learned status of the embedding table explicit and adding short recall cards to the existing Practice page. No new concept, page, route, source collection, workflow or model-download dependency is warranted.
 
+
+### 9.8 Validation snapshot after the first CI run
+
+The first CI run on the original branch revision completed 832 tests successfully and failed only the two locale variants of \`test_map_artifacts_freshness.py\`. Both failures identified the same deterministic omission: the newly authored Practice heading (\`Cartes de révision\` / \`Recall cards\`) was absent from the corresponding generated \`section_headings\` arrays.
+
+The bilingual Quarto site/browser audit completed successfully on that revision. Python quality and domain checks also passed (25 steps); secret scanning passed.
+
+The two generated map records have since been updated to include the new heading. The branch was rebased onto the current \`main\` commit to retain the intervening text-data and learning-page-workflow changes. The map update was applied as the exact one-item delta indicated by the failing test output; the generator itself could not be executed in the available environment. Therefore:
+- the stale-artifact discrepancy identified by CI has been corrected in both tracked files;
+- the generator command remains the authoritative reproducibility check;
+- a fresh CI run on the final rebased head is still required before merge;
+- no claim is made that the final revision has passed CI or that a learner pilot has been performed.
+
+The first failure was not caused by the embedding lookup explanation, its exercises, or the Python quality checks. It was a generated-navigation freshness issue introduced by the new Practice heading.
