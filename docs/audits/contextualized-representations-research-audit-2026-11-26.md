@@ -68,6 +68,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 - Ingestion canonique engagée dans Wiki Knowledge : trois fiches source, un concept, une synthèse, index, registre, taxonomie et journal dans la PR #199.
 - Mise à jour de revision_support sur les leçons FR/EN pour signaler explicitement les cartes et le compagnon Practice.
 - Conservation de la page principale, de ses exemples localisés, des illustrations et des exercices existants.
+- Mise en cohérence des relations `related` FR/EN entre la leçon principale et son approfondissement ; le parcours garde le Transformer comme étape suivante et ne place pas Q/K/V après l'état contextualisé final.
 
 ## 6. État de l'ingestion canonique dans Wiki Knowledge
 
