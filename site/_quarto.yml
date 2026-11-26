@@ -37,13 +37,13 @@ project:
     - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
-    - images/advent-zipf-rank-frequency.svg
     - images/positional-entry-points-en-mobile.svg
     - images/positional-entry-points-fr-mobile.svg
     - images/attention-calculation-flow-en-mobile.svg
     - images/attention-calculation-flow-fr-mobile.svg
     - images/causal-attention-mask-mobile.svg
     - images/causal-attention-mask-fr-mobile.svg
+    - images/advent-zipf-rank-frequency.svg
   render:
     - index.qmd
     - fr/scientific-calendar.qmd
