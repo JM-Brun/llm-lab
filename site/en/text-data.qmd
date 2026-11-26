@@ -67,7 +67,7 @@ The same text can produce different sequences because pre-tokenization rules and
 
 ## A thought experiment: what does the model actually receive? {#text-id-experiment}
 
-Return to the prefix “What have the Romans ever done for us?”. Before discussing meaning or attention, follow one occurrence through three transformations:
+Return to the prefix “What have the Romans ever done for us?”. The running narrative then continues with: “They built roads between distant towns.” Before discussing meaning or attention, follow one occurrence through three transformations:
 
 1. **Text is split.** The tokenizer applies its rules and produces an ordered sequence of tokens. Boundaries do not necessarily match visible words.
 2. **Tokens become IDs.** Each token is replaced by its index in the vocabulary. This index retrieves an entry; it is neither a measurement nor a semantic representation.
@@ -89,7 +89,7 @@ To verify the chain with concrete values, use the [reproducible tokenizer and lo
 
 An ID can only be interpreted with the vocabulary that assigned it. If the vocabulary contains $V$ tokens, the embedding matrix generally has $V$ rows and $d$ columns: ID $i$ selects row $E_i$. In an autoregressive language model, the output projection also produces $V$ logits; a logit index refers to a token in the same vocabulary. The interface therefore connects the network's input lookup to its output classes.
 
-A checkpoint is more than its weight tensors: it must be accompanied by the corresponding vocabulary and tokenizer configuration. The same integer can refer to a different fragment in another tokenizer. Switching tokenizers without adapting vocabulary-indexed parameters would make the model read the wrong vectors and associate its logits with the wrong tokens. This is why the weights and exact tokenizer files must be kept together.
+A checkpoint is more than its weight tensors: it must be accompanied by the corresponding vocabulary and tokenizer configuration. The contract also includes the rules and version that determine encoding and text reconstruction: normalization, pre-tokenization, special tokens, and decoding. The same integer can refer to a different fragment in another tokenizer. Switching tokenizers without adapting vocabulary-indexed parameters would make the model read the wrong vectors and associate its logits with the wrong tokens. This is why the weights and exact tokenizer files must be kept together. The details of these components belong in the dedicated deep dives.
 
 Some tokenizers also add **special tokens** (for example, an end marker or a separator). These are reserved IDs, not ordinary visible words; they can occupy positions in the sequence. Their roles and spellings depend on the model. The conventions are detailed in [Tokenization strategies](tokenization-strategies.qmd).
 
@@ -146,33 +146,16 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 </summary>
 ::: {.learning-resources__content}
 
-### From Unicode text to contextual representations
+### Picking up the path to representations
 
-```{mermaid}
-flowchart TB
-    A["Source text"] --> B["Optional preprocessing"]
-    B --> C["Tokenizer"]
-    C --> D["Tokens"]
-    D --> E["Integer IDs"]
-    E --> F["Embedding-table lookup"]
-    F --> G["Token embeddings"]
-    G --> H["Transformer with positional mechanism"]
-    H --> I["Contextual representations"]
-    classDef default color:#14532D;
-```
-
-[Unicode source text](unicode-text.qmd) can contain spaces, punctuation, numbers, code, or multiple languages. Depending on the tokenizer, the text can be normalized or split into preliminary pieces. Tokenizers differ in their base units, rules, vocabulary, and special tokens. Modern subword tokenizers often learn their vocabulary. These choices affect which inputs a tokenizer can encode. Tokens are units of computation and their boundaries can fall inside a word. [Tokenization strategies](tokenization-strategies.qmd) compares these choices and the BPE, WordPiece, and unigram algorithms.
-
-A separate single-speaker continuation used in the running example is “They built roads between distant towns.”
-
-The diagram groups positional handling with the Transformer. Some architectures add learned absolute position vectors to token embeddings. With [RoPE](positional-encoding.qmd), attention rotates the query and key vectors. These mechanisms act at different points in the sequence of operations that produces [contextual representations](contextualized-representations.qmd).
+The next lessons examine separately the objects this page has just distinguished: [embedding lookup](embedding-space.qmd), [positional mechanisms](positional-encoding.qmd), and then [contextual representations](contextualized-representations.qmd). These are not tokenizer operations.
 
 
 
 
 ### Two uses, two paths {#two-uses-two-paths}
 
-The tokenizer paired with the model encodes the prompt at inference and the corpus used to train it. At inference the tokenizer is already fixed. In pretraining, [corpus preparation](corpus-preparation.qmd) covers source selection, provenance, filtering, deduplication, splitting, and fitting the tokenizer before freezing it. Normalization and pre-tokenization, when used, operate on the text inside the tokenizer. [Training examples](training-examples.qmd) shows how to turn the ID stream into windows, shifted targets, and masks, and how to pack multiple sequences into one window.
+At inference, the tokenizer is already fixed with the model and encodes the prompt. To build a model, [corpus preparation](corpus-preparation.qmd) documents the data and split protocol; [training examples](training-examples.qmd) then show how the ID stream becomes windows, shifted targets, and masks. These are Build-path steps, distinct from encoding a request.
 
 ### Further reading {#boundaries-between-pages}
 
@@ -181,7 +164,6 @@ To choose a reading route by question—mechanisms, Unicode representation, or e
 - [Unicode, UTF-8, and normalization](unicode-text.qmd) traces the string to its bytes.
 - [Tokenization strategies](tokenization-strategies.qmd) compares segmentation options.
 - [Embedding space](embedding-space.qmd) covers table lookup and vector geometry.
-- [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications handle long interactions.
 
 :::
 
