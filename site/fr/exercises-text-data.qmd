@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-text-data"
-scope: "Exercices formatifs sur la tokenisation, les embeddings, les fenêtres, l'alignement des cibles, BPE et les fuites de données."
+scope: "Exercices formatifs sur la tokenisation, l’inspection de tokenizers réels, les embeddings, les fenêtres, l’alignement des cibles, BPE et les fuites de données."
 purpose: "Travailler la collection d'exercices données textuelles indépendamment du parcours conceptuel, avec des prérequis, des corrigés détaillés et des questions de transfert."
 suggested_route:
   previous: null
@@ -281,8 +281,6 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 [Reprendre la leçon à l’exemple de tokenisation](text-data.qmd#tokenizer-output).
 
 #### Inspecter un tokenizer Hugging Face {#tokenizer-huggingface-probe}
-
-Cette trace inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
 
 L'exemple suivant inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
 
