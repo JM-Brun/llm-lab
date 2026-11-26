@@ -74,7 +74,7 @@ pedagogical_model:
 
 items:
   - id: google-sentencepiece-documentation:library-versus-algorithm
-    kind: distinction
+    kind: mental-model
     summary: "SentencePiece is a tokenizer toolkit that supports multiple subword model families, including BPE and Unigram; it should not be treated as one segmentation algorithm."
     locator: {type: section, value: "SentencePiece overview, supported models", label: "Model families"}
     evidence:
