@@ -226,7 +226,8 @@
         "fr/embedding-space",
         "fr/text-data-exercises",
         "fr/deepen",
-        "fr/tokenization-and-tokenizers"
+        "fr/tokenization-and-tokenizers",
+        "fr/tokenization-strategies"
       ],
       "rank": 9
     },
@@ -2442,7 +2443,7 @@
       "type": "deep-dive",
       "topic": "tokenization-strategies",
       "domain": "text-tokenization",
-      "scope": "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings.",
+      "scope": "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; traite aussi les offsets comme un mécanisme d’alignement applicatif vers le texte source, non comme une famille d’algorithmes ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings.",
       "summary": "Compare les granularités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — avec les composants du pipeline d’un tokenizer et leurs compromis de couverture, de longueur et de coût.",
       "purpose": "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version, et montrer les limites d’un découpage fondé uniquement sur les espaces.",
       "covered_stages": [],
@@ -2451,8 +2452,8 @@
         "Pourquoi un découpage uniquement sur les espaces ne suffit pas",
         "2. Comparer les granularités",
         "3. Les composants d'un tokenizer",
-        "Les graphies des tokens spéciaux ne sont pas de simples mots du vocabulaire",
-        "Un même texte, plusieurs pipelines de tokenisation"
+        "Illustration externe du pipeline",
+        "Les graphies des tokens spéciaux ne sont pas de simples mots du vocabulaire"
       ],
       "route": {
         "previous": null,
@@ -2464,6 +2465,9 @@
       "children": [],
       "related": [
         "fr/text-data",
+        "fr/unicode-text",
+        "fr/tokenizer-design-evaluation",
+        "fr/tokenizer-multilingual-evaluation",
         "fr/training-examples",
         "fr/tokenization-strategies-exercises"
       ],
