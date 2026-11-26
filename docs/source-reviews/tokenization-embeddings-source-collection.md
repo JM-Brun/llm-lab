@@ -2,7 +2,7 @@
 
 **Validated collection snapshot (2026-11-26; PR #1696 CI).** The canonical source register contains **32** explicit `tokenization-embeddings` source memberships, joined to **12 extraction files and 45 atomic items** through `extraction.source_id -> source.id -> source.collections`. Across the full repository, the same report counted 150 source records, 112 extraction files, 552 atomic items and 125 canonical concepts. These are inventory measures, not measures of scan completeness, evidence quality or pedagogical adequacy. The five new pedagogical extractions in PR #1696 are included in the 12/45 collection totals. Earlier 2026-11-19 figures (25/0/0) are historical snapshots and are superseded. Regenerate these measures with `site/tools/report_source_coverage.py`; do not hand-maintain counts. No source scan was repeated. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
 
-**Status:** living source collection · **Review date:** 2026-11-18  
+**Status:** living source collection · **Review date:** 2026-11-26  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
 **Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
 **Method transfer assessment:** [Source-to-knowledge method transfer validation](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md)  
@@ -12,7 +12,7 @@
 
 This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
 
-For historical comparison only, the 2026-11-05 transfer-pilot branch contained 48 records (four Q/K/V/KV-cache plus 44 tokenization/embeddings-related records); its pre-pilot `main` baseline contained 47 (four plus 43). Those snapshots are superseded by the current 54-record catalogue stated above. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+For historical comparison only, the 2026-11-05 transfer-pilot branch contained 48 records (four Q/K/V/KV-cache plus 44 tokenization/embeddings-related records); its pre-pilot `main` baseline contained 47 (four plus 43). Those snapshots are superseded by the current repository-wide catalogue of 150 source records, of which 32 are explicitly assigned to this collection. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
 
 The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
 
@@ -177,16 +177,21 @@ The canonical route remains: text and corpus → tokenizer → token IDs → emb
 | Negative sampling, detailed pooling, API catalogues | defer | Optional depth, not a prerequisite for the current GPT build path |
 | Multimodal tokenization | defer | Outside the current text-only learning slice |
 
-## 6. Canonical project impact
+## 6. Canonical project impact — updated 2026-11-26
 
-- **Concept graph:** no new concept IDs proposed by this migration. Existing token, token-embedding, contextualized-representation and positional-encoding nodes cover the stable concepts represented here.
-- **Source graph:** source-local graphs and pedagogical routes are not yet backfilled for all sources; create them only for instructional sources where prior evidence contains enough structure.
-- **Pages:** no new learner-facing page edits are proposed by this dossier.
-- **Learning routes:** no route or prerequisite change is justified.
-- **Exercises/experiments:** existing contrastive tokenization mini-lab, BPE trace and implementation examples remain the canonical practical activities.
-- **Build/implementation:** no new tokenizer implementation is proposed.
+The tokenization backfill in PR #1696 changes the knowledge model and its source provenance, not the learner-facing curriculum.
+
+- **Concept graph:** 21 bilingual canonical concepts were added for the tokenizer, tokenization operation and pipeline, normalization, pre-tokenization, subword families, vocabulary, IDs, encoding/decoding, special tokens, tokenizer training/compatibility and evaluation. Twenty-five typed relations connect these concepts to the existing token and embedding concepts. The additions distinguish structural, functional and pedagogical relations; they do not impose one universal tokenizer execution sequence.
+- **Source graph:** five new source-local extractions and pedagogical routes were added for Raschka, Vizuara, ByteByteGo, minbpe and SentencePiece. The Hugging Face Course, Hugging Face Tokenizers and tiktoken retain their dedicated review-only representations because another atomic extraction would duplicate existing evidence or overstate the inspected scope.
+- **Source-to-concept traceability:** the audited explanatory sources are mapped to canonical concepts in `data/sources.yml`; the dossier's matrix records each source's distinct contribution and evidence boundary.
+- **Pages:** no learner-facing page content was changed in this backfill. The existing division remains: `text-data` explains the input path at overview level; `unicode-text` handles character/byte representation; `tokenization-strategies` explains pipeline components and segmentation algorithms; `tokenizer-design-evaluation` handles empirical trade-offs; `embedding-space` explains the model-side lookup and vector representation.
+- **Learning routes:** no new core route step or prerequisite was justified. The knowledge graph enriches conceptual navigation; source-local routes describe how an individual source teaches its subject and are not mandatory curriculum paths.
+- **Exercises/experiments:** existing dedicated exercise pages, the contrastive tokenizer mini-lab and the BPE trace remain the canonical practical activities. The overview continues to link to practice rather than absorbing the exercise collection.
+- **Build/implementation:** no new tokenizer implementation, benchmark or training run is proposed by this source backfill.
+- **Generated map:** the bilingual generated map projections must include the new concepts and relations. Their tracked artifacts are regenerated as part of PR #1696 and must remain reproducible from `data/concepts.yml`.
+- **Coverage snapshot:** the validated collection inventory is 32 source records, 12 extraction files and 45 atomic items. Repository-wide totals are 150 sources, 112 extraction files, 552 atomic items and 125 canonical concepts. These are inventory counts, not evidence-quality or learning-outcome metrics.
 - **Visual assets:** no asset was added, removed, replaced or modified. Rights remain with #156.
-- **New pages:** none.
+- **New learner-facing pages:** none.
 
 ## 7. Provenance, validation and open work
 
@@ -208,7 +213,7 @@ These are evidence pointers, not substitutes for inspecting the final repository
 
 ### Structured extraction progress — 2026-11-05
 
-Five primary research papers now have source-scoped atomic extraction records, based on direct inspection of their published PDFs:
+Five primary research papers had source-scoped atomic extraction records by the 2026-11-05 snapshot, based on direct inspection of their published PDFs:
 
 - [Ali et al. (2024)](../../data/extractions/ali-tokenizer-choice-llm-training-2024.yml): five items covering intrinsic versus extrinsic evaluation, controlled decoder-only comparison, downstream effects, the limits of fertility/parity as proxies, and the scope of the training-compute estimate.
 - [Wegmann et al. (2025)](../../data/extractions/wegmann-tokenization-language-variation-2025.yml): five items covering task-dependent robustness versus sensitivity to linguistic variation, pre-tokenizer boundaries, task-sensitive results, a task-aware proxy, and the paper's within-English scope.
@@ -227,7 +232,7 @@ Five primary research papers now have source-scoped atomic extraction records, b
 
 ### Structured extraction progress — second research backfill
 
-Two further primary papers have now been converted into source-scoped extraction records, bringing the collection to **eight structured extractions** (Karpathy plus seven research papers).
+At that historical stage, two further primary papers had been converted into source-scoped extraction records, bringing the collection to **eight structured extractions** (Karpathy plus seven research papers). The later 2026-11-26 backfill adds five pedagogical extractions; the current total is **12**, as reported in the header.
 
 - [Arnett et al. (2025)](../../data/extractions/arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025.yml): five atomic items covering token premium/CTC measurement, controlled monolingual tokenizer design, language-feature and whitespace effects, language-specific vocabulary sizing, and SuperBPE with its measured-versus-estimated boundaries.
 - [Chiu (2026), TokLens](../../data/extractions/chiu-toklens-acl-srw-2026.yml): six atomic items covering the six intrinsic metrics, benchmark/sample design, the English null result, multilingual mixed-effects associations, the Qwen2.5 family analysis, and complementarity with Qtok.
