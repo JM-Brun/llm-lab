@@ -9,7 +9,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/tokenizer-design-evaluation"
-scope: "Explique les compromis entre taille du vocabulaire, longueur des séquences, coûts du modèle et budgets ; construit une comparaison reproductible et une décision sous contraintes, puis renvoie les résultats empiriques détaillés vers un approfondissement."
+scope: "Évalue le compromis entre longueur de représentation, taille du vocabulaire, coûts d’entraînement et d’inférence, et qualité en aval ; compare les budgets et métriques avec leurs dénominateurs, puis construit un protocole et une décision sous contraintes. Les résultats empiriques multilingues détaillés restent dans l’approfondissement dédié."
 purpose: "Évaluer un choix de tokenizer en reliant taille du vocabulaire, longueur, coûts et usages ; construire une comparaison reproductible sans confondre métriques intrinsèques et qualité en aval."
 domain: "text-tokenization"
 suggested_route:
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/tokenization-and-tokenizers"]
   children: ["fr/tokenizer-multilingual-evaluation"]
-related: ["fr/tokenization-strategies", "fr/text-data", "fr/unicode-text", "fr/exercises-text-data"]
+related: ["fr/tokenization-strategies", "fr/tokenizer-multilingual-evaluation", "fr/text-data", "fr/unicode-text", "fr/exercises-text-data"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:fr", "status:published"]
 -->
 
