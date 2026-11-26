@@ -1,5 +1,5 @@
 ---
-title: "Le tokenizer, ingénieur de compression"
+title: "Concevoir et évaluer un tokenizer"
 subtitle: "Réduire la longueur des séquences sans déplacer les coûts ailleurs"
 description-meta: "Comprendre le compromis entre taille du vocabulaire, longueur des séquences, coût système et qualité en aval."
 keywords: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:fr", "status:published"]
