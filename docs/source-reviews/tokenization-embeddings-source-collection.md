@@ -159,6 +159,23 @@ The source set offers several local teaching sequences, but these should not be 
 
 The canonical route remains: text and corpus → tokenizer → token IDs → embedding lookup → positional information → contextualized hidden states. The project concept graph records semantic identities and relations; the source-local graphs/routes remain editorial reconstructions. Neither is a replacement for the other.
 
+### 4.1 From canonical concepts to learner-facing pages
+
+The new concept layer is useful only if each concept resolves to an appropriate explanation. This crosswalk keeps the graph connected to the existing bilingual curriculum without turning the graph itself into a second course.
+
+| Conceptual cluster | Canonical concepts | Primary learner-facing destination | Boundary of the explanation |
+|---|---|---|---|
+| Text representation | `text-normalization`, `byte-level-encoding` | [Unicode text](../../site/fr/unicode-text.qmd) → [Text and data](../../site/fr/text-data.qmd) | Character encodings and byte representations precede tokenizer-specific segmentation; byte-level encoding is not a universal requirement. |
+| Tokenizer and its pipeline | `tokenizer`, `tokenization`, `tokenizer-pipeline`, `pre-tokenization`, `token-post-processing`, `special-token` | [Tokenization strategies](../../site/fr/tokenization-strategies.qmd) | The page explains configurable components and their effects; it should not imply that every tokenizer uses the same stages or order. |
+| Segmentation families | `subword-tokenization`, `byte-pair-encoding`, `wordpiece`, `unigram-tokenization` | [Tokenization strategies](../../site/fr/tokenization-strategies.qmd) | BPE, WordPiece and Unigram are related subword approaches, not interchangeable algorithms or universal GPT conventions. |
+| Vocabulary and encoding | `token-vocabulary`, `token-encoding`, `token`, `token-id`, `token-decoding` | [Text and data](../../site/fr/text-data.qmd), with algorithm detail in [Tokenization strategies](../../site/fr/tokenization-strategies.qmd) | Tokens, IDs and decoded text are distinct representations. An ID is meaningful only relative to a particular vocabulary and tokenizer configuration. |
+| Model hand-off | `tokenizer-compatibility`, `token-id`, `token-embedding` | [Text and data](../../site/fr/text-data.qmd) → [Embedding space](../../site/fr/embedding-space.qmd) | The tokenizer's IDs index the embedding table paired with the model weights; this is an interface constraint, not a semantic property of the integer ID. |
+| Empirical evaluation | `tokenizer-evaluation`, `token-fertility`, `multilingual-tokenization` | [Designing and evaluating a tokenizer](../../site/fr/tokenizer-design-evaluation.qmd) | Fertility, sequence length, vocabulary size, system cost and downstream quality are separate measurements; none alone establishes overall quality. |
+
+The page links above name the French source files; the corresponding English pages carry the same conceptual roles. The bilingual concept registry supplies the language-specific resource links.
+
+**Reading graph edges correctly matters.** Structural and functional relations such as `part-of`, `produces`, `applies-to` and `contributes-to` describe different kinds of conceptual connection. They are not automatically chronological steps. Only the explicitly typed `prerequisite` relation represents a learning dependency, and even those local dependencies do not define a single total order. In particular, tokenizer training/fitting is a lifecycle operation on a training corpus; encoding a prompt is an inference-time operation. Neither should be silently folded into the other's execution sequence.
+
 ## 5. Integration decisions
 
 | Contribution | Decision | Rationale |
