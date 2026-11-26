@@ -307,7 +307,7 @@ Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text
 
 ### Ressources visuelles recommandées
 
-1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : manipulation interactive des fusions, meilleure première intuition.
+1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : manipulation interactive des fusions, meilleure première intuition. La ressource est liée plutôt que copiée ; les conditions de réutilisation de ses figures ne sont pas établies ici.
 2. [Hugging Face — cours BPE en français](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : présentation structurée de l'entraînement.
 3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : comparaison pédagogique BPE/WordPiece. **Réserve sur l'interface (vérifiée le 29-10-2026) :** le panneau de la fusion sélectionnée affichait « Frequency: undefined », alors que la liste des paires candidates indiquait des fréquences. Ne pas se fier à cette valeur tant que la page n'a pas été corrigée.
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) : Unicode, UTF-8, BPE, espaces et tokens spéciaux.
@@ -333,14 +333,14 @@ La page combine des schémas originaux du projet, des illustrations externes sé
 ### Ordre de lecture conseillé
 
 1. Regarder la vidéo de Karpathy pour construire l'intuition sur les octets, les fusions et les tokens spéciaux.
-2. Lire le [BPE Explainer](https://philipmueller.dev/bpe-visualization/) et suivre les fusions sur un petit exemple.
+2. Suivre les fusions avec le visualiseur présenté plus haut.
 3. Lire `minbpe` ou le [module éducatif de tiktoken](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) pour inspecter le code.
 4. Comparer avec la documentation de tiktoken, SentencePiece et Hugging Face pour distinguer les conventions.
 5. Revenir au [chapitre 2 de Raschka](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) pour relier les IDs au pipeline des embeddings et aux exemples entrée-cible.
 6. Tester des textes multilingues, du code, des nombres, des espaces initiaux et des formes Unicode inhabituelles.
 
 
-### Code pédagogique et références historiques
+### Code pédagogique et implémentations
 
 - [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, chapitre 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2) : lecture guidée du traitement du texte dans le pipeline LLM.
 - [Hugging Face — cours sur les tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) : introduction au chapitre consacré aux tokenizers ; les URL et le contenu du cours peuvent évoluer.
@@ -353,11 +353,9 @@ La page combine des schémas originaux du projet, des illustrations externes sé
 
 
 
-## Ressources externes
+<span id="ressources-externes"></span>
 
-- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
-- [SentencePiece](https://github.com/google/sentencepiece)
-- [tiktoken](https://github.com/openai/tiktoken)
+Les documentations de Hugging Face Tokenizers, SentencePiece et tiktoken sont regroupées dans les [ressources pédagogiques et d'implémentation](#ressources-pedagogiques-et-implementations).
 
 
 
