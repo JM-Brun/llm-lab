@@ -15,7 +15,7 @@ scope: "Détaille les métriques de représentation, les résultats de recherche
 purpose: "Interpréter une comparaison de tokenizers en tenant compte des dénominateurs, des tâches, des corpus, des budgets et des limites causales."
 domain: "text-tokenization"
 suggested_route:
-  previous: "fr/tokenizer-design-evaluation"
+  previous: null
   next: null
 hierarchy:
   parents: ["fr/tokenizer-design-evaluation"]
