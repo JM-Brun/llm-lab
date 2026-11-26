@@ -9,7 +9,7 @@ description: Design and create a new bilingual LLM Lab learning page only when a
 
 Create a page that earns its place in the existing LLM Lab learning system. The goal is not to publish every interesting topic or source as a page; it is to give a distinct learner question a clear, durable owner at the right depth.
 
-Use the normative [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) and the canonical [page-template guide](../../../docs/page-template-guide.md). This skill owns the page-creation decision and page contract; it does not replace source extraction, concept-graph governance, technical review or rendered-site validation.
+Use the normative [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md), the canonical [page-template guide](../../../docs/page-template-guide.md), and its [pre-draft learning-page blueprint](../../../docs/page-template-system.md#4-design-before-drafting-the-learning-page-blueprint). This skill owns the page-creation decision and page contract; it does not replace source extraction, concept-graph governance, technical review or rendered-site validation.
 
 ## When to use
 
@@ -73,6 +73,8 @@ Record:
 
 Do not use a page's editorial role, destination, primary Deepen domain, concept-domain memberships and guided-route stage as interchangeable metadata.
 
+Before drafting, complete the applicable [learning-page blueprint](../../../docs/page-template-system.md#4-design-before-drafting-the-learning-page-blueprint). It must make the learner problem, value to LLM understanding, observable outcome, scope/ownership, prerequisites, curriculum position, explanatory sequence, mathematical contract, source synthesis, misconceptions and validation evidence explicit. Decide whether a worked thread genuinely helps; do not force a single running example onto subjects better taught by contrasting cases. For a revision, update only the affected blueprint decisions rather than creating a duplicate planning document.
+
 ## Gate 3 — choose the correct place and depth
 
 Keep the existing four destinations distinct:
@@ -83,18 +85,21 @@ Keep the existing four destinations distinct:
 
 A new Understand page requires an explicit curriculum decision: update `data/guided-route.yml`, its generated projections, tests and `docs/learning-path.md` consistently. Do not encode a new global sequence in page metadata, sidebars, hierarchy or a page-local chain.
 
+Understand and Build are independent learning paths: the former orders conceptual understanding; the latter orders implementation by executable dependencies. A link from one to the other is a contextual reference, not an automatic prerequisite or a requirement to create paired pages. A lesson may inform several Build milestones, and a Build milestone may use several canonical Understand explanations.
+
 A new Deepen page should have a bounded purpose, correct existing primary domain, `type:deep-dive` and `destination:deepen` metadata as specified by the schema, and no invented previous/next chain. Use `related` for genuinely useful cross-links. Confirm how the current Deepen index is generated before adding manual navigation.
 
 ## Gate 4 — build the page from canonical templates
 
 1. Select the existing archetype and page template. Templates are soft guidance; include only sections that serve the learner contract.
 2. Create stable page identity and metadata according to `docs/page-metadata-schema.md`. IDs are durable and language-aware as the schema requires; do not derive them from mutable titles.
-3. Draft the explanation in original project language. Define terms before use; state assumptions; distinguish mechanism, interpretation and analogy; bound analogies.
-4. Use one canonical owner for each substantial explanation. Other pages may recap briefly and link.
-5. Include examples, equations, figures, code or experiments only when they serve the declared outcome. Verify the actual asset and rights before reuse; never infer licence from attribution.
-6. Add claim-level citations/links and preserve source locators in the relevant dossier. A bibliography alone does not establish provenance for individual claims.
-7. Add a summary, check or exercise when it materially tests the outcome; avoid generic filler and duplicated practice.
-8. Provide a concise bridge to adjacent pages that names the actual unresolved question, not a generic “read next” paragraph.
+3. Draft the explanation in original project language, following the approved blueprint. Define terms before use; state assumptions; distinguish mechanism, interpretation and analogy; bound analogies.
+4. If a worked thread is used, keep inputs, conventions and intermediate results consistent and checkable; add contrasting examples when they teach a distinct property.
+5. Use one canonical owner for each substantial explanation. Other pages may recap briefly and link.
+6. Include examples, equations, figures, code or experiments only when they serve the declared outcome. Verify the actual asset and rights before reuse; never infer licence from attribution.
+7. Add claim-level citations/links and preserve source locators in the relevant dossier. A bibliography alone does not establish provenance for individual claims.
+8. Add a summary or revision aid only when it materially supports the outcome. Keep learner questions, exercises and learner-directed experiments on the dedicated companion Practice page, following the shared editorial contract and [issue #1512](https://github.com/JM-Brun/llm-lab/issues/1512).
+9. Provide contextual links to adjacent pages that name the actual unresolved question, not a generic “read next” paragraph.
 
 ## Gate 5 — integrate metadata, graph and navigation
 
