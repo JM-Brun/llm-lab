@@ -2509,7 +2509,9 @@
         "fr/tokenization-strategies",
         "fr/text-data",
         "fr/unicode-text",
-        "fr/exercises-text-data"
+        "fr/exercises-text-data",
+        "fr/generation",
+        "fr/llm-computational-complexity"
       ],
       "rank": 145
     },
