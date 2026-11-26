@@ -90,7 +90,7 @@ Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces
 
 ## 7. Validation LLM Lab — état au 2026-11-26
 
-La PR [LLM Lab #1728](https://github.com/JM-Brun/llm-lab/pull/1728), branche `docs/contextualized-representations-evidence-v4`, est ouverte. Le head contrôlé est `7ebfb17ff01e1c7ac704b022fd611570fe73a248).
+La PR [LLM Lab #1728](https://github.com/JM-Brun/llm-lab/pull/1728), branche `docs/contextualized-representations-evidence-v4`, est ouverte. Le run CI complet contrôlait le commit `7ebfb17ff01e1c7ac704b022fd611570fe73a248`. Le document d'audit a ensuite été actualisé dans le commit `9df62f5a90aef3997cbe7fcd389c4c851d88f769` ; ce dernier n'a pas encore repassé la CI.
 
 Contrôles terminés avec succès :
 - qualité Python et contrôles métier ;
@@ -104,13 +104,16 @@ Contrôles terminés avec succès :
 - revue navigateur des pages pédagogiques bilingues et de leur navigation ;
 - téléversement des captures et du rapport d'audit navigateur.
 
-Les contrôles du rendu et du navigateur ont terminé avec succès dans le run `45904294331`; les contrôles Python et tests ont terminé avec succès dans le run `45904255898`. Les étapes conditionnelles de rendu incrémental isolé et d'installation Playwright ont été ignorées parce que le parcours complet n'en avait pas besoin ; ce n'est pas un échec.
+Les contrôles du rendu et du navigateur ont terminé avec succès dans le run `45904294331`; les contrôles Python et tests ont terminé avec succès dans le run `45904255898`. Attention : ces résultats portent sur le commit précédent (`7ebfb17…`), pas sur le head actuel après ajout de cet audit. Les étapes conditionnelles de rendu incrémental isolé et d'installation Playwright ont été ignorées parce que le parcours complet n'en avait pas besoin ; ce n'est pas un échec.
 
 Cette validation CI ne remplace pas une revue éditoriale humaine des captures, ni un test d'apprentissage auprès de lecteurs. Aucune preuve d'efficacité pédagogique ou de transfert n'est revendiquée.
 
 ## 8. Travail restant — LLM Lab
 
-### P0 — Revue finale avant fusion de la PR #1728
+### P0 — Synchronisation et revue finale avant fusion de la PR #1728
+
+- [ ] Synchroniser la branche avec `main` : la comparaison du 2026-11-26 indique **20 commits en avance et 2 en retard** ; GitHub signale actuellement la PR comme non mergeable. Examiner les deux commits entrants et résoudre proprement les éventuels conflits, sans écraser les modifications récentes de `main`.
+- [ ] Relancer la CI complète après synchronisation, y compris rendu Quarto, contrôles de carte/graphe, liens et audit navigateur. Les succès précédents ne valident pas le nouveau head.
 
 - [ ] Examiner visuellement les captures et le rapport d'audit navigateur produits par le run CI, notamment les pages FR/EN Understand, Deepen et Practice.
 - [ ] Contrôler à l'écran les formules, les ancres, les blocs repliables des cartes, les retours à la ligne et le comportement mobile ; le succès du rendu ne garantit pas à lui seul la qualité typographique.
