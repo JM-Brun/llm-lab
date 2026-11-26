@@ -348,18 +348,20 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.head_ref }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/includes/generated-map-*.qmd \
+          echo "Workspace: $GITHUB_WORKSPACE"
+          git -C "$GITHUB_WORKSPACE" rev-parse --show-toplevel
+          git -C "$GITHUB_WORKSPACE" config user.name "github-actions[bot]"
+          git -C "$GITHUB_WORKSPACE" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$GITHUB_WORKSPACE" add site/includes/generated-map-*.qmd \
             site/includes/generated-guided-route-*.qmd \
             site/includes/generated-computational-graph-*.qmd \
             site/learning-map-data-*.json
-          if git diff --cached --quiet; then
+          if git -C "$GITHUB_WORKSPACE" diff --cached --quiet; then
             echo "Generated map and graph fragments are already current."
             exit 0
           fi
-          git commit -m "chore: regenerate bilingual learning map and graph artifacts"
-          git push origin "HEAD:${BRANCH_NAME}"
+          git -C "$GITHUB_WORKSPACE" commit -m "chore: regenerate bilingual learning map and graph artifacts"
+          git -C "$GITHUB_WORKSPACE" push origin "HEAD:${BRANCH_NAME}"
 
       - name: Render changed pages incrementally
         if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
