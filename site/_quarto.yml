@@ -42,6 +42,7 @@ project:
     - index.qmd
     - fr/scientific-calendar.qmd
     - fr/advent-calendar-story-day-01.qmd
+    - fr/zipf-law-deep-dive.qmd
     - fr/surprisal-information-content.qmd
     - fr/advent-calendar.qmd
     - fr/advent-calendar-day-01.qmd
@@ -51,6 +52,7 @@ project:
     - en/index.qmd
     - en/scientific-calendar.qmd
     - en/advent-calendar-story-day-01.qmd
+    - en/zipf-law-deep-dive.qmd
     - en/surprisal-information-content.qmd
     - en/advent-calendar.qmd
     - en/advent-calendar-day-01.qmd
@@ -63,10 +65,12 @@ project:
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
     - fr/tokenizer-design-evaluation.qmd
+    - fr/tokenizer-multilingual-evaluation.qmd
     - fr/decoding-strategies.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
     - en/tokenizer-design-evaluation.qmd
+    - en/tokenizer-multilingual-evaluation.qmd
     - en/decoding-strategies.qmd
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
@@ -584,6 +588,7 @@ website:
                 - fr/tokenization-strategies.qmd
                 - fr/unicode-text.qmd
                 - fr/tokenizer-design-evaluation.qmd
+                - fr/tokenizer-multilingual-evaluation.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/embeddings-deep-dive.qmd
@@ -593,6 +598,7 @@ website:
             - section: "Formalisation probabiliste et chaîne de l’entraînement"
               contents:
                 - fr/surprisal-information-content.qmd
+                - fr/zipf-law-deep-dive.qmd
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
                 - fr/universal-artificial-intelligence.qmd
@@ -836,6 +842,7 @@ website:
                 - en/tokenization-strategies.qmd
                 - en/unicode-text.qmd
                 - en/tokenizer-design-evaluation.qmd
+                - en/tokenizer-multilingual-evaluation.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/embeddings-deep-dive.qmd
@@ -845,6 +852,7 @@ website:
             - section: "Probabilistic formalization and the training chain"
               contents:
                 - en/surprisal-information-content.qmd
+                - en/zipf-law-deep-dive.qmd
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
                 - en/universal-artificial-intelligence.qmd

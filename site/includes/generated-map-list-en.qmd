@@ -90,6 +90,7 @@
     - [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
     - [Unicode, UTF-8, and text normalization](unicode-text.html)
     - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
+    - [Evaluating tokenizers: cost, performance, and multilingual equity](tokenizer-multilingual-evaluation.html)
   - Mathematical tools and geometry
     - [Embeddings: from vector representations to search spaces](embeddings-deep-dive.html)
     - [Tensors in a Transformer: shapes and axes](tensors.html)
@@ -97,6 +98,7 @@
     - [The linearity hypothesis in representation spaces](embedding-linearity.html)
   - Probabilistic formalization and the training chain
     - [How many bits of surprise does an event contain?](surprisal-information-content.html)
+    - [Beyond Zipf’s law: data, uses, and limits](zipf-law-deep-dive.html)
     - [The mathematics of language modeling](language-modeling-math.html)
     - [The mathematical chain of LLM training](mathematical-foundations.html)
     - [Kolmogorov Complexity, AIXI, and the Limits of Computation](universal-artificial-intelligence.html)

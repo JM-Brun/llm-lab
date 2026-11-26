@@ -156,7 +156,7 @@ Voir les leçons Hugging Face sur les [capacités des tokenizers rapides](https:
 
 ### WordPiece et Unigramme en bref
 
-WordPiece construit son vocabulaire selon un critère lié à la vraisemblance, puis utilise couramment une segmentation gloutonne par plus long fragment. Unigramme apprend un modèle probabiliste sur des segmentations candidates et sélectionne la segmentation complète la plus probable. Ces familles ne se distinguent donc pas seulement par leur nom : leurs procédures d'apprentissage et d'encodage diffèrent. Les mécanismes détaillés, leurs réserves d'implémentation et les références sont présentés dans l'approfondissement sur la [conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+WordPiece construit son vocabulaire selon un critère lié à la vraisemblance, puis utilise couramment une segmentation gloutonne par plus long fragment. Unigramme apprend un modèle probabiliste sur des segmentations candidates et sélectionne la segmentation complète la plus probable. Ces familles ne se distinguent donc pas seulement par leur nom : leurs procédures d'apprentissage et d'encodage diffèrent. Les mécanismes détaillés, leurs réserves d'implémentation et les références sont présentés dans la section [Approfondissement : WordPiece et Unigramme](#approfondissement-wordpiece-et-unigramme).
 
 SentencePiece est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. Hugging Face Tokenizers est une bibliothèque de plusieurs modèles et composants. tiktoken est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
 
@@ -213,6 +213,30 @@ flowchart LR
 Ce schéma ne décrit pas l'entraînement du réseau neuronal : celui-ci est distinct et apprend ses paramètres à partir de séquences d'IDs. Un tokenizer byte-level peut couvrir les octets d'entrées textuelles arbitraires, mais tous les tokenizers BPE ne sont pas byte-level.
 
 
+## Approfondissement : WordPiece et Unigramme
+
+### WordPiece et Unigramme : deux stratégies différentes
+
+La page [Stratégies de tokenisation](tokenization-strategies.qmd) présente déjà les différences conceptuelles essentielles entre BPE, WordPiece et Unigramme. Cette section reprend ces distinctions uniquement pour approfondir les procédures d’apprentissage et d’encodage, avec leurs réserves d’implémentation.
+
+### En quoi WordPiece diffère de BPE
+
+Dans l'explication courante de l'apprentissage WordPiece, les paires d'unités adjacentes sont classées au moyen d'un score lié à leur cooccurrence relativement à la fréquence de chaque unité prise séparément. Une forme simplifiée est :
+
+$\operatorname{score}(a,b)=\frac{f(ab)}{f(a)\,f(b)}$
+
+où les fréquences sont estimées sur le corpus d'apprentissage. Ce score favorise une paire dont la fréquence conjointe est élevée relativement à celle de ses composants ; il ne sélectionne donc pas simplement la paire la plus fréquente, comme dans le BPE de base. **Réserve :** la procédure originale d'apprentissage WordPiece de Google n'est pas entièrement spécifiée dans une implémentation publique de référence. Hugging Face présente sa description comme une reconstruction : cette formule est explicative et ne garantit pas que tous les entraîneurs WordPiece l'utilisent exactement.
+
+À l'encodage, les implémentations WordPiece courantes utilisent une recherche gloutonne du **plus long fragment correspondant** au vocabulaire. Dans les tokenizers de type BERT, les fragments de continuation sont conventionnellement préfixés par `##`. Si un mot entier ne peut pas être segmenté selon les règles configurées, un tokenizer tel que BERT peut produire un unique `[UNK]` pour ce mot plutôt que de conserver une segmentation partielle. Ce sont des conventions d'implémentation, pas des propriétés universelles de tout tokenizer WordPiece.
+
+Voir l'[explication WordPiece de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/6) et la [documentation du modèle WordPiece](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
+
+### En quoi Unigramme diffère des tokenizers fondés sur des fusions
+
+Un tokenizer Unigramme commence avec un vocabulaire candidat relativement large, auquel sont associées des probabilités. L'apprentissage retire progressivement les candidats dont la suppression entraîne la plus faible augmentation de la loss du modèle, afin de réduire le vocabulaire vers la taille visée. Il s'agit d'un élagage dans un modèle probabiliste de segmentation, et non d'une succession de fusions de paires.
+
+À l'encodage, plusieurs segmentations peuvent être possibles. L'algorithme de Viterbi détermine la segmentation de probabilité maximale selon le modèle appris. Cela contraste avec l'application d'un ordre de fusions appris par BPE et avec la recherche gloutonne courante du plus long fragment de WordPiece. Voir l'[explication Unigram de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/7) et [SentencePiece](https://github.com/google/sentencepiece).
+
 ## 5. Exemples qui révèlent les compromis
 
 Un exemple de normalisation Unicode est traité dans [la page d'introduction](text-data.qmd) : `é` précomposé et `e\u0301` peuvent sembler identiques, tout en ayant des séquences de points de code différentes. Le tokenizer peut normaliser ces formes avant de les segmenter ; il faut vérifier sa configuration.
@@ -255,7 +279,6 @@ Ce tableau formule des questions à tester, pas des sorties exactes. Pour docume
 ::: {.callout-note title="Pour approfondir"}
 La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparative des tokenizers soulèvent des questions de coût, de qualité et d'équité multilingue. Ces choix dépassent la compréhension du mécanisme de segmentation ; ils sont traités dans [l'approfondissement sur la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 :::
-
 
 ### Comparaison reproductible de deux tokenizers {#comparaison-de-deux-tokenizers}
 

@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/experience-information-theory"
 summary: "Reproducible experiment for manipulating distributions and checking identities between entropy, cross-entropy, KL and coding."
-scope: "Guides a deterministic calculation on synthetic distributions and states what the results do and do not support."
+scope: "Guides reproducible experiments on synthetic distributions: conditional surprisal, entropy, cross-entropy, KL, perplexity, and predictive compression."
 purpose: "Turn definitions into a reproducible numerical check, including edge cases to explore."
 suggested_route:
   previous: null
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/entropy", "en/cross-entropy", "en/revision-information-theory"]
+related: ["en/entropy", "en/cross-entropy", "en/revision-information-theory", "en/surprisal-information-content"]
 tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:en", "status:published"]
 -->
 
@@ -74,6 +74,23 @@ Perplexity is the exponential of mean NLL using the same logarithm base: here ex
 
 Reusable functions and their tests live in `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`.
 
+
+## Guided experiments on surprisal {#surprisal-experiments}
+
+These manipulations extend the worked calculation in the lesson. They use fictional probabilities and do not represent outputs from a trained model.
+
+1. **Change the target probability.** Keep the context and observed token fixed, then vary its probability from $0.8$ to $0.4$, $0.1$, and $0.01$. Calculate $I(x\mid c)=-\log_2 p(x\mid c)$ each time. Surprisal should increase whenever probability decreases.
+2. **Change the context.** Keep the target token `Paris` fixed, but compare two fictional contexts:
+
+   | Context | $p(\text{Paris}\mid c)$ | Surprisal |
+   |---|---:|---:|
+   | “The capital of France is…” | $0.80$ | $0.32$ bits |
+   | “The capital of Japan is…” | $0.01$ | $6.64$ bits |
+
+   The token does not change; its conditional probability and therefore its surprisal do.
+3. **Change the probabilities of other tokens.** Keep the target probability constant, then redistribute the remaining probability mass among other candidates. The target's surprisal stays fixed, but the distribution's entropy may change.
+
+**Expected takeaway:** distinguish the observed event, the context that conditions its probability, and the full distribution of possible outcomes. An event does not have one unique surprisal independently of the model and context.
 
 ## Extension — predictive \(\mathcal V\)-information
 

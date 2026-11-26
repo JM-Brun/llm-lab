@@ -1050,7 +1050,7 @@ async function runCase(testCase, caseIndex) {
     if (capturePage) {
       const safePageName = pagePath.replace(/[^a-z0-9-]+/gi, "-").replace(/^-|-$/g, "");
       const screenshot = path.join(OUT, `${safePageName}-${lang}-${label}-${theme}.png`);
-      await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
+      await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled", timeout: 30000 });
       item.screenshot = screenshot;
     }
 
@@ -1179,7 +1179,7 @@ async function runCase(testCase, caseIndex) {
         throw new Error("concept view has horizontal overflow");
       }
       const conceptScreenshot = path.join(OUT, `learning-map-concepts-${lang}-${label}-${theme}.png`);
-      await page.screenshot({ path: conceptScreenshot, fullPage: true, animations: "disabled" });
+      await page.screenshot({ path: conceptScreenshot, fullPage: true, animations: "disabled", timeout: 30000 });
       item.learningMapScreenshot = conceptScreenshot;
       const legend = page.locator(".learning-map-concept-legend");
       const relationFilter = page.locator("[data-map-relation-type]");

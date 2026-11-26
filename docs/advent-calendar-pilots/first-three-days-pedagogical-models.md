@@ -6,6 +6,12 @@
 
 ## Contrat commun
 
+**Durée cible : environ 15 minutes par histoire.** Une durée de 10 à 20 minutes est acceptable si elle est justifiée par la complexité du sujet, le nombre d'étapes du raisonnement ou le temps nécessaire pour lire les figures, tableaux, équations et exemples. Une histoire de plus de 20 minutes doit normalement être redistribuée. Une histoire de moins de 10 minutes déclenche un diagnostic structurel : vérifier si le sujet est trop étroit ou insuffisamment intéressant pour une porte autonome, ou si le récit omet des étapes de raisonnement, des exemples travaillés, des visuels explicatifs ou une conclusion utile. Restructurer et approfondir lorsque le sujet le mérite ; rapprocher des notions connexes si cela construit une enquête cohérente. Si le sujet ne peut pas soutenir une histoire substantielle, le remplacer ou l'intégrer à une autre porte plutôt que de le rallonger artificiellement. Toute exception sous les 10 minutes doit être explicitement justifiée.
+
+Le temps de lecture ne se déduit pas du seul nombre de mots : il faut tenir compte des visuels, du code et des calculs à suivre. Lorsque cela est possible, compléter l'estimation éditoriale par une relecture novice chronométrée.
+
+**Redistribution plutôt que suppression :** garder dans l'histoire la question, le raisonnement indispensable, un exemple travaillé cohérent et la conclusion. Déplacer les dérivations facultatives, revues de littérature, détails historiques et mécanismes techniques vers des pages canoniques existantes ou des approfondissements ciblés. Les questions, exercices et expériences guidées restent dans les pages de pratique dédiées.
+
 Chaque porte possède quatre objets distincts :
 
 1. **Modèle de la page** : question, intention, unités de connaissance, progression argumentative, résultat attendu et frontières.
@@ -56,7 +62,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 
 **Résultat attendu.** Le lecteur sait lire une distribution rang–fréquence, expliquer ce que représentent ses paramètres, identifier les biais d'estimation et formuler une connexion LLM qui ne confond pas statistique de corpus et mécanisme prédictif.
 
-**Frontières éditoriales.** Les comparaisons contrôlées de corpus, l'estimation, les rééchantillonnages et les analyses de discours sont de la pratique. Les développements autonomes sur Zipf–Mandelbrot, Heaps, hapax et diversité lexicale peuvent devenir des approfondissements facultatifs. Ne pas insérer Zipf dans le graphe computationnel du Transformer.
+**Frontières éditoriales.** Les comparaisons contrôlées de corpus, l'estimation, les rééchantillonnages et les analyses de discours sont de la pratique. Les développements Zipf–Mandelbrot, données multilingues détaillées, repères historiques et applications étendues sont désormais regroupés dans `zipf-law-deep-dive.qmd`. Ne pas insérer Zipf dans le graphe computationnel du Transformer.
 
 ## 2. Ressources ingérées et leur modèle
 
@@ -91,7 +97,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 - **Page FR :** `site/fr/surprisal-information-content.qmd`
 - **Page EN :** `site/en/surprisal-information-content.qmd`
 - **Issue :** [#1666](https://github.com/JM-Brun/llm-lab/issues/1666)
-- **Pratique :** [expérience de théorie de l'information](https://jm-brun.github.io/llm-lab/fr/experience-information-theory.html)
+- **Pratique :** [expérience de théorie de l'information](https://jm-brun.github.io/llm-lab/fr/experience-information-theory.html#surprisal-experiments) — les trois expériences de variation de probabilité, de contexte et de distribution y sont regroupées.
 
 ## 1. Modèle conceptuel et progression de la page
 
@@ -121,7 +127,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 
 **Résultat attendu.** Le lecteur peut calculer le surprisal d'une cible, calculer/interpréter l'entropie de la distribution, expliquer leur différence et relier la règle de chaîne au score d'une séquence.
 
-**Frontières éditoriales.** Ne pas confondre surprisal, entropie, entropie croisée, KL et loss d'entraînement. Ces notions sont liées mais ne sont pas synonymes. La page doit rester centrée sur surprisal observé et incertitude prédictive ; les dérivations avancées de codage, cross-entropy/KL ou compression ont leurs pages dédiées.
+**Frontières éditoriales.** Ne pas confondre surprisal, entropie, entropie croisée, KL et loss d'entraînement. Ces notions sont liées mais ne sont pas synonymes. La page reste centrée sur le surprisal observé et l'incertitude prédictive ; les trois expériences guidées (variation de probabilité, de contexte et de distribution) sont dans `experience-information-theory.qmd`. Les dérivations avancées de codage, cross-entropy/KL ou compression ont leurs pages dédiées.
 
 ## 2. Ressources ingérées et leur modèle
 
@@ -155,7 +161,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 - **Page FR actuellement référencée :** `site/fr/tokenizer-design-evaluation.qmd`
 - **Page EN :** `site/en/tokenizer-design-evaluation.qmd`
 - **Issue :** [#1667](https://github.com/JM-Brun/llm-lab/issues/1667)
-- **Pratique / expérience :** à rattacher à une page dédiée existante ou à créer après audit ; aucune banque d'exercices ne doit être ajoutée à la page Deepen.
+- **Pratique / expérience :** [exercices sur les données textuelles](https://jm-brun.github.io/llm-lab/fr/exercises-text-data.html#tokenizer-huggingface-probe) — la trace Python d'inspection d'un tokenizer réel y est déplacée ; le récit ne conserve que le protocole et l'interprétation.
 
 ## 1. Modèle conceptuel et progression de la page
 
@@ -180,12 +186,12 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 |---|---|---|
 | 1. Décision concrète | même corpus, deux segmentations, budget de contexte | Faire apparaître la tentation « moins de tokens = meilleur » |
 | 2. Mesure juste | texte identique, normalisation, versions, dénominateur | Définir ce qui peut être comparé |
-| 3. Pourquoi les résultats diffèrent | pipeline, vocabulaire, BPE/WordPiece/Unigramme | Expliquer les mécanismes à partir des différences observées |
+| 3. Relier aux mécanismes | pipeline, vocabulaire, pré-tokenisation, BPE/WordPiece/Unigramme | Expliquer les différences sans interrompre le récit par une dérivation algorithmique ; renvoyer à la page canonique Stratégies de tokenisation |
 | 4. Coûts couplés | longueur, taille du vocabulaire, embeddings, sortie, calcul | Montrer que le gain local peut déplacer le coût |
 | 5. Évaluation | qualité aval, langues, scripts, tâches et budgets | Distinguer efficacité intrinsèque et utilité réelle |
 | 6. Décision bornée | protocole, incertitude, reproductibilité, limites | Conclure selon un objectif explicite, pas par classement universel |
 
-Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers les pages canoniques lorsque leur rappel n'est pas nécessaire à l'argument ; ils ne sont pas enseignés en détail dans cette page Deepen.
+Les prérequis Unicode/UTF-8 et pipeline général restent des liens vers les pages canoniques lorsque leur rappel n'est pas nécessaire à l'argument ; ils ne sont pas enseignés en détail dans cette page Deepen. Les détails WordPiece/Unigramme sont propriétaires de `tokenization-strategies.qmd`, les résultats d'études de `tokenizer-multilingual-evaluation.qmd` et la trace Python de `exercises-text-data.qmd`.
 
 **Relations principales :**
 
@@ -198,7 +204,7 @@ Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers
 
 **Résultat attendu.** Le lecteur peut concevoir une comparaison contrôlée, expliquer pourquoi les longueurs diffèrent et interpréter le compromis sans assimiler compression et qualité.
 
-**Décision éditoriale.** Conserver `tokenizer-design-evaluation` comme page canonique de la porte 03 : elle contient déjà le protocole, les études et les mécanismes avancés nécessaires. Ne pas créer une seconde leçon calendrier. En revanche, l'ordre actuel commence trop tôt par les détails WordPiece/Unigramme ; l'ouverture narrative ajoutée dans la PR #1693 met désormais en scène le compromis avant la matière technique. La suite doit vérifier le flux argumentatif complet et, si nécessaire, déplacer le bloc mécanistique après l'introduction du problème et des coûts.
+**Décision éditoriale appliquée.** Conserver `tokenizer-design-evaluation` comme page canonique de la porte 03, avec une narration centrée sur le compromis de conception, les coûts et une décision sous contraintes. Les mécanismes détaillés WordPiece/Unigramme sont intégrés à la page existante `tokenization-strategies.qmd`. Les études, métriques multilingues et ressources de recherche sont déplacées vers `tokenizer-multilingual-evaluation.qmd`. La trace Python d'inspection d'un tokenizer réel rejoint la page de pratique `exercises-text-data.qmd`. Il n'y a pas de deuxième leçon calendrier.
 
 **Relations principales :**
 
@@ -211,7 +217,7 @@ Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers
 
 **Résultat attendu.** Le lecteur peut concevoir une comparaison contrôlée de tokenizers, expliquer les différences de pipeline, mesurer la longueur et interpréter les compromis sans assimiler compression et qualité.
 
-**Décision de réutilisation à prendre.** La page actuellement référencée est une leçon Deepen avancée et dense, centrée sur les mécanismes WordPiece/Unigramme, budgets, métriques et résultats. Son périmètre est pertinent, mais son architecture n'est pas encore une histoire de calendrier. #1667 doit décider si l'on peut la réorganiser sans perdre son contenu technique, ou s'il faut conserver cette page comme approfondissement avancé et faire de la porte 03 une leçon narrative canonique distincte, avec une frontière explicite et sans duplication.
+**Décision de réutilisation résolue.** La page existante reste propriétaire de la porte et conserve son identité canonique. Son contenu est redistribué par fonction pédagogique, sans créer de copie calendrier : mécanismes dans `tokenization-strategies.qmd`, résultats empiriques dans `tokenizer-multilingual-evaluation.qmd`, pratique Python dans `exercises-text-data.qmd`.
 
 ## 2. Ressources ingérées et leur modèle
 
@@ -236,12 +242,10 @@ Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers
 
 ## 4. Route de progression
 
-1. Auditer la page existante contre ce modèle et les pages canoniques de tokenisation de base ; établir une matrice de contenu à conserver/déplacer.
-2. Prototyper une narration sur un même texte et plusieurs segmentations, avec un tableau mesuré et un visuel explicatif.
-3. Prendre explicitement la décision de propriétaire : réorganiser la page existante ou la garder comme approfondissement avancé et créer une seule leçon narrative canonique.
-4. Déplacer les détails algorithmiques qui interrompent le récit vers des approfondissements dédiés, sans perte d'information ni duplication.
-5. Construire une expérience reproductible séparée ; documenter versions, normalisation, corpus, scripts/langues et limites.
-6. Vérifier FR/EN, liens, accessibilité, rendu responsive et relecture non spécialiste.
+1. Vérifier que l'ouverture narrative, l'exemple de segmentation et le tableau des coûts conduisent sans rupture vers le protocole de comparaison.
+2. Vérifier la cohérence entre le récit, la page Stratégies de tokenisation, l'approfondissement empirique et la page de pratique.
+3. Contrôler les hypothèses du cas chiffré construit (positions d'attention, taille du vocabulaire, embeddings et partage des poids).
+4. Vérifier FR/EN, liens, ancres, accessibilité, rendu responsive et relecture non spécialiste chronométrée.
 
 ---
 

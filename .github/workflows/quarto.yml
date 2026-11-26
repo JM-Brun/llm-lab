@@ -339,6 +339,21 @@ jobs:
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_computational_graph == 'true')))
         run: .venv/bin/python site/tools/render_computational_graph.py
 
+      # Temporary PR diagnostic: export generated, tracked fragments so they can
+      # be committed back to the branch and the freshness tests remain meaningful.
+      - name: Upload generated map and graph fragments for refresh
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.site_relevant == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-map-graph-fragments-${{ github.sha }}
+          path: |
+            site/includes/generated-map-*.qmd
+            site/includes/generated-guided-route-*.qmd
+            site/includes/generated-computational-graph-*.qmd
+            site/learning-map-data-*.json
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Render changed pages incrementally
         if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
         env:
