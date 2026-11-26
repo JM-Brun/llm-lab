@@ -79,11 +79,11 @@ The shared-foundation inventory now separates the following roles rather than tr
 
 [PR #1712](https://github.com/JM-Brun/llm-lab/pull/1712) merged this classification into `docs/knowledge-architecture-interoperability.md`. The architecture table was aligned in this branch to separate extracted claims from evidence and to avoid assigning aliases/provenance fields to the current concept schema.
 
-**No new registry or schema is justified by this classification.** Remaining specialist boundaries stay with #512 (claim provenance/interoperability), #1233 (typed cross-graph bridges), #416 (concept relation semantics), #1541 (revision route), #1512 (Practice), and #78 (Build). Reconcile the handoff after #1712 is reviewed; do not create duplicate tasks or promote source-local records automatically.
+**No new registry or schema is justified by this classification.** Remaining specialist boundaries stay with #512 (claim provenance/interoperability), #1233 (typed cross-graph bridges), #416 (concept relation semantics), #1541 (revision route), #1512 (Practice), and #78 (Build). Use the merged classification as the boundary for subsequent work; do not create duplicate tasks or promote source-local records automatically.
 
 ## 1.4 Current canonical count refresh — 2026-11-26
 
-Direct reads of the canonical YAML files on main `f8e45989` give the following current record counts. They are structural counts, not quality or completeness scores.
+Direct reads of the canonical YAML files on main `6eaedf` give the following current record counts. They are structural counts, not quality or completeness scores.
 
 | Canonical owner | Current count | Qualification |
 |---|---:|---|
