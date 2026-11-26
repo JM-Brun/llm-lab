@@ -266,7 +266,7 @@ Gardons le texte `2 + 2 = 4` fixe et changeons de tokenizer. Dans les fragments 
 | `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
 | `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
 
-La [trace Python](exercises/text-data.qmd#tokenizer-embedding-trace) reproduit le tableau avec `tiktoken==0.14.0` et vérifie que chaque liste d’IDs se décode en texte d’origine.
+La [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace) reproduit le tableau avec `tiktoken==0.14.0` et vérifie que chaque liste d’IDs se décode en texte d’origine.
 
 La différence résulte des règles de pré-tokenisation et des fusions apprises propres à chaque tokenizer ; elle ne permet pas, à elle seule, de classer leur qualité. `cl100k_base` sépare ici l’espace du nombre qui suit, tandis que le BPE byte-level de GPT-2 fusionne directement l’espace avec l’opérateur ou le chiffre suivant. Ces listes ne contiennent aucun token spécial : `tiktoken` n’insère pas de token de début de séquence par défaut, alors que certaines bibliothèques peuvent en ajouter un. Vérifiez ce comportement avant de comparer vos propres traces.
 
