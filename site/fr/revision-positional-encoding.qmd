@@ -1,6 +1,6 @@
 ---
 title: "Révision — Information positionnelle"
-description-meta: "L’ordre des occurrences, la distinction entre une position absolue en entrée et une information relative dans le calcul de l’attention."
+description-meta: "Synthèse sur les encodages absolus, RoPE, les biais relatifs appliqués aux scores et le rôle distinct du masque causal, avec la nuance NoPE."
 keywords: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-positional-encoding"
-scope: "Fiche de rappel sur le rôle de l’ordre, les points d’injection positionnels et leur distinction avec la visibilité causale."
+scope: "Fiche de synthèse sur l’ordre, les points d’injection absolus et relatifs, les biais de score et la distinction entre visibilité causale et ordre implicite dans NoPE."
 purpose: "Distinguer ce qu’indiquent la position et le masque causal, puis prédire l’effet d’une permutation."
 revision_role: synthesis
 revision_of: ["fr/positional-encoding"]
@@ -28,7 +28,8 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 - Deux occurrences d’un même token peuvent commencer avec le même plongement. Leur rang dans la séquence apporte une information distincte de leur identité.
 - Un encodage absolu additif peut combiner en entrée le plongement du token et un vecteur attaché à son rang.
-- Avec RoPE, on utilise la position pour faire tourner les vecteurs Q et K après projection. Leur produit scalaire fait alors intervenir le décalage relatif.
+- Avec RoPE, on utilise la position pour faire tourner Q et K après projection ; leur produit scalaire fait intervenir le décalage relatif.
+- Les biais relatifs de type T5 et ALiBi ajoutent un terme dépendant de la distance aux scores avant softmax : appris par buckets pour T5, fixe et linéaire par tête pour ALiBi.
 
 ## Vérifier de mémoire {#revision-check}
 
@@ -48,7 +49,7 @@ Le masque causal suffit-il à indiquer la position absolue de chaque token ?
 <details>
 <summary>Afficher la réponse</summary>
 
-Non. Il détermine quelles positions peuvent être consultées. Un mécanisme positionnel fournit une information d’ordre ou de décalage. Les deux rôles sont complémentaires.
+Non. Il détermine quelles positions peuvent être consultées, sans fournir de coordonnée absolue ni de distance relative explicite. Dans une architecture NoPE, les préfixes visibles emboîtés peuvent néanmoins fournir un signal d’ordre implicite. Ce signal structurel ne doit pas être confondu avec un encodage positionnel explicite.
 
 </details>
 

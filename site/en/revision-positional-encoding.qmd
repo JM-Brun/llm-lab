@@ -1,6 +1,6 @@
 ---
 title: "Review — Positional information"
-description-meta: "Occurrence order and the distinction between an absolute input position and relative information in attention."
+description-meta: "A synthesis of absolute encodings, RoPE, relative score biases, and the distinct role of causal masking, including the NoPE nuance."
 keywords: ["type:concept-bridge", "destination:practice", "topic:revision-positional-encoding", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/revision-positional-encoding"
-scope: "A recall sheet on the role of order, positional insertion points, and their distinction from causal visibility."
+scope: "A synthesis sheet on order, absolute and relative insertion points, score biases, and the distinction between causal visibility and implicit order in NoPE."
 purpose: "Distinguish what position and causal masking specify, then predict the effect of a permutation."
 revision_role: synthesis
 revision_of: ["en/positional-encoding"]
@@ -28,7 +28,8 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 - Two occurrences of the same token can start with the same embedding. Their ranks in the sequence provide information distinct from token identity.
 - An additive absolute encoding can combine the token embedding with a vector for its position at the input.
-- RoPE uses position to rotate Q and K after projection. Their dot product then depends on the relative offset.
+- RoPE uses position to rotate Q and K after projection; their dot product involves the relative offset.
+- T5- and ALiBi-style relative biases add a distance-dependent term to scores before softmax: learned buckets for T5, fixed head-specific linear slopes for ALiBi.
 
 ## Recall from memory {#revision-check}
 
@@ -48,7 +49,7 @@ Does the causal mask tell the model the absolute position of each token?
 <details>
 <summary>Show the answer</summary>
 
-No. It determines which positions may be accessed. A positional mechanism supplies order or offset information. The two roles are complementary.
+No. It determines which positions may be accessed, without supplying an explicit absolute coordinate or relative distance. In a NoPE architecture, nested visible prefixes can nevertheless provide an implicit ordering signal. This structural signal must not be confused with an explicit positional encoding.
 
 </details>
 

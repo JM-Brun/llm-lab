@@ -1,0 +1,125 @@
+schema_version: 1
+source_id: raffel-et-al-t5-relative-position-bias-2020
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Primary T5 paper §2.1 inspected for the relative-position mechanism and its model-specific configuration."
+      - "The rest of the transfer-learning study is not reconstructed in this extraction."
+    inferred_elements:
+      - "The source-local graph summarizes the relative-bias computation; it is not an author-supplied graph."
+      - "The teaching route is inferred from the order of mathematical dependencies."
+  source_graph:
+    nodes:
+      - {id: src-t5-query-position, kind: input, description: "Position of the query token.", locator: "§2.1"}
+      - {id: src-t5-key-position, kind: input, description: "Position of a key token.", locator: "§2.1"}
+      - {id: src-t5-relative-offset, kind: mathematical-structure, description: "Signed displacement between key and query positions.", locator: "§2.1"}
+      - {id: src-t5-bucket, kind: operation, description: "Maps the relative offset into one of a finite set of distance buckets.", locator: "§2.1"}
+      - {id: src-t5-bias-table, kind: parameter, description: "Learned scalar values for relative-position buckets, with head-specific values shared across layers.", locator: "§2.1"}
+      - {id: src-t5-attention-logit, kind: representation, description: "Content-based query-key logit plus the selected relative-position scalar.", locator: "§2.1"}
+      - {id: src-t5-attention-weights, kind: representation, description: "Softmax-normalized attention weights.", locator: "§2.1"}
+    edges:
+      - {from: src-t5-query-position, type: determines-with, to: src-t5-relative-offset}
+      - {from: src-t5-key-position, type: determines-with, to: src-t5-relative-offset}
+      - {from: src-t5-relative-offset, type: mapped-to, to: src-t5-bucket}
+      - {from: src-t5-bucket, type: indexes, to: src-t5-bias-table}
+      - {from: src-t5-bias-table, type: added-to, to: src-t5-attention-logit}
+      - {from: src-t5-attention-logit, type: normalized-by, to: src-t5-attention-weights}
+    interpretation: "T5 injects a learned scalar relative-position term at the attention-logit stage, before softmax. The parameters are shared across layers and differ by attention head."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain how a query-key offset selects a learned scalar bias.", basis: "The paper defines a scalar embedding for each relative-position bucket."}
+    - {status: inferred, outcome: "Distinguish bucketed relative score bias from absolute input embeddings and RoPE.", basis: "The mechanism is explicitly applied to attention logits."}
+    - {status: inferred, outcome: "Explain why a finite logarithmic bucket scheme bounds the local distance resolution.", basis: "The paper specifies a finite bucket set with logarithmically increasing ranges."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Scaled dot-product attention and softmax.", basis: "The scalar bias is added to the attention logit before normalization."}
+    - {status: inferred, topic: "Integer sequence positions and signed offsets.", basis: "The mechanism maps query-key displacement to a bucket."}
+  teaching_route:
+    - {order: 1, section: "Relative offset", function: "define pairwise position difference", moves: ["Define the query-key displacement", "Explain why direction matters in the encoder and decoder settings"]}
+    - {order: 2, section: "Bucket mapping", function: "compress an unbounded offset range", moves: ["Map nearby offsets to distinct buckets", "Use logarithmically wider buckets for larger offsets"]}
+    - {order: 3, section: "Score injection", function: "locate the bias in attention", moves: ["Select a scalar per head and bucket", "Add it to the content logit before softmax"]}
+    - {order: 4, section: "Configuration limits", function: "separate method from hyperparameters", moves: ["Report the 32-bucket and 128-offset choices as T5 settings", "Explain that later layers may combine local information"]}
+  pedagogical_strengths:
+    - "The paper states the insertion point and parameter sharing convention precisely."
+    - "The logarithmic bucket scheme gives a clear example of finite-resolution relative distance."
+    - "The source explicitly distinguishes local per-layer distance sensitivity from larger-range sensitivity built by later layers."
+  pedagogical_limits:
+    - "Thirty-two buckets and the 128-token boundary are T5 configuration choices, not universal constants."
+    - "The paper leaves ablation of the positional scheme's impact for future work because the architecture changes are treated as orthogonal to its main study."
+    - "No T5 model or implementation was executed in this ingestion."
+  comparison:
+    dossier: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "Integrate a concise score-level bias comparison into the core positional-encoding and RoPE pages. Keep bucket calculations and implementation details for a future relative-bias deep dive."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: raffel-et-al-t5-relative-position-bias-2020:bucketed-score-bias
+    kind: mechanism
+    summary: "T5 maps each query-key offset to a distance bucket, looks up a learned scalar for that bucket and attention head, and adds it to the content logit before softmax."
+    locator: {type: section, value: "§2.1", label: "Relative position embeddings"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The primary paper defines scalar relative-position embeddings added to attention logits and describes the bucket mapping."
+      assumptions: ["The bucket lookup is based on the signed key-query offset.", "Each attention head has its own learned bucket values."]
+      limitations: ["The exact bucket count and maximum offset are specific to the T5 configuration."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:relative-position-bias, method:bucketed-relative-position]
+      concept_ids: [positional-encoding, self-attention, attention-score, softmax]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, attention-score]
+    pedagogical_profile:
+      learner_question: "How can a model encode relative distance without adding a position vector to the token embedding?"
+      explanatory_lens: computational
+      teaching_form: [mechanism-comparison, mathematical-derivation]
+      abstraction_level: intermediate
+      prerequisites: [self-attention, attention-score, softmax]
+      distinctive_value: "Makes the score-level insertion point explicit and contrasts learned bucket values with vector-valued methods."
+      limitations: ["The full bucket function is better handled in an advanced page."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current lesson did not name a primary-source example of a bucketed relative score bias."}
+      complementarity: {level: high, rationale: "It complements Shaw's relative vectors and RoPE's Q/K rotations."}
+      pedagogical_value: {level: high, rationale: "The insertion point is a key architectural distinction."}
+      applicability: {level: high, rationale: "A short comparison fits both the core and RoPE pages."}
+      redundancy: {level: low, rationale: "No equivalent T5 explanation was present in the current core lesson."}
+      evidence_quality: {level: high, rationale: "The primary paper specifies the scalar bias, sharing and bucket configuration."}
+    disposition: integrate
+    disposition_rationale: "Add the concise T5 example and keep the bucket derivation out of the core lesson."
+  - id: raffel-et-al-t5-relative-position-bias-2020:t5-bucket-range
+    kind: method
+    summary: "The cited T5 configuration uses 32 learned relative-position embeddings with logarithmically increasing ranges up to an offset of 128; larger offsets share the final bucket."
+    locator: {type: section, value: "§2.1", label: "Bucket count and maximum offset"}
+    evidence:
+      kind: implementation-detail
+      confidence: well-supported
+      scope: "These numerical settings are stated for the T5 models studied in the paper."
+      assumptions: ["The 32 embeddings and 128-token boundary refer to the paper's configuration."]
+      limitations: ["They must not be generalized to every T5 implementation or relative-position method."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:bucketed-relative-position]
+      concept_ids: [positional-encoding, self-attention]
+    candidate_destinations:
+      pages: [fr/rope, en/rope]
+      concepts: [positional-encoding]
+    pedagogical_profile:
+      learner_question: "How does T5 represent large relative distances with a finite parameter table?"
+      explanatory_lens: implementation
+      teaching_form: [worked-example, mechanism-comparison]
+      abstraction_level: advanced
+      prerequisites: [positional-encoding, self-attention, attention-score, softmax]
+      distinctive_value: "Shows the trade-off between fine local resolution and coarse long-range buckets."
+      limitations: ["Configuration values should not be treated as universal defaults."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The core lesson previously omitted T5 bucket details."}
+      complementarity: {level: high, rationale: "It supports a future worked example of relative-position bucketing."}
+      pedagogical_value: {level: moderate, rationale: "It explains why a finite table can represent an unbounded offset range coarsely."}
+      applicability: {level: moderate, rationale: "Best suited to a future advanced comparison page."}
+      redundancy: {level: low, rationale: "The current lesson does not explain bucket resolution."}
+      evidence_quality: {level: high, rationale: "The primary paper states the values and the logarithmic range mapping."}
+    disposition: defer
+    disposition_rationale: "Retain the configuration-specific detail in the extraction and synthesis dossier; do not add it to the core lesson."
