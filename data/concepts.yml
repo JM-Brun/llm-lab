@@ -1177,6 +1177,34 @@ relation_types:
 
 relations:
 
+  - {from: tokenizer, type: applies-to, to: tokenization}
+  - {from: tokenizer-pipeline, type: part-of, to: tokenizer}
+  - {from: text-normalization, type: part-of, to: tokenizer-pipeline}
+  - {from: pre-tokenization, type: part-of, to: tokenizer-pipeline}
+  - {from: subword-tokenization, type: part-of, to: tokenization}
+  - {from: byte-pair-encoding, type: part-of, to: subword-tokenization}
+  - {from: wordpiece, type: part-of, to: subword-tokenization}
+  - {from: unigram-tokenization, type: part-of, to: subword-tokenization}
+  - {from: token-vocabulary, type: part-of, to: tokenizer}
+  - {from: token-vocabulary, type: produces, to: token-id}
+  - {from: token, type: represented-by, to: token-id}
+  - {from: token-id, type: prerequisite, to: token-embedding}
+  - {from: special-token, type: part-of, to: token}
+  - {from: special-token, type: part-of, to: token-vocabulary}
+  - {from: tokenizer-training, type: contributes-to, to: token-vocabulary}
+  - {from: token-decoding, type: applies-to, to: token-id}
+  - {from: tokenizer-evaluation, type: applies-to, to: tokenizer}
+  - {from: token-fertility, type: part-of, to: tokenizer-evaluation}
+  - {from: multilingual-tokenization, type: applies-to, to: tokenizer-evaluation}
+  - from: tokenizer-compatibility
+    type: prerequisite
+    to: token-embedding
+    rationale:
+      fr: "Les identifiants doivent être interprétés avec le vocabulaire et les conventions du tokenizer associés aux poids du modèle avant de sélectionner les vecteurs d'embedding."
+      en: "Identifiers must be interpreted with the vocabulary and tokenizer conventions paired with the model weights before selecting embedding vectors."
+  - {from: tokenization, type: produces, to: token}
+
+
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
   - {from: active-inference, type: contrasts-with, to: aixi}
   - from: conditional-distribution
