@@ -72,7 +72,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 
 Les trois publications ont été examinées à partir de leurs pages bibliographiques primaires (ACL Anthology). La vérification de l'index et du registre de Wiki Knowledge n'a pas révélé de fiches source correspondantes. Cette passe constitue donc une **revue documentaire externe et une compilation éditoriale pour LLM Lab**, pas encore une ingestion canonique complète dans JM-Brun/wiki-knowledge.
 
-À faire dans Wiki Knowledge, avec le workflow wk-ingest et ses artefacts canoniques : créer/réutiliser les identités de source, enregistrer les métadonnées de provenance, extraire les claims avec localisateurs précis, résoudre les concepts existants, puis produire un ChangePlan. Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
+Le suivi de cette ingestion est ouvert dans [Wiki Knowledge #198](https://github.com/JM-Brun/wiki-knowledge/issues/198). À faire avec le workflow wk-ingest et ses artefacts canoniques : créer/réutiliser les identités de source, enregistrer les métadonnées de provenance, extraire les claims avec localisateurs précis, résoudre les concepts existants, puis produire un ChangePlan. Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
 
 ## 7. Validation et limites
 
