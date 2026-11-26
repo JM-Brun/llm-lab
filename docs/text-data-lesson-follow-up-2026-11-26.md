@@ -19,7 +19,7 @@ The lesson is not the place to teach every segmentation algorithm, corpus prepar
 | Understand | `text-data`: text → tokens → IDs → initial lookup |
 | Deepen | `tokenization-and-tokenizers` hub, then Unicode, segmentation strategies, tokenizer design/evaluation |
 | Build | corpus preparation, tokenizer fitting, training examples and targets |
-| Practice | dedicated `exercises-text-data` collection |
+| Practice | page-specific `exercises/text-data` hub, which links to the extended `exercises-text-data` collection |
 | Revision | concise retrieval and conceptual checks in `revision-text-data` |
 
 The hub and specialized pages are the canonical destinations for detailed explanations. Avoid reintroducing a second, collapsed explanation of Build in the main lesson.
@@ -30,8 +30,8 @@ The PR makes the following bilingual changes:
 
 - Removes a repeated “two uses, two paths” paragraph from the supplementary section while preserving its historical anchor.
 - Strengthens both revision sheets with three explicit checks: same-ID initial lookup, prompt encoding versus tokenizer fitting, and the interpretation limits of token count.
-- Adds direct links from the revision sheets to the lesson, Practice collection and Deepen hub.
-- Corrects Practice destinations to the actual `exercises-text-data.qmd` page (the former `exercises/text-data.qmd` path did not resolve).
+- Adds direct links from the revision sheets to the lesson, the page-specific Practice hub and the Deepen hub.
+- Keeps general Practice navigation on the page-specific `exercises/text-data.qmd` hub; links to the longer trace and lookup exercise target the separate `exercises-text-data.qmd` collection.
 - Refreshes the French and English generated learning-map data to include the new revision headings.
 
 The revision checks state the necessary conditions: same ID retrieves the same embedding row at fixed parameters; later contextualized states may differ; prompt encoding uses an already fixed tokenizer; token count alone does not establish downstream quality.
@@ -101,12 +101,11 @@ The following checks were made against the issue's detailed acceptance list:
 
 **Already present and retained**
 - The GPT-2 running examples and tokenizer-specific IDs remain in the main lessons; the fixed `2 + 2 = 4` comparison remains reproducible.
-- The exercise collection contains the Python tokenizer/embedding trace and the lookup exercise. The correct published exercise slug is `exercises-text-data`, not `exercises/text-data`.
+- The exercise collection contains the Python tokenizer/embedding trace and the lookup exercise. Two Practice destinations coexist: the page-specific exercise hub is `exercises/text-data.qmd`; the extended collection is `exercises-text-data.qmd`. Use the hub for general Practice navigation and the collection for its trace and lookup anchors.
 - The `data/guided-route.yml` outcome for `text-data` already matches the bilingual objective: follow text to IDs and explain what can vary between tokenizers.
 - The lesson's `revision_support` evidence anchor `revision-summary` is explicitly present in both lesson sources.
 - The `scope`, `purpose` and summary describe the text → IDs → initial-vector boundary rather than claiming to teach the segmentation algorithms.
-- The stale `related` page IDs have been aligned with the actual bilingual Practice page IDs (`fr/exercises-text-data` / `en/exercises-text-data`).
-- The exercise links to the lookup task now use the explicit existing anchor `ex-text-data-embedding-lookup`.
+- The lookup-task links now target the extended collection and use its explicit existing anchor `ex-text-data-embedding-lookup`.
 
 **Still open in #1492 or coordinated issues**
 - [ ] Verify the same GPT-2 example is picked up by `embedding-space`, including the exact ID and corresponding row, and coordinate the hierarchy edge in FR/EN with #1493.
