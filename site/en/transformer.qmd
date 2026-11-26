@@ -72,7 +72,13 @@ This diagram represents the **decoder-only** family used by autoregressive GPT m
 
 ### Placing the network in the generation process
 
-![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Complete pipeline: text, tokenization, embeddings and positional information, repeated Transformer blocks, logits, softmax, next-token selection, then addition to the context." width=100%}
+<figure id="fig-gpt-data-flow">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/gpt-data-flow-en-mobile.svg">
+    <img src="../images/gpt-data-flow-en.svg" alt="Complete pipeline: text, tokenization, embeddings and positional information, repeated Transformer blocks, logits, softmax, next-token selection, then addition to the context." style="width:100%;height:auto">
+  </picture>
+  <figcaption>The diagram places the Transformer stack in the full generation loop: the selected token is appended to the context, then another prediction is computed with the same parameters.</figcaption>
+</figure>
 
 This second diagram answers a different question: it places the network in the complete process. **The stack of blocks in the middle is the Transformer shown above**; upstream operations prepare its input, while softmax, token selection, and feedback happen downstream. The decoding loop takes place after the network output.
 
