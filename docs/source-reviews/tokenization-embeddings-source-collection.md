@@ -546,3 +546,10 @@ The audit found one stale cross-page exercise destination in both embedding-spac
 No new route edge, concept, prerequisite or page is justified by this audit. The existing sequence and page ownership remain appropriate.
 
 **Remaining validation:** run the fresh CI on the final PR head; confirm the map generator reproduces both committed map files; and verify the corrected exercise anchors in the rendered bilingual site. This source-level review does not replace browser inspection or a learner pilot.
+
+
+### 9.10 Architecture-neutral statement about repeated lookup rows
+
+The bilingual matrix explanation originally said that repeated IDs produce identical rows before positional information is “added”. That wording could imply that every architecture adds a positional vector directly to the token embedding. It is not architecture-neutral: RoPE acts on projected queries and keys inside attention, and relative biases can modify attention scores without adding a vector to the lookup.
+
+The FR and EN statements now say that repeated IDs yield identical rows of the initial lookup matrix before any architecture-specific position-dependent processing. This preserves the mathematical claim while leaving the location and form of positional handling to the positional-encoding lesson.
