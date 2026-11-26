@@ -4,7 +4,7 @@
 **Date:** 2026-11-23
 
 > **Production-order decision (2026-11-23):** draft, review and validate the stories in calendar order (Day 01, then Day 02, and so on). The earlier proposal to prepare non-adjacent pilots (Days 06, 17 and 23) is superseded as a production strategy. The stories remain independent for readers: chronological authoring does not create prerequisite dependencies.  
-**Scope:** 24 independent, approximately 10-minute readings for December 1–24  
+**Scope:** 24 independent, approximately 15-minute readings for December 1–24 (10–20 minutes when the subject genuinely warrants a shorter or longer treatment)  
 **Languages:** French and English  
 **Audience:** curious readers, from mathematically literate beginners to LLM practitioners
 
@@ -21,11 +21,24 @@ The calendar should therefore **stop being a compressed version of the main LLM 
 
 ### New editorial promise
 
-> Every day, open an independent scientific story about one idea from mathematics, statistics, information theory, computer science, or modern language-model research. In about ten minutes, understand the question, follow a worked example, and leave with an experiment or a new way to think.
+> Every day, open an independent scientific story about one idea from mathematics, statistics, information theory, computer science, or modern language-model research. In about fifteen minutes, understand the question, follow a worked example, and leave with an experiment or a new way to think.
 
 The calendar becomes a collection of 24 story-led Deepen lessons, not a prerequisite path or a duplicate curriculum. A reader can open day 17 before day 3 and still understand it. The entries are connected by a shared interest in mathematics and LLMs, not by a dependency chain.
 
 The calendar should have value even for someone who has already completed the main learning path.
+
+
+### Reading-time contract (updated 2026-11-26)
+
+The normal target is **about 15 minutes per story**. A story may be shorter or longer only when its subject and pedagogical structure justify it:
+
+- **10–20 minutes:** acceptable range; explain the reason for a meaningful deviation from 15 minutes in the editorial review.
+- **Below 10 minutes:** a structural warning, not an acceptable short format. Diagnose whether the subject is too narrow or weak for an independent story, or whether the treatment omits essential reasoning, examples, visual explanation, or a meaningful conclusion. Restructure the narrative and deepen the investigation where the subject has genuine potential; combine it with a closely related idea when that creates one coherent story. If the subject still cannot sustain a substantive investigation, replace it or fold it into another story rather than padding it. A sub-10-minute exception requires an explicit editorial justification.
+- **Above 20 minutes:** normally overloaded; redistribute material to an existing canonical lesson, a new focused deep dive, or the dedicated exercise/experiment page.
+
+Reading time is an estimate, not a word-count target alone. Tables, equations, code, figures and the time needed to inspect an experiment affect the actual experience. Record both a transparent text-based estimate and observed novice-reader time when available.
+
+**Redistribution is preferred to deletion.** Keep the central question, essential reasoning, one coherent worked example and the conclusion in the story. Move optional derivations, research surveys, historical detail, implementation caveats and extensive resource catalogues to a suitable existing page or a new focused companion. Move exercises to the dedicated practice page. Do not create duplicate copies: preserve citations, figures, anchors and backlinks, and make the destination discoverable from the story.
 
 ## 2. Relationship with the main LLM Lab
 
@@ -76,7 +89,7 @@ The 2026 mapping is maintained in `data/calendars/advent-2026.yml`. Each entry r
 
 ## 3. The daily reading contract
 
-**Target: approximately 10 minutes per language version**, excluding optional links.
+**Target: approximately 15 minutes per language version**, with a justified 10–20 minute range; optional deep dives and exercise pages are outside the story's reading-time estimate.
 
 A typical entry should contain 1,000–1,400 words in French (adjust after testing), with mathematical and visual material contributing to understanding rather than padding the word count.
 
@@ -109,7 +122,7 @@ The four groups below are **editorial shelves**, not acts in a learning sequence
 
 | Day | Working title | Narrative hook / story | Main mathematical or LLM connection | Distinct value beyond the main path |
 |---:|---|---|---|---|
-| 01 | **Why does the word “the” appear everywhere?** | A journey through word-frequency rankings and the surprising regularity of natural language. | Zipf's law, rank-frequency distributions, heavy tails, token-frequency imbalance. | Explains why language data are statistically uneven and why rare tokens are difficult; not a tokenization lesson. |
+| 01 | **Why does the word “I” appear so often?** | A journey through word-frequency rankings and the surprising regularity of natural language. | Zipf's law, rank-frequency distributions, heavy tails, token-frequency imbalance. | Explains why language data are statistically uneven and why rare tokens are difficult; not a tokenization lesson. |
 | 02 | **How many bits does a sentence surprise us with?** | Shannon's information problem: how to quantify uncertainty before knowing the outcome. | Self-information, entropy, conditional entropy, surprisal. | Builds an information-theoretic lens for language, not a softmax/probability walkthrough. |
 | 03 | **The tokenizer as a compression engineer** | Why a vocabulary must balance reusable chunks against sequence length; how pair-merging became a practical strategy. | Byte-pair encoding, greedy merges, compression trade-offs, vocabulary size. | A design trade-off and miniature tokenizer experiment, not a basic segmentation tutorial. |
 | 04 | **Can meaning have a direction?** | The geometric surprise of vector representations and the famous analogy experiments, followed by their limits. | Vector spaces, cosine similarity, linear offsets, distributional semantics. | Critical geometric interpretation rather than embedding lookup. |

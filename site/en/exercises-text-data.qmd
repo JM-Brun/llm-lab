@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-text-data"
-scope: "Formative practice on tokenization, embeddings, windows, target alignment, BPE, and data leakage."
+scope: "Formative practice on tokenization, inspecting real tokenizers, embeddings, windows, target alignment, BPE, and data leakage."
 purpose: "Work through the text data exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
   previous: null
@@ -279,6 +279,32 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see the BPE-merges exercise.
 
 [Return to the tokenization example in the lesson](text-data.qmd#tokenizer-output).
+
+#### Inspect a Hugging Face tokenizer {#tokenizer-huggingface-probe}
+
+The example below inspects a specific Hugging Face tokenizer. The first load may require network access; for a reproducible experiment, record library versions and pin a model revision rather than relying on a moving default branch.
+
+```python
+from importlib.metadata import version
+from transformers import AutoTokenizer
+
+model_id = "gpt2"
+revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
+text = " Hello world — café"
+
+ids = tokenizer.encode(text, add_special_tokens=False)
+tokens = tokenizer.convert_ids_to_tokens(ids)
+
+print("transformers:", version("transformers"))
+print("tokenizer:", model_id)
+print("tokens:", tokens)
+print("IDs:", ids)
+print("count:", len(ids))
+print("decoded:", tokenizer.decode(ids))
+```
+
+The displayed IDs and fragments belong to the loaded tokenizer. To compare two tokenizers, run the same protocol on the same text, record their revision/version identifiers, and compare fragments and token counts—not numeric ID values across vocabularies. Decoding can also depend on cleanup conventions and special tokens.
 
 <a id="ex-representation-context"></a>
 

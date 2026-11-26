@@ -347,6 +347,10 @@ project:
     - en/revision-training-loop.qmd
     - references.qmd
 
+    - fr/zipf-law-deep-dive.qmd
+    - en/zipf-law-deep-dive.qmd
+    - fr/tokenizer-multilingual-evaluation.qmd
+    - en/tokenizer-multilingual-evaluation.qmd
 website:
   title: "LLM Lab"
   description: "A bilingual learning lab to understand, build, and investigate language models."
@@ -589,6 +593,7 @@ website:
                     - fr/tokenization-strategies.qmd
                     - fr/unicode-text.qmd
                     - fr/tokenizer-design-evaluation.qmd
+                    - fr/tokenizer-multilingual-evaluation.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/embeddings-deep-dive.qmd
@@ -598,6 +603,7 @@ website:
             - section: "Formalisation probabiliste et chaîne de l’entraînement"
               contents:
                 - fr/surprisal-information-content.qmd
+                - fr/zipf-law-deep-dive.qmd
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
                 - fr/universal-artificial-intelligence.qmd
@@ -844,6 +850,7 @@ website:
                     - en/tokenization-strategies.qmd
                     - en/unicode-text.qmd
                     - en/tokenizer-design-evaluation.qmd
+                    - en/tokenizer-multilingual-evaluation.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/embeddings-deep-dive.qmd
@@ -853,6 +860,7 @@ website:
             - section: "Probabilistic formalization and the training chain"
               contents:
                 - en/surprisal-information-content.qmd
+                - en/zipf-law-deep-dive.qmd
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
                 - en/universal-artificial-intelligence.qmd

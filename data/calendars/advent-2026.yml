@@ -34,7 +34,7 @@ days:
       fr: "fr/advent-calendar-story-day-01"
       en: "en/advent-calendar-story-day-01"
     page_status: in-progress
-    lesson_scope: "Loi de Zipf, distributions rang-fréquence, longue traîne, corpus et limites empiriques."
+    lesson_scope: "Récit central : construire un petit corpus, interpréter la relation rang-fréquence, comprendre la longue traîne et les limites ; les données multilingues, l’histoire, les applications et la variante de Mandelbrot sont dans zipf-law-deep-dive."
     practice_page:
       fr: "fr/exercises-zipf-law"
       en: "en/exercises-zipf-law"
@@ -53,7 +53,7 @@ days:
       fr: "fr/surprisal-information-content"
       en: "en/surprisal-information-content"
     page_status: in-progress
-    lesson_scope: "Information propre, surprisal et lien entre information d’un événement, entropie et langage ; distinguer surprisal observé et incertitude prédictive."
+    lesson_scope: "Récit central : calculer l’information propre, relier surprisal et probabilités conditionnelles, distinguer une issue observée de l’entropie prédictive, puis relier logits et surprisal."
     practice_page:
       fr: "fr/experience-information-theory"
       en: "en/experience-information-theory"
@@ -72,7 +72,7 @@ days:
       fr: "fr/tokenizer-design-evaluation"
       en: "en/tokenizer-design-evaluation"
     page_status: reuse-audit
-    lesson_scope: "BPE, stratégies de segmentation, compression, taille du vocabulaire et protocole d’évaluation."
+    lesson_scope: "Récit central : comparer des segmentations, comprendre le compromis entre taille du vocabulaire et longueur, distinguer coût de représentation, coût système et qualité en aval ; les études comparatives détaillées sont dans tokenizer-multilingual-evaluation."
     experiment: "Comparer plusieurs segmentations d’un même corpus et mesurer les longueurs obtenues."
   - day: 4
     id: geometry-of-meaning

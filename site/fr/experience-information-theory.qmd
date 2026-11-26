@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/entropy", "fr/cross-entropy", "fr/revision-information-theory"]
+related: ["fr/entropy", "fr/cross-entropy", "fr/revision-information-theory", "fr/surprisal-information-content"]
 tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -74,6 +74,23 @@ La perplexité est l'exponentielle de la NLL moyenne, avec la même base de loga
 
 Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/information_theory.py` et `tests/unit/test_information_theory.py`.
 
+
+## Expériences guidées autour du surprisal {#surprisal-experiments}
+
+Ces manipulations complètent le calcul travaillé dans la leçon. Elles utilisent des probabilités fictives et ne représentent pas les sorties d'un modèle entraîné.
+
+1. **Modifier la probabilité de la cible.** Gardez le contexte et le token observé fixes, puis faites varier sa probabilité de $0{,}8$ à $0{,}4$, $0{,}1$ et $0{,}01$. Calculez $I(x\mid c)=-\log_2 p(x\mid c)$ à chaque étape. Le surprisal doit augmenter à chaque diminution de probabilité.
+2. **Modifier le contexte.** Gardez le token cible `Paris` identique, mais comparez deux contextes fictifs :
+
+   | Contexte | $p(\text{Paris}\mid c)$ | Surprisal |
+   |---|---:|---:|
+   | « La capitale de la France est… » | $0{,}80$ | $0{,}32$ bit |
+   | « La capitale du Japon est… » | $0{,}01$ | $6{,}64$ bits |
+
+   Le token ne change pas ; sa probabilité conditionnelle, et donc son surprisal, changent.
+3. **Modifier les probabilités des autres tokens.** Gardez la probabilité de la cible constante, puis redistribuez la masse restante entre les autres candidats. Le surprisal de la cible ne change pas, mais l'entropie de la distribution peut changer.
+
+**Bilan attendu :** distinguer l'événement observé, le contexte qui conditionne sa probabilité et la distribution complète des issues possibles. Une même issue ne possède pas un surprisal unique indépendamment du modèle et du contexte.
 
 ## Extension — information prédictive \(\mathcal V\)
 

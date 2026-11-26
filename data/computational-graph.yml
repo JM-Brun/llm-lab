@@ -56,7 +56,7 @@ nodes:
       fr: "Segmente le texte en unités discrètes selon le tokenizer."
       en: "Segments text into discrete units according to the tokenizer."
     branches: [shared-prediction]
-    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation, fr/tokenizer-multilingual-evaluation, en/tokenizer-multilingual-evaluation]
   - id: tokens
     kind: data
     role: representation
@@ -74,7 +74,7 @@ nodes:
       fr: "Associe chaque token à son identifiant dans le vocabulaire."
       en: "Maps each token to its identifier in the vocabulary."
     branches: [shared-prediction]
-    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation, fr/tokenizer-multilingual-evaluation, en/tokenizer-multilingual-evaluation]
   - id: token-ids
     kind: data
     role: representation
