@@ -102,9 +102,9 @@ stages:
     compact_title: {fr: "Représenter", en: "Represent"}
     conceptual_focus:
       embedding-space:
-        mobilizes: ["node:token-ids"]
+        mobilizes: ["node:token-ids", "node:embedding-lookup"]
         objects: ["concept:token-embedding"]
-        outcome: {fr: "Retrouver le vecteur associé à un identifiant", en: "Retrieve the vector for a token ID"}
+        outcome: {fr: "Retrouver dans l’ordre les vecteurs sélectionnés par une séquence d’IDs et justifier l’égalité des occurrences répétées à table fixée", en: "Trace the vectors selected by an ID sequence in order and explain why repeated IDs retrieve the same vector with a fixed table"}
       positional-encoding:
         mobilizes: ["concept:token-embedding"]
         objects: ["concept:positional-encoding"]
