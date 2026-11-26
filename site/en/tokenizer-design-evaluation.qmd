@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/tokenization-and-tokenizers"]
   children: ["en/tokenizer-multilingual-evaluation"]
-related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/exercises-text-data"]
+related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/exercises-text-data", "en/generation", "en/llm-computational-complexity"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -105,6 +105,8 @@ These values are a **constructed example**, not benchmark results. They isolate 
 
 Output-logit computation introduces another trade-off. In standard causal training, the output projection is applied at every position to produce a distribution over the vocabulary. At fixed hidden dimension, its cost is proportional to $T V d$: $120Vd$ for A versus $80 \times 4Vd = 320Vd$ for B, or $8/3$ times as much. This computation remains necessary when input and output weights are tied: tying avoids storing two separate matrices, but it does not eliminate the vocabulary projection. During generation, logits are usually computed only for the final position; the cost of that projection per generated token remains proportional to $Vd$.
 
+At inference, prompt length also determines the size of the **KV cache**. With architecture, batch size, and precision fixed, its memory grows linearly with cached positions (the prompt, then generated tokens): in this example, B's 80-position prompt cache would use about $2/3$ of A's 120-position prompt-cache memory. By contrast, the vocabulary projection remains proportional to $Vd$ for every generated token, so B makes that term four times larger. A tokenizer can therefore reduce context cost while increasing per-token output cost. See [KV caching during generation](generation.qmd) and [the KV-cache memory formula](llm-computational-complexity.qmd#kv-cache-memory).
+
 We therefore cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
 
 #### Which budget is held fixed?
@@ -163,17 +165,18 @@ A tokenizer choice should state the priority constraints and accepted trade-offs
 | Multilingual service | Metrics by language and text type | Do not let a global average hide disparities |
 | Task quality | Downstream scores by task and language | Compare under comparable budgets and protocols |
 
+::: {.callout-note title="A Pareto frontier, not a universal ranking"}
+For a fixed workload, each tokenizer maps to a vector of outcomes: prefill cost, KV-cache memory, projection cost, and downstream quality. Tokenizer A dominates B if every relevant cost is no higher, downstream quality is no lower, and at least one comparison is strict. The non-dominated choices form a **Pareto frontier**. Choosing among them requires explicit constraints (languages, latency, memory, quality) or weights for an aggregate score; those weights express a product objective, not an intrinsic property of the tokenizer.
+
 The right decision is not “choose the tokenizer that compresses best,” but **choose the tokenizer whose trade-offs match the intended system and use cases**, then test empirically whether those trade-offs hold.
+:::
 
-## Deep dive: mechanisms and evaluation
+## Further exploration
 
-The detailed WordPiece and Unigram training and encoding mechanisms are covered in [the tokenization strategies page](tokenization-strategies.qmd#wordpiece-unigram-mechanisms). Empirical findings, figures, and research resources are collected in [the multilingual tokenizer evaluation deep dive](tokenizer-multilingual-evaluation.qmd).
-
-## Go further
-
-- [Multilingual tokenizer evaluation](tokenizer-multilingual-evaluation.qmd).
-- [Tokenization strategies](tokenization-strategies.qmd) for segmentation mechanisms.
+- [Tokenization strategies](tokenization-strategies.qmd#wordpiece-unigram-mechanisms) for segmentation mechanisms.
+- [Multilingual tokenizer evaluation](tokenizer-multilingual-evaluation.qmd) for empirical findings, figures, and study limitations.
 - [Text data](text-data.qmd) for the upstream pipeline.
+- [Generation](generation.qmd) and [model complexity](llm-computational-complexity.qmd#kv-cache-memory) for inference costs and KV caching.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenizer-design-evaluation.qmd) · [English](tokenizer-design-evaluation.qmd)
