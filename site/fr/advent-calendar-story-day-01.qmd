@@ -13,7 +13,7 @@ id: "fr/advent-calendar-story-day-01"
 summary: "Construit un petit corpus, étudie les fréquences lexicales et découvre la loi de Zipf, ses usages et ses limites."
 scope: "Introduit les unités de comptage, construit une distribution rang-fréquence, interprète la loi de Zipf et ses limites ; renvoie les variantes, données comparatives, histoire et applications détaillées vers un approfondissement."
 purpose: "Construire un petit corpus, distinguer types et occurrences, lire une relation rang-fréquence et éviter les interprétations abusives."
-domain: "probabilistic-foundations-training"
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
