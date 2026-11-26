@@ -280,6 +280,34 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 
 [Reprendre la leçon à l’exemple de tokenisation](text-data.qmd#tokenizer-output).
 
+#### Inspecter un tokenizer Hugging Face {#tokenizer-huggingface-probe}
+
+Cette trace inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
+
+L'exemple suivant inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
+
+```python
+from importlib.metadata import version
+from transformers import AutoTokenizer
+
+model_id = "gpt2"
+revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
+text = " Hello world — café"
+
+ids = tokenizer.encode(text, add_special_tokens=False)
+tokens = tokenizer.convert_ids_to_tokens(ids)
+
+print("transformers:", version("transformers"))
+print("tokenizer:", model_id)
+print("tokens:", tokens)
+print("IDs:", ids)
+print("count:", len(ids))
+print("decoded:", tokenizer.decode(ids))
+```
+
+Les fragments et IDs affichés appartiennent au tokenizer chargé. Pour comparer deux tokenizers, exécutez le même protocole sur les mêmes textes, consignez leurs versions/révisions et comparez les fragments et le nombre de tokens — pas les valeurs numériques des IDs entre vocabulaires. Le décodage dépend aussi des conventions et des tokens spéciaux.
+
 <a id="ex-representation-context"></a>
 
 ### Distinguer identité, position et contexte {#ex-text-data-representation-context}
