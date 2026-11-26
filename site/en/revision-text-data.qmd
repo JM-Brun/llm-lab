@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/revision-text-data"
-scope: "The text → tokens → IDs → embeddings chain and the difference between encoding a prompt and preparing a corpus."
-purpose: "Recall the key ideas from this lesson and apply them to the review question."
+scope: "A recall sheet for the text → tokens → IDs → initial lookup chain, tokenizer dependencies, and the distinction between prompts and corpora."
+purpose: "Recall the representation chain and explain what an ID denotes without confusing it with a vector."
 revision_role: synthesis
 revision_of: ["en/text-data"]
 suggested_route:
@@ -39,6 +39,17 @@ Two tokenizers return different ID lists for the same text. Does this imply a bu
 <summary>Show the answer</summary>
 
 No. The input text stays fixed. Token boundaries, the number of tokens, and their IDs can change with the segmentation rules and vocabulary. Each ID list is interpreted with its own tokenizer.
+
+</details>
+
+## A second question to check the mental model
+
+Why is ID `31373` not “larger” or “closer in meaning” than ID `995`?
+
+<details>
+<summary>Show the answer</summary>
+
+An ID is a label that indexes a vocabulary entry. Its numeric value expresses neither a distance nor a semantic quantity. The corresponding row of the matrix supplies the initial vector.
 
 </details>
 
