@@ -67,7 +67,7 @@ The same text can produce different sequences because pre-tokenization rules and
 
 ## A thought experiment: what does the model actually receive? {#text-id-experiment}
 
-Return to the prefix “What have the Romans ever done for us?”. Before discussing meaning or attention, follow one occurrence through three transformations:
+Return to the prefix “What have the Romans ever done for us?”. The running narrative then continues with: “They built roads between distant towns.” Before discussing meaning or attention, follow one occurrence through three transformations:
 
 1. **Text is split.** The tokenizer applies its rules and produces an ordered sequence of tokens. Boundaries do not necessarily match visible words.
 2. **Tokens become IDs.** Each token is replaced by its index in the vocabulary. This index retrieves an entry; it is neither a measurement nor a semantic representation.
