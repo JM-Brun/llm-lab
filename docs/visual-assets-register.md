@@ -403,3 +403,15 @@ This update reconciles source references and repository inventory only. It does 
 A direct read of the current `main` sources `site/en/contextualized-representations.qmd` and `site/fr/contextualized-representations.qmd` confirms that neither file contains a Rushang Chauhan CDN image embed. Each page embeds its project-local `contextualization-pipeline` SVG and links to the Rushang article as optional further reading. The previous register description of this item as a current external embed was stale. The article link and both local diagrams are retained unchanged; this is a classification correction, not an asset removal or replacement.
 
 This is source-level evidence only. The site-wide rendered-DOM inventory remains outstanding: includes, generated HTML, CSS backgrounds, responsive `picture`/`srcset` selection, lazy-loaded images and network outcomes must still be checked on published EN/FR pages at desktop and mobile viewports. The current external-embed table should not be treated as complete until that pass is recorded.
+
+
+## Understand route visual pilot — prediction and inference — 2026-11-26
+
+The fourth source-level pilot reviews logits, probabilities, entropy, generation and in-context learning in EN/FR. It adds four mobile SVGs; the other pages retain their existing table/flow, generation timeline and Mermaid diagram. Full decisions are recorded in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `logits-common-shift-en-mobile.svg`, `logits-common-shift-fr-mobile.svg` | EN/FR `logits.qmd` | Original mobile composition showing equal logit gaps and identical softmax distributions after a common offset. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `entropy-distributions-en-mobile.svg`, `entropy-distributions-fr-mobile.svg` | EN/FR `entropy.qmd` | Original mobile composition comparing concentrated, example and uniform distributions with their entropy values. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+All four new files include SVG `title` and `desc` elements and contain no embedded raster, script, foreignObject or external href. The logits and entropy pages now use responsive `picture` embeds with page-level alt text and captions. Source-level checks only; Quarto rendering, responsive legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain unverified.
