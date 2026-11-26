@@ -64,6 +64,7 @@ The distinction is intentional:
 - **Projection** is a generated reader-facing view of canonical records (for example, the Review route).
 
 No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. Existing destination:review/revision metadata, where explicitly supported, must be interpreted as a page/resource classification within the Main learning path, not as evidence of a sixth top-level space.
+
 ## 2. Priority summary
 
 | Priority | Workstream | Outcome |
@@ -73,7 +74,7 @@ No registry, schema, page metadata migration or navigation rewrite is implied by
 | P1 | Main-path revision support | Enforced aid-to-lesson relations and honest coverage status, surfaced within the Main learning path |
 | P1 | Practice model | Stable activity identities and explicit links without bloating lessons |
 | P1 | Cross-graph interoperability | Consistent relation contracts and referential validation |
-| P1 | Calendar/collection model | Reusable edition model independent of Understand |
+| P1 | Stories / collection model | Reusable edition model independent of the Main learning path |
 | P1 | Project intelligence | Explainable multi-system coverage diagnostics |
 | P2 | Build/resource model expansion | Add resource kinds only when concrete use cases require them |
 | P2 | Learner-facing projections | Accessible cross-system discovery and useful views |
@@ -89,8 +90,9 @@ No registry, schema, page metadata migration or navigation rewrite is implied by
 - [x] Update the architecture validator matrix with Review, Project Intelligence, PR #1558 and PR #1560 evidence.
 - [ ] Recheck the remaining cross-document status statements after this inventory PR is reviewed; keep specialist work in its owning issues.
 - [x] Define and use a clear status vocabulary: implemented and validated, implemented with validation incomplete, documented/proposed, deferred, superseded and not assessed.
+- [x] Align the product-level vocabulary on five top-level spaces: Main learning path, Build from scratch, Practice & experiment, Deepen and Stories; nest Review/revision under the Main learning path while preserving its specialized contracts and #1541 ownership.
 
-**Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model.
+**Acceptance:** links resolve; README, architecture index and calendar handoff describe the same state; no superseded manifest is presented as the canonical new calendar model; the architecture does not describe Review as a sixth top-level space.
 
 ### P0 — Verify the shared knowledge foundation
 
@@ -147,7 +149,7 @@ No registry, schema, page metadata migration or navigation rewrite is implied by
 
 **Acceptance:** graph inventory and cross-reference validator; tests demonstrate that one concept can be referenced by several graph families without conflating edge semantics.
 
-### P1 — Generalize editorial collections and calendar editions
+### P1 — Generalize Stories collections and calendar editions
 
 - [x] Reconcile the old 2026 calendar prototype with the independent-story editorial decision; preserve the old material as historical and keep the new Day 06 draft source-only.
 - [ ] Complete the inventory/migration map required by docs/advent-calendar-next-steps.md.
