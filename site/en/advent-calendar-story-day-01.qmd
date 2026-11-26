@@ -24,6 +24,12 @@ related: ["en/scientific-calendar","en/text-data","en/tokenization-strategies","
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 -->
 
+<!--
+Editorial model: docs/advent-calendar-pilots/first-three-days-pedagogical-models.md#porte-01--pourquoi-le-mot-je-revient-il-si-souvent
+Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1653
+This is authoring metadata; it is intentionally not rendered to readers.
+-->
+
 *LLM Lab Advent Calendar 2026 · Door 1 · about 12 minutes*
 
 This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its words, and then compare the exercise with real linguistic corpora.

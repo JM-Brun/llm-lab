@@ -21,6 +21,12 @@ related: ["fr/tokenization-strategies", "fr/text-data", "fr/unicode-text", "fr/e
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:fr", "status:published"]
 -->
 
+<!--
+Editorial model: docs/advent-calendar-pilots/first-three-days-pedagogical-models.md#porte-03--le-tokenizer-ingenieur-de-compression
+Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1667
+This is authoring metadata; it is intentionally not rendered to readers.
+-->
+
 
 {{< include ../includes/generated-guided-context-fr-tokenizer-design-evaluation.qmd >}}
 ::: {.chapter-lead}

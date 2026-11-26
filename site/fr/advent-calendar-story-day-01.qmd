@@ -24,6 +24,12 @@ related: ["fr/scientific-calendar","fr/text-data","fr/tokenization-strategies","
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
+<!--
+Editorial model: docs/advent-calendar-pilots/first-three-days-pedagogical-models.md#porte-01--pourquoi-le-mot-je-revient-il-si-souvent
+Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1653
+This is authoring metadata; it is intentionally not rendered to readers.
+-->
+
 *Calendrier de l’Avent 2026 · Porte 1 · environ 12 minutes*
 
 Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
