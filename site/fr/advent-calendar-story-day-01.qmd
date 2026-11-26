@@ -24,7 +24,7 @@ related: ["fr/zipf-law-deep-dive","fr/exercises-zipf-law","fr/text-data","fr/tok
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
-*Calendrier de l’Avent 2026 · Porte 1 · environ 12 minutes*
+*Calendrier de l’Avent 2026 · Porte 1 · environ 15 minutes*
 
 Cette leçon part d’une question simple : pourquoi certaines formes reviennent-elles beaucoup plus souvent que d’autres ? Nous allons construire un petit corpus, compter ses mots, puis confronter cette expérience à des corpus linguistiques réels.
 
