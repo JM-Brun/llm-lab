@@ -8,6 +8,30 @@
 
 This document is an operational handoff for future sessions. It records what is complete, what remains, the order of work, and the conditions for considering the calendar ready. The editorial rationale and proposed 24-story slate remain in [advent-calendar-editorial-redesign.md](advent-calendar-editorial-redesign.md); this file should not duplicate that specification.
 
+
+
+## 2026-11-26 — first-three-story duration and redistribution pass
+
+The editorial contract now targets **about 15 minutes per story**, with 10–20 minutes accepted only when the subject justifies the deviation. A story below 10 minutes triggers a structural diagnosis, not an automatic instruction to add words: determine whether the topic is too narrow or weak for an independent story, or whether the treatment omits reasoning steps, worked examples, explanatory visuals, or a meaningful conclusion. Restructure and deepen where the topic has real potential; combine closely related ideas only when they form one coherent investigation. Replace or fold in a topic that cannot sustain a substantive story. Any sub-10-minute exception requires explicit editorial justification. For stories above 20 minutes, redistribute secondary material. Keep exercises on dedicated practice pages and prefer redistribution to deletion, preserving citations, figures, anchors, and navigation.
+
+A follow-up implementation is being prepared in the [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695). It redistributes the first three stories in FR/EN:
+
+- **Day 01 — Zipf:** the main story is approximately 2,600 words in French (about 15 minutes including figures/tables). Detailed Zipf–Mandelbrot material, cross-linguistic data, history, and extended applications move to zipf-law-deep-dive.qmd; exercises remain in the existing Zipf exercise page.
+- **Day 02 — Surprisal:** adds a context-sensitive worked example, the logits → softmax → probability → surprisal chain, sequence sum/average distinctions, an explicit entropy calculation, and guided experiments. The existing information-theory experiment remains the practical companion.
+- **Day 03 — Tokenizer:** keeps the core vocabulary/sequence/cost decision in the story and adds a worked cost comparison. Research tables, multilingual metrics, and external resources move to tokenizer-multilingual-evaluation.qmd. Detailed WordPiece/Unigram mechanisms are integrated into the existing tokenization-strategies.qmd rather than duplicated.
+
+The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target.
+
+**Validation status (2026-11-26):**
+- The branch has been merged with the latest `main` history (#1696 and #1697); it is now up to date and GitHub reports the PR as mergeable.
+- Python quality, page metadata, concept registry, and domain checks pass. The complete suite passed **834 tests, with 1 skipped and 1 warning** in [run #45817756001](https://github.com/JM-Brun/llm-lab/actions/runs/45817756001). The warning lists existing core lessons outside their 10–15 minute target; none of the three calendar stories is listed.
+- The full Quarto render, interactive learning-map checks, computational-graph export, timeline parity, and local-link audit passed. The FR/EN browser audit reviewed 138 cases with no blocking failures in [run #45817755969](https://github.com/JM-Brun/llm-lab/actions/runs/45817755969). It nevertheless exposed one critical Axe `image-alt` issue on the surprisal distribution figure in both languages: Quarto had dropped the Markdown alt text from the rendered `img`. The source now sets `fig-alt` explicitly; the latest Quarto audit must confirm the rendered HTML has the alternative text.
+- A scientific review of the tokenizer cost example identified a missing term: the output projection's training computation scales as `T × V × d`. The bilingual example now shows the factor `8/3` for the constructed A/B comparison and distinguishes tied parameter storage from the computation that remains necessary. The latest CI and Quarto runs must validate these final edits.
+- The generated learning-map data now combines the revised bilingual page records with the latest 125 tokenization concepts and 147 typed relations from `main`; the two new calendar deep dives remain in the page map and navigation.
+- No novice-reader timing or comprehension review has yet been performed. The advertised 15-minute durations remain editorial estimates, not observed measurements.
+- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) remains open and mergeable. Do not merge until the latest CI and Quarto/browser runs pass and the novice review has an explicit acceptance decision.
+
+The tracked generated fragments are committed. If a later source edit changes page-map metadata or section headings, regenerate the bilingual outputs with `uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py`.
 ## 1. Current state — verified (updated 2026-11-24)
 
 ### Completed
@@ -110,7 +134,7 @@ A story is not ready merely because it renders or the CI passes.
 | Scientific quality | Equations, assumptions, terminology, and claims checked |
 | Sources | Primary/authoritative references for central claims; provenance/licence notes for reused visuals |
 | Pedagogy | Narrative hook, one central question, worked example, limitation/counterexample, challenge and solution |
-| Timing | Approximately 10 minutes, checked with a reader rather than estimated from word count alone |
+| Timing | Approximately 15 minutes, checked with a reader rather than estimated from word count alone |
 | Language parity | FR and EN carry the same ideas, equations, caveats, and examples |
 | Rendering | Actual Quarto output inspected on desktop and mobile |
 | Accessibility | Semantic structure, keyboard operation, visible focus, contrast, alt text, no horizontal overflow |

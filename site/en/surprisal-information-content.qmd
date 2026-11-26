@@ -30,13 +30,11 @@ Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1666
 This is authoring metadata; it is intentionally not rendered to readers.
 -->
 
-*LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
-
-*Reading preview under scientific and pedagogical review — feedback welcome.*
+*LLM Lab Advent Calendar 2026 · Door 2 · about 15 minutes*
 
 ## Surprise is not an emotion
 
-After the prefix “The capital of France is…”, imagine that a model assigns the following probabilities to possible continuations. These numbers are **constructed for explanation**; they are not outputs measured from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
+A model completes the prefix “The capital of France is…” by assigning probabilities to possible continuations. Suppose it assigns the following values. They are **constructed for explanation**, not measured outputs from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
 
 | Candidate token | Predicted probability |
 |---|---:|
@@ -45,7 +43,7 @@ After the prefix “The capital of France is…”, imagine that a model assigns
 | `Marseille` | $0.05$ |
 | `Lille` | $0.05$ |
 
-![Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution width=95%}
+![](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution fig-alt="Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits." width=95%}
 
 Suppose the observed text nevertheless continues with `Lyon`. The model assigned this token probability $0.10$. Its surprisal is:
 
@@ -161,6 +159,43 @@ $$
 
 The six bits describe this sequence's score under the model being considered. They are not the entropy of the model's distribution.
 
+## The same event can have different surprisal in different contexts
+
+Surprisal is not a property attached to a token alone. It depends on the probability the model assigns to it **in a particular context**.
+
+Consider the token `Paris` in two fictional contexts. The values below are chosen for explanation; they are not outputs from a real model.
+
+| Context | Predicted probability of `Paris` | Surprisal |
+|---|---:|---:|
+| “The capital of France is…” | $0.80$ | $-\log_2(0.80)\approx0.32$ bits |
+| “The capital of Japan is…” | $0.01$ | $-\log_2(0.01)\approx6.64$ bits |
+
+The token is the same, but its information content differs sharply because the conditional distributions differ. We therefore cannot assign `Paris` one unique surprisal independently of context.
+
+This also explains why global frequency is insufficient to predict local surprisal. A word that is common in a corpus may be unexpected after a particular prefix; a globally rare form may be strongly expected in a specialized construction.
+
+
+
+### Calculate the entropy of our toy distribution
+
+We can now calculate the entropy of the distribution from the opening example. Multiply each outcome's surprisal by its probability, then add the contributions:
+
+| Token | Probability | Surprisal | Contribution $p(x)I(x)$ |
+|---|---:|---:|---:|
+| `Paris` | $0.80$ | $0.32$ bits | $0.26$ bits |
+| `Lyon` | $0.10$ | $3.32$ bits | $0.33$ bits |
+| `Marseille` | $0.05$ | $4.32$ bits | $0.22$ bits |
+| `Lille` | $0.05$ | $4.32$ bits | $0.22$ bits |
+
+Therefore,
+
+$$
+H(X\mid c)\approx0.26+0.33+0.22+0.22
+\approx1.02\text{ bits}.
+$$
+
+Entropy is lower than the surprisal of the observed outcome `Lyon` (about 3.32 bits). There is no contradiction: entropy is the probability-weighted average over all possible outcomes, whereas Lyon's surprisal concerns one particular outcome. Rare events can contribute substantially, but their contributions are weighted by their low probabilities.
+
 ## Observed surprisal and predictive entropy: two different questions
 
 Fix a context $c$. A language model produces a distribution over possible tokens:
@@ -184,6 +219,43 @@ Surprisal is a value associated with an observed outcome. Entropy is an expectat
 
 For this distinction, see the [Entropy: uncertainty over the next token](entropy.qmd) lesson. [Likelihood](likelihood.qmd) formalizes the score of an observed sequence, while [cross-entropy](cross-entropy.qmd) connects a target distribution to a predicted distribution.
 
+## From logits to surprisal: the calculation inside an LLM
+
+In an autoregressive Transformer, the context is first transformed into internal representations. The final position produces a vector of **logits**: unnormalized real-valued scores, one per vocabulary token. Softmax turns them into probabilities:
+
+$$
+p_\theta(v\mid c)=\frac{\exp(z_v)}{\sum_{u\in\mathcal V}\exp(z_u)}.
+$$
+
+The surprisal of the observed target $y$ is then computed from its probability:
+
+$$
+I_\theta(y\mid c)=-\log_2 p_\theta(y\mid c).
+$$
+
+The conceptual path is therefore:
+
+$$
+\text{context}\rightarrow\text{logits}\rightarrow\text{softmax}\rightarrow
+\text{target probability}\rightarrow\text{surprisal}.
+$$
+
+Logits are not probabilities: they may be negative, positive, or shifted by a constant without changing the softmax distribution. Surprisal depends on the normalized probability, not on the raw logit value in isolation. For the mechanics of score computation, see [Logits: from scores to a distribution](logits.qmd).
+
+## Comparing sequences: sum, average, and tokenization unit
+
+The sum of conditional surprisals gives the total surprisal of a sequence and corresponds, up to sign, to its log-likelihood. But a longer sequence generally accumulates more contributions. To compare sequences of different lengths, one sometimes examines average surprisal per token:
+
+$$
+\overline I(x_{1:T})=\frac{1}{T}\sum_{t=1}^{T}-\log_2 p_\theta(x_t\mid x_{<t}).
+$$
+
+This average facilitates some comparisons, but it does not solve everything. Different tokenizers may split the same text into different numbers and units; average surprisal “per token” is then not directly comparable. The tokenizer, normalization, evaluated positions, and, where relevant, character- or byte-normalized measures must be specified.
+
+We must also distinguish sequence surprisal, average cross-entropy over a dataset, and perplexity. These quantities are related, but answer questions at different levels. The [Cross-entropy](cross-entropy.qmd) page covers average model evaluation over examples; here, we have studied the information cost of one observation under a conditional distribution.
+
+
+
 ## What surprisal does — and does not — tell us about an LLM
 
 In an autoregressive model, the conditional surprisal of an observed token is one local contribution to the sequence's negative log-likelihood, using the chosen logarithm base. Adding these contributions gives the sequence score, subject to the conventions used for the evaluated positions.
@@ -199,9 +271,7 @@ But surprisal is not a direct measure of answer quality. A false statement that 
 
 ## Experiment
 
-The [Experiment — Entropy, KL, and predictive compression](experience-information-theory.qmd) page lets you manipulate synthetic distributions and verify relationships between entropy, cross-entropy, KL divergence, and code lengths.
-
-For further practice, compare the surprisal of several events under one distribution, then change the distribution while keeping the observed event fixed. You will see that surprisal depends on the chosen probabilistic model.
+To manipulate distributions and distinguish observed surprisal, entropy, and related metrics, use the [dedicated experiment](experience-information-theory.qmd#surprisal-experiments).
 
 ## Takeaways
 

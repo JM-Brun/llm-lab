@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-text-data"
-scope: "Exercices formatifs sur la tokenisation, les embeddings, les fenêtres, l'alignement des cibles, BPE et les fuites de données."
+scope: "Exercices formatifs sur la tokenisation, l’inspection de tokenizers réels, les embeddings, les fenêtres, l’alignement des cibles, BPE et les fuites de données."
 purpose: "Travailler la collection d'exercices données textuelles indépendamment du parcours conceptuel, avec des prérequis, des corrigés détaillés et des questions de transfert."
 suggested_route:
   previous: null
@@ -279,6 +279,32 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir l'exercice sur les fusions BPE.
 
 [Reprendre la leçon à l’exemple de tokenisation](text-data.qmd#tokenizer-output).
+
+#### Inspecter un tokenizer Hugging Face {#tokenizer-huggingface-probe}
+
+L'exemple suivant inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
+
+```python
+from importlib.metadata import version
+from transformers import AutoTokenizer
+
+model_id = "gpt2"
+revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
+text = " Hello world — café"
+
+ids = tokenizer.encode(text, add_special_tokens=False)
+tokens = tokenizer.convert_ids_to_tokens(ids)
+
+print("transformers:", version("transformers"))
+print("tokenizer:", model_id)
+print("tokens:", tokens)
+print("IDs:", ids)
+print("count:", len(ids))
+print("decoded:", tokenizer.decode(ids))
+```
+
+Les fragments et IDs affichés appartiennent au tokenizer chargé. Pour comparer deux tokenizers, exécutez le même protocole sur les mêmes textes, consignez leurs versions/révisions et comparez les fragments et le nombre de tokens — pas les valeurs numériques des IDs entre vocabulaires. Le décodage dépend aussi des conventions et des tokens spéciaux.
 
 <a id="ex-representation-context"></a>
 
