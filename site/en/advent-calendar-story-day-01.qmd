@@ -24,7 +24,7 @@ related: ["en/zipf-law-deep-dive","en/exercises-zipf-law","en/text-data","en/tok
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:en", "status:published"]
 -->
 
-*LLM Lab Advent Calendar 2026 · Door 1 · about 12 minutes*
+*LLM Lab Advent Calendar 2026 · Door 1 · about 15 minutes*
 
 This lesson starts with a simple question: why do some forms appear much more often than others? We will build a small corpus, count its words, and then compare the exercise with real linguistic corpora.
 
