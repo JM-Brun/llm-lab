@@ -162,7 +162,7 @@ Use controlled vocabularies by entity type, with shared governance and validatio
 | Facet | Applies to | Example / owner |
 |---|---|---|
 | Editorial page type | Page | type, page metadata schema |
-| Destination / experience | Page | understand, build, deepen, practice; revision/review only where explicitly supported by the page contract, without implying a sixth top-level space |
+| Destination / experience | Page | orient, understand, build, deepen, practice, reference; revision roles are represented by `revision_role`/`revision_of`, not by a destination value |
 | Page topic key | Page | topic:<id>; page grouping key, not a concept entity |
 | Page level/status/language | Page | Existing controlled page metadata |
 | Scientific domain | Concept | domains in data/concepts.yml referencing data/domains.yml |
