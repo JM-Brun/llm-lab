@@ -280,10 +280,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenization, method:bpe]
-      concept_ids: [byte-pair-encoding, tokenizer-training, token-encoding, token-vocabulary]
+      concept_ids: [byte-pair-encoding, tokenizer-training, token-encoding, token-id, token-decoding, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [byte-pair-encoding, tokenizer-training, token-encoding, token-vocabulary]
+      concepts: [byte-pair-encoding, tokenizer-training, token-encoding, token-id, token-decoding, token-vocabulary]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful alternate walkthrough; do not duplicate the canonical worked trace."

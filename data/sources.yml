@@ -225,7 +225,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, modality:video]
-      concept_ids: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-encoding, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-decoding, token-encoding, token-id, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy, historical-context]
@@ -252,7 +252,7 @@ sources:
           - "The full audiovisual content, comments, linked resources and reuse rights were not audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
-      concepts: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-encoding, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
+      concepts: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-decoding, token-encoding, token-id, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sebastian-raschka-llms-from-scratch-ch02
@@ -958,7 +958,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, ecosystem:tiktoken]
-      concept_ids: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token, token-encoding]
+      concept_ids: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, token-id, special-token, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
@@ -990,7 +990,7 @@ sources:
           - "Rust CoreBPE internals and full repository behavior remain outside this bounded audit."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
-      concepts: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token, token-encoding]
+      concepts: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, token-id, special-token, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/tiktoken-implementation-audit-2026-11-19.md]
 
   - id: karpathy-minbpe
