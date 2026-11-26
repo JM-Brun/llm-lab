@@ -22,14 +22,16 @@ related: []
 tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data", "level:core", "language:fr", "status:published"]
 -->
 
-[Revenir à la leçon](text-data.qmd) · [Plan du parcours](review-path.qmd#text-input)
+[Revenir à la leçon](text-data.qmd) · [Exercices et expériences](exercises/text-data.qmd) · [Approfondir la tokenisation](tokenization-and-tokenizers.qmd) · [Plan du parcours](review-path.qmd#text-input)
 
 ## À retenir {#revision-essentials}
 
 - Le tokenizer segmente ou encode le texte en unités de son vocabulaire. Un token peut correspondre à un morceau de mot, un espace, un symbole ou une partie de leur représentation en octets.
 - Le vocabulaire associe chaque token à un ID entier. Le nombre lui-même sert de référence dans ce vocabulaire.
 - La segmentation et les IDs dépendent du tokenizer. Deux tokenizers peuvent encoder le même texte avec des longueurs différentes.
-- Les IDs sélectionnent ensuite des plongements dans le modèle. Encoder un prompt fournit son entrée immédiate. Préparer un corpus ajoute des choix de nettoyage et de construction des exemples d’entraînement.
+- Les IDs sélectionnent ensuite des plongements dans le modèle. À paramètres fixes, deux occurrences du même ID lisent le même vecteur initial ; leur position et leur contexte peuvent ensuite produire des états différents.
+- Encoder un prompt applique un tokenizer déjà fixé. Préparer un corpus et ajuster un tokenizer relèvent de la construction du modèle, pas de chaque requête.
+- Une séquence plus longue consomme davantage de budget de contexte et peut augmenter le calcul. Le nombre de tokens, seul, ne mesure ni la qualité linguistique ni la qualité aval.
 
 ## Vérifier de mémoire {#revision-check}
 
@@ -50,6 +52,39 @@ Pourquoi l’ID `31373` n’est-il pas « plus grand » ou « plus proche du sen
 <summary>Afficher la réponse</summary>
 
 Un ID est une étiquette qui indexe une entrée du vocabulaire. Sa valeur numérique n’exprime ni une distance ni une quantité sémantique. C’est la ligne correspondante de la matrice qui fournit le vecteur initial.
+
+</details>
+
+## Vérifier le lookup initial
+
+Pourquoi deux occurrences du même ID lisent-elles le même vecteur initial, alors que leurs représentations peuvent ensuite différer ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le lookup consulte la même ligne de la matrice d'embeddings pour un ID donné. La position et le contexte interviennent dans les calculs ultérieurs du modèle ; ils peuvent donc produire des états contextualisés différents.
+
+</details>
+
+## Distinguer encodage et apprentissage du tokenizer
+
+L'envoi d'un prompt entraîne-t-il ou ajuste-t-il le tokenizer ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le prompt est encodé avec un tokenizer déjà fixé. Son apprentissage ou son ajustement relève de la construction du modèle à partir d'un corpus.
+
+</details>
+
+## Interpréter le nombre de tokens
+
+Un tokenizer qui produit moins de tokens est-il nécessairement meilleur ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Une séquence plus courte peut réduire le budget consommé ou certains coûts, mais la qualité dépend aussi du système et des résultats sur les tâches visées. Il faut une évaluation dédiée.
 
 </details>
 

@@ -22,14 +22,16 @@ related: []
 tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data", "level:core", "language:en", "status:published"]
 -->
 
-[Back to the lesson](text-data.qmd) · [Learning path plan](review-path.qmd#text-input)
+[Back to the lesson](text-data.qmd) · [Practice and experiments](exercises/text-data.qmd) · [Explore tokenization in depth](tokenization-and-tokenizers.qmd) · [Learning path plan](review-path.qmd#text-input)
 
 ## What to remember {#revision-essentials}
 
 - The tokenizer encodes text as units from its vocabulary. A token can represent part of a word, a space, a symbol, or part of its byte representation.
 - The vocabulary assigns an integer ID to each token. The number identifies that entry in the vocabulary.
 - Both segmentation and IDs depend on the tokenizer. Two tokenizers may encode the same text into sequences of different lengths.
-- IDs then select embeddings in the model. Encoding a prompt gives its immediate input. Preparing a corpus adds decisions about cleaning data and constructing training examples.
+- IDs then select embeddings in the model. With fixed parameters, two occurrences of the same ID retrieve the same initial vector; their positions and contexts can later produce different states.
+- Encoding a prompt applies an already fixed tokenizer. Preparing a corpus and fitting a tokenizer belong to model construction, not to each request.
+- A longer sequence consumes more context budget and may increase computation. Token count alone measures neither linguistic quality nor downstream model quality.
 
 ## Recall from memory {#revision-check}
 
@@ -50,6 +52,39 @@ Why is ID `31373` not “larger” or “closer in meaning” than ID `995`?
 <summary>Show the answer</summary>
 
 An ID is a label that indexes a vocabulary entry. Its numeric value expresses neither a distance nor a semantic quantity. The corresponding row of the matrix supplies the initial vector.
+
+</details>
+
+## Check the initial lookup
+
+Why do two occurrences of the same ID retrieve the same initial vector even though their later representations may differ?
+
+<details>
+<summary>Show the answer</summary>
+
+Lookup reads the same embedding-matrix row for a given ID. Position and context enter later model computations, so they can produce different contextualized states.
+
+</details>
+
+## Distinguish encoding from tokenizer training
+
+Does submitting a prompt train or fit the tokenizer?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The prompt is encoded with an already fixed tokenizer. Training or fitting it belongs to model construction from a corpus.
+
+</details>
+
+## Interpret token count
+
+Is a tokenizer that produces fewer tokens necessarily better?
+
+<details>
+<summary>Show the answer</summary>
+
+No. A shorter sequence may save context budget or some compute, but quality also depends on the system and target-task results. It requires separate evaluation.
 
 </details>
 
