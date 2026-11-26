@@ -882,7 +882,7 @@ concepts:
       fr: "Régularité empirique approximative selon laquelle, dans une distribution de fréquences lexicales classées par fréquence décroissante, la fréquence f(r) du rang r suit souvent une relation de puissance f(r) ∝ r^{-α}, avec α proche de 1 dans certains corpus. L'exposant et la qualité de l'ajustement dépendent du corpus, de l'unité et de la méthode d'estimation ; la relation ne constitue pas en elle-même une explication causale."
       en: "Approximate empirical regularity in which, for lexical frequencies ordered from highest to lowest, the frequency f(r) at rank r often follows a power relation f(r) ∝ r^{-α}, with α near 1 in some corpora. The exponent and fit depend on corpus, unit, and estimation method; the relation is not itself a causal explanation."
     domains: [probabilistic-foundations-training, text-tokenization]
-    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/zipf-law-deep-dive, en/zipf-law-deep-dive, fr/exercises-zipf-law, en/exercises-zipf-law]
+    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law]
 
 relation_types:
   represented-by:
