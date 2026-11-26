@@ -30,13 +30,11 @@ Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1666
 This is authoring metadata; it is intentionally not rendered to readers.
 -->
 
-*Calendrier de l’Avent 2026 · Porte 2 · environ 10 minutes*
-
-*Version de lecture en cours de revue scientifique et pédagogique — retours bienvenus.*
+*Calendrier de l’Avent 2026 · Porte 2 · environ 15 minutes*
 
 ## Une surprise n'est pas une émotion
 
-Après le préfixe « La capitale de la France est… », imaginons qu'un modèle attribue les probabilités suivantes aux continuations possibles. Ces nombres sont **construits pour l'explication** : ils ne proviennent pas d'un modèle réel. Dans ce vocabulaire jouet, chaque étiquette représente exactement un token ; un tokenizer réel peut découper ces chaînes autrement.
+Un modèle complète le préfixe « La capitale de la France est… » en répartissant une probabilité entre plusieurs continuations. Supposons qu'il attribue les valeurs suivantes. Elles sont **construites pour l'explication**, et non mesurées sur un modèle réel. Dans cet exemple, chaque étiquette représente exactement un token ; un tokenizer réel peut découper ces chaînes autrement.
 
 | Token candidat | Probabilité prédite |
 |---|---:|
@@ -161,6 +159,43 @@ $$
 
 Les six bits décrivent le score de cette séquence sous le modèle considéré. Ils ne sont pas l'entropie de la distribution du modèle.
 
+## Le même événement peut surprendre différemment selon le contexte
+
+Le surprisal n'est pas une propriété attachée au token seul. Il dépend de la probabilité que le modèle lui attribue **dans un contexte donné**.
+
+Considérons le token `Paris` dans deux contextes fictifs. Les valeurs ci-dessous sont choisies pour l'explication ; elles ne proviennent pas d'un modèle réel.
+
+| Contexte | Probabilité prédite de `Paris` | Surprisal |
+|---|---:|---:|
+| « La capitale de la France est… » | $0{,}80$ | $-\log_2(0{,}80)\approx0{,}32$ bit |
+| « La capitale du Japon est… » | $0{,}01$ | $-\log_2(0{,}01)\approx6{,}64$ bits |
+
+Le token est identique, mais l'information propre diffère fortement parce que les distributions conditionnelles diffèrent. On ne peut donc pas attribuer à `Paris` un surprisal unique indépendamment de son contexte.
+
+Cette dépendance explique aussi pourquoi une fréquence globale ne suffit pas à prédire le surprisal local. Un mot courant dans un corpus peut être inattendu après un préfixe particulier ; une forme rare globalement peut être fortement attendue dans une construction spécialisée.
+
+
+
+### Calculer l'entropie de notre distribution jouet
+
+Nous pouvons maintenant calculer l'entropie de la distribution du premier exemple. Pour chaque issue, on multiplie son surprisal par sa probabilité, puis on additionne :
+
+| Token | Probabilité | Surprisal | Contribution $p(x)I(x)$ |
+|---|---:|---:|---:|
+| `Paris` | $0{,}80$ | $0{,}32$ bit | $0{,}26$ bit |
+| `Lyon` | $0{,}10$ | $3{,}32$ bits | $0{,}33$ bit |
+| `Marseille` | $0{,}05$ | $4{,}32$ bits | $0{,}22$ bit |
+| `Lille` | $0{,}05$ | $4{,}32$ bits | $0{,}22$ bit |
+
+Ainsi,
+
+$
+H(X\mid c)\approx0{,}26+0{,}33+0{,}22+0{,}22
+\approx1{,}02\text{ bits}.
+$
+
+L'entropie est inférieure au surprisal de l'issue observée `Lyon` (environ 3,32 bits). Il n'y a aucune contradiction : l'entropie est la moyenne pondérée sur toutes les issues possibles, tandis que le surprisal de Lyon ne concerne qu'une issue particulière. Les contributions des événements rares peuvent être importantes, mais elles sont pondérées par leur faible probabilité.
+
 ## Surprisal observé et entropie prédictive : deux questions différentes
 
 Fixons un contexte $c$. Un modèle de langage produit une distribution sur les tokens possibles :
@@ -184,6 +219,43 @@ Le surprisal est une valeur associée à une issue observée. L'entropie est une
 
 Pour approfondir cette distinction, consultez la leçon [Entropie : incertitude sur le prochain token](entropy.qmd). La [vraisemblance](vraisemblance.qmd) formalise le score d'une séquence observée, et l'[entropie croisée](cross-entropy.qmd) relie une distribution cible à une distribution prédite.
 
+## Des logits au surprisal : la chaîne de calcul dans un LLM
+
+Dans un Transformer autorégressif, le contexte est d'abord transformé en représentations internes. La dernière position produit un vecteur de **logits**, c'est-à-dire des scores réels non normalisés, un par token du vocabulaire. La fonction softmax les transforme en probabilités :
+
+$$
+p_\theta(v\mid c)=\frac{\exp(z_v)}{\sum_{u\in\mathcal V}\exp(z_u)}.
+$$
+
+Le surprisal de la cible observée $y$ est ensuite calculé à partir de sa probabilité :
+
+$$
+I_\theta(y\mid c)=-\log_2 p_\theta(y\mid c).
+$$
+
+Le chemin conceptuel est donc :
+
+$$
+\text{contexte}\rightarrow\text{logits}\rightarrow\text{softmax}\rightarrow
+\text{probabilité de la cible}\rightarrow\text{surprisal}.
+$$
+
+Les logits ne sont pas des probabilités : ils peuvent être négatifs, positifs ou décalés d'une constante sans changer la distribution softmax. Le surprisal dépend de la probabilité normalisée, pas de la valeur brute du logit prise isolément. Pour la mécanique de calcul des scores, voir [Logits : des scores à la distribution](logits.qmd).
+
+## Comparer des séquences : somme, moyenne et unité de tokenisation
+
+La somme des surprisals conditionnels donne le surprisal total d'une séquence et correspond, au signe près, à sa log-vraisemblance. Mais une séquence plus longue accumule généralement davantage de contributions. Pour comparer des séquences de longueurs différentes, on examine parfois le surprisal moyen par token :
+
+$$
+\overline I(x_{1:T})=\frac{1}{T}\sum_{t=1}^{T}-\log_2 p_\theta(x_t\mid x_{<t}).
+$$
+
+Cette moyenne facilite certaines comparaisons, mais elle ne résout pas tout. Deux tokenizers peuvent découper le même texte en nombres et unités différents ; un surprisal moyen « par token » n'est alors pas une mesure directement comparable. Il faut préciser le tokenizer, la normalisation, les positions évaluées et, si nécessaire, rapporter aussi des mesures rapportées au caractère ou à l'octet.
+
+Il faut également distinguer le surprisal d'une séquence, l'entropie croisée moyenne sur un ensemble d'exemples et la perplexité. Ces quantités sont liées, mais répondent à des niveaux de question différents. La page [Entropie croisée](cross-entropy.qmd) détaille l'évaluation moyenne d'un modèle sur des données ; ici, nous avons étudié le coût informationnel d'une observation sous une distribution conditionnelle.
+
+
+
 ## Ce que le surprisal dit — et ne dit pas — sur un LLM
 
 Dans un modèle autorégressif, le surprisal conditionnel d'un token observé est une contribution locale à la log-vraisemblance négative de la séquence, dans la base logarithmique choisie. Additionner ces contributions donne le score de la séquence, sous réserve des conventions retenues pour les positions évaluées.
@@ -202,6 +274,16 @@ Mais le surprisal n'est pas une mesure directe de la qualité d'une réponse. Un
 La page [Expérience — Entropie, KL et compression prédictive](experience-information-theory.qmd) permet de manipuler des distributions synthétiques et de vérifier les relations entre entropie, entropie croisée, divergence KL et longueurs de code.
 
 Pour aller plus loin dans la pratique, comparez le surprisal de plusieurs événements sous une même distribution, puis modifiez la distribution sans changer l'événement observé. Vous verrez que le surprisal dépend du modèle probabiliste choisi.
+
+### Trois expériences simples à mener
+
+1. **Modifier la probabilité de la cible.** Gardez le contexte et le token observé fixes, puis faites varier sa probabilité de $0{,}8$ à $0{,}4$, $0{,}1$ et $0{,}01$. Le surprisal doit augmenter à chaque diminution de probabilité.
+2. **Modifier le contexte.** Gardez le token cible identique, mais changez le préfixe et donc la distribution conditionnelle. Le surprisal peut changer sans que le token change.
+3. **Modifier les probabilités des autres tokens.** Si la probabilité de la cible reste identique, redistribuer le reste de la masse entre les autres candidats ne change pas son surprisal. En revanche, cela peut changer l'entropie totale de la distribution.
+
+Ces expériences séparent trois objets souvent confondus : l'événement observé, le contexte qui conditionne sa probabilité et la distribution complète des issues possibles.
+
+
 
 ## À retenir
 
