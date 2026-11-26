@@ -54,7 +54,13 @@ The diagram below offers two levels of view: the complete GPT, to locate the dat
 
 ## The Transformer: the network at the heart of a GPT
 
-![Architecture of a decoder-only GPT: input representations pass through a stack of Transformer blocks, then a final normalization and output head produce logits. The lower panel expands one typical block.](../images/transformer-stack-en.svg){#fig-transformer-stack fig-alt="At the top, the complete network: token IDs, embeddings and positional information, a stack of N Transformer blocks, final normalization, vocabulary projection and logits. At the bottom, one pre-LN block: normalization, causal multi-head self-attention, a residual connection, then normalization, a position-wise MLP and a second residual connection." width=100%}
+<figure id="fig-transformer-stack">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/transformer-stack-en-mobile.svg">
+    <img src="../images/transformer-stack-en.svg" alt="At the top, the complete network: token IDs, embeddings and positional information, a stack of N Transformer blocks, final normalization, vocabulary projection and logits. At the bottom, one pre-LN block: normalization, causal multi-head self-attention, a residual connection, then normalization, a position-wise MLP and a second residual connection." style="width:100%;height:auto">
+  </picture>
+  <figcaption>The first panel locates the complete network; the second expands one common pre-LN block. Attention mixes information across positions, while the MLP transforms each position independently.</figcaption>
+</figure>
 
 *The stack of blocks is the Transformer in the GPT shown here. The expanded view shows a **pre-LN** arrangement: each sublayer is preceded by its own normalization. This is a common layout; sublayer order and normalization variants differ across models.*
 
