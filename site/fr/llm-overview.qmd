@@ -91,7 +91,13 @@ Le nouveau préfixe se termine par « Je ». Le modèle recalcule la distributio
 
 ### Aperçu du calcul à l'intérieur d'un GPT
 
-![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits convertis en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
+<figure id="fig-gpt-generation-process">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/llm-generation-process-fr-mobile.svg">
+    <img src="../images/llm-generation-process-fr.svg" alt="Un GPT autorégressif traite le préfixe en six étapes : texte, tokens et identifiants, représentations initiales avec traitement positionnel dépendant de l’architecture, blocs Transformer répétés, distribution du prochain token, puis sélection et ajout d’un token au contexte. Le calcul reprend avec la séquence enrichie. Les probabilités sont fictives." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le token sélectionné est ajouté à la séquence ; le calcul reprend avec le contexte enrichi. Les probabilités montrées servent d’exemple et ne sont pas des mesures d’un modèle réel.</figcaption>
+</figure>
 
 Un GPT autorégressif transforme le texte en tokens, leurs identifiants en représentations numériques, puis traite ces représentations dans les blocs Transformer. La tête de sortie produit des logits, convertis en probabilités ; une règle de décodage sélectionne ensuite un token, qui est ajouté au contexte avant le calcul suivant. La sélection n'est pas une opération interne à l'attention : elle intervient après le calcul de la distribution.
 
