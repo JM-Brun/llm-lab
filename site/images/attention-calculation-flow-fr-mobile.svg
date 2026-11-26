@@ -8,7 +8,7 @@
 <text x="36" y="820" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#172b4d">Deux entrées de l’agrégation</text>
 <rect x="40" y="850" width="300" height="110" rx="16" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/><text x="190" y="915" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#17583f">Poids A</text>
 <rect x="380" y="850" width="300" height="110" rx="16" fill="#e8f1ff" stroke="#4778b8" stroke-width="2"/><text x="530" y="915" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#173b67">Valeurs V</text>
-<path d="M190 960 V1000 H360 V1050" stroke="#344054" stroke-width="3" fill="none" marker-end="url(#arrow)"/><path d="M530 960 V1000 H360" stroke="#344054" stroke-width="3" fill="none"/>
+<path d="M190 960 V1000 H360 V1050" stroke="#344054" stroke-width="3" fill="none" marker-end="url(#arrow)"/><path d="M530 960 V1000 H360" stroke="#344054" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
 <rect x="55" y="1060" width="610" height="115" rx="16" fill="#f0eaff" stroke="#8063b3" stroke-width="2"/><text x="360" y="1128" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#4b337b">Agrégation · O = AV</text>
 <text x="36" y="1255" font-family="Arial,sans-serif" font-size="18" fill="#344054">Q et K déterminent les poids ; V fournit le contenu.</text><text x="36" y="1292" font-family="Arial,sans-serif" font-size="18" fill="#344054">Le softmax porte sur les positions accessibles à chaque requête.</text>
 </svg>
