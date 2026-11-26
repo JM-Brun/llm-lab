@@ -36,7 +36,7 @@ Mais le second tokenizer peut avoir un vocabulaire plus petit. Or la taille du v
 
 **Alors lequel choisir ?** Il faut comparer les mêmes textes, préciser ce que l'on appelle « plus court », mesurer les coûts du modèle et vérifier les performances sur les tâches visées. La compression est un indice utile, pas un verdict.
 
-Cette page suit ce problème : comprendre les mécanismes qui produisent les segmentations, mesurer leurs effets, puis construire une comparaison dont les conclusions restent dans les limites du protocole.
+Cette page s'appuie sur l'explication des mécanismes dans [Stratégies de tokenisation](tokenization-strategies.qmd), puis examine leurs effets et construit une comparaison dont les conclusions restent dans les limites du protocole.
 :::
 
 ::: {.chapter-lead}
@@ -50,10 +50,6 @@ Comprendre comment un tokenizer segmente le texte ne suffit pas pour en choisir 
 - distinguer longueur de représentation, coût système et qualité en aval ;
 - interpréter avec prudence les métriques et études sur les écarts multilingues.
 :::
-
-## Mécanismes de segmentation
-
-L'explication détaillée de BPE, WordPiece et Unigramme, de leurs procédures d’apprentissage et d’encodage ainsi que des réserves propres aux implémentations est désormais regroupée dans [Stratégies de tokenisation](tokenization-strategies.qmd#bpe-wordpiece-et-unigramme). Cette page se concentre sur les conséquences de ces choix : vocabulaire, budgets, métriques, coûts système et qualité en aval.
 
 ## 1. La taille du vocabulaire : architecture et budget
 
