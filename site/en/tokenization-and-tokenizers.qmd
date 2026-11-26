@@ -22,8 +22,6 @@ related: ["en/text-data", "en/corpus-preparation", "en/training-examples", "en/e
 tags: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-tokenization-and-tokenizers.qmd >}}
-
 # Where should you go deeper on tokenization?
 
 The main learning path's [From text to tokens](text-data.qmd) lesson establishes the minimum contract: text is converted into tokens and then into IDs compatible with the tokenizer paired with the model weights. This page does not add a mandatory step. It is a **navigation map** for understanding the choices behind that interface, building a tokenizer, or evaluating its consequences.
