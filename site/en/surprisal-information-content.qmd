@@ -189,10 +189,10 @@ We can now calculate the entropy of the distribution from the opening example. M
 
 Therefore,
 
-$
+$$
 H(X\mid c)\approx0.26+0.33+0.22+0.22
 \approx1.02\text{ bits}.
-$
+$$
 
 Entropy is lower than the surprisal of the observed outcome `Lyon` (about 3.32 bits). There is no contradiction: entropy is the probability-weighted average over all possible outcomes, whereas Lyon's surprisal concerns one particular outcome. Rare events can contribute substantially, but their contributions are weighted by their low probabilities.
 
