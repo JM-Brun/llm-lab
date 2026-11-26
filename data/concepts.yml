@@ -1189,7 +1189,6 @@ relations:
   - {from: token-vocabulary, type: produces, to: token-id}
   - {from: token, type: represented-by, to: token-id}
   - {from: token-id, type: prerequisite, to: token-embedding}
-  - {from: special-token, type: part-of, to: token}
   - {from: special-token, type: part-of, to: token-vocabulary}
   - {from: tokenizer-training, type: contributes-to, to: token-vocabulary}
   - {from: token-decoding, type: applies-to, to: token-id}
