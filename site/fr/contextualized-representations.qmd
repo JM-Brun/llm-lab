@@ -170,6 +170,10 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 :::
 
+::: {.callout-note title="Où se situent Q/K/V ?"}
+Q, K et V ne constituent pas une étape qui vient après les représentations contextualisées. Ce sont des projections calculées **à l'intérieur du sous-bloc d'auto-attention** de chaque couche Transformer ; les blocs répétés construisent progressivement les états contextualisés. Voir la page dédiée à [Q/K/V](queries-keys-values.qmd).
+:::
+
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
