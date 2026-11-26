@@ -1,7 +1,7 @@
 ---
 title: "From token IDs to vectors: embeddings"
-subtitle: "How an ID selects a learned row — and why that row is not a coordinate"
-description-meta: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
+subtitle: "How a sequence of IDs selects learned rows, in order"
+description-meta: "Traces an ID sequence to the ordered rows of the embedding matrix, distinguishes position, ID and vector, and places lookup before positional processing and contextualization."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
-summary: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
-scope: "Shows how an ID indexes a learned row of the embedding matrix."
-purpose: "Given an ID, find the row of its initial embedding and explain why neighboring IDs do not determine vector proximity."
+summary: "Follows an ID sequence to the initial vectors selected from the embedding matrix, preserving their order and repeated IDs."
+scope: "Traces lookup for an ID sequence: sequence position, ID, selected row, and resulting initial vector. Distinguishes this result from positional processing and contextualized states."
+purpose: "Given an ID sequence, retrieve the selected rows and vectors in order, explain why repeated IDs share the same vector with a fixed table, and predict the effect of coordinated renumbering."
 suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"
@@ -30,14 +30,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-en-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. Reading a row from this table is called **lookup**.
+After tokenization, the model receives an ordered sequence of **integer token IDs**. Each ID selects a row of the **embedding matrix** and the learned vector stored there: this is **lookup**. The matrix values are model parameters adjusted during training; the tokenizer supplies IDs but does not compute these vectors.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
+
 - explain how a token ID selects a row in the embedding matrix;
-- distinguish the row address from the vector stored in that row;
-- explain why two occurrences of the same ID share the same initial vector but may later have different contextualized states.
+- distinguish sequence position, ID, and selected vector;
+- retrieve the vectors for an ID sequence in order and explain why repeated IDs share the same initial vector with a fixed table.
 :::
 
 ## Start with the prefix supplied to the model
@@ -61,7 +62,15 @@ For a controlled, single-speaker continuation used to trace next-token mechanics
 
 The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
-To work out the rows and vectors by hand, switch from the GPT-2 prefix output to the toy sequence `[17, 42, 8, 17]`. In the [lookup exercise](exercises-text-data.qmd#ex-text-data-embedding-lookup), the toy tokenizer assigns the token `cat` ID 17 at positions 0 and 3. The model reads row $E_{17,:}$ twice. That row contains a vector. Positions 0 and 3 identify where each occurrence appears in the sequence.
+To work out the rows and vectors by hand, distinguish the GPT-2 prefix output from the toy sequence `[17, 42, 8, 17]` used in the [lookup exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup). The toy tokenizer splits “cat follows the cat” into four tokens. With zero-based sequence positions, $t$ denotes the position while $i_t$ denotes the ID at that position. Lookup therefore reads rows $E_{17,:}$, $E_{42,:}$, $E_{8,:}$, and $E_{17,:}$ in that order.
+
+| Position $t$ | 0 | 1 | 2 | 3 |
+|---|---:|---:|---:|---:|
+| ID $i_t$ | 17 | 42 | 8 | 17 |
+| Selected row | $E_{17,:}$ | $E_{42,:}$ | $E_{8,:}$ | $E_{17,:}$ |
+| Retrieved vector | $(2,-1)$ | $E_{42,:}$ | $E_{8,:}$ | $(2,-1)$ |
+
+In the exercise, the toy vector for row 17 is fixed at $(2,-1)$ so that both occurrences of `cat` can be traced into the positional step. This value is illustrative; it is not a row extracted from the real GPT-2 weights. Both occurrences retrieve exactly the same vector because they use the same ID and the same table. The vectors in rows 42 and 8 remain symbolic here; the exercise lets us reason about their order without inventing their values.
 
 ![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
@@ -92,18 +101,19 @@ $$
 - $d$ is the embedding dimension.
 - $E_{i,:}$ denotes all components of row $i$.
 
-For an ID sequence $(i_1,\ldots,i_T)$, lookup is applied at every position, in the same order:
+For an ID sequence $(i_0,\ldots,i_{T-1})$, lookup is applied at every position $t$, in the same order:
 
-$$
+$
 X = \begin{bmatrix}
+E_{i_0,:} \\
 E_{i_1,:} \\
 \vdots \\
-E_{i_T,:}
+E_{i_{T-1},:}
 \end{bmatrix}
 \in \mathbb{R}^{T \times d}
-$$
+$
 
-$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. If an ID occurs twice, the corresponding rows of $X$ are identical before the architecture applies any position-dependent processing.
+$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. For the example $[17,42,8,17]$, $T=4$ and the output therefore has shape $(4,d)$. If an ID occurs twice, the corresponding rows of $X$ are identical before any positional processing. Position $t$, ID $i_t$, and vector $E_{i_t,:}$ denote three distinct objects.
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
