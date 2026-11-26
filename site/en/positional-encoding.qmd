@@ -51,39 +51,25 @@ In “What have the Romans ever done for us?”, token order is part of the inpu
 
 The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares three insertion points: absolute addition at the input, Q/K rotation, and a relative bias added to attention scores before softmax. The causal mask remains a separate visibility constraint.
 
+<figure id="fig-positional-entry-points">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/positional-entry-points-en-mobile.svg">
+    <img src="../images/positional-entry-points-en.svg" alt="Three insertion points: add an absolute vector to the embedding before Transformer blocks; rotate queries and keys with RoPE after projection without rotating V; or add a relative bias to QK scores before softmax." style="width:100%;height:auto">
+  </picture>
+  <figcaption>These mechanisms inject positional information at different points in the computation. RoPE belongs to the relative family and acts on Q and K; causal masking remains a separate visibility constraint.</figcaption>
+</figure>
+
 ### A permutation reveals the problem
 
 Compare “the cat chases the dog” with “the dog chases the cat”. The same token embeddings occur in a different order. Without a positional signal or an order-dependent structural constraint, self-attention based only on content is permutation equivariant: permuting the inputs permutes the outputs, but does not tell the model which role belongs to the first or last position.
 
 A positional mechanism makes order available to the network. A causal mask answers a different question: which positions may a query access? The two mechanisms are complementary, not interchangeable.
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Two common ways to inject positional information"}
-::: {.meta-flow__source}
-<strong>Token embeddings</strong><span>Content vectors before positional handling</span>
-:::
-::: {.meta-flow__source .meta-flow__branch--active}
-<strong>Positional handling</strong><span>The mechanism depends on the architecture</span>
-:::
-::: {.meta-flow__comparison}
-::: {.meta-flow__comparison-item}
-<strong>Absolute encoding</strong><small>Add a position vector to the embedding, then compute Q/K/V</small>
-:::
-::: {.meta-flow__comparison-item}
-<strong>RoPE</strong><small>Project Q/K, then rotate them according to position; RoPE does not rotate V</small>
-:::
-:::
-::: {.meta-flow__result}
-<strong>Position-aware attention scores</strong> · [Q/K/V projections](queries-keys-values.qmd)
-:::
-::::
+
 
 In the additive exercise, the toy table gives both occurrences of `cat` the same embedding $(2,-1)$. The vector added at each occurrence depends on its position. [Compute the two first-block inputs](exercises/text-data.qmd#ex-token-to-block-input).
 
-::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
-![Three points where positional information enters: input addition, Q/K rotation, and score bias.](../images/positional-entry-points-en.svg){fig-alt="Three paths are compared: add a position vector to the embedding before Transformer blocks; apply RoPE to queries and keys after projection; add a relative bias to the QK score before softmax. RoPE does not rotate values V." width=100%}
-
-:::
 
 ::: {.callout-note title="A computable signal does not guarantee extrapolation"}
 A mechanism may compute a signal for a position without the model generalizing reliably to that context length. **Being able to represent a position does not guarantee performance at that position.** The deep dives on [sinusoidal encodings](sinusoidal-positional-encoding.qmd) and [RoPE](rope.qmd) examine the limitations and related techniques.
