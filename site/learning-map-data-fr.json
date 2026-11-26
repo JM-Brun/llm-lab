@@ -5341,7 +5341,8 @@
                 "fr/tokenization-and-tokenizers",
                 "fr/tokenization-strategies",
                 "fr/unicode-text",
-                "fr/tokenizer-design-evaluation"
+                "fr/tokenizer-design-evaluation",
+                "fr/tokenizer-multilingual-evaluation"
               ]
             }
           ]
@@ -5359,6 +5360,7 @@
           "title": "Formalisation probabiliste et chaîne de l’entraînement",
           "pages": [
             "fr/surprisal-information-content",
+            "fr/zipf-law-deep-dive",
             "fr/language-modeling-math",
             "fr/mathematical-foundations",
             "fr/universal-artificial-intelligence",

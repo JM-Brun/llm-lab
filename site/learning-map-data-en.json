@@ -5358,7 +5358,8 @@
                 "en/tokenization-and-tokenizers",
                 "en/tokenization-strategies",
                 "en/unicode-text",
-                "en/tokenizer-design-evaluation"
+                "en/tokenizer-design-evaluation",
+                "en/tokenizer-multilingual-evaluation"
               ]
             }
           ]
@@ -5376,6 +5377,7 @@
           "title": "Probabilistic formalization and the training chain",
           "pages": [
             "en/surprisal-information-content",
+            "en/zipf-law-deep-dive",
             "en/language-modeling-math",
             "en/mathematical-foundations",
             "en/universal-artificial-intelligence",
