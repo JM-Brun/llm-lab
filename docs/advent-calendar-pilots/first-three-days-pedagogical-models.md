@@ -6,7 +6,7 @@
 
 ## Contrat commun
 
-**Durée cible : environ 15 minutes par histoire.** Une durée de 10 à 20 minutes est acceptable si elle est justifiée par la complexité du sujet, le nombre d'étapes du raisonnement ou le temps nécessaire pour lire les figures, tableaux, équations et exemples. Une histoire de plus de 20 minutes doit normalement être redistribuée ; une histoire de moins de 10 minutes doit être étoffée ou son statut de porte autonome réexaminé.
+**Durée cible : environ 15 minutes par histoire.** Une durée de 10 à 20 minutes est acceptable si elle est justifiée par la complexité du sujet, le nombre d'étapes du raisonnement ou le temps nécessaire pour lire les figures, tableaux, équations et exemples. Une histoire de plus de 20 minutes doit normalement être redistribuée. Une histoire de moins de 10 minutes déclenche un diagnostic structurel : vérifier si le sujet est trop étroit ou insuffisamment intéressant pour une porte autonome, ou si le récit omet des étapes de raisonnement, des exemples travaillés, des visuels explicatifs ou une conclusion utile. Restructurer et approfondir lorsque le sujet le mérite ; rapprocher des notions connexes si cela construit une enquête cohérente. Si le sujet ne peut pas soutenir une histoire substantielle, le remplacer ou l'intégrer à une autre porte plutôt que de le rallonger artificiellement. Toute exception sous les 10 minutes doit être explicitement justifiée.
 
 Le temps de lecture ne se déduit pas du seul nombre de mots : il faut tenir compte des visuels, du code et des calculs à suivre. Lorsque cela est possible, compléter l'estimation éditoriale par une relecture novice chronométrée.
 
