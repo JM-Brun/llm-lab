@@ -32,7 +32,7 @@ La page du calendrier présente le compromis de conception et un protocole de pr
 
 **Retour à la page principale :** [Le tokenizer, ingénieur de compression](tokenizer-design-evaluation.qmd).
 
-## 3. Évaluer un tokenizer : métriques, performances et équité multilingue {#tokenizer-evaluation}
+## Dimensions d'évaluation {#tokenizer-evaluation}
 
 La comparaison des algorithmes ne suffit pas à établir qu'un tokenizer est adapté à un usage. Il faut distinguer plusieurs questions empiriques, qui ne se résument pas à un score unique.
 
