@@ -29,7 +29,9 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data"
 - The tokenizer encodes text as units from its vocabulary. A token can represent part of a word, a space, a symbol, or part of its byte representation.
 - The vocabulary assigns an integer ID to each token. The number identifies that entry in the vocabulary.
 - Both segmentation and IDs depend on the tokenizer. Two tokenizers may encode the same text into sequences of different lengths.
-- IDs then select embeddings in the model. Encoding a prompt gives its immediate input. Preparing a corpus adds decisions about cleaning data and constructing training examples.
+- IDs then select embeddings in the model. With fixed parameters, two occurrences of the same ID retrieve the same initial vector; their positions and contexts can later produce different states.
+- Encoding a prompt applies an already fixed tokenizer. Preparing a corpus and fitting a tokenizer belong to model construction, not to each request.
+- A longer sequence consumes more context budget and may increase computation. Token count alone measures neither linguistic quality nor downstream model quality.
 
 ## Recall from memory {#revision-check}
 
