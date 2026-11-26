@@ -26,7 +26,7 @@ tags: ["type:entry-point", "destination:orient", "topic:scientific-calendar", "l
   <p class="advent-hero__eyebrow">LLM LAB · 2026 EDITION</p>
   <p class="advent-hero__statement">One question a day. <span>Twenty-four ways to look at LLMs differently.</span></p>
   <p class="advent-hero__description">Open a door, follow an idea, put it to the test. From language regularities to architectural choices, each story is a self-contained investigation, with its reasoning, examples, and limitations.</p>
-  <div class="advent-hero__facts" aria-label="Edition at a glance"><span><strong>24</strong> stories</span><span><strong>4</strong> thematic shelves</span><span><strong>≈ 10 min</strong> per story</span></div>
+  <div class="advent-hero__facts" aria-label="Edition at a glance"><span><strong>24</strong> stories</span><span><strong>4</strong> thematic shelves</span><span><strong>≈ 15 min</strong> per story</span></div>
 </div>
 
 ## Open a door
@@ -39,8 +39,8 @@ The first story is published; the second is available as an in-progress preview.
 </div>
 
 <div class="advent-calendar-grid" aria-label="2026 Advent calendar, 24 doors in chronological order">
-  <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Day 1, available : Why does the word “the” appear everywhere?">
-  <span class="advent-door__top"><span>December 1</span><span class="advent-door__status">Available</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Why does the word “the” appear everywhere?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Zipf’s law · 10 min</span><strong>Open ↗</strong></span>
+  <a class="advent-door advent-door--open advent-door--language" href="advent-calendar-story-day-01.qmd" aria-label="Day 1, available : Why does the word “I” appear so often?">
+  <span class="advent-door__top"><span>December 1</span><span class="advent-door__status">Available</span></span><span class="advent-door__number">01</span><span class="advent-door__title">Why does the word “the” appear everywhere?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Zipf’s law · 15 min</span><strong>Open ↗</strong></span>
   </a>
   <a class="advent-door advent-door--open advent-door--language" href="surprisal-information-content.qmd" aria-label="Day 2, preview available : How many bits of surprise does an event contain?">
   <span class="advent-door__top"><span>December 2</span><span class="advent-door__status">Preview · review pending</span></span><span class="advent-door__number">02</span><span class="advent-door__title">How many bits of surprise does an event contain?</span><span class="advent-door__bottom"><span class="advent-door__topic">Language & information</span><span>Self-information · Surprisal</span></span>
