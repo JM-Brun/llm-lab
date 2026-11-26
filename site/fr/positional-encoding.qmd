@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
-scope: "Explique où l’ordre des tokens intervient, avec un signal absolu à l’entrée et un signal relatif dans la comparaison en attention."
-purpose: "Prédire ce qui change quand on permute deux tokens et situer l’information de position dans les deux mécanismes présentés."
+summary: "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale."
+scope: "Présente le rôle de l’information positionnelle et situe les encodages absolus et mécanismes relatifs dans le calcul. La dérivation de RoPE et les propriétés des sinusoïdes sont réservées aux approfondissements."
+purpose: "Expliquer pourquoi l’ordre doit être représenté, distinguer position et visibilité causale, et situer les principaux points d’injection."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
@@ -97,7 +97,7 @@ Dans le cas additif de l’exercice, la table jouet donne le même plongement $(
 :::
 
 ::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
-La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
+Un mécanisme peut calculer un signal pour une position sans que le modèle sache bien généraliser à cette longueur de contexte. **Pouvoir représenter une position n'est pas garantir la performance à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) examinent les limites et les techniques associées.
 :::
 
 Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
