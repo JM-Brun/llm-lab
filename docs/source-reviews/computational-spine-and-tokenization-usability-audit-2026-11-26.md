@@ -13,6 +13,8 @@ Deux niveaux de maturité différents ressortent.
 
 L'objectif d'exploitabilité est de naviguer de façon traçable entre source, extraction, idée, concept, page et activité pédagogique, sans confondre ces entités ni inférer une relation à partir d'un simple tag ou d'une proximité éditoriale.
 
+**Suivi opérationnel de la leçon `text-data` :** [implementation follow-up and remaining work](../text-data-lesson-follow-up-2026-11-26.md), including PR #1713, the generated-map correction, learner validation and the remaining provenance audit.
+
 ## 2. Architecture computationnelle
 
 ### 2.1 Décision canonique
