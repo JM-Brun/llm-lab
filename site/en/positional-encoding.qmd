@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
-summary: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
-scope: "Explains where token order enters, with an absolute signal at the input and a relative signal in attention comparisons."
-purpose: "Predict what changes when two tokens swap places and locate positional information in both mechanisms."
+summary: "Shows why token content alone does not represent order, then distinguishes positional signals from causal visibility constraints."
+scope: "Introduces the role of positional information and locates absolute encodings and relative mechanisms in the computation. RoPE derivations and sinusoidal properties belong in the deep dives."
+purpose: "Explain why order must be represented, distinguish position from causal visibility, and locate the main insertion points."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes absolute and relative positional mechanisms, situates RoPE and separates positional encoding from causal masking; the dedicated practice page checks order, RoPE, causal masks and extrapolation limits."
+      note: "The recap and permutation experiment distinguish content, order, and causal visibility; the diagram locates absolute addition and RoPE without deriving their formulas."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -48,6 +48,12 @@ In “What have the Romans ever done for us?”, token order is part of the inpu
 - **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
 The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint.
+
+### A permutation reveals the problem
+
+Compare “the cat chases the dog” with “the dog chases the cat”. The same token embeddings occur in a different order. Without a positional signal or an order-dependent structural constraint, self-attention based only on content is permutation equivariant: permuting the inputs permutes the outputs, but does not tell the model which role belongs to the first or last position.
+
+A positional mechanism makes order available to the network. A causal mask answers a different question: which positions may a query access? The two mechanisms are complementary, not interchangeable.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Two common ways to inject positional information"}
 ::: {.meta-flow__source}
@@ -78,7 +84,7 @@ In the additive exercise, the toy table gives both occurrences of `cat` the same
 :::
 
 ::: {.callout-note title="A computable signal does not guarantee extrapolation"}
-The sinusoidal formula can be evaluated at arbitrarily large position indices. That does not guarantee that a model trained on shorter sequences will use those unseen positions reliably. Likewise, RoPE alone does not guarantee reliable long-context behaviour: this depends in part on the frequencies, any scaling method, training sequence length, and data. **Being able to represent a position is not the same as generalizing to it.** The deep dives on [sinusoidal encodings](sinusoidal-positional-encoding.qmd) and [RoPE](rope.qmd) examine these limitations.
+A mechanism may compute a signal for a position without the model generalizing reliably to that context length. **Being able to represent a position does not guarantee performance at that position.** The deep dives on [sinusoidal encodings](sinusoidal-positional-encoding.qmd) and [RoPE](rope.qmd) examine the limitations and related techniques.
 :::
 
 At this stage, it is enough to understand the mechanisms' role and approximate location in the computation. For relative-offset dependence and rotation conventions, see the [advanced RoPE deep dive](rope.qmd).
