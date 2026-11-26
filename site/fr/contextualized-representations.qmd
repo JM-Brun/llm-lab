@@ -111,12 +111,12 @@ Dans un GPT causal, le préfixe accessible à une position s’arrête au token 
 
 ### Une expérience contrôlée : modifier le passé ou le futur
 
-Fixons une position (i), les paramètres du modèle et le token présent à cette position. Comparons trois entrées :
+Fixons une position $i$, les paramètres du modèle et le token présent à cette position. Comparons trois entrées :
 
-| Expérience | Modification | L'état à la position (i) peut-il changer ? |
+| Expérience | Modification | L'état à la position $i$ peut-il changer ? |
 |---|---|---|
 | A — référence | Aucun changement | Non : c'est le point de comparaison |
-| B — passé modifié | Un token situé avant ou à (i) change | Oui : le contenu accessible à (i) est modifié |
+| B — passé modifié | Un token situé strictement avant $i$ change | Oui : le contenu accessible à (i) est modifié |
 | C — futur modifié | Un token situé strictement après (i) change | Non, dans un GPT causal correctement masqué |
 
 Cette comparaison est plus précise que dire simplement que « le contexte change le sens ». Elle identifie **quel contexte** peut intervenir dans le calcul d'un état donné. Le résultat suppose que l'on compare la même position, avec les mêmes paramètres et le même mécanisme causal.
