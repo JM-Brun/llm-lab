@@ -74,7 +74,7 @@ The design question is: which segmentation gives a good trade-off for the target
 
 ## 1. Vocabulary size: architecture and budget
 
-A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension $d$ and vocabulary size $V$, an input embedding table has $Vd$ parameters. A separate output projection over the vocabulary commonly has another $Vd$ parameters; this second count does not apply in the same way when input and output weights are tied. A larger $V$ can therefore increase parameter and memory costs even as it shortens sequences.
+A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension $d$ and vocabulary size $V$, an input embedding table has $Vd$ parameters. A separate output projection over the vocabulary can add another $Vd$ parameters; tying input and output weights removes this duplicate parameter storage. The vocabulary projection still has to be computed. A larger $V$ can therefore increase parameter and memory costs even as it shortens sequences.
 
 The training budget also changes what a comparison means:
 
@@ -128,12 +128,15 @@ Consider two fictional tokenizers applied to the same text collection and paired
 |---|---:|---:|
 | Vocabulary size | $V$ | $4V$ |
 | Average sequence length | 120 positions | 80 positions |
-| Input embedding parameters | $Vd$ | $4Vd$ |
-| Position pairs in dense attention | $120^2$ | $80^2$ |
+| Input embedding-table parameters | $Vd$ | $4Vd$ |
+| Output-projection computation (logits, per training sequence) | $\propto 120Vd$ | $\propto 80 \times 4Vd = 320Vd$ |
+| Position pairs scored by dense attention (per head and layer) | $120^2$ | $80^2$ |
 
-These values are a **constructed example**, not benchmark results. They isolate two effects. B reduces average sequence length by one third. For standard dense attention, the number of position pairs falls from $120^2$ to $80^2$, a ratio of $4/9$. But B's embedding table has four times as many parameters; an untied output projection may add a similar cost.
+These values are a **constructed example**, not benchmark results. They isolate several terms. B reduces average sequence length by one third. For standard dense attention, the number of position pairs falls from $120^2$ to $80^2$, a ratio of $4/9$; this ratio concerns position pairs, not the total cost of the Transformer. But B's embedding table has four times as many parameters.
 
-We cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
+Output-logit computation introduces another trade-off. In standard causal training, the output projection is applied at every position to produce a distribution over the vocabulary. At fixed hidden dimension, its cost is proportional to $T V d$: $120Vd$ for A versus $80 \times 4Vd = 320Vd$ for B, or $8/3$ times as much. This computation remains necessary when input and output weights are tied: tying avoids storing two separate matrices, but it does not eliminate the vocabulary projection. During generation, logits are usually computed only for the final position; the cost of that projection per generated token remains proportional to $Vd$.
+
+We therefore cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
 
 #### Which budget is held fixed?
 
