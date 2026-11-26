@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01", "en/surprisal-information-content"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01", "en/surprisal-information-content", "en/tokenization-strategies", "en/unicode-text", "en/tokenizer-design-evaluation"]
 related: []
 tags:
   - "type:entry-point"
@@ -100,17 +100,34 @@ These resources are complementary, not interchangeable: visualizations build int
 
 ## Text and tokenization
 
-**Guiding question:** how do text-representation choices affect a system's properties?
+**Guiding question:** how does a character string become a discrete sequence compatible with a model, and how should representation choices be evaluated?
 
-**Start here:** begin with [Text and data](text-data.qmd), which follows the transformation from text to token IDs.
+**Starting point:** [From text to tokens](text-data.qmd) introduces the minimum contract in the Understand route: tokens, IDs, and embedding lookup. The pages below deepen distinct questions; they do not form another mandatory step.
 
-- [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
-- [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
+### Understand units and mechanisms
+
+[Tokenization strategies](tokenization-strategies.qmd) — granularities (words, characters, bytes, subwords), pipeline components, special tokens, offsets, BPE, WordPiece, and Unigram. Read this page to explain why the same text can produce different sequences and which assumptions distinguish the algorithms.
+
+### Understand text representation upstream
+
+[Unicode, UTF-8, and normalization](unicode-text.qmd) — code points, graphemes, bytes, and normalized forms. Read it when visually identical strings may have different representations before tokenization.
+
+### Evaluate design choices
+
+[Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd) — vocabulary size, sequence length, budgets, metrics, system costs, downstream quality, and multilingual disparities. Read it to design a controlled comparison without reducing the decision to token count.
+
+### Reading routes by question
+
+- **Understand the algorithms:** tokenization strategies.
+- **Understand Unicode cases:** Unicode, then tokenization strategies if needed.
+- **Compare and evaluate:** strategies, then design and evaluation.
+- **Prepare a training run:** [prepare a corpus](corpus-preparation.qmd), then [build training examples](training-examples.qmd). This route belongs to Build; it is linked here as a practical continuation, not as a Deepen child.
+
 ### Language statistics
 
 - [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — rank-frequency distributions, long tails, empirical fitting, and limits of interpretation.
 
-The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
+These routes are reading suggestions, not prerequisites. The strategies page owns the mechanism explanations; the design-and-evaluation page owns comparative criteria and evidence.
 
 ## Mathematical tools and geometry {#mathematical-tools-and-geometry}
 
