@@ -305,7 +305,7 @@ Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text
 
 ### Visualiser les fusions et le pipeline
 
-- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : suivre les paires candidates et les fusions sur un petit corpus.
+- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : suivre les paires candidates et les fusions sur un petit corpus. La ressource est liée plutôt que copiée ; les conditions de réutilisation de ses figures ne sont pas établies ici.
 - [Hugging Face — cours BPE en français](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : explication structurée de l'apprentissage BPE.
 - [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : comparaison pédagogique BPE/WordPiece. **Réserve sur l'interface (vérifiée le 29-10-2026) :** le panneau de la fusion sélectionnée affichait « Frequency: undefined », alors que la liste des paires candidates indiquait des fréquences. Ne pas se fier à cette valeur tant que la page n'a pas été corrigée.
 - [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) : progression de Unicode et UTF-8 à BPE, aux espaces et aux tokens spéciaux.
@@ -327,7 +327,7 @@ Ces repères facilitent la navigation ; ils ne remplacent pas la vérification d
 ### Code pédagogique et lecture conseillée
 
 1. Regarder les passages de la vidéo de Karpathy sur Unicode, les fusions, le pré-tokenizer et les tokens spéciaux.
-2. Suivre les fusions avec le [BPE Explainer](https://philipmueller.dev/bpe-visualization/).
+2. Suivre les fusions avec le visualiseur présenté plus haut.
 3. Inspecter le [module éducatif de tiktoken](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) ou le code de [minbpe](https://github.com/karpathy/minbpe) ; ces ressources rendent les mécanismes inspectables mais ne sont pas interchangeables avec les chemins de production.
 4. Comparer les conventions dans la documentation de [tiktoken](https://github.com/openai/tiktoken), [SentencePiece](https://github.com/google/sentencepiece) et [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index).
 5. Revenir au [chapitre 2 de Raschka](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2) et à son [code associé](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) pour relier tokenisation, IDs et préparation des exemples.
@@ -338,11 +338,9 @@ Ces repères facilitent la navigation ; ils ne remplacent pas la vérification d
 
 La page combine des schémas originaux du projet, des illustrations externes sélectionnées et des ressources liées. La provenance et les droits de réutilisation des actifs intégrés sont suivis dans [l'audit transversal des illustrations](https://github.com/JM-Brun/llm-lab/issues/156).
 
-## Ressources externes
+<span id="ressources-externes"></span>
 
-- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
-- [SentencePiece](https://github.com/google/sentencepiece)
-- [tiktoken](https://github.com/openai/tiktoken)
+Les documentations de Hugging Face Tokenizers, SentencePiece et tiktoken sont regroupées dans les [ressources pédagogiques et d'implémentation](#ressources-pedagogiques-et-implementations).
 
 
 
