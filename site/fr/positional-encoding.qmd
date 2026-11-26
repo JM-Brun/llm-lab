@@ -50,6 +50,24 @@ Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tok
 
 La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
 
+### Une permutation suffit à révéler le problème
+
+Considérons les deux séquences :
+
+- « Le chat poursuit le chien. »
+- « Le chien poursuit le chat. »
+
+Elles contiennent les mêmes tokens, mais pas dans le même ordre. Si l'on ne fournit que leurs embeddings de contenu à une auto-attention sans information positionnelle ni masque dépendant de l'ordre, permuter les entrées permute simplement les sorties : le calcul ne dispose d'aucun repère lui permettant d'attribuer un rôle à la première ou à la dernière position.
+
+Un mécanisme positionnel rend l'ordre exploitable. Il ne « comprend » pas à lui seul la phrase : il donne au réseau une information supplémentaire qu'il pourra combiner avec le contenu.
+
+Cette expérience sépare deux questions souvent confondues :
+
+- **Où se trouve le token ?** C'est le rôle du mécanisme positionnel (position absolue ou relation entre positions).
+- **Quels tokens cette position peut-elle consulter ?** C'est notamment le rôle du masque causal dans un GPT.
+
+Le masque causal ne remplace donc pas l'encodage positionnel. Il impose une règle de visibilité ; le mécanisme positionnel fournit un signal d'ordre ou de distance.
+
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
 ::: {.meta-flow__source}
 <strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span>
