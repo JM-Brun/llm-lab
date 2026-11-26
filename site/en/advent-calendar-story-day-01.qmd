@@ -170,9 +170,7 @@ The derivation, comparison plots, and fitting caveats are collected in [the Zipf
 
 The rank-frequency relation is not limited to English or French. Lavi-Rotbain and Arnon (2023) report distributions close to Zipf-Mandelbrot in child-directed speech corpora across several languages.
 
-The estimated parameters vary across languages and corpora. They also depend on sample size, the linguistic unit, and counting conventions. These findings illustrate a cross-linguistic regularity in a specific empirical setting; they do not rank languages by their supposed “compliance with Zipf”.
-
-For the data, parameter estimates, and comparison caveats, see [the multilingual observations and Zipf-Mandelbrot deep dive](zipf-law-deep-dive.qmd#cross-linguistic-observations).
+Across the five languages studied, the estimated values of $\alpha$ range from 1.30 to 1.57, while those of $\beta$ range from 7.12 to 19.48. These values describe fits to child-directed speech corpora; they are neither language-specific constants nor values that can be generalized directly to all texts. They also depend on corpus size and composition, the counted unit, and normalization conventions. For the corpus details and comparison caveats, see [the multilingual observations and Zipf-Mandelbrot deep dive](zipf-law-deep-dive.qmd#cross-linguistic-observations).
 
 ## 4. Why does this regularity matter for language science and LLMs?
 
@@ -187,6 +185,8 @@ One distinction is essential. Zipf describes a **marginal frequency** in a corpu
 $$
 p_\theta(x_t\mid x_{<t}).
 $$
+
+Consider the prefix “The capital of France is…”. The model computes a distribution over the next token; the probability of the continuation that spells “Paris” depends on this prefix and on the tokenizer’s segmentation. It cannot be read from the overall frequency of “Paris” in a corpus.
 
 A token that is rare across the corpus may be highly probable after a particular prefix. Conversely, a globally frequent token may be unlikely in that context. These distributions answer different questions.
 
@@ -204,7 +204,9 @@ An approximate straight line on logarithmic axes is not enough to prove that a p
 - **Linguistic conventions.** Inflected forms, compounds, contractions, characters and segmentation units change the number of types and their frequencies.
 - **Model choice.** A simple power law, a Zipf-Mandelbrot law or another model may describe the ends of the distribution differently.
 
-Steven Piantadosi (2014) emphasizes that classical visualizations can hide richer structure and that proposed causal explanations do not account for every phenomenon. Separating the data used to estimate ranks from those used to estimate frequencies is one way to reduce an important bias, but it does not solve every estimation problem.
+Piantadosi (2014, Fig. 1) provides an empirical example using the American National Corpus: a two-dimensional hexbin density plot displays observed frequencies alongside a Zipf-Mandelbrot fit, with ranks and frequencies estimated from two independent subcorpora. Dispersion increases in the long tail, and the residuals reveal structure that the fitted curve does not capture. [See Figure 1 and its method](https://doi.org/10.3758/S13423-014-0585-6).
+
+This split-sample procedure reduces the bias caused by correlated rank and frequency errors, but it does not solve every estimation problem.
 
 The reasonable conclusion is therefore: **lexical frequencies often exhibit a Zipf-like regularity, but their exact shape depends on the data, units and analysis method.**
 
@@ -226,6 +228,7 @@ Zipf’s law describes a frequent regularity in lexical-frequency distributions:
 
 ## Go further
 
+- The [Zipf’s law deep dive](zipf-law-deep-dive.qmd) collects the historical context, multilingual evidence, model variants, and extended applications.
 - The [text-data lesson](text-data.qmd) introduces the representations and units handled in the LLM pipeline.
 - The [tokenization lesson](tokenization-strategies.qmd) explains how a string is split into model tokens.
 

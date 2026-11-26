@@ -1,6 +1,6 @@
 # Day 01 source dossier — Zipf's law and lexical frequency
 
-**Status:** bilingual public-reading revision prepared in PR #1639; novice review and explicit editorial acceptance remain pending  
+**Status:** bilingual public-reading version; focused empirical/LLM revision is documented in [the 2026-11-26 follow-up audit](../audits/day-01-empirical-llm-bridge-2026-11-26.md). Novice review and explicit editorial acceptance remain pending  
 **Date:** 2026-11-23  
 **Languages:** French and English  
 **Story question:** FR — Pourquoi le mot « je » revient-il si souvent dans ce texte ? EN — Why does the word “I” appear so often in this text?
