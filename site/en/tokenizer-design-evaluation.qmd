@@ -2,7 +2,7 @@
 title: "The tokenizer as a compression engineer"
 subtitle: "Shorter sequences without shifting costs elsewhere"
 description-meta: "Understand the trade-off between vocabulary size, sequence length, system cost, and downstream quality."
-keywords: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: ["en/tokenizer-multilingual-evaluation"]
 related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/exercises-text-data"]
-tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:en", "status:published"]
 -->
 
 
