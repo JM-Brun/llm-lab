@@ -1,0 +1,153 @@
+schema_version: 1
+source_id: huggingface-tokenizers-pipeline-docs
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Existing implementation/documentation audit dated 2026-11-18, including a versioned v0.23.3 pipeline reference."
+      - "No API execution or new documentation scan performed in this backfill."
+    inferred_elements:
+      - "The route is a conceptual organization of the documented encoding stages."
+  source_graph:
+    nodes:
+      - id: src-normalizer
+        kind: component
+        description: "Optional normalization transforms the input text according to configuration."
+        locator: "The tokenization pipeline, Normalization"
+        inferred: false
+      - id: src-pretokenizer
+        kind: component
+        description: "Pre-tokenization creates segments that constrain the units seen by the model."
+        locator: "The tokenization pipeline, Pre-tokenization"
+        inferred: false
+      - id: src-model
+        kind: component
+        description: "The model applies a vocabulary and segmentation algorithm such as BPE, Unigram, WordLevel or WordPiece."
+        locator: "The tokenization pipeline, Model"
+        inferred: false
+      - id: src-postprocessor
+        kind: component
+        description: "Post-processing transforms the encoding, for example by inserting sequence special tokens."
+        locator: "The tokenization pipeline, Post-Processing"
+        inferred: false
+      - id: src-decoder
+        kind: component
+        description: "Decoding reconstructs text from token IDs according to the configured decoder."
+        locator: "The tokenization pipeline, Decoding"
+        inferred: false
+    edges:
+      - from: src-normalizer
+        type: precedes
+        to: src-pretokenizer
+        inferred: false
+      - from: src-pretokenizer
+        type: precedes
+        to: src-model
+        inferred: false
+      - from: src-model
+        type: precedes
+        to: src-postprocessor
+        inferred: false
+      - from: src-model
+        type: paired-with
+        to: src-decoder
+        inferred: true
+    interpretation: "The four documented encoding stages are kept separate from decoding, which the documentation treats as a distinct operation. Optional components and version-specific API availability must not be generalized."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Describe the responsibilities of normalization, pre-tokenization, model and post-processing."
+      basis: "These are the four encoding stages in the audited pipeline documentation."
+    - status: inferred
+      outcome: "Explain why decoding is not simply a fifth encoding stage."
+      basis: "The documentation treats decoding separately."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic understanding of text, tokens and vocabularies."
+      basis: "The pipeline documentation assumes tokenizer concepts."
+  teaching_route:
+    - order: 1
+      section: "Normalization"
+      function: input-transformation
+      moves: ["Identify transformations applied before segmentation."]
+    - order: 2
+      section: "Pre-tokenization"
+      function: segmentation-boundary
+      moves: ["Identify how initial segments constrain the model stage."]
+    - order: 3
+      section: "Model"
+      function: algorithm-and-vocabulary
+      moves: ["Separate the segmentation algorithm from the surrounding pipeline."]
+    - order: 4
+      section: "Post-processing"
+      function: encoding-finalization
+      moves: ["Identify sequence-level additions such as special tokens."]
+    - order: 5
+      section: "Decoding"
+      function: inverse-operation
+      moves: ["Follow the distinct reconstruction path."]
+  pedagogical_strengths:
+    - "Provides a clear component-level architecture for a tokenizer."
+    - "Separates the segmentation model from preprocessing and post-processing."
+    - "Makes configuration boundaries explicit."
+  pedagogical_limits:
+    - "Documentation is version-sensitive and the inspected bindings had documented API limitations."
+    - "The audit did not execute APIs or test offsets across language bindings."
+    - "The four-stage list describes encoding, not every operation in a tokenizer lifecycle."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/tokenization-strategies.qmd", "site/en/tokenization-strategies.qmd"]
+    decision: "Use as the architectural reference for tokenizer pipeline components; preserve version and binding caveats."
+    structures_kept_separate: ["Library component architecture", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: huggingface-tokenizers-pipeline-docs:four-encoding-stages
+    kind: architecture
+    summary: "The documented encoding pipeline consists of normalization, pre-tokenization, model and post-processing; these components have distinct responsibilities."
+    locator: {type: section, value: "The tokenization pipeline, Normalization through Post-Processing", label: "Encoding pipeline"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "Audited Hugging Face Tokenizers pipeline documentation; versioned v0.23.3 reference and dated current documentation review."
+      assumptions: []
+      limitations: ["Components are configurable; normalization and pre-tokenization may be optional."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing static documentation audit reused.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-pipeline, topic:text-normalization, topic:pre-tokenization]
+      concept_ids: [tokenizer-pipeline, text-normalization, pre-tokenization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [tokenizer-pipeline, text-normalization, pre-tokenization]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The existing bilingual strategy lesson already presents these components; this extraction preserves their documented responsibilities."
+
+  - id: huggingface-tokenizers-pipeline-docs:decoding-separate-operation
+    kind: mechanism
+    summary: "Decoding is documented as a separate reconstruction operation rather than as a fifth stage in the four-stage encoding pipeline."
+    locator: {type: section, value: "The tokenization pipeline, Decoding", label: "Decoding"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "Audited pipeline documentation."
+      assumptions: []
+      limitations: ["Concrete decoding behavior depends on the configured decoder and tokenizer."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing static documentation audit reused.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:token-decoding, topic:tokenizer-pipeline]
+      concept_ids: [token-decoding, tokenizer-pipeline]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [token-decoding, tokenizer-pipeline]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the distinction between encoding stages and the separate decoding operation."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The documentation supplies the clearest component architecture. Its version-specific API caveats remain attached to the evidence and should not be generalized."
