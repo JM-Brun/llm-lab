@@ -9,10 +9,10 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations-advanced"
-summary: "Formalizes contextual dependencies and deepens the internal operation of Transformer blocks: self-attention, MLP, residual connections, and normalization."
-scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, the roles of self-attention and the MLP, the residual stream, and normalization."
+summary: "Formalizes contextual dependencies, deepens Transformer blocks, and relates the conceptual model to empirical findings about representations and layers."
+scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, self-attention and MLP, the residual stream, normalization, empirical studies of contextuality, and layer probing."
 domain: "architectures-mechanisms"
-purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain Transformer sublayers, residual connections, and normalization variants."
+purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, explain Transformer sublayers, and critically interpret empirical findings about contextuality, representation geometry, and information decoded across layers."
 suggested_route:
   previous: null
   next: null
