@@ -85,7 +85,7 @@ The distinction matters when we change only one thing:
 
 **Key point:** the tokenizer defines the symbolic interface between text and model; the embedding table then maps IDs to vectors. Contextualization belongs to later network computations, not to the tokenizer.
 
-To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then [the exercise that follows an ID to its embedding row](exercises-text-data.qmd#ex-text-to-embedding-lookup).
+To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then [the exercise that follows an ID to its embedding row](exercises-text-data.qmd#ex-text-data-embedding-lookup).
 
 ## The tokenizer is part of the model contract
 
@@ -121,7 +121,7 @@ The **token** is the unit produced by the split. The **ID** is its reference num
 
 **An order-of-magnitude example.** Suppose the same passage uses 1,000 tokens with one tokenizer and 1,200 with another. In an 8,192-token context window, that consumes about 12.2% and 14.6% of the budget, respectively. For full dense attention, the number of position pairs grows as $T^2$: a sequence that is 20% longer implies about 44% more pairs ($1.2^2=1.44$). This is not a direct runtime prediction: attention kernels, caching, batch padding, and architecture all affect actual cost. Token count is still an important operational signal.
 
-[Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises-text-data.qmd#ex-text-to-embedding-lookup).
+[Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises-text-data.qmd#ex-text-data-embedding-lookup).
 
 Do not confuse **encoding a prompt** with **preparing a tokenizer**. At inference time, the tokenizer has already been selected and fixed with the model weights: it converts the prompt into IDs. When building a model, the corpus is prepared first, then the tokenizer is trained or fitted before this interface is frozen. That preparation is not repeated for every request; it belongs to the Build path ([prepare a corpus](corpus-preparation.qmd)).
 
