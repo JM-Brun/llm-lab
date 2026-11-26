@@ -433,3 +433,6 @@ The cross-entropy page was also included in the responsive pass:
 | `cross-entropy-target-probability-mobile.svg`, `cross-entropy-target-probability-fr-mobile.svg` | EN/FR `cross-entropy.qmd` | Original mobile compositions of the existing one-hot target probability/loss comparison. Probability bars share a 0–1 scale; loss bars share a separate 0–2.303 nats scale. Owner provenance confirmation remains pending; no asset-level licence declared. |
 
 The page now embeds these through responsive `picture` elements with page-level alt text and captions. The mobile variants do not claim to show the full vocabulary distribution or the average over valid positions; the page retains that explicit caveat.
+
+
+For the complete route-level coverage matrix and outstanding render/accessibility/licensing gates, see the [Understand route visual audit status](understand-route-visual-audit-status-2026-11-26.md).
