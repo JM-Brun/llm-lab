@@ -17,7 +17,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: []
+  children: ["en/tokenizer-multilingual-evaluation"]
 related: ["en/tokenization-strategies", "en/tokenizer-multilingual-evaluation", "en/text-data", "en/unicode-text"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 -->
