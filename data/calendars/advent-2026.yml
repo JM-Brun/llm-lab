@@ -367,7 +367,7 @@ days:
     tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1687"
     door:
       fr: "Les grands modèles deviennent-ils prévisibles ?"
-      en: "Do bigger models become predictable?"
+      en: "Do larger models become predictable?"
     question:
       fr: "Que permettent réellement d’extrapoler les lois d’échelle empiriques ?"
       en: "What can empirical scaling laws actually let us extrapolate?"
