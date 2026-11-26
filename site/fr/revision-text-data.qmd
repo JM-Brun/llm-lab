@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-text-data"
-scope: "La chaîne texte → tokens → IDs → plongements et la distinction entre encodage d’un prompt et préparation d’un corpus."
-purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+scope: "Fiche de rappel sur la chaîne texte → tokens → IDs → lookup initial, les dépendances au tokenizer et la distinction entre prompt et corpus."
+purpose: "Restituer la chaîne de représentation et expliquer ce que désigne un ID, sans le confondre avec un vecteur."
 revision_role: synthesis
 revision_of: ["fr/text-data"]
 suggested_route:
@@ -39,6 +39,17 @@ Deux tokenizers donnent des listes d’IDs différentes pour le même texte. Est
 <summary>Afficher la réponse</summary>
 
 Non. Le texte source reste fixe. Les frontières des tokens, leur nombre et leurs IDs peuvent changer selon les règles de segmentation et le vocabulaire. Chaque liste s’interprète avec son propre tokenizer.
+
+</details>
+
+## Une deuxième question pour vérifier le modèle mental
+
+Pourquoi l’ID `31373` n’est-il pas « plus grand » ou « plus proche du sens » que l’ID `995` ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Un ID est une étiquette qui indexe une entrée du vocabulaire. Sa valeur numérique n’exprime ni une distance ni une quantité sémantique. C’est la ligne correspondante de la matrice qui fournit le vecteur initial.
 
 </details>
 
