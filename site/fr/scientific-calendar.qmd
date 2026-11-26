@@ -128,7 +128,7 @@ Les quatre couleurs discrètes repèrent les grands rayons thématiques ; elles 
 - **Mécanismes, calcul et optimisation** : attention, causalité, résidus, normalisation et rétropropagation.
 - **Recherche, généralisation et systèmes** : décodage, double descente, lois d’échelle, RAG et quantification.
 
-Chaque histoire part d’une question singulière, rend le raisonnement visible, examine ses limites et propose une expérience à emporter. Comptez environ **15 minutes par histoire**, hors lectures complémentaires.
+Chaque histoire part d’une question singulière, rend le raisonnement visible et examine ses limites. Les calculs, exercices et expériences guidées sont regroupés dans des pages de pratique dédiées. Comptez environ **15 minutes par histoire**, hors lectures complémentaires.
 
 ## Où en est l’édition ?
 
