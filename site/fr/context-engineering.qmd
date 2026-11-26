@@ -53,6 +53,14 @@ Injecter tout le dépôt et tout l'historique sans sélection est rarement utile
 | **Séquence d’entrée et fenêtre de contexte** | Le modèle traite la séquence transmise, qui peut comprendre des éléments multimodaux structurés. La longueur du contexte actif compte les tokens effectivement présents. La fenêtre de contexte fixe le budget maximal en tokens, selon les conventions de comptage de l’entrée et de la sortie propres au modèle et à l’API. En génération autorégressive, les tokens produits s’ajoutent à la séquence. |
 | **Contexte accessible à une position** | L’architecture, le masque et la fenêtre disponible déterminent les positions qu’une requête peut consulter. Dans un décodeur causal, l’attention à la position $t$ exclut les positions futures, même si leurs tokens figurent dans la séquence d’entrée. |
 
+<figure id="fig-context-engineering-levels">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/context-engineering-fr-mobile.svg">
+    <img src="../images/context-engineering-fr.svg" alt="L’application dispose de plusieurs sources, en sélectionne certaines et les organise en séquence transmise au modèle. À la position t d’un décodeur causal, seules les positions du préfixe jusqu’à t sont accessibles ; les positions futures sont masquées." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Trois niveaux se succèdent sans se confondre : les informations disponibles dans le système, la séquence effectivement transmise (dans le budget de la fenêtre), puis les positions accessibles à une requête donnée. Tout ce qui est stocké n’est pas nécessairement envoyé, et tout ce qui est envoyé n’est pas visible depuis chaque position.</figcaption>
+</figure>
+
 Les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés vectoriels que le Transformer calcule à partir des tokens accessibles à chaque position. Ces états constituent un résultat du calcul sur la séquence, distinct des informations transmises ou stockées par le système.
 
 ## Pourquoi la fenêtre de contexte ne suffit pas
