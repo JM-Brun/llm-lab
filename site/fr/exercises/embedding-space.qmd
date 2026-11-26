@@ -60,6 +60,45 @@ Les deux architectures partagent la même table de plongements. Pour chaque ID, 
 
 </details>
 
+## Cartes de révision
+
+Essayez de répondre avant d'ouvrir chaque carte. Elles servent au rappel des distinctions essentielles ; les exercices et l'expérience qui suivent demandent ensuite de les appliquer.
+
+<details>
+<summary>Carte 1 — Que désigne l'ID $i$ ?</summary>
+
+L'indice de la ligne $i$ dans la matrice $E$, pas une coordonnée ni une mesure de proximité.
+
+</details>
+
+<details>
+<summary>Carte 2 — Quelle est la forme de la matrice $E$ ?</summary>
+
+$V \times d$ : une ligne par ID du vocabulaire et $d$ composantes par vecteur.
+
+</details>
+
+<details>
+<summary>Carte 3 — Deux occurrences du même ID ont-elles le même vecteur initial ?</summary>
+
+Oui, avec une matrice fixe : elles consultent la même ligne avant le traitement positionnel et la contextualisation.
+
+</details>
+
+<details>
+<summary>Carte 4 — Où apparaît la contextualisation ?</summary>
+
+Dans les calculs ultérieurs du réseau, notamment les blocs Transformer, pas pendant le lookup initial.
+
+</details>
+
+<details>
+<summary>Carte 5 — Que prouve un voisin cosinus ?</summary>
+
+Une proximité selon un modèle, des vecteurs, une normalisation et une métrique donnés ; pas une synonymie ni une équivalence sémantique.
+
+</details>
+
 ## Inspecter une petite matrice d'embeddings d'entrée
 
 Cette expérience indépendante d'un modèle utilise une toute petite matrice NumPy. Elle ne nécessite ni tokenizer, ni téléchargement de checkpoint, ni GPU. Les fonctions opèrent sur les **lignes d'une table d'embeddings d'entrée**, pas sur des états cachés contextualisés.
