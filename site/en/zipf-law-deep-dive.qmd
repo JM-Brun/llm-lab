@@ -15,7 +15,7 @@ scope: "Collects mathematical extensions, comparative empirical findings, histor
 purpose: "Interpret empirical results without overgeneralizing and connect rank-frequency statistics to practical uses."
 domain: "probabilistic-foundations-training"
 suggested_route:
-  previous: "en/advent-calendar-story-day-01"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/advent-calendar-story-day-01"]
