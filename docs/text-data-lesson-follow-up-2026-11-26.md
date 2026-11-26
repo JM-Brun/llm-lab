@@ -93,3 +93,27 @@ A green CI is necessary for the repository changes, but it does not demonstrate 
 ## 6. Handoff for the next session
 
 Start with PR #1713 and its latest checks. Do not repeat source ingestion or rebuild the tokenization hub. After merge, continue with the P1 learner pilot and the targeted provenance/concept audit under #1319. Treat the broader corpus backlog as separate from closing the lesson PR.
+
+
+## 7. Reconciliation with issue #1492
+
+The following checks were made against the issue's detailed acceptance list:
+
+**Already present and retained**
+- The GPT-2 running examples and tokenizer-specific IDs remain in the main lessons; the fixed `2 + 2 = 4` comparison remains reproducible.
+- The exercise collection contains the Python tokenizer/embedding trace and the lookup exercise. The correct published exercise slug is `exercises-text-data`, not `exercises/text-data`.
+- The `data/guided-route.yml` outcome for `text-data` already matches the bilingual objective: follow text to IDs and explain what can vary between tokenizers.
+- The lesson's `revision_support` evidence anchor `revision-summary` is explicitly present in both lesson sources.
+- The `scope`, `purpose` and summary describe the text → IDs → initial-vector boundary rather than claiming to teach the segmentation algorithms.
+- The stale `related` page IDs have been aligned with the actual bilingual Practice page IDs (`fr/exercises-text-data` / `en/exercises-text-data`).
+- The exercise links to the lookup task now use the explicit existing anchor `ex-text-data-embedding-lookup`.
+
+**Still open in #1492 or coordinated issues**
+- [ ] Verify the same GPT-2 example is picked up by `embedding-space`, including the exact ID and corresponding row, and coordinate the hierarchy edge in FR/EN with #1493.
+- [ ] Decide whether the existing computational-graph operations for tokenization and ID encoding should be projected in the guided context; do not add duplicate operations if the current projection already conveys the required concept.
+- [ ] Review the shared guided-page banner so a single-page lesson does not display redundant progress indicators, while multipage stages retain their page position (#988, #337).
+- [ ] Complete the rendered-browser review at 390 px and 1,280 px, including keyboard/focus, copy behavior, disclosure controls, language switching and the transition to embeddings.
+- [ ] Run the existing learner pilot and record observed explanations separately from the page's declared learning outcomes.
+- [ ] Preserve the external source-comparison decisions in the existing audit trail (#756) where they are not already recorded.
+
+Issue #1492 remains the canonical tracker for these broader lesson-level and shared-navigation tasks. This follow-up does not close them by implication.
