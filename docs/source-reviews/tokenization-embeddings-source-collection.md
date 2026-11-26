@@ -526,3 +526,23 @@ The two generated map records have since been updated to include the new heading
 - no claim is made that the final revision has passed CI or that a learner pilot has been performed.
 
 The first failure was not caused by the embedding lookup explanation, its exercises, or the Python quality checks. It was a generated-navigation freshness issue introduced by the new Practice heading.
+
+
+### 9.9 Cross-page transition audit: text → lookup → position → context
+
+A targeted review of the French and English pages confirms that the conceptual hand-offs are coherent and that the route should remain unchanged.
+
+| Step | What the learner should carry forward | Boundary to preserve |
+|---|---|---|
+| \`text-data\` → \`embedding-space\` | The tokenizer-specific final GPT-2 token ID (FR example: \`5633\`) identifies a row in the matching model's embedding table. | The ID is meaningful only with the matching tokenizer/vocabulary; it is not a vector or a portable semantic number. |
+| \`embedding-space\` → \`positional-encoding\` | A token ID retrieves an initial vector; repeated occurrences of the same ID retrieve the same row at fixed parameters. | The lookup itself does not encode sequence position or mix neighbouring-token information. |
+| \`positional-encoding\` → \`contextualized-representations\` | The architecture must account for order; absolute embeddings and relative mechanisms are distinct choices. | RoPE rotates projected queries and keys inside attention; it is not a universal position vector added to the token lookup. |
+| \`contextualized-representations\` → Transformer details | Later blocks produce states dependent on the accessible context and the architecture's position mechanism. | The same initial lookup does not imply identical contextualized states. |
+
+The route is pedagogical, not a claim that every architecture has a standalone positional-encoding layer between lookup and the Transformer. The contextualized-representations page correctly qualifies this: position handling is architecture-dependent, and RoPE is injected inside attention.
+
+The audit found one stale cross-page exercise destination in both embedding-space lessons. It pointed to the old page-specific text-data exercise anchor, while the current text-data lesson and the canonical lookup exercise use \`exercises-text-data.qmd#ex-text-data-embedding-lookup\`. The FR and EN links have been aligned to that destination. The exercise exists in both locale collections and its preparation section links back to the embedding-space lesson.
+
+No new route edge, concept, prerequisite or page is justified by this audit. The existing sequence and page ownership remain appropriate.
+
+**Remaining validation:** run the fresh CI on the final PR head; confirm the map generator reproduces both committed map files; and verify the corrected exercise anchors in the rendered bilingual site. This source-level review does not replace browser inspection or a learner pilot.
