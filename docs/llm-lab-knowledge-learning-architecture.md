@@ -113,7 +113,7 @@ May contain mathematical derivations, alternative architectures, assumptions, li
 
 Deepen is organized for discovery by question/domain, not as a second mandatory curriculum. Its page-level primary discovery domain must not be confused with multi-valued concept membership in data/domains.yml.
 
-### 4.6 Editorial collections — calendars and future projects
+### 4.6 Stories — editorial collections, calendars and future projects
 
 **Purpose:** provide a bounded editorial experience with its own theme, format, selection and navigation.
 
