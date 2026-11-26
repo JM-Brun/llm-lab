@@ -24,8 +24,6 @@ related: ["fr/tokenization-strategies", "fr/text-data", "fr/scaling-laws"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-tokenizer-design-evaluation.qmd >}}
-
 ::: {.chapter-lead}
 La page du calendrier présente le compromis de conception et un protocole de première comparaison. Cet approfondissement examine ce que les études mesurent réellement : longueur de représentation, performances en aval, écarts entre langues et reproductibilité.
 :::
