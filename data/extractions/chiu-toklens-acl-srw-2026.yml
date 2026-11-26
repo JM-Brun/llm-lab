@@ -52,7 +52,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:intrinsic-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -79,7 +79,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:benchmark]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -105,7 +105,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:correlation, topic:downstream-performance]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -133,7 +133,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, topic:downstream-performance, method:mixed-effects-model]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -159,7 +159,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:scaling-laws]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -183,7 +183,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, ecosystem:qtok]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []

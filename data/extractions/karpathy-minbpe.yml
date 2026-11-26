@@ -1,0 +1,158 @@
+schema_version: 1
+source_id: karpathy-minbpe
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Existing static implementation comparison in docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md."
+      - "No code execution was performed."
+    inferred_elements:
+      - "The route below is reconstructed from the implementation variants and their documented responsibilities."
+  source_graph:
+    nodes:
+      - id: src-basic-tokenizer
+        kind: implementation
+        description: "BasicTokenizer exposes byte-level BPE without regex pre-tokenization or special-token handling."
+        locator: "minbpe, BasicTokenizer"
+        inferred: false
+      - id: src-regex-tokenizer
+        kind: implementation
+        description: "RegexTokenizer adds a configurable regex pre-tokenization convention."
+        locator: "minbpe, RegexTokenizer"
+        inferred: false
+      - id: src-gpt4-tokenizer
+        kind: implementation
+        description: "GPT4Tokenizer reconstructs merges and byte handling for a pretrained tiktoken encoding."
+        locator: "minbpe, GPT4Tokenizer"
+        inferred: false
+      - id: src-special-token-policy
+        kind: constraint
+        description: "The exercise adds explicit handling and authorization choices for reserved special tokens."
+        locator: "exercise.md, step 4"
+        inferred: false
+      - id: src-family-comparison
+        kind: comparison
+        description: "The final exercise compares byte-level BPE with other tokenizer families and points to SentencePiece."
+        locator: "exercise.md, step 5"
+        inferred: false
+    edges:
+      - from: src-basic-tokenizer
+        type: extended-by
+        to: src-regex-tokenizer
+        inferred: false
+      - from: src-regex-tokenizer
+        type: specialized-by
+        to: src-gpt4-tokenizer
+        inferred: true
+      - from: src-gpt4-tokenizer
+        type: followed-by
+        to: src-special-token-policy
+        inferred: false
+      - from: src-special-token-policy
+        type: followed-by
+        to: src-family-comparison
+        inferred: false
+    interpretation: "The variants are pedagogical implementation layers, not a universal tokenizer architecture or a claim of production compatibility."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Identify which tokenizer conventions are absent from a minimal BPE implementation and added by richer variants."
+      basis: "The audit compares BasicTokenizer, RegexTokenizer and GPT4Tokenizer."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Byte-level BPE and basic Python classes."
+      basis: "The repository is an implementation-oriented learning resource."
+  teaching_route:
+    - order: 1
+      section: "BasicTokenizer"
+      function: minimal-mechanism
+      moves: ["Isolate the byte-level merge mechanism."]
+    - order: 2
+      section: "RegexTokenizer"
+      function: added-convention
+      moves: ["Observe the effect of regex pre-tokenization."]
+    - order: 3
+      section: "GPT4Tokenizer"
+      function: compatibility-case
+      moves: ["Inspect the extra conventions needed to reproduce a pretrained encoding."]
+    - order: 4
+      section: "Special tokens"
+      function: control-token-policy
+      moves: ["Distinguish reserved tokens from ordinary text and make authorization policy explicit."]
+    - order: 5
+      section: "Compare tokenizer families"
+      function: transfer-and-boundary
+      moves: ["Compare byte-level BPE with other segmentation families without treating the library name as an algorithm."]
+  pedagogical_strengths:
+    - "Makes implementation layers and added conventions explicit."
+    - "Shows why a minimal BPE core is not a complete GPT tokenizer."
+  pedagogical_limits:
+    - "The repository was inspected statically and not executed in the recorded audit."
+    - "Compatibility is scoped to the audited implementation and encoding reconstruction."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/tokenization-strategies.qmd", "site/en/tokenization-strategies.qmd"]
+    decision: "Use as an implementation comparison alongside the tiktoken educational module; do not conflate the minimal BPE core with production tokenizer behavior."
+    structures_kept_separate: ["Implementation variant graph", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: karpathy-minbpe:implementation-layers
+    kind: implementation-pattern
+    summary: "The repository separates a minimal byte-level BPE tokenizer from a regex-pretokenized variant and a GPT-4-oriented reconstruction."
+    locator: {type: code-symbol, value: "BasicTokenizer, RegexTokenizer, GPT4Tokenizer", label: "Tokenizer variants"}
+    evidence:
+      kind: static-code-inspection
+      confidence: established
+      scope: "The three implementation variants documented in the existing project audit."
+      assumptions: []
+      limitations: ["Static inspection only; no execution or compatibility test."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing static audit reused.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "What additional layers turn a minimal BPE implementation into a model-compatible tokenizer?"
+      explanatory_lens: "Progressively add pre-tokenization, pretrained merge reconstruction and special-token policy."
+      teaching_form: [implementation-progression, worked-example, comparison]
+      novelty: {level: high, rationale: "The five-step exercise explicitly teaches implementation boundaries."}
+      complementarity: {level: high, rationale: "It connects minimal BPE mechanics to real tokenizer compatibility conventions."}
+      pedagogical_value: {level: high, rationale: "The staged implementation exposes where a minimal algorithm stops being sufficient."}
+      applicability: {level: high, rationale: "Strong reference for the Build/Deepen boundary in the tokenization lesson."}
+      redundancy: {level: low, rationale: "The progression adds implementation layers beyond the generic BPE explanation."}
+      evidence_quality: {level: high, rationale: "The exercise and relevant code paths were inspected at a pinned revision, though not executed."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-implementation, topic:tokenizer-compatibility, method:bpe]
+      concept_ids: [tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is a useful contrast for the implementation caveat: the BPE core is only one part of tokenizer behavior."
+
+  - id: karpathy-minbpe:special-token-policy
+    kind: mechanism
+    summary: "The exercise adds reserved special-token handling as a distinct layer after the byte-level merge mechanism, with explicit choices about which special tokens may be encoded."
+    locator: {type: section, value: "exercise.md, step 4; minbpe RegexTokenizer.encode", label: "Special-token handling"}
+    evidence:
+      kind: static-code-and-exercise-inspection
+      confidence: established
+      scope: "The pinned minbpe exercise and implementation files recorded in the 2026-11-19 audit."
+      assumptions: []
+      limitations: ["The policy is specific to the inspected implementation and should not be generalized to all tokenizer APIs."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing static audit reused; no code execution.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:special-token, topic:tokenizer-pipeline]
+      concept_ids: [special-token, tokenizer]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [special-token, tokenizer]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The exercise makes explicit that reserved tokens require a policy distinct from ordinary BPE merges."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "minbpe offers an inspectable progression through implementation conventions. Keep it separate from tiktoken's production implementation and from the educational module's narrower BPE loop."

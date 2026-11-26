@@ -243,10 +243,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:unicode, topic:tokenization]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding]
     candidate_destinations:
       pages: [en/unicode-text, fr/unicode-text, en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The canonical Unicode page is the stronger owner; retain the source as an optional walkthrough."
@@ -280,10 +280,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenization, method:bpe]
-      concept_ids: [token]
+      concept_ids: [byte-pair-encoding, tokenizer-training, token-encoding, token-id, token-decoding, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful alternate walkthrough; do not duplicate the canonical worked trace."
@@ -318,10 +318,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenization, method:pre-tokenization]
-      concept_ids: [token]
+      concept_ids: [pre-tokenization, tokenizer-pipeline]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The general mechanism is covered; exact GPT regex variants remain an optional implementation-level topic."
@@ -356,10 +356,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenization, topic:special-tokens]
-      concept_ids: [token]
+      concept_ids: [special-token]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: []
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current bilingual special-token section is more explicit about API-specific behavior."
@@ -393,10 +393,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenization, topic:multimodal]
-      concept_ids: [token]
+      concept_ids: [tokenizer]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: []
       route_ids: []
     disposition: defer
     disposition_rationale: "Multimodal tokenization is intentionally outside the current text-only learning slice."

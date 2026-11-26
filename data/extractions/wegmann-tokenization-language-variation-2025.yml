@@ -49,7 +49,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:downstream-tasks]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -73,7 +73,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:pre-tokenization, method:bpe]
-      concept_ids: [token]
+      concept_ids: [pre-tokenization, tokenizer-pipeline]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -100,7 +100,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:pre-tokenization, topic:tokenizer-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, pre-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -126,7 +126,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:task-aware-proxy]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -150,7 +150,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:multilingual-tokenization]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []

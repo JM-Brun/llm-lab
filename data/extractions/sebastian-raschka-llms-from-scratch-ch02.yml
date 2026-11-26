@@ -1,0 +1,161 @@
+schema_version: 1
+source_id: sebastian-raschka-llms-from-scratch-ch02
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Existing Chapter 2 audit (#96) and tokenization source audit (#114), reused without rescanning."
+      - "The migration map distinguishes the chapter's simple tokenizer path from loading a pretrained GPT-2 tokenizer."
+    inferred_elements:
+      - "The ordered route below is an editorial reconstruction from the audited chapter material."
+  source_graph:
+    nodes:
+      - id: src-text-units
+        kind: concept
+        description: "Text is converted into discrete units before integer encoding."
+        locator: "Chapter 2, text-tokenization sections"
+        inferred: false
+      - id: src-vocabulary
+        kind: representation
+        description: "A vocabulary associates recognized token strings with integer IDs."
+        locator: "Chapter 2, vocabulary and tokenizer implementation"
+        inferred: false
+      - id: src-encode-decode
+        kind: operation
+        description: "Encoding maps text to IDs; decoding reconstructs text from token IDs."
+        locator: "Chapter 2, tokenizer implementation"
+        inferred: false
+      - id: src-tokenizer-variants
+        kind: implementation
+        description: "A simple educational tokenizer and a pretrained GPT-2 tokenizer serve different purposes."
+        locator: "Chapter 2, simple tokenizer and GPT-2 tokenizer sections"
+        inferred: false
+    edges:
+      - from: src-text-units
+        type: segmented-into
+        to: src-vocabulary
+        inferred: true
+      - from: src-vocabulary
+        type: defines
+        to: src-encode-decode
+        inferred: true
+      - from: src-encode-decode
+        type: instantiated-by
+        to: src-tokenizer-variants
+        inferred: true
+    interpretation: "Source-local reconstruction from the audited Chapter 2 material; the edges are editorial relations, not a graph published by the author."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Explain why a tokenizer needs a vocabulary and an encoding/decoding convention."
+      basis: "The chapter builds a tokenizer and uses its vocabulary to map text to IDs."
+    - status: inferred
+      outcome: "Distinguish a toy tokenizer built for learning from a pretrained model's tokenizer."
+      basis: "The audit explicitly separates the custom educational path from pretrained GPT-2 loading."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic Python strings, dictionaries and integer indexing."
+      basis: "The implementation uses these programming constructs."
+  teaching_route:
+    - order: 1
+      section: "Text and token units"
+      function: motivation
+      moves: ["Observe that text must be represented as discrete units."]
+    - order: 2
+      section: "Vocabulary and integer encoding"
+      function: representation
+      moves: ["Build the mapping between token strings and IDs."]
+    - order: 3
+      section: "Encoding and decoding"
+      function: reversible-operation
+      moves: ["Trace text-to-ID and ID-to-text transformations."]
+    - order: 4
+      section: "Simple versus pretrained tokenizer"
+      function: implementation-boundary
+      moves: ["Separate a didactic tokenizer from the tokenizer paired with pretrained weights."]
+  pedagogical_strengths:
+    - "Connects conceptual tokenization to a small implementation."
+    - "Makes vocabulary construction and ID mapping inspectable."
+    - "Provides a bridge from a toy implementation to a pretrained tokenizer."
+  pedagogical_limits:
+    - "The audit does not establish clean-room execution of every notebook."
+    - "The simple tokenizer is not a complete specification of modern production tokenizers."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["docs/learning-path.md", "site/fr/text-data.qmd", "site/fr/tokenization-strategies.qmd"]
+    decision: "Use as a build-oriented explanation of vocabulary, IDs and encode/decode; keep its toy implementation distinct from production tokenizer conventions."
+    structures_kept_separate: ["Source-local teaching reconstruction", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: sebastian-raschka-llms-from-scratch-ch02:text-to-token-units
+    kind: mechanism
+    summary: "The chapter introduces tokenization as the conversion of text into discrete units that can subsequently be represented by integer IDs."
+    locator: {type: section, value: "Chapter 2, text-tokenization sections", label: "Working with text data"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "The audited Chapter 2 treatment of text tokenization."
+      assumptions: []
+      limitations: ["The chapter's simple tokenizer should not be generalized to every production tokenizer."]
+    technical_assessment: {status: not-reviewed, rationale: "Retained from the completed source audit; no new technical review in this backfill.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, topic:token]
+      concept_ids: [tokenizer, tokenization, token]
+    candidate_destinations:
+      pages: [fr/text-data, en/text-data]
+      concepts: [tokenizer, tokenization, token]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The introductory page already explains text-to-token conversion; the extraction preserves the source's explanatory provenance."
+
+  - id: sebastian-raschka-llms-from-scratch-ch02:vocabulary-and-token-ids
+    kind: mechanism
+    summary: "A tokenizer vocabulary assigns integer identifiers to its recognized token strings; these IDs are indices, not semantic measurements."
+    locator: {type: section, value: "Chapter 2, vocabulary and tokenizer implementation", label: "Vocabulary"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "The chapter's vocabulary-based tokenizer implementation."
+      assumptions: []
+      limitations: ["The exact vocabulary and IDs depend on the tokenizer configuration."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing audit reused; no new execution.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:token-vocabulary, topic:token-id]
+      concept_ids: [token-vocabulary, token-id]
+    candidate_destinations:
+      pages: [fr/text-data, en/text-data]
+      concepts: [token-vocabulary, token-id]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The token/ID distinction is already explicit in the canonical text-data lesson."
+
+  - id: sebastian-raschka-llms-from-scratch-ch02:toy-versus-pretrained-tokenizer
+    kind: limitation
+    summary: "The chapter's educational tokenizer and the pretrained GPT-2 tokenizer are distinct paths; a toy tokenizer does not reproduce all conventions of a pretrained model tokenizer."
+    locator: {type: section, value: "Chapter 2, simple tokenizer and pretrained GPT-2 tokenizer sections", label: "Tokenizer implementations"}
+    evidence:
+      kind: audit-reconciliation
+      confidence: well-supported
+      scope: "Distinction recorded in the Chapter 2 and project source audits."
+      assumptions: []
+      limitations: ["No claim is made that all notebook cells or upstream revisions were independently executed."]
+    technical_assessment: {status: qualified, rationale: "The distinction is explicit in the project audit and migration map.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-implementation, topic:tokenizer-compatibility]
+      concept_ids: [tokenizer, tokenizer-compatibility]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [tokenizer, tokenizer-compatibility]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as an implementation boundary when learners move from a toy tokenizer to model-compatible tokenization."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The chapter supplies an explanatory/build perspective for text units, vocabulary, IDs and encode/decode. Its main concepts are already taught; preserve its source-local sequence and implementation boundary."

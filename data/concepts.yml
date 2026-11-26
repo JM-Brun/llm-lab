@@ -9,6 +9,174 @@ concepts:
       en: "Discrete unit produced by tokenization and consumed by the model."
     domains: [text-tokenization]
     resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokenizer
+    importance: core
+    labels: {fr: "Tokenizer", en: "Tokenizer"}
+    definitions:
+      fr: "Système qui transforme du texte en séquences de tokens et d'identifiants selon une configuration donnée."
+      en: "System that transforms text into token and identifier sequences according to a defined configuration."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokenization
+    importance: core
+    labels: {fr: "Tokenisation", en: "Tokenization"}
+    definitions:
+      fr: "Opération qui segmente ou représente un texte en unités discrètes consommées par un modèle."
+      en: "Operation that segments or represents text as discrete units consumed by a model."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokenizer-pipeline
+    importance: core
+    labels: {fr: "Pipeline du tokenizer", en: "Tokenizer pipeline"}
+    definitions:
+      fr: "Ensemble ordonné et configurable d'opérations qui transforment le texte en encodage, notamment normalisation, pré-tokenisation, modèle de segmentation et post-traitement."
+      en: "Ordered, configurable set of operations transforming text into an encoding, including normalization, pre-tokenization, segmentation model and post-processing."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-encoding
+    importance: core
+    labels: {fr: "Encodage des tokens", en: "Token encoding"}
+    definitions:
+      fr: "Application d'un tokenizer à un texte pour produire une séquence de tokens et leurs identifiants selon un vocabulaire et des conventions déterminés."
+      en: "Application of a tokenizer to text to produce a token sequence and its IDs according to a defined vocabulary and conventions."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-post-processing
+    importance: supporting
+    labels: {fr: "Post-traitement du tokenizer", en: "Tokenizer post-processing"}
+    definitions:
+      fr: "Étape qui transforme l'encodage obtenu, par exemple en ajoutant des tokens de séquence ou des éléments structurants."
+      en: "Stage that transforms the resulting encoding, for example by adding sequence tokens or structural elements."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: text-normalization
+    importance: supporting
+    labels: {fr: "Normalisation du texte", en: "Text normalization"}
+    definitions:
+      fr: "Transformation préalable du texte, par exemple de la casse, des espaces ou de la représentation Unicode, selon la configuration du tokenizer."
+      en: "Preliminary transformation of text, such as case, whitespace or Unicode representation, according to tokenizer configuration."
+    domains: [text-tokenization]
+    resources: [fr/unicode-text, en/unicode-text, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: pre-tokenization
+    importance: core
+    labels: {fr: "Pré-tokenisation", en: "Pre-tokenization"}
+    definitions:
+      fr: "Découpage ou transformation initiale du texte en segments qui contraignent les unités auxquelles s'applique le modèle de segmentation."
+      en: "Initial splitting or transformation of text into segments that constrain the units processed by the segmentation model."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-vocabulary
+    importance: core
+    labels: {fr: "Vocabulaire du tokenizer", en: "Tokenizer vocabulary"}
+    definitions:
+      fr: "Ensemble des unités reconnues par un tokenizer, associées à des identifiants entiers."
+      en: "Set of units recognized by a tokenizer and associated with integer identifiers."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-id
+    importance: core
+    labels: {fr: "Identifiant de token", en: "Token ID"}
+    definitions:
+      fr: "Identifiant entier d'une entrée du vocabulaire ; sa signification dépend du tokenizer et de son vocabulaire."
+      en: "Integer identifier for a vocabulary entry; its meaning depends on the tokenizer and its vocabulary."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/embedding-space, en/embedding-space]
+  - id: subword-tokenization
+    importance: core
+    labels: {fr: "Tokenisation en sous-mots", en: "Subword tokenization"}
+    definitions:
+      fr: "Famille de méthodes qui représente les textes à l'aide de fragments de mots appris ou définis par un vocabulaire."
+      en: "Family of methods representing text with word fragments learned or defined by a vocabulary."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: byte-pair-encoding
+    importance: core
+    labels: {fr: "Byte Pair Encoding (BPE)", en: "Byte Pair Encoding (BPE)"}
+    definitions:
+      fr: "Méthode de construction d'un vocabulaire par fusions successives de paires adjacentes selon une règle de sélection."
+      en: "Vocabulary construction method based on successive merges of adjacent pairs according to a selection rule."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: wordpiece
+    importance: supporting
+    labels: {fr: "WordPiece", en: "WordPiece"}
+    definitions:
+      fr: "Méthode de segmentation en sous-mots utilisant un vocabulaire appris et une procédure de sélection et d'encodage propre à cette famille."
+      en: "Subword segmentation method using a learned vocabulary and family-specific selection and encoding procedures."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: unigram-tokenization
+    importance: supporting
+    labels: {fr: "Tokenisation Unigram", en: "Unigram tokenization"}
+    definitions:
+      fr: "Approche probabiliste de segmentation en sous-mots fondée sur un modèle de tokens et une procédure de sélection de segmentation."
+      en: "Probabilistic subword segmentation approach based on a token model and a segmentation-selection procedure."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: byte-level-encoding
+    importance: supporting
+    labels: {fr: "Encodage au niveau des octets", en: "Byte-level encoding"}
+    definitions:
+      fr: "Représentation initiale d'un texte par ses octets encodés, souvent UTF-8, avant d'éventuelles fusions en unités plus grandes."
+      en: "Initial representation of text using its encoded bytes, often UTF-8, before possible merges into larger units."
+    domains: [text-tokenization]
+    resources: [fr/unicode-text, en/unicode-text, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: special-token
+    importance: supporting
+    labels: {fr: "Token spécial", en: "Special token"}
+    definitions:
+      fr: "Token réservé auquel le tokenizer ou le modèle attribue une fonction de contrôle ou de structure distincte du texte ordinaire."
+      en: "Reserved token assigned a control or structural role distinct from ordinary text."
+    domains: [text-tokenization, architectures-mechanisms]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies, fr/generation, en/generation]
+  - id: token-decoding
+    importance: supporting
+    labels: {fr: "Décodage des tokens", en: "Token decoding"}
+    definitions:
+      fr: "Opération qui reconstruit une représentation textuelle à partir d'une séquence de tokens ou d'identifiants selon les conventions du tokenizer."
+      en: "Operation that reconstructs a text representation from a sequence of tokens or IDs according to tokenizer conventions."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokenizer-training
+    importance: supporting
+    labels: {fr: "Entraînement d'un tokenizer", en: "Tokenizer training"}
+    definitions:
+      fr: "Procédure qui apprend ou ajuste le vocabulaire et les paramètres d'un tokenizer à partir d'un corpus d'entraînement."
+      en: "Procedure that learns or fits a tokenizer vocabulary and parameters from a training corpus."
+    domains: [text-tokenization]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies, fr/corpus-preparation, en/corpus-preparation]
+  - id: tokenizer-compatibility
+    importance: core
+    labels: {fr: "Compatibilité du tokenizer", en: "Tokenizer compatibility"}
+    definitions:
+      fr: "Correspondance nécessaire entre le tokenizer, son vocabulaire, ses conventions d'encodage et les poids du modèle qui consomme ses identifiants."
+      en: "Required correspondence between a tokenizer, its vocabulary and encoding conventions, and the weights of the model consuming its IDs."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokenizer-evaluation
+    importance: supporting
+    labels: {fr: "Évaluation d'un tokenizer", en: "Tokenizer evaluation"}
+    definitions:
+      fr: "Évaluation des propriétés intrinsèques d'un tokenizer et de ses effets sur le coût et les performances du modèle en aval."
+      en: "Evaluation of a tokenizer's intrinsic properties and its effects on downstream model cost and performance."
+    domains: [text-tokenization]
+    resources: [fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation]
+  - id: token-fertility
+    importance: supporting
+    labels: {fr: "Fertilité de tokenisation", en: "Token fertility"}
+    definitions:
+      fr: "Mesure du nombre moyen de tokens produits pour une unité de référence linguistique ou textuelle, selon une définition expérimentale explicite."
+      en: "Measure of the average number of tokens produced for a reference linguistic or textual unit, under an explicit experimental definition."
+    domains: [text-tokenization]
+    resources: [fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation]
+  - id: multilingual-tokenization
+    importance: supporting
+    labels: {fr: "Tokenisation multilingue", en: "Multilingual tokenization"}
+    definitions:
+      fr: "Étude de la segmentation et du coût en tokens selon les langues, les systèmes d'écriture et les variations linguistiques."
+      en: "Study of segmentation and token cost across languages, writing systems and linguistic variation."
+    domains: [text-tokenization]
+    resources: [fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation]
   - id: token-embedding
     importance: core
     labels: {fr: "Plongement initial du token", en: "Initial token embedding"}
@@ -1024,6 +1192,43 @@ relation_types:
       en: "The source is a model, empirical law, or bounded construction that approximates selected aspects of the target’s behaviour without being identical to it; the scope and assumptions of the approximation must be explicit."
 
 relations:
+
+  - {from: tokenizer, type: applies-to, to: tokenization}
+  - {from: tokenizer-pipeline, type: part-of, to: tokenizer}
+  - {from: text-normalization, type: part-of, to: tokenizer-pipeline}
+  - {from: pre-tokenization, type: part-of, to: tokenizer-pipeline}
+  - {from: subword-tokenization, type: part-of, to: tokenization}
+  - {from: byte-pair-encoding, type: part-of, to: subword-tokenization}
+  - {from: wordpiece, type: part-of, to: subword-tokenization}
+  - {from: unigram-tokenization, type: part-of, to: subword-tokenization}
+  - {from: token-vocabulary, type: part-of, to: tokenizer}
+  - {from: token-vocabulary, type: produces, to: token-id}
+  - {from: token, type: represented-by, to: token-id}
+  - from: token-id
+    type: prerequisite
+    to: token-embedding
+    rationale:
+      fr: "Le modèle utilise l'identifiant du token pour sélectionner son vecteur initial dans la matrice d'embeddings."
+      en: "The model uses the token ID to select its initial vector from the embedding matrix."
+  - {from: special-token, type: part-of, to: token-vocabulary}
+  - {from: tokenizer-training, type: contributes-to, to: token-vocabulary}
+  - {from: token-decoding, type: applies-to, to: token-id}
+  - {from: tokenizer-evaluation, type: applies-to, to: tokenizer}
+  - {from: token-fertility, type: part-of, to: tokenizer-evaluation}
+  - {from: tokenizer-evaluation, type: applies-to, to: multilingual-tokenization}
+  - {from: byte-level-encoding, type: part-of, to: tokenization}
+  - from: tokenizer-compatibility
+    type: prerequisite
+    to: token-embedding
+    rationale:
+      fr: "Les identifiants doivent être interprétés avec le vocabulaire et les conventions du tokenizer associés aux poids du modèle avant de sélectionner les vecteurs d'embedding."
+      en: "Identifiers must be interpreted with the vocabulary and tokenizer conventions paired with the model weights before selecting embedding vectors."
+  - {from: tokenization, type: produces, to: token}
+  - {from: token-encoding, type: produces, to: token-id}
+  - {from: token-post-processing, type: part-of, to: tokenizer-pipeline}
+  - {from: token-post-processing, type: contributes-to, to: special-token}
+  - {from: subword-tokenization, type: part-of, to: tokenizer-pipeline}
+
 
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
   - {from: active-inference, type: contrasts-with, to: aixi}
