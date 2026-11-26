@@ -1,7 +1,7 @@
 # LLM Lab knowledge and learning ecosystem architecture
 
 **Status:** architectural synthesis and target contract  
-**Date:** 2026-11-23  
+**Date:** 2026-11-26  
 **Scope:** shared knowledge foundation, specialized learning systems, graph interoperability, reader-facing experiences and editorial projects.
 
 **Parent documents:** [Information architecture](information-architecture.md), [Knowledge architecture interoperability](knowledge-architecture-interoperability.md), [Knowledge graph standards](knowledge-graph-standards.md), [Project intelligence layer](project-intelligence-layer.md).
@@ -10,16 +10,17 @@ This document explains how the repository's existing systems fit together. It is
 
 ## 1. Product definition
 
-LLM Lab is a bilingual, self-contained learning and experimentation environment about large language models. It combines several complementary products:
+LLM Lab is a bilingual, self-contained learning and experimentation environment about large language models. Its reader-facing structure has **five top-level spaces** over one shared knowledge foundation:
 
-1. **Understand:** a curated learning journey synthesizing strong existing explanations and sources.
-2. **Review:** a system for consolidating and retrieving knowledge through summaries, revision sheets, flashcards, visual recall and self-assessment.
-3. **Practice & experiment:** a growing collection of questions, exercises, coding tasks and controlled experiments.
-4. **Build:** an implementation-oriented path for inspecting, testing and progressively constructing a small LLM.
-5. **Deepen:** a non-linear knowledge wiki for mathematical, scientific, architectural and research-level extensions.
-6. **Editorial projects:** independent collections such as seasonal/advent calendars, potentially recurring with new editions and themes.
+1. **Main learning path (Understand):** the curated, coherent journey that develops the learner's mental model of LLMs from foundations to generation and learning. Revision and retrieval resources (summaries, revision sheets, flashcards, visual recall and self-assessment) support this path; they are not a sixth top-level space or a parallel curriculum.
+2. **Build from scratch (Build):** the implementation-oriented path for inspecting, testing and progressively constructing a small LLM.
+3. **Practice & experiment:** the dedicated space for questions, exercises, coding tasks and controlled experiments.
+4. **Deepen:** the non-linear knowledge wiki for mathematical, scientific, architectural and research-level extensions.
+5. **Stories:** independent editorial stories and bounded collections such as seasonal/advent calendars, potentially recurring with new editions and themes.
 
-These are distinct learner experiences over a shared knowledge foundation. They are not six names for the same curriculum, and they should not be forced into one reading order.
+These five spaces are distinct experiences over the same shared foundation. They have different purposes and progression semantics; they must not be forced into one reading order.
+
+**Vocabulary rule:** `Understand` names the guided route within the Main learning path. `Review` names a consolidation/retrieval dimension and its supporting resources and reader-facing projection within that same space. Keep the specialized revision contracts and aid→lesson relations; do not present Review as an independent top-level destination.
 
 The repository should remain useful as a book-like, independently navigable resource. No private repository or external service is a build-time or reading dependency.
 
@@ -72,17 +73,17 @@ Owns learning objectives, expected outcomes, recommended stage order, transition
 
 Canonical route: data/guided-route.yml, with page identities and metadata in the existing page map. The route is not the knowledge graph, page hierarchy or implementation dependency graph.
 
-### 4.2 Review — retrieval and consolidation
+### 4.2 Revision and retrieval — support for the Main learning path
 
-**Purpose:** help learners reconstruct, retain and check knowledge already introduced.
+**Purpose:** help learners reconstruct, retain and check knowledge introduced by the Main learning path. This is the revision dimension of that space, not a sixth top-level experience.
 
-Resource roles may include synthesis/summary, revision sheet, flashcard/active-recall prompt, visual reconstruction, retrieval question and self-assessment.
+Resource roles may include synthesis/summary, revision sheet, flashcard/active-recall prompt, visual reconstruction, retrieval question and self-assessment. These resources complement the primary lesson; they do not replace it or duplicate the dedicated Practice space.
 
 The canonical relation is an explicit aid-to-supported-lesson relation. One aid may support several lessons; one lesson may have several aids. Reverse lesson-to-aid views should be generated. Coverage sufficiency is a separate assessment from link existence. Missing assessment metadata means **not assessed**, not **no support**.
 
-The proposed contract in [revision-resource-contract.md](revision-resource-contract.md) is the starting point; its status and implementation must be reconciled before it is treated as a fully enforced schema.
+The contract in [revision-resource-contract.md](revision-resource-contract.md) and the implemented page-based ProjectIndex validation are the starting point. Non-page revision aids remain unsupported; do not imply that the contract covers them.
 
-Review is not a duplicate copy of Understand. It is a different activity over the same concepts and lessons.
+The reader-facing Review route is a projection of the same nine-stage Understand curriculum, not a second curriculum. Preserve its stage/lesson traversal, primary revision destinations, optional stops and aid→lesson semantics under #1541.
 
 ### 4.3 Practice & experiment — application and transfer
 
@@ -132,7 +133,7 @@ LLM Lab should have an ecosystem of interoperable graph families, not one univer
 | Page/navigation graph | Published pages; route, hierarchy and related-page edges | Page-map metadata; generated bilingual learning-map projection |
 | Pedagogical route graph | Lessons/stages; recommended order and justified learning prerequisites | data/guided-route.yml, docs/learning-path.md; separate from concept relations |
 | Revision relations | Page-based aids → lessons; typed role and separate lesson coverage assessment | `ProjectIndex` validates page-aid relations and assessments; `audit_revision_coverage.py` derives both directions and runs in CI. Non-page revision aids remain unsupported. See the revision-resource contract. |
-| Review route | A reader-facing projection of the same nine-stage curriculum, using primary synthesis destinations and revision aids | `guided-route.yml` + `lesson_contracts`; generated bilingual review plan and peer sidebar (PR #1549). Optional revision stops, complete flashcard inventory and manual rendered/learner review remain incomplete. |
+| Revision route (Main learning path projection) | A reader-facing consolidation projection of the same nine-stage Understand curriculum, using primary synthesis destinations and revision aids; not a separate top-level space | `guided-route.yml` + `lesson_contracts`; generated bilingual review plan and peer sidebar (PR #1549). Optional revision stops, complete flashcard inventory and manual rendered/learner review remain incomplete. |
 | Practice graph | Per-lesson exercise hubs, shared collections and anchored activities; page-level lesson associations | 45 exercise pages per language are catalogued/rendered. The Q/K/V activity pilot (PR #1558, merged after Python, Quarto/browser and secret-scan success) validates bilingual `page_id#anchor` identities and lesson→hub→collection navigation. Its 120-case browser audit checks the nested FR/EN hub at desktop/mobile, including links and keyboard disclosure. Learner validation and the complete 45-pair audit remain open; no global activity registry or complete per-activity concept mapping is established. |
 | Build dependency graph | G0–G9 implementation milestones, modules, code evidence and verification dependencies | docs/learning-path.md, implementation modules and data/resources.yml. Resource/code validators exist, but no single canonical cross-graph Build dependency validator is established. |
 | Computational graph | Operations, state/data artifacts and typed computational flow | `data/computational-graph.yml`; `check_computational_graph.py` and tests/site/test_computational_graph.py; opt-in ProjectIndex evidence adapter. The shared-spine design issue #575 is closed; remaining manual screen-reader/rendered-content review is tracked in #584. |
@@ -161,7 +162,7 @@ Use controlled vocabularies by entity type, with shared governance and validatio
 | Facet | Applies to | Example / owner |
 |---|---|---|
 | Editorial page type | Page | type, page metadata schema |
-| Destination / experience | Page | understand, build, deepen, practice; review only where explicitly supported |
+| Destination / experience | Page | understand, build, deepen, practice; revision/review only where explicitly supported by the page contract, without implying a sixth top-level space |
 | Page topic key | Page | topic:<id>; page grouping key, not a concept entity |
 | Page level/status/language | Page | Existing controlled page metadata |
 | Scientific domain | Concept | domains in data/concepts.yml referencing data/domains.yml |
@@ -204,7 +205,7 @@ The following foundations should be preserved and extended:
 - docs/knowledge-architecture-interoperability.md: technology-neutral and cross-repository boundaries.
 - data/concepts.yml, data/domains.yml: shared semantic foundation.
 - LLM-LAB-PAGE-MAP v1: page identity and page graph.
-- data/guided-route.yml, docs/learning-path.md: Understand route and implementation learning path.
+- data/guided-route.yml, docs/learning-path.md: Understand route within the Main learning path, and the separate Build implementation learning path.
 - data/resources.yml: current non-page implementation resources.
 - docs/revision-resource-contract.md: partially implemented page-based aid-to-lesson relations and lesson coverage assessments; non-page revision aids remain unsupported.
 - data/computational-graph.yml, docs/canonical-computational-spine.md: computation model and branches.
