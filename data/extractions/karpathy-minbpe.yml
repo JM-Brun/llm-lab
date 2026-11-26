@@ -108,6 +108,16 @@ items:
       assumptions: []
       limitations: ["Static inspection only; no execution or compatibility test."]
     technical_assessment: {status: not-reviewed, rationale: "Existing static audit reused.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "What additional layers turn a minimal BPE implementation into a model-compatible tokenizer?"
+      explanatory_lens: "Progressively add pre-tokenization, pretrained merge reconstruction and special-token policy."
+      teaching_form: [implementation-progression, worked-example, comparison]
+      novelty: {level: high, rationale: "The five-step exercise explicitly teaches implementation boundaries."}
+      complementarity: {level: high, rationale: "It connects minimal BPE mechanics to real tokenizer compatibility conventions."}
+      pedagogical_value: {level: high, rationale: "The staged implementation exposes where a minimal algorithm stops being sufficient."}
+      applicability: {level: high, rationale: "Strong reference for the Build/Deepen boundary in the tokenization lesson."}
+      redundancy: {level: low, rationale: "The progression adds implementation layers beyond the generic BPE explanation."}
+      evidence_quality: {level: high, rationale: "The exercise and relevant code paths were inspected at a pinned revision, though not executed."}
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-implementation, topic:tokenizer-compatibility, method:bpe]
