@@ -4,6 +4,7 @@ subtitle: "Three ways to organize sequence processing"
 description: "Compare encoder-only, encoder–decoder, and decoder-only Transformer architectures, their information flow, and typical objectives."
 keywords: ["type:concept-lesson","destination:understand","topic:transformer-architectures","level:core","language:en","status:published"]
 lang: en
+sidebar: en
 ---
 
 <!--

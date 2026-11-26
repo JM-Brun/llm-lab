@@ -13,7 +13,7 @@ id: "fr/zipf-law-deep-dive"
 summary: "Approfondit la loi de Zipf : variante de Mandelbrot, données multilingues, histoire, applications et limites."
 scope: "Rassemble les extensions mathématiques, résultats empiriques comparatifs, repères historiques et usages en analyse de corpus, recherche d'information et étude des modèles."
 purpose: "Interpréter les résultats empiriques sans généralisation abusive et relier la statistique rang-fréquence aux usages concrets."
-domain: "probabilistic-foundations-training"
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null

@@ -40,6 +40,8 @@ Reading time is an estimate, not a word-count target alone. Tables, equations, c
 
 **Redistribution is preferred to deletion.** Keep the central question, essential reasoning, one coherent worked example and the conclusion in the story. Move optional derivations, research surveys, historical detail, implementation caveats and extensive resource catalogues to a suitable existing page or a new focused companion. Move exercises to the dedicated practice page. Do not create duplicate copies: preserve citations, figures, anchors and backlinks, and make the destination discoverable from the story.
 
+The first implementation audit for Days 01–03 records the source-to-destination traceability, confirms where material was retained or moved to Deepen versus Practice, and documents the navigation corrections: [audit of the 2026-11-26 redistribution](audits/calendar-redistribution-destination-audit-2026-11-26.md).
+
 ## 2. Relationship with the main LLM Lab
 
 The two experiences have different jobs.

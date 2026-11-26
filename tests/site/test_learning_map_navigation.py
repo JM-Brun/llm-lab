@@ -31,7 +31,17 @@ def test_flat_sidebar_entries_are_projected_once(language: str) -> None:
     ]
     assert all(page_id in understand["pages"] for page_id in expected_pages)
     assert all(understand["pages"].count(page_id) == 1 for page_id in expected_pages)
-    assert understand["sections"] == []
+    optional_title = (
+        "Architectures et variantes (facultatif)"
+        if language == "fr"
+        else "Architecture comparison (optional)"
+    )
+    assert understand["sections"] == [
+        {
+            "title": optional_title,
+            "pages": [f"{language}/transformer-architectures"],
+        }
+    ]
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])

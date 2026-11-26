@@ -42,18 +42,27 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 
 | Votre question | Domaine |
 |---|---|
+| Comment les modèles représentent-ils, prédisent-ils et génèrent-ils du texte ? | [Modélisation du langage](#modelisation-du-langage) |
 | Comment une architecture spécialisée modifie-t-elle le flux d'information ? | [Attention, position et architectures](#architectures-et-mecanismes) |
-| Comment concevoir et évaluer la représentation du texte ? | [Texte et tokenisation](#texte-et-tokenisation) |
+| Comment les corpus et les tokenizers structurent-ils les entrées du modèle ? | [Texte, corpus et tokenisation](#texte-et-tokenisation) |
 | Quels outils mathématiques permettent d'analyser les représentations ? | [Outils mathématiques et géométrie](#outils-mathematiques-et-geometrie) |
-| Comment relier probabilités, objectif d'apprentissage et gradients ? | [Formalisation probabiliste et chaîne de l’entraînement](#fondements-probabilistes-et-entrainement) |
+| Comment relier probabilités, objectifs et optimisation ? | [Formalisation probabiliste et chaîne de l’entraînement](#fondements-probabilistes-et-entrainement) |
 | Comment produire des sorties et quels coûts cela implique-t-il ? | [Inférence et efficacité](#inference-et-efficacite) |
 | Que peut-on conclure sur l'échelle et les capacités des modèles ? | [Échelle et questions de recherche](#echelle-et-questions-de-recherche) |
 
-## Attention, position et architectures {#architectures-et-mecanismes}
+## Modélisation du langage {#modelisation-du-langage}
+
+Cette collection rassemble les approfondissements consacrés aux modèles de langage : représentation du texte, architectures, formalisation probabiliste, apprentissage, inférence et résultats de recherche. Elle accueille deux types de pages : les prolongements techniques de certaines histoires du calendrier et les dossiers autonomes dont la question, le niveau de détail ou la portée empirique ne se prêtent pas à un récit de quinze minutes.
+
+Le calendrier conserve une histoire centrale et autonome ; il ne doit pas absorber les dérivations longues, les comparaisons de recherche ou les dossiers de référence. Ces contenus restent accessibles ici, avec un lien depuis l’histoire lorsqu’ils la prolongent. Les rubriques ci-dessous sont des domaines de découverte, pas un ordre de lecture obligatoire.
+
+### Attention, position et architectures {#architectures-et-mecanismes}
 
 **Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
 
 **Point d'entrée :** commencez par [l'attention à produit scalaire](scaled-dot-product-attention.qmd) ; les variantes et dérivations ci-dessous restent facultatives.
+
+**Leçon fondamentale associée :** [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.qmd) — compare les trois grandes configurations et leurs flux d'information ; ce cours Understand n'est pas un approfondissement spécialisé.
 
 - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.qmd) — variance des produits scalaires sous hypothèses gaussiennes, concentration du softmax et limites du facteur $\sqrt{d_k}$.
 - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.qmd) — formalisation du contexte accessible, des masques et de l'évolution des états cachés.
@@ -67,31 +76,31 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 
 Les variantes spécialisées ne rejoignent pas le parcours principal simplement parce qu'un modèle récent les utilise. Il faut démontrer qu'elles sont indispensables à la compréhension générale.
 
-### Ressources dédiées aux encodages sinusoïdaux
+#### Ressources dédiées aux encodages sinusoïdaux
 
 - [Vaswani et al. (2017), section 3.5](https://arxiv.org/abs/1706.03762) — source primaire pour la formule, les fréquences et la motivation mathématique.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) — visualisation des signaux positionnels ; distinguer la première représentation concaténée de la formule entrelacée du papier.
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/) — code PyTorch annoté qui relie la formule à son implémentation.
 - [Stanford — *Transformers for Signal Prediction*](https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf) — lecture orientée signaux des fréquences logarithmiques et des longueurs d'onde.
 
-### Ressources complémentaires pour comprendre le Transformer {#ressources-transformer}
+#### Ressources complémentaires pour comprendre le Transformer {#ressources-transformer}
 
 Ces ressources proposent des explications visuelles, une formulation historique de l'architecture ou des exemples d'implémentation. Elles complètent les pages conceptuelles de LLM Lab ; elles ne constituent ni un parcours parallèle ni des prérequis.
 
-#### Construire l'intuition avec des visualisations
+##### Construire l'intuition avec des visualisations
 
 - [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/) : une explication animée du système, des embeddings aux blocs Transformer, aux logits et à la génération.
 - [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/) : une explication visuelle ciblée de l'attention, du masquage, des têtes multiples et de la cross-attention.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) : une explication visuelle pas à pas du **Transformer original encodeur-décodeur**. Elle éclaire la conception de 2017, mais ne représente pas tous les GPT modernes.
 - [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/) : une présentation visuelle plus directement liée aux modèles de type GPT à décodeur seul.
 
-#### Relier les équations à une implémentation
+##### Relier les équations à une implémentation
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) : l'article primaire décrivant la formulation du Transformer original. Il présente une architecture encodeur-décodeur ; GPT est une famille ultérieure à décodeur seul.
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/) : une implémentation exécutable et annotée, liée à l'article original. Elle aide à relier les équations au code, mais son architecture et ses choix d'entraînement ne définissent pas tous les LLM modernes.
 - [PyTorch — attention à produit scalaire mise à l'échelle](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) : le contrat d'API d'une opération, pas une explication ou une implémentation complète d'un Transformer.
 
-#### Livres et cours complémentaires (facultatifs)
+##### Livres et cours complémentaires (facultatifs)
 
 - [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [le dépôt source](https://github.com/rasbt/LLMs-from-scratch) : un ouvrage accompagné de code couvrant les données, l'attention, l'implémentation de GPT, le préentraînement et le fine-tuning. C'est une référence importante, pas l'ordre de lecture obligatoire de ce site.
 - [Raschka — conseils de lecture](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md) : conseils pour construire d'abord une vue d'ensemble, puis approfondir avec le code.
@@ -99,7 +108,7 @@ Ces ressources proposent des explications visuelles, une formulation historique 
 
 Ces ressources sont complémentaires, pas interchangeables : les visualisations construisent l'intuition, l'article original documente la formulation, le code annoté expose les choix d'implémentation et la documentation d'API précise le contrat d'une opération de bibliothèque.
 
-## Texte et tokenisation
+### Texte, corpus et tokenisation {#texte-et-tokenisation}
 
 **Question directrice :** comment une chaîne de caractères devient-elle une séquence discrète compatible avec un modèle, et comment juger les choix de représentation ?
 
@@ -109,9 +118,58 @@ Le parcours principal commence par [Du texte aux tokens](text-data.qmd). La cart
 
 ### Statistiques du langage
 
-- [Loi de Zipf et statistiques des fréquences lexicales](advent-calendar-story-day-01.qmd) — distributions rang-fréquence, longue traîne, ajustements empiriques et limites de l’interprétation.
+- [Loi de Zipf et statistiques des fréquences lexicales](advent-calendar-story-day-01.qmd) — l’histoire du calendrier : construire un corpus, lire une relation rang–fréquence et en comprendre les limites.
+- [Au-delà de la loi de Zipf : données, usages et limites](zipf-law-deep-dive.qmd) — approfondissement associé : Zipf–Mandelbrot, comparaison multilingue, histoire, usages et précautions d’interprétation.
 
-Les itinéraires sont des suggestions de lecture, pas des prérequis. La page stratégies porte l'explication des mécanismes ; la page conception-évaluation porte les critères et les preuves comparatives.
+### Tokenisation et évaluation
+
+- [Unicode, UTF-8 et normalisation du texte](unicode-text.qmd) — points de code, octets et normalisation avant la tokenisation.
+- [Stratégies de tokenisation](tokenization-strategies.qmd) — BPE, WordPiece, Unigramme et conventions d’encodage.
+- [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — compromis entre vocabulaire, longueur des séquences et coûts.
+- [Évaluer les tokenizers : coûts, performances et équité multilingue](tokenizer-multilingual-evaluation.qmd) — résultats empiriques, métriques, comparaisons entre langues et limites des protocoles.
+
+Les itinéraires sont des suggestions de lecture, pas des prérequis. Les pages de mécanismes, de conception et d’évaluation ont des périmètres distincts ; leurs liens ne signifient pas qu’une métrique ou une stratégie suffit à choisir un tokenizer.
+
+### Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}
+
+**Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
+
+**Point d'entrée :** commencez par [la vraisemblance](vraisemblance.qmd) et [la loss](loss.qmd) ; les approfondissements relient ces objets sans les confondre.
+
+- [Information propre et surprisal](surprisal-information-content.qmd) — information d’un événement, surprisal conditionnel et règle de chaîne ; distinguer le score observé de l’entropie prédictive.
+- [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
+- [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
+- [Centrage du score en RL hors politique](score-centering.qmd) — correction de la dérive du gradient lorsque les distributions du sampler et du trainer diffèrent.
+
+**Leçon fondamentale associée :** [Du modèle de base à un assistant : le post-entraînement](post-training.qmd) — une leçon Understand sur les méthodes d'adaptation des paramètres, distincte des approfondissements mathématiques ci-dessus.
+
+Les pages canoniques du parcours principal restent propriétaires des définitions locales de vraisemblance, entropie, entropie croisée, loss et gradients. Ces approfondissements les relient ou les généralisent sans les remplacer.
+
+### Inférence et efficacité {#inference-et-efficacite}
+
+**Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
+
+**Point d'entrée :** commencez par [la génération autorégressive](generation.qmd) ; les stratégies et coûts avancés viennent ensuite si votre question le nécessite.
+
+- [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
+- [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
+- [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd) — suivre l'information externe jusqu'à son exploitation par le modèle.
+- [Récupération documentaire : indexer, retrouver, classer](document-retrieval.qmd) — comparer les familles de retrievers, la recherche visuelle et les méthodes de classement.
+
+Le parcours principal présente la génération autorégressive et ses opérations minimales. Cette rubrique traite les stratégies et coûts non nécessaires à cette première compréhension.
+
+### Échelle et questions de recherche {#echelle-et-questions-de-recherche}
+
+**Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
+
+**Point d'entrée :** commencez par le [panorama des LLM](llm-overview.qmd) et ses [limites](llm-limits.qmd) avant d'examiner les résultats de recherche et les lois empiriques.
+
+- [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd) — synthèse transversale des évolutions de l'échelle au post-entraînement, du raisonnement aux systèmes utilisant des outils.
+- [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
+- [Émergence](emergence.qmd) — amélioration graduelle, effets de seuil liés aux métriques et véritables discontinuités.
+- [JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.qmd) — graphes de paires positives, bonnes et mauvaises vues, théorème de convergence conditionnel et lecture qualifiée des preuves d'alignement intermodal.
+
+Distinguer systématiquement observations, hypothèses explicatives et conclusions dépendantes du protocole.
 
 ## Outils mathématiques et géométrie {#outils-mathematiques-et-geometrie}
 
@@ -123,6 +181,7 @@ Les itinéraires sont des suggestions de lecture, pas des prérequis. La page st
 - [Tenseurs](tensors.qmd) — dimensions, opérations et conventions.
 - [Similarité cosinus](cosine-similarity.qmd) — mesure angulaire et limites d'interprétation.
 - [Linéarité des embeddings](linearite-embeddings.qmd) — hypothèses et preuves empiriques associées aux relations linéaires dans les espaces de représentation.
+- [Complexité de Kolmogorov, AIXI et limites du calcul](universal-artificial-intelligence.qmd) — lien entre complexité descriptive, induction universelle et décision sous contraintes de calcul.
 
 ### Repères historiques : des vecteurs statiques aux représentations contextualisées
 
@@ -160,51 +219,12 @@ Pour les outils de mesure, voir [la similarité cosinus](cosine-similarity.qmd) 
 
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
-## Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}
-
-**Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
-
-**Point d'entrée :** commencez par [la vraisemblance](vraisemblance.qmd) et [la loss](loss.qmd) ; les approfondissements relient ces objets sans les confondre.
-
-- [Information propre et surprisal](surprisal-information-content.qmd) — information d’un événement, surprisal conditionnel et règle de chaîne ; distinguer le score observé de l’entropie prédictive.
-- [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
-- [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
-- [Centrage du score en RL hors politique](score-centering.qmd) — correction de la dérive du gradient lorsque les distributions du sampler et du trainer diffèrent.
-
-Les pages canoniques du parcours principal restent propriétaires des définitions locales de vraisemblance, entropie, entropie croisée, loss et gradients. Ces approfondissements les relient ou les généralisent sans les remplacer.
-
-## Inférence et efficacité {#inference-et-efficacite}
-
-**Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
-
-**Point d'entrée :** commencez par [la génération autorégressive](generation.qmd) ; les stratégies et coûts avancés viennent ensuite si votre question le nécessite.
-
-- [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
-- [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
-- [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd) — suivre l'information externe jusqu'à son exploitation par le modèle.
-- [Récupération documentaire : indexer, retrouver, classer](document-retrieval.qmd) — comparer les familles de retrievers, la recherche visuelle et les méthodes de classement.
-
-Le parcours principal présente la génération autorégressive et ses opérations minimales. Cette rubrique traite les stratégies et coûts non nécessaires à cette première compréhension.
-
-## Échelle et questions de recherche {#echelle-et-questions-de-recherche}
-
-**Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
-
-**Point d'entrée :** commencez par le [panorama des LLM](llm-overview.qmd) et ses [limites](llm-limits.qmd) avant d'examiner les résultats de recherche et les lois empiriques.
-
-- [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd) — synthèse transversale des évolutions de l'échelle au post-entraînement, du raisonnement aux systèmes utilisant des outils.
-- [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
-- [Émergence](emergence.qmd) — amélioration graduelle, effets de seuil liés aux métriques et véritables discontinuités.
-- [JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.qmd) — graphes de paires positives, bonnes et mauvaises vues, théorème de convergence conditionnel et lecture qualifiée des preuves d'alignement intermodal.
-
-Distinguer systématiquement observations, hypothèses explicatives et conclusions dépendantes du protocole.
-
 ## Classer une nouvelle notion
 
 Une entrée se classe selon son **objectif d'apprentissage principal**, pas selon le mot-clé de son titre.
 
 1. **Nécessité conceptuelle :** le mécanisme est-il indispensable au premier modèle mental ? Si oui, intégrer le minimum exact dans Understand et réserver ici les dérivations ou variantes. Sinon, le garder dans Approfondir.
-2. **Question traitée :** architecture/flux, texte/tokenisation, outil mathématique, fondement probabiliste/entraînement, inférence/efficacité, ou échelle/recherche.
+2. **Question traitée :** architecture/flux, texte/corpus/tokenisation, outil mathématique, fondement probabiliste/entraînement, inférence/efficacité, ou échelle/recherche.
 3. **Propriété du contenu :** étendre une page canonique si le nouvel apport relève de son périmètre. Créer une page seulement pour une question durable et distincte.
 4. **Nature du lien :** parent/enfant pour une généralisation ou décomposition ; related pour une connexion transversale ; suggested_route pour un ordre conseillé. Toute dépendance n'est pas une relation hiérarchique.
 5. **Niveau de preuve :** expliciter hypothèses et conventions des dérivations ; documenter données, métriques et protocoles empiriques ; séparer principes généraux et choix propres aux études de cas.
