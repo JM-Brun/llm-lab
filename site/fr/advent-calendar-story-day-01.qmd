@@ -169,9 +169,7 @@ La dérivation, les graphiques comparatifs et les précautions d'ajustement sont
 
 La relation rang–fréquence ne se limite pas au français ou à l'anglais. Une étude de Lavi-Rotbain et Arnon (2023) observe des distributions proches de Zipf-Mandelbrot dans des corpus de parole adressée aux jeunes enfants, pour plusieurs langues.
 
-Les paramètres estimés varient d'une langue et d'un corpus à l'autre. Ils dépendent aussi de la taille de l'échantillon, de l'unité linguistique et des conventions de comptage. Ces résultats illustrent une régularité translinguistique dans un cadre expérimental précis ; ils ne permettent pas de classer les langues selon leur « conformité à Zipf ».
-
-Pour les données, les paramètres et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#observations-multilingues).
+Dans les cinq langues étudiées, les estimations de $\alpha$ vont de 1,30 à 1,57 et celles de $\beta$ de 7,12 à 19,48. Ces valeurs décrivent les ajustements obtenus sur des corpus de parole adressée aux enfants ; elles ne sont ni des constantes propres aux langues ni des valeurs directement généralisables à tous les textes. Pour le détail des corpus et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#observations-multilingues).
 
 ## 4. Pourquoi cette régularité intéresse-t-elle les sciences du langage et les LLM ?
 
@@ -186,6 +184,8 @@ Une distinction est essentielle. Zipf décrit une **fréquence marginale** dans 
 $$
 p_\theta(x_t\mid x_{<t}).
 $$
+
+Prenons le préfixe « La capitale de la France est… ». Le modèle calcule une distribution sur le token suivant ; la probabilité de la continuation qui écrit « Paris » dépend de ce préfixe et du découpage du tokenizer. Elle ne se lit pas dans la fréquence globale de « Paris » dans un corpus. Une forme rare dans l'ensemble des textes peut donc être une continuation très probable dans un contexte précis.
 
 Un token rare dans l'ensemble du corpus peut être très probable après un préfixe précis. Inversement, un token fréquent globalement peut être improbable dans ce contexte. Les deux distributions répondent à des questions différentes.
 
@@ -203,7 +203,9 @@ Une droite approximative sur un graphique logarithmique ne suffit pas à démont
 - **Les conventions linguistiques.** Les formes fléchies, les composés, les élisions, les caractères et les unités de segmentation changent le nombre de types et leur fréquence.
 - **Le choix du modèle.** Une loi de puissance simple, une loi de Zipf-Mandelbrot ou un autre modèle peuvent décrire différemment les extrémités de la distribution.
 
-Steven Piantadosi (2014) insiste sur le fait que les représentations classiques peuvent masquer une structure plus riche et que les explications causales proposées ne rendent pas compte de tous les phénomènes. Séparer les données utilisées pour estimer les rangs de celles utilisées pour estimer les fréquences est une manière de réduire un biais important, mais cela ne résout pas toutes les difficultés d'estimation.
+Steven Piantadosi (2014, figure 1) donne un exemple empirique sur l'American National Corpus : un histogramme de densité représente les fréquences observées et l'ajustement de Zipf-Mandelbrot, les rangs et fréquences étant estimés à partir de deux sous-corpus indépendants. La dispersion augmente dans la longue traîne et les résidus révèlent des structures que la courbe ajustée ne capture pas. [Consulter la figure 1 et sa méthode](https://doi.org/10.3758/S13423-014-0585-6).
+
+Cette séparation des échantillons réduit le biais lié aux erreurs corrélées entre rang et fréquence, mais ne résout pas toutes les difficultés d'estimation.
 
 La conclusion raisonnable est donc la suivante : **les fréquences lexicales présentent souvent une régularité proche de Zipf, mais sa forme exacte dépend des données, des unités et de la méthode d'analyse.**
 
@@ -225,6 +227,7 @@ La loi de Zipf décrit une régularité fréquente dans les distributions de fr�
 
 ## Pour aller plus loin
 
+- [Approfondir la loi de Zipf](zipf-law-deep-dive.qmd) : données multilingues, histoire, applications et variante de Mandelbrot.
 - [Approfondir la loi de Zipf](zipf-law-deep-dive.qmd) : données multilingues, histoire, applications et variante de Mandelbrot.
 - La leçon sur les [données textuelles](text-data.qmd) présente les représentations et unités manipulées dans le pipeline du LLM.
 - La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens de modèle.
