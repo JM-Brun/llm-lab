@@ -24,15 +24,13 @@ related: ["en/exercises-zipf-law", "en/text-data", "en/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:advanced", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-advent-calendar-story-day-01.qmd >}}
-
 ::: {.chapter-lead}
 The calendar story introduced the rank-frequency relation and its limits. This companion gathers the material that benefits from more room: richer models, cross-corpus comparisons, historical context, and practical uses in language technology.
 :::
 
 **Return to the story:** [Why does the word “I” appear so often?](advent-calendar-story-day-01.qmd).
 
-### A useful extension: the Zipf-Mandelbrot law
+## The Zipf-Mandelbrot law {#zipf-mandelbrot-law}
 
 The simple form does not describe some distributions perfectly, particularly at the very highest ranks. Mandelbrot proposed a generalization:
 
@@ -58,7 +56,7 @@ For example, at rank 10 with $\beta=0$, values $\alpha=0.7$, $1$ and $1.3$ give 
 
 This extension reminds us that an empirical law is a model to fit and evaluate, not a formula to apply without checking its assumptions.
 
-## 3. What do we observe across languages?
+## Cross-linguistic observations {#cross-linguistic-observations}
 
 The regularity is not limited to English or French. To avoid comparing figures from incompatible corpora, the following table is drawn from a single study of *child-directed speech*. The authors aggregated conversational corpora and estimated the parameters of a Zipf-Mandelbrot distribution.
 
@@ -81,7 +79,7 @@ These results show two things:
 
 The study also found that the parameters depend on sample size and the choice of linguistic unit. The authors used a minimum threshold of 100,000 occurrences for their main estimates. They define a word by its orthographic form, aggregate conversations by language and randomly assign ranks to tied forms. Their result is described as *near-Zipfian*: an empirical approximation, not an exact power law. This is another reason not to draw general conclusions from our 196-occurrence text.
 
-## 4. A history older than its name
+## A history older than its name
 
 The law is named after George Kingsley Zipf, but its history starts earlier.
 
@@ -92,7 +90,7 @@ The law is named after George Kingsley Zipf, but its history starts earlier.
 
 “Zipf’s law” is therefore a historical shortcut. For lexical statistics, “Estoup-Zipf law” better reflects this lineage.
 
-## 5. What is it actually used for?
+## What is it actually used for?
 
 Zipf’s law is not a computational step performed by a language model. A Transformer does not consult this formula at every prediction. It is primarily a **descriptive model**. To understand what it contributes, distinguish its direct use from methods that merely exploit frequency statistics.
 
