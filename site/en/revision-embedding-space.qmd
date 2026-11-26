@@ -30,18 +30,20 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-embedding-
 - The ID is a row index. The d learned numbers stored in the row are the embedding coordinates.
 - With fixed parameters, two occurrences of the same ID share the lookup vector. States produced later can differ with position and context.
 
-## Recall from memory {#revision-check}
+## Predict before checking {#revision-check}
 
-Are the vectors of tokens with IDs 41 and 42 necessarily close?
+Consider the toy ID sequence $[17,42,8,17]$, with zero-based sequence positions. Which rows does the table read, and in what order? Which vector must repeat if the table stays fixed?
 
 <details>
 <summary>Show the answer</summary>
 
-No. Proximity between vocabulary indices places no constraint on the geometry of the learned rows.
+The rows read are $E_{17,:}$, $E_{42,:}$, $E_{8,:}$, and $E_{17,:}$, in that order. Both occurrences of ID 17 retrieve the same initial vector. In the [first-block-input exercise](exercises/text-data.qmd#ex-token-to-block-input), that vector is fixed at $(2,-1)$; the other values are not needed to establish the order.
+
+IDs 41 and 42 do not necessarily have nearby vectors: proximity between vocabulary indices places no constraint on the geometry of the learned rows.
 
 </details>
 
-[Check what stays the same when you renumber the IDs and reorder the table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+[Work through the lookup exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup) to check the row order, then predict what happens when IDs are renumbered with or without the corresponding table-row permutation.
 
 ::: {.language-switch}
 **Language** · [Français](../fr/revision-embedding-space.qmd) · [English](../en/revision-embedding-space.qmd)

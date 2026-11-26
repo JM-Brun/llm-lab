@@ -30,18 +30,20 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-embedding-
 - L’ID est un indice de ligne. Ce sont les d nombres appris stockés sur cette ligne qui forment les coordonnées du plongement.
 - À paramètres fixes, deux occurrences du même ID partagent le même vecteur de lookup. Les états produits ensuite peuvent différer selon la position et le contexte.
 
-## Vérifier de mémoire {#revision-check}
+## Prédire avant de vérifier {#revision-check}
 
-Les tokens d’IDs 41 et 42 ont-ils nécessairement des vecteurs proches ?
+On considère la séquence d’IDs jouet $[17,42,8,17]$, avec une indexation des positions à partir de zéro. Quelles lignes la table lit-elle, dans quel ordre ? Quel vecteur est nécessairement répété si la table reste fixe ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Non. La proximité des indices dans le vocabulaire ne contraint pas la géométrie des lignes apprises.
+Les lignes lues sont $E_{17,:}$, $E_{42,:}$, $E_{8,:}$ et $E_{17,:}$, dans cet ordre. Les deux occurrences de l’ID 17 récupèrent le même vecteur initial. Dans l’[exercice sur l’entrée du premier bloc](exercises/text-data.qmd#ex-token-to-block-input), ce vecteur est fixé à $(2,-1)$ ; les autres valeurs ne sont pas nécessaires pour établir l’ordre.
+
+Les IDs 41 et 42 n’ont pas nécessairement des vecteurs proches : la proximité des indices dans le vocabulaire ne contraint pas la géométrie des lignes apprises.
 
 </details>
 
-[Vérifier ce qui reste identique quand on renumérote les IDs et qu’on réordonne la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+[Faire l’exercice de lookup](exercises/text-data.qmd#ex-text-to-embedding-lookup) pour vérifier l’ordre des lignes, puis prévoir l’effet d’une renumérotation des IDs avec ou sans permutation correspondante de la table.
 
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-embedding-space.qmd) · [English](../en/revision-embedding-space.qmd)
