@@ -103,6 +103,10 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 - **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
 :::
 
+
+
+Le fil rouge se prolonge ensuite avec « Vous savez, moi je ne crois pas… ». Les tokens ajoutés occupent de nouvelles positions ; ils peuvent influer sur les états calculés à ces positions et aux suivantes, sans modifier les états déjà calculés aux positions antérieures dans un GPT causal.
+
 Dans un GPT causal, le préfixe accessible à une position s’arrête au token courant. À position et poids fixés, une modification du préfixe accessible peut changer l’état courant ; une modification située après cette position ne doit pas le changer.
 
 ### Une expérience contrôlée : modifier le passé ou le futur
