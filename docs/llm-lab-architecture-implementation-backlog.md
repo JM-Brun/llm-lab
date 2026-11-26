@@ -1,7 +1,7 @@
 # LLM Lab architecture — implementation backlog and session handoff
 
-**Status:** canonical inventory reconciled in this branch; specialist implementation and learner-validation work remains  
-**Date:** 2026-11-23  
+**Status:** canonical inventory reconciled; five-space vocabulary aligned; specialist implementation and learner-validation work remains  
+**Date:** 2026-11-26  
 **Parent architecture:** [LLM Lab knowledge and learning ecosystem architecture](llm-lab-knowledge-learning-architecture.md)
 
 This document translates the architecture into bounded work. It is deliberately not a claim that every item is missing: existing contracts, code and open issues must be inspected before duplicate work is created. Update this handoff as tasks are completed, superseded or linked to existing issues/PRs.
@@ -45,13 +45,32 @@ This snapshot is reconciled against current `main`, the cited merged PRs, curren
 
 **Status vocabulary:** use `implemented and validated`, `implemented; validation incomplete`, `documented/proposed`, `deferred`, `superseded` and `not assessed`. Never use a single “complete” label for source inspection, CI, rendering, accessibility and learner outcomes.
 
+## 1.2 Five-space vocabulary reconciliation — 2026-11-26
+
+The architecture now uses one consistent product-level vocabulary:
+
+1. **Main learning path (Understand)** — the guided conceptual route and its attached revision/retrieval resources.
+2. **Build from scratch (Build)** — implementation milestones, code, tests and implementation evidence.
+3. **Practice & experiment** — dedicated questions, exercises, coding tasks and experiments.
+4. **Deepen** — optional, non-linear mathematical, scientific, architectural and research extensions.
+5. **Stories** — independent editorial stories and bounded collections/editions.
+
+**Review is not a sixth top-level space.** It is the consolidation/retrieval dimension of the Main learning path. Its specialized aid→lesson relations, coverage assessments and stage-by-stage reader-facing projection remain intact and continue to be owned by #1541. This vocabulary change does not remove the Review projection or weaken its acceptance criteria.
+
+The distinction is intentional:
+- **Top-level space** answers where a learner goes and what kind of experience is offered.
+- **Route** describes a recommended progression inside a space (for example, the nine-stage Understand route).
+- **Resource/revision role** describes material that supports a lesson (for example, a flashcard or synthesis).
+- **Projection** is a generated reader-facing view of canonical records (for example, the Review route).
+
+No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. Existing destination:review/revision metadata, where explicitly supported, must be interpreted as a page/resource classification within the Main learning path, not as evidence of a sixth top-level space.
 ## 2. Priority summary
 
 | Priority | Workstream | Outcome |
 |---|---|---|
-| P0 | Reconcile architecture documentation and status | One accurate entry point; no stale claims |
+| P0 | Reconcile architecture documentation and status | One accurate entry point; five top-level spaces and nested revision dimension |
 | P0 | Inventory and audit canonical registries | Verified ownership, IDs, relations and migrations |
-| P1 | Revision model | Enforced aid-to-lesson relations and honest coverage status |
+| P1 | Main-path revision support | Enforced aid-to-lesson relations and honest coverage status, surfaced within the Main learning path |
 | P1 | Practice model | Stable activity identities and explicit links without bloating lessons |
 | P1 | Cross-graph interoperability | Consistent relation contracts and referential validation |
 | P1 | Calendar/collection model | Reusable edition model independent of Understand |
