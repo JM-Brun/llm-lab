@@ -11,8 +11,8 @@ toc: true
 LLM-LAB-PAGE-MAP v1
 id: "en/advent-calendar-story-day-01"
 summary: "Builds a small corpus, studies lexical frequencies, and explores Zipf’s law, its uses and limitations."
-scope: "Explains counting units, the rank-frequency relation, Zipf-Mandelbrot variants, multilingual findings, history, applications and empirical limitations."
-purpose: "Build and normalize a corpus, distinguish types from occurrences, interpret an estimated exponent and evaluate what the law can actually do."
+scope: "Introduces the counting units, builds a rank-frequency distribution, interprets Zipf’s law and its limitations, and moves variants, comparative data, history, and extended applications to a companion deep dive."
+purpose: "Build a small corpus, distinguish types from occurrences, read a rank-frequency relation, and avoid overinterpretation."
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
