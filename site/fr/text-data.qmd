@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises", "fr/deepen", "fr/tokenization-and-tokenizers"]
+related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises", "fr/deepen", "fr/tokenization-and-tokenizers", "fr/tokenization-strategies"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -52,6 +52,8 @@ L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, 
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
 
+<span id="comparaison-de-deux-tokenizers"></span>
+
 Comparons deux encodages du **même texte exact**, `2 + 2 = 4`, avec `tiktoken==0.14.0`. Le symbole `␠` rend visibles les espaces qui appartiennent aux fragments :
 
 | Encodage | Fragments de tokens | IDs | Total |
@@ -63,7 +65,7 @@ Les deux séquences se décodent en `2 + 2 = 4`. Les IDs sont propres à chaque 
 
 ### Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?
 
-Le même texte peut produire des séquences différentes selon les règles de pré-tokenisation et le vocabulaire appris. Un exemple reproductible et ses IDs exacts sont présentés dans l’[approfondissement sur les stratégies de tokenisation](tokenization-strategies.qmd#comparaison-de-deux-tokenizers). Pour le parcours principal, retenez que chaque séquence d’IDs doit être interprétée avec le tokenizer qui l’a produite.
+Le même texte peut produire des séquences différentes selon les règles de pré-tokenisation et le vocabulaire appris. Les mécanismes de BPE, WordPiece et Unigramme qui expliquent ces différences sont détaillés dans l’[approfondissement sur les stratégies de tokenisation](tokenization-strategies.qmd#familles-dalgorithmes-de-segmentation). Pour le parcours principal, retenez que chaque séquence d’IDs doit être interprétée avec le tokenizer qui l’a produite.
 
 ## Une expérience mentale : que reçoit réellement le modèle ? {#experience-texte-ids}
 
