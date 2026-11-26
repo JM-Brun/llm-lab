@@ -33,8 +33,8 @@
 - Added EN/FR mobile variants for the detailed decoder-only GPT / pre-LN block diagram.
 - Added EN/FR mobile variants for the end-to-end GPT data-flow diagram.
 - Preserved the distinction between architecture and generation process.
-- Mobile block labels state the residual additions explicitly: input plus attention output, then intermediate state plus MLP output.
-- Clarified “embeddings + position” to “embeddings · positional mechanism” (and English equivalent), avoiding the implication that positional information is always added at the input. The exact injection point remains architecture-dependent.
+- Mobile block labels state the residual additions explicitly: input plus attention output gives the intermediate state H′, then H′ plus MLP output gives the block output.
+- Clarified the input stage as “initial representations” and added an explicit note that positional handling depends on the architecture. This avoids implying that positional information is always added at the input; the exact injection point remains architecture-dependent.
 
 ## New assets
 
@@ -56,7 +56,7 @@ All eight files were authored for this contribution and include SVG `title` and 
 - Each affected figure has one page-level alternative text and one caption.
 - The mobile contextualization figure shows two separate computation branches from one shared lookup.
 - The mobile Transformer block labels both residual additions explicitly.
-- Positional wording in the mobile Transformer and GPT-flow diagrams no longer implies universal additive position embeddings.
+- The mobile Transformer and GPT-flow diagrams use “initial representations” and separately state that positional handling depends on the architecture.
 - The redundant collapsed context pipeline is no longer embedded in the core lesson; its source asset is retained.
 
 ## Not yet validated
