@@ -95,6 +95,31 @@ Use this pattern for each exercise heading:
 
 Existing public fragments should be retained as aliases when replacing opaque or automatically generated heading IDs. The page metadata remains the authority for page identity; heading anchors identify only the exercise within that page.
 
+
+### Design before drafting: the learning-page blueprint {#learning-page-blueprint}
+
+Before writing or substantially restructuring a lesson, prepare a concise brief connecting the learner's problem, the page's architectural place and the explanation that will teach it. This is the hand-off from source synthesis to drafting—not a new registry, metadata schema, required standalone file or fixed form. For a small revision, update only affected decisions.
+
+| Dimension | Decision to make |
+|---|---|
+| Learner problem and value | The precise question, the difficulty it resolves, and why the answer matters to understanding or using an LLM. |
+| Outcome | A small set of observable capabilities: explain, distinguish, derive, calculate, predict, implement or evaluate. |
+| Scope and ownership | What this page explains fully, canonical concepts, explicit non-goals and the existing pages that own adjacent material. |
+| Prerequisites and connections | Essential prerequisites versus optional context, downstream applications and useful neighbors. |
+| Curriculum position | Destination, route role and depth; a new Understand step remains a separate curriculum decision. |
+| Explanatory progression | The order of intuition, definitions, mechanism, formalism, examples, interpretation and limitations. |
+| Mathematical contract | Quantities, assumptions, dimensions, axes, conventions and derivations needed to support the claims. |
+| Worked thread | Whether one small case can carry several stages; define inputs, conventions and checkable intermediate values. Use contrasting cases when they reveal distinct properties more clearly. |
+| Visual and implementation support | Diagrams, tensor/data-flow views, numerical traces, code and tests, with provenance and status. |
+| Source synthesis | Which sources support each claim or teaching choice; complementary lenses, disagreements, evidence boundaries and unresolved questions. |
+| Misconceptions and limits | Plausible wrong interpretations, assumptions, counterexamples and conditions where the explanation stops applying. |
+| Transfer and companions | Relevant Build connections, optional Deepen topics, revision resources and dedicated Practice companions—or why none is warranted. |
+| Validation | Scientific, bilingual, metadata, navigation, rendering, accessibility and learner evidence required for this change. |
+
+A worked thread is a teaching device, not a decorative example or universal requirement. For computational LLM topics, it may follow a small token sequence through the relevant transformations. Make shapes, axes, masks, parameter assumptions and intermediate values inspectable where they matter. Do not silently change examples or force every variant into one trace.
+
+The blueprint is ready when a reviewer can explain the learner benefit and canonical ownership; distinguish essential prerequisites from optional links; reconstruct the proposed explanatory sequence; assess whether the source synthesis supports original explanation; verify the worked thread if one is used; and identify the evidence required for validation. If a key claim, convention, contradiction or ownership decision remains unresolved, return to the relevant earlier stage rather than drafting around it.
+
 ## 4. A practical starting sequence
 
 1. Write one sentence stating the question the page answers.
