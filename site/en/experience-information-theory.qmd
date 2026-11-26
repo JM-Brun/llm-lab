@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/experience-information-theory"
 summary: "Reproducible experiment for manipulating distributions and checking identities between entropy, cross-entropy, KL and coding."
-scope: "Guides a deterministic calculation on synthetic distributions and states what the results do and do not support."
+scope: "Guides reproducible experiments on synthetic distributions: conditional surprisal, entropy, cross-entropy, KL, perplexity, and predictive compression."
 purpose: "Turn definitions into a reproducible numerical check, including edge cases to explore."
 suggested_route:
   previous: null
