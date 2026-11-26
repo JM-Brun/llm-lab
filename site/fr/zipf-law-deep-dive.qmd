@@ -15,7 +15,7 @@ scope: "Rassemble les extensions mathématiques, résultats empiriques comparati
 purpose: "Interpréter les résultats empiriques sans généralisation abusive et relier la statistique rang-fréquence aux usages concrets."
 domain: "probabilistic-foundations-training"
 suggested_route:
-  previous: "fr/advent-calendar-story-day-01"
+  previous: null
   next: null
 hierarchy:
   parents: ["fr/advent-calendar-story-day-01"]
