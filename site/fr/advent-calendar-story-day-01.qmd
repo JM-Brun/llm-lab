@@ -169,7 +169,7 @@ La dérivation, les graphiques comparatifs et les précautions d'ajustement sont
 
 La relation rang–fréquence ne se limite pas au français ou à l'anglais. Une étude de Lavi-Rotbain et Arnon (2023) observe des distributions proches de Zipf-Mandelbrot dans des corpus de parole adressée aux jeunes enfants, pour plusieurs langues.
 
-Dans les cinq langues étudiées, les estimations de $\alpha$ vont de 1,30 à 1,57 et celles de $\beta$ de 7,12 à 19,48. Ces valeurs décrivent les ajustements obtenus sur des corpus de parole adressée aux enfants ; elles ne sont ni des constantes propres aux langues ni des valeurs directement généralisables à tous les textes. Pour le détail des corpus et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#observations-multilingues).
+Dans les cinq langues étudiées, les estimations de $\alpha$ vont de 1,30 à 1,57 et celles de $\beta$ de 7,12 à 19,48. Ces valeurs décrivent les ajustements obtenus sur des corpus de parole adressée aux enfants ; elles ne sont ni des constantes propres aux langues ni des valeurs directement généralisables à tous les textes. Elles dépendent aussi de la taille et de la composition des corpus, de l'unité comptée et des conventions de normalisation. Pour le détail des corpus et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#observations-multilingues).
 
 ## 4. Pourquoi cette régularité intéresse-t-elle les sciences du langage et les LLM ?
 
@@ -203,7 +203,7 @@ Une droite approximative sur un graphique logarithmique ne suffit pas à démont
 - **Les conventions linguistiques.** Les formes fléchies, les composés, les élisions, les caractères et les unités de segmentation changent le nombre de types et leur fréquence.
 - **Le choix du modèle.** Une loi de puissance simple, une loi de Zipf-Mandelbrot ou un autre modèle peuvent décrire différemment les extrémités de la distribution.
 
-Steven Piantadosi (2014, figure 1) donne un exemple empirique sur l'American National Corpus : un histogramme de densité représente les fréquences observées et l'ajustement de Zipf-Mandelbrot, les rangs et fréquences étant estimés à partir de deux sous-corpus indépendants. La dispersion augmente dans la longue traîne et les résidus révèlent des structures que la courbe ajustée ne capture pas. [Consulter la figure 1 et sa méthode](https://doi.org/10.3758/S13423-014-0585-6).
+Steven Piantadosi (2014, figure 1) donne un exemple empirique sur l'American National Corpus : un histogramme bidimensionnel en hexagones représente les fréquences observées et l'ajustement de Zipf-Mandelbrot, les rangs et fréquences étant estimés à partir de deux sous-corpus indépendants. La dispersion augmente dans la longue traîne et les résidus révèlent des structures que la courbe ajustée ne capture pas. [Consulter la figure 1 et sa méthode](https://doi.org/10.3758/S13423-014-0585-6).
 
 Cette séparation des échantillons réduit le biais lié aux erreurs corrélées entre rang et fréquence, mais ne résout pas toutes les difficultés d'estimation.
 
