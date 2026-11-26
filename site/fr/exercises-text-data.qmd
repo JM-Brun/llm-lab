@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/exercises"]
   children: []
-related: ["fr/tokenizer-design-evaluation"]
+related: []
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-data", "level:applied", "language:fr", "status:published"]
 -->
 
