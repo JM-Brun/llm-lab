@@ -9,7 +9,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/text-data"
-summary: "Follows an occurrence from text to its token ID and the initial vector selected from the embedding table. Locates tokenization in the input pipeline without detailing its algorithms."
+summary: "Follows an occurrence from text to its token ID and initial vector, then compares two tokenizers on the same input. Locates tokenization in the input pipeline without detailing its algorithms."
 scope: "Covers the path from text to tokens, tokens to IDs, and IDs to embedding lookup. Distinguishes prompt encoding from corpus preparation; segmentation algorithms belong to the dedicated deep dive."
 purpose: "Explain the text → tokens → IDs → initial vectors chain, compare two tokenizers on the same input, and identify what depends on the tokenizer rather than on the text’s meaning."
 suggested_route:
