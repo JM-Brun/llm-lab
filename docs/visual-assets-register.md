@@ -403,3 +403,19 @@ This update reconciles source references and repository inventory only. It does 
 A direct read of the current `main` sources `site/en/contextualized-representations.qmd` and `site/fr/contextualized-representations.qmd` confirms that neither file contains a Rushang Chauhan CDN image embed. Each page embeds its project-local `contextualization-pipeline` SVG and links to the Rushang article as optional further reading. The previous register description of this item as a current external embed was stale. The article link and both local diagrams are retained unchanged; this is a classification correction, not an asset removal or replacement.
 
 This is source-level evidence only. The site-wide rendered-DOM inventory remains outstanding: includes, generated HTML, CSS backgrounds, responsive `picture`/`srcset` selection, lazy-loaded images and network outcomes must still be checked on published EN/FR pages at desktop and mobile viewports. The current external-embed table should not be treated as complete until that pass is recorded.
+
+
+## Understand route visual pilot — embeddings and Transformer architecture — 2026-11-26
+
+The third source-level pilot reviews embedding lookup, contextualized representations and Transformer architecture in EN/FR. It adds eight responsive mobile SVGs and removes one redundant image embed without deleting the asset. See [the third visual audit](visual-audit-third-pilot-2026-11-26.md) for decisions, rationale and outstanding checks.
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `embedding-lookup-en-mobile.svg`, `embedding-lookup-fr-mobile.svg` | EN/FR `embedding-space.qmd` | Original mobile compositions of the existing ID → matrix row → vector → point explanation. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `contextualized-embeddings-en-mobile.svg`, `contextualized-embeddings-fr-mobile.svg` | EN/FR `contextualized-representations.qmd` | Original mobile compositions of the same-lookup/different-accessible-context comparison. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `gpt-data-flow-en-mobile.svg`, `gpt-data-flow-fr-mobile.svg` | EN/FR `transformer.qmd` | Original mobile compositions of the autoregressive GPT path from supplied context through token selection and feedback. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `transformer-stack-en-mobile.svg`, `transformer-stack-fr-mobile.svg` | EN/FR `transformer.qmd` | Original mobile compositions of the decoder-only GPT architecture and one common pre-LN block, with residual additions labelled explicitly. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The existing `contextualization-pipeline-en.svg` and `contextualization-pipeline-fr.svg` are no longer embedded in the core contextualized-representations lesson because that collapsed figure repeated the route's existing text/ID/embedding/Transformer progression. Both assets are retained; no file was deleted. The external complementary article link remains in the page as text.
+
+The desktop GPT-flow wording was clarified from “embeddings + position” to “embeddings · positional mechanism” (and the English equivalent) so it does not imply that every architecture adds a position vector at the input. All eight new mobile files have SVG `title` and `desc` elements, with no embedded raster, script, foreignObject or external href. These are source-level checks only; Quarto rendering, browser legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain outstanding.
