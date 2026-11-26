@@ -87,7 +87,7 @@ La distinction devient importante lorsqu'on modifie une seule chose :
 
 Un ID n'est interprétable qu'avec le vocabulaire qui l'a attribué. Si le vocabulaire contient $V$ tokens, la matrice d'embeddings possède généralement $V$ lignes et $d$ colonnes : l'ID $i$ sélectionne la ligne $E_i$. Dans un modèle de langage autorégressif, la projection de sortie produit elle aussi $V$ logits ; l'indice d'un logit désigne un token du même vocabulaire. L'interface relie donc l'entrée du réseau à ses classes de sortie.
 
-Un checkpoint ne se résume pas à ses tenseurs de poids : il doit être accompagné du vocabulaire et de la configuration du tokenizer correspondants. Le même entier peut désigner un autre fragment dans un autre tokenizer. Changer de tokenizer sans adapter les paramètres indexés par le vocabulaire ferait lire au modèle les mauvais vecteurs et associer ses logits aux mauvais tokens. C'est pourquoi il faut conserver ensemble les poids et les fichiers exacts du tokenizer.
+Un checkpoint ne se résume pas à ses tenseurs de poids : il doit être accompagné du vocabulaire et de la configuration du tokenizer correspondants. Le contrat inclut aussi les règles et la version qui déterminent l'encodage et la reconstruction du texte : normalisation, pré-tokenisation, tokens spéciaux et décodage. Le même entier peut désigner un autre fragment dans un autre tokenizer. Changer de tokenizer sans adapter les paramètres indexés par le vocabulaire ferait lire au modèle les mauvais vecteurs et associer ses logits aux mauvais tokens. C'est pourquoi il faut conserver ensemble les poids et les fichiers exacts du tokenizer. Les détails de ces composants sont étudiés dans les approfondissements dédiés.
 
 Certains tokenizers ajoutent aussi des **tokens spéciaux** (par exemple un marqueur de fin ou un séparateur). Ce sont des IDs réservés, pas de simples mots visibles ; ils peuvent occuper des positions dans la séquence. Leur rôle et leur graphie dépendent du modèle. Les conventions sont détaillées dans [Stratégies de tokenisation](tokenization-strategies.qmd).
 
@@ -146,33 +146,16 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 </summary>
 ::: {.learning-resources__content}
 
-### Du texte Unicode aux représentations contextualisées
+### Reprendre le fil vers les représentations
 
-```{mermaid}
-flowchart TB
-    A["Texte source"] --> B["Prétraitement éventuel"]
-    B --> C["Tokeniseur"]
-    C --> D["Tokens"]
-    D --> E["IDs entiers"]
-    E --> F["Lookup dans la table d'embeddings"]
-    F --> G["Embeddings des tokens"]
-    G --> H["Transformer et mécanisme positionnel"]
-    H --> I["Représentations contextualisées"]
-    classDef default color:#14532D;
-```
-
-Le [texte source en Unicode](unicode-text.qmd) peut contenir des espaces, de la ponctuation, des nombres, du code ou plusieurs langues. Selon le tokenizer, le texte peut être normalisé ou pré-découpé. Les tokenizers diffèrent par leurs unités de base, leurs règles, leur vocabulaire et leurs tokens spéciaux. Les tokenizers modernes à sous-mots apprennent souvent leur vocabulaire. La couverture des entrées dépend de ces choix. Un découpage en tokens donne des unités de calcul, dont les frontières peuvent traverser un mot. Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent ces choix et les algorithmes BPE, WordPiece et unigramme.
-
-Une continuation prononcée par une seule personne, utilisée dans le fil rouge, est « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ».
-
-Le schéma regroupe le traitement positionnel et le Transformer. Certaines architectures ajoutent des vecteurs de position absolue appris aux plongements des tokens. Avec [RoPE](positional-encoding.qmd), l'attention fait tourner les vecteurs requête et clé. Ces mécanismes interviennent à des endroits différents dans la chaîne qui produit les [représentations contextualisées](contextualized-representations.qmd).
+La suite du parcours examine séparément les objets que cette leçon vient de distinguer : le [lookup des embeddings](embedding-space.qmd), les [mécanismes positionnels](positional-encoding.qmd), puis les [représentations contextualisées](contextualized-representations.qmd). Ces étapes ne sont pas des opérations du tokenizer.
 
 
 
 
 ### Deux usages, deux parcours {#deux-usages-deux-parcours}
 
-Le tokenizer associé au modèle code le prompt à l'inférence et le corpus utilisé pour l'entraîner. À l'inférence, le tokenizer est déjà fixé. En pré-entraînement, la [préparation du corpus](corpus-preparation.qmd) traite le choix des sources, la provenance, le filtrage, la déduplication, le partitionnement et l'ajustement du tokenizer avant de le fixer. La normalisation et la pré-tokenisation, lorsqu'elles sont utilisées, opèrent sur le texte dans le tokenizer. Les [exemples d'entraînement](training-examples.qmd) montrent comment transformer le flux d'IDs en fenêtres d'entrée, en cibles décalées et en masques, et comment regrouper plusieurs séquences dans une fenêtre (*packing*).
+À l'inférence, le tokenizer est déjà fixé avec le modèle et encode le prompt. Pour construire un modèle, la [préparation du corpus](corpus-preparation.qmd) documente les données et le protocole de partitionnement ; les [exemples d'entraînement](training-examples.qmd) montrent ensuite comment le flux d'IDs devient des fenêtres, des cibles décalées et des masques. Ce sont des étapes du parcours Build, distinctes de l'encodage d'une requête.
 
 ### Choisir un approfondissement {#frontières-entre-les-pages}
 
@@ -181,7 +164,6 @@ Pour choisir une lecture selon la question — mécanismes, représentation Unic
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) pour suivre le passage de la chaîne aux octets.
 - [Stratégies de tokenisation](tokenization-strategies.qmd) pour comparer les découpages.
 - [Espace des embeddings](embedding-space.qmd) pour lire la table et étudier la géométrie des vecteurs.
-- [Évolution des LLM](llm-evolution.qmd#tool-using-systems) pour comprendre comment les applications gèrent les interactions longues.
 
 :::
 
