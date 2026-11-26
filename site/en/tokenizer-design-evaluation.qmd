@@ -9,7 +9,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/tokenizer-design-evaluation"
-scope: "Explains trade-offs between vocabulary size, sequence length, model cost, and training budgets; builds a reproducible comparison and a constrained design decision, then links to detailed empirical findings."
+scope: "Evaluates the trade-off between representation length, vocabulary size, training and inference costs, and downstream quality; compares budgets and metrics with their denominators, then builds a constrained comparison protocol and decision. Detailed multilingual empirical findings remain in the dedicated deep dive."
 purpose: "Evaluate vocabulary and sequence trade-offs, build a reproducible comparison, and make a constrained design decision without conflating representation cost, system cost, and downstream quality."
 domain: "text-tokenization"
 suggested_route:
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/tokenization-and-tokenizers"]
   children: ["en/tokenizer-multilingual-evaluation"]
-related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/exercises-text-data"]
+related: ["en/tokenization-strategies", "en/tokenizer-multilingual-evaluation", "en/text-data", "en/unicode-text", "en/exercises-text-data"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:en", "status:published"]
 -->
 
