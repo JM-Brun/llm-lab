@@ -40,7 +40,7 @@ Read this short account before looking at the numbers:
 
 A **corpus** is a collection of texts assembled for a study under explicit criteria—for example, language, genre, period, and source.
 
-This text is our working corpus. It was written for this demonstration in the first person, which makes the frequency of “I” visible; it is not a representative sample of English. Only the quoted account is counted: the introductory question and the surrounding explanations are excluded. We will normalize it, count its lexical units, rank the forms by frequency, and then compare this small sample with regularities observed in much larger corpora.
+This first-person account makes the frequency of “I” visible. It is a deliberately revealing example, not a representative sample of English. We will define the units being counted, rank the forms by frequency, and compare this result with patterns observed in much larger corpora.
 
 ### Building the corpus: which units should we count?
 
