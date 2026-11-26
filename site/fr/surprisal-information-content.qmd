@@ -26,6 +26,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 *Calendrier de l’Avent 2026 · Porte 2 · environ 10 minutes*
 
+*Version de lecture en cours de revue scientifique et pédagogique — retours bienvenus.*
+
 ## Une surprise n'est pas une émotion
 
 Après le préfixe « La capitale de la France est… », imaginons qu'un modèle attribue les probabilités suivantes aux continuations possibles. Ces nombres sont **construits pour l'explication** : ils ne proviennent pas d'un modèle réel. Dans ce vocabulaire jouet, chaque étiquette représente exactement un token ; un tokenizer réel peut découper ces chaînes autrement.
