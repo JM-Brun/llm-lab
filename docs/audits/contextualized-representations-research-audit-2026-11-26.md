@@ -69,6 +69,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 - Mise à jour de revision_support sur les leçons FR/EN pour signaler explicitement les cartes et le compagnon Practice.
 - Conservation de la page principale, de ses exemples localisés, des illustrations et des exercices existants.
 - Mise en cohérence des relations `related` FR/EN entre la leçon principale et son approfondissement ; le parcours garde le Transformer comme étape suivante et ne place pas Q/K/V après l'état contextualisé final.
+- Ajout d'un avertissement bilingue sur la leçon principale : Q/K/V sont des projections internes au sous-bloc d'auto-attention, pas une étape après les représentations contextualisées.
 
 ## 6. État de l'ingestion canonique dans Wiki Knowledge
 
