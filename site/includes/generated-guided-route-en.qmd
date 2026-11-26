@@ -58,6 +58,7 @@ Distinguish text, tokens, and token IDs that form the model's discrete input wit
 - [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
 - [Unicode, UTF-8, and text normalization](unicode-text.html)
 - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
+- [Evaluating tokenizers: cost, performance, and multilingual equity](tokenizer-multilingual-evaluation.html)
 
 :::
 
@@ -117,6 +118,10 @@ Trace the projection from final hidden states to logits and the conditional next
 - [Logits: scores before normalization](logits.html)
 - [Output probabilities: from logits to a distribution](probabilities.html)
 - [Entropy: uncertainty over the next token](entropy.html)
+
+**Optional resources**
+
+- [Beyond Zipf’s law: data, uses, and limits](zipf-law-deep-dive.html)
 
 :::
 
