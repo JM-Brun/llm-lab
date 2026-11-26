@@ -67,7 +67,7 @@ Le même texte peut produire des séquences différentes selon les règles de pr
 
 ## Une expérience mentale : que reçoit réellement le modèle ? {#experience-texte-ids}
 
-Reprenons le préfixe « C'est une bonne situation, ça, scribe ? ». Avant de parler de sens ou d'attention, suivons une seule occurrence à travers trois transformations :
+Reprenons le préfixe « C'est une bonne situation, ça, scribe ? ». Le fil rouge narratif du parcours se poursuit avec cette phrase : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Avant de parler de sens ou d'attention, suivons une seule occurrence à travers trois transformations :
 
 1. **Le texte est découpé.** Le tokenizer applique ses règles et produit une suite ordonnée de tokens. Les frontières ne sont pas nécessairement celles des mots visibles.
 2. **Les tokens deviennent des IDs.** Chaque token est remplacé par son indice dans le vocabulaire. Cet indice sert à retrouver une entrée ; ce n'est ni une mesure, ni une représentation sémantique.
