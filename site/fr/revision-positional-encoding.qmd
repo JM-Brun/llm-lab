@@ -32,12 +32,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-positional
 
 ## Vérifier de mémoire {#revision-check}
 
-Après tokenisation, on échange les positions de deux IDs dans la séquence. Leur ligne dans la table de plongements change-t-elle ?
+On ne retokenise pas le texte : on réordonne une séquence d’IDs déjà obtenue en échangeant deux positions. Les IDs échangés sélectionnent-ils de nouvelles lignes dans la table de plongements ? Dans quel ordre les vecteurs apparaissent-ils ensuite ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Non, leurs IDs choisissent les mêmes lignes. Leurs positions dans la séquence changent, ce qui peut modifier le calcul des états contextualisés.
+Non. Chaque ID sélectionne toujours la même ligne : on ne change ni le vocabulaire ni la table. En revanche, l’ordre des vecteurs dans la séquence suit celui des IDs réordonnés ; les positions occupées changent et le traitement positionnel peut donc modifier les représentations qui entrent dans le réseau.
 
 </details>
 
