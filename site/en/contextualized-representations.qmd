@@ -66,7 +66,13 @@ The initial lookup is not the whole network input: the architecture must also ha
 
 In the running example, “What have the Romans ever done for us?” is already in the context. As “They built roads between distant towns.” is generated, each new token is processed against the context available at that step, which grows throughout the loop.
 
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
+<figure id="fig-contextualized-embeddings">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/contextualized-embeddings-en-mobile.svg">
+    <img src="../images/contextualized-embeddings-en.svg" alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ.</figcaption>
+</figure>
 
 This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
 
