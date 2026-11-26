@@ -56,6 +56,26 @@ A different tokenizer can give the same text different tokens and IDs. Even when
 
 The same text can produce different sequences because pre-tokenization rules and learned vocabularies differ. A reproducible example with exact IDs is available in the [deep dive on tokenization strategies](tokenization-strategies.qmd#comparison-of-two-tokenizers). For the core learning path, remember that each ID sequence must be interpreted with the tokenizer that produced it.
 
+## A thought experiment: what does the model actually receive? {#text-id-experiment}
+
+Return to the prefix “What have the Romans ever done for us?”. Before discussing meaning or attention, follow one occurrence through three transformations:
+
+1. **Text is split.** The tokenizer applies its rules and produces an ordered sequence of tokens. Boundaries do not necessarily match visible words.
+2. **Tokens become IDs.** Each token is replaced by its index in the vocabulary. This index retrieves an entry; it is neither a measurement nor a semantic representation.
+3. **IDs select vectors.** For each ID, the network reads one row of the embedding matrix. With fixed parameters, two occurrences of the same ID therefore select the same initial vector.
+
+The distinction matters when we change only one thing:
+
+| What changes | What may change | What does not automatically change |
+|---|---|---|
+| The tokenizer | Token boundaries and their IDs | The source text |
+| Vocabulary numbering, with the embedding rows permuted in the same way | The displayed ID numbers | The vectors actually selected |
+| The context around an occurrence | Later states produced by the Transformer | The initial lookup for a fixed ID |
+
+**Key point:** the tokenizer defines the symbolic interface between text and model; the embedding table then maps IDs to vectors. Contextualization belongs to later network computations, not to the tokenizer.
+
+To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then the exercise that follows an ID to its embedding row.
+
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
 :::
