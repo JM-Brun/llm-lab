@@ -9,7 +9,7 @@ on:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
   pull-requests: read
 
 concurrency:
@@ -38,9 +38,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
 
       # Only modified, already-listed .qmd pages qualify for incremental rendering.
       # Any shared input, deletion, rename, addition, or config change falls back to full.
@@ -341,87 +338,6 @@ jobs:
       - name: Generate bilingual computational-graph fragments
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_computational_graph == 'true')))
         run: .venv/bin/python site/tools/render_computational_graph.py
-
-      # One-time bridge: commit canonical generated artifacts back to this PR branch.
-      - name: Commit regenerated map and graph fragments
-        if: github.event_name == 'pull_request' && steps.site_changes.outputs.site_relevant == 'true'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          REPOSITORY: ${{ github.repository }}
-          BRANCH_NAME: ${{ github.head_ref }}
-        run: |
-          .venv/bin/python - <<'PY'
-          import json
-          import os
-          import sys
-          from pathlib import Path
-          from urllib.parse import quote
-          from urllib.request import Request, urlopen
-
-          workspace = Path(os.environ["GITHUB_WORKSPACE"])
-          repository = os.environ["REPOSITORY"]
-          branch = quote(os.environ["BRANCH_NAME"], safe="")
-          token = os.environ["GITHUB_TOKEN"]
-          files = set()
-          for pattern in (
-              "site/includes/generated-map-*.qmd",
-              "site/includes/generated-guided-route-*.qmd",
-              "site/includes/generated-computational-graph-*.qmd",
-              "site/learning-map-data-*.json",
-          ):
-              files.update(workspace.glob(pattern))
-          knowledge_graph = workspace / "site/knowledge-graph.jsonld"
-          if knowledge_graph.exists():
-              files.add(knowledge_graph)
-          entries = [
-              {
-                  "path": path.relative_to(workspace).as_posix(),
-                  "mode": "100644",
-                  "type": "blob",
-                  "content": path.read_text(encoding="utf-8"),
-              }
-              for path in sorted(files)
-          ]
-          if not entries:
-              raise SystemExit("No generated map or graph files were found.")
-
-          def api(method, endpoint, payload=None):
-              data = None if payload is None else json.dumps(payload).encode("utf-8")
-              request = Request(
-                  f"https://api.github.com/repos/{repository}{endpoint}",
-                  data=data,
-                  method=method,
-                  headers={
-                      "Accept": "application/vnd.github+json",
-                      "Authorization": f"Bearer {token}",
-                      "X-GitHub-Api-Version": "2022-11-28",
-                      "Content-Type": "application/json",
-                  },
-              )
-              with urlopen(request, timeout=90) as response:
-                  return json.load(response)
-
-          ref = api("GET", f"/git/ref/heads/{branch}")
-          parent = ref["object"]["sha"]
-          parent_commit = api("GET", f"/git/commits/{parent}")
-          tree = api("POST", "/git/trees", {
-              "base_tree": parent_commit["tree"]["sha"],
-              "tree": entries,
-          })
-          if tree["sha"] == parent_commit["tree"]["sha"]:
-              print("Generated map and graph artifacts are already current.")
-              sys.exit(0)
-          commit = api("POST", "/git/commits", {
-              "message": "chore: regenerate bilingual learning map and graph artifacts",
-              "tree": tree["sha"],
-              "parents": [parent],
-          })
-          api("PATCH", f"/git/refs/heads/{branch}", {
-              "sha": commit["sha"],
-              "force": False,
-          })
-          print(f"Committed {len(entries)} generated files in {commit['sha']}.")
-          PY
 
       - name: Render changed pages incrementally
         if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
