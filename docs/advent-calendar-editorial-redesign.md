@@ -33,7 +33,7 @@ The calendar should have value even for someone who has already completed the ma
 The normal target is **about 15 minutes per story**. A story may be shorter or longer only when its subject and pedagogical structure justify it:
 
 - **10–20 minutes:** acceptable range; explain the reason for a meaningful deviation from 15 minutes in the editorial review.
-- **Below 10 minutes:** normally underdeveloped; expand the explanation or reconsider whether the subject warrants a full door.
+- **Below 10 minutes:** a structural warning, not an acceptable short format. Diagnose whether the subject is too narrow or weak for an independent story, or whether the treatment omits essential reasoning, examples, visual explanation, or a meaningful conclusion. Restructure the narrative and deepen the investigation where the subject has genuine potential; combine it with a closely related idea when that creates one coherent story. If the subject still cannot sustain a substantive investigation, replace it or fold it into another story rather than padding it. A sub-10-minute exception requires an explicit editorial justification.
 - **Above 20 minutes:** normally overloaded; redistribute material to an existing canonical lesson, a new focused deep dive, or the dedicated exercise/experiment page.
 
 Reading time is an estimate, not a word-count target alone. Tables, equations, code, figures and the time needed to inspect an experiment affect the actual experience. Record both a transparent text-based estimate and observed novice-reader time when available.
