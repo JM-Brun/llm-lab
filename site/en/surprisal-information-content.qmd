@@ -10,9 +10,9 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/surprisal-information-content"
-summary: "Introduces the self-information of an event and surprisal, then connects them to entropy, conditional probabilities, and autoregressive prediction."
+summary: "Explains surprisal through a worked toy predictive distribution, then connects it to entropy, conditional probabilities, and sequence scoring."
 scope: "Defines I(x)=-log p(x), explains additivity for independent events and the chain rule for dependent sequences, then distinguishes observed surprisal from predictive entropy."
-purpose: "Calculate an event's self-information, interpret its units, and connect observed-token surprisal to a sequence's probabilistic score."
+purpose: "Calculate the surprisal of an observed token, distinguish it from predictive entropy, and decompose a sequence score."
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
@@ -26,20 +26,30 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 *LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
 
-This is an in-progress reading preview. Scientific and pedagogical review is still pending.
+*Reading preview under scientific and pedagogical review — feedback welcome.*
 
 ## Surprise is not an emotion
 
-Imagine two events:
+After the prefix “The capital of France is…”, imagine that a model assigns the following probabilities to possible continuations. These numbers are **constructed for explanation**; they are not outputs measured from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
 
-- an event you assign a probability of $0.99$;
-- a rare event you assign a probability of $1/100$.
+| Candidate token | Predicted probability |
+|---|---:|
+| `Paris` | $0.80$ |
+| `Lyon` | $0.10$ |
+| `Marseille` | $0.05$ |
+| `Lille` | $0.05$ |
 
-The second is more surprising if all you know is this probability distribution. But how can we quantify the difference? Can we say that one event carries “twice as much information” as another?
+![Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution width=95%}
 
-Information theory gives a precise answer: an event's self-information depends on its probability. The less likely the event, the greater its surprisal.
+Suppose the observed text nevertheless continues with `Lyon`. The model assigned this token probability $0.10$. Its surprisal is:
 
-This quantity measures neither emotional importance nor truth nor semantic richness. It measures rarity relative to an explicitly chosen probability distribution.
+$$
+I(\text{Lyon}\mid c)=-\log_2(0.10)\approx 3.32\text{ bits}.
+$$
+
+This number describes **the outcome that occurred**. It does not, by itself, describe the distribution's average uncertainty before the outcome was known. That second question is about entropy, which we will calculate below.
+
+Information theory measures neither an emotion, nor the truth of a sentence, nor its semantic richness. It quantifies a probabilistic property relative to an explicitly chosen distribution.
 
 ## Measuring the self-information of an event
 

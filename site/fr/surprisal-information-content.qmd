@@ -10,9 +10,9 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/surprisal-information-content"
-summary: "Introduit l'information propre d'un événement et le surprisal, puis les relie à l'entropie, aux probabilités conditionnelles et à la prédiction autorégressive."
+summary: "Explique le surprisal à partir d'une distribution prédictive jouet, puis le relie à l'entropie, aux probabilités conditionnelles et au score d'une séquence."
 scope: "Définit I(x)=-log p(x), explique l'additivité pour des événements indépendants et la règle de chaîne pour les séquences dépendantes, puis distingue le surprisal observé de l'entropie prédictive."
-purpose: "Calculer l'information propre d'un événement, interpréter ses unités et relier le surprisal d'un token observé au score probabiliste d'une séquence."
+purpose: "Calculer le surprisal d'un token observé, distinguer cette valeur de l'entropie prédictive et décomposer le score d'une séquence."
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
@@ -26,20 +26,30 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 *Calendrier de l’Avent 2026 · Porte 2 · environ 10 minutes*
 
-Cette page est un aperçu en cours de rédaction. Sa validation scientifique et pédagogique reste à réaliser.
+*Version de lecture en cours de revue scientifique et pédagogique — retours bienvenus.*
 
 ## Une surprise n'est pas une émotion
 
-Imaginez deux événements :
+Après le préfixe « La capitale de la France est… », imaginons qu'un modèle attribue les probabilités suivantes aux continuations possibles. Ces nombres sont **construits pour l'explication** : ils ne proviennent pas d'un modèle réel. Dans ce vocabulaire jouet, chaque étiquette représente exactement un token ; un tokenizer réel peut découper ces chaînes autrement.
 
-- un événement presque certain, auquel vous attribuez une probabilité de $0{,}99$ ;
-- un événement rare, auquel vous attribuez une probabilité de $1/100$.
+| Token candidat | Probabilité prédite |
+|---|---:|
+| `Paris` | $0{,}80$ |
+| `Lyon` | $0{,}10$ |
+| `Marseille` | $0{,}05$ |
+| `Lille` | $0{,}05$ |
 
-Le second vous surprend davantage si vous ne connaissez que cette distribution. Mais comment quantifier cette différence ? Peut-on dire qu'un événement porte « deux fois plus d'information » qu'un autre ?
+![Distribution prédictive illustrative : Paris reçoit 80 % de la probabilité, Lyon 10 %, Marseille et Lille 5 % chacun. La cible observée Lyon a un surprisal de 3,32 bits, tandis que l'entropie de la distribution vaut environ 1,02 bit.](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution width=95%}
 
-La théorie de l'information donne une réponse précise : l'information propre (*self-information*) d'un événement dépend de sa probabilité. Plus l'événement est improbable, plus son surprisal est élevé.
+Supposons que le texte observé continue pourtant par `Lyon`. Le modèle avait attribué à ce token une probabilité de $0{,}10$. Son surprisal vaut :
 
-Cette quantité ne mesure ni l'importance émotionnelle d'un événement, ni sa vérité, ni sa richesse sémantique. Elle mesure sa rareté relativement à une distribution probabiliste explicitement choisie.
+$$
+I(\text{Lyon}\mid c)=-\log_2(0{,}10)\approx 3{,}32\text{ bits}.
+$$
+
+Ce nombre décrit **l'issue qui s'est produite**. Il ne décrit pas, à lui seul, l'incertitude moyenne de la distribution avant de connaître l'issue. Cette seconde question est celle de l'entropie, que nous calculerons plus loin.
+
+La théorie de l'information ne mesure ni l'émotion ressentie, ni la vérité d'une phrase, ni sa richesse sémantique. Elle quantifie une propriété probabiliste relativement à une distribution explicitement choisie.
 
 ## Mesurer l'information propre d'un événement
 

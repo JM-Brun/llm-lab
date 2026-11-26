@@ -22,6 +22,7 @@ calendar:
 days:
   - day: 1
     id: zipf-law
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1653"
     door:
       fr: "Pourquoi le mot « de » revient-il si souvent ?"
       en: "Why does the word “the” appear everywhere?"
@@ -40,6 +41,7 @@ days:
     experiment: "Construire un classement de fréquences sur un petit corpus et examiner la relation rang-fréquence."
   - day: 2
     id: information-and-surprisal
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1666"
     door:
       fr: "Combien de bits contient la surprise d’un événement ?"
       en: "How many bits of surprise does an event contain?"
@@ -58,6 +60,7 @@ days:
     experiment: "Comparer la surprise de plusieurs événements sous des distributions construites."
   - day: 3
     id: tokenizer-as-compression-engineer
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1667"
     door:
       fr: "Le tokenizer, ingénieur de compression"
       en: "The tokenizer as a compression engineer"
@@ -73,6 +76,7 @@ days:
     experiment: "Comparer plusieurs segmentations d’un même corpus et mesurer les longueurs obtenues."
   - day: 4
     id: geometry-of-meaning
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1668"
     door:
       fr: "Le sens peut-il avoir une direction ?"
       en: "Can meaning have a direction?"
@@ -88,6 +92,7 @@ days:
     experiment: "Comparer des directions et des similarités en explicitant les limites de l’interprétation."
   - day: 5
     id: contextual-meaning
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1669"
     door:
       fr: "Le même mot, deux mondes différents"
       en: "The same word, two different worlds"
@@ -103,6 +108,7 @@ days:
     experiment: "Comparer les occurrences d’un mot ambigu dans deux contextes."
   - day: 6
     id: positional-encoding-as-signal
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1671"
     door:
       fr: "Que vient faire une sinusoïde dans l’ordre des mots ?"
       en: "What does a sine wave have to do with word order?"
@@ -118,6 +124,7 @@ days:
     experiment: "Tracer plusieurs composantes sinusoïdales et comparer leurs variations selon la position."
   - day: 7
     id: attention-as-retrieval
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1672"
     door:
       fr: "L’attention comme système de recherche appris"
       en: "Attention as a learned retrieval system"
@@ -133,6 +140,7 @@ days:
     experiment: "Modifier Q, K ou V séparément et prédire l’effet sur les poids et la sortie."
   - day: 8
     id: attention-score-scaling
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1673"
     door:
       fr: "Pourquoi diviser par la racine carrée de la dimension ?"
       en: "Why divide by the square root of the dimension?"
@@ -148,6 +156,7 @@ days:
     experiment: "Simuler des produits scalaires de dimensions différentes et comparer leur dispersion."
   - day: 9
     id: softmax-and-statistical-physics
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1674"
     door:
       fr: "Softmax et physique d’une foule"
       en: "Softmax and the physics of a crowd"
@@ -163,6 +172,7 @@ days:
     experiment: "Faire varier la température sur des logits fixes et mesurer l’entropie."
   - day: 10
     id: causal-information-barrier
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1675"
     door:
       fr: "Le mur triangulaire : empêcher les fuites d’information"
       en: "The triangular wall: preventing information leaks"
@@ -178,6 +188,7 @@ days:
     experiment: "Retirer une contrainte du masque et identifier précisément quelles positions accèdent au futur."
   - day: 11
     id: residual-stream
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1676"
     door:
       fr: "Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?"
       en: "Why do deep networks keep a residual stream?"
@@ -193,6 +204,7 @@ days:
     experiment: "Comparer les gradients d’un petit réseau avec et sans chemin identité."
   - day: 12
     id: normalization-and-conditioning
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1677"
     door:
       fr: "Normalisation : changer de coordonnées pour mieux apprendre"
       en: "Normalization: changing coordinates to make learning easier"
@@ -208,6 +220,7 @@ days:
     experiment: "Calculer les sorties de LayerNorm et RMSNorm sur un petit vecteur."
   - day: 13
     id: perplexity
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1678"
     door:
       fr: "Perplexité : à quel point le modèle est-il surpris ?"
       en: "Perplexity: how surprised was the model?"
@@ -223,6 +236,7 @@ days:
     experiment: "Calculer la perplexité de deux modèles jouets sur les mêmes cibles."
   - day: 14
     id: temperature-and-sampling
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1679"
     door:
       fr: "Température : créativité ou distribution simplement plus plate ?"
       en: "Temperature: creativity or just a flatter distribution?"
@@ -238,6 +252,7 @@ days:
     experiment: "Comparer les distributions et des fréquences empiriques de tirage pour plusieurs températures."
   - day: 15
     id: top-k-and-top-p
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1680"
     door:
       fr: "Top-k et top-p : où couper la queue de probabilité ?"
       en: "Top-k and top-p: where should the probability tail end?"
@@ -253,6 +268,7 @@ days:
     experiment: "Appliquer les deux règles à une distribution construite et comparer les candidats conservés."
   - day: 16
     id: local-choice-global-sequence
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1681"
     door:
       fr: "Pourquoi le token le plus probable peut-il produire une phrase moins bonne ?"
       en: "Why can the most likely next token produce a worse sentence?"
@@ -268,6 +284,7 @@ days:
     experiment: "Construire un petit arbre de probabilités où greedy échoue à trouver la meilleure séquence."
   - day: 17
     id: cross-entropy-as-code-length
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1682"
     door:
       fr: "L’entropie croisée comme longueur de code"
       en: "Cross-entropy as a code length"
@@ -283,6 +300,7 @@ days:
     experiment: "Comparer les longueurs de code attendues sous deux modèles."
   - day: 18
     id: log-likelihood-and-sequence-products
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1683"
     door:
       fr: "Pourquoi additionner les logarithmes plutôt que multiplier les probabilités ?"
       en: "Why add log-probabilities instead of multiplying probabilities?"
@@ -298,6 +316,7 @@ days:
     experiment: "Calculer une vraisemblance de séquence en probabilités puis en log-probabilités."
   - day: 19
     id: backpropagation-chain-rule
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1684"
     door:
       fr: "La règle de la chaîne : comment l’erreur atteint-elle les premières couches ?"
       en: "The chain rule: how does an error reach an early layer?"
@@ -313,6 +332,7 @@ days:
     experiment: "Calculer à la main un gradient dans un petit réseau à deux couches."
   - day: 20
     id: learning-rate-and-optimization
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1685"
     door:
       fr: "La falaise du taux d’apprentissage"
       en: "The learning-rate cliff"
@@ -328,6 +348,7 @@ days:
     experiment: "Comparer plusieurs pas sur une fonction quadratique simple."
   - day: 21
     id: double-descent
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1686"
     door:
       fr: "Quand un modèle devient moins bon avant de s’améliorer"
       en: "When a model gets worse before it gets better"
@@ -343,6 +364,7 @@ days:
     experiment: "Étudier une courbe jouet et distinguer observation empirique et loi universelle."
   - day: 22
     id: scaling-laws
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1687"
     door:
       fr: "Les grands modèles deviennent-ils prévisibles ?"
       en: "Do bigger models become predictable?"
@@ -358,6 +380,7 @@ days:
     experiment: "Ajuster une loi de puissance à des données synthétiques et examiner l’incertitude."
   - day: 23
     id: retrieval-augmented-generation
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1688"
     door:
       fr: "Et si le modèle pouvait consulter une bibliothèque ?"
       en: "What if the model could look things up?"
@@ -373,6 +396,7 @@ days:
     experiment: "Comparer une réponse sans document récupéré et une réponse conditionnée par un extrait."
   - day: 24
     id: quantization
+    tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1689"
     door:
       fr: "Réduire un modèle sans tout réentraîner"
       en: "Making a model smaller without retraining everything"

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative predictive distribution over four tokens</title>
+  <desc id="desc">A toy model assigns probability 80 percent to Paris, 10 percent to Lyon, 5 percent to Marseille, and 5 percent to Lille. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.</desc>
+  <rect x="0" y="0" width="960" height="420" rx="18" fill="#f7faf8"/>
+  <text x="44" y="48" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#183b2c">One distribution, two different quantities</text>
+  <text x="44" y="79" font-family="Arial, sans-serif" font-size="15" fill="#496456">Constructed example — illustrative probabilities, not measured LLM output</text>
+  <line x1="280" y1="112" x2="280" y2="330" stroke="#9eafa5" stroke-width="1.5"/>
+  <g font-family="Arial, sans-serif" font-size="18" fill="#183b2c">
+    <text x="44" y="153">Paris</text><text x="44" y="203">Lyon</text><text x="44" y="253">Marseille</text><text x="44" y="303">Lille</text>
+  </g>
+  <g>
+    <rect x="300" y="128" width="440" height="30" rx="6" fill="#26734d"/>
+    <rect x="300" y="178" width="55" height="30" rx="6" fill="#d08a36"/>
+    <rect x="300" y="228" width="27.5" height="30" rx="6" fill="#8ba99a"/>
+    <rect x="300" y="278" width="27.5" height="30" rx="6" fill="#8ba99a"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#183b2c">
+    <text x="754" y="150">0.80</text><text x="369" y="200">0.10</text><text x="341" y="250">0.05</text><text x="341" y="300">0.05</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#496456">
+    <text x="300" y="350">0</text><text x="520" y="350">0.4</text><text x="740" y="350">0.8</text><text x="850" y="350">probability</text>
+  </g>
+  <rect x="44" y="370" width="872" height="1" fill="#c6d3cb"/>
+  <text x="44" y="399" font-family="Arial, sans-serif" font-size="16" fill="#183b2c">If “Lyon” is observed: surprisal = −log₂(0.10) ≈ 3.32 bits. Mean entropy ≈ 1.02 bits.</text>
+</svg>
