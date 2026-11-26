@@ -191,7 +191,7 @@ days:
     tracking_issue: "https://github.com/JM-Brun/llm-lab/issues/1676"
     door:
       fr: "Pourquoi les réseaux profonds gardent-ils des connexions résiduelles ?"
-      en: "Why do deep networks keep a residual stream?"
+      en: "Why do deep networks keep residual connections?"
     question:
       fr: "Comment un chemin identité modifie-t-il la propagation du signal et des gradients ?"
       en: "How does an identity path change signal and gradient propagation?"
