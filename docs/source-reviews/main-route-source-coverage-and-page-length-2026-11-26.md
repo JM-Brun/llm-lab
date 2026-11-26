@@ -289,49 +289,58 @@ Un relevé complémentaire a été effectué sur les 20 pages françaises décla
 
 ### 9.1 Mesure exploratoire
 
-Le comptage ci-dessous porte sur le texte de la page après retrait du front matter, des commentaires HTML, des directives d'inclusion Quarto et des blocs de code clôturés. Il reste un comptage lexical approximatif : les composants, tableaux, contenus repliés et ressources peuvent encore être comptés même s'ils ne font pas partie de la lecture centrale. Les blocs de code sont indiqués séparément lorsqu'ils ont été relevés.
+Le comptage distingue maintenant :
 
-La fourchette de lecture indicative est calculée à 130–150 mots/minute, arrondie à la minute. Elle **n'est pas encore une durée de leçon validée** : elle ne mesure pas correctement l'interprétation des équations, des schémas ou des exemples, et ne distingue pas systématiquement le tronc principal du contenu facultatif. Elle sert uniquement à repérer les pages à examiner en premier.
+- **Texte total** : prose de la page, y compris les blocs repliés et les ressources HTML `details`.
+- **Tronc visible** : texte restant après retrait du front matter, des commentaires HTML, des directives d'inclusion Quarto, des blocs de code clôturés, des callouts explicitement `collapse="true"` et des éléments HTML `details`.
+- **Code** : blocs clôturés, qui doivent faire l'objet d'une estimation de lecture séparée.
+  
+Le comptage lexical reste approximatif : les composants, tableaux et formules ne sont pas interprétés sémantiquement. La fourchette ci-dessous est une **durée de lecture textuelle du tronc visible**, calculée à 130–150 mots/minute et arrondie. Elle n'inclut pas le temps d'interprétation des équations, de lecture des figures, d'exécution du code ni les exercices. C'est donc un indicateur de dépistage, pas encore la durée de leçon à afficher.
 
-| Leçon (FR) | Mots approx. | Sources catalogue reliées | Lecture brute indicative |
-|---|---:|---:|---:|
-| Vue d'ensemble | 2 367 | 1 | 16–18 min |
-| Du texte aux tokens | 1 913 | 1 | 13–15 min |
-| Espace des embeddings | 1 453 | 2 | 10–11 min |
-| Encodage positionnel | 1 689 | 1 | 11–13 min |
-| Représentations contextualisées | 1 746 | 4 | 12–13 min |
-| Transformer | 1 934 | 3 | 13–15 min |
-| Queries, Keys, Values | 1 762 | 4 | 12–14 min |
-| Attention à produit scalaire | 2 321 | 4 | 16–18 min |
-| Masquage causal | 1 983 | 1 | 13–15 min |
-| Logits | 1 282 | 0 | 9–10 min |
-| Probabilités de sortie | 1 235 | 1 | 8–10 min |
-| Entropie | 1 527 | 0 | 10–12 min |
-| Génération | 3 245 | 2 | 22–25 min |
-| Apprentissage en contexte (ICL) | 1 118 | 1 | 7–9 min |
-| Ingénierie du contexte | 1 654 | 0 | 11–13 min |
-| Vraisemblance | 1 254 | 1 | 8–10 min |
-| Cross-entropy | 2 404 | 0 | 16–19 min |
-| Loss | 1 617 | 0 | 11–12 min |
-| Gradients | 1 741 | 0 | 12–13 min |
-| Training loop | 3 012 | 0 | 20–23 min |
+| Leçon (FR) | Texte total approx. | Tronc visible approx. | Sources catalogue reliées | Lecture textuelle indicative |
+|---|---:|---:|---:|---:|
+| Vue d'ensemble | 2 367 | 2 041 | 1 | 14–16 min |
+| Du texte aux tokens | 1 913 | 1 741 | 1 | 12–14 min |
+| Espace des embeddings | 1 453 | 1 188 | 2 | 8–10 min |
+| Encodage positionnel | 1 689 | 1 072 | 1 | 7–9 min |
+| Représentations contextualisées | 1 746 | 1 434 | 4 | 10–12 min |
+| Transformer | 1 934 | 1 740 | 3 | 12–14 min |
+| Queries, Keys, Values | 1 762 | 1 585 | 4 | 11–13 min |
+| Attention à produit scalaire | 2 321 | 1 368 | 4 | 9–11 min |
+| Masquage causal | 1 983 | 1 371 | 1 | 9–11 min |
+| Logits | 1 282 | 1 092 | 0 | 7–9 min |
+| Probabilités de sortie | 1 235 | 944 | 1 | 6–8 min |
+| Entropie | 1 527 | 1 264 | 0 | 8–10 min |
+| Génération | 3 245 | 2 302 | 2 | 15–18 min |
+| Apprentissage en contexte (ICL) | 1 118 | 785 | 1 | 5–7 min |
+| Ingénierie du contexte | 1 654 | 1 193 | 0 | 8–10 min |
+| Vraisemblance | 1 254 | 1 164 | 1 | 8–9 min |
+| Cross-entropy | 2 404 | 1 977 | 0 | 13–16 min |
+| Loss | 1 617 | 1 317 | 0 | 9–11 min |
+| Gradients | 1 741 | 918 | 0 | 6–8 min |
+| Training loop | 3 012 | 2 321 | 0 | 15–18 min |
+
+Les durées textuelles basses ne sont pas des verdicts : une page comportant plusieurs équations, un exemple numérique ou un schéma peut demander plusieurs minutes supplémentaires. À l'inverse, les textes repliés ne doivent pas être inclus dans la durée du tronc principal. Les contenus de code et les exercices doivent avoir leurs propres estimations.
 
 **Important :** le nombre de sources est celui des identifiants canoniques dont `related.pages` référence la page dans `data/sources.yml`. Ce n'est ni le nombre de références bibliographiques visibles ni le nombre de sources effectivement mobilisées. Par exemple, l'unique source reliée à ICL dans le catalogue est actuellement la vidéo générale d'Andrej Karpathy ; la page cite aussi quatre articles scientifiques visibles. La couverture catalogue ne doit donc pas être lue comme une mesure de qualité ou de profondeur bibliographique.
 
 ### 9.2 Première lecture des déséquilibres
 
-**Pages à examiner en priorité pour un possible découpage ou déplacement de contenu :**
+**Pages à examiner pour confirmer le périmètre du tronc principal :**
 
-- **Génération (3 245 mots)** : la page réunit la boucle autorégressive, la sélection du prochain token, le prefill/decode et des éléments de latence, d'ordonnancement et de cache pour le service de plusieurs requêtes. Le fil principal doit conserver la boucle de génération et le couple prefill/decode. Les détails de serving, d'ordonnancement et d'optimisation du cache sont des candidats naturels pour Build / Deepen, à condition de préserver les liens explicatifs utiles.
-- **Training loop (3 012 mots)** : le corps précédant la section « Approfondissements » représente environ 1 979 mots dans le même comptage. La page semble donc déjà proche de la cible dans son tronc principal ; il faut éviter de la raccourcir sur la base du volume total sans distinguer les sections facultatives. Les comparaisons d'optimiseurs, workflows et détails d'implémentation doivent rester clairement hors du tronc principal.
-- **Cross-entropy (2 404 mots)** : le texte avant « Cibles souples et divergence KL » représente environ 1 348 mots ; avant les sections d'implémentation, environ 1 424 mots. Le contenu sur labels souples / KL et les implémentations NumPy/PyTorch / stabilité numérique doit être évalué comme approfondissement ou Build, plutôt que d'être nécessairement imposé dans le parcours principal. Le noyau doit garder le lien entre cible observée, probabilité, perte par token, agrégation sur les positions, masques et perplexité si ces éléments sont nécessaires à la transition vers l'entraînement.
-- **Vue d'ensemble (2 367 mots)** et **Attention à produit scalaire (2 321 mots)** : leur longueur brute mérite une lecture éditoriale, mais aucun découpage ne doit être décidé sans vérifier la fonction de synthèse de la première et le fil de calcul de la seconde.
+- **Génération (2 302 mots visibles, 15–18 min de lecture textuelle)** : le contenu de base est déjà dans la cible. Les 943 mots supplémentaires sont dans des callouts repliés, dont le développement sur TTFT / ITL, le service multi-requêtes, le continuous batching et le prefix caching. La page de complexité traite déjà prefill, decode et mémoire du cache KV. Ne pas scinder la leçon sur la base du volume total ; conserver le caractère facultatif des optimisations de serving et vérifier les liens avec la page de complexité.
+- **Training loop (2 321 mots visibles, 15–18 min)** : le tronc principal est également dans la cible. Les 691 mots hors tronc correspondent aux approfondissements, comparaisons d'optimiseurs, ressources et workflows. Ne pas raccourcir le noyau. Vérifier seulement que la frontière entre explication conceptuelle et implémentation est visible.
+- **Cross-entropy (1 977 mots visibles, 13–16 min)** : sa durée est proche de la cible. Les exemples de formes, de décalage causal, de masques, de perplexité et le lien au gradient donnent une progression cohérente. Les cibles souples / KL et les implémentations méritent une revue de niveau (Understand vs Build / Deepen), mais il n'y a pas de justification à les déplacer sur le seul critère de durée.
+- **Vue d'ensemble (2 041 mots visibles, 14–16 min)** : cohérente avec la cible ; contrôler les recouvrements avec les leçons détaillées plutôt que la raccourcir automatiquement.
+- **Attention à produit scalaire (1 368 mots visibles, 9–11 min)** et **masquage causal (1 371, 9–11 min)** : les callouts repliés sont volumineux. Vérifier que le tronc visible donne un exemple complet et une compréhension suffisante, mais conserver les approfondissements repliés hors de la durée principale.
 
-**Pages courtes à examiner sans présumer qu'elles sont insuffisantes :**
+**Pages courtes ou proches du seuil à examiner sans présumer qu'elles sont insuffisantes :**
 
-- **ICL (1 118 mots)**, **Logits (1 282)**, **Probabilités (1 235)** et **Vraisemblance (1 254)**. Ces pages peuvent être des unités conceptuelles volontairement resserrées. Leur durée réelle doit intégrer la lecture des exemples et des formules. Pour ICL, l'ajout Min / Yoo ne se justifie que par la nuance scientifique ; il ne doit pas être utilisé comme remplissage.
+- **ICL (785 mots visibles, 5–7 min)** : candidate la plus nette à une revue sous le seuil. La page contient déjà un exemple, un schéma et deux approfondissements repliés. Avant d'ajouter du texte, vérifier si l'exemple permet réellement de comparer zero-shot, one-shot et few-shot et d'identifier les différentes informations apportées par les démonstrations. Un exemple travaillé comparant ces configurations pourrait apporter de la valeur ; le paragraphe Min / Yoo ne doit pas servir de remplissage.
+- **Probabilités (944 mots, 6–8 min)** et **Gradients (918 mots, 6–8 min)** : pages à la frontière. Les formules, exemples et schémas doivent être pris en compte avant toute décision. Ne pas ajouter du texte si la durée réelle, exercices exclus, atteint déjà 7 minutes.
+- **Logits (1 092 mots, 7–9 min)** et **Vraisemblance (1 164, 8–9 min)** : formats resserrés plausibles pour des unités conceptuelles précises.
 - **Logits** n'a aucune source catalogue reliée à ce jour, mais contient une référence PyTorch visible. Il faut réconcilier cette référence avant de conclure à un défaut de sources.
-- **ICL** a une source catalogue reliée (vidéo générale Karpathy), mais ses quatre articles visibles ne sont pas encore représentés comme des entrées dédiées dans le registre. La priorité est la traçabilité bibliographique, non l'augmentation du volume de texte.
+- **ICL** a une source catalogue reliée (vidéo générale Karpathy), mais ses quatre articles visibles ne sont pas encore représentés comme des entrées dédiées dans le registre. La priorité est la traçabilité bibliographique, non l'augmentation mécanique du volume de texte.
 
 ### 9.3 Conséquences éditoriales provisoires
 
