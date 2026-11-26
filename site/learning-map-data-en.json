@@ -227,7 +227,8 @@
         "en/embedding-space",
         "en/text-data-exercises",
         "en/deepen",
-        "en/tokenization-and-tokenizers"
+        "en/tokenization-and-tokenizers",
+        "en/tokenization-strategies"
       ],
       "rank": 9
     },
@@ -2439,7 +2440,7 @@
       "type": "deep-dive",
       "topic": "tokenization-strategies",
       "domain": "text-tokenization",
-      "scope": "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup.",
+      "scope": "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; also treats offsets as an application-level alignment mechanism to source text, not as an algorithm family; assumes the input is already represented as text and stops before embedding lookup.",
       "summary": "Compares segmentation granularities and tokenization algorithm families — BPE, WordPiece, and unigram — along with tokenizer pipeline components and their coverage, length, and cost trade-offs.",
       "purpose": "Readers should be able to describe major segmentation strategies, compare their assumptions and trade-offs, explain why tokens and IDs depend on the tokenizer and its version, and demonstrate the limits of whitespace-only splitting.",
       "covered_stages": [],
@@ -2448,8 +2449,8 @@
         "Why whitespace-only splitting is insufficient",
         "2. Compare granularity",
         "3. Components of a tokenizer pipeline",
-        "Special-token spellings are not ordinary vocabulary words",
-        "Same text, different tokenizer pipelines"
+        "External illustration of the tokenizer pipeline",
+        "Special-token spellings are not ordinary vocabulary words"
       ],
       "route": {
         "previous": null,
@@ -2461,6 +2462,9 @@
       "children": [],
       "related": [
         "en/text-data",
+        "en/unicode-text",
+        "en/tokenizer-design-evaluation",
+        "en/tokenizer-multilingual-evaluation",
         "en/training-examples",
         "en/tokenization-strategies-exercises"
       ],
