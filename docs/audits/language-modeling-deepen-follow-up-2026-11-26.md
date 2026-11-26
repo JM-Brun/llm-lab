@@ -354,3 +354,31 @@ Le commit de génération a déclenché des runs avec le résultat `action_requi
 5. statut de fusion et absence de conflit avec `main`.
 
 Ne pas prendre les succès d'une ancienne tête ni le succès de la seule étape de génération pour une validation de PR. Ne pas fusionner avant que tous les contrôles requis soient verts sur le même SHA.
+
+
+## 13. Réconciliation avec main et régénération finale — 2026-11-26
+
+Après la réparation du wrapper, `main` a avancé avec le commit `1216d5fca5ad02acff6b95f53b3a3ed9c7b3154e` (PR #1717), qui approfondit le lookup d'embeddings dans les deux langues et met à jour le parcours guidé.
+
+### Intégration préservée
+
+- La branche #1707 a été réconciliée avec ce commit via un commit de fusion à deux parents : `326b1e1ca4de185f250e202714509923e84eda5e`.
+- Les changements de #1717 conservés comprennent `data/guided-route.yml`, les leçons FR/EN `embedding-space.qmd` et leurs fiches `revision-embedding-space.qmd`.
+- Les données de carte ont ensuite été régénérées sur l'arbre fusionné, afin d'intégrer les métadonnées de l'exercice de lookup tout en préservant l'arborescence Language modeling de #1707.
+- Commit de génération canonique : `0c3811881d687c55851c7e42657e2a026e980151`.
+- La vérification du JSON généré confirme que les résumés FR/EN de `embedding-space` reflètent la séquence ordonnée d'IDs, et que les sections de navigation restent bilingues et imbriquées comme prévu.
+- Les domaines des pages Zipf story/deep dive restent `text-tokenization` en FR et EN.
+
+### Nettoyage et état Git
+
+- L'étape temporaire de régénération/commit du workflow a été retirée.
+- Les permissions du workflow sont revenues à `contents: read`.
+- Le commentaire permanent sur le test de fraîcheur des artefacts est conservé.
+- Dernière tête après nettoyage : `9de7c9e6a7867df558020add0a9e2f70fffdb17c`.
+- Comparaison avec `main` : branche en avance de 68 commits, en retard de 0 ; GitHub indique `mergeable: true`.
+
+### Validation finale
+
+Des exécutions CI, Quarto et secret scanning ont été déclenchées sur `9de7c9e6a7867df558020add0a9e2f70fffdb17c`. Leurs résultats doivent être relus sur ce SHA précis. Les runs sur les commits intermédiaires `2d62cc1` et `0c38118` sont `action_required` car ils ont été créés par le bot pendant la régénération ; les runs sur les parents antérieurs échouent encore sur les anciens artefacts et ne sont pas représentatifs de l'état final.
+
+Ne pas fusionner avant que la suite complète, le rendu Quarto/audit navigateur, les contrôles Python/domain et le secret scanning soient tous réussis sur le SHA final.
