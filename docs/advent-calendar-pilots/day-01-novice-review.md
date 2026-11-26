@@ -4,7 +4,7 @@
 
 **Target reader:** someone comfortable reading a short popular-science article but not already familiar with Zipf's law, rank-frequency plots or language-model training. Do not choose a specialist in statistical linguistics or NLP as the only test reader.
 
-**Time budget:** about 15–20 minutes including the short post-reading questions. The article itself claims approximately 10 minutes; measure the actual reading time rather than assuming the estimate is correct.
+**Time budget:** about 15–20 minutes including the short post-reading questions. The article now targets approximately 15 minutes; measure the actual reading time rather than assuming the estimate is correct.
 
 ## 1. Set up the test
 
@@ -32,7 +32,7 @@ Use a simple observation log:
 Ask openly first. Do not show the expected answer until the reader has responded.
 
 1. **Main idea:** In your own words, what does the story say about how often words occur?
-2. **Building the ranking:** In the small count table in the story, why is “de” / “the” at rank 1, and what would make its rank change?
+2. **Building the ranking:** In the small count table in the story, why is “je” / “I” at rank 1, and what would make its rank change?
 3. **Graph:** What do the horizontal and vertical axes represent? What does a roughly straight line on log-log axes suggest, and what does it not prove?
 4. **Transfer calculation:** With \(C=12,000\) and \(\alpha=1\), what frequency does the model predict at rank 6? Can you explain the calculation? This rank is deliberately different from the article's challenge so the question still tests transfer if the reader opened the solution.
 5. **Limits:** Name one reason not to treat the formula as an exact law for every word or every corpus.
