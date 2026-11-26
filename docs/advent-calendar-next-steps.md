@@ -20,7 +20,15 @@ A follow-up implementation is being prepared in the [PR #1695](https://github.co
 - **Day 02 — Surprisal:** adds a context-sensitive worked example, the logits → softmax → probability → surprisal chain, sequence sum/average distinctions, an explicit entropy calculation, and guided experiments. The existing information-theory experiment remains the practical companion.
 - **Day 03 — Tokenizer:** keeps the core vocabulary/sequence/cost decision in the story and adds a worked cost comparison. Research tables, multilingual metrics, and external resources move to tokenizer-multilingual-evaluation.qmd. Detailed WordPiece/Unigram mechanisms are integrated into the existing tokenization-strategies.qmd rather than duplicated.
 
-The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target. Quarto rendering, browser inspection, and novice-reader timing still need to be run before acceptance.
+The concept registry, computational graph, guided-route optional pages, page maps, calendar manifest, landing pages, and novice-review protocol have been updated to reflect the new ownership and 15-minute target.
+
+**Validation status (2026-11-26):**
+- Python quality and page-metadata validation pass.
+- Full Quarto site rendering and local-link checks pass in [run #45803272644](https://github.com/JM-Brun/llm-lab/actions/runs/45803272644); the FR/EN browser review is still running.
+- The test suite currently has 828 passing tests and 6 failures, all caused by stale tracked generated map-list, map-data, and guided-route fragments. The same Quarto run has produced the refreshed fragments as an Actions artifact; they must be committed before CI can pass.
+- No novice-reader timing or comprehension review has yet been performed. The displayed 15-minute estimates remain editorial estimates, not observed measurements.
+
+Do not merge #1695 until the generated fragments are refreshed and the complete CI/browser review passes.
 
 ## 1. Current state — verified (updated 2026-11-24)
 
