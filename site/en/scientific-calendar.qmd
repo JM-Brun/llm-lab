@@ -128,7 +128,7 @@ The subtle colour accents identify four thematic shelves; they do not prescribe 
 - **Mechanisms, computation, and optimization**: attention, causality, residual connections, normalization, and backpropagation.
 - **Research, generalization, and systems**: decoding, double descent, scaling laws, RAG, and quantization.
 
-Each story starts with a distinctive question, makes its reasoning visible, examines its limits, and offers an experiment to take away. Allow about **15 minutes per story**, excluding further reading.
+Each story starts with a distinctive question, makes its reasoning visible, and examines its limits. Calculations, exercises, and guided experiments live in dedicated practice pages. Allow about **15 minutes per story**, excluding further reading.
 
 ## Edition status
 
