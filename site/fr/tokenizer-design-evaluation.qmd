@@ -93,8 +93,6 @@ Le compromis devient concret lorsqu'on met en regard la longueur des séquences 
 
 ### Exemple chiffré : moins de positions, vocabulaire plus grand
 
-Considérons deux tokenizers fictifs appliqués au même ensemble de textes et associés à la même dimension cachée $d$ :
-
 | | Tokenizer A | Tokenizer B |
 |---|---:|---:|
 | Taille du vocabulaire | $V$ | $4V$ |
