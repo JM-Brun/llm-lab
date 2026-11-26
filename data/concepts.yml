@@ -189,10 +189,10 @@ concepts:
     importance: core
     labels: {fr: "Représentation contextualisée", en: "Contextualized representation"}
     definitions:
-      fr: "État vectoriel dont la valeur dépend du token, de son contexte et des calculs du réseau."
-      en: "Vector state whose value depends on the token, its context, and the network computation."
+      fr: "État vectoriel associé à une occurrence de token, calculé à partir de sa représentation initiale, de l'information positionnelle et du contexte accessible selon l'architecture du modèle."
+      en: "Vector state associated with a token occurrence, computed from its initial representation, positional information, and the context accessible under the model architecture."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/contextualized-representations, en/contextualized-representations]
+    resources: [fr/contextualized-representations, en/contextualized-representations, fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
   - id: query
     importance: supporting
     labels: {fr: "Query (requête)", en: "Query"}

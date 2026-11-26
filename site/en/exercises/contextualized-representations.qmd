@@ -38,7 +38,37 @@ Now consider “They built roads.” Who does **they** refer to in this exchange
 
 You have understood this step if you can distinguish **the identity of the initial vector**, **context-dependent information built by the Transformer**, and **the interpretation of a reference in the dialogue**. The same initial vector does not force identical hidden states; this example also does not prove that one attention head alone resolves reference.
 
+## Review cards
 
+Try to answer before opening each card. They reinforce the distinctions needed for the transfer exercises.
+
+<details>
+<summary>Card 1 — What does an identical token ID guarantee?</summary>
+
+With the same embedding table, it selects the same row and therefore the same initial lookup vector.
+
+</details>
+
+<details>
+<summary>Card 2 — Why can hidden states differ?</summary>
+
+Transformer blocks transform states according to each occurrence's position and accessible context.
+
+</details>
+
+<details>
+<summary>Card 3 — What can position i access in a causal GPT?</summary>
+
+Positions up to and including i; no position strictly in the future.
+
+</details>
+
+<details>
+<summary>Card 4 — Why can loss change without changing the distribution?</summary>
+
+A future token can change the observed target, not the distribution computed from the same causal prefix.
+
+</details>
 
 ## Which change can reach the current state? {#ex-contextualization-causal-boundary}
 
