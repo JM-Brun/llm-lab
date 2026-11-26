@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
 summary: "Distinguishes the three learned self-attention projections: Q forms queries, K supports compatibility scores, and V carries the content that is aggregated."
 scope: "Distinguishes three learned projections of a block state and their roles in one self-attention head."
-purpose: "Predict what changing the values can affect in an attention head when queries, keys and the mask stay fixed."
+purpose: "Explain why self-attention projects the block input into Q, K, and V; distinguish compatibility computation (Q/K) from aggregated content (V); and predict the effects of changing one projection in isolation."
 suggested_route:
   previous: "en/transformer"
   next: "en/scaled-dot-product-attention"
@@ -115,7 +115,7 @@ The diagram reveals two paths: one determines the weighting, the other supplies 
 
 ## Why three projections from the same input? {#why-three-projections-from-the-same-input}
 
-In self-attention, Q, K, and V are three learned transformations of the same representation stream. Call the block input $H_{\mathrm{in}}$. In the first block it comes from token embeddings and the architecture’s input mechanism. In later blocks it contains already contextualized states. In this project's reference GPT, learned absolute positional embeddings are **added** to token embeddings before the first block ([positional embeddings](positional-encoding.qmd)). With [RoPE](rope.qmd), queries and keys receive a position-dependent rotation after the linear projection. The equations below describe the projections before this rotation.
+In self-attention, Q, K, and V are three learned transformations of the same representation stream. Call the block input $H_{\mathrm{in}}$. In the first block it comes from token embeddings and the architecture’s input mechanism. In later blocks it contains already contextualized states. In a stack of Transformer blocks, these projections are recomputed inside each attention sublayer from that block’s own input state. They help produce the states passed to the next block; they are not an operation placed after the final contextualized representations. In this project's reference GPT, learned absolute positional embeddings are **added** to token embeddings before the first block ([positional embeddings](positional-encoding.qmd)). With [RoPE](rope.qmd), queries and keys receive a position-dependent rotation after the linear projection. The equations below describe the projections before this rotation.
 
 In the [reference GPT’s pre-LN block](transformer.qmd), LayerNorm acts position by position before the projections. Their shared input is therefore $X=\operatorname{LN}_1(H_{\mathrm{in}})$. The residual path receives $H_{\mathrm{in}}$.
 
