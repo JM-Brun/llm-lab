@@ -12,7 +12,6 @@ id: "fr/tokenization-and-tokenizers"
 summary: "Organise les approfondissements sur la représentation du texte, les mécanismes de segmentation, la conception des tokenizers et leur évaluation."
 scope: "Carte éditoriale du domaine. Distingue l'encodage d'une entrée avec un tokenizer fixé de l'apprentissage ou de l'ajustement d'un tokenizer à partir d'un corpus ; oriente vers les pages spécialisées sans en recopier le contenu."
 purpose: "Choisir un approfondissement selon la question à résoudre, comprendre les relations entre Unicode, segmentation, vocabulaire, corpus et évaluation, et identifier les prérequis et prolongements pratiques."
-domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
