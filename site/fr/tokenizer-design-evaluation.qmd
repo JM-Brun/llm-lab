@@ -74,7 +74,7 @@ La question de conception devient : quelle segmentation donne un bon compromis p
 
 ## 1. La taille du vocabulaire : architecture et budget
 
-Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée $d$ et un vocabulaire de taille $V$, la matrice d'embeddings d'entrée contient $Vd$ paramètres. Une projection de sortie distincte sur le vocabulaire en contient couramment autant ; ce second terme ne s'applique pas de la même manière lorsque les poids d'entrée et de sortie sont partagés. Augmenter $V$ peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
+Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée $d$ et un vocabulaire de taille $V$, la matrice d'embeddings d'entrée contient $Vd$ paramètres. Une projection de sortie distincte sur le vocabulaire peut ajouter $Vd$ paramètres ; lorsque les poids d'entrée et de sortie sont partagés, ce doublon de paramètres disparaît. En revanche, le calcul de la projection sur le vocabulaire reste nécessaire. Augmenter $V$ peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
 
 Le budget d'entraînement change également le sens de la comparaison :
 
@@ -128,12 +128,15 @@ Considérons deux tokenizers fictifs appliqués au même ensemble de textes et a
 |---|---:|---:|
 | Taille du vocabulaire | $V$ | $4V$ |
 | Longueur moyenne d'une séquence | 120 positions | 80 positions |
-| Paramètres de la table d'embeddings | $Vd$ | $4Vd$ |
-| Nombre de paires de positions dans l'attention dense | $120^2$ | $80^2$ |
+| Paramètres de la table d'embeddings d'entrée | $Vd$ | $4Vd$ |
+| Calcul de la projection de sortie (logits, par séquence d'entraînement) | $\propto 120Vd$ | $\propto 80 \times 4Vd = 320Vd$ |
+| Paires de positions à scorer dans l'attention dense (par tête et par couche) | $120^2$ | $80^2$ |
 
-Ces nombres sont **un exemple construit**, pas les résultats d'un benchmark. Ils isolent deux effets. B réduit la longueur moyenne d'un tiers. Pour une attention dense standard, le nombre de paires de positions passe de $120^2$ à $80^2$, soit un rapport de $4/9$. Mais la table d'embeddings de B contient quatre fois plus de paramètres ; une projection de sortie non liée aux embeddings peut ajouter un coût analogue.
+Ces nombres sont **un exemple construit**, pas les résultats d'un benchmark. Ils isolent plusieurs termes. B réduit la longueur moyenne d'un tiers. Pour une attention dense standard, le nombre de paires de positions passe de $120^2$ à $80^2$, soit un rapport de $4/9$ ; ce ratio concerne les paires de positions, pas le coût total du Transformer. Mais la table d'embeddings de B contient quatre fois plus de paramètres.
 
-On ne peut pas conclure que B est globalement moins cher. Le coût total dépend aussi de la dimension cachée, des couches, du partage des poids, de l'implémentation de l'attention, du débit matériel et du nombre de tokens traités pendant l'entraînement. Le tableau sert à repérer les termes qui changent, pas à additionner des coûts incomparables.
+Le calcul des logits introduit un compromis supplémentaire. En entraînement causal standard, la projection de sortie est appliquée à chaque position pour produire une distribution sur le vocabulaire. À dimension cachée fixée, son coût est de l'ordre de $T V d$ : $120Vd$ pour A, contre $80 \times 4Vd = 320Vd$ pour B, soit $8/3$ fois plus. Ce calcul ne disparaît pas lorsque les poids d'entrée et de sortie sont liés : le partage évite de stocker deux matrices distinctes, mais la projection doit toujours être calculée. En génération, les logits sont généralement calculés à la dernière position seulement ; le coût de cette projection par token généré reste proportionnel à $Vd$.
+
+On ne peut donc pas conclure que B est globalement moins cher. Le coût total dépend aussi de la dimension cachée, des couches, du partage des poids, de l'implémentation de l'attention, du débit matériel et du nombre de tokens traités pendant l'entraînement. Le tableau sert à repérer les termes qui changent, pas à additionner des coûts incomparables.
 
 #### Quel budget tient-on constant ?
 
