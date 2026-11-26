@@ -29,6 +29,16 @@ This is authoring metadata; it is intentionally not rendered to readers.
 
 
 {{< include ../includes/generated-guided-context-en-tokenizer-design-evaluation.qmd >}}
+::: {.callout-note title="A decision that seems obvious — until we look at the whole system"}
+Imagine two teams preparing a language model from the same corpus. They compare two tokenizers: the first turns the texts into shorter sequences. At first glance, the choice seems obvious: fewer tokens mean fewer positions to process and more text fitting into a context window of fixed size.
+
+But the second tokenizer may have a smaller vocabulary. Vocabulary size also affects embedding parameters and, depending on the architecture, the output projection. A global average may also hide that one language or text type is represented much less efficiently than another.
+
+**So which tokenizer should they choose?** They must compare the same texts, define what “shorter” means, measure model costs, and evaluate performance on the intended tasks. Compression is a useful signal, not a verdict.
+
+This page follows that problem: understand the mechanisms that produce segmentations, measure their effects, and build a comparison whose conclusions stay within the limits of its protocol.
+:::
+
 ::: {.chapter-lead}
 Understanding how a tokenizer segments text is not enough to select one or compare systems. Vocabulary size affects both sequence length and some model costs; compression metrics do not summarize downstream quality or differences across languages. This page brings together the design and evaluation questions that require a more advanced level of analysis.
 :::
