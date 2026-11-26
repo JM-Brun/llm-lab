@@ -107,6 +107,8 @@ $T$ is the number of positions in the sequence and $d$ is the dimension of each 
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
+The tokenizer fixes the vocabulary and the token-to-ID mapping; it does not provide the values of $E$. Those values are **learned network parameters**: they are initialized and then adjusted during training. When an example uses ID $i$, the loss gradient can contribute to updating row $E_{i,:}$. Lookup selects that row; it does not compute its contents.
+
 ## From the initial vector to a contextualized representation
 
 With a fixed matrix, two occurrences of the same ID select the same row and therefore retrieve the same initial vector. The lookup does not read neighbouring words or disambiguate the meaning of a sentence.
@@ -145,8 +147,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - **Deepen:** [mathematical tools and representation geometry](deepen.qmd#mathematical-tools-and-geometry), including the history of static word vectors, cosine similarity, and the limits of geometric interpretations.
 
 ### Where do the table values come from?
-
-The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters. Gradients from training examples also flow through the lookup operation, so the rows selected by those examples' IDs can be updated during training.
 
 The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
 
