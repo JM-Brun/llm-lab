@@ -60,6 +60,45 @@ Both architectures share the token embedding table. They therefore read the same
 
 </details>
 
+## Recall cards
+
+Try to answer before opening each card. These cards rehearse the key distinctions; the exercises and experiment below ask you to apply them.
+
+<details>
+<summary>Card 1 — What does ID $i$ identify?</summary>
+
+Row $i$ in matrix $E$, not a coordinate or a measure of proximity.
+
+</details>
+
+<details>
+<summary>Card 2 — What is the shape of matrix $E$?</summary>
+
+$V \times d$: one row per vocabulary ID and $d$ components per vector.
+
+</details>
+
+<details>
+<summary>Card 3 — Do two occurrences of the same ID have the same initial vector?</summary>
+
+Yes, for a fixed matrix: both retrieve the same row before positional processing and contextualization.
+
+</details>
+
+<details>
+<summary>Card 4 — Where does contextualization happen?</summary>
+
+In later network computations, including Transformer blocks, not during the initial lookup.
+
+</details>
+
+<details>
+<summary>Card 5 — What does a cosine neighbour establish?</summary>
+
+Proximity under a specified model, vectors, normalization, and metric; not synonymy or semantic equivalence.
+
+</details>
+
 ## Inspect a tiny input embedding table
 
 This model-independent exercise uses a deliberately tiny NumPy matrix. It needs no tokenizer, checkpoint download or GPU. The helper functions operate on **input embedding rows**, not contextualized hidden states.
