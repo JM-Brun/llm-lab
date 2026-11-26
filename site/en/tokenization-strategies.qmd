@@ -308,7 +308,7 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 
 ### Recommended visual resources
 
-1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
+1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition. The resource is linked rather than copied; reuse terms for its figures have not been established here.
 2. [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): English-language explanation of BPE training, paired with the French course linked from the French page.
 3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
@@ -334,14 +334,14 @@ The page combines project-owned diagrams with selected external illustrations an
 ### Suggested reading order
 
 1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
-2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
+2. Follow merges with the visualizer listed above.
 3. Read `minbpe` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
 4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
 5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
 6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
 
 
-### Educational code and historical reference
+### Educational code and implementations
 
 - [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): guided reading on text processing in the LLM pipeline.
 - [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
@@ -354,11 +354,9 @@ The page combines project-owned diagrams with selected external illustrations an
 
 
 
-## External tools
+<span id="external-tools"></span>
 
-- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
-- [SentencePiece](https://github.com/google/sentencepiece)
-- [tiktoken](https://github.com/openai/tiktoken)
+The Hugging Face Tokenizers, SentencePiece, and tiktoken documentation links are grouped in the [mechanism and implementation resources](#mechanism-resources-and-implementations).
 
 
 
