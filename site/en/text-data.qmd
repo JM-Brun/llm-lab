@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/exercises-text-data", "en/deepen", "en/tokenization-and-tokenizers", "en/tokenization-strategies"]
+related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/text-data-exercises", "en/deepen", "en/tokenization-and-tokenizers", "en/tokenization-strategies"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -135,7 +135,7 @@ In the next lesson, return to the last token of the prefix. With the GPT-2 token
 
 ## Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises-text-data.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/text-data.qmd).
 
 ## Further exploration
 
