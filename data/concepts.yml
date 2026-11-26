@@ -1194,7 +1194,8 @@ relations:
   - {from: token-decoding, type: applies-to, to: token-id}
   - {from: tokenizer-evaluation, type: applies-to, to: tokenizer}
   - {from: token-fertility, type: part-of, to: tokenizer-evaluation}
-  - {from: multilingual-tokenization, type: applies-to, to: tokenizer-evaluation}
+  - {from: tokenizer-evaluation, type: applies-to, to: multilingual-tokenization}
+  - {from: byte-level-encoding, type: part-of, to: tokenization}
   - from: tokenizer-compatibility
     type: prerequisite
     to: token-embedding
