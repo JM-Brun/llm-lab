@@ -43,7 +43,7 @@ Un modèle complète le préfixe « La capitale de la France est… » en répar
 | `Marseille` | $0{,}05$ |
 | `Lille` | $0{,}05$ |
 
-![Distribution prédictive illustrative : Paris reçoit 80 % de la probabilité, Lyon 10 %, Marseille et Lille 5 % chacun. La cible observée Lyon a un surprisal de 3,32 bits, tandis que l'entropie de la distribution vaut environ 1,02 bit.](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution width=95%}
+![](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution fig-alt="Distribution prédictive illustrative : Paris reçoit 80 % de la probabilité, Lyon 10 %, Marseille et Lille 5 % chacun. La cible observée Lyon a un surprisal de 3,32 bits, tandis que l'entropie de la distribution vaut environ 1,02 bit." width=95%}
 
 Supposons que le texte observé continue pourtant par `Lyon`. Le modèle avait attribué à ce token une probabilité de $0{,}10$. Son surprisal vaut :
 
