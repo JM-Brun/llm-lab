@@ -179,7 +179,7 @@ The page links above name the French source files; the corresponding English pag
 
 ### 4.2 Evidence-aware source-to-concept mapping
 
-The backfill also updates the provenance layer beneath the concept graph: seven existing source extractions now map their atomic items to canonical concepts, and eleven source records expose the corresponding source-level concept coverage. The source-level list is the union of a source's contributions; the item-level list remains narrower and is the preferred evidence trail for a particular claim.
+The backfill also updates the provenance layer beneath the concept graph: seven existing source extractions now map their atomic items to canonical concepts, and eleven source records expose the corresponding source-level concept coverage. The source-level list summarizes a source's overall contribution; item-level mappings are a narrower, evidence-linked subset and are the preferred trail for a particular claim.
 
 Three deliberate distinctions prevent misleading aggregation:
 
