@@ -225,7 +225,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, modality:video]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-encoding, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy, historical-context]
@@ -252,7 +252,7 @@ sources:
           - "The full audiovisual content, comments, linked resources and reuse rights were not audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
-      concepts: [token]
+      concepts: [byte-level-encoding, byte-pair-encoding, pre-tokenization, special-token, token-encoding, token-vocabulary, tokenizer, tokenizer-pipeline, tokenizer-training]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sebastian-raschka-llms-from-scratch-ch02
@@ -414,7 +414,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
@@ -441,7 +441,7 @@ sources:
           - "The linked code repository and raw evaluation data were not independently audited or executed."
     related:
       pages: [en/text-data, fr/text-data, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: ali-tokenizer-choice-llm-training-2024
@@ -462,7 +462,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:bpe, method:unigram]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization, token-fertility, tokenizer-evaluation, tokenizer-training]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
@@ -491,7 +491,7 @@ sources:
   
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [multilingual-tokenization, token-fertility, tokenizer-evaluation, tokenizer-training]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: wegmann-tokenization-language-variation-2025
@@ -512,7 +512,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:language-variation]
-      concept_ids: [token]
+      concept_ids: [pre-tokenization, token-vocabulary, tokenizer-evaluation, tokenizer-pipeline]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
@@ -539,7 +539,7 @@ sources:
   
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [pre-tokenization, token-vocabulary, tokenizer-evaluation, tokenizer-pipeline]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025
@@ -560,7 +560,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:bpe, method:unigram]
-      concept_ids: [token]
+      concept_ids: [byte-pair-encoding, multilingual-tokenization, pre-tokenization, token-vocabulary, tokenizer-evaluation, tokenizer-training, unigram-tokenization]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
@@ -588,7 +588,7 @@ sources:
   
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [byte-pair-encoding, multilingual-tokenization, pre-tokenization, token-vocabulary, tokenizer-evaluation, tokenizer-training, unigram-tokenization]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: chiu-toklens-acl-srw-2026
@@ -609,7 +609,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization, token-fertility, token-vocabulary, tokenizer-evaluation]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
@@ -637,7 +637,7 @@ sources:
   
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [multilingual-tokenization, token-fertility, token-vocabulary, tokenizer-evaluation]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: catherine-arnett-tokenizer-fertility
@@ -658,7 +658,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, ecosystem:huggingface]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization, token-fertility, tokenizer-evaluation]
     metadata:
       technical_level: intermediate
       contribution_types: [experiment, pedagogy, visualization]
@@ -686,7 +686,7 @@ sources:
           - "The embedded fertility illustration remains subject to asset-level rights review in issue #156; the image was not copied or modified."
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
-      concepts: [token]
+      concepts: [multilingual-tokenization, token-fertility, tokenizer-evaluation]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: mikolov-word2vec-2013
@@ -2049,7 +2049,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:compression, topic:downstream-performance]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization, tokenizer-evaluation]
     metadata:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
@@ -2075,7 +2075,7 @@ sources:
           - "The Turkish downstream experiment covers only three tokenizer-support conditions; no independent reproduction was performed."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [multilingual-tokenization, tokenizer-evaluation]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenizer-compression-goldman-schmidt-2024.md]
 
   - id: schmidt-tokenization-more-than-compression-2024
@@ -2096,7 +2096,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [topic:tokenizer-evaluation, topic:compression, topic:downstream-performance]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, pre-tokenization, token-vocabulary, tokenization, tokenizer-evaluation, tokenizer-pipeline]
     metadata:
       technical_level: advanced
       contribution_types: [theory, experiment, benchmark]
@@ -2122,7 +2122,7 @@ sources:
           - "All reported experiments use English; no independent reproduction was performed."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: [token]
+      concepts: [byte-level-encoding, byte-pair-encoding, pre-tokenization, token-vocabulary, tokenization, tokenizer-evaluation, tokenizer-pipeline]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenizer-compression-goldman-schmidt-2024.md]
 
   - id: mike-x-cohen-llm-breakdown-tokenization-2025
@@ -2183,7 +2183,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:tokenizer-evaluation, topic:vocabulary-size, topic:embedding-geometry]
-      concept_ids: [token, token-embedding]
+      concept_ids: [token-embedding, token-vocabulary, tokenizer-evaluation]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, theory]
@@ -2203,7 +2203,7 @@ sources:
           - "No figure reuse rights were established."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
-      concepts: [token, token-embedding]
+      concepts: [token-embedding, token-vocabulary, tokenizer-evaluation]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: yael-gomez-tokenization-overview-2025
@@ -2331,7 +2331,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, topic:visualization, ecosystem:python]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization, token-fertility, token-vocabulary, tokenizer-evaluation]
     metadata:
       technical_level: advanced
       contribution_types: [implementation, benchmark, visualization, experiment]
@@ -2352,7 +2352,7 @@ sources:
           - "Third-party figures/assets were not extracted or reused."
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      concepts: [multilingual-tokenization, token-fertility, token-vocabulary, tokenizer-evaluation]
       audit_records:
         - docs/source-syntheses/tokenization-embeddings-protocol-transferability-2026-11.md
         - data/extractions/varis-stephen-libovicky-tokcollate-2026.yml

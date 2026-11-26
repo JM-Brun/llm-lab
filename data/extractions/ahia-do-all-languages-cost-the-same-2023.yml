@@ -51,10 +51,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds the economic/billing interpretation of sequence length to the existing tokenizer evaluation comparison; keep its measurement distinct from the other corpus metrics."
@@ -77,10 +77,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:byte-level-bpe]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced lesson already includes the finding that tokenizer disparity is not reducible to language data volume; this extraction preserves the controlled experiment's scope."
@@ -104,10 +104,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [application:api-cost, topic:multilingual-tokenization, topic:compute-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A concrete example of how tokenizer sequence length propagates into user-facing economic cost; numbers should remain explicitly historical."
@@ -131,10 +131,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:context-window, topic:in-context-learning, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "This is a useful connection from tokenizer output to context-window utilization and few-shot capacity; retain as an advanced application example, not a general causal law."
@@ -159,10 +159,10 @@ items:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [application:api-cost, topic:multilingual-tokenization, topic:accessibility]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds a distinct social-accessibility perspective that is not captured by tokenizer compression metrics alone; preserve its ecological and historical scope."
@@ -186,10 +186,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:reproducibility, topic:multilingual-tokenization, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced lesson already treats the results as historically scoped; the extraction adds the exact reproducibility caveats."

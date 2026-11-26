@@ -51,10 +51,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:evaluation-pipeline]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A concrete external example of separating tokenizer execution, metric computation and result exploration. It adds operational specificity, but does not warrant a new canonical pipeline or implementation."
@@ -75,10 +75,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation, topic:multilingual-tokenization]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The canonical advanced lesson already explains that token count, fertility, compression and downstream quality are distinct; the paper is useful as a concrete tool reference rather than another metric catalogue."
@@ -99,10 +99,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization, token-vocabulary]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful complementary operational detail for researchers; adding another list to the learner-facing core would duplicate the existing advanced metric discussion."
@@ -123,10 +123,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, topic:dataset-provenance]
-      concept_ids: [token]
+      concept_ids: [multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [multilingual-tokenization]
       route_ids: []
     disposition: defer
     disposition_rationale: "The metadata lineage is important for an advanced research review but is too implementation-specific for the current canonical explanation; revisit only if the tool is selected for a hands-on lab."
@@ -147,10 +147,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "This is a key existing canonical caveat; the new source reinforces rather than changes the lesson."
@@ -171,10 +171,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:visualization, topic:pedagogy]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: link
     disposition_rationale: "Potential optional teaching resource; keep as a link-only candidate until the live interface is inspected and a learner task is designed. Do not claim that the visualizer improves learning."

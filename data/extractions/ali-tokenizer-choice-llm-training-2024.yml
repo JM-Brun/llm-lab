@@ -49,10 +49,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation, method:extrinsic-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-fertility]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced bilingual evaluation lesson already distinguishes intrinsic measures from downstream evaluation."
@@ -76,10 +76,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:controlled-comparison, modality:multilingual]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A useful concrete protocol, already summarized in the advanced comparison."
@@ -103,10 +103,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:downstream-performance, topic:tokenizer-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The bilingual deep dive already records this finding with experimental scope."
@@ -129,10 +129,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:fertility, topic:parity]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-fertility]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current deep dive already expresses this caveat."
@@ -153,10 +153,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:compute-cost, topic:multilingual-tokenization]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current documentation already scopes the number to a specific training-compute comparison."

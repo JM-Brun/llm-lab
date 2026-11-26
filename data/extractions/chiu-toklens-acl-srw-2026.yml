@@ -52,10 +52,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:intrinsic-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-fertility, multilingual-tokenization]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "Issue #326 already documents all six metrics; this structured record preserves their precise denominators and warns against conflating native-corpus parity with parallel-text token premium."
@@ -79,10 +79,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:benchmark]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "The subset distinction is critical to interpreting results and is already highlighted by issue #326; retain as machine-readable evidence."
@@ -105,10 +105,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:correlation, topic:downstream-performance]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The existing advanced comparison records the English null result; this extraction makes its sample size and multiple-comparison correction explicit."
@@ -133,10 +133,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, topic:downstream-performance, method:mixed-effects-model]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, token-fertility]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization, token-fertility]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Adds the exact statistical structure and robustness caveats behind the already-integrated summary; do not translate this association into causal evidence."
@@ -159,10 +159,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:scaling-laws]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, multilingual-tokenization]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "The shared-tokenizer family design is a useful quasi-control for discussion, but its correlation must not be presented as a causal tokenizer effect."
@@ -183,10 +183,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, ecosystem:qtok]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-vocabulary]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "This provides a useful framework-level distinction for the source compilation; it does not warrant a second toolkit implementation in the curriculum."

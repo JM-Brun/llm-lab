@@ -49,10 +49,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:downstream-tasks]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A distinct task-design lens that complements crosslingual efficiency studies; already summarized in the advanced lesson."
@@ -73,10 +73,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:pre-tokenization, method:bpe]
-      concept_ids: [token]
+      concept_ids: [pre-tokenization, tokenizer-pipeline]
     candidate_destinations:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [pre-tokenization, tokenizer-pipeline]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The tokenizer-strategies lesson already explains pre-tokenization boundaries."
@@ -100,10 +100,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:pre-tokenization, topic:tokenizer-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, pre-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, pre-tokenization]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The advanced deep dive already records this task-sensitive result and its BERT-base scope."
@@ -126,10 +126,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, method:task-aware-proxy]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation, token-vocabulary]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful methodological perspective for research evaluation; another proxy on the learner-facing page is not currently justified."
@@ -150,10 +150,10 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:language-variation, topic:multilingual-tokenization]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
-      concepts: []
+      concepts: [tokenizer-evaluation]
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The project already distinguishes this study from crosslingual tokenizer-equity research."
