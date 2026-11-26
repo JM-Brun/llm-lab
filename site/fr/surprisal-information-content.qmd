@@ -271,9 +271,7 @@ Mais le surprisal n'est pas une mesure directe de la qualité d'une réponse. Un
 
 ## Expérimenter
 
-La page [Expérience — Entropie, KL et compression prédictive](experience-information-theory.qmd) permet de manipuler des distributions synthétiques et de vérifier les relations entre entropie, entropie croisée, divergence KL et longueurs de code.
-
-Pour aller plus loin dans la pratique, comparez le surprisal de plusieurs événements sous une même distribution, puis modifiez la distribution sans changer l'événement observé. Vous verrez que le surprisal dépend du modèle probabiliste choisi.
+Pour manipuler des distributions et distinguer surprisal observé, entropie et autres métriques, rendez-vous dans [l'expérience dédiée](experience-information-theory.qmd#surprisal-experiments).
 
 ## À retenir
 
