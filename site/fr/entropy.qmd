@@ -14,7 +14,7 @@ scope: "Mesure l’incertitude d’une distribution prédictive à contexte fix�
 purpose: "Comparer l’entropie de deux distributions sur le même vocabulaire et distinguer cette moyenne de la surprise du token observé."
 suggested_route:
   previous: "fr/probabilites"
-  next: "fr/generation"
+  next: "fr/vraisemblance"
 hierarchy:
   parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
