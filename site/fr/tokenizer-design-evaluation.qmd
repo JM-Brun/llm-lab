@@ -87,8 +87,6 @@ Takase et al. ont étudié des vocabulaires unigrammes SentencePiece de 5 000 à
 
 ## 2. Coût système : séquences, vocabulaire et calcul
 
-## 3. Choisir sous contraintes
-
 Imaginons un assistant destiné à traiter des documents en plusieurs langues, avec une fenêtre de contexte limitée et une contrainte de latence. Le tokenizer qui produit le moins de tokens en moyenne n'est pas nécessairement le meilleur choix : il faut savoir quel coût diminue, quel coût augmente et pour quels utilisateurs.
 
 Le compromis devient concret lorsqu'on met en regard la longueur des séquences et le coût dépendant du vocabulaire. Considérons deux tokenizers fictifs appliqués au même ensemble de textes et associés à la même dimension cachée $d$ :
