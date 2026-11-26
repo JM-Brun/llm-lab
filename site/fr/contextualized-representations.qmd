@@ -109,6 +109,25 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 
 Dans un GPT causal, le préfixe accessible à une position s’arrête au token courant. À position et poids fixés, une modification du préfixe accessible peut changer l’état courant ; une modification située après cette position ne doit pas le changer.
 
+### Une expérience contrôlée : modifier le passé ou le futur
+
+Fixons une position (i), les paramètres du modèle et le token présent à cette position. Comparons trois entrées :
+
+| Expérience | Modification | L'état à la position (i) peut-il changer ? |
+|---|---|---|
+| A — référence | Aucun changement | Non : c'est le point de comparaison |
+| B — passé modifié | Un token situé avant ou à (i) change | Oui : le contenu accessible à (i) est modifié |
+| C — futur modifié | Un token situé strictement après (i) change | Non, dans un GPT causal correctement masqué |
+
+Cette comparaison est plus précise que dire simplement que « le contexte change le sens ». Elle identifie **quel contexte** peut intervenir dans le calcul d'un état donné. Le résultat suppose que l'on compare la même position, avec les mêmes paramètres et le même mécanisme causal.
+
+Elle permet aussi de distinguer deux sources de variation :
+
+- le **lookup** dépend de l'ID et de la matrice d'embeddings ;
+- l'**état caché** dépend des transformations successives et des informations auxquelles la position a accès.
+
+La page d'[exercices dédiée](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary) propose de tester cette frontière avec des cas concrets.
+
 ## Où se situe cette étape dans le modèle ?
 
 Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcul, les blocs produisent les états contextualisés à partir de leurs entrées.
