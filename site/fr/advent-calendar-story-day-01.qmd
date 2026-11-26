@@ -185,7 +185,7 @@ $$
 p_\theta(x_t\mid x_{<t}).
 $$
 
-Prenons le préfixe « La capitale de la France est… ». Le modèle calcule une distribution sur le token suivant ; la probabilité de la continuation qui écrit « Paris » dépend de ce préfixe et du découpage du tokenizer. Elle ne se lit pas dans la fréquence globale de « Paris » dans un corpus. Une forme rare dans l'ensemble des textes peut donc être une continuation très probable dans un contexte précis.
+Prenons le préfixe « La capitale de la France est… ». Le modèle calcule une distribution sur le token suivant ; la probabilité de la continuation qui écrit « Paris » dépend de ce préfixe et du découpage du tokenizer. Elle ne se lit pas dans la fréquence globale de « Paris » dans un corpus.
 
 Un token rare dans l'ensemble du corpus peut être très probable après un préfixe précis. Inversement, un token fréquent globalement peut être improbable dans ce contexte. Les deux distributions répondent à des questions différentes.
 
