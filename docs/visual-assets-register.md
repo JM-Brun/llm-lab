@@ -424,3 +424,12 @@ The same audit was extended to the adjacent core visual sequence:
 | `llm-generation-process-en-mobile.svg`, `llm-generation-process-fr-mobile.svg` | EN/FR `llm-overview.qmd` | Original mobile compositions of the six-stage autoregressive generation overview. They return the feedback loop to the initial-representation stage and state that positional handling is architecture-dependent. Owner provenance confirmation remains pending; no asset-level licence declared. |
 
 The overview's second figure (one predictive computation, three uses) already has responsive EN/FR variants. The Q/K/V lesson's computational-path and S/A/O matrix diagrams also already have responsive EN/FR variants. The training-loop and optional optimizer-comparison figures likewise already have responsive EN/FR variants. They were reviewed and retained; no duplicate assets were created. The detailed decisions are included in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
+
+
+The cross-entropy page was also included in the responsive pass:
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `cross-entropy-target-probability-mobile.svg`, `cross-entropy-target-probability-fr-mobile.svg` | EN/FR `cross-entropy.qmd` | Original mobile compositions of the existing one-hot target probability/loss comparison. Probability bars share a 0–1 scale; loss bars share a separate 0–2.303 nats scale. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The page now embeds these through responsive `picture` elements with page-level alt text and captions. The mobile variants do not claim to show the full vocabulary distribution or the average over valid positions; the page retains that explicit caveat.
