@@ -91,6 +91,7 @@ Pour comparer deux tokenizers de manière interprétable :
 
 **Règle de lecture :** le nombre de tokens mesure une longueur sous un tokenizer donné ; il ne mesure directement ni la qualité linguistique, ni la qualité du modèle, ni le coût système complet.
 
+<span id="ressources-et-travaux-connexes"></span>
 ### Bibliographie thématique et ressources complémentaires
 
 Cette bibliographie rassemble les références complémentaires en distinguant leur question, leur apport et leurs limites. Le tableau d'études reste la base de l'analyse ; cette liste oriente les lectures sans confondre des protocoles différents.
@@ -108,6 +109,8 @@ Cette bibliographie rassemble les références complémentaires en distinguant l
 - **Mesures multilingues — Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/).** Question : comment comparer plusieurs dimensions intrinsèques et leur association aux benchmarks ? Contribution : six métriques, 24 tokenizers et 15 langues, avec analyses anglaise et MMLU-ProX séparées. Limite : associations observationnelles, échantillons distincts et métriques fondées sur les espaces inadaptées à la notion de mot en chinois, japonais et thaï.
 
 - **Point de vue de praticienne — Catherine Arnett (2024), [article sur la réutilisation des tokenizers](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling).** Question : pourquoi réutiliser sans vérification un tokenizer pré-entraîné peut-il pénaliser certains textes ? Contribution : exemples concrets sur la pré-tokenisation et les écarts de fertilité. Limite : article communautaire et observations de praticienne, non benchmark contrôlé.
+
+<span id="references-de-recherche-complementaires"></span>
 
 <!-- Ancres historiques : les ressources visuelles et de mécanismes sont désormais regroupées dans tokenization-strategies. -->
 <span id="ressources-visuelles-recommandees"></span>
