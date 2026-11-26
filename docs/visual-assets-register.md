@@ -403,3 +403,19 @@ This update reconciles source references and repository inventory only. It does 
 A direct read of the current `main` sources `site/en/contextualized-representations.qmd` and `site/fr/contextualized-representations.qmd` confirms that neither file contains a Rushang Chauhan CDN image embed. Each page embeds its project-local `contextualization-pipeline` SVG and links to the Rushang article as optional further reading. The previous register description of this item as a current external embed was stale. The article link and both local diagrams are retained unchanged; this is a classification correction, not an asset removal or replacement.
 
 This is source-level evidence only. The site-wide rendered-DOM inventory remains outstanding: includes, generated HTML, CSS backgrounds, responsive `picture`/`srcset` selection, lazy-loaded images and network outcomes must still be checked on published EN/FR pages at desktop and mobile viewports. The current external-embed table should not be treated as complete until that pass is recorded.
+
+
+## Understand route visual pilot — tokenization, position and attention — 2026-11-26
+
+The second source-level pilot reviews the EN/FR tokenization, positional-encoding, scaled-dot-product-attention and causal-masking lessons. It adds seven responsive/localized SVG assets and changes the placement of one existing figure. Full decisions and remaining validation are documented in [the second visual audit](visual-audit-second-pilot-2026-11-26.md).
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `positional-entry-points-en-mobile.svg`, `positional-entry-points-fr-mobile.svg` | EN/FR `positional-encoding.qmd` responsive figure | Original mobile compositions authored for this contribution from the existing three-lane positional-mechanism diagram. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `causal-attention-mask-fr.svg` | FR `causal-masking.qmd` desktop figure | Localized project-authored counterpart to the existing EN causal mask matrix. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `causal-attention-mask-mobile.svg`, `causal-attention-mask-fr-mobile.svg` | EN/FR `causal-masking.qmd` mobile figure | Original mobile compositions of the four-position query/key visibility matrix. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `attention-calculation-flow-en-mobile.svg`, `attention-calculation-flow-fr-mobile.svg` | EN/FR `scaled-dot-product-attention.qmd` mobile figure | Original mobile compositions of the existing Q/K → scores → mask → softmax path and the separate A/V inputs to O=AV. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The positional-encoding desktop diagram was moved from a collapsed callout into the main lesson flow; the partial two-branch stepper was removed because it repeated only a subset of the three mechanisms. The existing desktop attention diagram was retained and paired with mobile compositions. The causal-mask figure now has language-specific desktop/mobile variants and explicit query-row/key-column semantics.
+
+All seven new files include SVG `title` and `desc` elements. These are source-level checks only: XML conformance, Quarto rendering, responsive legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain unverified. The existing provenance/licence constraints in #156 and #163 continue to apply. No existing asset was removed or replaced.
