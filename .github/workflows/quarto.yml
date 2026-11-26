@@ -9,7 +9,7 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write
   pull-requests: read
 
 concurrency:
@@ -38,6 +38,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       # Only modified, already-listed .qmd pages qualify for incremental rendering.
       # Any shared input, deletion, rename, addition, or config change falls back to full.
@@ -339,20 +342,24 @@ jobs:
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_computational_graph == 'true')))
         run: .venv/bin/python site/tools/render_computational_graph.py
 
-      # Temporary PR diagnostic: export generated, tracked fragments so they can
-      # be committed back to the branch and the freshness tests remain meaningful.
-      - name: Upload generated map and graph fragments for refresh
+      # One-time bridge: commit canonical generated artifacts back to this PR branch.
+      - name: Commit regenerated map and graph fragments
         if: github.event_name == 'pull_request' && steps.site_changes.outputs.site_relevant == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-map-graph-fragments-${{ github.sha }}
-          path: |
-            site/includes/generated-map-*.qmd
-            site/includes/generated-guided-route-*.qmd
-            site/includes/generated-computational-graph-*.qmd
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/includes/generated-map-*.qmd \
+            site/includes/generated-guided-route-*.qmd \
+            site/includes/generated-computational-graph-*.qmd \
             site/learning-map-data-*.json
-          if-no-files-found: warn
-          retention-days: 7
+          if git diff --cached --quiet; then
+            echo "Generated map and graph fragments are already current."
+            exit 0
+          fi
+          git commit -m "chore: regenerate bilingual learning map and graph artifacts"
+          git push origin "HEAD:${BRANCH_NAME}"
 
       - name: Render changed pages incrementally
         if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
