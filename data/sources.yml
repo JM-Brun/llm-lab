@@ -273,7 +273,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:tokenization, topic:training-examples, method:bpe, ecosystem:pytorch]
-      concept_ids: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility]
+      concept_ids: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy]
@@ -293,7 +293,7 @@ sources:
           - "The full book and unrelated chapters were not audited."
     related:
       pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/training-examples, fr/training-examples, en/embedding-space, fr/embedding-space]
-      concepts: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility]
+      concepts: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-course-tokenizers-chapter6
@@ -314,7 +314,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, method:wordpiece, method:unigram, ecosystem:huggingface]
-      concept_ids: [token, tokenizer, tokenization, tokenizer-pipeline, text-normalization, pre-tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, tokenizer-training]
+      concept_ids: [token, tokenizer, tokenization, tokenizer-pipeline, text-normalization, pre-tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, tokenizer-training, token-encoding, token-post-processing]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy, visualization]
@@ -343,7 +343,7 @@ sources:
           - "The embedded pipeline figure's asset-level rights and provenance remain with issue #156."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/text-data, fr/text-data]
-      concepts: [token, tokenizer, tokenization, tokenizer-pipeline, text-normalization, pre-tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, tokenizer-training]
+      concepts: [token, tokenizer, tokenization, tokenizer-pipeline, text-normalization, pre-tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, tokenizer-training, token-encoding, token-post-processing]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/huggingface-course-tokenizer-pedagogical-audit-2026-11-19.md]
 
   - id: philip-gage-byte-pair-compression-1994
@@ -958,7 +958,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, ecosystem:tiktoken]
-      concept_ids: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token]
+      concept_ids: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
@@ -990,7 +990,7 @@ sources:
           - "Rust CoreBPE internals and full repository behavior remain outside this bounded audit."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
-      concepts: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token]
+      concepts: [token, tokenizer, tokenization, byte-level-encoding, byte-pair-encoding, tokenizer-training, token-decoding, special-token, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/tiktoken-implementation-audit-2026-11-19.md]
 
   - id: karpathy-minbpe
@@ -1011,7 +1011,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, ecosystem:python]
-      concept_ids: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility]
+      concept_ids: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
@@ -1048,7 +1048,7 @@ sources:
           - "Static source inspection only; no tests, execution, performance comparison or independent compatibility reproduction."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility]
+      concepts: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/minbpe-exercises-tests-audit-2026-11-19.md]
 
   - id: huggingface-tokenizers-pipeline-docs
@@ -1069,7 +1069,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, ecosystem:huggingface]
-      concept_ids: [token, tokenizer, tokenizer-pipeline, text-normalization, pre-tokenization, token-decoding, special-token]
+      concept_ids: [token, tokenizer, tokenizer-pipeline, text-normalization, pre-tokenization, token-decoding, special-token, token-encoding, token-post-processing]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation]
@@ -1109,7 +1109,7 @@ sources:
 
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token, tokenizer, tokenizer-pipeline, text-normalization, pre-tokenization, token-decoding, special-token]
+      concepts: [token, tokenizer, tokenizer-pipeline, text-normalization, pre-tokenization, token-decoding, special-token, token-encoding, token-post-processing]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
 
   - id: google-sentencepiece-documentation
@@ -1130,7 +1130,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:unigram, method:bpe, ecosystem:sentencepiece]
-      concept_ids: [token, tokenizer, tokenizer-pipeline, text-normalization, subword-tokenization, byte-pair-encoding, unigram-tokenization]
+      concept_ids: [token, tokenizer, tokenizer-pipeline, text-normalization, subword-tokenization, byte-pair-encoding, unigram-tokenization, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation]
@@ -1149,7 +1149,7 @@ sources:
           - "Not every normalization option or implementation detail was audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token, tokenizer, tokenizer-pipeline, text-normalization, subword-tokenization, byte-pair-encoding, unigram-tokenization]
+      concepts: [token, tokenizer, tokenizer-pipeline, text-normalization, subword-tokenization, byte-pair-encoding, unigram-tokenization, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-tokenizer-algorithms-summary
@@ -1928,7 +1928,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:tokenization, topic:token-embedding, topic:contextualized-representations]
-      concept_ids: [token, tokenizer, tokenization, tokenizer-pipeline, multilingual-tokenization, tokenizer-evaluation]
+      concept_ids: [token, tokenizer, tokenization, tokenizer-pipeline, multilingual-tokenization, tokenizer-evaluation, token-encoding]
     metadata:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
@@ -1948,7 +1948,7 @@ sources:
           - "No external image reuse rights were established."
     related:
       pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
-      concepts: [token, tokenizer, tokenization, tokenizer-pipeline, multilingual-tokenization, tokenizer-evaluation]
+      concepts: [token, tokenizer, tokenization, tokenizer-pipeline, multilingual-tokenization, tokenizer-evaluation, token-encoding]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: vizuara-tokenization-from-scratch-bpe
