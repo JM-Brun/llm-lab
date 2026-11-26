@@ -382,3 +382,20 @@ Après la réparation du wrapper, `main` a avancé avec le commit `1216d5fca5ad0
 Des exécutions CI, Quarto et secret scanning ont été déclenchées sur `9de7c9e6a7867df558020add0a9e2f70fffdb17c`. Leurs résultats doivent être relus sur ce SHA précis. Les runs sur les commits intermédiaires `2d62cc1` et `0c38118` sont `action_required` car ils ont été créés par le bot pendant la régénération ; les runs sur les parents antérieurs échouent encore sur les anciens artefacts et ne sont pas représentatifs de l'état final.
 
 Ne pas fusionner avant que la suite complète, le rendu Quarto/audit navigateur, les contrôles Python/domain et le secret scanning soient tous réussis sur le SHA final.
+
+
+## 14. Intégration de la PR #1720 et nouvelle régénération — 2026-11-26
+
+`main` a avancé après la réconciliation précédente avec la PR #1720 (workflow documentaire, pilote de page sur l'attention et exercices associés). Cette mise à jour touchait notamment les deux fragments `generated-map-data`.
+
+- Commit intégré : `3f89245581ae276f67b93d0f77e053df350cc745`.
+- Commit de fusion à deux parents : `61add5765e17f81caaa25681119c895945b6cba6`.
+- Les changements source intégrés comprennent le workflow documentaire, les synthèses QKV/attention, les leçons et exercices FR/EN sur l'attention.
+- Les artefacts de carte ont été régénérés à partir de l'arbre fusionné avec `site/tools/build_learning_map.py`, via l'environnement Python 3.12 de Quarto.
+- Commit de génération : `2f296c49ad896553af05b726981b958f247dfbc1`.
+- L'étape temporaire du workflow et la permission `contents: write` ont de nouveau été retirées ; le workflow est revenu à `contents: read`.
+- La vérification de structure confirme que les deux cartes gardent le parent Language modeling et la section sœur Mathematical tools ; les pages Zipf restent classées `text-tokenization`.
+
+État de branche après nettoyage : `8b010bcde2f007b14e79574c4c4f31683c503b3c`, en avance de 73 commits et en retard de 0 sur `main`; GitHub indique `mergeable: true`.
+
+Les runs déclenchés sur le commit de génération par le bot sont `action_required`. Les validations antérieures ne couvrent pas cette dernière intégration. Une suite CI, un rendu Quarto/audit navigateur et un secret scanning doivent être constatés sur la tête finale après nettoyage. Ne pas fusionner avant leur succès.
