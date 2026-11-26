@@ -107,7 +107,8 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
         else "Architecture comparison (optional)"
     )
     optional_sections = [
-        item for item in understand["contents"]
+        item
+        for item in understand["contents"]
         if isinstance(item, dict) and "section" in item
     ]
     assert optional_sections == [
