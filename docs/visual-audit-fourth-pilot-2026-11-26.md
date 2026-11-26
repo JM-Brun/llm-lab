@@ -1,6 +1,6 @@
 # Visual audit pilot — prediction and inference (2026-11-26)
 
-**Scope:** EN/FR Understand lessons for logits, probabilities, entropy, generation and in-context learning.  
+**Scope:** EN/FR Understand lessons for logits, probabilities, entropy, generation and in-context learning, plus adjacent core visuals for the LLM overview, Q/K/V and the training loop.  
 **Status:** source-level audit and responsive changes completed; Quarto build and browser rendering remain unverified.
 
 ## Decisions
@@ -12,8 +12,19 @@
 | Entropy | A three-distribution comparison (certain, running example, uniform) with probability bars and entropy values | **Retain; add mobile composition** | This visual directly compares distribution spread and entropy, a relationship not conveyed as clearly by the equation alone. The existing 1200 px layout needs a vertical mobile version. |
 | Generation | A responsive prefill/decode timeline with causal mask, first next-token distribution, incremental decode, EOS/length/application stopping and optional KV cache | **Retain** | The figure already has EN/FR desktop/mobile compositions and supports the central prefill-versus-decode distinction. No extra figure is justified. |
 | In-context learning | A Mermaid flowchart separating prompt/RAG context at inference with fixed parameters from fine-tuning data and optimizer-driven parameter updates | **Retain** | The diagram addresses the main misconception (contextual adaptation vs. weight update) and the surrounding prose/table supply the definitions. Another static image would be redundant. |
+| LLM overview | A six-stage horizontal generation diagram plus an EN/FR responsive diagram of the three uses of the predictive distribution | **Add mobile composition to the six-stage diagram; retain the three-uses figure** | The six-stage diagram is 1600 px wide and would become unreadable when scaled to a phone. The three-uses figure already has a vertical mobile composition. The stage for positional information also needed architecture-dependent wording. |
+| Q/K/V | Responsive overview of X → Q/K/V → scores/weights → V aggregation, plus responsive S/A/O matrix comparison | **Retain** | The two diagrams answer different questions: computational path and matrix shapes/roles. Both already have mobile variants and their captions distinguish scores from normalized attention weights. No third diagram is needed. |
+| Training loop | Responsive training-update flow with held-out validation branch, plus a responsive optional optimizer comparison | **Retain** | The first visual distinguishes forward/loss/backprop/update from validation without gradients; the second is appropriately kept in the optimizer deepening section. Both already have mobile variants. |
 
 ## Changes made
+
+### LLM overview
+
+- Added EN/FR mobile variants for the six-stage autoregressive computation diagram.
+- Replaced the bare Markdown image with a responsive `picture` and a page-level alt text/caption.
+- Changed the third stage from a generic “embeddings + position” statement to “initial representations”; the caption/diagram now state that positional handling depends on the architecture.
+- The mobile feedback loop returns to stage 3 (initial representations) after the selected token is appended, not to the Transformer block directly.
+- The example distribution matches the desktop diagram in each language.
 
 ### Logits
 
@@ -35,6 +46,8 @@
 
 ## New assets
 
+- `llm-generation-process-en-mobile.svg`
+- `llm-generation-process-fr-mobile.svg`
 - `logits-common-shift-en-mobile.svg`
 - `logits-common-shift-fr-mobile.svg`
 - `entropy-distributions-en-mobile.svg`
@@ -47,12 +60,15 @@ All four SVGs were authored for this contribution and include SVG `title` and `d
 - EN/FR logits and entropy pages use matching mobile variants through responsive `picture` elements.
 - Each updated figure has one page-level alt text and a caption.
 - The French mobile labels use decimal commas and localized descriptions.
+- The LLM overview diagram now has EN/FR mobile variants; the feedback loop returns to initial representations and the displayed distribution matches the desktop reference.
+- Q/K/V and training-loop diagrams were inspected at source level; their EN/FR mobile variants already exist, so no duplicate assets were added.
 - The probability-page no-new-figure decision is explicit and grounded in its table/flow plus the entropy comparison.
 - Existing generation responsive figures and ICL Mermaid flow are retained.
 
 ## Not yet validated
 
 1. Run the normal Quarto build and resolve any source, HTML or asset-path failures.
+2. Inspect the LLM overview mobile diagram at a narrow viewport; confirm the six cards, feedback loop and illustrative distribution remain legible.
 2. Inspect the logits and entropy figures at desktop and narrow mobile widths; check labels, bars, wrapping, vertical length and caption placement.
 3. Inspect the Mermaid ICL diagram on mobile and confirm the two subgraphs remain readable without horizontal overflow.
 4. Verify the accessibility tree: page-level alt text, SVG title/description and captions should not be announced redundantly.
