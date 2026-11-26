@@ -65,8 +65,8 @@ stages:
           fr: "Suivre le passage du texte aux IDs et expliquer ce qui varie entre deux tokenizers."
           en: "Trace text to IDs and explain what can change between two tokenizers."
     optional_pages:
-      fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation]
-      en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation]
+      fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation, fr/tokenizer-multilingual-evaluation]
+      en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation, en/tokenizer-multilingual-evaluation]
 
   - id: representations
     title:
