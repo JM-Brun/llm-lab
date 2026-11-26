@@ -28,6 +28,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:adva
 A tokenizer splits text into units the model can process. Longer units often reduce the number of positions, but they enlarge the vocabulary and can increase other costs. The best choice is therefore not the one that produces the fewest tokens at any price: it is the one that balances representation, compute resources, and quality for the intended use.
 :::
 
+*LLM Lab Advent Calendar 2026 · Door 3 · about 15 minutes*
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - explain how vocabulary size interacts with model parameters and training budgets;
