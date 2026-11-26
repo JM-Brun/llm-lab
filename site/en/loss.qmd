@@ -90,7 +90,7 @@ In causal language modeling, the indexing convention must be explicit. With the 
 <figure id="fig-loss-and-attention-masks">
   <picture>
     <source media="(max-width: 600px)" srcset="../images/loss-en-mobile.svg">
-    <img src="../images/loss-en.svg" alt="Two distinct masks: the causal mask determines which positions a query can see, while the loss mask includes three valid targets and ignores PAD. The mean is computed over the three valid losses." style="width:100%;height:auto">
+    <img src="../images/loss-en.svg" alt="Two distinct masks: the causal matrix uses rows for queries and columns for keys to show visible positions; the loss mask includes three valid targets and ignores PAD. The mean is computed over the three valid losses." style="width:100%;height:auto">
   </picture>
   <figcaption>The attention mask controls visibility during computation; the loss mask controls which targets are counted. An ignored position is excluded from both numerator and denominator, but this mask alone does not determine whether its content can influence other positions.</figcaption>
 </figure>
