@@ -43,7 +43,7 @@ A model completes the prefix “The capital of France is…” by assigning prob
 | `Marseille` | $0.05$ |
 | `Lille` | $0.05$ |
 
-![Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution width=95%}
+![](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution fig-alt="Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits." width=95%}
 
 Suppose the observed text nevertheless continues with `Lyon`. The model assigned this token probability $0.10$. Its surprisal is:
 
