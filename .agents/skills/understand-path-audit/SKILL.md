@@ -39,6 +39,7 @@ Read the relevant current versions before auditing; do not reproduce their rules
 - `docs/page-metadata-schema.md`: page IDs, tags, language parity and navigation metadata.
 - `docs/page-template-system.md`, `docs/page-template-guide.md`: soft composition targets, not mandatory outlines.
 - `docs/design-system.md`: shared visual and interaction rules.
+- `docs/pedagogical-visual-design-process.md`: decision, design, placement, caption, alt-text, responsive and validation contract for explanatory visuals.
 - `docs/reader-experience-and-editorial-method.md`: progressive disclosure, page roles, meaningful links, editorial economy and self-checks.
 - `docs/pedagogical-breadcrumb-and-page-navigation-contract.md`: breadcrumb and navigation behavior.
 - `docs/roadmap.md` and `docs/project-status.md`: planned versus implemented content.
@@ -181,6 +182,18 @@ Classify differences as:
 3. **Inconsistency with reader cost** that should be harmonized.
 
 Never standardize away a useful page-specific explanatory form just to make outlines match.
+
+### 6. Audit visual explanations as designed teaching material
+
+Use the canonical [Pedagogical visual design and review process](../../docs/pedagogical-visual-design-process.md) for every substantive figure decision. Do not merely count images or check whether a page contains an SVG.
+
+For each page, inventory existing figures and candidate gaps. For every core visual, assess its learner question, explanatory contribution, scientific fidelity, visual form, placement, caption, alternative text, FR/EN parity, responsive behavior and asset provenance. Search the page, neighbouring lessons and asset register before proposing a new figure. Where a gap is found, explicitly decide add, reuse, revise, keep prose/math/table, or defer.
+
+A new visual must earn its place: identify the specific learner obstacle it resolves and the new understanding it makes visible. Explore alternative representations for difficult concepts, consult authoritative sources for ideas, and distinguish inspiration from permission to reuse source artwork. Check that arrows, axes, dimensions, colors and visual metaphors have unambiguous semantics. Place the figure at the point of need, introduce it in the prose, write a takeaway caption and useful alt text, and provide a textual equivalent for complex figures.
+
+Review each figure locally, in its page context and across the route. Keep conceptual maps, computation/data-flow diagrams, architecture diagrams and curriculum sequences distinct. Preserve the canonical shared predictive model in issue #575: generation, observed-token scoring and learning are separate uses of the predictive distribution; Q/K/V projections occur inside Transformer attention blocks.
+
+For each accepted change, update the visual asset register and record rationale, sources, provenance/licence status and validation evidence. Verify rendered desktop/mobile behavior where browser access exists. If only source inspection or a Quarto build was possible, state that limitation; do not claim visual inspection or learning impact without corresponding evidence.
 
 ### 6. Verify the actual reader experience
 

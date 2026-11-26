@@ -5,6 +5,8 @@
 **Scope:** visual files under `site/images/` and externally hosted image assets embedded by the published Quarto pages.  
 **Status:** initial source-level inventory; not a legal opinion, exhaustive rendered-DOM audit, or browser visual inspection.
 
+**Pedagogical review contract:** [Pedagogical visual design and review process](pedagogical-visual-design-process.md). This document tracks assets and provenance; the companion process decides whether a visual earns its place, how it should be designed and placed, and how its caption, alternative text and rendered behavior are validated.
+
 ## Preservation and decision rule
 
 An unknown, unclear, or restrictive licence is an audit finding—not an automatic instruction to remove an illustration. Keep existing illustrations in place while the exact asset, provenance, licence/permission evidence, and intended use are investigated. Do not remove, replace, hide, or disable an existing external illustration solely because rights are uncertain. A later change requires a separate, explicit, documented decision.
