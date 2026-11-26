@@ -156,14 +156,16 @@ Peters et al. (2018) introduisent ELMo (*Embeddings from Language Models*), dont
 
 ### Une mesure de la contextualité et ses limites géométriques
 
-Ethayarajh (2019) étudie ELMo, BERT et GPT-2. Dans les configurations étudiées, les représentations du même mot dans des contextes différents restent en moyenne plus proches entre elles que celles de mots différents, mais cette auto-similarité diminue dans les couches supérieures. L'auteur rapporte également qu'en moyenne moins de 5 % de la variance des représentations contextualisées est expliquée par une représentation statique du mot.
+Ethayarajh (2019) étudie ELMo, BERT et GPT-2. Après correction de l'anisotropie, les représentations d'un même mot dans des contextes différents restent en moyenne plus proches entre elles que celles de mots différents, mais cette auto-similarité diminue dans les couches supérieures.
+
+L'article rapporte aussi une **Maximum Explainable Variance (MEV) moyenne inférieure à 5 %** dans les couches étudiées, après ajustement de l'anisotropie. La MEV estime la proportion de variance des représentations d'un mot expliquée par leur première composante principale ; elle fournit une borne supérieure à ce qu'un unique vecteur statique pourrait expliquer dans ce protocole. Ce n'est donc ni une mesure brute de variance, ni une comparaison directe avec n'importe quel embedding statique pré-entraîné.
 
 Deux précautions sont essentielles :
 
-- ce résultat est une mesure agrégée sur les modèles, couches et données étudiés en 2019 ; ce n'est pas une constante universelle applicable à tout LLM ;
-- les représentations sont anisotropes : une similarité cosinus élevée entre deux vecteurs ne suffit donc pas à établir qu'ils portent le même sens.
+- ce résultat est agrégé sur les modèles, couches et données étudiés en 2019 ; ce n'est pas une constante universelle applicable à tout LLM ;
+- les représentations sont anisotropes : une similarité cosinus brute élevée peut provenir de cette géométrie et ne suffit pas à établir que deux vecteurs portent le même sens.
 
-La mesure confirme que le contexte contribue fortement aux représentations observées dans ces modèles ; elle ne prouve pas que chaque sens humain corresponde à une région géométrique distincte.
+La mesure indique que, selon ce protocole, un vecteur statique explique peu la variabilité des occurrences d'un mot ; elle ne prouve pas que chaque sens humain corresponde à une région géométrique distincte.
 
 ### Des informations linguistiques réparties entre les couches
 
