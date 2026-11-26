@@ -1,7 +1,7 @@
 ---
 title: "Des identifiants aux vecteurs : les embeddings"
-subtitle: "Comment un ID sélectionne une ligne apprise — et pourquoi cette ligne n'est pas une coordonnée"
-description-meta: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
+subtitle: "Comment une séquence d’IDs sélectionne des lignes apprises, dans l’ordre"
+description-meta: "Suit une séquence d’IDs jusqu’aux lignes ordonnées de la matrice de plongements, distingue position, identifiant et vecteur, puis situe le lookup avant le traitement positionnel et la contextualisation."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
-summary: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
-scope: "Montre comment un ID indexe une ligne apprise de la matrice de plongements."
-purpose: "Pour un ID donné, retrouver la ligne du plongement initial et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs."
+summary: "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions."
+scope: "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés."
+purpose: "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"
@@ -30,14 +30,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-fr-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaque ID permet de retrouver un vecteur appris dans une table de paramètres : la **matrice de plongements** (*embedding matrix*). Cet accès à la table s’appelle le **lookup**.
+Après la tokenisation, le modèle reçoit une séquence ordonnée d’**IDs entiers**. Chaque ID sélectionne une ligne de la **matrice de plongements** (*embedding matrix*) et le vecteur appris qui y est stocké : c’est le **lookup**. Les valeurs de cette matrice sont des paramètres du modèle, ajustés pendant l’entraînement ; le tokenizer fournit les IDs, mais ne calcule pas ces vecteurs.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
+
 - expliquer comment un Token ID sélectionne une ligne de la matrice de plongements ;
-- distinguer l'adresse de ligne du vecteur qui occupe cette ligne ;
-- expliquer pourquoi deux occurrences du même ID partagent le même vecteur initial, mais peuvent ensuite avoir des états contextualisés différents.
+- distinguer la position dans la séquence, l’ID et le vecteur sélectionné ;
+- retrouver dans l’ordre les vecteurs d’une séquence d’IDs et justifier pourquoi les occurrences d’un même ID partagent le même vecteur initial à table fixée.
 :::
 
 ## Le point de départ : le préfixe fourni au modèle
@@ -59,7 +60,15 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 
 La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 
-Pour calculer les lignes et les vecteurs à la main, remplaçons la sortie GPT-2 du préfixe par la séquence jouet `[17, 42, 8, 17]`. Dans l’[exercice sur le lookup](exercises-text-data.qmd#ex-text-data-embedding-lookup), le tokenizer jouet associe le token `chat` à l’ID 17 aux positions 0 et 3. Le modèle lit deux fois la ligne $E_{17,:}$. Cette ligne contient un vecteur. Les positions 0 et 3 indiquent où chaque occurrence se trouve dans la séquence.
+Pour calculer les lignes et les vecteurs à la main, distinguons maintenant la sortie GPT-2 du préfixe de la séquence jouet `[17, 42, 8, 17]` utilisée dans l’[exercice sur le lookup](exercises/text-data.qmd#ex-text-to-embedding-lookup). Le tokenizer jouet découpe « chat suit le chat » en quatre tokens. Avec une indexation des positions à partir de zéro, la position $t$ indique le rang dans la séquence, tandis que $i_t$ désigne l’ID présent à cette position. Le lookup lit donc, dans l’ordre, les lignes $E_{17,:}$, $E_{42,:}$, $E_{8,:}$ et $E_{17,:}$.
+
+| Position $t$ | 0 | 1 | 2 | 3 |
+|---|---:|---:|---:|---:|
+| ID $i_t$ | 17 | 42 | 8 | 17 |
+| Ligne sélectionnée | $E_{17,:}$ | $E_{42,:}$ | $E_{8,:}$ | $E_{17,:}$ |
+| Vecteur obtenu | $(2,-1)$ | $E_{42,:}$ | $E_{8,:}$ | $(2,-1)$ |
+
+Dans l’exercice, le vecteur jouet de la ligne 17 est fixé à $(2,-1)$ pour pouvoir suivre les deux occurrences de `chat` jusqu’à l’étape positionnelle. Cette valeur est illustrative : elle ne correspond pas à une ligne extraite des poids réels de GPT-2. Les deux occurrences lisent exactement le même vecteur parce qu’elles utilisent le même ID et la même table. Les vecteurs des lignes 42 et 8 restent symboliques ici ; l’exercice permet de raisonner sur leur ordre sans inventer leurs valeurs.
 
 ![Du préfixe au vecteur : l'ID sélectionne une ligne de la matrice, puis le vecteur de cette ligne peut être représenté comme un point dans l'espace.](../images/embedding-lookup-fr.svg){fig-alt="Le préfixe est découpé en tokens. Un token reçoit un ID i, utilisé comme indice ou adresse de ligne pour sélectionner la ligne i de la matrice E. Cette ligne contient un vecteur de d nombres, représentable comme un point dans l'espace de plongement. L'adresse de ligne et le point sont deux objets différents." fig-cap="Le Token ID sert à retrouver une ligne dans la table ; le vecteur contenu dans cette ligne est l'objet représenté dans l'espace vectoriel." width=100%}
 
@@ -90,18 +99,19 @@ $$
 - $d$ est la dimension des vecteurs d'embedding.
 - $E_{i,:}$ désigne toutes les composantes de la ligne $i$.
 
-Pour une séquence d'IDs $(i_1,\ldots,i_T)$, le lookup s'applique à chaque position, dans le même ordre :
+Pour une séquence d'IDs $(i_0,\ldots,i_{T-1})$, le lookup s'applique à chaque position $t$, dans le même ordre :
 
-$$
+$
 X = \begin{bmatrix}
+E_{i_0,:} \\
 E_{i_1,:} \\
 \vdots \\
-E_{i_T,:}
+E_{i_{T-1},:}
 \end{bmatrix}
 \in \mathbb{R}^{T \times d}
-$$
+$
 
-$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant tout traitement dépendant de la position propre à l'architecture.
+$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Pour l’exemple $[17,42,8,17]$, $T=4$ et la sortie a donc la forme $(4,d)$. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant tout traitement positionnel. La position $t$, l’ID $i_t$ et le vecteur $E_{i_t,:}$ désignent trois objets distincts.
 
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
