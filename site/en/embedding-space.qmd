@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap brings together the lesson's three distinctions: an ID is a row address, the row stores a static vector of dimension d, and Transformer layers then produce position- and context-dependent states. Three answered questions and guided exploration reinforce the recap."
+      note: "The recap brings together the lesson's three distinctions: an ID is a row address, the row stores a static vector of dimension d, and Transformer layers then produce position- and context-dependent states. Three answered questions, five recall cards on the dedicated Practice page, and guided exploration reinforce the recap."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
@@ -61,7 +61,7 @@ For a controlled, single-speaker continuation used to trace next-token mechanics
 
 The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
-To work out the rows and vectors by hand, switch from the GPT-2 prefix output to the toy sequence `[17, 42, 8, 17]`. In the [lookup exercise](exercises/text-data.qmd#ex-text-to-embedding-lookup), the toy tokenizer assigns the token `cat` ID 17 at positions 0 and 3. The model reads row $E_{17,:}$ twice. That row contains a vector. Positions 0 and 3 identify where each occurrence appears in the sequence.
+To work out the rows and vectors by hand, switch from the GPT-2 prefix output to the toy sequence `[17, 42, 8, 17]`. In the [lookup exercise](exercises-text-data.qmd#ex-text-data-embedding-lookup), the toy tokenizer assigns the token `cat` ID 17 at positions 0 and 3. The model reads row $E_{17,:}$ twice. That row contains a vector. Positions 0 and 3 identify where each occurrence appears in the sequence.
 
 ![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
@@ -103,9 +103,11 @@ E_{i_T,:}
 \in \mathbb{R}^{T \times d}
 $$
 
-$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. If an ID occurs twice, the corresponding rows of $X$ are identical before positional information is added.
+$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. If an ID occurs twice, the corresponding rows of $X$ are identical before the architecture applies any position-dependent processing.
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
+
+The tokenizer fixes the vocabulary and the token-to-ID mapping; it does not provide the values of $E$. Those values are **learned network parameters**: they are initialized and then adjusted during training. When an example uses ID $i$, the loss gradient can contribute to updating row $E_{i,:}$. Lookup selects that row; it does not compute its contents.
 
 ## From the initial vector to a contextualized representation
 
@@ -145,8 +147,6 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - **Deepen:** [mathematical tools and representation geometry](deepen.qmd#mathematical-tools-and-geometry), including the history of static word vectors, cosine similarity, and the limits of geometric interpretations.
 
 ### Where do the table values come from?
-
-The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters. Gradients from training examples also flow through the lookup operation, so the rows selected by those examples' IDs can be updated during training.
 
 The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
 
