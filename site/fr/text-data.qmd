@@ -83,6 +83,14 @@ La distinction devient importante lorsqu'on modifie une seule chose :
 
 **À retenir :** le tokenizer définit l'interface symbolique entre le texte et le modèle ; la table d'embeddings transforme ensuite les IDs en vecteurs. La contextualisation appartient aux calculs ultérieurs du réseau, pas au tokenizer.
 
+## Le tokenizer fait partie du contrat du modèle
+
+Un ID n'est interprétable qu'avec le vocabulaire qui l'a attribué. Si le vocabulaire contient $V$ tokens, la matrice d'embeddings possède généralement $V$ lignes et $d$ colonnes : l'ID $i$ sélectionne la ligne $E_i$. Dans un modèle de langage autorégressif, la projection de sortie produit elle aussi $V$ logits ; l'indice d'un logit désigne un token du même vocabulaire. L'interface relie donc l'entrée du réseau à ses classes de sortie.
+
+Un checkpoint ne se résume pas à ses tenseurs de poids : il doit être accompagné du vocabulaire et de la configuration du tokenizer correspondants. Le même entier peut désigner un autre fragment dans un autre tokenizer. Changer de tokenizer sans adapter les paramètres indexés par le vocabulaire ferait lire au modèle les mauvais vecteurs et associer ses logits aux mauvais tokens. C'est pourquoi il faut conserver ensemble les poids et les fichiers exacts du tokenizer.
+
+Certains tokenizers ajoutent aussi des **tokens spéciaux** (par exemple un marqueur de fin ou un séparateur). Ce sont des IDs réservés, pas de simples mots visibles ; ils peuvent occuper des positions dans la séquence. Leur rôle et leur graphie dépendent du modèle. Les conventions sont détaillées dans [Stratégies de tokenisation](tokenization-strategies.qmd).
+
 ::: {.callout-tip title="Token, ID et plongement" #revision-summary}
 Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
 :::
@@ -108,6 +116,8 @@ Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace repr
 - **Capacité.** Une fenêtre de contexte donnée (par exemple 8 000 tokens) admet une quantité de texte qui varie selon le découpage. Plus le texte occupe de tokens, moins il reste de place pour l'historique, les instructions, les documents récupérés, les descriptions d'outils ou la réponse. Le calcul du budget dépend du modèle et de l'API. [Ingénierie du contexte](context-engineering.qmd).
 - **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
 - **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+
+**Ordre de grandeur.** Supposons qu'un même passage occupe 1 000 tokens avec un tokenizer et 1 200 avec un autre. Dans une fenêtre de 8 192 tokens, cela représente respectivement environ 12,2 % et 14,6 % du budget. Pour une attention dense complète, le nombre de paires de positions à comparer croît comme $T^2$ : une séquence 20 % plus longue implique environ 44 % de paires supplémentaires ($1{,}2^2=1{,}44$). Ce n'est pas une prédiction directe du temps d'exécution : les noyaux d'attention, le cache, le padding des lots et l'architecture modifient le coût réel. Le nombre de tokens reste néanmoins un indicateur opérationnel important.
 
 [Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
