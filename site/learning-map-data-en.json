@@ -2489,12 +2489,8 @@
         "1. Vocabulary size: architecture and budget",
         "2. System cost: sequences, vocabulary, and compute",
         "Worked example: fewer positions, larger vocabulary",
-        "Which budget is held fixed?",
         "3. Quality: what the metrics can establish",
-        "Measuring representation without conflating length and quality",
-        "4. Comparing and deciding under constraints",
-        "Reproduce an inspection with a real tokenizer",
-        "Build a defensible decision"
+        "Measuring representation without conflating length and quality"
       ],
       "route": {
         "previous": null,
