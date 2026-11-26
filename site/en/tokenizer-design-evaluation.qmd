@@ -1,6 +1,7 @@
 ---
-title: "Designing and evaluating a tokenizer"
-subtitle: "Vocabulary size, budgets, metrics, and multilingual equity"
+title: "The tokenizer as a compression engineer"
+subtitle: "Shorter sequences without shifting costs elsewhere"
+description-meta: "Understand the trade-off between vocabulary size, sequence length, system cost, and downstream quality."
 keywords: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
@@ -24,7 +25,7 @@ tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:adva
 
 {{< include ../includes/generated-guided-context-en-tokenizer-design-evaluation.qmd >}}
 ::: {.chapter-lead}
-Understanding how a tokenizer segments text is not enough to select one or compare systems. Vocabulary size affects both sequence length and some model costs; compression metrics do not summarize downstream quality or differences across languages. This page brings together the design and evaluation questions that require a more advanced level of analysis.
+A tokenizer splits text into units the model can process. Longer units often reduce the number of positions, but they enlarge the vocabulary and can increase other costs. The best choice is therefore not the one that produces the fewest tokens at any price: it is the one that balances representation, compute resources, and quality for the intended use.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
@@ -35,28 +36,21 @@ By the end of this page, you will be able to:
 - interpret metrics and studies of multilingual disparities with appropriate caution.
 :::
 
-## WordPiece and Unigram: detailed mechanisms
+## One text, three segmentations
 
-The [Tokenization strategies](tokenization-strategies.qmd) page already introduces the essential conceptual differences between BPE, WordPiece, and Unigram. This section revisits them only to examine training and encoding procedures in more depth, including implementation caveats.
+Take two occurrences of the same word: **unbelievable unbelievable**. To isolate the effect of segmentation, compare three schematic segmentations. They are constructed for explanation; they do not claim to reproduce any production tokenizer.
 
-### How WordPiece differs from BPE
+| Segmentation | Sequence for the two occurrences | Token positions | Distinct units in this toy vocabulary |
+|---|---|---:|---:|
+| Characters | `u n b e l i e v a b l e` × 2 | 24 | 8 |
+| Subwords A | `un · believable` × 2 | 4 | 2 |
+| Subwords B | `un · believ · able` × 2 | 6 | 3 |
 
-In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
+Character-level segmentation uses few distinct entries but produces a long sequence. Subwords shorten the sequence by adding vocabulary units. This example measures neither bit-level compression nor model quality: it makes a representation trade-off visible.
 
-$$\operatorname{score}(a,b)=\frac{f(ab)}{f(a)\,f(b)}$$
+In a Transformer, fewer positions can reduce sequence-processing cost, including attention cost. A larger vocabulary, however, increases the size of the embedding tables and, depending on the architecture, the output projection. **Reducing the token count therefore does not automatically make the whole system cheaper.**
 
-where frequencies are estimated from the training corpus. This favours a pair whose joint frequency is high relative to the frequencies of its parts; it is not simply the most frequent pair, as in basic BPE. **Caveat:** Google's original WordPiece training procedure is not fully specified in a public reference implementation. Hugging Face presents its account as a reconstruction, so this formula is explanatory rather than a guarantee that every WordPiece trainer uses exactly this procedure.
-
-At encoding time, common WordPiece implementations use greedy **longest-match-first** search over the vocabulary. In BERT-style tokenizers, continuation pieces are conventionally prefixed with `##`. If the complete input word cannot be segmented under the configured rules, a tokenizer such as BERT may emit one `[UNK]` for the whole word rather than retain a partial segmentation. These are implementation conventions, not universal properties of every WordPiece tokenizer.
-
-See the [Hugging Face WordPiece explanation](https://huggingface.co/learn/llm-course/en/chapter6/6) and [WordPiece model documentation](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
-
-### How Unigram differs from merge-based tokenizers
-
-A Unigram tokenizer starts from a relatively large candidate vocabulary with associated probabilities. Training iteratively removes candidates whose removal causes the smallest increase in the model's loss, reducing the vocabulary toward the target size. This is pruning over a probabilistic segmentation model—not a sequence of pair merges.
-
-At encoding time, several segmentations may be possible. The Viterbi algorithm finds the highest-probability segmentation under the learned model. This contrasts with BPE's application of a learned merge order and WordPiece's common greedy longest-match procedure. See the [Hugging Face Unigram explanation](https://huggingface.co/learn/llm-course/en/chapter6/7) and [SentencePiece](https://github.com/google/sentencepiece).
-
+The design question is: which segmentation gives a good trade-off for the target languages, texts, architecture, and budget? Answering it requires understanding how segments are produced and measuring their effects beyond token count alone.
 
 ## 1. Vocabulary size: architecture and budget
 
@@ -179,6 +173,30 @@ To compare two tokenizers:
 7. Publish uncertainty, limitations, and cases where results are not comparable.
 
 **Reading rule:** token count measures length under a given tokenizer; it does not directly measure linguistic quality, model quality, or total system cost.
+
+## Deep dive: segmentation mechanisms
+
+## WordPiece and Unigram: detailed mechanisms
+
+The [Tokenization strategies](tokenization-strategies.qmd) page already introduces the essential conceptual differences between BPE, WordPiece, and Unigram. This section revisits them only to examine training and encoding procedures in more depth, including implementation caveats.
+
+### How WordPiece differs from BPE
+
+In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
+
+$$\operatorname{score}(a,b)=\frac{f(ab)}{f(a)\,f(b)}$$
+
+where frequencies are estimated from the training corpus. This favours a pair whose joint frequency is high relative to the frequencies of its parts; it is not simply the most frequent pair, as in basic BPE. **Caveat:** Google's original WordPiece training procedure is not fully specified in a public reference implementation. Hugging Face presents its account as a reconstruction, so this formula is explanatory rather than a guarantee that every WordPiece trainer uses exactly this procedure.
+
+At encoding time, common WordPiece implementations use greedy **longest-match-first** search over the vocabulary. In BERT-style tokenizers, continuation pieces are conventionally prefixed with `##`. If the complete input word cannot be segmented under the configured rules, a tokenizer such as BERT may emit one `[UNK]` for the whole word rather than retain a partial segmentation. These are implementation conventions, not universal properties of every WordPiece tokenizer.
+
+See the [Hugging Face WordPiece explanation](https://huggingface.co/learn/llm-course/en/chapter6/6) and [WordPiece model documentation](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
+
+### How Unigram differs from merge-based tokenizers
+
+A Unigram tokenizer starts from a relatively large candidate vocabulary with associated probabilities. Training iteratively removes candidates whose removal causes the smallest increase in the model's loss, reducing the vocabulary toward the target size. This is pruning over a probabilistic segmentation model—not a sequence of pair merges.
+
+At encoding time, several segmentations may be possible. The Viterbi algorithm finds the highest-probability segmentation under the learned model. This contrasts with BPE's application of a learned merge order and WordPiece's common greedy longest-match procedure. See the [Hugging Face Unigram explanation](https://huggingface.co/learn/llm-course/en/chapter6/7) and [SentencePiece](https://github.com/google/sentencepiece).
 
 ### Related work and resources
 
