@@ -14,7 +14,7 @@ scope: "Measures uncertainty in the predictive distribution for a fixed context.
 purpose: "Compare the entropy of two distributions over the same vocabulary and distinguish that average from one observed token’s surprisal."
 suggested_route:
   previous: "en/probabilities"
-  next: "en/generation"
+  next: "en/likelihood"
 hierarchy:
   parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
