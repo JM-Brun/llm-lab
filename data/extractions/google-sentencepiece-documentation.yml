@@ -84,6 +84,16 @@ items:
       assumptions: []
       limitations: ["The available configuration and behavior depend on the SentencePiece version and model."]
     technical_assessment: {status: not-reviewed, rationale: "Existing source audit reused.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Is SentencePiece itself an algorithm?"
+      explanatory_lens: "Separate a tokenizer toolkit from the model family configured within it."
+      teaching_form: [contrast, mental-model]
+      novelty: {level: moderate, rationale: "The distinction prevents a common category error."}
+      complementarity: {level: high, rationale: "It complements algorithm-focused explanations with a library-level view."}
+      pedagogical_value: {level: high, rationale: "It clarifies what a library name does and does not imply."}
+      applicability: {level: high, rationale: "Useful in the comparison of BPE, WordPiece and Unigram."}
+      redundancy: {level: low, rationale: "The library-versus-algorithm distinction is not a repeated algorithm explanation."}
+      evidence_quality: {level: moderate, rationale: "Limited to the overview and model-family documentation previously audited."}
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-library, topic:subword-tokenization]
