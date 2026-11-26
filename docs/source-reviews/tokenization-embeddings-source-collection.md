@@ -1,6 +1,6 @@
 # Tokenization and embeddings — cross-source synthesis
 
-**Current inventory snapshot (2026-11-19; validated by PRs #1347 and #1364).** The canonical catalogue contains 139 source records; `data/extractions/` contains 96 YAML extraction files and 489 atomic items. Explicit collection membership is joined only by `extraction.source_id -> source.id -> source.collections`. The validated collection counts are: `tokenization-embeddings` 25 source records / 0 extraction files / 0 atomic items; `visual-learning-tools` 6 / 0 / 0; `qkv-attention` 4 / 4 / 41. The 2 explicit empty memberships and 102 undecided sources are not included in collection totals. These are distinct inventory measures, not measures of scan completeness, claim support or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
+**Collection membership snapshot (2026-11-26).** The current `data/sources.yml` contains **32 explicit source memberships** in `tokenization-embeddings` (counted from `source.collections`). This is a source-membership count, not an extraction or quality measure. The 2026-11-19 inventory figures elsewhere in the historical record are snapshots and must not be presented as current; extraction-file and atomic-item totals must be regenerated from the repository tree with `site/tools/report_source_coverage.py`, using the canonical join `extraction.source_id -> source.id -> source.collections`. This update adds five source-specific pedagogical extractions while preserving the prior Karpathy and research extractions. No source scan is repeated. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
 
 **Status:** living source collection · **Review date:** 2026-11-18  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
@@ -36,6 +36,37 @@ The source set is selected because it was already cited, inspected or used in th
 | Token and contextualized embeddings | Mikolov; Ethayarajh; Rushang Chauhan; Raschka Ch. 2 | Static word-type vectors vs token lookup vectors, and why contextual states can vary by context even when the token ID is fixed | Equivalence between Word2Vec and Transformer embeddings, or proof that a particular attention head performs a linguistic task |
 | Sentence embeddings and geometry | Li et al.; Steck et al.; Sentence Transformers documentation | Anisotropy, sentence-level pooling/geometry, limits of raw cosine similarity, metric choice and model/API-specific behavior | Universal conclusions about every embedding model or a claim that cosine similarity directly measures semantic similarity |
 | Interactive and visual learning | Hugging Face BPE visualizer; Polo Club Transformer Explainer; Vizuara pedagogical review | Manipulable views, question-led exploration, source-code cross-checks and interactive forward-pass observation | Faithful production-tokenizer execution from every visualizer, generalization from GPT-2 small to all LLMs, or learning outcomes for LLM Lab without a separate study |
+
+### Pedagogical source coverage: what each resource explains
+
+The explanatory resources are not interchangeable. The following matrix distinguishes source content, pedagogical role and the form of metadata retained in the repository. “Extraction” means a source-local graph/route plus atomic items; an existing source review can be the appropriate representation when an extraction would duplicate claims or overstate inspected evidence.
+
+| Resource | Distinct contribution to understanding tokenization | Representation in the repository | Evidence boundary |
+|---|---|---|---|
+| Andrej Karpathy, *Let's build the GPT Tokenizer* | Unicode code points → UTF-8 bytes → byte-level BPE; pair merging; learned merge ranks; regex pre-tokenization; special tokens | Existing detailed extraction: `data/extractions/andrej-karpathy-gpt-tokenizer-video.yml` | Transcript/chapter-marker reconstruction; not a full audiovisual review |
+| Sebastian Raschka, Chapter 2 | Text units, vocabulary, token IDs, encode/decode; contrast between an educational tokenizer and a pretrained GPT-2 tokenizer | New extraction: `data/extractions/sebastian-raschka-llms-from-scratch-ch02.yml` | Reuses #96/#114; no new notebook execution or claim of exhaustive revision coverage |
+| Hugging Face LLM Course, Chapter 6 | Three concrete tokenizer constructions (BERT/WordPiece, GPT-2/BPE, XLNet/Unigram); components, trainers, corpus iterator, encoding outputs | Dedicated pedagogical audit: `huggingface-course-tokenizer-pedagogical-audit-2026-11-19.md`; no duplicate atomic extraction | Selective section audit; living course; examples were not executed |
+| Vizuara, *Tokenization from Scratch* | Teaching progression from fundamentals to inspectable notebooks/figures and a case study | New extraction: `data/extractions/vizuara-tokenization-from-scratch-bpe.yml` | Pedagogical review in #147; not a full course scan and no figure reuse rights established |
+| ByteByteGo, *How LLMs See the World* | Contrastive examples involving whitespace, punctuation, numbers, code and multilingual text | New extraction: `data/extractions/bytebytego-how-llms-see-world-2025.yml` | Selective review in #147; examples are not universal tokenizer outputs or causal evidence about reasoning |
+| Hugging Face Tokenizers documentation | Configurable encoding components: normalization, pre-tokenization, model, post-processing; decoding is separate | Existing implementation/documentation audit: `tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md`; no duplicate extraction | Version- and binding-specific API caveats; static documentation inspection |
+| OpenAI tiktoken | Difference between educational Python BPE and production native core; regex, mergeable ranks, special-token policy, offsets and tests | Dedicated implementation audit: `tiktoken-implementation-audit-2026-11-19.md`; no duplicate generic BPE extraction | Pinned static code/test inspection; tests and benchmarks were not run |
+| Karpathy minbpe | Five-step progression: minimal byte-level BPE → regex pre-tokenization → pretrained merge reconstruction → special-token policy → comparison with other families | New extraction: `data/extractions/karpathy-minbpe.yml` | Pinned static inspection; tests and training were not executed |
+| Google SentencePiece | Raw Unicode input, whitespace handling and the distinction between a tokenizer toolkit and its supported BPE/Unigram models | New extraction: `data/extractions/google-sentencepiece-documentation.yml` | Limited to the overview and normalization material recorded in the source audit |
+
+The five new extraction records are deliberately selective. The Hugging Face course and tiktoken already have source-specific reviews whose explicit decisions caution against duplicating technical claims; those reviews remain their canonical meta-representations. The source-local graph in each extraction is an editorial reconstruction, not a claim that the external author published that graph.
+
+### Cross-source concept spine
+
+The sources jointly support several related but non-identical progressions:
+
+1. **Representation:** text → Unicode code points → encoded bytes (when the tokenizer uses a byte-level base).
+2. **Tokenizer pipeline:** optional normalization → pre-tokenization → segmentation model and vocabulary → post-processing; decoding is a separate reconstruction operation.
+3. **Algorithm families:** subword tokenization → BPE / WordPiece / Unigram; BPE's pair-merging principle must not be conflated with Gage's byte-pair compression or every GPT tokenizer convention.
+4. **Tokenizer lifecycle:** corpus selection → tokenizer training/fitting → vocabulary and merge/model parameters → encoding new text → token IDs → decoding.
+5. **Model interface:** token IDs → tokenizer-compatible embedding lookup; IDs are only meaningful relative to the vocabulary and model weights they accompany.
+6. **Evaluation:** token fertility / sequence length / vocabulary size → compute and context-budget effects → downstream evaluation; multilingual averages must not hide language-specific disparities.
+
+These are projections of the knowledge graph, not one mandatory universal execution order. Corpus preparation, tokenizer fitting, ordinary encoding and model training remain distinct operations. In particular, the training corpus used to fit a tokenizer and held-out evaluation partitions must be handled according to the evaluation protocol.
 
 ## 3. Cross-source synthesis by learner question
 
