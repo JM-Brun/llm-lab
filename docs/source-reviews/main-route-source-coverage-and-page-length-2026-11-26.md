@@ -391,3 +391,136 @@ Ces vérifications sont une lecture des sections de ressources des pages concern
 - Lier une source à une page seulement si elle soutient effectivement une notion ou une explication de cette leçon. Les ressources d'implémentation et d'approfondissement doivent garder leur rôle explicite.
 - Conserver les références visibles dans les leçons : le catalogue central les complète et les rend interrogeables, il ne doit pas rendre la bibliographie visible inutilement opaque.
 - Ajouter un contrôle de cohérence qui compare les références visibles et les sources cataloguées, mais présente les différences comme une file de revue, car les formats de citation, les liens internes et les ressources facultatives ne se prêtent pas tous à une correspondance automatique.
+
+
+## 11. Architecture de la durée estimée et travail restant
+
+Cette section transforme les constats précédents en plan d'implémentation. Elle ne constitue pas encore une décision de renseigner les durées dans les pages.
+
+### 11.1 État technique vérifié
+
+Le dépôt possède déjà un format de métadonnées de page versionné (LLM-LAB-PAGE-MAP v1) et un validateur central dans site/tools/check_page_metadata.py.
+
+Le validateur :
+- extrait un unique bloc PAGE-MAP placé immédiatement après le front matter ;
+- exige actuellement les champs structurels id, scope, purpose, suggested_route, hierarchy, related et tags ;
+- vérifie notamment les relations, les identifiants, les tags contrôlés et la parité FR/EN ;
+- n'expose pas encore de contrat dédié pour une durée de lecture.
+
+Le rapport site/tools/audit_page_metadata.py charge ces métadonnées et audite le graphe documentaire. Il n'est pas aujourd'hui un estimateur de durée. Le nouveau besoin doit donc s'intégrer à l'architecture existante sans détourner le sens de ces outils.
+
+### 11.2 Contrat de données recommandé
+
+Retenir une métadonnée facultative et numérique, par exemple :
+
+    estimated_reading_minutes: 15
+
+Principes :
+- la valeur décrit le tronc principal visible de la leçon, hors exercices et approfondissements explicitement facultatifs ;
+- elle est calculée indépendamment pour chaque langue ;
+- elle est entière et arrondie, sans décimale ni fausse précision ;
+- elle reste une estimation éditoriale, pas une mesure instrumentée du temps réel ;
+- elle ne doit pas être déduite automatiquement d'une simple division du nombre de mots ;
+- son absence est autorisée tant que la méthode n'est pas calibrée.
+
+Le PAGE-MAP v1 ne doit pas être modifié implicitement. Avant d'ajouter le champ, vérifier la compatibilité du parseur, les éventuels consommateurs externes et les conventions de versionnement. Si le schéma est volontairement extensible, documenter et tester cette extensibilité ; sinon, introduire une version de schéma explicite ou un mécanisme d'extension contrôlé. Ne pas changer la version pour un champ facultatif sans vérifier les implications sur les pages existantes.
+
+L'affichage doit être produit par un mécanisme commun aux pages de leçon, avec une formulation localisée (« Durée estimée : ≈ 15 min » / « Estimated time: ≈ 15 min »). Ne pas dupliquer manuellement cette information dans le corps des 40 pages. L'emplacement exact (composant Quarto, include partagé ou mécanisme déjà utilisé par le site) reste à choisir après inspection du rendu et des conventions existantes.
+
+### 11.3 Méthode d'estimation à calibrer
+
+Le premier comptage lexical de la section 9 est un indicateur de triage. Il ne doit pas être converti mécaniquement en durée officielle.
+
+La méthode versionnée devra séparer les composantes suivantes :
+1. prose courante du tronc principal ;
+2. tableaux, listes et légendes denses ;
+3. équations et notations nécessitant une interprétation ;
+4. exemples travaillés et calculs guidés ;
+5. code à lire, distinct du code simplement fourni comme référence ;
+6. figures et schémas qui portent une partie de l'explication ;
+7. contenu facultatif (callouts repliés, détails Deepen) ;
+8. exercices, hors durée de la leçon principale.
+
+Éviter d'attribuer un coefficient arbitraire à chaque élément dès la première version. Commencer par une mesure reproductible des contenus, puis calibrer les pondérations sur quelques leçons représentatives avec une lecture réelle chronométrée ou une estimation éditoriale argumentée. Conserver les composantes brutes dans le rapport pour rendre les résultats auditables.
+
+Échantillon de calibration minimal :
+- une leçon surtout textuelle ;
+- une leçon mathématique avec équations et figures (priorité : Gradients) ;
+- une leçon avec code ou exemples techniques ;
+- une leçon riche en callouts facultatifs (Génération ou ICL).
+
+Comparer le temps estimé au temps observé, documenter les écarts et ajuster la méthode avant de calculer les 40 pages. La vitesse de lecture 130–150 mots/minute peut rester un point de départ pour la prose, pas une constante universelle appliquée à tout le contenu.
+
+### 11.4 Architecture du rapport
+
+Étendre de préférence un outil de rapport existant ou ajouter un script local unique, plutôt que créer une action CI ou un workflow par page.
+
+Le rapport devrait prendre data/guided-route.yml comme source d'autorité pour le parcours :
+- inclure les pages des étapes principales ;
+- exclure optional_pages, les pages d'exercices et les ressources de navigation ;
+- dédupliquer les identifiants ;
+- résoudre les fichiers FR et EN séparément ;
+- compter les notices canoniques uniques via data/sources.yml et related.pages ;
+- extraire séparément les références visibles et signaler les écarts à examiner ;
+- produire les composantes de longueur et la durée estimée ;
+- signaler les valeurs manquantes ou atypiques comme alertes de revue, sans faire échouer le build.
+
+Le rapport doit distinguer au minimum :
+- nombre de notices canoniques reliées ;
+- nombre de références bibliographiques visibles détectées ;
+- nombre de références visibles non réconciliées ;
+- volume de prose du tronc ;
+- contenu mathématique, code, figures et éléments facultatifs détectés ;
+- durée estimée du tronc ;
+- durée indicative des approfondissements, si elle est calculée ;
+- statut de calibration de la méthode.
+
+### 11.5 Tests et critères d'acceptation
+
+Les tests doivent vérifier :
+- sélection des seules pages du parcours principal depuis guided-route.yml ;
+- exclusion des pages optionnelles et des pages d'exercices ;
+- déduplication des pages et des sources ;
+- absence de double comptage d'une même source liée plusieurs fois ;
+- distinction entre bibliographie visible et catalogue canonique ;
+- exclusion du front matter, du PAGE-MAP, des commentaires et des URLs ;
+- traitement explicite des blocs de code, mathématiques, tableaux, callouts repliés et HTML details ;
+- calcul indépendant FR / EN ;
+- stabilité des résultats sur des fixtures représentatives ;
+- absence de seuil bloquant basé sur la durée ;
+- cohérence entre métadonnée, rapport et affichage localisé.
+
+Critère final : une modification de contenu substantielle doit pouvoir entraîner une mise à jour reproductible de l'estimation, et un contributeur doit pouvoir comprendre pourquoi une page est évaluée à cette durée.
+
+### 11.6 Plan de travail restant
+
+| Ordre | Travail | Livrable / critère de sortie |
+|---|---|---|
+| P0 | Vérifier le schéma PAGE-MAP et ses consommateurs | Décision documentée sur compatibilité, extensibilité et versionnement |
+| P0 | Réconcilier les sources des pages signalées en section 10 | Notices canoniques vérifiées et liens related.pages justifiés, sans doublons |
+| P1 | Finaliser le contenu ICL FR/EN (nuance Min/Yoo) | Paragraphe concis, symétrique sur le fond, bibliographie/catalogue réconciliés |
+| P1 | Revoir l'exemple pédagogique ICL | Comparaison zero-shot / one-shot / few-shot réellement exploitable ; aucune extension de remplissage |
+| P1 | Revoir Logits | Décision sur la source Jay Alammar et sur la courte note weight tying / untied ; aucun ajout d'illustration sans vérification de provenance |
+| P1 | Revoir Gradients | Évaluer un exemple numérique guidé et la durée réelle de lecture des équations |
+| P1 | Vérifier les frontières de niveau | Génération, Cross-entropy et Training loop : tronc Understand distinct de Build / Deepen |
+| P2 | Implémenter le rapport local | Rapport déterministe basé sur le parcours, sans action CI dédiée |
+| P2 | Ajouter les tests automatisés | Cas de sélection, extraction, bilinguisme, sources et contenus mixtes couverts |
+| P2 | Calibrer la méthode sur l'échantillon | Écarts estimé / observé documentés et méthode stabilisée |
+| P3 | Ajouter la métadonnée aux leçons FR/EN | Valeurs distinctes et justifiées, aucune valeur copiée automatiquement entre langues |
+| P3 | Ajouter l'affichage commun localisé | Durée visible une seule fois, sans bruit de métadonnées |
+| P3 | Recalculer et relire les 40 pages | Rapport final, anomalies revues manuellement, durées cohérentes |
+| P3 | Documenter la maintenance | Règle simple : quand recalculer, comment valider, comment interpréter les alertes |
+
+### 11.7 Ordre d'exécution recommandé
+
+Ne pas commencer par modifier les 40 pages. L'ordre le moins risqué est :
+
+1. stabiliser les décisions éditoriales prioritaires (ICL, Logits, Gradients et frontières Understand / Build / Deepen) ;
+2. réconcilier les références bibliographiques et le catalogue ;
+3. vérifier le contrat PAGE-MAP et choisir le point d'intégration de l'affichage ;
+4. construire le rapport local et ses tests ;
+5. calibrer l'estimateur sur quatre profils de leçons ;
+6. calculer les durées FR/EN et les soumettre à une revue humaine ;
+7. seulement ensuite renseigner les métadonnées et activer l'affichage commun.
+
+Cette séquence évite de figer des durées provisoires, de propager des valeurs erronées dans les deux langues ou de créer un outil trop complexe avant d'avoir validé son utilité.
