@@ -9,10 +9,10 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/contextualized-representations-advanced"
-summary: "Formalise les dépendances contextuelles et approfondit le fonctionnement interne des blocs Transformer : auto-attention, MLP, connexions résiduelles et normalisation."
-scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel et normalisation."
+summary: "Formalise les dépendances contextuelles, approfondit les blocs Transformer et confronte les intuitions aux résultats empiriques sur les représentations et les couches."
+scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel, normalisation, études empiriques de contextualité et probing des couches."
 domain: "architectures-mechanisms"
-purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, puis expliquer les sous-couches, les connexions résiduelles et les variantes de normalisation d'un bloc."
+purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, expliquer les sous-couches et interpréter avec prudence les résultats empiriques sur la contextualité, la géométrie et les informations décodables entre couches."
 suggested_route:
   previous: null
   next: null
