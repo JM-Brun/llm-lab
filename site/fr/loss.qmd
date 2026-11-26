@@ -108,7 +108,7 @@ Dans un modèle de langage causal, la convention d'indexation doit être explici
 <figure id="fig-loss-and-attention-masks">
   <picture>
     <source media="(max-width: 600px)" srcset="../images/loss-fr-mobile.svg">
-    <img src="../images/loss-fr.svg" alt="Deux masques distincts : le masque causal détermine les positions visibles par une requête, tandis que le masque de perte inclut les trois cibles valides et ignore PAD. La moyenne est calculée sur les trois pertes valides." style="width:100%;height:auto">
+    <img src="../images/loss-fr.svg" alt="Deux masques distincts : le masque causal indique, dans une matrice lignes = requêtes et colonnes = clés, quelles positions sont visibles ; le masque de perte inclut les trois cibles valides et ignore PAD. La moyenne est calculée sur les trois pertes valides." style="width:100%;height:auto">
   </picture>
   <figcaption>Le masque d’attention contrôle la visibilité pendant le calcul ; le masque de perte contrôle les cibles comptabilisées. Une position ignorée est exclue du numérateur et du dénominateur de la moyenne, mais ce masque ne détermine pas à lui seul si son contenu peut influencer d’autres positions.</figcaption>
 </figure>
