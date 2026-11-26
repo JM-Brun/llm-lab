@@ -273,7 +273,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:tokenization, topic:training-examples, method:bpe, ecosystem:pytorch]
-      concept_ids: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding]
+      concept_ids: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding, token-decoding]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy]
@@ -293,7 +293,7 @@ sources:
           - "The full book and unrelated chapters were not audited."
     related:
       pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/training-examples, fr/training-examples, en/embedding-space, fr/embedding-space]
-      concepts: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding]
+      concepts: [token, tokenizer, tokenization, token-vocabulary, token-id, token-embedding, tokenizer-compatibility, token-encoding, token-decoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-course-tokenizers-chapter6
@@ -1011,7 +1011,7 @@ sources:
       primary_theme: text-tokenization
       secondary_themes: []
       tags: [topic:tokenization, method:bpe, ecosystem:python]
-      concept_ids: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility, token-encoding]
+      concept_ids: [token, tokenizer, byte-pair-encoding, pre-tokenization, special-token, tokenizer-compatibility, token-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
@@ -1048,7 +1048,7 @@ sources:
           - "Static source inspection only; no tests, execution, performance comparison or independent compatibility reproduction."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token, tokenizer, byte-pair-encoding, pre-tokenization, tokenizer-compatibility, token-encoding]
+      concepts: [token, tokenizer, byte-pair-encoding, pre-tokenization, special-token, tokenizer-compatibility, token-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/minbpe-exercises-tests-audit-2026-11-19.md]
 
   - id: huggingface-tokenizers-pipeline-docs
