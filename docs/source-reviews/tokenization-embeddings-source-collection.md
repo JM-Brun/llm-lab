@@ -553,3 +553,8 @@ No new route edge, concept, prerequisite or page is justified by this audit. The
 The bilingual matrix explanation originally said that repeated IDs produce identical rows before positional information is “added”. That wording could imply that every architecture adds a positional vector directly to the token embedding. It is not architecture-neutral: RoPE acts on projected queries and keys inside attention, and relative biases can modify attention scores without adding a vector to the lookup.
 
 The FR and EN statements now say that repeated IDs yield identical rows of the initial lookup matrix before any architecture-specific position-dependent processing. This preserves the mathematical claim while leaving the location and form of positional handling to the positional-encoding lesson.
+
+
+### 9.11 Revision-support metadata parity
+
+The bilingual lesson front matter already declares the stable \`revision-summary\` anchor and describes the recall support. After adding five active-recall cards to the dedicated Practice pages, the FR/EN \`revision_support\` notes were updated to mention those cards alongside the three answered lesson questions and the guided exploration. The metadata now describes the actual support available without moving cards or exercises back into the main lesson.
