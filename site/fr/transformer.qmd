@@ -72,7 +72,13 @@ Cette représentation concerne la famille **décodeur seul**, utilisée notammen
 
 ### Situer le réseau dans la génération
 
-![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline complet : texte, tokenisation, embeddings et information positionnelle, blocs Transformer répétés, logits, softmax, sélection du prochain token puis ajout au contexte." width=100%}
+<figure id="fig-gpt-data-flow">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/gpt-data-flow-fr-mobile.svg">
+    <img src="../images/gpt-data-flow.svg" alt="Pipeline complet : texte, tokenisation, embeddings et information positionnelle, blocs Transformer répétés, logits, softmax, sélection du prochain token puis ajout au contexte." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le schéma replace la pile Transformer dans la boucle complète de génération : le token sélectionné est ajouté au contexte, puis une nouvelle prédiction est calculée avec les mêmes paramètres.</figcaption>
+</figure>
 
 Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste-au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La boucle de décodage intervient après la sortie du réseau.
 
