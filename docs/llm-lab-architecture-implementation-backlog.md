@@ -77,7 +77,7 @@ The shared-foundation inventory now separates the following roles rather than tr
 - **Relation:** family-owned typed assertion between identified endpoints. Concept, page, source-local, source-lineage, route, computation, Build, revision and Practice relations keep distinct semantics; no universal edge registry.
 - **Pedagogical objective / outcome:** owned by the relevant experience or source reconstruction. Understand objectives/outcomes live in the guided route, Build goals/evidence in the Build path, and source-local outcomes retain `declared`/`inferred` status. None proves learner mastery.
 
-[PR #1712](https://github.com/JM-Brun/llm-lab/pull/1712) consolidates this classification in `docs/knowledge-architecture-interoperability.md`. The architecture table was aligned in this branch to separate extracted claims from evidence and to avoid assigning aliases/provenance fields to the current concept schema.
+[PR #1712](https://github.com/JM-Brun/llm-lab/pull/1712) merged this classification into `docs/knowledge-architecture-interoperability.md`. The architecture table was aligned in this branch to separate extracted claims from evidence and to avoid assigning aliases/provenance fields to the current concept schema.
 
 **No new registry or schema is justified by this classification.** Remaining specialist boundaries stay with #512 (claim provenance/interoperability), #1233 (typed cross-graph bridges), #416 (concept relation semantics), #1541 (revision route), #1512 (Practice), and #78 (Build). Reconcile the handoff after #1712 is reviewed; do not create duplicate tasks or promote source-local records automatically.
 
