@@ -289,38 +289,38 @@ Un relevé complémentaire a été effectué sur les 20 pages françaises décla
 
 ### 9.1 Mesure exploratoire
 
-Le comptage distingue maintenant :
+Le comptage distingue :
 
-- **Texte total** : prose de la page, y compris les blocs repliés et les ressources HTML `details`.
-- **Tronc visible** : texte restant après retrait du front matter, des commentaires HTML, des directives d'inclusion Quarto, des blocs de code clôturés, des callouts explicitement `collapse="true"` et des éléments HTML `details`.
-- **Code** : blocs clôturés, qui doivent faire l'objet d'une estimation de lecture séparée.
-  
-Le comptage lexical reste approximatif : les composants, tableaux et formules ne sont pas interprétés sémantiquement. La fourchette ci-dessous est une **durée de lecture textuelle du tronc visible**, calculée à 130–150 mots/minute et arrondie. Elle n'inclut pas le temps d'interprétation des équations, de lecture des figures, d'exécution du code ni les exercices. C'est donc un indicateur de dépistage, pas encore la durée de leçon à afficher.
+- **Texte total** : volume lexical approximatif de la page, y compris le contenu replié.
+- **Tronc de prose** : texte visible après retrait du front matter, des commentaires HTML, des directives d'inclusion Quarto, des blocs de code clôturés, des callouts explicitement `collapse="true"`, des éléments HTML `details`, des URLs et des expressions mathématiques délimitées.
+- **Code, mathématiques et figures** : exclus du comptage lexical et à estimer séparément, car leur lecture demande un effort qui n'est pas proportionnel au nombre de mots.
 
-| Leçon (FR) | Texte total approx. | Tronc visible approx. | Sources catalogue reliées | Lecture textuelle indicative |
-|---|---:|---:|---:|---:|
-| Vue d'ensemble | 2 367 | 2 041 | 1 | 14–16 min |
-| Du texte aux tokens | 1 913 | 1 741 | 1 | 12–14 min |
-| Espace des embeddings | 1 453 | 1 188 | 2 | 8–10 min |
-| Encodage positionnel | 1 689 | 1 072 | 1 | 7–9 min |
-| Représentations contextualisées | 1 746 | 1 434 | 4 | 10–12 min |
-| Transformer | 1 934 | 1 740 | 3 | 12–14 min |
-| Queries, Keys, Values | 1 762 | 1 585 | 4 | 11–13 min |
-| Attention à produit scalaire | 2 321 | 1 368 | 4 | 9–11 min |
-| Masquage causal | 1 983 | 1 371 | 1 | 9–11 min |
-| Logits | 1 282 | 1 092 | 0 | 7–9 min |
-| Probabilités de sortie | 1 235 | 944 | 1 | 6–8 min |
-| Entropie | 1 527 | 1 264 | 0 | 8–10 min |
-| Génération | 3 245 | 2 302 | 2 | 15–18 min |
-| Apprentissage en contexte (ICL) | 1 118 | 785 | 1 | 5–7 min |
-| Ingénierie du contexte | 1 654 | 1 193 | 0 | 8–10 min |
-| Vraisemblance | 1 254 | 1 164 | 1 | 8–9 min |
-| Cross-entropy | 2 404 | 1 977 | 0 | 13–16 min |
-| Loss | 1 617 | 1 317 | 0 | 9–11 min |
-| Gradients | 1 741 | 918 | 0 | 6–8 min |
-| Training loop | 3 012 | 2 321 | 0 | 15–18 min |
+La fourchette ci-dessous est une **base de lecture textuelle** calculée à 130–150 mots/minute et arrondie. Elle ne représente pas encore la durée de leçon à afficher : elle n'inclut pas le temps d'interprétation des équations, de lecture des figures, d'exécution du code ni les exercices. La durée pédagogique réelle sera donc généralement supérieure, mais l'ampleur de cet écart doit être estimée par type de contenu et validée sur quelques leçons.
 
-Les durées textuelles basses ne sont pas des verdicts : une page comportant plusieurs équations, un exemple numérique ou un schéma peut demander plusieurs minutes supplémentaires. À l'inverse, les textes repliés ne doivent pas être inclus dans la durée du tronc principal. Les contenus de code et les exercices doivent avoir leurs propres estimations.
+| Leçon (FR) | Prose du tronc approx. | Sources catalogue reliées | Base textuelle indicative |
+|---|---:|---:|---:|
+| Vue d'ensemble | 1 997 | 1 | 13–16 min |
+| Du texte aux tokens | 1 620 | 1 | 11–13 min |
+| Espace des embeddings | 1 058 | 2 | 7–9 min |
+| Encodage positionnel | 1 050 | 1 | 7–9 min |
+| Représentations contextualisées | 1 372 | 4 | 9–11 min |
+| Transformer | 1 597 | 3 | 11–13 min |
+| Queries, Keys, Values | 1 265 | 4 | 8–10 min |
+| Attention à produit scalaire | 1 077 | 4 | 7–9 min |
+| Masquage causal | 1 190 | 1 | 8–10 min |
+| Logits | 804 | 0 | 5–7 min |
+| Probabilités de sortie | 855 | 1 | 6–7 min |
+| Entropie | 1 093 | 0 | 7–9 min |
+| Génération | 1 978 | 2 | 13–16 min |
+| Apprentissage en contexte (ICL) | 785 | 1 | 5–7 min |
+| Ingénierie du contexte | 1 192 | 0 | 8–10 min |
+| Vraisemblance | 978 | 1 | 7–8 min |
+| Cross-entropy | 1 727 | 0 | 12–14 min |
+| Loss | 1 128 | 0 | 8–9 min |
+| Gradients | 771 | 0 | 5–6 min |
+| Training loop | 1 997 | 0 | 13–16 min |
+
+Les pages Logits, Probabilités, ICL et Gradients ont une base textuelle sous ou proche de 7 minutes. Ce n'est pas encore une conclusion : Logits et Probabilités contiennent des exemples et des formules ; ICL comporte un schéma et un exemple ; Gradients contient plusieurs équations. La durée réelle doit inclure cet effort de lecture avant de décider si une leçon est sous le seuil.
 
 **Important :** le nombre de sources est celui des identifiants canoniques dont `related.pages` référence la page dans `data/sources.yml`. Ce n'est ni le nombre de références bibliographiques visibles ni le nombre de sources effectivement mobilisées. Par exemple, l'unique source reliée à ICL dans le catalogue est actuellement la vidéo générale d'Andrej Karpathy ; la page cite aussi quatre articles scientifiques visibles. La couverture catalogue ne doit donc pas être lue comme une mesure de qualité ou de profondeur bibliographique.
 
