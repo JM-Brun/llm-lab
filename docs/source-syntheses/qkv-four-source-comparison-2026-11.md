@@ -217,7 +217,7 @@ This Q/K/V lesson pair is the first end-to-end application of the seven-stage pa
 
 This pilot demonstrates the workflow's hand-offs and non-duplication decisions. It does not validate the workflow's effectiveness across all page archetypes; a second pilot should use a materially different page type, preferably a mathematical or implementation-heavy lesson.
 
-## 9. Related records
+## 10. Related records
 
 - [Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 - [Pedagogical coverage matrix](qkv-pedagogical-coverage-matrix-2026-11.md)
