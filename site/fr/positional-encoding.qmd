@@ -51,6 +51,14 @@ Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tok
 
 La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare trois points d'injection : ajout absolu à l'entrée, rotation de Q/K et biais relatif ajouté aux scores avant softmax. Le masque causal reste une contrainte de visibilité distincte.
 
+<figure id="fig-positional-entry-points">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/positional-entry-points-fr-mobile.svg">
+    <img src="../images/positional-entry-points-fr.svg" alt="Trois points d’injection : ajout d’un vecteur absolu à l’embedding avant les blocs ; rotation RoPE des requêtes et des clés après projection, sans tourner V ; ajout d’un biais relatif aux scores QK avant softmax." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Les mécanismes injectent l’information positionnelle à des endroits différents du calcul. RoPE appartient à la famille relative et agit sur Q et K ; le masque causal reste une contrainte de visibilité distincte.</figcaption>
+</figure>
+
 ### Une permutation suffit à révéler le problème
 
 Considérons les deux séquences :
@@ -69,33 +77,11 @@ Cette expérience sépare deux questions souvent confondues :
 
 Le masque causal ne remplace donc pas l'encodage positionnel. Il impose une règle de visibilité ; le mécanisme positionnel fournit un signal d'ordre ou de distance.
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
-::: {.meta-flow__source}
-<strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span>
-:::
-::: {.meta-flow__source .meta-flow__branch--active}
-<strong>Traitement de la position</strong><span>Le mécanisme dépend de l’architecture</span>
-:::
-::: {.meta-flow__comparison}
-::: {.meta-flow__comparison-item}
-<strong>Encodage absolu</strong><small>Ajouter un vecteur de position à l’embedding, puis calculer Q/K/V</small>
-:::
-::: {.meta-flow__comparison-item}
-<strong>RoPE</strong><small>Projeter Q/K, puis les faire tourner selon leur position ; V n’est pas tourné par RoPE</small>
-:::
-:::
-::: {.meta-flow__result}
-<strong>Scores d’attention sensibles à la position</strong> · [Projections Q/K/V](queries-keys-values.qmd)
-:::
-::::
+
 
 Dans le cas additif de l’exercice, la table jouet donne le même plongement $(2,-1)$ aux deux occurrences de `chat`. Le vecteur ajouté dépend de leur position. [Calculez les deux entrées du premier bloc](exercises/text-data.qmd#ex-token-to-block-input).
 
-::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
-![Trois points d'injection de l'information positionnelle : ajout à l'entrée, rotation de Q/K et biais sur les scores.](../images/positional-entry-points-fr.svg){fig-alt="Trois voies sont comparées : ajouter un vecteur de position à l'embedding avant les blocs Transformer ; appliquer RoPE aux requêtes et aux clés après projection ; ajouter un biais relatif au score QK avant softmax. Les valeurs V ne sont pas tournées par RoPE." width=100%}
-
-:::
 
 ::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
 Un mécanisme peut calculer un signal pour une position sans que le modèle sache bien généraliser à cette longueur de contexte. **Pouvoir représenter une position n'est pas garantir la performance à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) examinent les limites et les techniques associées.
