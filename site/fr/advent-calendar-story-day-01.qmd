@@ -228,7 +228,6 @@ La loi de Zipf décrit une régularité fréquente dans les distributions de fr�
 ## Pour aller plus loin
 
 - [Approfondir la loi de Zipf](zipf-law-deep-dive.qmd) : données multilingues, histoire, applications et variante de Mandelbrot.
-- [Approfondir la loi de Zipf](zipf-law-deep-dive.qmd) : données multilingues, histoire, applications et variante de Mandelbrot.
 - La leçon sur les [données textuelles](text-data.qmd) présente les représentations et unités manipulées dans le pipeline du LLM.
 - La leçon sur la [tokenisation](tokenization-strategies.qmd) explique comment une chaîne est découpée en tokens de modèle.
 
