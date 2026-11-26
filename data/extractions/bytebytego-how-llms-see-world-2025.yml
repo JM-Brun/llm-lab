@@ -77,13 +77,13 @@ items:
   - id: bytebytego-how-llms-see-world-2025:non-obvious-token-boundaries
     kind: misconception
     summary: "Whitespace and punctuation examples challenge the assumption that tokenizer units coincide with visible words or simple space-separated strings."
-    locator: {type: section, value: "Reviewed examples: whitespace and punctuation", label: "Tokenization examples"}
+    locator: {type: section, value: "Article body — examples of whitespace and punctuation (the prior review did not preserve stable subsection anchors)", label: "Tokenization examples"}
     evidence:
       kind: pedagogical-audit
       confidence: well-supported
       scope: "Example families explicitly compared in the completed #147 review."
       assumptions: []
-      limitations: ["Exact output depends on the tokenizer and its configuration; the examples are not universal tokenization outputs."]
+      limitations: ["Exact output depends on the tokenizer and its configuration; the examples are not universal tokenization outputs.", "The earlier review did not retain stable subsection anchors; the article-body locator is intentionally coarse."]
     technical_assessment: {status: not-reviewed, rationale: "The extraction records the reviewed pedagogical role; no new source verification.", corroborating_sources: []}
     pedagogical_assessment:
       learner_question: "Why can intuitive word boundaries differ from tokenizer boundaries?"
@@ -109,7 +109,7 @@ items:
   - id: bytebytego-how-llms-see-world-2025:multilingual-tokenization
     kind: limitation
     summary: "The article's multilingual examples are useful prompts for inspecting segmentation, but categorical claims about language difficulty or downstream reasoning must not be inferred from token fragmentation alone."
-    locator: {type: section, value: "Reviewed multilingual examples and causal-claim assessment", label: "Multilingual tokenization"}
+    locator: {type: section, value: "Article body — multilingual examples (the prior review did not preserve stable subsection anchors)", label: "Multilingual tokenization"}
     evidence:
       kind: editorial-qualification
       confidence: well-supported
