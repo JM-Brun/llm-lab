@@ -59,6 +59,8 @@ project:
     - en/learning-map.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
+    - fr/tokenization-and-tokenizers.qmd
+    - en/tokenization-and-tokenizers.qmd
     - fr/unicode-text.qmd
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
@@ -581,9 +583,12 @@ website:
                 - fr/next-concept-modeling.qmd
             - section: "Texte et tokenisation"
               contents:
-                - fr/tokenization-strategies.qmd
-                - fr/unicode-text.qmd
-                - fr/tokenizer-design-evaluation.qmd
+                - section: "Tokenisation et tokenizers"
+                  href: fr/tokenization-and-tokenizers.qmd
+                  contents:
+                    - fr/tokenization-strategies.qmd
+                    - fr/unicode-text.qmd
+                    - fr/tokenizer-design-evaluation.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/embeddings-deep-dive.qmd
@@ -833,9 +838,12 @@ website:
                 - en/next-concept-modeling.qmd
             - section: "Text and tokenization"
               contents:
-                - en/tokenization-strategies.qmd
-                - en/unicode-text.qmd
-                - en/tokenizer-design-evaluation.qmd
+                - section: "Tokenization and tokenizers"
+                  href: en/tokenization-and-tokenizers.qmd
+                  contents:
+                    - en/tokenization-strategies.qmd
+                    - en/unicode-text.qmd
+                    - en/tokenizer-design-evaluation.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/embeddings-deep-dive.qmd

@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01", "en/surprisal-information-content"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries", "en/document-retrieval", "en/advent-calendar-story-day-01", "en/surprisal-information-content", "en/tokenization-and-tokenizers"]
 related: []
 tags:
   - "type:entry-point"
@@ -100,17 +100,17 @@ These resources are complementary, not interchangeable: visualizations build int
 
 ## Text and tokenization
 
-**Guiding question:** how do text-representation choices affect a system's properties?
+**Guiding question:** how does a character string become a discrete sequence compatible with a model, and how should representation choices be evaluated?
 
-**Start here:** begin with [Text and data](text-data.qmd), which follows the transformation from text to token IDs.
+**Entry point:** [Tokenization and tokenizers](tokenization-and-tokenizers.qmd) — a domain map connecting Unicode representation, segmentation mechanisms, design, evaluation, and data preparation.
 
-- [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
-- [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
+The main learning path starts with [From text to tokens](text-data.qmd). The map organizes optional deep dives and helps choose one according to the question. Corpus preparation remains in Build; it is linked from this map as a practical continuation, not as a Deepen child.
+
 ### Language statistics
 
 - [Zipf’s law and lexical frequency statistics](advent-calendar-story-day-01.qmd) — rank-frequency distributions, long tails, empirical fitting, and limits of interpretation.
 
-The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
+These routes are reading suggestions, not prerequisites. The strategies page owns the mechanism explanations; the design-and-evaluation page owns comparative criteria and evidence.
 
 ## Mathematical tools and geometry {#mathematical-tools-and-geometry}
 

@@ -9,16 +9,16 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/text-data"
-summary: "Suit une occurrence du texte jusqu’à son ID puis au vecteur initial sélectionné dans la table d’embeddings. Situe la tokenisation dans la chaîne d’entrée, sans détailler les algorithmes."
+summary: "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, compare deux tokenizers sur une même entrée et explique pourquoi le tokenizer doit rester associé aux poids."
 scope: "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée."
-purpose: "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, et identifier ce qui dépend du tokenizer plutôt que du sens du texte."
+purpose: "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/embedding-space"
 hierarchy:
   parents: []
-  children: ["fr/unicode-text", "fr/tokenization-strategies"]
-related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises"]
+  children: []
+related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises", "fr/deepen", "fr/tokenization-and-tokenizers"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -52,13 +52,18 @@ L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, 
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
 
+Comparons deux encodages du **même texte exact**, `2 + 2 = 4`, avec `tiktoken==0.14.0`. Le symbole `␠` rend visibles les espaces qui appartiennent aux fragments :
+
+| Encodage | Fragments de tokens | IDs | Total |
+|---|---|---|---:|
+| `gpt2` | `2` · `␠+` · `␠2` · `␠=` · `␠4` | `17, 1343, 362, 796, 604` | **5** |
+| `cl100k_base` | `2` · `␠+` · `␠` · `2` · `␠=` · `␠` · `4` | `17, 489, 220, 17, 284, 220, 19` | **7** |
+
+Les deux séquences se décodent en `2 + 2 = 4`. Les IDs sont propres à chaque vocabulaire : ils ne sont pas comparables numériquement entre encodages. Ce contraste montre un effet sur la longueur de représentation, pas une différence de qualité linguistique. La [trace reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les fragments, les IDs et le décodage complet.
+
 ### Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?
 
 Le même texte peut produire des séquences différentes selon les règles de pré-tokenisation et le vocabulaire appris. Un exemple reproductible et ses IDs exacts sont présentés dans l’[approfondissement sur les stratégies de tokenisation](tokenization-strategies.qmd#comparaison-de-deux-tokenizers). Pour le parcours principal, retenez que chaque séquence d’IDs doit être interprétée avec le tokenizer qui l’a produite.
-
-::: {.callout-tip title="Token, ID et plongement" #revision-summary}
-Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
-:::
 
 ## Une expérience mentale : que reçoit réellement le modèle ? {#experience-texte-ids}
 
@@ -77,6 +82,18 @@ La distinction devient importante lorsqu'on modifie une seule chose :
 | Le contexte autour d'une occurrence | Les états produits plus loin par le Transformer | Le lookup initial d'un ID donné |
 
 **À retenir :** le tokenizer définit l'interface symbolique entre le texte et le modèle ; la table d'embeddings transforme ensuite les IDs en vecteurs. La contextualisation appartient aux calculs ultérieurs du réseau, pas au tokenizer.
+
+## Le tokenizer fait partie du contrat du modèle
+
+Un ID n'est interprétable qu'avec le vocabulaire qui l'a attribué. Si le vocabulaire contient $V$ tokens, la matrice d'embeddings possède généralement $V$ lignes et $d$ colonnes : l'ID $i$ sélectionne la ligne $E_i$. Dans un modèle de langage autorégressif, la projection de sortie produit elle aussi $V$ logits ; l'indice d'un logit désigne un token du même vocabulaire. L'interface relie donc l'entrée du réseau à ses classes de sortie.
+
+Un checkpoint ne se résume pas à ses tenseurs de poids : il doit être accompagné du vocabulaire et de la configuration du tokenizer correspondants. Le même entier peut désigner un autre fragment dans un autre tokenizer. Changer de tokenizer sans adapter les paramètres indexés par le vocabulaire ferait lire au modèle les mauvais vecteurs et associer ses logits aux mauvais tokens. C'est pourquoi il faut conserver ensemble les poids et les fichiers exacts du tokenizer.
+
+Certains tokenizers ajoutent aussi des **tokens spéciaux** (par exemple un marqueur de fin ou un séparateur). Ce sont des IDs réservés, pas de simples mots visibles ; ils peuvent occuper des positions dans la séquence. Leur rôle et leur graphie dépendent du modèle. Les conventions sont détaillées dans [Stratégies de tokenisation](tokenization-strategies.qmd).
+
+::: {.callout-tip title="Token, ID et plongement" #revision-summary}
+Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
+:::
 
 Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace reproductible du tokenizer et du lookup](exercises-text-data.qmd#tokenizer-embedding-trace), puis l'exercice qui suit un ID jusqu'à sa ligne dans la table.
 
@@ -100,7 +117,11 @@ Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace repr
 - **Calcul.** Une séquence plus longue ajoute des positions à traiter. L'effet sur le temps et le coût dépend de l'architecture, du matériel et du service. [Complexité de l'inférence](llm-computational-complexity.qmd).
 - **Langues.** Deux traductions d'un même passage peuvent consommer des nombres de tokens différents. À budget de contexte ou, selon le protocole, d'entraînement égal, la quantité de texte varie donc selon la langue. Mesurez l'efficacité du découpage par langue et type de texte, puis évaluez séparément la qualité sur les tâches visées. [Conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
+**Ordre de grandeur.** Supposons qu'un même passage occupe 1 000 tokens avec un tokenizer et 1 200 avec un autre. Dans une fenêtre de 8 192 tokens, cela représente respectivement environ 12,2 % et 14,6 % du budget. Pour une attention dense complète, le nombre de paires de positions à comparer croît comme $T^2$ : une séquence 20 % plus longue implique environ 44 % de paires supplémentaires ($1{,}2^2=1{,}44$). Ce n'est pas une prédiction directe du temps d'exécution : les noyaux d'attention, le cache, le padding des lots et l'architecture modifient le coût réel. Le nombre de tokens reste néanmoins un indicateur opérationnel important.
+
 [Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
+Ne confondez pas **encoder un prompt** et **préparer un tokenizer**. À l'inférence, le tokenizer est déjà choisi et fixé avec les poids du modèle : il convertit le prompt en IDs. Lors de la construction du modèle, on prépare le corpus puis on entraîne ou ajuste le tokenizer avant de fixer cette interface. Cette préparation ne se répète pas à chaque requête ; elle relève du parcours Build ([préparer un corpus](corpus-preparation.qmd)).
 
 Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenizer de GPT-2 et sa table associée, l'ID `5633` indique quelle ligne lire. [Que contient cette ligne et comment le modèle s'en sert-il ?](embedding-space.qmd)
 
@@ -154,6 +175,8 @@ Le schéma regroupe le traitement positionnel et le Transformer. Certaines archi
 Le tokenizer associé au modèle code le prompt à l'inférence et le corpus utilisé pour l'entraîner. À l'inférence, le tokenizer est déjà fixé. En pré-entraînement, la [préparation du corpus](corpus-preparation.qmd) traite le choix des sources, la provenance, le filtrage, la déduplication, le partitionnement et l'ajustement du tokenizer avant de le fixer. La normalisation et la pré-tokenisation, lorsqu'elles sont utilisées, opèrent sur le texte dans le tokenizer. Les [exemples d'entraînement](training-examples.qmd) montrent comment transformer le flux d'IDs en fenêtres d'entrée, en cibles décalées et en masques, et comment regrouper plusieurs séquences dans une fenêtre (*packing*).
 
 ### Choisir un approfondissement {#frontières-entre-les-pages}
+
+Pour choisir une lecture selon la question — mécanismes, représentation Unicode ou évaluation — consultez la [carte des approfondissements sur la tokenisation](tokenization-and-tokenizers.qmd). Les pages spécialisées ci-dessous restent facultatives.
 
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) pour suivre le passage de la chaîne aux octets.
 - [Stratégies de tokenisation](tokenization-strategies.qmd) pour comparer les découpages.

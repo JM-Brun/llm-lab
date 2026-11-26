@@ -1,0 +1,80 @@
+---
+title: "Tokenization and tokenizers: a domain map"
+subtitle: "Understanding units, mechanisms, design, and evaluation"
+description-meta: "A map of tokenization deep dives: text representation, segmentation, algorithm families, tokenizer training, and evaluation."
+lang: en
+keywords: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:en", "status:published"]
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/tokenization-and-tokenizers"
+summary: "Organizes deep dives on text representation, segmentation mechanisms, tokenizer design, and evaluation."
+scope: "An editorial map of the domain. Distinguishes encoding an input with a fixed tokenizer from learning or fitting a tokenizer from a corpus; routes readers to specialist pages without reproducing their content."
+purpose: "Choose a deep dive according to the question, understand the relationships between Unicode, segmentation, vocabulary, corpus, and evaluation, and identify prerequisites and practical continuations."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/deepen"]
+  children: ["en/tokenization-strategies", "en/unicode-text", "en/tokenizer-design-evaluation"]
+related: ["en/text-data", "en/corpus-preparation", "en/training-examples", "en/exercises-text-data", "en/tokenization-strategies-exercises"]
+tags: ["type:entry-point", "destination:deepen", "topic:tokenization-hub", "level:overview", "language:en", "status:published"]
+-->
+
+# Where should you go deeper on tokenization?
+
+The main learning path's [From text to tokens](text-data.qmd) lesson establishes the minimum contract: text is converted into tokens and then into IDs compatible with the tokenizer paired with the model weights. This page does not add a mandatory step. It is a **navigation map** for understanding the choices behind that interface, building a tokenizer, or evaluating its consequences.
+
+The domain connects several objects that should remain distinct: the character string, its Unicode and UTF-8 representations, the units produced by segmentation, the vocabulary and its IDs, the corpus that may be used to fit the tokenizer, and the metrics used to evaluate the result.
+
+## Two different operations: encoding and training
+
+A tokenizer is involved in two contexts that should not be confused:
+
+- **Encoding an input**: applying an already fixed tokenizer to a prompt or text to produce an ordered sequence of IDs. This is the interface used at inference time.
+- **Building or fitting a tokenizer**: preparing a corpus, selecting data, and learning or adjusting a vocabulary and segmentation rules before fixing the tokenizer alongside the model.
+
+```{mermaid}
+flowchart TB
+  subgraph build["Build — model construction"]
+    A["Corpus"] --> B["Preparation and filtering"]
+    B --> C["Tokenizer training / fitting"]
+    C --> D["Fixed vocabulary and rules"]
+  end
+  subgraph encode["Use — model input"]
+    E["Input text"] --> F["Optional preprocessing"]
+    F --> G["Segmentation"]
+    G --> H["Tokens"]
+    H --> I["IDs"]
+    I --> J["Embedding lookup"]
+  end
+  D -. "compatible tokenizer" .-> G
+```
+
+Corpus preparation and tokenizer training belong to the [Build path](build-path.qmd). Encoding a prompt does not relearn the vocabulary on every request. **Training a tokenizer is not training the LLM's weights**: it fits a discrete representation from a corpus and then freezes it; neural-model training subsequently uses that interface.
+
+## Map of questions
+
+| Question | Page | Useful prerequisites | Specific contribution |
+|---|---|---|---|
+| How is a character string represented before segmentation? | [Unicode, UTF-8, and normalization](unicode-text.qmd) | None; [From text to tokens](text-data.qmd) provides the LLM context. | Distinguish abstract characters, code points, bytes, and normalized forms. |
+| Why can the same text produce different sequences? | [Tokenization strategies](tokenization-strategies.qmd) | [From text to tokens](text-data.qmd); Unicode helps with edge cases. | Compare granularities, pipeline components, BPE, WordPiece, and Unigram. |
+| How should vocabulary size and tokenizer choices be compared? | [Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd) | [Tokenization strategies](tokenization-strategies.qmd); basic measurement and experimental evaluation. | Connect length, budgets, system costs, metrics, and downstream quality. |
+| How should data be prepared and a model's tokenizer fitted? | [Corpus preparation](corpus-preparation.qmd) | The [Build path](build-path.qmd), especially corpus and data-splitting concepts. | Cover sources, filtering, deduplication, splitting, and fitting in the Build context. |
+| How do IDs become training examples? | [Training examples](training-examples.qmd) | The [Build path](build-path.qmd) and the text → IDs interface. | Move from an ID stream to windows, shifted targets, masks, and packed sequences. |
+
+## Routes by objective
+
+- **Understand the mechanisms**: start with [From text to tokens](text-data.qmd), then read [Tokenization strategies](tokenization-strategies.qmd). Open Unicode when bytes, characters, or normalization become important.
+- **Understand strings and bytes**: read [Unicode, UTF-8, and normalization](unicode-text.qmd), then return to strategies to follow its effects on segmentation.
+- **Evaluate a tokenizer choice**: understand the mechanisms in [Tokenization strategies](tokenization-strategies.qmd), then build a comparison in [Designing and evaluating a tokenizer](tokenizer-design-evaluation.qmd).
+- **Prepare a training run**: follow the [Build path](build-path.qmd), especially [Corpus preparation](corpus-preparation.qmd), then [Training examples](training-examples.qmd).
+
+These routes are suggestions, not a universal sequence. Choose according to the question and the knowledge you already have.
+
+## Practice and experiments
+
+Exercises remain separate from lessons: use the [text → IDs → embeddings trace](exercises-text-data.qmd#tokenizer-embedding-trace) and the [tokenization-strategy exercises](exercises/tokenization-strategies.qmd). They let you verify the mechanisms without bloating explanatory pages.
+
+**Return point:** after a deep dive, resume the [Understand path from text](text-data.qmd), then continue to [embeddings](embedding-space.qmd).

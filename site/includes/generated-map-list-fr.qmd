@@ -87,9 +87,11 @@
     - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
     - [Next-Concept Modeling : générer par niveaux de représentation](next-concept-modeling.html)
   - Texte et tokenisation
-    - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
-    - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
-    - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
+    - Tokenisation et tokenizers
+      - [Tokenisation et tokenizers : carte du domaine](tokenization-and-tokenizers.html)
+      - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
+      - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
+      - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
   - Outils mathématiques et géométrie
     - [Embeddings : des représentations vectorielles aux espaces de recherche](embeddings-deep-dive.html)
     - [Tenseurs dans un Transformer : formes et axes](tensors.html)

@@ -9,16 +9,16 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/text-data"
-summary: "Follows an occurrence from text to its token ID and the initial vector selected from the embedding table. Locates tokenization in the input pipeline without detailing its algorithms."
+summary: "Follows an occurrence from text to its token ID and initial vector, compares two tokenizers on the same input, and explains why the tokenizer must stay paired with the weights."
 scope: "Covers the path from text to tokens, tokens to IDs, and IDs to embedding lookup. Distinguishes prompt encoding from corpus preparation; segmentation algorithms belong to the dedicated deep dive."
-purpose: "Explain the text → tokens → IDs → initial vectors chain, and identify what depends on the tokenizer rather than on the text’s meaning."
+purpose: "Explain the text → tokens → IDs → initial vectors chain, compare two tokenizers on the same input, distinguish IDs from numerical quantities, and understand why tokenizer and weights form a contract."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/embedding-space"
 hierarchy:
   parents: []
-  children: ["en/unicode-text", "en/tokenization-strategies"]
-related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/text-data-exercises"]
+  children: []
+related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/text-data-exercises", "en/deepen", "en/tokenization-and-tokenizers"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -52,6 +52,15 @@ The space before `world` is part of the second token. Across the two examples, s
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
 
+Compare two encodings of the **exact same input**, `2 + 2 = 4`, using `tiktoken==0.14.0`. The symbol `␠` makes spaces that belong to fragments visible:
+
+| Encoding | Token fragments | IDs | Total |
+|---|---|---|---:|
+| `gpt2` | `2` · `␠+` · `␠2` · `␠=` · `␠4` | `17, 1343, 362, 796, 604` | **5** |
+| `cl100k_base` | `2` · `␠+` · `␠` · `2` · `␠=` · `␠` · `4` | `17, 489, 220, 17, 284, 220, 19` | **7** |
+
+Both sequences decode to `2 + 2 = 4`. IDs are local to each vocabulary, so their numerical values are not comparable across encodings. This contrast demonstrates an effect on representation length, not a difference in linguistic quality. The [reproducible trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks the fragments, IDs, and full decode.
+
 ### Why do two tokenizers produce different sequences?
 
 The same text can produce different sequences because pre-tokenization rules and learned vocabularies differ. A reproducible example with exact IDs is available in the [deep dive on tokenization strategies](tokenization-strategies.qmd#comparison-of-two-tokenizers). For the core learning path, remember that each ID sequence must be interpreted with the tokenizer that produced it.
@@ -75,6 +84,14 @@ The distinction matters when we change only one thing:
 **Key point:** the tokenizer defines the symbolic interface between text and model; the embedding table then maps IDs to vectors. Contextualization belongs to later network computations, not to the tokenizer.
 
 To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then [the exercise that follows an ID to its embedding row](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
+## The tokenizer is part of the model contract
+
+An ID can only be interpreted with the vocabulary that assigned it. If the vocabulary contains $V$ tokens, the embedding matrix generally has $V$ rows and $d$ columns: ID $i$ selects row $E_i$. In an autoregressive language model, the output projection also produces $V$ logits; a logit index refers to a token in the same vocabulary. The interface therefore connects the network's input lookup to its output classes.
+
+A checkpoint is more than its weight tensors: it must be accompanied by the corresponding vocabulary and tokenizer configuration. The same integer can refer to a different fragment in another tokenizer. Switching tokenizers without adapting vocabulary-indexed parameters would make the model read the wrong vectors and associate its logits with the wrong tokens. This is why the weights and exact tokenizer files must be kept together.
+
+Some tokenizers also add **special tokens** (for example, an end marker or a separator). These are reserved IDs, not ordinary visible words; they can occupy positions in the sequence. Their roles and spellings depend on the model. The conventions are detailed in [Tokenization strategies](tokenization-strategies.qmd).
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
@@ -100,7 +117,11 @@ The **token** is the unit produced by the split. The **ID** is its reference num
 - **Compute.** A longer sequence adds positions to process. The effect on time and cost depends on the architecture, hardware, and service. [Inference complexity](llm-computational-complexity.qmd).
 - **Languages.** Two translations of the same passage can use different numbers of tokens. A fixed context budget or, depending on the protocol, a fixed training budget can therefore cover different amounts of text across languages. Measure the efficiency of the split by language and text type, then evaluate quality separately on the target tasks. [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
+**An order-of-magnitude example.** Suppose the same passage uses 1,000 tokens with one tokenizer and 1,200 with another. In an 8,192-token context window, that consumes about 12.2% and 14.6% of the budget, respectively. For full dense attention, the number of position pairs grows as $T^2$: a sequence that is 20% longer implies about 44% more pairs ($1.2^2=1.44$). This is not a direct runtime prediction: attention kernels, caching, batch padding, and architecture all affect actual cost. Token count is still an important operational signal.
+
 [Explain what can change when the text stays fixed](revision-text-data.qmd#revision-check). [Check your understanding by following IDs to the rows of the embedding table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+
+Do not confuse **encoding a prompt** with **preparing a tokenizer**. At inference time, the tokenizer has already been selected and fixed with the model weights: it converts the prompt into IDs. When building a model, the corpus is prepared first, then the tokenizer is trained or fitted before this interface is frozen. That preparation is not repeated for every request; it belongs to the Build path ([prepare a corpus](corpus-preparation.qmd)).
 
 In the next lesson, return to the last token of the prefix. With the GPT-2 tokenizer and its corresponding table, ID `30` tells the model which row to read. [What does that row contain, and how does the model use it?](embedding-space.qmd)
 
@@ -154,6 +175,8 @@ The diagram groups positional handling with the Transformer. Some architectures 
 The tokenizer paired with the model encodes the prompt at inference and the corpus used to train it. At inference the tokenizer is already fixed. In pretraining, [corpus preparation](corpus-preparation.qmd) covers source selection, provenance, filtering, deduplication, splitting, and fitting the tokenizer before freezing it. Normalization and pre-tokenization, when used, operate on the text inside the tokenizer. [Training examples](training-examples.qmd) shows how to turn the ID stream into windows, shifted targets, and masks, and how to pack multiple sequences into one window.
 
 ### Further reading {#boundaries-between-pages}
+
+To choose a reading route by question—mechanisms, Unicode representation, or evaluation—use the [tokenization and tokenizers domain map](tokenization-and-tokenizers.qmd). The specialist pages below remain optional.
 
 - [Unicode, UTF-8, and normalization](unicode-text.qmd) traces the string to its bytes.
 - [Tokenization strategies](tokenization-strategies.qmd) compares segmentation options.

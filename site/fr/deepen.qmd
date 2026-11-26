@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01", "fr/surprisal-information-content"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01", "fr/surprisal-information-content", "fr/tokenization-and-tokenizers"]
 related: []
 tags:
   - "type:entry-point"
@@ -101,17 +101,17 @@ Ces ressources sont complémentaires, pas interchangeables : les visualisations 
 
 ## Texte et tokenisation
 
-**Question directrice :** comment les choix de représentation du texte influencent-ils les propriétés d'un système ?
+**Question directrice :** comment une chaîne de caractères devient-elle une séquence discrète compatible avec un modèle, et comment juger les choix de représentation ?
 
-**Point d'entrée :** commencez par [Texte et données](text-data.qmd), qui suit le passage du texte aux identifiants de tokens.
+**Point d'entrée :** [Tokenisation et tokenizers](tokenization-and-tokenizers.qmd) — une carte du domaine qui relie représentation Unicode, mécanismes de segmentation, conception, évaluation et préparation des données.
 
-- [Unicode et représentation du texte](unicode-text.qmd) — couches de représentation des caractères et conséquences.
-- [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — familles BPE, WordPiece et Unigramme, conception et protocole empirique.
+Le parcours principal commence par [Du texte aux tokens](text-data.qmd). La carte organise les approfondissements facultatifs et indique quel lire selon la question. La préparation du corpus reste dans Build ; elle est reliée depuis cette carte comme prolongement pratique, pas comme sous-page Deepen.
+
 ### Statistiques du langage
 
 - [Loi de Zipf et statistiques des fréquences lexicales](advent-calendar-story-day-01.qmd) — distributions rang-fréquence, longue traîne, ajustements empiriques et limites de l’interprétation.
 
-La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours principal reste le point d'entrée conceptuel ; la conception et l'évaluation comparative sont des approfondissements.
+Les itinéraires sont des suggestions de lecture, pas des prérequis. La page stratégies porte l'explication des mécanismes ; la page conception-évaluation porte les critères et les preuves comparatives.
 
 ## Outils mathématiques et géométrie {#outils-mathematiques-et-geometrie}
 
