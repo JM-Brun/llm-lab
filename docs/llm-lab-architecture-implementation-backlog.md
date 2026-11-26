@@ -63,7 +63,7 @@ The distinction is intentional:
 - **Resource/revision role** describes material that supports a lesson (for example, a flashcard or synthesis).
 - **Projection** is a generated reader-facing view of canonical records (for example, the Review route).
 
-No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. Existing destination:review/revision metadata, where explicitly supported, must be interpreted as a page/resource classification within the Main learning path, not as evidence of a sixth top-level space.
+No registry, schema, page metadata migration or navigation rewrite is implied by this documentation alignment. The existing page-based `revision_role`/`revision_of` contract and generated Review route remain revision semantics within the Main learning path; `review` is not a page `destination` value.
 
 ## 2. Priority summary
 
