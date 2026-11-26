@@ -2449,7 +2449,7 @@
         "Why whitespace-only splitting is insufficient",
         "2. Compare granularity",
         "3. Components of a tokenizer pipeline",
-        "External illustration of the tokenizer pipeline",
+        "An external illustration of the tokenizer pipeline",
         "Special-token spellings are not ordinary vocabulary words"
       ],
       "route": {
