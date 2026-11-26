@@ -337,6 +337,19 @@ jobs:
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_learning_map == 'true')))
         run: .venv/bin/python site/tools/build_learning_map.py
 
+      # TEMPORARY: export canonical map artifacts to repair tracked generated files.
+      - name: Export canonical learning-map artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-learning-map-artifacts
+          path: |
+            site/includes/generated-map-data-fr.qmd
+            site/includes/generated-map-data-en.qmd
+            site/includes/generated-map-list-fr.qmd
+            site/includes/generated-map-list-en.qmd
+          if-no-files-found: error
+
       - name: Generate bilingual computational-graph fragments
         if: (github.event_name != 'pull_request' && steps.verify_published_site.outputs.cache_restored != 'true') || (github.event_name == 'pull_request' && ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_mode == 'full' || steps.verify_site_cache.outputs.cache_restored != 'true' || steps.site_changes.outputs.generate_computational_graph == 'true')))
         run: .venv/bin/python site/tools/render_computational_graph.py
