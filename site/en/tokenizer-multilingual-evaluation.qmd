@@ -29,6 +29,8 @@ The calendar story introduces the design trade-off and a first comparison protoc
 :::
 
 **Return to the main page:** [The tokenizer as a compression engineer](tokenizer-design-evaluation.qmd).
+**For segmentation mechanisms and implementation resources:** [Tokenization strategies](tokenization-strategies.qmd).
+
 
 ## Evaluation dimensions {#tokenizer-evaluation}
 
@@ -96,45 +98,15 @@ To compare two tokenizers:
 - [TokLens — paper and resources](https://aclanthology.org/2026.acl-srw.18/) — inspect as a tool/method, checking its metrics and protocol.
 - [Catherine Arnett (2024), tokenizer-recycling community article](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling) — practitioner observations on tokenizer reuse and pre-tokenization; not a substitute for controlled research evidence.
 
-### Recommended visual resources
+<!-- Legacy anchors: visual and mechanism resources now live on tokenization-strategies. -->
+<span id="recommended-visual-resources"></span>
+<span id="useful-timestamps-in-karpathys-video"></span>
+<span id="suggested-reading-order"></span>
+<span id="an-external-illustration-of-the-tokenizer-pipeline"></span>
 
-1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
-2. [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): English-language explanation of BPE training, paired with the French course linked from the French page.
-3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
-4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
-5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): optional community visualization. **Source-audit caveat (2026-10-30):** the inspected implementation replays the model's merge list over raw Unicode characters; it does not reproduce the tokenizer's byte-level mapping and pre-tokenization pipeline. Treat its graph as a schematic of merge operations, not a faithful trace of GPT-2 token boundaries. Its package metadata also omits runtime dependencies although the README lists `graphviz` and `transformers`; inspect and pin dependencies before installing.
-
-#### Useful timestamps in Karpathy's video
-
-The video is long; these chapter markers let you select only the relevant parts:
-
-- [14:56 — Unicode code points and strings](https://www.youtube.com/watch?v=zduSFxRajkE&t=896s), then [18:15 — UTF encodings and bytes](https://www.youtube.com/watch?v=zduSFxRajkE&t=1095s).
-- [23:50 — BPE intuition](https://www.youtube.com/watch?v=zduSFxRajkE&t=1430s) and [28:35 — counting and merging frequent pairs](https://www.youtube.com/watch?v=zduSFxRajkE&t=1715s).
-- [39:20 — tokenizer as a separate pipeline stage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2360s), [42:47 — decoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2567s), and [48:21 — encoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2901s).
-- [57:36 — regex pre-tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=3456s) and [1:11:38 — GPT-2/GPT-4 regex differences](https://www.youtube.com/watch?v=zduSFxRajkE&t=4298s).
-- [1:18:15 — special tokens and API handling](https://www.youtube.com/watch?v=zduSFxRajkE&t=4695s).
-- [1:28:42 — SentencePiece](https://www.youtube.com/watch?v=zduSFxRajkE&t=5322s); [1:49:58 — multimodal tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=6598s) is an optional extension beyond this text-tokenization sequence.
-
-These are navigation aids, not a substitute for checking implementation details against the relevant tokenizer documentation and source code.
-
-The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
-
-
-
-### Suggested reading order
-
-1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
-2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
-3. Read `minbpe` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
-4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
-5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
-6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
-
-### An external illustration of the tokenizer pipeline
-
-![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
-
-This published illustration comes from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8). It complements the conceptual diagram on the [overview page](text-data.qmd) with the components of a tokenizer. The image is served from the course's public documentation assets rather than copied locally; citation does not itself establish reuse permission. Rights review: pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); retained pending asset-level verification.
+::: {.callout-note title="Resources moved"}
+Visualizers, Karpathy video timestamps, and the pipeline illustration are now grouped beside the mechanism explanations in [Tokenization strategies](tokenization-strategies.qmd#mechanism-resources-and-implementations).
+:::
 
 ### Additional research references
 
@@ -145,17 +117,12 @@ This published illustration comes from the [Hugging Face course, “Building a t
 - [Petrov et al. (2023), *Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/): studies cross-language tokenization-length and runtime disparities; consult the paper for the experimental setup.
 - [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/): a multilingual measurement toolkit to inspect as a method and software, not as evidence that one intrinsic metric is sufficient.
 
-### Educational code and historical reference
+<!-- Legacy anchor: educational code resources now live on tokenization-strategies. -->
+<span id="educational-code-and-historical-reference"></span>
 
-- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): guided reading on text processing in the LLM pipeline.
-- [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
-
-
-- [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
-- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
-- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook. **Implementation caveat (source audit, 2026-10-30):** the notebook's custom from-scratch training path uses character/string symbols and simplified whitespace/newline splitting; it does not reproduce the full UTF-8 byte-level GPT-2 pipeline. Its separate GPT-2 loading path uses the pretrained vocabulary and merge ranks, with tests against selected `tiktoken` cases. Those checks do not establish exhaustive compatibility. See the [full notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch.ipynb), [simple notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb), and [tests](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/tests.py).
-- [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
-- [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914): historical reference for byte-pair compression. Modern LLM tokenizers add conventions not fully specified by that paper alone.
+::: {.callout-note title="Implementation resources moved"}
+Educational code resources (educational tiktoken, minbpe, and Raschka notebooks) are grouped in [Tokenization strategies](tokenization-strategies.qmd#mechanism-resources-and-implementations). Gage's historical reference remains explained in the BPE section of that page.
+:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenizer-multilingual-evaluation.qmd) · [English](tokenizer-multilingual-evaluation.qmd)
