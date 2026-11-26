@@ -154,7 +154,7 @@ Voir les leçons Hugging Face sur les [capacités des tokenizers rapides](https:
 | **WordPiece** | Sélection d'unités liée à un critère de vraisemblance, puis encodage selon des règles propres à l'implémentation | Ce n'est pas simplement BPE sous un autre nom ; certains systèmes marquent les continuations avec `##` |
 | **Unigramme** | Modèle probabiliste sur des sous-mots candidats, souvent réduit par élagage | Le résultat dépend du modèle, des candidats et des conventions |
 
-### Mécanismes détaillés de WordPiece et Unigramme {#mecanismes-wordpiece-unigramme}
+### Mécanismes détaillés de WordPiece et Unigramme
 
 #### En quoi WordPiece diffère de BPE
 
