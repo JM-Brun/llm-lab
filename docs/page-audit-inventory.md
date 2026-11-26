@@ -2118,6 +2118,6 @@ No mathematical correction was identified in this bounded pass. The downstream p
 ### Remaining work after this slice
 
 1. Render the prediction group in FR/EN and inspect the equation, numerical table, entropy chart, accessibility text and links at desktop/mobile sizes.
-2. Specifically inspect the rendered entropy route cue and reconcile it with the prediction → inference / scoring / training sibling transitions. Keep the canonical route and computational graph as the source of truth for the distinction.
+2. Verify in the rendered FR/EN pages that the corrected entropy → generation cue and likelihood ← probabilities cue are generated as intended. Keep the canonical route and computational graph as the source of truth for the sibling distinction.
 3. Continue with a cross-branch audit of generation, observed-target scoring/evaluation and training. Use the existing 2026-11-25 audit entries for prefill, teacher forcing, likelihood, cross-entropy, loss and gradients; inspect only gaps or contradictions, not already checked arithmetic.
 4. Record manual screen-reader and native breadcrumb evidence under #584; automated browser/Axe checks remain a separate evidence class.
