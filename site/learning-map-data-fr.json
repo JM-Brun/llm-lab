@@ -2492,12 +2492,8 @@
         "1. Taille du vocabulaire : architecture et budget",
         "2. Coût système : séquences, vocabulaire et calcul",
         "Exemple chiffré : moins de positions, vocabulaire plus grand",
-        "Quel budget tient-on constant ?",
         "3. Qualité : ce que les métriques permettent de conclure",
-        "Mesurer la représentation sans confondre longueur et qualité",
-        "4. Comparer et décider sous contraintes",
-        "Reproduire une inspection sur un tokenizer réel",
-        "Construire une décision défendable"
+        "Mesurer la représentation sans confondre longueur et qualité"
       ],
       "route": {
         "previous": null,
