@@ -156,12 +156,8 @@ Comparing these objects prepares you to read the Transformer. In the computation
 :::
 ::::
 
-::: {.callout-note collapse="true" title="From text to hidden states in one diagram"}
-
-![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
-
-This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
-
+::: {.callout-note title="Another pedagogical perspective"}
+For a complementary overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 :::
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
