@@ -95,16 +95,60 @@ Use this pattern for each exercise heading:
 
 Existing public fragments should be retained as aliases when replacing opaque or automatically generated heading IDs. The page metadata remains the authority for page identity; heading anchors identify only the exercise within that page.
 
-## 4. A practical starting sequence
+## 4. Design before drafting: the learning-page blueprint
+
+Before writing or substantially restructuring a lesson, make a concise design brief that connects the learner's problem, the page's architectural place and the explanation that will teach it. This is the hand-off from source synthesis to drafting. It is a working artifact, not a new registry, metadata schema, required standalone file or fixed form.
+
+For a small revision, update only the affected decisions. For a new or substantially reworked Understand lesson, resolve the following dimensions before drafting:
+
+| Dimension | Design question | What to decide |
+|---|---|---|
+| Learner problem and value | What difficulty does this page resolve, and why does it matter when understanding or using an LLM? | A precise learner question and a reason this deserves attention at this point in the curriculum. |
+| Outcome | What should the reader be able to explain, distinguish, derive, calculate or predict? | A small number of observable capabilities, not a list of topics. |
+| Scope and ownership | What does this page explain fully, and what belongs elsewhere? | Canonical concepts, included mechanisms, explicit non-goals and the existing page(s) to reuse or link. |
+| Prerequisites and connections | What knowledge is genuinely needed, and what is merely useful context or a downstream application? | Essential prerequisites, optional background, computational relations and useful neighboring pages—kept semantically distinct. |
+| Curriculum position | Why is the page placed here in Understand, or in another destination? | Its role in the existing route, stage and depth. A new Understand route step requires the separate curriculum decision and registry update. |
+| Explanatory progression | What sequence makes the mechanism easiest to reconstruct without hiding its dependencies? | The order of intuition, definitions, mechanism, formalism, examples, interpretation and limitations. |
+| Mathematical contract | Which quantities, assumptions, shapes, axes, conventions and derivations are necessary? | The minimum formal model needed to support the claims and the boundary between core explanation and optional derivation. |
+| Worked thread | Can one concrete case carry the reader through several stages of the explanation? | A small, checkable example and the exact stages it illuminates; use multiple contrasting cases when one thread would obscure distinct properties. |
+| Visual and implementation support | What should be seen, calculated or executed to make the mechanism inspectable? | Figures, tensor/data-flow diagrams, numerical traces, code and tests, with their status and provenance. |
+| Source synthesis | Which sources support each substantive claim or teaching choice, and where do they disagree? | Retained complementary perspectives, evidence boundaries, unresolved questions and claim-level provenance. |
+| Misconceptions and limits | Which plausible interpretation would be wrong, and under what conditions does the explanation stop applying? | Material caveats beside the claims they qualify, plus counterexamples or failure cases where useful. |
+| Transfer and companions | What later reasoning or construction should this understanding enable? | Relevant Build connections, Deepen topics, revision resources and dedicated Practice companions—or an explicit decision that a companion is not warranted. |
+
+### The worked thread is a teaching device, not a decorative example
+
+When a continuous example is useful, choose it because it can expose the mechanism's important stages with manageable notation and verifiable intermediate results. Define its inputs and conventions once; reuse them consistently; explain what changes at each stage; and return to the original learner question at the end.
+
+For a computational LLM topic, a useful thread may follow a small token sequence through the relevant transformations, tensors and outputs. It should make dimensions, axes, masks, parameter assumptions and intermediate values inspectable where they matter. Do not force every equation, edge case or variant into the same example: add a contrasting case when it reveals a property the main thread cannot. Avoid changing examples silently or using numerical values that cannot be checked.
+
+A thread is not mandatory. A conceptual distinction, mathematical proof, architecture comparison or physical analogy may be better served by several deliberately chosen examples. Any analogy must state where it stops matching the mechanism.
+
+### Blueprint review before drafting
+
+A blueprint is ready when a reviewer can answer:
+
+- What precise learner problem does the page solve, and why does it belong in this destination and route position?
+- What is the one canonical owner for each substantial explanation?
+- Which prerequisites are essential, and which links are optional or downstream?
+- Can the proposed sequence build the intuition and then justify it mathematically or computationally?
+- Are the sources, disagreements and claim boundaries understood well enough to write original synthesis rather than concatenate source explanations?
+- Does the worked thread (if any) genuinely support the mechanism and remain checkable?
+- Are Build, Deepen, revision and Practice connections correctly distinguished?
+- What scientific, bilingual, navigation and rendered evidence will be needed at validation?
+
+Do not start drafting merely because the source list is long or the page outline looks complete. If a key claim, contradiction, technical convention or ownership decision remains unresolved, return to the relevant earlier stage.
+
+### A practical starting sequence
 
 1. Write one sentence stating the question the page answers.
-2. State what the reader should understand after the core explanation.
-3. Choose the dominant pattern.
-4. Select only the modules needed to meet that outcome.
-5. Decide what belongs in the main flow and what can be optional depth.
-6. Identify useful diagrams, examples, or comparisons—if any.
-7. Connect the page to canonical neighbours using the metadata relation semantics.
-8. Add references that support the actual claims.
+2. State the observable outcome and the reason it matters to the LLM learning objective.
+3. Choose the dominant page pattern and destination.
+4. Resolve canonical ownership, scope, prerequisites and route position.
+5. Select only the explanatory modules needed to meet the outcome.
+6. Decide whether a worked thread is useful; define its inputs, conventions and checkpoints.
+7. Plan the mathematics, figures, implementation evidence, caveats and source attribution.
+8. Decide which optional or companion resources are justified, without duplicating the lesson.
 9. Review the rendered page and its language counterpart.
 
 If a page becomes too long, check for duplicated explanations, unclear scope, or material that belongs on an existing canonical page. Do not split it merely to meet a target length.
