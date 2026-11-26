@@ -105,6 +105,27 @@ Use only item dispositions defined by `data/source-taxonomy.yml`. Keep source sc
 
 **Pass condition:** each accepted contribution has a precise evidence boundary, a decision and a canonical destination. Useful rejected/deferred material remains traceable where appropriate.
 
+
+### Page-level production sequence: seven connected stages
+
+For a reader-facing learning page—new or substantially improved—use this sequence as the operational crosswalk of the gates above. It is not a second workflow: source extraction, graph governance, page metadata, curriculum, templates and validation remain owned by their canonical documents.
+
+| Stage | Work | Working output / exit condition | Canonical owner |
+|---|---|---|---|
+| **1. Ingest sources** | Identify primary, official and pedagogical sources; inspect relevant text, equations, figures, code, data and linked evidence; record versions, access limits and rights. | Sources are registered; inspected and uninspected modalities are explicit. | `source-extraction`; `data/sources.yml` |
+| **2. Model sources and extracted knowledge** | Apply controlled metadata; extract atomic claims, definitions, mechanisms, derivations, examples, teaching sequences, visuals, code and limitations with locators and evidence confidence. Reconstruct source-local semantic or pedagogical models where useful. | Traceable extraction distinguishes what a source says, demonstrates and leaves uncertain. | `docs/source-catalogue-schema.md`; `data/source-taxonomy.yml`; `data/extractions/` |
+| **3. Compile and synthesize** | Compare sources with the learner question and existing coverage. Identify convergence, complementary lenses, disagreements, contradictions, unsupported claims and unique teaching contributions; decide what to integrate, cite, link, defer or reject. | Synthesis/review and item dispositions justify each retained contribution and destination. | `docs/source-synthesis-method.md`; `docs/source-syntheses/`; `knowledge-and-learning-integration` |
+| **4. Model the page and its learning position** | Choose the existing owner or justify a new page. Define the learner contract and pre-draft blueprint; map concepts, ownership, semantic relations, prerequisites, route position, neighbors and Understand / Build / Deepen / Practice roles. | Page contract and blueprint explain purpose, scope, sequence, examples and links before drafting. | This workflow; [page-template system](../page-template-system.md); [new-learning-page skill](../../.agents/skills/new-learning-page/SKILL.md); curriculum and metadata contracts |
+| **5. Write the explanation** | Compose an original, self-contained explanation from validated synthesis and blueprint. Sequence intuition, definitions, mechanism, mathematics, figures, examples, code and caveats around the learner outcome. | Technically defensible, pedagogically coherent and substantively bilingual core explanation. | [Page-template system](../page-template-system.md); [reader-experience method](../reader-experience-and-editorial-method.md) |
+| **6. Derive companions** | Decide which revision aids, flashcards, optional deep dives, dedicated exercises, experiments and Build references are justified. Derive them from validated concepts and outcomes; do not generate every format mechanically. | Companion resources have a clear purpose and canonical links, or a reasoned not-applicable decision. | Existing revision, Deepen, Build and Practice structures; [Practice separation issue #1512](https://github.com/JM-Brun/llm-lab/issues/1512) |
+| **7. Validate and close** | Review science, reasoning, provenance, metadata, links, bilingual parity, rendered accessibility, Quarto output and relevant build/CI checks. Record exactly what was and was not tested. | Validation evidence, residual risks and follow-up work are recorded without overstating browser or learner validation. | This workflow; specialist validators and CI; [source-to-knowledge validation](source-to-knowledge-validation.md) |
+
+**The blueprint is the hand-off between synthesis and drafting.** It is a concise working brief, not another registry or mandatory standalone file. For a bounded edit, update only affected decisions. The stages are iterative: contradictions, technical errors or failed validation may send work back to source inspection, synthesis, modelling or drafting.
+
+Keep the representations distinct: source models describe a resource; the concept graph describes stable semantic knowledge; the computational graph describes objects and operations; the pedagogical route describes a useful learning order. Understand and Build are independent progressions. Deepen is optional depth. Practice & experiment owns learner activities; core lessons teach and link to their dedicated practice companions.
+
+Do not require a new synthesis dossier for every correction, a new page for every concept, a flashcard set for every lesson, or one continuous example where contrasting cases teach better.
+
 ## 7. Gate 4 — create or update the learning artifact
 
 ### Existing page
