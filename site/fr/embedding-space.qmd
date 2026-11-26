@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées et l'exploration guidée renforcent le rappel."
+      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées, cinq cartes de rappel sur la page Practice dédiée et l'exploration guidée renforcent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -59,7 +59,7 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 
 La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 
-Pour calculer les lignes et les vecteurs à la main, remplaçons la sortie GPT-2 du préfixe par la séquence jouet `[17, 42, 8, 17]`. Dans l’[exercice sur le lookup](exercises/text-data.qmd#ex-text-to-embedding-lookup), le tokenizer jouet associe le token `chat` à l’ID 17 aux positions 0 et 3. Le modèle lit deux fois la ligne $E_{17,:}$. Cette ligne contient un vecteur. Les positions 0 et 3 indiquent où chaque occurrence se trouve dans la séquence.
+Pour calculer les lignes et les vecteurs à la main, remplaçons la sortie GPT-2 du préfixe par la séquence jouet `[17, 42, 8, 17]`. Dans l’[exercice sur le lookup](exercises-text-data.qmd#ex-text-data-embedding-lookup), le tokenizer jouet associe le token `chat` à l’ID 17 aux positions 0 et 3. Le modèle lit deux fois la ligne $E_{17,:}$. Cette ligne contient un vecteur. Les positions 0 et 3 indiquent où chaque occurrence se trouve dans la séquence.
 
 ![Du préfixe au vecteur : l'ID sélectionne une ligne de la matrice, puis le vecteur de cette ligne peut être représenté comme un point dans l'espace.](../images/embedding-lookup-fr.svg){fig-alt="Le préfixe est découpé en tokens. Un token reçoit un ID i, utilisé comme indice ou adresse de ligne pour sélectionner la ligne i de la matrice E. Cette ligne contient un vecteur de d nombres, représentable comme un point dans l'espace de plongement. L'adresse de ligne et le point sont deux objets différents." fig-cap="Le Token ID sert à retrouver une ligne dans la table ; le vecteur contenu dans cette ligne est l'objet représenté dans l'espace vectoriel." width=100%}
 
@@ -101,9 +101,11 @@ E_{i_T,:}
 \in \mathbb{R}^{T \times d}
 $$
 
-$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant l'ajout de l'information positionnelle.
+$T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vecteur. Si un ID apparaît deux fois, les lignes correspondantes de $X$ sont identiques avant tout traitement dépendant de la position propre à l'architecture.
 
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
+
+Le tokenizer fixe le vocabulaire et l'association entre tokens et IDs ; il ne fournit pas les valeurs de $E$. Ces valeurs sont des **paramètres appris du réseau** : elles sont initialisées, puis ajustées pendant l'entraînement. Lorsqu'un exemple utilise l'ID $i$, le gradient de la perte peut contribuer à l'ajustement de la ligne $E_{i,:}$. Le lookup sélectionne cette ligne ; il ne calcule pas lui-même son contenu.
 
 ## Du vecteur initial à la représentation contextualisée
 
@@ -143,8 +145,6 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - **Approfondir :** [outils mathématiques et géométrie des représentations](deepen.qmd#outils-mathematiques-et-geometrie), notamment l'histoire des vecteurs de mots statiques, la similarité cosinus et les limites des interprétations géométriques.
 
 ### D'où viennent les valeurs de la table ?
-
-Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres. Les gradients issus des exemples traversent aussi l'opération de lookup : les lignes sélectionnées par les IDs de ces exemples peuvent ainsi être ajustées pendant l'entraînement.
 
 Le détail du calcul et du code appartient au parcours **Build** : [assembler le GPT et suivre les tables d'embeddings](gpt-model-walkthrough.qmd), dans la [visite guidée de construction](build-path.qmd). Pour le rôle de la loss et des gradients, voir aussi [la fonction de perte](loss.qmd) et [les gradients](gradients.qmd).
 
