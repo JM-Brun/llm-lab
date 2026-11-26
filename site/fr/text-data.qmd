@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/exercises-text-data", "fr/deepen", "fr/tokenization-and-tokenizers", "fr/tokenization-strategies"]
+related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises", "fr/deepen", "fr/tokenization-and-tokenizers", "fr/tokenization-strategies"]
 revision_support:
   status: integrated_sufficient
   evidence:
@@ -135,7 +135,7 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises-text-data.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
 
 ## Approfondir
 
