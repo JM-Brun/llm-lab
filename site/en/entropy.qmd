@@ -108,7 +108,13 @@ $$
 
 The maximum for four outcomes is $\ln4\approx1.386$ nats, so this distribution reaches about 79% of that maximum. These illustrative values let us follow the same example through [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and [gradients](gradients.qmd).
 
-![Three distributions over four tokens, from most concentrated to most uniform, and their respective entropies.](../images/entropy-distributions-en.svg){fig-alt="Three distributions over four tokens. The concentrated distribution (100%, 0%, 0%, 0%) has entropy 0 nats. The Roman-question example (60%, 20%, 10%, 10%) has entropy 1.089 nats. The uniform distribution (25% each) reaches the maximum of 1.386 nats. The bars show probabilities; entropy summarizes the spread of the whole distribution." fig-cap="For four outcomes, entropy increases as the distribution spreads out: 0 nats for a certain outcome, 1.089 nats for the example, and 1.386 nats for the uniform distribution." width=100%}
+<figure id="fig-entropy-distributions">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/entropy-distributions-en-mobile.svg">
+    <img src="../images/entropy-distributions-en.svg" alt="Three distributions over four tokens. The concentrated distribution (100%, 0%, 0%, 0%) has entropy 0 nats. The Roman-question example (60%, 20%, 10%, 10%) has entropy 1.089 nats. The uniform distribution (25% each) reaches the maximum of 1.386 nats. The bars show probabilities; entropy summarizes the spread of the whole distribution." style="width:100%;height:auto">
+  </picture>
+  <figcaption>For four outcomes, entropy increases as the distribution spreads out: 0 nats for a certain outcome, 1.089 nats for the example, and 1.386 nats for the uniform distribution.</figcaption>
+</figure>
 
 The key identity is:
 
