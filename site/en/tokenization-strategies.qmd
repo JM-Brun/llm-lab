@@ -155,7 +155,7 @@ See the Hugging Face lessons on [fast-tokenizer capabilities](https://huggingfac
 | **WordPiece** | Select units using a likelihood-related criterion, then encode with implementation-specific rules | Not simply BPE under another name; some systems mark continuations with `##` |
 | **Unigram** | Probabilistic model over candidate subwords, often reduced by pruning | Output depends on model, candidates, and conventions |
 
-### Detailed WordPiece and Unigram mechanisms
+### Detailed WordPiece and Unigram mechanisms {#wordpiece-unigram-mechanisms}
 
 #### How WordPiece differs from BPE
 
