@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01", "fr/surprisal-information-content"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/advent-calendar-story-day-01", "fr/surprisal-information-content", "fr/tokenization-strategies", "fr/unicode-text", "fr/tokenizer-design-evaluation"]
 related: []
 tags:
   - "type:entry-point"
@@ -101,17 +101,34 @@ Ces ressources sont complémentaires, pas interchangeables : les visualisations 
 
 ## Texte et tokenisation
 
-**Question directrice :** comment les choix de représentation du texte influencent-ils les propriétés d'un système ?
+**Question directrice :** comment une chaîne de caractères devient-elle une séquence discrète compatible avec un modèle, et comment juger les choix de représentation ?
 
-**Point d'entrée :** commencez par [Texte et données](text-data.qmd), qui suit le passage du texte aux identifiants de tokens.
+**Point de départ :** [Du texte aux tokens](text-data.qmd) présente le contrat minimal du parcours Understand : tokens, IDs et lookup des embeddings. Les pages ci-dessous approfondissent des questions distinctes ; elles ne constituent pas une nouvelle étape obligatoire.
 
-- [Unicode et représentation du texte](unicode-text.qmd) — couches de représentation des caractères et conséquences.
-- [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — familles BPE, WordPiece et Unigramme, conception et protocole empirique.
+### Comprendre les unités et les mécanismes
+
+[Stratégies de tokenisation](tokenization-strategies.qmd) — granularités (mots, caractères, octets, sous-mots), composants du pipeline, tokens spéciaux, offsets, BPE, WordPiece et Unigramme. À lire pour expliquer pourquoi un même texte peut produire des séquences différentes et quelles hypothèses distinguent les algorithmes.
+
+### Comprendre la représentation du texte en amont
+
+[Unicode, UTF-8 et normalisation](unicode-text.qmd) — points de code, graphèmes, octets et formes normalisées. À lire lorsque deux chaînes visuellement identiques peuvent être représentées différemment avant la tokenisation.
+
+### Évaluer les choix de conception
+
+[Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — taille du vocabulaire, longueur des séquences, budgets, métriques, coûts système, qualité en aval et écarts multilingues. À lire pour construire une comparaison contrôlée sans réduire la décision au nombre de tokens.
+
+### Itinéraires selon la question
+
+- **Comprendre les algorithmes :** stratégies de tokenisation.
+- **Comprendre les cas Unicode :** Unicode, puis stratégies de tokenisation si nécessaire.
+- **Comparer et évaluer :** stratégies, puis conception et évaluation.
+- **Préparer un entraînement :** [préparer un corpus](corpus-preparation.qmd), puis [construire les exemples d'entraînement](training-examples.qmd). Ce dernier itinéraire relève du parcours Build : il est lié ici comme prolongement pratique, pas comme sous-page Deepen.
+
 ### Statistiques du langage
 
 - [Loi de Zipf et statistiques des fréquences lexicales](advent-calendar-story-day-01.qmd) — distributions rang-fréquence, longue traîne, ajustements empiriques et limites de l’interprétation.
 
-La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours principal reste le point d'entrée conceptuel ; la conception et l'évaluation comparative sont des approfondissements.
+Les itinéraires sont des suggestions de lecture, pas des prérequis. La page stratégies porte l'explication des mécanismes ; la page conception-évaluation porte les critères et les preuves comparatives.
 
 ## Outils mathématiques et géométrie {#outils-mathematiques-et-geometrie}
 
