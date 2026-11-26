@@ -349,3 +349,30 @@ La fourchette de lecture indicative est calculée à 130–150 mots/minute, arro
 4. Vue d'ensemble et attention : vérifier les répétitions et les objectifs distincts avant tout déplacement.
 5. Leçons courtes : examiner l'autonomie, les exemples, les transitions et les sources ; ne pas ajouter de contenu par quota.
 6. Après ces décisions, établir la méthode de durée et renseigner les métadonnées FR/EN.
+
+
+## 10. Vérification ciblée des références visibles sur les pages sans source catalogue
+
+Une seconde vérification des sections de ressources et de références confirme que plusieurs zéros du tableau précédent sont des défauts de liaison au catalogue, et non des pages sans références.
+
+| Leçon | Sources reliées dans le catalogue | Références visibles repérées lors de la vérification |
+|---|---:|---|
+| Logits | 0 | 1 : PyTorch `CrossEntropyLoss` |
+| Entropie | 0 | 3 : Shannon, Cover & Thomas, 3Blue1Brown |
+| Ingénierie du contexte | 0 | 3 : Anthropic, Liu et al. (*Lost in the Middle*), OWASP |
+| Cross-entropy | 0 | 5 : PyTorch `CrossEntropyLoss`, PyTorch `LogSoftmax`, Shannon, Cover & Thomas, 3Blue1Brown |
+| Loss | 0 | 1 : PyTorch `CrossEntropyLoss` |
+| Gradients | 0 | 2 : PyTorch autograd, PyTorch `gradcheck` |
+| Training loop | 0 | 9 références / ressources documentaires, dont Adam, AdamW, Deep Learning (Goodfellow et al.), Karpathy et plusieurs ressources Hugging Face |
+
+Pour ICL, le catalogue compte actuellement une source reliée, mais il s'agit de la vidéo générale *Deep Dive into LLMs like ChatGPT* d'Andrej Karpathy ; la page comporte quatre références d'articles scientifiques (Brown, Olsson, Xie et Min). La source générale ne remplace pas quatre notices bibliographiques dédiées.
+
+Ces vérifications sont une lecture des sections de ressources des pages concernées ; elles ne constituent pas encore une extraction automatique exhaustive de toutes les URLs de toutes les pages du parcours.
+
+### Décision documentaire
+
+- Ne pas ajouter une notice catalogue par simple copie de chaque URL sans vérifier l'identité bibliographique, la qualité, le statut de consultation et l'apport de la source.
+- Réconcilier les notices canoniques existantes quand elles existent déjà, puis compléter les entrées manquantes.
+- Lier une source à une page seulement si elle soutient effectivement une notion ou une explication de cette leçon. Les ressources d'implémentation et d'approfondissement doivent garder leur rôle explicite.
+- Conserver les références visibles dans les leçons : le catalogue central les complète et les rend interrogeables, il ne doit pas rendre la bibliographie visible inutilement opaque.
+- Ajouter un contrôle de cohérence qui compare les références visibles et les sources cataloguées, mais présente les différences comme une file de revue, car les formats de citation, les liens internes et les ressources facultatives ne se prêtent pas tous à une correspondance automatique.
