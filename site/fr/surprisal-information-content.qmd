@@ -189,10 +189,10 @@ Nous pouvons maintenant calculer l'entropie de la distribution du premier exempl
 
 Ainsi,
 
-$
+$$
 H(X\mid c)\approx0{,}26+0{,}33+0{,}22+0{,}22
 \approx1{,}02\text{ bits}.
-$
+$$
 
 L'entropie est inférieure au surprisal de l'issue observée `Lyon` (environ 3,32 bits). Il n'y a aucune contradiction : l'entropie est la moyenne pondérée sur toutes les issues possibles, tandis que le surprisal de Lyon ne concerne qu'une issue particulière. Les contributions des événements rares peuvent être importantes, mais elles sont pondérées par leur faible probabilité.
 
