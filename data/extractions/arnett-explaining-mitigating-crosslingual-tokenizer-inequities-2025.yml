@@ -51,7 +51,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:intrinsic-evaluation]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -77,7 +77,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:tokenizer-training]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, byte-pair-encoding, unigram-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -103,7 +103,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:pre-tokenization, topic:multilingual-tokenization, method:regression]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, pre-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
       concepts: []
@@ -129,7 +129,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-training, topic:multilingual-tokenization, method:regression]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, token-vocabulary]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -157,7 +157,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:pre-tokenization, topic:multilingual-tokenization, topic:superbpe]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization, tokenizer-training, pre-tokenization, byte-pair-encoding]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []

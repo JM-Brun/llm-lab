@@ -1,0 +1,110 @@
+schema_version: 1
+source_id: vizuara-tokenization-from-scratch-bpe
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Pedagogical assessment recorded in issue #147; no new course scan performed."
+    inferred_elements:
+      - "The teaching route is reconstructed from the reviewed progression description, not from a complete course transcript."
+  source_graph:
+    nodes:
+      - id: src-bpe-fundamentals
+        kind: concept
+        description: "Introduce the basic idea and purpose of BPE before implementing it."
+        locator: "Course progression: fundamentals"
+        inferred: false
+      - id: src-bpe-notebooks
+        kind: implementation
+        description: "Use notebooks and figures to make the BPE procedure inspectable."
+        locator: "Course progression: notebooks and figures"
+        inferred: false
+      - id: src-bpe-case-study
+        kind: application
+        description: "Consolidate the algorithm through a worked case study."
+        locator: "Course progression: case study"
+        inferred: false
+    edges:
+      - from: src-bpe-fundamentals
+        type: prepares-for
+        to: src-bpe-notebooks
+        inferred: true
+      - from: src-bpe-notebooks
+        type: prepares-for
+        to: src-bpe-case-study
+        inferred: true
+    interpretation: "A deliberately coarse pedagogical reconstruction from #147; it does not assert that every course lesson or asset was inspected."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Follow the mechanics of BPE through a concrete, inspectable example."
+      basis: "The review identifies hands-on notebooks and figures as the resource's principal teaching affordance."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Familiarity with strings, sequences and adjacent pairs."
+      basis: "Needed to follow a manual pair-merging demonstration."
+  teaching_route:
+    - order: 1
+      section: "Fundamentals"
+      function: conceptual-framing
+      moves: ["Establish what BPE is intended to do."]
+    - order: 2
+      section: "Notebooks and figures"
+      function: worked-mechanism
+      moves: ["Inspect intermediate pair counts and merges."]
+    - order: 3
+      section: "Case study"
+      function: transfer
+      moves: ["Apply the mechanism to a concrete input."]
+  pedagogical_strengths:
+    - "Progression from concept to notebook/figure to case study."
+    - "Makes BPE more manipulable than a purely verbal description."
+  pedagogical_limits:
+    - "The existing review records a pedagogical assessment, not a full course scan."
+    - "No claim is made about learning outcomes measured experimentally."
+    - "Asset-level reuse rights are not established."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/tokenization-strategies.qmd", "site/en/tokenization-strategies.qmd"]
+    decision: "Retain as a linked practical teaching resource; use its hands-on progression as a benchmark for LLM Lab's own BPE explanation without copying its figures."
+    structures_kept_separate: ["Source-local pedagogical reconstruction", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: vizuara-tokenization-from-scratch-bpe:interactive-bpe-learning
+    kind: teaching-sequence
+    summary: "The resource's distinctive pedagogical contribution is a progression from BPE fundamentals to notebooks and figures, then to a case study."
+    locator: {type: section, value: "Course progression: fundamentals, notebooks/figures, case study", label: "Course structure"}
+    evidence:
+      kind: pedagogical-audit
+      confidence: well-supported
+      scope: "The progression explicitly summarized in the completed Vizuara review (#147)."
+      assumptions: []
+      limitations: ["This extraction preserves the review's summary; it does not claim full lesson-by-lesson inspection."]
+    technical_assessment: {status: not-reviewed, rationale: "This item captures a pedagogical contribution, not a new technical claim.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "How can a learner see what BPE does at each step?"
+      explanatory_lens: "Concept-first, then inspectable notebook/figure, then case study."
+      teaching_form: [worked-example, notebook, visualization, case-study]
+      novelty: {level: high, rationale: "The main value is the progression and inspectability, not a new algorithm."}
+      complementarity: {level: high, rationale: "Complements text explanations and source-code implementations with a staged learning experience."}
+      pedagogical_value: {level: high, rationale: "Intermediate states make an iterative algorithm easier to reason about."}
+      applicability: {level: high, rationale: "Useful as a benchmark for the project's BPE lesson and experiments section."}
+      redundancy: {level: low, rationale: "The teaching format adds value even where the underlying BPE facts are already covered."}
+      evidence_quality: {level: moderate, rationale: "Based on the completed pedagogical review, not an exhaustive source scan."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:byte-pair-encoding, modality:visualization, modality:notebook]
+      concept_ids: [byte-pair-encoding, tokenizer-training]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [byte-pair-encoding, tokenizer-training]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Link the resource and reuse its pedagogical pattern, not its unverified assets."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Vizuara contributes a teaching pattern for making BPE state transitions observable. It does not justify another LLM Lab page or copied figure."

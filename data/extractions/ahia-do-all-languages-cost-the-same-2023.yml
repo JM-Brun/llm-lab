@@ -51,7 +51,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
       concepts: []
@@ -77,7 +77,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:byte-level-bpe]
-      concept_ids: [token]
+      concept_ids: [byte-level-encoding, byte-pair-encoding, multilingual-tokenization, tokenizer-evaluation]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -104,7 +104,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [application:api-cost, topic:multilingual-tokenization, topic:compute-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -131,7 +131,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:context-window, topic:in-context-learning, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -159,7 +159,7 @@ items:
       primary_theme: text-tokenization
       secondary_themes: [scale-research]
       tags: [application:api-cost, topic:multilingual-tokenization, topic:accessibility]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
@@ -186,7 +186,7 @@ items:
     classification:
       primary_theme: text-tokenization
       tags: [topic:reproducibility, topic:multilingual-tokenization, application:api-cost]
-      concept_ids: [token]
+      concept_ids: [tokenizer-evaluation, multilingual-tokenization]
     candidate_destinations:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []

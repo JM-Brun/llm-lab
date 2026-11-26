@@ -28,9 +28,27 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 
 | Collection | Scope | Entry point | Current state |
 |---|---|---|---|
-| Tokenization and embeddings | Text representation, tokenizer construction, corpus preparation, multilingual evaluation, embeddings and similarity geometry | [Cross-source synthesis](tokenization-embeddings-source-collection.md) · [Migration map](tokenization-embeddings-source-migration-map-2026-11.md) · [Hesam's interactive embedding guide](hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md) · [Gage (1994) primary audit](gage-1994-primary-audit.md) · [Sennrich et al. (2016) primary audit](sennrich-2016-primary-audit.md) | 139 source records in the project catalogue; 96 YAML extraction files across the repository (validated full-corpus inventory on `main`, 2026-11-19; PR #1347). As of 2026-11-19, explicit collection decisions are recorded for 37 sources: 25 in `tokenization-embeddings`, 6 in `visual-learning-tools`, and 4 in `qkv-attention` (35 memberships total); 2 reviewed sources explicitly have no collection, and 102 sources remain undecided. These are source-membership counts, not extraction-file or atomic-item counts. CI derives the latter by `extraction.source_id -> source.id -> source.collections` in `site/tools/report_source_coverage.py`. On the validated 2026-11-19 snapshot, the collections contain respectively 25/0/0 (`tokenization-embeddings`), 6/0/0 (`visual-learning-tools`) and 4/4/41 (`qkv-attention`) source records / extraction files / atomic items. Gage (1994) and Sennrich et al. (2016) now have primary audit records and canonical extraction files ([Gage](../../data/extractions/philip-gage-byte-pair-compression-1994.yml), [Sennrich](../../data/extractions/sennrich-subword-nmt-2016.yml)). File counts are inventory metadata, not measures of scan completeness or quality; field-level `source_id` reconciliation remains tracked in #1319. Remaining metadata, URL and asset-rights gaps are tracked in the migration map and #156 |
+| Tokenization and embeddings | Text representation, tokenizer construction, corpus preparation, multilingual evaluation, embeddings and similarity geometry | [Cross-source synthesis](tokenization-embeddings-source-collection.md) · [Migration map](tokenization-embeddings-source-migration-map-2026-11.md) · [Hesam's interactive embedding guide](hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md) · [Gage (1994) primary audit](gage-1994-primary-audit.md) · [Sennrich et al. (2016) primary audit](sennrich-2016-primary-audit.md) | 32 source records, 12 extraction files and 45 atomic items in the validated 2026-11-26 report (PR #1696). Counts are joined through `extraction.source_id -> source.id -> source.collections`; historical snapshots are superseded. See the collection synthesis for source-to-concept coverage. |
 | Q/K/V and attention | Query, Key, Value, self-attention, scaled dot-product attention and related teaching perspectives | [Q/K/V source collection](qkv-source-collection.md) · [Learning-graph comparison](qkv-learning-graph-comparison-2026-11.md) | Initial source records and structured extractions integrated |
 | Visual learning tools: Embedding Atlas and Neuronpedia | Interactive embedding-data exploration versus evidence-led inspection of SAE features and model internals | [Focused review and bilingual integration](embedding-atlas-neuronpedia-integration-2026-11.md) · [Initial ten-resource triage](visual-learning-resources-2026-11.md) | Bilingual guided labs integrated; sources remain partially scanned; no benchmark or model-internals experiment reproduced |
+
+## Tokenization source models
+
+The tokenization collection now distinguishes source-specific meta-representations from atomic evidence extraction:
+
+| Source | Representation |
+|---|---|
+| Karpathy GPT Tokenizer | [Structured extraction](../../data/extractions/andrej-karpathy-gpt-tokenizer-video.yml) |
+| Raschka, Chapter 2 | [Structured extraction](../../data/extractions/sebastian-raschka-llms-from-scratch-ch02.yml) |
+| Hugging Face Course, Chapter 6 | [Pedagogical audit](huggingface-course-tokenizer-pedagogical-audit-2026-11-19.md) |
+| Vizuara, Tokenization from Scratch | [Structured extraction](../../data/extractions/vizuara-tokenization-from-scratch-bpe.yml) |
+| ByteByteGo, How LLMs See the World | [Structured extraction](../../data/extractions/bytebytego-how-llms-see-world-2025.yml) |
+| Hugging Face Tokenizers | [Implementation/documentation audit](tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md) |
+| OpenAI tiktoken | [Implementation audit](tiktoken-implementation-audit-2026-11-19.md) |
+| Karpathy minbpe | [Structured extraction](../../data/extractions/karpathy-minbpe.yml) |
+| Google SentencePiece | [Structured extraction](../../data/extractions/google-sentencepiece-documentation.yml) |
+
+The current concept model adds 21 tokenization-specific concepts and typed relations; five new source extractions complement the existing Karpathy extraction and the source-specific Hugging Face/tiktoken reviews. Use the cross-source synthesis for the comparative concept spine. The extraction records retain source-local graphs and teaching routes; the canonical concept registry remains a separate project-level model. Existing reviews remain the representation of record where a new extraction would duplicate already-audited claims or exceed the evidence.
 
 ## Introductory overviews and social-media explainers
 

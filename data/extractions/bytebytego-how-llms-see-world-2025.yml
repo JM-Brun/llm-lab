@@ -1,0 +1,145 @@
+schema_version: 1
+source_id: bytebytego-how-llms-see-world-2025
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Completed pedagogical comparison in issue #147; no new article scan performed."
+    inferred_elements:
+      - "The route is reconstructed from the examples explicitly recorded in the review."
+  source_graph:
+    nodes:
+      - id: src-visible-text-variation
+        kind: example-family
+        description: "Whitespace, punctuation, numbers and code can expose differences between visible text units and tokenizer units."
+        locator: "Reviewed examples: whitespace, punctuation, numbers and code"
+        inferred: false
+      - id: src-multilingual-text
+        kind: example-family
+        description: "Text from different writing systems and languages can produce different segmentation behavior."
+        locator: "Reviewed multilingual examples"
+        inferred: false
+      - id: src-tokenizer-output
+        kind: representation
+        description: "The examples motivate inspecting actual tokenizer output rather than assuming word boundaries."
+        locator: "Article's tokenization examples"
+        inferred: true
+    edges:
+      - from: src-visible-text-variation
+        type: motivates-inspection-of
+        to: src-tokenizer-output
+        inferred: true
+      - from: src-multilingual-text
+        type: motivates-inspection-of
+        to: src-tokenizer-output
+        inferred: true
+    interpretation: "The source graph captures the reviewed example families and their teaching purpose. It does not endorse simplified causal claims about downstream model errors."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Recognize that spaces, punctuation, numbers and code are not necessarily tokenized according to intuitive word boundaries."
+      basis: "These example families are explicitly listed in the #147 review."
+    - status: inferred
+      outcome: "Treat multilingual tokenization differences as measurable representation effects rather than as a simple language ranking."
+      basis: "The review warns against categorical causal explanations and simplistic language comparisons."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic distinction between text, tokens and token IDs."
+      basis: "The examples are intended to illustrate tokenizer behavior."
+  teaching_route:
+    - order: 1
+      section: "Whitespace and punctuation"
+      function: counterexample
+      moves: ["Challenge the assumption that visible words define token boundaries."]
+    - order: 2
+      section: "Numbers and code"
+      function: transfer-example
+      moves: ["Test the same intuition on non-prose inputs."]
+    - order: 3
+      section: "Multilingual text"
+      function: comparison
+      moves: ["Observe language-dependent segmentation without inferring a universal quality ranking."]
+  pedagogical_strengths:
+    - "Uses familiar examples to make token boundaries less abstract."
+    - "Extends intuition beyond ordinary English prose."
+  pedagogical_limits:
+    - "The review warns that some causal explanations are too categorical."
+    - "No general causal link from fragmentation to reasoning errors is established."
+    - "The review is selective and does not imply complete site coverage."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/text-data.qmd", "site/fr/tokenization-strategies.qmd"]
+    decision: "Use as a source of contrastive examples only after checking that each example adds a distinct mechanism and, where numeric output is shown, recording tokenizer/version."
+    structures_kept_separate: ["Source-local example sequence", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: bytebytego-how-llms-see-world-2025:non-obvious-token-boundaries
+    kind: misconception
+    summary: "Whitespace and punctuation examples challenge the assumption that tokenizer units coincide with visible words or simple space-separated strings."
+    locator: {type: section, value: "Article body — examples of whitespace and punctuation (the prior review did not preserve stable subsection anchors)", label: "Tokenization examples"}
+    evidence:
+      kind: pedagogical-audit
+      confidence: well-supported
+      scope: "Example families explicitly compared in the completed #147 review."
+      assumptions: []
+      limitations: ["Exact output depends on the tokenizer and its configuration; the examples are not universal tokenization outputs.", "The earlier review did not retain stable subsection anchors; the article-body locator is intentionally coarse."]
+    technical_assessment: {status: not-reviewed, rationale: "The extraction records the reviewed pedagogical role; no new source verification.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Why can intuitive word boundaries differ from tokenizer boundaries?"
+      explanatory_lens: "Contrastive examples using ordinary and non-prose text."
+      teaching_form: [counterexample, worked-example]
+      novelty: {level: moderate, rationale: "The examples make familiar token-boundary edge cases salient."}
+      complementarity: {level: high, rationale: "They add concrete example families to the algorithm-focused sources."}
+      pedagogical_value: {level: moderate, rationale: "They motivate inspecting actual tokenizer output."}
+      applicability: {level: high, rationale: "Useful in the introductory and strategy lessons if outputs are versioned and reproducible."}
+      redundancy: {level: moderate, rationale: "Spaces and punctuation are already covered in the canonical lesson."}
+      evidence_quality: {level: moderate, rationale: "Based on the selective pedagogical review in #147."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:token-boundaries, topic:whitespace, topic:punctuation]
+      concept_ids: [token, tokenization, tokenizer-pipeline]
+    candidate_destinations:
+      pages: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [token, tokenization, tokenizer-pipeline]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current pages already address spaces and punctuation; retain as corroborating examples, not as new claims."
+
+  - id: bytebytego-how-llms-see-world-2025:multilingual-tokenization
+    kind: limitation
+    summary: "The article's multilingual examples are useful prompts for inspecting segmentation, but categorical claims about language difficulty or downstream reasoning must not be inferred from token fragmentation alone."
+    locator: {type: section, value: "Article body — multilingual examples (the prior review did not preserve stable subsection anchors)", label: "Multilingual tokenization"}
+    evidence:
+      kind: editorial-qualification
+      confidence: well-supported
+      scope: "The qualification is recorded in the completed project review (#147)."
+      assumptions: []
+      limitations: ["No quantitative comparison or causal experiment is supplied by this extraction."]
+    technical_assessment: {status: qualified, rationale: "The project audit explicitly qualifies overly categorical causal explanations.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "How should language-dependent token counts be interpreted?"
+      explanatory_lens: "Examples that motivate measurement, paired with an explicit causal caveat."
+      teaching_form: [comparison, misconception]
+      novelty: {level: moderate, rationale: "The source supplies an accessible motivation for multilingual tokenization."}
+      complementarity: {level: high, rationale: "It motivates the research literature without replacing it."}
+      pedagogical_value: {level: high, rationale: "The caution prevents a naive language ranking or unsupported causal story."}
+      applicability: {level: high, rationale: "Useful as a bridge to controlled tokenizer evaluation."}
+      redundancy: {level: moderate, rationale: "The advanced lesson already treats multilingual evaluation."}
+      evidence_quality: {level: moderate, rationale: "The review is selective and no quantitative experiment is extracted."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation]
+      concept_ids: [multilingual-tokenization, tokenizer-evaluation]
+    candidate_destinations:
+      pages: [fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation]
+      concepts: [multilingual-tokenization, tokenizer-evaluation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as motivation for controlled evaluation; scientific claims must come from the research sources."
+    
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "ByteByteGo contributes memorable example families, not primary evidence about tokenizer quality or model reasoning. Keep its examples subordinate to verified tokenizer outputs and research."

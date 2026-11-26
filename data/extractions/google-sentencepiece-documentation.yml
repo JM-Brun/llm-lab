@@ -1,0 +1,134 @@
+schema_version: 1
+source_id: google-sentencepiece-documentation
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Existing source-family audit and implementation comparison; no new SentencePiece scan performed."
+    inferred_elements:
+      - "The route organizes the audited contribution around text input, whitespace and supported subword models."
+  source_graph:
+    nodes:
+      - id: src-raw-unicode-input
+        kind: representation
+        description: "SentencePiece can operate directly on raw Unicode text rather than requiring whitespace-tokenized words as input."
+        locator: "SentencePiece overview and normalization documentation"
+        inferred: false
+      - id: src-whitespace-treatment
+        kind: mechanism
+        description: "Whitespace is represented and handled through tokenizer-specific conventions."
+        locator: "SentencePiece overview and normalization documentation"
+        inferred: false
+      - id: src-algorithm-families
+        kind: concept
+        description: "SentencePiece is a toolkit that supports more than one subword model, including BPE and Unigram."
+        locator: "SentencePiece model overview"
+        inferred: false
+    edges:
+      - from: src-raw-unicode-input
+        type: processed-with
+        to: src-whitespace-treatment
+        inferred: true
+      - from: src-whitespace-treatment
+        type: used-by
+        to: src-algorithm-families
+        inferred: true
+    interpretation: "The source is a tokenizer toolkit and documentation family, not a synonym for the Unigram algorithm. The audit's claims are limited to the inspected overview and normalization material."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Distinguish a tokenizer library from the segmentation algorithm selected within it."
+      basis: "The audited documentation describes multiple supported model families."
+    - status: inferred
+      outcome: "Explain why whitespace handling and input representation are part of tokenizer design."
+      basis: "The overview and normalization material discuss raw text and whitespace."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic tokenization and subword vocabulary concepts."
+      basis: "The documentation presents a tokenizer toolkit and its models."
+  teaching_route:
+    - order: 1
+      section: "Raw Unicode input"
+      function: input-model
+      moves: ["Contrast raw-text processing with pre-splitting on whitespace."]
+    - order: 2
+      section: "Whitespace and normalization"
+      function: tokenizer-convention
+      moves: ["Identify how whitespace is preserved or represented."]
+    - order: 3
+      section: "BPE and Unigram models"
+      function: library-versus-algorithm
+      moves: ["Separate the library name from the selected segmentation model."]
+  pedagogical_strengths:
+    - "Provides a useful contrast to whitespace-first tokenization assumptions."
+    - "Clarifies that one library may support multiple algorithm families."
+  pedagogical_limits:
+    - "The extraction is limited to the audited overview and normalization documentation."
+    - "It does not establish that every SentencePiece configuration behaves identically."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/tokenization-strategies.qmd", "site/en/tokenization-strategies.qmd"]
+    decision: "Use as a library-level counterpoint to algorithm-centric explanations; preserve configuration-specific behavior."
+    structures_kept_separate: ["Library documentation model", "Canonical concept graph", "Project learning route"]
+
+items:
+  - id: google-sentencepiece-documentation:library-versus-algorithm
+    kind: mental-model
+    summary: "SentencePiece is a tokenizer toolkit that supports multiple subword model families, including BPE and Unigram; it should not be treated as one segmentation algorithm."
+    locator: {type: section, value: "SentencePiece overview, supported models", label: "Model families"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "The overview and model-family information included in the existing project audit."
+      assumptions: []
+      limitations: ["The available configuration and behavior depend on the SentencePiece version and model."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing source audit reused.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Is SentencePiece itself an algorithm?"
+      explanatory_lens: "Separate a tokenizer toolkit from the model family configured within it."
+      teaching_form: [contrast, mental-model]
+      novelty: {level: moderate, rationale: "The distinction prevents a common category error."}
+      complementarity: {level: high, rationale: "It complements algorithm-focused explanations with a library-level view."}
+      pedagogical_value: {level: high, rationale: "It clarifies what a library name does and does not imply."}
+      applicability: {level: high, rationale: "Useful in the comparison of BPE, WordPiece and Unigram."}
+      redundancy: {level: low, rationale: "The library-versus-algorithm distinction is not a repeated algorithm explanation."}
+      evidence_quality: {level: moderate, rationale: "Limited to the overview and model-family documentation previously audited."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-library, topic:subword-tokenization]
+      concept_ids: [tokenizer, subword-tokenization, byte-pair-encoding, unigram-tokenization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [tokenizer, subword-tokenization, byte-pair-encoding, unigram-tokenization]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The distinction prevents the library from being conflated with a single algorithm."
+
+  - id: google-sentencepiece-documentation:raw-text-and-whitespace
+    kind: mechanism
+    summary: "SentencePiece's raw-text approach makes whitespace handling an explicit tokenizer convention rather than assuming that words have already been split by spaces."
+    locator: {type: section, value: "SentencePiece overview and normalization documentation", label: "Raw text and whitespace"}
+    evidence:
+      kind: official-documentation
+      confidence: well-supported
+      scope: "The specific raw-Unicode and whitespace material retained in the existing audit."
+      assumptions: []
+      limitations: ["This statement is about the audited SentencePiece design, not every tokenizer library."]
+    technical_assessment: {status: not-reviewed, rationale: "Existing source audit reused.", corroborating_sources: []}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:whitespace, topic:text-normalization, topic:tokenizer-pipeline]
+      concept_ids: [tokenizer-pipeline, text-normalization, tokenization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [tokenizer-pipeline, text-normalization, tokenization]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful to explain that whitespace behavior is part of the tokenizer specification, not a universal precondition."
+    
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "SentencePiece contributes a useful library-versus-algorithm distinction and a raw-text/whitespace perspective. It complements rather than replaces the BPE, WordPiece and Unigram explanations."

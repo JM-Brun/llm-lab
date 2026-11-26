@@ -498,7 +498,9 @@ def test_2026_concept_relation_review_corrections_are_preserved() -> None:
     # the context-conditioned next-token distribution used by a language model.
     assert ("zipf-law", "approximates", "word-frequency-distribution") in edges
     assert ("conditional-distribution", "contrasts-with", "word-frequency-distribution") in edges
-    assert len(edges) == 122
+    # The registry grows as new, source-backed concepts are integrated; avoid
+    # pinning this editorial review test to a global edge count.
+    assert len(edges) >= 122
 
     relation_by_key = {(item["from"], item["type"], item["to"]): item for item in data["relations"]}
     scoped_edges = {
