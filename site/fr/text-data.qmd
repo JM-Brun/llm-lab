@@ -166,7 +166,7 @@ Le tokenizer associé au modèle code le prompt à l'inférence et le corpus uti
 
 ### Choisir un approfondissement {#frontières-entre-les-pages}
 
-Pour choisir une lecture selon la question — mécanismes, représentation Unicode ou évaluation — consultez la [carte des approfondissements sur la tokenisation](deepen.qmd#texte-et-tokenisation). Les pages spécialisées ci-dessous restent facultatives.
+Pour choisir une lecture selon la question — mécanismes, représentation Unicode ou évaluation — consultez la [carte des approfondissements sur la tokenisation](tokenization-and-tokenizers.qmd). Les pages spécialisées ci-dessous restent facultatives.
 
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) pour suivre le passage de la chaîne aux octets.
 - [Stratégies de tokenisation](tokenization-strategies.qmd) pour comparer les découpages.
