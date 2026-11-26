@@ -56,13 +56,13 @@ La préparation du corpus et l'entraînement du tokenizer relèvent du parcours 
 
 ## Carte des questions
 
-| Si votre question est… | Lisez… | Ce que cette page apporte |
-|---|---|---|
-| Comment une chaîne de caractères est-elle représentée avant la segmentation ? | [Unicode, UTF-8 et normalisation](unicode-text.qmd) | Distinguer caractères, points de code, octets et formes normalisées. |
-| Pourquoi un même texte produit-il plusieurs séquences possibles ? | [Stratégies de tokenisation](tokenization-strategies.qmd) | Comparer granularités, pipeline, BPE, WordPiece et Unigramme. |
-| Comment choisir une taille de vocabulaire et comparer des tokenizers ? | [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) | Relier longueur, budgets, coûts système, métriques et qualité en aval. |
-| Comment préparer les données et ajuster le tokenizer d'un modèle ? | [Préparation du corpus](corpus-preparation.qmd) | Traiter sources, filtrage, déduplication, partitionnement et fitting dans le contexte de Build. |
-| Comment les IDs deviennent-ils des exemples d'apprentissage ? | [Exemples d'entraînement](training-examples.qmd) | Passer du flux d'IDs aux fenêtres, cibles décalées, masques et séquences packées. |
+| Question | Page | Prérequis utiles | Apport spécifique |
+|---|---|---|---|
+| Comment une chaîne est-elle représentée avant la segmentation ? | [Unicode, UTF-8 et normalisation](unicode-text.qmd) | Aucun ; la leçon [Du texte aux tokens](text-data.qmd) donne le contexte LLM. | Distinguer caractères abstraits, points de code, octets et formes normalisées. |
+| Pourquoi un même texte produit-il plusieurs séquences possibles ? | [Stratégies de tokenisation](tokenization-strategies.qmd) | [Du texte aux tokens](text-data.qmd) ; Unicode est utile pour les cas limites. | Comparer granularités, pipeline, BPE, WordPiece et Unigramme. |
+| Comment choisir une taille de vocabulaire et comparer des tokenizers ? | [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) | Les [stratégies de tokenisation](tokenization-strategies.qmd) ; bases de mesure et d'évaluation expérimentale. | Relier longueur, budgets, coûts système, métriques et qualité en aval. |
+| Comment préparer les données et ajuster le tokenizer d'un modèle ? | [Préparation du corpus](corpus-preparation.qmd) | Le [parcours Build](build-path.qmd) et ses notions de corpus et de partitionnement. | Traiter sources, filtrage, déduplication, partitionnement et fitting dans le contexte de Build. |
+| Comment les IDs deviennent-ils des exemples d'apprentissage ? | [Exemples d'entraînement](training-examples.qmd) | Le [parcours Build](build-path.qmd) et la chaîne texte → IDs. | Passer du flux d'IDs aux fenêtres, cibles décalées, masques et séquences packées. |
 
 ## Itinéraires selon l'objectif
 
