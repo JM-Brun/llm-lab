@@ -1,7 +1,7 @@
 ---
 title: "Positional encoding: giving tokens an order"
 subtitle: "Why order must be injected—and where"
-description-meta: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
+description-meta: "Explains how Transformers represent token order and distinguishes absolute encodings, relative representations, score biases, and causal visibility."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
 summary: "Shows why token content alone does not represent order, then distinguishes positional signals from causal visibility constraints."
-scope: "Introduces the role of positional information and locates absolute encodings and relative mechanisms in the computation. RoPE derivations and sinusoidal properties belong in the deep dives."
-purpose: "Explain why order must be represented, distinguish position from causal visibility, and locate the main insertion points."
+scope: "Explains why order must be represented and compares the insertion points of absolute encodings, relative representations, score biases and RoPE. Distinguishes these signals from causal visibility and locates NoPE as the omission of an explicit positional mechanism. Derivations remain in the deep dives."
+purpose: "Explain why content alone is insufficient, compare where positional mechanisms act in the computation, and distinguish explicit information, implicit order and causal visibility."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap and permutation experiment distinguish content, order, and causal visibility; the diagram locates absolute addition and RoPE without deriving their formulas."
+      note: "The recap distinguishes content, order, insertion points and causal visibility; five recall cards and a transfer exercise are available on the dedicated Practice page."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -37,17 +37,19 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 
 The two occurrences of `cat` at positions 0 and 3 retrieve the same vector from the [embedding table](embedding-space.qmd). The model needs an ordering signal to account for where each token occurs. Changing the order in “the cat chases the dog” can change who is chasing whom.
 
-When used, the causal mask indicates which positions may be attended to (`j ≤ i`). Positional mechanisms can additionally represent an absolute position or a relative offset. These signals are complementary, not interchangeable.
+When used, the causal mask indicates which positions may be attended to (`j ≤ i`). Positional mechanisms can additionally represent an absolute position or a relative offset. These signals are complementary, not interchangeable. Some architectures described as **NoPE** omit an explicit positional mechanism: the nested visible prefixes induced by causal masking can then provide an implicit ordering signal. This structural signal does not provide an explicit absolute coordinate or relative distance, and it does not guarantee reliable generalization to longer contexts.
 
 In “What have the Romans ever done for us?”, token order is part of the input. As generation adds “They built roads between distant towns.”, each new token takes its own position in the growing sequence.
 
 ## Two families, with several mechanisms
 
 - **Absolute encoding added to the vector:** add a position-specific vector to the token representation. The original Transformer used sinusoidal encodings; other models learn positional embeddings.
-- **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
-- **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
+- **Relative mechanisms:** introduce the offset between positions into the attention computation. Important examples include:
+  - **Relative representations**, as in Shaw et al., attach learned representations to relations between positions and can affect both compatibility and aggregation.
+  - **Relative biases**, as in T5 or ALiBi, add an offset-dependent term to attention scores before softmax: T5 learns bucketed values, whereas ALiBi uses a fixed linear penalty for each head.
+  - **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
-The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint.
+The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares three insertion points: absolute addition at the input, Q/K rotation, and a relative bias added to attention scores before softmax. The causal mask remains a separate visibility constraint.
 
 ### A permutation reveals the problem
 
@@ -79,7 +81,7 @@ In the additive exercise, the toy table gives both occurrences of `cat` the same
 
 ::: {.callout-note collapse="true" title="Compare the two insertion points in the diagram"}
 
-![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
+![Three points where positional information enters: input addition, Q/K rotation, and score bias.](../images/positional-entry-points-en.svg){fig-alt="Three paths are compared: add a position vector to the embedding before Transformer blocks; apply RoPE to queries and keys after projection; add a relative bias to the QK score before softmax. RoPE does not rotate values V." width=100%}
 
 :::
 
@@ -95,8 +97,8 @@ At this stage, it is enough to understand the mechanisms' role and approximate l
 
 ::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Why:** content embeddings alone do not say where a token occurs. Without positional information or an order-dependent constraint, self-attention is permutation equivariant.
-- **Where:** absolute encodings are added to input representations; relative mechanisms act inside attention; **RoPE** rotates queries and keys after projection.
-- **Do not conflate:** the causal mask limits which positions are visible (no future tokens), but it does not replace a mechanism that represents positions or their offsets.
+- **Where:** additive absolute encodings enter at the input; **RoPE** rotates Q and K after projection; T5/ALiBi biases modify scores before softmax.
+- **Do not conflate:** the causal mask controls visibility. In NoPE it can provide implicit order, but not an explicit absolute coordinate or distance.
 :::
 
 ## Where does this step sit in the route?
@@ -172,6 +174,9 @@ In this construction, $P$ is added to the embeddings at the input, $X_0=E[\text{
 ### References
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — sinusoidal positional encodings.
+- [Shaw et al. (2018), *Self-Attention with Relative Position Representations*](https://aclanthology.org/N18-2074/) — relative representations in compatibility and aggregation.
+- [Raffel et al. (2020), *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer*](https://arxiv.org/abs/1910.10683) — T5’s learned bucketed relative bias (§2.1).
+- [Press et al. (2022), *Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation*](https://arxiv.org/abs/2108.12409) — ALiBi’s fixed linear bias and extrapolation results in the studied protocols.
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — the original RoPE paper.
 - [Hugging Face Transformers documentation](https://huggingface.co/docs/transformers/) — implementation details vary by architecture.
 - [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — complementary pedagogical treatment of embedding and sinusoidal-encoding geometry; the calculations shown here were independently checked.

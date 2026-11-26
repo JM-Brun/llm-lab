@@ -7108,3 +7108,123 @@ sources:
       pages: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01]
       concepts: []
       audit_records: [docs/source-reviews/zipf-law-learning-resources-2026-11.md]
+
+  - id: shaw-et-al-relative-position-representations-2018
+    title: "Self-Attention with Relative Position Representations"
+    creators: ["Peter Shaw", "Jakob Uszkoreit", "Ashish Vaswani"]
+    source_type: paper
+    identifiers: {arxiv: "1803.02155", doi: "10.18653/v1/N18-2074"}
+    canonical_url: "https://aclanthology.org/N18-2074/"
+    publisher: "Association for Computational Linguistics / NAACL-HLT"
+    publication_date: "2018-06"
+    updated_date: null
+    language: en
+    version: "NAACL-HLT 2018 short paper"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:relative-position-representations, topic:self-attention]
+      concept_ids: [positional-encoding, self-attention, query, key, value, attention-score]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: [positional-encoding]
+    scan_history:
+      - accessed_at: "2026-11-26"
+        status: partially-scanned
+        inspected_scope:
+          - "Full five-page NAACL-HLT paper: relative edge representations, key-compatibility and value-aggregation equations, clipped offsets, efficient implementation and WMT experiments"
+        limitations:
+          - "Reported improvements are bounded to the paper's WMT 2014 translation configurations; they do not establish universal superiority or long-context generalization."
+          - "No code or experiment was reproduced."
+          - "No figures or code were copied."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, query, key, value, attention-score]
+      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/shaw-et-al-relative-position-representations-2018.yml]
+
+  - id: raffel-et-al-t5-relative-position-bias-2020
+    title: "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
+    creators: ["Colin Raffel", "Noam Shazeer", "Adam Roberts", "Katherine Lee", "Sharan Narang", "Michael Matena", "Yanqi Zhou", "Wei Li", "Peter J. Liu"]
+    source_type: paper
+    identifiers: {arxiv: "1910.10683"}
+    canonical_url: "https://arxiv.org/abs/1910.10683"
+    publisher: "Journal of Machine Learning Research"
+    publication_date: "2020"
+    updated_date: null
+    language: en
+    version: "JMLR volume 21 (2020); positional mechanism inspected in §2.1"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:relative-position-bias, method:bucketed-relative-position]
+      concept_ids: [positional-encoding, self-attention, attention-score, softmax]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, mathematical-derivation, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: [positional-encoding]
+    scan_history:
+      - accessed_at: "2026-11-26"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper §2.1: relative offset definition, scalar pre-softmax bias, logarithmic buckets, per-head parameters shared across layers"
+        limitations:
+          - "The extraction is restricted to the positional mechanism; the full transfer-learning study and its other experiments were not re-audited."
+          - "The 32-bucket and 128-offset settings are T5 configuration choices, not universal constants."
+          - "No model or implementation was executed."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, attention-score, softmax]
+      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/raffel-et-al-t5-relative-position-bias-2020.yml]
+
+  - id: press-et-al-alibi-2021
+    title: "Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation"
+    creators: ["Ofir Press", "Noah A. Smith", "Mike Lewis"]
+    source_type: paper
+    identifiers: {arxiv: "2108.12409"}
+    canonical_url: "https://arxiv.org/abs/2108.12409"
+    publisher: "arXiv / ICLR 2022"
+    publication_date: "2021-08-27"
+    updated_date: "2022-04-22"
+    language: en
+    version: "arXiv v2; ICLR 2022"
+    revision: "2108.12409v2"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry, inference-efficiency]
+      tags: [topic:positional-information, method:alibi, method:relative-position-bias, topic:context-length]
+      concept_ids: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture, experiment, benchmark]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: [positional-encoding]
+    scan_history:
+      - accessed_at: "2026-11-26"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper: abstract, §§2–4, ALiBi score modification, fixed head-specific slopes, causal-mask implementation and reported length-extrapolation experiments"
+        limitations:
+          - "Extrapolation and efficiency claims are specific to the studied models, datasets, training lengths, hardware and evaluation protocol."
+          - "No independent training run or benchmark reproduction was performed."
+          - "The paper's reported performance does not establish that ALiBi is universally preferable."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
+      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]

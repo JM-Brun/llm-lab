@@ -637,9 +637,9 @@
       "type": "concept-lesson",
       "topic": "positional-encoding",
       "domain": null,
-      "scope": "Présente le rôle de l’information positionnelle et situe les encodages absolus et mécanismes relatifs dans le calcul. La dérivation de RoPE et les propriétés des sinusoïdes sont réservées aux approfondissements.",
+      "scope": "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements.",
       "summary": "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale.",
-      "purpose": "Expliquer pourquoi l’ordre doit être représenté, distinguer position et visibilité causale, et situer les principaux points d’injection.",
+      "purpose": "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale.",
       "covered_stages": [],
       "section_headings": [
         "Pourquoi ajouter une information de position ?",
@@ -3938,13 +3938,14 @@
       "type": "exercise-hub",
       "topic": "positional-encoding-exercises",
       "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Position et encodage positionnel.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "scope": "Regroupe les questions, cinq cartes de rappel et exercices corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification, cinq cartes de rappel et exercices associés à la leçon Position et encodage positionnel.",
+      "purpose": "Restituer les distinctions essentielles, vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
-        "Comparer deux préfixes visibles"
+        "Comparer deux préfixes visibles",
+        "Cartes de rappel"
       ],
       "route": {
         "previous": null,

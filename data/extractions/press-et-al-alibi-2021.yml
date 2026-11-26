@@ -1,0 +1,126 @@
+schema_version: 1
+source_id: press-et-al-alibi-2021
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Primary ALiBi paper inspected for its score modification, slope construction, causal-mask integration and reported length-extrapolation experiments."
+      - "Extraction is scoped to ALiBi; the complete language-modeling experiments are not independently reproduced."
+    inferred_elements:
+      - "The source-local graph is a compact reconstruction of the method, not a formal graph supplied by the authors."
+      - "The teaching route is inferred from the method's mathematical dependencies."
+  source_graph:
+    nodes:
+      - {id: src-alibi-query-position, kind: input, description: "Position index of the query token.", locator: "§2"}
+      - {id: src-alibi-key-position, kind: input, description: "Position index of a candidate key token.", locator: "§2"}
+      - {id: src-alibi-distance, kind: mathematical-structure, description: "Causal relative distance between query and key positions.", locator: "§2"}
+      - {id: src-alibi-head-slope, kind: parameter, description: "Fixed slope associated with an attention head.", locator: "§2"}
+      - {id: src-alibi-linear-bias, kind: operation, description: "Head-specific linear penalty derived from the relative distance.", locator: "§2"}
+      - {id: src-alibi-content-score, kind: representation, description: "Scaled query-key dot product before positional bias.", locator: "§2"}
+      - {id: src-alibi-biased-score, kind: representation, description: "Content score plus the head-specific linear positional penalty.", locator: "§2"}
+      - {id: src-alibi-attention-weights, kind: representation, description: "Softmax-normalized attention weights under the causal mask.", locator: "§2"}
+    edges:
+      - {from: src-alibi-query-position, type: determines-with, to: src-alibi-distance}
+      - {from: src-alibi-key-position, type: determines-with, to: src-alibi-distance}
+      - {from: src-alibi-distance, type: input-to, to: src-alibi-linear-bias}
+      - {from: src-alibi-head-slope, type: parameterizes, to: src-alibi-linear-bias}
+      - {from: src-alibi-content-score, type: added-to, to: src-alibi-biased-score}
+      - {from: src-alibi-linear-bias, type: added-to, to: src-alibi-biased-score}
+      - {from: src-alibi-biased-score, type: normalized-by, to: src-alibi-attention-weights}
+    interpretation: "ALiBi adds a fixed head-specific linear distance penalty to the content-based attention score before softmax. It does not add an absolute position vector to the input embedding."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain where ALiBi adds its relative-position signal in scaled dot-product attention.", basis: "The paper defines the bias as an additive term in the attention score."}
+    - {status: inferred, outcome: "Distinguish fixed head-specific slopes from learned bucketed relative biases.", basis: "The slope construction is fixed rather than trained as a bucket embedding table."}
+    - {status: inferred, outcome: "Interpret the paper's length-extrapolation results without treating them as universal guarantees.", basis: "The experiments evaluate specific models and training/evaluation lengths."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Scaled dot-product attention and softmax.", basis: "The bias modifies the query-key score before softmax."}
+    - {status: inferred, topic: "Causal masking and sequence positions.", basis: "The method is applied in autoregressive attention with a causal mask."}
+  teaching_route:
+    - {order: 1, section: "Motivation", function: "introduce a score-level relative signal", moves: ["Start from the content-based query-key score", "Explain why a distance-dependent penalty can encode recency"]}
+    - {order: 2, section: "Linear bias", function: "define the head-specific penalty", moves: ["Define the relative distance", "Apply a fixed slope per head", "Add the penalty before softmax"]}
+    - {order: 3, section: "Causal attention and extrapolation", function: "interpret the reported behaviour", moves: ["Combine the bias with causal visibility", "Separate reported extrapolation from a universal guarantee"]}
+  pedagogical_strengths:
+    - "The method has a simple score-level insertion point and a compact linear form."
+    - "The paper explicitly contrasts ALiBi with learned positional embeddings."
+    - "The experiments directly test sequence lengths beyond those seen during training."
+  pedagogical_limits:
+    - "Length-extrapolation claims are specific to the models, data, training lengths, hardware and evaluation protocol in the paper."
+    - "The paper does not establish that ALiBi is universally preferable to RoPE, T5 or other mechanisms."
+    - "No independent training run or benchmark reproduction was performed."
+  comparison:
+    dossier: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "Integrate ALiBi as a score-level relative-bias example beside T5 in the core lesson and RoPE comparison. Keep the slope schedule and extrapolation experiments in the source extraction."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: press-et-al-alibi-2021:linear-score-bias
+    kind: mechanism
+    summary: "ALiBi adds a fixed, head-specific linear penalty based on query-key distance to the scaled content score before softmax."
+    locator: {type: section, value: "§2", label: "Attention with Linear Biases"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The primary paper defines the score as the content-based dot product plus a head-specific linear distance bias."
+      assumptions: ["The attention is causal and the distance is measured between query and key positions.", "Each head uses a fixed slope."]
+      limitations: ["The slope schedule is part of the method's configuration and is not a learned positional embedding."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry, inference-efficiency]
+      tags: [topic:positional-information, method:alibi, method:relative-position-bias, topic:context-length]
+      concept_ids: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, attention-score, causal-mask]
+    pedagogical_profile:
+      learner_question: "How can relative position influence attention without adding a position vector to the input?"
+      explanatory_lens: computational
+      teaching_form: [mechanism-comparison, mathematical-derivation]
+      abstraction_level: intermediate
+      prerequisites: [self-attention, query, key, attention-score, causal-mask]
+      distinctive_value: "Provides a simple fixed score-level bias that contrasts with learned T5 buckets and Q/K rotations in RoPE."
+      limitations: ["The complete slope construction and empirical study are beyond the core lesson."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The current lesson did not name ALiBi as a primary-source score-bias mechanism."}
+      complementarity: {level: high, rationale: "It complements T5 and RoPE by making the fixed linear score bias explicit."}
+      pedagogical_value: {level: high, rationale: "The insertion point is easy to compare and prevents conflating ALiBi with input embeddings or rotary transformations."}
+      applicability: {level: high, rationale: "A concise mention fits the core lesson and the RoPE comparison section."}
+      redundancy: {level: low, rationale: "No ALiBi example was previously present in the positional-encoding core lesson."}
+      evidence_quality: {level: high, rationale: "The primary paper defines the method and reports controlled length-extrapolation experiments."}
+    disposition: integrate
+    disposition_rationale: "Add the concise ALiBi example to the relative-bias category; do not move the full empirical comparison into the core lesson."
+  - id: press-et-al-alibi-2021:length-extrapolation
+    kind: claim
+    summary: "The paper reports that models trained with ALiBi on shorter contexts can perform on longer contexts in the tested language-modeling configurations."
+    locator: {type: section, value: "§3", label: "Experimental results"}
+    evidence:
+      kind: experimental-result
+      confidence: context-dependent
+      scope: "The finding is tied to the paper's model sizes, training lengths, datasets, hardware and evaluation protocol."
+      assumptions: ["The paper's training and evaluation conditions are reproduced as described."]
+      limitations: ["This is not a guarantee for all model scales, tasks, training distributions or later positional methods."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:context-length, method:alibi, topic:positional-information]
+      concept_ids: [positional-encoding, causal-mask]
+    candidate_destinations:
+      pages: [fr/rope, en/rope]
+      concepts: [positional-encoding]
+    pedagogical_profile:
+      learner_question: "What does the ALiBi paper actually establish about longer context lengths?"
+      explanatory_lens: empirical
+      teaching_form: [experiment-analysis, evidence-qualification]
+      abstraction_level: advanced
+      prerequisites: [positional-encoding, self-attention, attention-score, causal-mask]
+      distinctive_value: "Separates a paper's empirical extrapolation result from a universal architectural guarantee."
+      limitations: ["Requires careful interpretation of the paper's experimental setup."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The source provides a primary empirical example of length extrapolation."}
+      complementarity: {level: high, rationale: "It qualifies general claims about positional mechanisms and context length."}
+      pedagogical_value: {level: high, rationale: "It teaches the difference between a reported result and a general theorem."}
+      applicability: {level: moderate, rationale: "The detailed result belongs in an advanced source comparison, not the core lesson."}
+      redundancy: {level: low, rationale: "No ALiBi extrapolation evidence was previously catalogued in this lesson's source set."}
+      evidence_quality: {level: high, rationale: "The source is the original experimental paper, although the experiment was not independently reproduced."}
+    disposition: defer
+    disposition_rationale: "Retain the result and its limitations in the source extraction and synthesis dossier; avoid turning the core page into an empirical ranking."

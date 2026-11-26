@@ -1,7 +1,7 @@
 ---
 title: "Encodage positionnel : donner un ordre aux tokens"
 subtitle: "Pourquoi l'ordre doit être injecté — et où"
-description-meta: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
+description-meta: "Explique comment le Transformer représente l’ordre des tokens et distingue encodages absolus, représentations relatives, biais de score et visibilité causale."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
 summary: "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale."
-scope: "Présente le rôle de l’information positionnelle et situe les encodages absolus et mécanismes relatifs dans le calcul. La dérivation de RoPE et les propriétés des sinusoïdes sont réservées aux approfondissements."
-purpose: "Expliquer pourquoi l’ordre doit être représenté, distinguer position et visibilité causale, et situer les principaux points d’injection."
+scope: "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements."
+purpose: "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel et l’expérience de permutation distinguent contenu, ordre et visibilité causale ; le schéma situe l’ajout absolu et l’injection de RoPE sans dériver leurs formules."
+      note: "Le rappel distingue contenu, ordre, points d’injection et visibilité causale ; cinq cartes de rappel et un exercice de transfert sont disponibles dans la page Practice dédiée."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -37,18 +37,19 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 
 Les deux occurrences de `chat` aux positions 0 et 3 lisent le même vecteur dans la [table de plongements](embedding-space.qmd). Pour tenir compte de leur rang, le modèle a besoin d’un signal d’ordre. Permuter « le chat poursuit le chien » peut changer qui poursuit qui.
 
-Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
+Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables. Dans certaines architectures dites **NoPE**, aucun mécanisme positionnel explicite n'est appliqué : les préfixes visibles emboîtés du masque causal peuvent alors fournir un signal d'ordre implicite. Ce signal structurel ne donne toutefois ni coordonnée absolue ni distance relative explicite, et ne garantit pas une bonne généralisation à des contextes plus longs.
 
 Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi… », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
 
 ## Deux familles et plusieurs mécanismes
 
 - **Encodages absolus :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
-- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. Deux exemples importants sont :
-  - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
+- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. On distingue notamment :
+  - les **représentations relatives** de type Shaw, qui associent des représentations apprises aux relations entre positions et peuvent intervenir dans la compatibilité et l’agrégation ;
+  - les **biais relatifs** de type T5 ou ALiBi, qui ajoutent un terme dépendant du décalage aux scores d’attention avant softmax : T5 apprend des valeurs par buckets, tandis qu’ALiBi utilise une pénalité linéaire fixe propre à chaque tête ;
   - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
 
-La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
+La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare trois points d'injection : ajout absolu à l'entrée, rotation de Q/K et biais relatif ajouté aux scores avant softmax. Le masque causal reste une contrainte de visibilité distincte.
 
 ### Une permutation suffit à révéler le problème
 
@@ -92,7 +93,7 @@ Dans le cas additif de l’exercice, la table jouet donne le même plongement $(
 
 ::: {.callout-note collapse="true" title="Comparer les deux points d’insertion sur le schéma"}
 
-![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
+![Trois points d'injection de l'information positionnelle : ajout à l'entrée, rotation de Q/K et biais sur les scores.](../images/positional-entry-points-fr.svg){fig-alt="Trois voies sont comparées : ajouter un vecteur de position à l'embedding avant les blocs Transformer ; appliquer RoPE aux requêtes et aux clés après projection ; ajouter un biais relatif au score QK avant softmax. Les valeurs V ne sont pas tournées par RoPE." width=100%}
 
 :::
 
@@ -108,8 +109,8 @@ Pour comprendre la dépendance au décalage relatif et les conventions de rotati
 
 ::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Pourquoi :** les embeddings de contenu seuls ne disent pas où se trouve un token. Sans signal positionnel ni contrainte d'ordre, l'auto-attention est équivariante par permutation.
-- **Où :** les encodages absolus sont ajoutés aux représentations d'entrée ; les mécanismes relatifs agissent dans l'attention ; **RoPE** fait tourner les requêtes et les clés après projection.
-- **À ne pas confondre :** le masque causal limite les positions visibles (pas de futur), mais ne remplace pas un mécanisme qui représente les positions ou leurs décalages.
+- **Où :** l'encodage absolu additif entre à l'entrée ; **RoPE** fait tourner Q et K après projection ; les biais T5/ALiBi modifient les scores avant softmax.
+- **À ne pas confondre :** le masque causal règle la visibilité. Dans NoPE, il peut fournir un ordre implicite, mais pas une coordonnée absolue ou une distance explicite.
 :::
 
 ## Où se situe cette étape dans le parcours ?
@@ -185,6 +186,9 @@ Dans cette construction, $P$ est ajouté aux embeddings à l’entrée, $X_0=E[\
 ### Références
 
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762) — encodages positionnels sinusoïdaux.
+- [Shaw et al. (2018), Self-Attention with Relative Position Representations](https://aclanthology.org/N18-2074/) — représentations relatives dans les compatibilités et l'agrégation.
+- [Raffel et al. (2020), Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683) — biais relatif appris par buckets dans T5 (§2.1).
+- [Press et al. (2022), Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409) — biais linéaire fixe ALiBi et résultats d'extrapolation dans les protocoles étudiés.
 - [Su et al. (2021), RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864) — article original sur RoPE.
 - [Hugging Face Transformers — documentation](https://huggingface.co/docs/transformers/) — détails d'implémentation selon les architectures.
 - [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — ressource pédagogique complémentaire sur la lecture géométrique des embeddings et des encodages sinusoïdaux ; les calculs présentés ici ont été vérifiés indépendamment.
