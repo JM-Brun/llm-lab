@@ -103,7 +103,7 @@ E_{i_T,:}
 \in \mathbb{R}^{T \times d}
 $$
 
-$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. If an ID occurs twice, the corresponding rows of $X$ are identical before positional information is added.
+$T$ is the number of positions in the sequence and $d$ is the dimension of each vector. If an ID occurs twice, the corresponding rows of $X$ are identical before the architecture applies any position-dependent processing.
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
