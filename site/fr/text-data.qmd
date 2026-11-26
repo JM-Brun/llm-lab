@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/text-data-exercises", "fr/deepen", "fr/tokenization-and-tokenizers", "fr/tokenization-strategies"]
+related: ["fr/generation", "fr/context-engineering", "fr/transformer", "fr/embedding-space", "fr/exercises-text-data", "fr/deepen", "fr/tokenization-and-tokenizers", "fr/tokenization-strategies"]
 revision_support:
   status: integrated_sufficient
   evidence:
