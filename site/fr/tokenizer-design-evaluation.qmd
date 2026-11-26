@@ -176,7 +176,7 @@ Pour comparer deux tokenizers de manière interprétable :
 
 ## Approfondissement : les mécanismes de segmentation
 
-## Mécanismes détaillés de WordPiece et Unigramme
+### WordPiece et Unigramme : deux stratégies différentes
 
 La page [Stratégies de tokenisation](tokenization-strategies.qmd) présente déjà les différences conceptuelles essentielles entre BPE, WordPiece et Unigramme. Cette section reprend ces distinctions uniquement pour approfondir les procédures d’apprentissage et d’encodage, avec leurs réserves d’implémentation.
 
