@@ -17,8 +17,8 @@ suggested_route:
   next: "en/embedding-space"
 hierarchy:
   parents: []
-  children: ["en/unicode-text", "en/tokenization-strategies"]
-related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/text-data-exercises"]
+  children: []
+related: ["en/generation", "en/context-engineering", "en/transformer", "en/embedding-space", "en/text-data-exercises", "en/deepen"]
 revision_support:
   status: integrated_sufficient
   evidence:
