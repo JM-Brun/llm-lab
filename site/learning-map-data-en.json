@@ -227,7 +227,8 @@
         "en/embedding-space",
         "en/text-data-exercises",
         "en/deepen",
-        "en/tokenization-and-tokenizers"
+        "en/tokenization-and-tokenizers",
+        "en/tokenization-strategies"
       ],
       "rank": 9
     },
@@ -2439,7 +2440,7 @@
       "type": "deep-dive",
       "topic": "tokenization-strategies",
       "domain": "text-tokenization",
-      "scope": "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup.",
+      "scope": "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; also treats offsets as an application-level alignment mechanism to source text, not as an algorithm family; assumes the input is already represented as text and stops before embedding lookup.",
       "summary": "Compares segmentation granularities and tokenization algorithm families — BPE, WordPiece, and unigram — along with tokenizer pipeline components and their coverage, length, and cost trade-offs.",
       "purpose": "Readers should be able to describe major segmentation strategies, compare their assumptions and trade-offs, explain why tokens and IDs depend on the tokenizer and its version, and demonstrate the limits of whitespace-only splitting.",
       "covered_stages": [],
@@ -2448,8 +2449,8 @@
         "Why whitespace-only splitting is insufficient",
         "2. Compare granularity",
         "3. Components of a tokenizer pipeline",
-        "Special-token spellings are not ordinary vocabulary words",
-        "Same text, different tokenizer pipelines"
+        "An external illustration of the tokenizer pipeline",
+        "Special-token spellings are not ordinary vocabulary words"
       ],
       "route": {
         "previous": null,
@@ -2461,6 +2462,9 @@
       "children": [],
       "related": [
         "en/text-data",
+        "en/unicode-text",
+        "en/tokenizer-design-evaluation",
+        "en/tokenizer-multilingual-evaluation",
         "en/training-examples",
         "en/tokenization-strategies-exercises"
       ],
@@ -2476,17 +2480,17 @@
       "type": "deep-dive",
       "topic": "tokenizer-design-evaluation",
       "domain": "text-tokenization",
-      "scope": "Explains trade-offs between vocabulary size, sequence length, model cost, and training budgets; builds a reproducible comparison and a constrained design decision, then links to detailed empirical findings.",
+      "scope": "Evaluates the trade-off between representation length, vocabulary size, training and inference costs, and downstream quality; compares budgets and metrics with their denominators, then builds a constrained comparison protocol and decision. Detailed multilingual empirical findings remain in the dedicated deep dive.",
       "summary": "",
       "purpose": "Evaluate vocabulary and sequence trade-offs, build a reproducible comparison, and make a constrained design decision without conflating representation cost, system cost, and downstream quality.",
       "covered_stages": [],
       "section_headings": [
         "One text, three segmentations",
         "1. Vocabulary size: architecture and budget",
-        "2. Reproducible comparison",
-        "Reproduce an inspection with a real tokenizer",
-        "Measuring a tokenizer without reducing quality to token count",
-        "3. Choosing under constraints"
+        "2. System cost: sequences, vocabulary, and compute",
+        "Worked example: fewer positions, larger vocabulary",
+        "3. Quality: what the metrics can establish",
+        "Measuring representation without conflating length and quality"
       ],
       "route": {
         "previous": null,
@@ -2525,8 +2529,7 @@
         "Four dimensions to keep separate",
         "What the studies show — and what they do not",
         "Building an interpretable comparison protocol",
-        "Related work and resources",
-        "Recommended visual resources"
+        "Thematic bibliography and complementary resources"
       ],
       "route": {
         "previous": null,

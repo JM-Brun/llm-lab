@@ -9,7 +9,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/tokenizer-design-evaluation"
-scope: "Explains trade-offs between vocabulary size, sequence length, model cost, and training budgets; builds a reproducible comparison and a constrained design decision, then links to detailed empirical findings."
+scope: "Evaluates the trade-off between representation length, vocabulary size, training and inference costs, and downstream quality; compares budgets and metrics with their denominators, then builds a constrained comparison protocol and decision. Detailed multilingual empirical findings remain in the dedicated deep dive."
 purpose: "Evaluate vocabulary and sequence trade-offs, build a reproducible comparison, and make a constrained design decision without conflating representation cost, system cost, and downstream quality."
 domain: "text-tokenization"
 suggested_route:
@@ -85,44 +85,13 @@ Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on Engl
 
 **Practical rule:** choose vocabulary size jointly with model architecture, language mix, data distribution, and compute budget. Compare both model quality and total system cost; token count alone is not enough.
 
-## 2. Reproducible comparison
-
-1. Fix the texts, encoding, cleaning, and document handling.
-2. Record the exact tokenizer, package version, encoding identifier, and parameters.
-3. Compare visible tokens and sequence lengths; do not compare IDs across vocabularies as common semantic values.
-4. Report distributions by language, script, and text type, not only a global average.
-5. Check vocabulary size, special tokens, coverage, and truncation.
-6. Evaluate downstream quality separately from latency, memory, throughput, and cost.
-7. Report limitations: corpus, versions, normalization, covered languages, and uncertainty.
-
-### Reproduce an inspection with a real tokenizer
-
-To run the Python trace, pin the tokenizer revision and record library versions. The full code is in the practice page [Text data exercises](exercises-text-data.qmd#tokenizer-huggingface-probe).
-
-### Measuring a tokenizer without reducing quality to token count
-
-Research on multilingual tokenization costs does not always use the same metrics or denominators. Read each metric's operational definition before comparing results. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) and the multilingual measurement work [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
-
-| Metric | Interpretation | Limitation |
-|---|---|---|
-| **Token count** | Sequence length produced for a given text | Depends on text, tokenizer, version, and normalization |
-| **Fertility** | Often, the average number of subword tokens per reference word | “Word” boundaries and punctuation handling can vary; state the denominator |
-| **Characters or bytes per token** | Ratio between source-text length and token count | Unicode characters, code points, and UTF-8 bytes are different units |
-| **Vocabulary coverage** | Ability to represent input units without an unknown token, depending on the system | Complete coverage does not imply efficient segmentation or downstream quality |
-| **Downstream quality** | Result on a defined task, by language and text type | Requires comparable budgets and evaluation conditions; cannot be inferred from an intrinsic metric |
-
-For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
-
-## 3. Choosing under constraints
+## 2. System cost: sequences, vocabulary, and compute
 
 Imagine an assistant that processes documents in several languages, with a limited context window and a latency constraint. The tokenizer that produces the fewest tokens on average is not necessarily the best choice: we need to know which cost decreases, which cost increases, and for which users.
 
-Start by isolating two measurable effects on the same corpus: the number of positions to process and the size of vocabulary-dependent tables. The following example is deliberately simplified; it helps reason about the relevant quantities, not predict a model's total cost.
-
+The trade-off becomes concrete when sequence length is considered alongside vocabulary-dependent cost. Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
 
 ### Worked example: fewer positions, larger vocabulary
-
-Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
 
 | | Tokenizer A | Tokenizer B |
 |---|---:|---:|
@@ -148,7 +117,41 @@ The comparison changes with the experimental constraint:
 
 A study that merely says “same data” therefore does not establish a fair comparison. It must specify what is held fixed: raw text, tokens, optimization steps, FLOPs, elapsed time, or financial budget.
 
-#### Build a defensible decision
+## 3. Quality: what the metrics can establish
+
+A shorter representation is a useful intrinsic measure, but it does not by itself tell us whether the model performs better on the task. Segmentation metrics, system costs, and downstream quality must be kept distinct.
+
+### Measuring representation without conflating length and quality
+
+Research on multilingual tokenization costs does not always use the same metrics or denominators. Read each metric's operational definition before comparing results. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) and the multilingual measurement work [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
+
+| Metric | Interpretation | Limitation |
+|---|---|---|
+| **Token count** | Sequence length produced for a given text | Depends on text, tokenizer, version, and normalization |
+| **Fertility** | Often, the average number of subword tokens per reference word | “Word” boundaries and punctuation handling can vary; state the denominator |
+| **Characters or bytes per token** | Ratio between source-text length and token count | Unicode characters, code points, and UTF-8 bytes are different units |
+| **Vocabulary coverage** | Ability to represent input units without an unknown token, depending on the system | Complete coverage does not imply efficient segmentation or downstream quality |
+| **Downstream quality** | Result on a defined task, by language and text type | Requires comparable budgets and evaluation conditions; cannot be inferred from an intrinsic metric |
+
+For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
+
+## 4. Comparing and deciding under constraints
+
+A defensible comparison starts by fixing what must remain identical and making the experiment reproducible:
+
+1. Fix the texts, encoding, cleaning, and document handling.
+2. Record the exact tokenizer, package version, encoding identifier, and parameters.
+3. Compare visible tokens and sequence lengths; do not compare IDs across vocabularies as common semantic values.
+4. Report distributions by language, script, and text type, not only a global average.
+5. Check vocabulary size, special tokens, coverage, and truncation.
+6. Evaluate downstream quality separately from latency, memory, throughput, and cost.
+7. Report limitations: corpus, versions, normalization, covered languages, and uncertainty.
+
+### Reproduce an inspection with a real tokenizer
+
+To run the Python trace, pin the tokenizer revision and record library versions. The full code is in the practice page [Text data exercises](exercises-text-data.qmd#tokenizer-huggingface-probe).
+
+### Build a defensible decision
 
 A tokenizer choice should state the priority constraints and accepted trade-offs:
 

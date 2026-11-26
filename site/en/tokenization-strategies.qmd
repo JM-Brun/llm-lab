@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/tokenization-strategies"
 summary: "Compares segmentation granularities and tokenization algorithm families — BPE, WordPiece, and unigram — along with tokenizer pipeline components and their coverage, length, and cost trade-offs."
-scope: "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup."
+scope: "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; also treats offsets as an application-level alignment mechanism to source text, not as an algorithm family; assumes the input is already represented as text and stops before embedding lookup."
 purpose: "Readers should be able to describe major segmentation strategies, compare their assumptions and trade-offs, explain why tokens and IDs depend on the tokenizer and its version, and demonstrate the limits of whitespace-only splitting."
 domain: "text-tokenization"
 suggested_route:
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/tokenization-and-tokenizers"]
   children: []
-related: ["en/text-data", "en/training-examples", "en/tokenization-strategies-exercises"]
+related: ["en/text-data", "en/unicode-text", "en/tokenizer-design-evaluation", "en/tokenizer-multilingual-evaluation", "en/training-examples", "en/tokenization-strategies-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -42,8 +42,6 @@ A tokenizer is a representation and engineering choice. It must cover expected i
 ## 1. Concept map
 
 The full pipeline—from Unicode text through IDs to embedding lookup—is illustrated on the [text-to-token page](text-data.qmd).
-
-To inspect BPE merges directly, open the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It shows the corpus as it is segmented, candidate pairs, and vocabulary growth. The resource is linked rather than copied because the reuse terms for its figures have not been established here.
 
 A token is the discrete unit produced by the system, not necessarily a linguistic unit. Initial boundaries, whitespace, normalization, and special-token rules can change outputs as much as the algorithm's name.
 
@@ -82,6 +80,14 @@ A production tokenizer is not just a segmentation algorithm. Libraries can expos
 | **Post-processing** | May add special tokens or prepare sequences for the model | Are BOS, EOS, separators, or task tokens added? |
 | **Decoder** | Converts tokens/IDs back to text according to implementation conventions | Are whitespace, bytes, and characters reconstructed as expected? |
 
+### An external illustration of the tokenizer pipeline
+
+![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
+
+This published illustration comes from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8). It complements the tokenizer-component table immediately above. The image is served from the course's public documentation assets rather than copied locally; citation does not itself establish reuse permission. Rights review: pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); retained pending asset-level verification.
+
+
+
 ### Special-token spellings are not ordinary vocabulary words
 
 A special token is a reserved vocabulary entry with a dedicated ID and a model-specific role. For example, GPT-2 uses `<|endoftext|>` as an end-of-text marker. Its visible spelling is not enough, by itself, to establish how an input string will be handled: the token must be registered in that tokenizer, and the API decides whether a matching string is parsed as a special token, rejected, or treated as ordinary text.
@@ -114,40 +120,13 @@ For pre-tokenization, consider the exact input `Hello, how are  you?`:
 
 **Important:** the table calls the pre-tokenizer component directly; it does not apply the normalizer shown above. That is why the BERT pre-tokenizer row still displays `Hello` with a capital letter. A complete tokenizer call applies the configured stages together.
 
-These outputs are specific to the named configurations and the Hugging Face Tokenizers pipeline. The markers `Ġ` and `▁` are visible representations, not literal characters that should be inserted into arbitrary text. The course also reports offsets into the original string: these matter when mapping tokenized pieces back to source spans, especially when normalization or whitespace handling changes the text.
+These outputs are specific to the named configurations and the Hugging Face Tokenizers pipeline. The markers `Ġ` and `▁` are visible representations, not literal characters that should be inserted into arbitrary text.
 
 This comparison illustrates why an algorithm label such as BPE is insufficient to reproduce tokenization. Normalizer, pre-tokenizer, model, post-processor, decoder, and their configuration jointly determine the behaviour. See the Hugging Face course's [normalization and pre-tokenization lesson](https://huggingface.co/docs/course/main/chapter6/4) for the source examples.
 
 A related coverage distinction is important: a character-based tokenizer whose initial alphabet omits a character may need an unknown-token fallback. A byte-level BPE with all 256 byte values in its base vocabulary can instead represent arbitrary input bytes. This is a property of that byte-level design, not a guarantee about every tokenizer called BPE.
 
-## 3 bis. Mapping tokens back to source text: offsets and alignment
-
-Tokens are model-internal units; an application often needs to recover the source text span they correspond to. A fast tokenizer's *offsets* associate each token with an interval in the original input string. They can help reconstruct a named entity from several subtokens, highlight a prediction, or attach a model output to its context.
-
-With a compatible fast tokenizer, the Transformers API exposes this information through the `BatchEncoding` object:
-
-```python
-from transformers import AutoTokenizer
-
-tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
-text = "My name is Sylvain."
-encoding = tokenizer(text, return_offsets_mapping=True)
-
-for token, (start, end) in zip(
-    encoding.tokens(), encoding["offset_mapping"]
-):
-    print(token, repr(text[start:end]))
-```
-
-Offsets are positions in the original string and can be used to extract a slice. Special tokens may have a zero-length interval such as `(0, 0)`. The `word_ids()`, `token_to_chars()`, and `char_to_token()` methods expose other directions of this alignment; they are not available in the same way for every slow tokenizer.
-
-**Why this matters:** in token classification, a label supplied for a word must be aligned with one or more subtokens. In extractive question answering, predicted positions must be mapped back to character spans in the context. When a context exceeds the model's maximum length, splitting it into overlapping windows (*overflow* / *stride*) requires tracking offsets and window identity: a position local to one window is not automatically a global document position.
-
-Do not confuse an offset with a token ID: the ID indexes the vocabulary; the offset points to a slice of the input text. Normalization transformations and implementation conventions matter, especially for Unicode text and paired inputs.
-
-See the Hugging Face lessons on [fast-tokenizer capabilities](https://huggingface.co/learn/llm-course/en/chapter6/3) and their [use in the question-answering pipeline](https://huggingface.co/learn/llm-course/en/chapter6/3b). API names and availability should be checked against the Transformers version in use.
-
-## 4. BPE, WordPiece, and unigram
+## 4. BPE, WordPiece, and unigram {#segmentation-algorithm-families}
 
 | Family | Core idea | Limitation to remember |
 |---|---|---|
@@ -205,9 +184,9 @@ The most frequent pair is tied: `l + o` and `o + w` both occur three times. Assu
 | 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
 | 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
-The frequency table makes the greedy choice visible; it does not mean BPE discovers linguistic morphemes or an optimal vocabulary. This is a word-level teaching convention with an end-of-word marker, not a complete byte-level production tokenizer. Real outputs also depend on pre-tokenization, base units, corpus frequencies, special-token handling, and implementation-specific tie-breaking. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
+The frequency table makes the greedy choice visible; it does not mean BPE discovers linguistic morphemes or an optimal vocabulary. This is a word-level teaching convention with an end-of-word marker, not a complete byte-level production tokenizer. Real outputs also depend on pre-tokenization, base units, corpus frequencies, special-token handling, and implementation-specific tie-breaking. An interactive visualizer is listed in the complementary resources.
 
-**Historical distinction.** Gage's 1994 [byte-pair encoding algorithm](https://www.derczynski.com/papers/archive/BPE_Gage.pdf) is a general-purpose compression method: it repeatedly replaces frequent adjacent byte pairs with unused byte values and records substitutions for decompression. NLP subword BPE adapts the pair-merging idea to build a token vocabulary and merge order over text units. Its base units, pre-tokenization, vocabulary construction, and encoding procedure are different; GPT-style byte-level BPE is one specific design. A key NLP adaptation is Sennrich, Haddow and Birch (2016), who use the merge idea for word-level subword segmentation in open-vocabulary neural machine translation ([ACL paper](https://aclanthology.org/P16-1162/)). This is a distinct historical step, not a specification of GPT-style byte-level tokenization. Gage is therefore the historical reference for the pair-replacement idea, not a specification of a modern LLM tokenizer.
+**Historical distinction.** Gage's 1994 [byte-pair encoding algorithm](https://www.derczynski.com/papers/archive/BPE_Gage.pdf) ([ACM bibliographic record](https://dl.acm.org/doi/10.5555/177910.177914)) is a general-purpose compression method: it repeatedly replaces frequent adjacent byte pairs with unused byte values and records substitutions for decompression. NLP subword BPE adapts the pair-merging idea to build a token vocabulary and merge order over text units. Its base units, pre-tokenization, vocabulary construction, and encoding procedure are different; GPT-style byte-level BPE is one specific design. A key NLP adaptation is Sennrich, Haddow and Birch (2016), who use the merge idea for word-level subword segmentation in open-vocabulary neural machine translation ([ACL paper](https://aclanthology.org/P16-1162/)). This is a distinct historical step, not a specification of GPT-style byte-level tokenization. Gage is therefore the historical reference for the pair-replacement idea, not a specification of a modern LLM tokenizer.
 
 ### Tokenizer training versus encoding at inference
 
@@ -228,6 +207,37 @@ flowchart LR
 ```
 
 This diagram does not describe neural-network training, which is distinct and learns model parameters from sequences of token IDs. A byte-level tokenizer can cover arbitrary text input at the byte level, but not every BPE tokenizer is byte-level.
+
+
+## Mapping tokens back to source text: offsets and alignment {#offsets-and-alignment}
+
+<span id="3-bis-mapping-tokens-back-to-source-text-offsets-and-alignment"></span>
+
+Tokens are model-internal units; an application often needs to recover the source text span they correspond to. A fast tokenizer's *offsets* associate each token with an interval in the original input string. They can help reconstruct a named entity from several subtokens, highlight a prediction, or attach a model output to its context.
+
+With a compatible fast tokenizer, the Transformers API exposes this information through the `BatchEncoding` object:
+
+```python
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+text = "My name is Sylvain."
+encoding = tokenizer(text, return_offsets_mapping=True)
+
+for token, (start, end) in zip(
+    encoding.tokens(), encoding["offset_mapping"]
+):
+    print(token, repr(text[start:end]))
+```
+
+Offsets are positions in the original string and can be used to extract a slice. Special tokens may have a zero-length interval such as `(0, 0)`. The `word_ids()`, `token_to_chars()`, and `char_to_token()` methods expose other directions of this alignment; they are not available in the same way for every slow tokenizer.
+
+**Why this matters:** in token classification, a label supplied for a word must be aligned with one or more subtokens. In extractive question answering, predicted positions must be mapped back to character spans in the context. When a context exceeds the model's maximum length, splitting it into overlapping windows (*overflow* / *stride*) requires tracking offsets and window identity: a position local to one window is not automatically a global document position.
+
+Do not confuse an offset with a token ID: the ID indexes the vocabulary; the offset points to a slice of the input text. Normalization transformations and implementation conventions matter, especially for Unicode text and paired inputs.
+
+See the Hugging Face lessons on [fast-tokenizer capabilities](https://huggingface.co/learn/llm-course/en/chapter6/3) and their [use in the question-answering pipeline](https://huggingface.co/learn/llm-course/en/chapter6/3b). API names and availability should be checked against the Transformers version in use.
+
 
 
 ## 5. Examples that expose trade-offs
@@ -274,18 +284,12 @@ Vocabulary size, training budgets, and comparative tokenizer evaluation raise qu
 :::
 
 
-### Reproducible comparison of two tokenizers {#comparison-of-two-tokenizers}
+<!-- Legacy anchor: the controlled 2 + 2 = 4 comparison now lives in Understand. -->
+<span id="comparison-of-two-tokenizers"></span>
 
-Keep the text `2 + 2 = 4` fixed and change the tokenizer. In the fragments below, `␠` stands for a space in the input. Each fragment matches the ID at the same position.
-
-| Tokenizer | Fragments in order | IDs in the same order | Total |
-|---|---|---|---:|
-| `gpt2` | `2`, `␠+`, `␠2`, `␠=`, `␠4` | 17, 1343, 362, 796, 604 | 5 |
-| `cl100k_base` | `2`, `␠+`, `␠`, `2`, `␠=`, `␠`, `4` | 17, 489, 220, 17, 284, 220, 19 | 7 |
-
-The [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) reproduces the table with `tiktoken==0.14.0` and checks that each ID list decodes to the original text.
-
-The difference comes from tokenizer-specific pre-tokenization rules and learned merges; it does not, by itself, rank their quality. Here `cl100k_base` separates the space from the following number, while GPT-2 byte-level BPE merges the space directly with the following operator or digit. These lists contain no special tokens: `tiktoken` does not insert a start-of-sequence token by default, although some libraries may add one. Check this behaviour before comparing your own traces.
+::: {.callout-note title="Canonical comparison"}
+The controlled comparison on the fixed text 2 + 2 = 4, including fragments, IDs, and decoding, is presented in [From text to tokens](text-data.qmd#comparison-of-two-tokenizers). This page deepens the mechanisms that explain why boundaries and lengths can differ.
+:::
 
 ## 6. Counterexamples
 
@@ -300,11 +304,59 @@ The difference comes from tokenizer-specific pre-tokenization rules and learned 
 
 This page is an **optional deepening** of [From text to tokens](text-data.qmd): it compares the strategies that turn text into tokens and IDs. You do not need to know BPE, WordPiece, or unigram tokenization to understand embedding lookup. The core route continues directly with [From token IDs to vectors](embedding-space.qmd), which shows how IDs select initial vectors. For empirical evaluation criteria, see [tokenizer design and evaluation](tokenizer-design-evaluation.qmd); for character representation, see [Unicode and text](unicode-text.qmd).
 
-## External tools
+## Resources for visualizing mechanisms and inspecting implementations {#mechanism-resources-and-implementations}
 
-- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
-- [SentencePiece](https://github.com/google/sentencepiece)
-- [tiktoken](https://github.com/openai/tiktoken)
+### Recommended visual resources
+
+1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition. The resource is linked rather than copied; reuse terms for its figures have not been established here.
+2. [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): English-language explanation of BPE training, paired with the French course linked from the French page.
+3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
+4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
+5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): optional community visualization. **Source-audit caveat (2026-10-30):** the inspected implementation replays the model's merge list over raw Unicode characters; it does not reproduce the tokenizer's byte-level mapping and pre-tokenization pipeline. Treat its graph as a schematic of merge operations, not a faithful trace of GPT-2 token boundaries. Its package metadata also omits runtime dependencies although the README lists `graphviz` and `transformers`; inspect and pin dependencies before installing.
+
+#### Useful timestamps in Karpathy's video
+
+The video is long; these chapter markers let you select only the relevant parts:
+
+- [14:56 — Unicode code points and strings](https://www.youtube.com/watch?v=zduSFxRajkE&t=896s), then [18:15 — UTF encodings and bytes](https://www.youtube.com/watch?v=zduSFxRajkE&t=1095s).
+- [23:50 — BPE intuition](https://www.youtube.com/watch?v=zduSFxRajkE&t=1430s) and [28:35 — counting and merging frequent pairs](https://www.youtube.com/watch?v=zduSFxRajkE&t=1715s).
+- [39:20 — tokenizer as a separate pipeline stage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2360s), [42:47 — decoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2567s), and [48:21 — encoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2901s).
+- [57:36 — regex pre-tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=3456s) and [1:11:38 — GPT-2/GPT-4 regex differences](https://www.youtube.com/watch?v=zduSFxRajkE&t=4298s).
+- [1:18:15 — special tokens and API handling](https://www.youtube.com/watch?v=zduSFxRajkE&t=4695s).
+- [1:28:42 — SentencePiece](https://www.youtube.com/watch?v=zduSFxRajkE&t=5322s); [1:49:58 — multimodal tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=6598s) is an optional extension beyond this text-tokenization sequence.
+
+These are navigation aids, not a substitute for checking implementation details against the relevant tokenizer documentation and source code.
+
+The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
+
+
+
+### Suggested reading order
+
+1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
+2. Follow merges with the visualizer listed above.
+3. Read `minbpe` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
+4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
+5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
+6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
+
+
+### Educational code and implementations
+
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): guided reading on text processing in the LLM pipeline.
+- [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
+
+
+- [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
+- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
+- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook. **Implementation caveat (source audit, 2026-10-30):** the notebook's custom from-scratch training path uses character/string symbols and simplified whitespace/newline splitting; it does not reproduce the full UTF-8 byte-level GPT-2 pipeline. Its separate GPT-2 loading path uses the pretrained vocabulary and merge ranks, with tests against selected `tiktoken` cases. Those checks do not establish exhaustive compatibility. See the [full notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch.ipynb), [simple notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb), and [tests](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/tests.py).
+- [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
+
+
+
+<span id="external-tools"></span>
+
+The Hugging Face Tokenizers, SentencePiece, and tiktoken documentation links are grouped in the [mechanism and implementation resources](#mechanism-resources-and-implementations).
 
 
 
