@@ -91,12 +91,23 @@ Pour comparer deux tokenizers de manière interprétable :
 
 **Règle de lecture :** le nombre de tokens mesure une longueur sous un tokenizer donné ; il ne mesure directement ni la qualité linguistique, ni la qualité du modèle, ni le coût système complet.
 
-### Ressources et travaux connexes
+### Bibliographie thématique et ressources complémentaires
 
-- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — étude antérieure des coûts de tokenisation entre langues.
-- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — variation linguistique et rôle du pré-tokenizer.
-- [TokLens — dépôt et ressources](https://aclanthology.org/2026.acl-srw.18/) — à utiliser comme outil/méthode à examiner, en vérifiant ses métriques et son protocole.
-- [Catherine Arnett (2024), article communautaire sur la réutilisation des tokenizers](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling) — observations de praticienne sur le réemploi des tokenizers et la pré-tokenisation ; ne remplace pas des résultats de recherche contrôlés.
+Cette bibliographie rassemble les références complémentaires en distinguant leur question, leur apport et leurs limites. Le tableau d'études reste la base de l'analyse ; cette liste oriente les lectures sans confondre des protocoles différents.
+
+- **Coût de représentation entre langues — Ahia et al. (2023), [*Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/).** Question : les langues entraînent-elles des coûts de tokenisation comparables ? Contribution : comparaison sur 22 langues et discussion des implications pour les API. Limite : les coûts mesurés ne suffisent pas à conclure sur la qualité des générations.
+
+- **Variation linguistique — Wegmann et al. (2025), [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/).** Question : les variations d'une langue modifient-elles la segmentation ? Contribution : analyse le rôle du pré-tokenizer et des variations linguistiques. Limite : les résultats dépendent des langues, phénomènes et tokenizers étudiés ; ils ne définissent pas un classement universel.
+
+- **Choix du tokenizer à l'entraînement — Ali et al. (2024), [*Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/).** Question : le tokenizer modifie-t-il le coût d'entraînement et les performances aval ? Contribution : comparaison de 24 configurations sur des corpus anglais et multilingues. Limite : cinq langues européennes à écriture latine, une graine, évaluation zero-shot et absence de recherche d'hyperparamètres par tokenizer.
+
+- **Écarts crosslinguaux — Arnett et al. (2025), [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html).** Question : pourquoi les coûts diffèrent-ils entre langues ? Contribution : distingue les écarts entre tokenizers monolingues des effets d'un tokenizer multilingue partagé et teste des facteurs de conception. Limite : l'étude de compression ne démontre pas d'effet sur la qualité aval ; les protocoles CTC et token premium ne sont pas interchangeables avec la parité TokLens.
+
+- **Longueur et temps d'exécution — Petrov et al. (2023), [*Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/).** Question : les différences de segmentation peuvent-elles créer des écarts de coût entre langues ? Contribution : relie longueur tokenisée et temps d'exécution dans le protocole étudié. Limite : association expérimentale, pas loi causale générale ni mesure directe de la qualité de génération ; la figure et sa licence sont documentées plus haut.
+
+- **Mesures multilingues — Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/).** Question : comment comparer plusieurs dimensions intrinsèques et leur association aux benchmarks ? Contribution : six métriques, 24 tokenizers et 15 langues, avec analyses anglaise et MMLU-ProX séparées. Limite : associations observationnelles, échantillons distincts et métriques fondées sur les espaces inadaptées à la notion de mot en chinois, japonais et thaï.
+
+- **Point de vue de praticienne — Catherine Arnett (2024), [article sur la réutilisation des tokenizers](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling).** Question : pourquoi réutiliser sans vérification un tokenizer pré-entraîné peut-il pénaliser certains textes ? Contribution : exemples concrets sur la pré-tokenisation et les écarts de fertilité. Limite : article communautaire et observations de praticienne, non benchmark contrôlé.
 
 <!-- Ancres historiques : les ressources visuelles et de mécanismes sont désormais regroupées dans tokenization-strategies. -->
 <span id="ressources-visuelles-recommandees"></span>
