@@ -62,7 +62,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 
 **Résultat attendu.** Le lecteur sait lire une distribution rang–fréquence, expliquer ce que représentent ses paramètres, identifier les biais d'estimation et formuler une connexion LLM qui ne confond pas statistique de corpus et mécanisme prédictif.
 
-**Frontières éditoriales.** Les comparaisons contrôlées de corpus, l'estimation, les rééchantillonnages et les analyses de discours sont de la pratique. Les développements autonomes sur Zipf–Mandelbrot, Heaps, hapax et diversité lexicale peuvent devenir des approfondissements facultatifs. Ne pas insérer Zipf dans le graphe computationnel du Transformer.
+**Frontières éditoriales.** Les comparaisons contrôlées de corpus, l'estimation, les rééchantillonnages et les analyses de discours sont de la pratique. Les développements Zipf–Mandelbrot, données multilingues détaillées, repères historiques et applications étendues sont désormais regroupés dans `zipf-law-deep-dive.qmd`. Ne pas insérer Zipf dans le graphe computationnel du Transformer.
 
 ## 2. Ressources ingérées et leur modèle
 
@@ -127,7 +127,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 
 **Résultat attendu.** Le lecteur peut calculer le surprisal d'une cible, calculer/interpréter l'entropie de la distribution, expliquer leur différence et relier la règle de chaîne au score d'une séquence.
 
-**Frontières éditoriales.** Ne pas confondre surprisal, entropie, entropie croisée, KL et loss d'entraînement. Ces notions sont liées mais ne sont pas synonymes. La page doit rester centrée sur surprisal observé et incertitude prédictive ; les dérivations avancées de codage, cross-entropy/KL ou compression ont leurs pages dédiées.
+**Frontières éditoriales.** Ne pas confondre surprisal, entropie, entropie croisée, KL et loss d'entraînement. Ces notions sont liées mais ne sont pas synonymes. La page reste centrée sur le surprisal observé et l'incertitude prédictive ; les trois expériences guidées (variation de probabilité, de contexte et de distribution) sont dans `experience-information-theory.qmd`. Les dérivations avancées de codage, cross-entropy/KL ou compression ont leurs pages dédiées.
 
 ## 2. Ressources ingérées et leur modèle
 
@@ -191,7 +191,7 @@ Les exercices, questions de compréhension, calculs à réaliser et expériences
 | 5. Évaluation | qualité aval, langues, scripts, tâches et budgets | Distinguer efficacité intrinsèque et utilité réelle |
 | 6. Décision bornée | protocole, incertitude, reproductibilité, limites | Conclure selon un objectif explicite, pas par classement universel |
 
-Les prérequis Unicode/UTF-8 et pipeline général doivent rester des liens vers les pages canoniques lorsque leur rappel n'est pas nécessaire à l'argument ; ils ne sont pas enseignés en détail dans cette page Deepen.
+Les prérequis Unicode/UTF-8 et pipeline général restent des liens vers les pages canoniques lorsque leur rappel n'est pas nécessaire à l'argument ; ils ne sont pas enseignés en détail dans cette page Deepen. Les détails WordPiece/Unigramme sont propriétaires de `tokenization-strategies.qmd`, les résultats d'études de `tokenizer-multilingual-evaluation.qmd` et la trace Python de `exercises-text-data.qmd`.
 
 **Relations principales :**
 
