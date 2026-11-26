@@ -1,5 +1,5 @@
 ---
-title: "The tokenizer as a compression engineer"
+title: "Designing and evaluating a tokenizer"
 subtitle: "Shorter sequences without shifting costs elsewhere"
 description-meta: "Understand the trade-off between vocabulary size, sequence length, system cost, and downstream quality."
 keywords: ["type:deep-dive", "destination:deepen", "topic:tokenizer-design-evaluation", "level:advanced", "language:en", "status:published"]
