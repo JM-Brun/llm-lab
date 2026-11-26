@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap brings together the lesson's three distinctions: an ID is a row address, the row stores a static vector of dimension d, and Transformer layers then produce position- and context-dependent states. Three answered questions, five recall cards on the dedicated Practice page, and guided exploration reinforce the recap."
+      note: "The recap distinguishes the ID as a row address, the sequence position, and the selected initial vector. The review sheet asks learners to predict row order and repeated vectors; the associated exercise extends the reasoning to coordinated renumbering of IDs and table rows."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
