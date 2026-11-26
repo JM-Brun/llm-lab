@@ -13,7 +13,7 @@ summary: "Explains how to score an already observed token sequence by combining 
 scope: "Scores an already-observed sequence with a fixed context and fixed parameters."
 purpose: "Compute continuation likelihood by multiplying conditional probabilities, then recover its log-likelihood and NLL."
 suggested_route:
-  previous: "en/probabilities"
+  previous: "en/entropy"
   next: "en/cross-entropy"
 hierarchy:
   parents: []
