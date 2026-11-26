@@ -76,22 +76,84 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 
 ## 6. État de l'ingestion canonique dans Wiki Knowledge
 
-Les trois publications ont été examinées à partir de leurs pages bibliographiques primaires (ACL Anthology). La vérification de l'index et du registre de Wiki Knowledge n'a pas révélé de fiches source correspondantes. Cette passe constitue donc une **revue documentaire externe et une compilation éditoriale pour LLM Lab**, pas encore une ingestion canonique complète dans JM-Brun/wiki-knowledge.
+Les trois publications ont été examinées à partir de leurs pages bibliographiques primaires (ACL Anthology). La vérification de l'index et du registre de Wiki Knowledge n'avait pas révélé de fiches source correspondantes. Les nouveaux artefacts sont maintenant proposés dans [Wiki Knowledge PR #199](https://github.com/JM-Brun/wiki-knowledge/pull/199), qui suit [l'issue #198](https://github.com/JM-Brun/wiki-knowledge/issues/198).
 
-Le suivi est ouvert dans [Wiki Knowledge #198](https://github.com/JM-Brun/wiki-knowledge/issues/198). Les trois fiches source, le concept canonique et la synthèse comparative ont maintenant été créés dans la branche `ingest/contextualized-representations-papers`, proposée dans la [PR #199](https://github.com/JM-Brun/wiki-knowledge/pull/199). Il s'agit de fiches metadata-only : aucun PDF n'est déclaré archivé. La PR reste en brouillon jusqu'à l'exécution de `wk-sync --registry-only`, `wk-validate`, `wk-lint` et du rapport de provenance. Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
+La PR contient trois fiches source, un concept canonique, une synthèse comparative, des entrées d'index et de taxonomie, une mise à jour du registre et un journal d'ingestion. Les fiches sont metadata-only : aucun PDF local n'est déclaré. La PR est actuellement ouverte et non fusionnée. Son état GitHub n'est plus « draft », mais cela ne vaut pas validation scientifique ou technique.
 
-## 7. Validation et limites
+Les critères de l'issue #198 ne sont pas encore réputés satisfaits tant que les éléments suivants n'ont pas été vérifiés sur le head courant :
+- existence et qualité des artefacts d'extraction source par source et d'un ChangePlan explicite ;
+- vérification des claims atomiques, localisateurs exacts, types/niveaux de preuve et limites ;
+- exécution réussie des mécanismes canoniques `wk-sync --registry-only`, `wk-validate`, `wk-lint` et du rapport de provenance ;
+- résolution des échecs de CI antérieurs (rendu Quarto, qualité Wiki, audit des identifiants documentaires). Les journaux correspondants n'étaient pas récupérables via le connecteur au moment du contrôle.
 
-- Revue des sources Quarto FR/EN et des compagnons Practice existants.
-- Contrôle de cohérence scientifique des résumés à partir des abstracts et métadonnées des publications primaires.
-- Les modifications sont des ajouts bilingues ciblés ; aucun contenu existant n'est supprimé.
-- Rendu Quarto, vérification des liens, inspection responsive et contrôles d'accessibilité restent à exécuter sur le head de la PR.
-- La qualité d'apprentissage et le transfert chez des lecteurs n'ont pas été évalués.
+Ne pas déclarer de capture locale ni de droits de réutilisation des PDF si ces éléments n'ont pas été archivés et vérifiés.
 
-## 8. Travail restant
+## 7. Validation LLM Lab — état au 2026-11-26
 
-1. Réaliser l'ingestion canonique des trois sources dans Wiki Knowledge ; enregistrer les claims, localisateurs, limites et relations.
-2. Vérifier le rendu FR/EN des nouvelles cartes et de la section empirique (formules, liens, longueurs et mobile).
-3. Auditer la transition embedding-space → positional-encoding → contextualized-representations → transformer → Q/K/V sur les pages rendues, sans modifier les responsabilités déjà établies.
-4. Vérifier que la page Advanced reste proportionnée : si l'enquête SAE prend trop de place par rapport à la formalisation et aux résultats empiriques, envisager un déplacement vers une page dédiée à l'interprétabilité, après inventaire des pages existantes.
-5. Ne pas ajouter de nouvelles cartes si elles répètent les exercices ; mesurer leur utilité lors d'un test apprenant avant d'étendre le lot.
+La PR [LLM Lab #1728](https://github.com/JM-Brun/llm-lab/pull/1728), branche `docs/contextualized-representations-evidence-v4`, est ouverte. Le head contrôlé est `7ebfb17ff01e1c7ac704b022fd611570fe73a248).
+
+Contrôles terminés avec succès :
+- qualité Python et contrôles métier ;
+- suite de tests : **834 réussis, 1 ignoré** ;
+- secret scanning ;
+- génération des fragments bilingues de carte et de graphe computationnel ;
+- rendu Quarto complet ;
+- contrôles des commandes de la carte d'apprentissage et de l'export du graphe de connaissances ;
+- parité de la chronologie bilingue ;
+- vérification des liens locaux ;
+- revue navigateur des pages pédagogiques bilingues et de leur navigation ;
+- téléversement des captures et du rapport d'audit navigateur.
+
+Les contrôles du rendu et du navigateur ont terminé avec succès dans le run `45904294331`; les contrôles Python et tests ont terminé avec succès dans le run `45904255898`. Les étapes conditionnelles de rendu incrémental isolé et d'installation Playwright ont été ignorées parce que le parcours complet n'en avait pas besoin ; ce n'est pas un échec.
+
+Cette validation CI ne remplace pas une revue éditoriale humaine des captures, ni un test d'apprentissage auprès de lecteurs. Aucune preuve d'efficacité pédagogique ou de transfert n'est revendiquée.
+
+## 8. Travail restant — LLM Lab
+
+### P0 — Revue finale avant fusion de la PR #1728
+
+- [ ] Examiner visuellement les captures et le rapport d'audit navigateur produits par le run CI, notamment les pages FR/EN Understand, Deepen et Practice.
+- [ ] Contrôler à l'écran les formules, les ancres, les blocs repliables des cartes, les retours à la ligne et le comportement mobile ; le succès du rendu ne garantit pas à lui seul la qualité typographique.
+- [ ] Faire une dernière lecture comparative FR/EN : précision terminologique, équivalence du contenu, liens et titres.
+- [ ] Vérifier le diff final de la PR pour confirmer qu'aucune modification concurrente de la carte ou des métadonnées n'a été perdue.
+- [ ] Mettre à jour le corps de la PR si nécessaire et demander/retenir la revue avant fusion. Ne pas fusionner automatiquement.
+
+### P1 — Audit de continuité du parcours
+
+- [ ] Relire les pages rendues dans l'ordre embedding-space → positional-encoding → contextualized-representations → transformer → queries-keys-values.
+- [ ] Vérifier que chaque transition annonce correctement la relation : prérequis, étape suivante ou mécanisme interne connexe.
+- [ ] Vérifier les liens retour et les relations `related` FR/EN, sans transformer le graphe de connaissances en parcours linéaire.
+- [ ] Vérifier que Q/K/V sont présentés comme des projections internes à chaque bloc Transformer, et non comme une étape après l'état contextualisé final.
+
+### P1 — Proportion de la page Advanced
+
+- [ ] Évaluer si l'enquête SAE est à sa juste place et proportionnée par rapport à la formalisation et aux résultats empiriques.
+- [ ] Si elle surcharge l'approfondissement, inventorier d'abord les pages existantes sur l'interprétabilité avant de proposer un déplacement ; ne pas créer une page redondante.
+- [ ] Vérifier que les résultats de probing restent explicitement distincts d'une preuve d'usage causal ou d'une attribution fonctionnelle exclusive.
+
+### P2 — Évaluation pédagogique
+
+- [ ] Faire relire les cartes et les exercices par un lecteur qui n'a pas suivi la rédaction.
+- [ ] Vérifier que les quatre cartes testent des rappels distincts et ne dupliquent pas les exercices de transfert.
+- [ ] Observer si le lecteur peut expliquer avec ses propres mots la différence entre lookup, information positionnelle, contexte accessible et état caché.
+- [ ] N'étendre le nombre de cartes qu'après avoir identifié un besoin réel.
+
+## 9. Travail restant — Wiki Knowledge
+
+- [ ] Comparer le contenu exact de la PR #199 à l'issue #198 et confirmer que chaque candidat a un ChangePlan traçable.
+- [ ] Vérifier les trois fiches source, leurs claims et leurs localisateurs dans les documents complets ; distinguer explicitement ce qui est tiré de l'article de ce qui relève de la synthèse éditoriale.
+- [ ] Vérifier les éventuels artefacts d'extraction attendus par les modèles et outils canoniques ; ne pas considérer la présence de fiches source comme preuve que l'ingestion est entièrement achevée.
+- [ ] Exécuter ou faire exécuter les validations canoniques sur le head courant : synchronisation du registre, validation, lint, rendu Quarto et audit des identifiants.
+- [ ] Examiner les journaux des anciens échecs et les corriger à la source ; si les logs restent inaccessibles, relancer une validation contrôlée plutôt que conclure à partir d'un statut ancien.
+- [ ] Vérifier le diff du registre : les changements doivent être limités aux enregistrements attendus et ne pas écraser des mises à jour indépendantes.
+- [ ] Faire relire la synthèse comparative, puis seulement passer les statuts de brouillon aux statuts validés appropriés.
+- [ ] Mettre à jour l'issue #198 et la PR #199 avec les preuves de validation ; fusionner uniquement après satisfaction des critères d'acceptation.
+
+## 10. Ordre d'exécution recommandé
+
+1. Terminer la revue visuelle et éditoriale de LLM Lab #1728 ; cette branche est techniquement validée.
+2. Finaliser séparément l'ingestion Wiki Knowledge #199 ; ne pas bloquer la PR LLM Lab sur une validation documentaire externe si ses propres critères sont satisfaits.
+3. Effectuer l'audit de continuité du parcours et le contrôle de proportion de la page Advanced.
+4. Organiser un test de lecture court avant toute extension des cartes ou de la page.
+
+**Critère de clôture :** le travail LLM Lab est terminé lorsque la PR #1728 a été relue puis fusionnée, que les pages publiées restent cohérentes dans les deux langues et que l'audit de parcours est clos. Le travail Wiki Knowledge est terminé séparément lorsque les validations canoniques et la provenance sont démontrées et que l'issue #198 peut être fermée sans réserve.
