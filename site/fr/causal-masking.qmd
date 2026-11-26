@@ -83,7 +83,13 @@ $$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
 $$
 
-![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
+<figure id="fig-causal-attention-mask">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/causal-attention-mask-fr-mobile.svg">
+    <img src="../images/causal-attention-mask-fr.svg" alt="Matrice quatre par quatre : les lignes sont les requêtes et les colonnes les clés. Une position peut accéder à elle-même et aux positions précédentes, mais pas aux positions futures." style="width:100%;height:auto">
+  </picture>
+  <figcaption>La ligne i représente la requête à la position i ; seules les clés j ≤ i restent accessibles. La diagonale est autorisée parce que la cible prédite est le token suivant, pas le token d’entrée à la position i.</figcaption>
+</figure>
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte. Chaque ligne de requête doit conserver au moins une clé autorisée : si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement. Dans la primitive de référence `scaled_dot_product_attention`, une ligne entièrement masquée reçoit par convention des poids nuls et une sortie nulle ; ces poids ne forment pas une distribution de probabilité. Cette convention d'implémentation n'est pas universelle. Le masque causal triangulaire présenté ici évite ce cas en autorisant toujours la diagonale.
 
