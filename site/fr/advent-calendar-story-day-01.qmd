@@ -157,7 +157,7 @@ $$
 
 Elle peut mieux décrire les tout premiers rangs dans certains corpus. Le paramètre $\beta$ modifie surtout leur courbure, tandis que $\alpha$ gouverne la pente asymptotique. Cette flexibilité supplémentaire doit être évaluée sur les données : elle n'est pas automatiquement préférable.
 
-La dérivation, les graphiques comparatifs et les précautions d'ajustement sont regroupés dans [l'approfondissement consacré à Zipf-Mandelbrot](zipf-law-deep-dive.qmd#loi-de-zipf-mandelbrot).
+La dérivation, les graphiques comparatifs et les précautions d'ajustement sont regroupés dans [l'approfondissement consacré à Zipf-Mandelbrot](zipf-law-deep-dive.qmd#zipf-mandelbrot).
 
 ## 3. Une régularité observée dans plusieurs langues
 
@@ -165,7 +165,7 @@ La relation rang–fréquence ne se limite pas au français ou à l'anglais. Une
 
 Les paramètres estimés varient d'une langue et d'un corpus à l'autre. Ils dépendent aussi de la taille de l'échantillon, de l'unité linguistique et des conventions de comptage. Ces résultats illustrent une régularité translinguistique dans un cadre expérimental précis ; ils ne permettent pas de classer les langues selon leur « conformité à Zipf ».
 
-Pour les données, les paramètres et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#que-trouve-t-on-dans-plusieurs-langues).
+Pour les données, les paramètres et les précautions de comparaison, voir [l'approfondissement sur les observations multilingues et la loi de Zipf-Mandelbrot](zipf-law-deep-dive.qmd#observations-multilingues).
 
 ## 4. Pourquoi cette régularité intéresse-t-elle les sciences du langage et les LLM ?
 
