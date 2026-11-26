@@ -177,6 +177,18 @@ The page links above name the French source files; the corresponding English pag
 
 **Reading graph edges correctly matters.** Structural and functional relations such as `part-of`, `produces`, `applies-to` and `contributes-to` describe different kinds of conceptual connection. They are not automatically chronological steps. Only the explicitly typed `prerequisite` relation represents a learning dependency, and even those local dependencies do not define a single total order. In particular, tokenizer training/fitting is a lifecycle operation on a training corpus; encoding a prompt is an inference-time operation. Neither should be silently folded into the other's execution sequence.
 
+### 4.2 Evidence-aware source-to-concept mapping
+
+The backfill also updates the provenance layer beneath the concept graph: seven existing source extractions now map their atomic items to canonical concepts, and eleven source records expose the corresponding source-level concept coverage. The source-level list is the union of a source's contributions; the item-level list remains narrower and is the preferred evidence trail for a particular claim.
+
+Three deliberate distinctions prevent misleading aggregation:
+
+- **Fertility is not a synonym for token count.** Ali et al., TokLens and TokCollate define or use fertility with an explicit unit denominator. Ahia et al. compare average tokens per parallel sentence for API-cost questions; Arnett et al. use corpus token count (CTC) and token premiums. Both explicitly avoid treating whitespace-delimited fertility as a comparable cross-language measure. Those sources therefore support tokenizer evaluation and multilingual tokenization, but are not mapped to `token-fertility`.
+- **Within-language variation is not crosslingual inequity.** Wegmann et al. study task-sensitive variation within English and the effect of pre-tokenizer boundaries. Their extraction maps to `pre-tokenization` and `tokenizer-evaluation`, not to `multilingual-tokenization`. This prevents the source from being used as evidence for a claim it does not test.
+- **Vocabulary, IDs and evaluation remain separate concepts.** Sources are mapped to `token-vocabulary` when they inspect vocabulary construction/allocation or overlap; `token-id` is retained where the source explicitly explains the integer lookup interface. Intrinsic metrics and downstream model results map to `tokenizer-evaluation`, not to a generic claim that one tokenizer is better.
+
+This is a provenance backfill from already-inspected source extractions and reviews, not a new source scan. It does not upgrade any source's scan status or strengthen the underlying empirical claims.
+
 ## 5. Integration decisions
 
 | Contribution | Decision | Rationale |
@@ -201,7 +213,7 @@ The tokenization backfill in PR #1696 changes the knowledge model and its source
 
 - **Concept graph:** 21 bilingual canonical concepts were added for the tokenizer, tokenization operation and pipeline, normalization, pre-tokenization, subword families, vocabulary, IDs, encoding/decoding, special tokens, tokenizer training/compatibility and evaluation. Twenty-five typed relations connect these concepts to the existing token and embedding concepts. The additions distinguish structural, functional and pedagogical relations; they do not impose one universal tokenizer execution sequence.
 - **Source graph:** five new source-local extractions and pedagogical routes were added for Raschka, Vizuara, ByteByteGo, minbpe and SentencePiece. The Hugging Face Course, Hugging Face Tokenizers and tiktoken retain their dedicated review-only representations because another atomic extraction would duplicate existing evidence or overstate the inspected scope.
-- **Source-to-concept traceability:** the audited explanatory sources are mapped to canonical concepts in `data/sources.yml`; the dossier's matrix records each source's distinct contribution and evidence boundary.
+- **Source-to-concept traceability:** source-level concept coverage is mapped in `data/sources.yml`, and seven existing source extractions now map individual atomic items to canonical concepts. The mapping deliberately distinguishes token fertility from tokens-per-sentence/CTC and within-language variation from crosslingual evaluation.
 - **Pages:** no learner-facing page content was changed in this backfill. The existing division remains: `text-data` explains the input path at overview level; `unicode-text` handles character/byte representation; `tokenization-strategies` explains pipeline components and segmentation algorithms; `tokenizer-design-evaluation` handles empirical trade-offs; `embedding-space` explains the model-side lookup and vector representation.
 - **Learning routes:** no new core route step or prerequisite was justified. The knowledge graph enriches conceptual navigation; source-local routes describe how an individual source teaches its subject and are not mandatory curriculum paths.
 - **Exercises/experiments:** existing dedicated exercise pages, the contrastive tokenizer mini-lab and the BPE trace remain the canonical practical activities. The overview continues to link to practice rather than absorbing the exercise collection.
