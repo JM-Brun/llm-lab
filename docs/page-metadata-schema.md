@@ -191,13 +191,13 @@ Controlled values:
 | Identifier | Primary learning question |
 |---|---|
 | `architectures-mechanisms` | How do specialized mechanisms and architectures change information flow or computation? |
-| `text-tokenization` | How do text representation and tokenizer design affect model inputs? |
+| `text-tokenization` | How do corpus statistics, text representation, and tokenizer design shape model inputs? |
 | `mathematical-tools-geometry` | Which mathematical tools help analyze tensors and representation spaces? |
 | `probabilistic-foundations-training` | How do probabilistic quantities, objectives, and optimization connect? |
 | `inference-efficiency` | How does a model use context, select outputs, and consume compute or memory? |
 | `scale-research` | What empirical regularities and capability claims are supported by evidence? |
 
-The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains.
+The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains. A higher-level navigation collection such as **Language modeling** may group several of these controlled domains, but it is not itself a page-level `domain` value and must not be added to the controlled vocabulary merely to mirror the sidebar.
 
 ## 10. Language-independent concept registry
 
