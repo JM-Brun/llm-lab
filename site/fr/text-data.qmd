@@ -121,7 +121,7 @@ Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace repr
 
 **Ordre de grandeur.** Supposons qu'un même passage occupe 1 000 tokens avec un tokenizer et 1 200 avec un autre. Dans une fenêtre de 8 192 tokens, cela représente respectivement environ 12,2 % et 14,6 % du budget. Pour une attention dense complète, le nombre de paires de positions à comparer croît comme $T^2$ : une séquence 20 % plus longue implique environ 44 % de paires supplémentaires ($1{,}2^2=1{,}44$). Ce n'est pas une prédiction directe du temps d'exécution : les noyaux d'attention, le cache, le padding des lots et l'architecture modifient le coût réel. Le nombre de tokens reste néanmoins un indicateur opérationnel important.
 
-[Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises/text-data.qmd#ex-text-to-embedding-lookup).
+[Expliquer ce qui peut changer à texte fixe](revision-text-data.qmd#revision-check). [Vérifier sa compréhension en suivant les IDs jusqu'aux lignes de la table](exercises-text-data.qmd#ex-text-to-embedding-lookup).
 
 Ne confondez pas **encoder un prompt** et **préparer un tokenizer**. À l'inférence, le tokenizer est déjà choisi et fixé avec les poids du modèle : il convertit le prompt en IDs. Lors de la construction du modèle, on prépare le corpus puis on entraîne ou ajuste le tokenizer avant de fixer cette interface. Cette préparation ne se répète pas à chaque requête ; elle relève du parcours Build ([préparer un corpus](corpus-preparation.qmd)).
 
@@ -135,7 +135,7 @@ Dans la leçon suivante, reprenez le dernier token du préfixe. Avec le tokenize
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises-text-data.qmd).
 
 ## Approfondir
 
