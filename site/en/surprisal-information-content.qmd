@@ -26,11 +26,9 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 *LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
 
-*Reading preview under scientific and pedagogical review — feedback welcome.*
-
 ## Surprise is not an emotion
 
-After the prefix “The capital of France is…”, imagine that a model assigns the following probabilities to possible continuations. These numbers are **constructed for explanation**; they are not outputs measured from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
+A model completes the prefix “The capital of France is…” by assigning probabilities to possible continuations. Suppose it assigns the following values. They are **constructed for explanation**, not measured outputs from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
 
 | Candidate token | Predicted probability |
 |---|---:|
