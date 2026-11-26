@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/text-data"
 summary: "Suit une occurrence du texte jusqu’à son ID puis au vecteur initial sélectionné dans la table d’embeddings. Situe la tokenisation dans la chaîne d’entrée, sans détailler les algorithmes."
 scope: "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée."
-purpose: "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, et identifier ce qui dépend du tokenizer plutôt que du sens du texte."
+purpose: "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée et identifier ce qui dépend du tokenizer plutôt que du sens du texte."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/embedding-space"
@@ -52,13 +52,18 @@ L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, 
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
 
+Comparons deux encodages du **même texte exact**, `2 + 2 = 4`, avec `tiktoken==0.14.0`. Le symbole `␠` rend visibles les espaces qui appartiennent aux fragments :
+
+| Encodage | Fragments de tokens | IDs | Total |
+|---|---|---|---:|
+| `gpt2` | `2` · `␠+` · `␠2` · `␠=` · `␠4` | `17, 1343, 362, 796, 604` | **5** |
+| `cl100k_base` | `2` · `␠+` · `␠` · `2` · `␠=` · `␠` · `4` | `17, 489, 220, 17, 284, 220, 19` | **7** |
+
+Les deux séquences se décodent en `2 + 2 = 4`. Les IDs sont propres à chaque vocabulaire : ils ne sont pas comparables numériquement entre encodages. Ce contraste montre un effet sur la longueur de représentation, pas une différence de qualité linguistique. La [trace reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les fragments, les IDs et le décodage complet.
+
 ### Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?
 
 Le même texte peut produire des séquences différentes selon les règles de pré-tokenisation et le vocabulaire appris. Un exemple reproductible et ses IDs exacts sont présentés dans l’[approfondissement sur les stratégies de tokenisation](tokenization-strategies.qmd#comparaison-de-deux-tokenizers). Pour le parcours principal, retenez que chaque séquence d’IDs doit être interprétée avec le tokenizer qui l’a produite.
-
-::: {.callout-tip title="Token, ID et plongement" #revision-summary}
-Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
-:::
 
 ## Une expérience mentale : que reçoit réellement le modèle ? {#experience-texte-ids}
 
@@ -77,6 +82,10 @@ La distinction devient importante lorsqu'on modifie une seule chose :
 | Le contexte autour d'une occurrence | Les états produits plus loin par le Transformer | Le lookup initial d'un ID donné |
 
 **À retenir :** le tokenizer définit l'interface symbolique entre le texte et le modèle ; la table d'embeddings transforme ensuite les IDs en vecteurs. La contextualisation appartient aux calculs ultérieurs du réseau, pas au tokenizer.
+
+::: {.callout-tip title="Token, ID et plongement" #revision-summary}
+Le **token** est l'unité issue du découpage. L'**ID** est son numéro de référence dans le vocabulaire, comme dans un catalogue. Le **plongement** (embedding) est le vecteur appris que le modèle lit à la ligne correspondante. Une table de $V$ lignes contient un vecteur de $d$ composantes par ligne. Deux occurrences du même ID lisent le même vecteur initial à paramètres fixés. Le Transformer peut ensuite les représenter différemment selon le contexte.
+:::
 
 Pour vérifier cette chaîne sur des valeurs concrètes, utilisez la [trace reproductible du tokenizer et du lookup](exercises-text-data.qmd#tokenizer-embedding-trace), puis l'exercice qui suit un ID jusqu'à sa ligne dans la table.
 
