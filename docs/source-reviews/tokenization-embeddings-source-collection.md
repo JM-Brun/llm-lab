@@ -345,3 +345,109 @@ The targeted static review is recorded in [Hugging Face / tiktoken / minbpe impl
 ### Hugging Face documentation qualification (2026-11-18)
 
 The expanded primary documentation audit is recorded in [the implementation comparison](tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md). At the inspected Tokenizers documentation commit, the `rc0` bindings expose a narrower surface than the conceptual pipeline guide might suggest: load/encode/decode are supported, while component authoring, editing, saving and training are not exposed. The API reference also marks several `Encoding` and `Tokenizer` properties as unavailable in `rc0`. The quicktour's `offsets` example conflicts with the API reference's availability note; its Python and Rust examples also use different index units (Unicode character positions versus UTF-8 byte offsets). Keep this as a version-specific documentation/API caveat, not a general statement about all Hugging Face Tokenizers releases. No code was run.
+
+
+## 9. Editorial architecture and page-by-page synthesis — 2026-11-26
+
+This section connects the source synthesis to the current bilingual learner-facing architecture. It is an editorial disposition of the existing evidence, not a new source scan or a claim that the proposed page edits have already been implemented.
+
+### 9.1 Readiness: ingestion and knowledge modelling
+
+The collection is sufficiently modelled to support editorial integration:
+
+- 32 explicit source memberships in `tokenization-embeddings`;
+- 12 extraction files and 45 atomic items;
+- 21 new bilingual concepts and 25 typed conceptual relations;
+- five pedagogical source models (Raschka, Vizuara, ByteByteGo, minbpe and SentencePiece);
+- seven existing extractions enriched and conceptual coverage reconciled for 11 sources.
+
+The matrix and source-family synthesis in this dossier remain the canonical comparison. Existing source reviews are the right representation where a new extraction would duplicate claims or overstate inspection depth. Inventory counts do not measure source completeness, evidence strength, pedagogical quality or learner outcomes.
+
+**Readiness decision:** do not restart broad ingestion, create a parallel registry, or create extraction records to meet a numeric target. Continue source work only for a concrete unresolved claim, an independently useful contribution or a testable implementation question. The remaining evidence tasks are listed in §9.5.
+
+### 9.2 Canonical page architecture
+
+Keep the existing page set. No full page merge, deletion or new concept page is justified by this audit.
+
+| Page | Canonical responsibility | Editorial disposition |
+|---|---|---|
+| `text-data` (Understand, FR/EN) | Essential model: text → tokens → vocabulary/IDs → embedding lookup | Keep as the approximately 15-minute core lesson. Preserve the worked GPT-2 example and the controlled `2 + 2 = 4` comparison (GPT-2: 5 tokens; `cl100k_base`: 7), the distinction token/ID/embedding/contextual representation, and tokenizer–vocabulary/configuration–weights compatibility. Clarify context budget, system compute/latency and downstream quality as separate consequences. |
+| `tokenization-and-tokenizers` (Deepen hub, FR/EN) | Domain map, conceptual orientation and routes into specialist material | Keep as a hub, not a glossary or a second mandatory Understand step. It distinguishes fixed-tokenizer encoding from tokenizer construction/fitting and routes readers by question. |
+| `unicode-text` (Deepen child, FR/EN) | Unicode code points, UTF-8 bytes, graphemes and normalization | Keep as a compact, distinct foundation. Do not mechanically merge it into algorithm explanations. |
+| `tokenization-strategies` (Deepen child, FR/EN) | Token units/granularity, tokenizer pipeline, normalization/pre-tokenization, BPE, WordPiece and Unigram | Keep as the canonical mechanism page. Remove the duplicated full GPT-2/`cl100k_base` comparison table in favour of a link to the canonical worked example in `text-data`; retain compatibility anchors until inbound links are audited. Move the offsets/alignment discussion later in the page as an applied API topic, not a separate concept/page. |
+| `tokenizer-design-evaluation` (Deepen child, FR/EN) | Vocabulary size, compression/length, intrinsic metrics, system costs, downstream evidence and multilingual evaluation | Keep as the canonical advanced evaluation page. Reorganize around the decision question and evidence protocol; consolidate repeated bibliographies and move mechanism-focused resources to `tokenization-strategies`. Preserve scientific results, figures, citations and rights-tracking. |
+| `corpus-preparation` (Build companion) | Corpus provenance, filtering, deduplication, contamination, splits and tokenizer fitting | Keep classified as Build, linked from the hub but not made a Deepen child. |
+| `training-examples` (Build companion) | IDs → input/target examples, shifts, teacher forcing, windows, packing, padding and masks | Keep as a separate Build step; do not conflate training-example construction with tokenization. |
+
+The hub's three hierarchical Deepen children are `unicode-text`, `tokenization-strategies` and `tokenizer-design-evaluation`. The two Build companions remain linked extensions, not children in the Deepen hierarchy.
+
+### 9.3 Content disposition and conceptual boundaries
+
+**Understand — retain the essential thread**
+
+- Text is converted into an ordered sequence of discrete tokens; a token is not necessarily a word and may include whitespace or punctuation.
+- The vocabulary maps token strings to integer IDs. An ID is a local index, not a magnitude or semantic representation.
+- IDs select initial vectors through the model's embedding table; this lookup is distinct from later contextualization.
+- Token boundaries and IDs depend on the tokenizer, vocabulary, configuration and version. IDs are not portable across vocabularies; tokenizer and model weights must agree.
+- Keep one early, resolved example with visible spaces and punctuation, plus the controlled tokenizer contrast. The same worked example should lead into the embeddings page.
+- Explain that longer token sequences affect context budget and system cost, but token count alone is not a quality metric.
+
+**Understand — condense or redirect the supplement**
+
+- Replace or relocate the broad Unicode → Transformer → contextualized-representations diagram: it exceeds the immediate lesson result (text → IDs → initial vectors). Move it to the general architecture page only if it has a clear function there; otherwise use a simpler navigation cue to embeddings, position and contextualization.
+- Condense “two uses, two routes” to a short transition toward the existing Build pages; the hub already owns the distinction between encoding and tokenizer fitting.
+- Remove the unrelated `llm-evolution#tool-using-systems` link from the tokenizer deepening list.
+- Keep direct links to Unicode, tokenization strategies and embeddings.
+- State briefly that normalization, pre-tokenization, vocabulary, special-token and decoding conventions belong to the concrete tokenizer/checkpoint contract; explain them in Deepen.
+
+**Deepen — preserve detail while reducing duplication**
+
+- In `tokenization-strategies`, retain the worked BPE explanation, algorithm distinctions and concrete pipeline cases. Remove only the repeated tokenizer-comparison table; link to the canonical Understand example instead. Keep case, whitespace, Unicode, numbers, code and emoji as discriminating test cases, while rationalizing repeated explanations.
+- Correct the composed/decomposed Unicode example's destination to `unicode-text`.
+- Keep offsets/alignment material, but place it after algorithm explanations and examples under an applied heading such as “Alignment in practice”. Offsets currently describe API alignment/output behaviour, not an autonomous canonical concept.
+- Keep tokenizer training versus encoding distinct. The hub owns the high-level conceptual distinction; `corpus-preparation` owns the Build procedure. The strategies page should explain only the relationship between learned vocabulary/merge rules and later encoding.
+- In `tokenizer-design-evaluation`, retain empirical evidence and its protocol limits. Consolidate repeated research references into one thematic bibliography; each entry should state the question, contribution and limitation. Move BPE explainers, algorithm videos, visualizers, implementation tutorials and the Hugging Face pipeline illustration to `tokenization-strategies`, preserving provenance and the #156 asset-rights follow-up.
+
+**Conceptual boundaries that must survive editing**
+
+1. Unicode representation (code points and UTF-8 bytes) is not tokenization.
+2. A tokenizer pipeline may include normalization → pre-tokenization → segmentation/model and vocabulary → post-processing; components and order depend on the implementation.
+3. Tokenizer training/fitting learns vocabulary and rules from a corpus. It is neither ordinary prompt encoding nor LLM weight training.
+4. Encoding applies a fixed tokenizer and returns IDs. Decoding follows that tokenizer's conventions.
+5. IDs index both input embeddings and output classes, but are local to a vocabulary/checkpoint contract.
+6. Training-example construction follows tokenization and belongs to Build.
+7. Intrinsic tokenizer metrics, system costs and downstream task quality are different evaluation dimensions.
+8. Crosslingual versus multilingual evaluation, and within-language variation versus between-language disparity, must not be collapsed into one claim.
+
+### 9.4 Knowledge graph and metadata constraints
+
+- Reuse the existing canonical concepts, domains, metadata, page map and graph exports; do not create a parallel taxonomy.
+- Link each concept only to pages that actually teach it. Distinguish semantic relations, computational dependencies and pedagogical prerequisites.
+- Do not promote offsets to a standalone concept unless an independent learning objective for token↔text alignment is established.
+- Keep page-level metadata machine-readable and out of rendered lesson prose.
+- Preserve the separation of Understand, Build, Deepen and Practice. Exercises remain on dedicated Practice pages.
+- Keep FR/EN content equivalent in learning outcomes, examples and navigation, while allowing language-appropriate surface text.
+
+### 9.5 Remaining work — ordered and evidence-aware
+
+The ingestion/model layer is ready; the remaining work is primarily editorial integration and validation.
+
+1. **Finalize `text-data` (Understand; #1492).** Apply the keep/condense/redirect decisions in §9.3 to both languages. Check the early worked example, encode/decode round trip, tokenizer/checkpoint contract, separate context/cost/quality consequences, same-ID transition into embeddings, supplement links and compatibility anchors. Then validate rendered FR/EN output, trace and metadata on the delivered commit. Measure the approximately 15-minute reading target with the existing learner pilot; word count alone is not validation.
+2. **Reorganize `tokenization-strategies` (coordinated by #1698 and source follow-through #1319).** Remove the duplicated comparison table only after auditing incoming links and preserving old anchors as needed. Move offsets later; correct the Unicode link; transfer mechanism resources from the evaluation page with their citations, URLs and rights notes. Preserve the worked algorithm explanations and avoid shortening that loses technical distinctions.
+3. **Reorganize `tokenizer-design-evaluation` (#1667).** Validate the narrative opening and the order: decision question → vocabulary/budget → reproducible protocol → intrinsic measures with denominators → system costs → downstream evidence → linguistic/multilingual effects → no-single-metric synthesis. Consolidate the bibliography and move mechanism resources without dropping evidence or figures.
+4. **Verify the hub and Build boundaries.** Confirm the three Deepen children and that `corpus-preparation` / `training-examples` remain Build companions. Verify routes, reciprocal links, page metadata, cards, generated map and graph exports.
+5. **Run final integration checks.** On the actual delivery SHA, run targeted source/concept/relationship validation, Python tests relevant to the changed material, Quarto FR/EN rendering, local-link and anchor checks, and browser checks at narrow/mobile and desktop widths. Test keyboard navigation and visible focus; keep automated checks distinct from manual accessibility review.
+6. **Validate learning separately from rendering.** Use the existing learner pilot to test whether a reader can explain text → tokens → IDs → embeddings, identify why IDs are tokenizer-local, distinguish tokenizer fitting from encoding, and find the appropriate Deepen page without being led. Record observed outcomes rather than inferring them from a successful build.
+7. **Keep experiments conditional.** Execute selected SentencePiece upstream tests and/or a cross-library behavioural comparison only if the unresolved question has a distinct pedagogical or compatibility payoff. Pin versions, specify discriminating cases and expected outputs, and report actual execution. Static inspection, CI and example tests are not experimental equivalence evidence.
+
+**Recommended execution order:** complete and validate `text-data`; then reorganize `tokenization-strategies` and `tokenizer-design-evaluation` as one coordinated Deepen editorial lot; finish with hub/graph/render/accessibility and learner checks. Do not create a page per algorithm, a new workflow per concept, or another ingestion infrastructure layer.
+
+### 9.6 Ownership and coordination
+
+- [#1698](https://github.com/JM-Brun/llm-lab/issues/1698) owns the cross-page Understand/Deepen architecture and sequencing.
+- [#1492](https://github.com/JM-Brun/llm-lab/issues/1492) owns the Understand `text-data` implementation and learner-facing validation.
+- [#1667](https://github.com/JM-Brun/llm-lab/issues/1667) owns the advanced tokenizer evaluation narrative and its evidence.
+- [#1319](https://github.com/JM-Brun/llm-lab/issues/1319) owns source evidence, extraction follow-through, selected upstream tests and graph/source reconciliation.
+- [#156](https://github.com/JM-Brun/llm-lab/issues/156) continues to own asset-level rights verification.
+
+This dossier is the shared editorial reference. The issues track implementation and validation; they should link here rather than reproduce the full matrix independently.
