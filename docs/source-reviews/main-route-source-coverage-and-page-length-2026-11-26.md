@@ -199,3 +199,85 @@ Les tests doivent couvrir au minimum : exclusion des pages optionnelles, dédupl
 - Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
 - Hugging Face, [GPT-2 model documentation](https://huggingface.co/docs/transformers/model_doc/gpt2).
 - PyTorch, [CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
+
+
+## 8. Critère éditorial : durée cible et équilibre des leçons
+
+La longueur ne doit pas être optimisée indépendamment de l'objectif pédagogique. La cible éditoriale du parcours principal est désormais :
+
+- **environ 15 minutes** pour une leçon standard ;
+- **7 minutes** comme seuil inférieur de vigilance ;
+- **20 minutes** comme seuil supérieur de vigilance.
+
+Ces bornes sont des repères de conception, pas des seuils automatiques de validation. Une leçon de 8 ou 10 minutes peut être parfaitement équilibrée si elle traite une unité conceptuelle cohérente. Une leçon de 18 minutes n'a pas à être raccourcie si chaque partie est nécessaire. Il ne faut ni ajouter du contenu pour atteindre 15 minutes, ni supprimer des explications utiles pour passer sous 20 minutes.
+
+### 8.1 Décider du bon périmètre avant de modifier la longueur
+
+Pour une leçon sous 7 minutes, examiner dans cet ordre :
+
+1. son objectif constitue-t-il une unité d'apprentissage autonome ?
+2. lui manque-t-il une explication, un exemple travaillé, une représentation ou une transition nécessaire à la compréhension ?
+3. une notion préalable ou complémentaire a-t-elle été artificiellement séparée alors qu'elle forme avec elle une même progression ?
+4. la page est-elle plutôt une fiche de référence, une étape de parcours ou une véritable leçon ?
+
+Pour une leçon au-dessus de 20 minutes :
+
+1. identifier les objectifs pédagogiques distincts ;
+2. repérer les changements de question, d'objet étudié ou de niveau d'abstraction ;
+3. déterminer si une partie peut devenir une leçon autonome avec prérequis et transition explicites ;
+4. déplacer les variantes, démonstrations avancées et détails d'implémentation vers Deepen ou Build lorsqu'ils ne sont pas nécessaires à l'objectif principal.
+
+Le découpage doit suivre les dépendances conceptuelles et la progression du raisonnement, pas un quota de mots. Ne pas scinder une explication au milieu d'une chaîne causale simplement pour obtenir deux durées proches.
+
+### 8.2 Durée de lecture : une estimation explicite et reproductible
+
+Chaque leçon du parcours devrait afficher une durée approximative, idéalement calculée à partir d'une métadonnée structurée et rendue automatiquement dans l'interface. Cette durée doit représenter le temps nécessaire pour lire et comprendre le contenu principal, et non seulement un nombre de mots divisé par une vitesse de lecture.
+
+Le calcul devrait distinguer au minimum :
+
+- prose explicative ;
+- tableaux et listes denses ;
+- équations et notations à interpréter ;
+- exemples travaillés et blocs de code à lire ;
+- schémas et diagrammes à parcourir ;
+- contenu facultatif de type Deepen, qui ne doit pas être confondu avec le temps du tronc principal ;
+- exercices, comptabilisés séparément puisqu'ils disposent de pages dédiées.
+
+La méthode doit être documentée, versionnée et appliquée de la même manière en français et en anglais. Il faut afficher une **estimation arrondie** (par exemple « ≈ 15 min »), pas une précision artificielle à la minute près si la méthode ne la justifie pas. La durée doit être révisée après toute modification substantielle du contenu.
+
+### 8.3 Métadonnée et affichage proposés
+
+Conserver une valeur structurée, lisible par les outils, dans le bloc de métadonnées de la page (PAGE-MAP ou schéma de métadonnées canonique retenu par le dépôt), par exemple :
+
+```yaml
+estimated_reading_minutes: 15
+```
+
+Ce champ est une estimation éditoriale maintenue et vérifiée par le rapport, pas une valeur que le rapport doit écraser automatiquement. Le rapport peut calculer une estimation indépendante, signaler un écart et demander une revue.
+
+Les sources doivent rester canoniques dans `data/sources.yml`, avec leurs identifiants et leurs relations `related.pages`. La page doit continuer à présenter au lecteur ses références et ressources pertinentes. Le rapport doit pouvoir confronter les références visibles, le catalogue et les sources réellement mobilisées dans le contenu ; il ne doit pas confondre ces trois notions.
+
+À terme, la page peut afficher ensemble, de façon discrète, la durée approximative et ses références principales. Les références complémentaires et approfondissements restent séparés des sources qui soutiennent directement le tronc principal. Éviter de recopier dans une métadonnée de page une seconde liste de sources qui divergerait du catalogue canonique.
+
+### 8.4 Critères d'équilibre à auditer
+
+La revue d'une leçon doit donc combiner :
+
+| Dimension | Question de contrôle |
+|---|---|
+| Objectif | La leçon répond-elle à une question pédagogique précise et identifiable ? |
+| Prérequis | Les connaissances nécessaires sont-elles introduites ou reliées explicitement ? |
+| Progression | Les explications, exemples et représentations s'enchaînent-ils sans saut ? |
+| Profondeur | Le tronc principal contient-il le nécessaire, sans absorber les développements de Build / Deepen ? |
+| Sources | Les affirmations importantes sont-elles soutenues par des sources identifiables et pertinentes ? |
+| Durée | La durée estimée est-elle proche de 15 min et comprise idéalement entre 7 et 20 min ? |
+| Autonomie | La leçon a-t-elle une conclusion, des références et une transition vers la suite ? |
+
+Une durée hors intervalle déclenche une revue éditoriale, jamais une correction mécanique. Une durée dans l'intervalle ne prouve pas à elle seule que la leçon est bien construite.
+
+### 8.5 Conséquence pour les deux pages de cet audit
+
+- **ICL** : ne pas l'allonger uniquement parce qu'elle est la plus courte. L'ajout Min / Yoo ne se justifie que par la nuance empirique qu'il apporte. Réestimer ensuite la durée réelle ; si elle reste sous 7 minutes, revoir le périmètre et les éventuelles notions manquantes avant de décider d'un enrichissement ou d'un regroupement.
+- **Logits** : ne pas ajouter une section sur le *weight tying* uniquement pour augmenter la durée ou le nombre de sources. Ne l'intégrer au tronc que si cette distinction est nécessaire pour comprendre la projection de sortie ; sinon, conserver une ressource facultative / Build / Deepen.
+
+Le classement initial par nombre de mots reste un signal exploratoire. Il doit être remplacé, pour le suivi régulier, par une estimation de durée tenant compte des différents types de contenu et accompagnée d'une validation éditoriale.
