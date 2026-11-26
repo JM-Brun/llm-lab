@@ -114,7 +114,7 @@ Une couche qui omet RoPE ne reçoit pas une représentation vide ou réinitialis
 
 ## Biais relatif : ajouter un terme positionnel avant softmax
 
-Un score d'attention peut être décomposé en un terme de contenu et un terme de position relative, par exemple \(s_{ij}=q_i^\top k_j/\sqrt{d_k}+b(h_i,j-i)\). La fonction exacte dépend de l'architecture. Un biais conditionné par la requête, comme le mécanisme Inkling décrit par Raschka, n'est pas équivalent à la table apprise par buckets et par tête de T5.
+Un score d'attention peut être décomposé en un terme de contenu et un terme de position relative, par exemple \(s_{ij}=q_i^\top k_j/\sqrt{d_k}+b(h_i,j-i)\). La fonction exacte dépend de l'architecture. Dans T5, le biais est un scalaire appris par bucket de distance ; dans ALiBi, une pente fixe propre à la tête produit une pénalité linéaire. Un biais conditionné par la requête, comme le mécanisme Inkling décrit par Raschka, est encore une autre paramétrisation. Ces biais agissent sur les scores avant softmax ; ils ne sont pas des rotations RoPE.
 
 {{< include ../includes/relative-bias-decomposition-fr.html >}}
 
@@ -137,14 +137,13 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
 
-## Au-delà de RoPE complet : variantes architecturales
+## Variantes architecturales et mécanismes voisins
 
-RoPE complet fait tourner toutes les paires de coordonnées de Q et K. Les architectures récentes peuvent modifier la fraction de dimensions tournée, les couches qui appliquent RoPE ou la façon d'ajouter un signal relatif aux scores.
+RoPE complet fait tourner toutes les paires de coordonnées de Q et K. Les architectures récentes peuvent modifier la fraction de dimensions tournée ou les couches qui appliquent RoPE. D'autres mécanismes relatifs, présentés dans la section précédente, modifient directement les scores ; ce ne sont pas des variantes de RoPE.
 
 - **Partial RoPE** ne fait tourner qu'un sous-ensemble des dimensions de chaque tête. Cela réduit la largeur des tables sinus/cosinus, mais pas la dimension des clés et valeurs du cache KV. L'exemple MiniMax-M3 discuté par Raschka utilise 64 dimensions rotatives sur 128.
 - **NoPE** omet toute transformation positionnelle explicite dans une couche, tout en conservant le masque causal. Les préfixes visibles emboîtés peuvent fournir un signal d'ordre implicite, mais pas une coordonnée absolue ou une distance relative explicite. Les résultats de généralisation en longueur dépendent des tâches et du régime d'entraînement.
 - **Couches hybrides RoPE/NoPE** appliquent RoPE dans certaines couches et l'omettent dans d'autres. SmolLM3 est un exemple décrit dans l'article ; vérifier le motif exact dans la configuration de la version étudiée.
-- **Biais positionnel relatif appris** ajoute un terme au score QK avant softmax. Dans l'exemple Inkling, ce terme dépend de l'état caché de la requête et de l'écart entre positions. Il diffère du biais par buckets de T5.
 
 Ces mécanismes ne sont pas interchangeables. Les exemples sont des instantanés datés, pas une taxonomie exhaustive.
 
@@ -179,6 +178,9 @@ Pour une implémentation complète de Qwen3 en PyTorch, voir le [tutoriel et dé
 ## Références
 
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — formulation originale de RoPE.
+- [Shaw et al. (2018), *Self-Attention with Relative Position Representations*](https://aclanthology.org/N18-2074/) — représentations relatives dans les clés et les valeurs.
+- [Raffel et al. (2020), *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer*](https://arxiv.org/abs/1910.10683) — biais relatif appris par buckets de T5.
+- [Press et al. (2022), *Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation*](https://arxiv.org/abs/2108.12409) — biais linéaire ALiBi.
 - [Hugging Face Transformers — documentation](https://huggingface.co/docs/transformers/) — les conventions d'implémentation varient selon les architectures.
 
 **Notion canonique :** [Encodage positionnel](positional-encoding.qmd). Cette page approfondit un mécanisme particulier ; elle ne remplace pas l'introduction générale à l'information positionnelle.

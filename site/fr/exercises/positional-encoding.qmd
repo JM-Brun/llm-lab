@@ -1,7 +1,7 @@
 ---
 title: "Exercices — Position et encodage positionnel"
-subtitle: "Questions de vérification, exercices et corrigés"
-description-meta: "Questions de vérification et exercices associés à la leçon Position et encodage positionnel."
+subtitle: "Questions de vérification, cartes de rappel, exercices et corrigés"
+description-meta: "Questions de vérification, cinq cartes de rappel et exercices associés à la leçon Position et encodage positionnel."
 keywords: ["type:exercise-hub", "destination:practice", "topic:positional-encoding-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding-exercises"
-summary: "Questions de vérification et exercices associés à la leçon Position et encodage positionnel."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
-purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+summary: "Questions de vérification, cinq cartes de rappel et exercices associés à la leçon Position et encodage positionnel."
+scope: "Regroupe les questions, cinq cartes de rappel et exercices corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Restituer les distinctions essentielles, vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
 suggested_route:
   previous: null
   next: null
@@ -78,6 +78,45 @@ B voit les mêmes trois tokens dans les deux cas. Les paires clé-valeur associ�
 </details>
 
 [Voir la propriété générale d’équivariance par permutation](../positional-encoding.qmd#permutation-equivariance)
+
+## Cartes de rappel
+
+Essayez de répondre avant d'ouvrir chaque carte. Elles portent sur les distinctions à conserver ; les exercices précédents et suivants demandent de les appliquer.
+
+<details>
+<summary>Carte 1 — Pourquoi l’auto-attention a-t-elle besoin d’un signal d’ordre ?</summary>
+
+Sans signal positionnel ni contrainte structurelle dépendant de l’ordre, l’auto-attention fondée sur le contenu est équivariante par permutation : elle réordonne ses sorties avec ses entrées.
+
+</details>
+
+<details>
+<summary>Carte 2 — Où un encodage absolu additif est-il injecté ?</summary>
+
+À l’entrée : le vecteur de position est ajouté au plongement du token avant le premier bloc Transformer.
+
+</details>
+
+<details>
+<summary>Carte 3 — Comment distinguer Shaw, T5 et ALiBi ?</summary>
+
+Shaw apprend des représentations relatives pour les clés et les valeurs ; T5 ajoute un biais scalaire appris par buckets aux scores ; ALiBi ajoute un biais linéaire fixe par tête.
+
+</details>
+
+<details>
+<summary>Carte 4 — Quels vecteurs RoPE fait-il tourner ?</summary>
+
+Les requêtes Q et les clés K après projection, avant leur produit scalaire. Les valeurs V ne sont pas tournées.
+
+</details>
+
+<details>
+<summary>Carte 5 — Sur quoi repose NoPE ?</summary>
+
+Sur un ordre implicite fourni notamment par les préfixes causaux emboîtés, sans coordonnée absolue ni distance relative explicite ; cela ne garantit pas l’extrapolation.
+
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)

@@ -1,7 +1,7 @@
 ---
 title: "Exercises — Positional encoding"
-subtitle: "Self-check questions, exercises, and worked answers"
-description-meta: "Self-check questions and exercises associated with the Positional encoding lesson."
+subtitle: "Self-check questions, recall cards, exercises, and worked answers"
+description-meta: "Self-check questions, five recall cards, and exercises associated with the Positional encoding lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:positional-encoding-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding-exercises"
-summary: "Self-check questions and exercises associated with the Positional encoding lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
-purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+summary: "Self-check questions, five recall cards, and exercises associated with the Positional encoding lesson."
+scope: "Collects the questions, five recall cards, and worked exercises for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Recall the essential distinctions, check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
 suggested_route:
   previous: null
   next: null
@@ -78,6 +78,45 @@ B sees the same three tokens in both cases. The key-value pairs for A and C swit
 </details>
 
 [See the general permutation-equivariance property](../positional-encoding.qmd#permutation-equivariance)
+
+## Recall cards
+
+Try to answer before opening each card. They rehearse the distinctions to retain; the exercises above and below ask you to apply them.
+
+<details>
+<summary>Card 1 — Why does self-attention need an ordering signal?</summary>
+
+Without a positional signal or an order-dependent structural constraint, content-based self-attention is permutation equivariant: it reorders its outputs with its inputs.
+
+</details>
+
+<details>
+<summary>Card 2 — Where is an additive absolute encoding injected?</summary>
+
+At the input: the position vector is added to the token embedding before the first Transformer block.
+
+</details>
+
+<details>
+<summary>Card 3 — How do Shaw, T5, and ALiBi differ?</summary>
+
+Shaw learns relative key/value representations; T5 adds a learned bucketed scalar bias to scores; ALiBi adds a fixed linear bias per head.
+
+</details>
+
+<details>
+<summary>Card 4 — Which vectors does RoPE rotate?</summary>
+
+Projected queries Q and keys K, before their dot product. Values V are not rotated.
+
+</details>
+
+<details>
+<summary>Card 5 — What does NoPE rely on?</summary>
+
+Implicit order from nested causal prefixes, without explicit absolute coordinates or relative distances; this does not guarantee extrapolation.
+
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](positional-encoding.qmd)

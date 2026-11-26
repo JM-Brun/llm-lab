@@ -1,0 +1,124 @@
+schema_version: 1
+source_id: shaw-et-al-relative-position-representations-2018
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full five-page NAACL-HLT paper inspected, including the relative-position formulation, equations (3)-(5), clipping, implementation discussion and WMT 2014 experiments."
+      - "Extraction is scoped to the positional mechanism; the paper's wider relation-aware attention framing is not exhaustively reconstructed."
+    inferred_elements:
+      - "The source-local graph below is a compact reconstruction of the method, not a formal graph supplied by the authors."
+      - "The proposed teaching order is inferred from the paper's technical dependencies."
+  source_graph:
+    nodes:
+      - {id: src-shaw-query-position, kind: input, description: "Position index of the query token.", locator: "§3"}
+      - {id: src-shaw-key-position, kind: input, description: "Position index of a candidate key token.", locator: "§3"}
+      - {id: src-shaw-relative-offset, kind: mathematical-structure, description: "Clipped displacement between query and key positions.", locator: "§3, equations (3)-(5)"}
+      - {id: src-shaw-relative-key, kind: parameter, description: "Learned relation representation added to the key-side compatibility computation.", locator: "§3, equation (4)"}
+      - {id: src-shaw-relative-value, kind: parameter, description: "Learned relation representation used in value aggregation.", locator: "§3, equation (5)"}
+      - {id: src-shaw-attention-score, kind: representation, description: "Compatibility score containing content and relative-key contributions.", locator: "§3"}
+      - {id: src-shaw-context-vector, kind: representation, description: "Weighted aggregation containing content values and relative-value contributions.", locator: "§3"}
+    edges:
+      - {from: src-shaw-query-position, type: determines-with, to: src-shaw-relative-offset}
+      - {from: src-shaw-key-position, type: determines-with, to: src-shaw-relative-offset}
+      - {from: src-shaw-relative-offset, type: selects, to: src-shaw-relative-key}
+      - {from: src-shaw-relative-offset, type: selects, to: src-shaw-relative-value}
+      - {from: src-shaw-relative-key, type: contributes-to, to: src-shaw-attention-score}
+      - {from: src-shaw-relative-value, type: contributes-to, to: src-shaw-context-vector}
+    interpretation: "The method injects relative-position representations on both the compatibility and aggregation paths. It is not merely a scalar bias added to attention logits."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why a query-key displacement can be represented inside self-attention.", basis: "The method is introduced as an alternative to adding absolute position vectors at the input."}
+    - {status: inferred, outcome: "Distinguish relative-key contributions to compatibility from relative-value contributions to aggregation.", basis: "Equations (4) and (5) define separate uses."}
+    - {status: inferred, outcome: "Explain why relative offsets are clipped to a configured maximum distance.", basis: "The method uses a bounded set of relation embeddings."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Scaled dot-product attention and the roles of queries, keys and values.", basis: "The method modifies both the score and weighted aggregation."}
+    - {status: inferred, topic: "Vector embeddings and indexed lookup.", basis: "Relative offsets select learned vectors."}
+  teaching_route:
+    - {order: 1, section: "Motivation", function: "contrast absolute and relative position", moves: ["Start from absolute position vectors added to inputs", "Introduce pairwise query-key displacement"]}
+    - {order: 2, section: "Relative representations", function: "show two insertion paths", moves: ["Add a relation vector to key compatibility", "Add a relation vector to value aggregation"]}
+    - {order: 3, section: "Distance clipping and experiments", function: "bound the method and evidence", moves: ["Explain the maximum relative distance", "Report WMT results only within their experimental scope"]}
+  pedagogical_strengths:
+    - "The method provides a concrete relative-position mechanism distinct from scalar score biases."
+    - "The separate key and value equations make the two insertion paths explicit."
+    - "The paper reports an efficient implementation and evaluates the method against absolute encodings."
+  pedagogical_limits:
+    - "The reported BLEU improvements concern the paper's WMT 2014 English-to-German and English-to-French configurations only."
+    - "The paper does not establish universal superiority over later positional mechanisms or long-context extrapolation."
+    - "No code or experiment was reproduced in this ingestion."
+  comparison:
+    dossier: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "Integrate the distinction between relative representations and scalar score biases into the existing positional-encoding lesson. Keep the full equations and implementation details for a future relative-position-bias deep dive if needed."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: shaw-et-al-relative-position-representations-2018:relative-key-and-value
+    kind: mechanism
+    summary: "Learned representations of the query-key offset contribute separately to the compatibility score and to the weighted value aggregation."
+    locator: {type: section, value: "§3", label: "Relative position representations"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The paper's equations (4) and (5) define relative-position contributions on the key and value paths."
+      assumptions: ["The query and key positions are integer sequence indices.", "Relative embeddings are selected from a bounded offset range."]
+      limitations: ["This is the paper's formulation, not a claim that all relative-position methods modify both paths."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:relative-position-representations, topic:self-attention]
+      concept_ids: [positional-encoding, self-attention, query, key, value, attention-score]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      concepts: [positional-encoding, self-attention, attention-score]
+    pedagogical_profile:
+      learner_question: "Where can relative position enter an attention computation?"
+      explanatory_lens: computational
+      teaching_form: [mechanism-comparison, mathematical-derivation]
+      abstraction_level: advanced
+      prerequisites: [self-attention, query, key, value]
+      distinctive_value: "Shows that relative position can affect both score formation and value aggregation, unlike scalar score-bias examples."
+      limitations: ["Full equations and implementation are too detailed for the core lesson."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The core page previously grouped relative representations and score biases without distinguishing their insertion paths."}
+      complementarity: {level: high, rationale: "It adds a primary-source example that complements T5, ALiBi and RoPE."}
+      pedagogical_value: {level: high, rationale: "The distinction prevents all relative methods from being reduced to a scalar bias."}
+      applicability: {level: high, rationale: "A short description fits the core page; equations can be deferred."}
+      redundancy: {level: low, rationale: "The existing core page did not explain the key-side and value-side contributions."}
+      evidence_quality: {level: high, rationale: "The primary paper directly defines both terms in equations (4) and (5)."}
+    disposition: integrate
+    disposition_rationale: "Add the concise Shaw example to the relative-mechanism taxonomy; reserve derivation and implementation for a possible later deep dive."
+  - id: shaw-et-al-relative-position-representations-2018:distance-clipping
+    kind: mechanism
+    summary: "Relative offsets beyond a configured range are clipped so the method can use a bounded set of learned relation representations."
+    locator: {type: section, value: "§3", label: "Clipped relative positions"}
+    evidence:
+      kind: implementation-detail
+      confidence: well-supported
+      scope: "The paper defines a maximum relative distance and maps larger offsets to the boundary representation."
+      assumptions: ["The maximum distance is a hyperparameter."]
+      limitations: ["The chosen clipping range is configuration-specific."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:relative-position-representations]
+      concept_ids: [positional-encoding, self-attention]
+    candidate_destinations:
+      pages: [fr/rope, en/rope]
+      concepts: [positional-encoding]
+    pedagogical_profile:
+      learner_question: "How does a relative-position method bound the number of learned offsets?"
+      explanatory_lens: implementation
+      teaching_form: [mechanism-comparison]
+      abstraction_level: advanced
+      prerequisites: [positional-encoding, self-attention, query, key, value]
+      distinctive_value: "Connects a mathematical displacement to a finite parameter table."
+      limitations: ["Not needed for the introductory lesson."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Clipping is not currently explained in the core page."}
+      complementarity: {level: moderate, rationale: "It adds an implementation detail to the source comparison."}
+      pedagogical_value: {level: moderate, rationale: "It clarifies how relative distances are represented with finite parameters."}
+      applicability: {level: moderate, rationale: "Useful in a future relative-position implementation deep dive."}
+      redundancy: {level: low, rationale: "No current page explains Shaw-style clipping."}
+      evidence_quality: {level: high, rationale: "The primary paper specifies the clipping operation."}
+    disposition: defer
+    disposition_rationale: "Retain as a structured extraction; do not expand the core page with this implementation detail."
