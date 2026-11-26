@@ -107,7 +107,7 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
         ("en", "Understand LLMs", "Deepen your understanding", "Practice and experiment"),
     ],
 )
-def test_optional_pages_and_experiments_are_outside_the_core_sidebar(
+def test_foundational_lessons_are_not_misclassified_as_deep_dive_or_core_sidebar(
     language: str,
     understand_title: str,
     deepen_title: str,
@@ -121,11 +121,16 @@ def test_optional_pages_and_experiments_are_outside_the_core_sidebar(
     core_paths = set(_page_paths(understand["contents"]))
     deepen_paths = set(_page_paths(deepen["contents"]))
     practice_paths = set(_page_paths(practice["contents"]))
+    editorial_hub = (SITE / language / "deepen.qmd").read_text(encoding="utf-8")
 
+    # These pages are foundational Understand lessons, not optional deep dives.
+    # The Deepen hub may point to them as related lessons without reclassifying
+    # them or adding them to the Deepen sidebar.
     for slug in ("transformer-architectures", "llm-limits", "post-training"):
         path = f"{language}/{slug}.qmd"
         assert path not in core_paths
-        assert path in deepen_paths
+        assert path not in deepen_paths
+        assert f"({slug}.qmd)" in editorial_hub
 
     assert f"{language}/experience-information-theory.qmd" in practice_paths
     assert f"{language}/experience-information-theory.qmd" not in core_paths
