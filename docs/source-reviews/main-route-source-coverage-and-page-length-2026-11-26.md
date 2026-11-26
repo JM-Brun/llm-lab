@@ -63,7 +63,7 @@ Cette distinction doit être présentée comme une variante de paramétrisation,
 
 Page : [Apprentissage en contexte](https://jm-brun.github.io/llm-lab/fr/in-context-learning.html).
 
-Le comptage heuristique effectué sur les pages candidates place cette page au bas du classement, autour de 950 mots de contenu. Ce chiffre est un ordre de grandeur, pas une métrique éditoriale normative.
+Le premier comptage brut plaçait cette page au bas du classement. Le relevé affiné distingue environ 1 118 mots sur l'ensemble de la page et 785 mots dans le tronc visible après retrait des callouts repliés, des ressources HTML et du code. La lecture textuelle seule se situe donc autour de 5 à 7 minutes ; les exemples, le schéma et les formules doivent être pris en compte avant de conclure que la leçon passe sous le seuil de 7 minutes.
 
 La page est déjà structurée autour de :
 - la définition de l'ICL et les configurations zero-shot / one-shot / few-shot ;
@@ -72,7 +72,7 @@ La page est déjà structurée autour de :
 - les limites de généralisation et la sensibilité aux exemples ;
 - des approfondissements séparés sur les hypothèses mécanistes et les protocoles expérimentaux.
 
-Sa bibliographie visible contient quatre références : Brown et al. (2020), Olsson et al. (2022), Xie et al. (2022) et Min et al. (2022). Aucune de ces références n'était reliée à la page dans `data/sources.yml` lors de l'audit.
+Sa bibliographie visible contient quatre références : Brown et al. (2020), Olsson et al. (2022), Xie et al. (2022) et Min et al. (2022). Le catalogue relie actuellement une source à cette page, la vidéo générale d'Andrej Karpathy *Deep Dive into LLMs like ChatGPT* ; les quatre articles cités ne disposent pas encore de liaisons canoniques dédiées à cette leçon.
 
 **Interprétation :** la page est courte mais n'est pas sous-documentée dans son contenu visible. Son potentiel d'amélioration vient d'une nuance empirique importante, pas d'un besoin d'allonger la définition.
 
