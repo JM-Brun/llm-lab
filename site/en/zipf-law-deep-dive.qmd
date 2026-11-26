@@ -13,7 +13,7 @@ id: "en/zipf-law-deep-dive"
 summary: "Explores Zipf’s law beyond the initial intuition: the Mandelbrot variant, multilingual data, history, applications, and limitations."
 scope: "Collects mathematical extensions, comparative empirical findings, historical milestones, and uses in corpus analysis, information retrieval, and model studies."
 purpose: "Interpret empirical results without overgeneralizing and connect rank-frequency statistics to practical uses."
-domain: "probabilistic-foundations-training"
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
