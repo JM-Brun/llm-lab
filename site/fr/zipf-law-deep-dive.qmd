@@ -24,15 +24,13 @@ related: ["fr/exercises-zipf-law", "fr/text-data", "fr/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:advanced", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-advent-calendar-story-day-01.qmd >}}
-
 ::: {.chapter-lead}
 La leçon du calendrier a établi la relation rang–fréquence et ses limites. Cet approfondissement rassemble les éléments qui demandent davantage de recul : modèles plus flexibles, comparaison entre corpus, histoire et usages dans les systèmes de traitement du langage.
 :::
 
 **Retour à l'histoire :** [Pourquoi le mot « je » revient-il si souvent ?](advent-calendar-story-day-01.qmd).
 
-### Une extension utile : la loi de Zipf-Mandelbrot
+## La loi de Zipf-Mandelbrot {#zipf-mandelbrot}
 
 La forme simple décrit imparfaitement certaines distributions, en particulier les tout premiers rangs. Mandelbrot a proposé une généralisation :
 
@@ -58,7 +56,7 @@ Par exemple, au rang 10 avec $\beta=0$, les valeurs $\alpha=0{,}7$, $1$ et $1{,}
 
 Cette extension rappelle qu'une loi empirique est un modèle à ajuster et à évaluer, pas une formule à appliquer sans vérifier ses hypothèses.
 
-## 3. Que trouve-t-on dans plusieurs langues ?
+## Observations multilingues {#observations-multilingues}
 
 La régularité n'est pas limitée au français ou à l'anglais. Pour éviter de comparer des chiffres issus de corpus incompatibles, voici un extrait d'une même étude consacrée au langage adressé aux jeunes enfants (*child-directed speech*). Les auteurs ont agrégé des corpus de conversations et estimé les paramètres d'une distribution de Zipf-Mandelbrot.
 
@@ -81,7 +79,7 @@ Ces résultats montrent deux choses :
 
 L'étude a également montré que les paramètres dépendent de la taille des échantillons et du choix de l'unité linguistique. Les auteurs ont notamment retenu un seuil minimal de 100 000 occurrences pour leurs estimations principales. Ils définissent un mot par sa forme orthographique, agrègent les conversations par langue et attribuent aléatoirement les rangs aux formes ex æquo. Leur résultat est qualifié de *near-Zipfian* : il s'agit d'une proximité empirique, pas d'une loi de puissance exacte. C'est une raison supplémentaire de ne pas tirer de conclusion générale à partir de notre texte de 217 occurrences.
 
-## 4. Une histoire plus ancienne que son nom
+## Une histoire plus ancienne que son nom
 
 La loi porte le nom de George Kingsley Zipf, mais l'histoire commence avant lui.
 
@@ -92,7 +90,7 @@ La loi porte le nom de George Kingsley Zipf, mais l'histoire commence avant lui.
 
 L'appellation « loi de Zipf » est donc un raccourci historique : pour la statistique lexicale, « loi d'Estoup-Zipf » rend mieux compte de cette filiation.
 
-## 5. À quoi sert-elle concrètement ?
+## À quoi sert-elle concrètement ?
 
 La loi de Zipf n'est pas une étape de calcul exécutée par un modèle de langage. Un Transformer ne consulte pas cette formule à chaque prédiction. C'est avant tout un **modèle descriptif**. Pour comprendre ce qu'elle apporte réellement, distinguons son usage direct des méthodes qui exploitent seulement des statistiques de fréquence.
 
