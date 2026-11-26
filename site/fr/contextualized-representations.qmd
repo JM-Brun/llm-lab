@@ -48,6 +48,7 @@ Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis
 
 **Questions et exercices :** [Accéder à la page dédiée](exercises/contextualized-representations.qmd).
 
+Pour isoler maintenant l’effet du contexte, nous fixons les paramètres, l’ID du token étudié et sa position. Seul le préfixe accessible varie. La leçon précédente faisait varier la position ; celle-ci maintient cette position fixe pour étudier ce que les blocs peuvent en faire.
 
 ## Ce qui reste identique
 
@@ -134,8 +135,8 @@ Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcu
 
 1. Le tokenizer transforme le texte en IDs de tokens.
 2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
-3. L'architecture introduit l'information positionnelle selon ses choix.
-4. Les couches du Transformer produisent des états cachés dépendants du contexte.
+3. L'architecture traite la position à l'endroit prévu par son mécanisme : dans la représentation d'entrée ou au sein de l'attention.
+4. Les blocs du Transformer produisent des états cachés dépendants du contexte en utilisant ce mécanisme.
 5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Des embeddings aux représentations contextualisées selon le traitement positionnel"}
