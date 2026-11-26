@@ -15,7 +15,7 @@ scope: "Details representation metrics, research findings on downstream performa
 purpose: "Interpret tokenizer comparisons while accounting for denominators, tasks, corpora, budgets, and causal limitations."
 domain: "text-tokenization"
 suggested_route:
-  previous: "en/tokenizer-design-evaluation"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/tokenizer-design-evaluation"]
