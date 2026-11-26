@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-contextualized-representations"
 scope: "Le passage du plongement initial à un état caché par occurrence, puis à une prédiction."
-purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+purpose: "Prédire quelles modifications du préfixe peuvent affecter l’état d’une position donnée."
 revision_role: synthesis
 revision_of: ["fr/contextualized-representations"]
 suggested_route:
@@ -38,6 +38,17 @@ Deux occurrences du mot « avocat » peuvent-elles avoir le même plongement ini
 <summary>Afficher la réponse</summary>
 
 Oui, si elles reçoivent le même ID, leur lookup est identique. Dans des préfixes différents, les couches peuvent produire des états différents.
+
+</details>
+
+### Une deuxième question pour vérifier la causalité
+
+À paramètres et position fixés, modifier un token situé après la position étudiée peut-il changer son état caché dans un GPT causal ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le masque causal interdit à cette position de consulter le futur. Une modification du préfixe accessible peut, elle, changer l’état.
 
 </details>
 
