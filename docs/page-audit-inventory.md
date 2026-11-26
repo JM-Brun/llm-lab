@@ -2089,3 +2089,35 @@ No source-level mathematical or architectural correction was identified in this 
 2. Audit the next prediction group: `logits` → `probabilites` / `probabilities` → `entropy`. Explicitly distinguish the final hidden state, output projection, vocabulary softmax and attention softmax.
 3. Audit the branch point from the conditional distribution into generation, observed-target scoring/evaluation and training. Reuse the dated scoring, prefill/teacher-forcing and gradient audits already in this inventory; do not rebuild the same evidence.
 4. Keep manual FR/EN screen-reader and native breadcrumb ancestry/label checks tracked in #584. Automated axe results do not close them.
+
+
+## 2026-11-26: main Understand route — logits, probabilities and predictive entropy
+
+**Scope.** Bounded FR/EN source review of `logits`, `probabilites` / `probabilities`, and `entropy`; cross-checked the prediction stage and its outgoing transitions in `data/guided-route.yml`, plus the corresponding final-hidden-state, vocabulary-projection, logits, softmax and sibling-use nodes in `data/computational-graph.yml`. The pass checked the representative running examples and mathematical definitions. It did not render the pages or independently audit downstream generation/scoring/training lessons.
+
+### Findings
+
+- **The logits lesson correctly closes the network forward pass.** It takes the final hidden state at a prediction position, applies the vocabulary projection, and obtains one score per vocabulary token. The FR/EN pages distinguish score, probability and truth; state the $(B,T,V)$ batch/sequence/vocabulary axes; and explain common-shift invariance and why the raw maximum is not a confidence measure. The training note correctly says a stable cross-entropy implementation can consume logits directly without an explicit prior softmax.
+- **The probabilities lesson correctly defines the shared conditional-distribution boundary.** It applies vocabulary softmax to logits at one position, distinguishes normalization from calibration and factual truth, and differentiates attention softmax (over accessible positions) from vocabulary softmax (over candidate tokens). It also separates optional decoding policy operations—temperature, top-k and top-p—from the base predictive distribution, and notes that library ordering can vary.
+- **The same four-token running example is numerically consistent across the output projection, probability and entropy pages.** The illustrative probability vector $(0.6,0.2,0.1,0.1)$ has entropy $-\sum_i p_i\ln p_i\approx1.089$ nats; the maximum for four outcomes is $\ln4\approx1.386$ nats, so the stated ratio is about 79%. The FR and EN token labels differ with their respective narrative examples, while the numerical distribution and mathematical reasoning agree.
+- **The entropy lesson distinguishes three different objects.** Predictive entropy is the expected surprisal over the full distribution before the next token is observed; the surprisal $-\log p(x_t\mid x_{<t})$ belongs to one observed token; and cross-entropy compares a target distribution with the model distribution. It correctly avoids treating low entropy as factual correctness or empirical calibration.
+- **The branch semantics are explicit at the distribution page and in the canonical registries.** The probability lesson names generation, observed-target scoring and learning as three uses. The guided route declares prediction → inference, prediction → observed scoring, and prediction → training transitions; the computational graph likewise keeps generated-token feedback, observed-target scoring/evaluation and parameter-updating training as distinct branches.
+- **One navigation question remains open for rendered review.** The page-map metadata on `entropy` currently sets `suggested_route.next: likelihood`, while the guided route places generation/inference as the next stage after prediction and treats scoring as a sibling use of the shared distribution. The entropy lesson itself contains valid links to generation, likelihood and cross-entropy, so this is not a demonstrated content error. Inspect the generated reader-facing route cue in the rendered FR/EN pages: if it presents likelihood as the obligatory next step and visually bypasses inference, revise the cue or metadata only after confirming the rendered behavior. Do not alter the canonical three-branch model to fit a navigation shortcut.
+- **FR/EN content parity is strong for the audited concepts.** The formulas, definitions, example probabilities, temperature semantics, calibration caveats and links to the next lessons correspond. The running token labels are localized rather than forced to be identical.
+
+### Status decision
+
+| Page pair | Source status | Remaining validation |
+|---|---|---|
+| `logits` | **Ready for the main route** | Render the output-projection example, $(B,T,V)$ notation and common-shift figure; verify the link to probabilities. |
+| `probabilites` / `probabilities` | **Ready for the main route** | Render the softmax example and three-use branch explanation; inspect the transition cues against the guided route. |
+| `entropy` | **Ready in content; route cue needs verification** | Recheck the entropy calculation and figure; inspect whether the generated next-step cue to likelihood improperly suggests a linear prerequisite after prediction. |
+
+No mathematical correction was identified in this bounded pass. The downstream pages for generation, likelihood, cross-entropy, loss and gradients have their own dated audits in this inventory; those checks are not repeated here.
+
+### Remaining work after this slice
+
+1. Render the prediction group in FR/EN and inspect the equation, numerical table, entropy chart, accessibility text and links at desktop/mobile sizes.
+2. Specifically inspect the rendered entropy route cue and reconcile it with the prediction → inference / scoring / training sibling transitions. Keep the canonical route and computational graph as the source of truth for the distinction.
+3. Continue with a cross-branch audit of generation, observed-target scoring/evaluation and training. Use the existing 2026-11-25 audit entries for prefill, teacher forcing, likelihood, cross-entropy, loss and gradients; inspect only gaps or contradictions, not already checked arithmetic.
+4. Record manual screen-reader and native breadcrumb evidence under #584; automated browser/Axe checks remain a separate evidence class.
