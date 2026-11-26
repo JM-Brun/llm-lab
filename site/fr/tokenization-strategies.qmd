@@ -16,9 +16,9 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["fr/text-data"]
+  parents: ["fr/deepen"]
   children: []
-related: ["fr/training-examples", "fr/tokenization-strategies-exercises"]
+related: ["fr/text-data", "fr/training-examples", "fr/tokenization-strategies-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:fr", "status:published"]
 -->
 
