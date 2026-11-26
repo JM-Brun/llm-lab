@@ -271,9 +271,7 @@ But surprisal is not a direct measure of answer quality. A false statement that 
 
 ## Experiment
 
-The [Experiment — Entropy, KL, and predictive compression](experience-information-theory.qmd) page lets you manipulate synthetic distributions and verify relationships between entropy, cross-entropy, KL divergence, and code lengths.
-
-For further practice, compare the surprisal of several events under one distribution, then change the distribution while keeping the observed event fixed. You will see that surprisal depends on the chosen probabilistic model.
+To manipulate distributions and distinguish observed surprisal, entropy, and related metrics, use the [dedicated experiment](experience-information-theory.qmd#surprisal-experiments).
 
 ## Takeaways
 
