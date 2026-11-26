@@ -24,6 +24,12 @@ related: ["en/entropy", "en/likelihood", "en/cross-entropy", "en/language-modeli
 tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-content", "level:overview", "language:en", "status:published"]
 -->
 
+<!--
+Editorial model: docs/advent-calendar-pilots/first-three-days-pedagogical-models.md#porte-02--combien-de-bits-contient-la-surprise-dun-evenement
+Tracking issue: https://github.com/JM-Brun/llm-lab/issues/1666
+This is authoring metadata; it is intentionally not rendered to readers.
+-->
+
 *LLM Lab Advent Calendar 2026 · Door 2 · about 10 minutes*
 
 *Reading preview under scientific and pedagogical review — feedback welcome.*
