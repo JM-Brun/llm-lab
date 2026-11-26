@@ -71,6 +71,7 @@ Ces relations décrivent des dépendances distinctes ; elles ne doivent pas êtr
 - Mise en cohérence des relations `related` FR/EN entre la leçon principale et son approfondissement ; le parcours garde le Transformer comme étape suivante et ne place pas Q/K/V après l'état contextualisé final.
 - Mise à jour du nœud bilingue `contextualized-representation` dans `data/concepts.yml` : définition recentrée sur l'occurrence et le contexte accessible ; ajout des deux pages Advanced comme ressources de ce concept.
 - Régénération des fragments `generated-map-data-fr/en.qmd` pour refléter la définition bilingue et les ressources Advanced du nœud conceptuel.
+- Réconciliation des fragments générés avec le dernier `main` : les mises à jour indépendantes du calendrier et de la carte `Deepen` sont conservées, tandis que les relations et ressources du concept contextualisé sont ajoutées.
 - Ajout d'un avertissement bilingue sur la leçon principale : Q/K/V sont des projections internes au sous-bloc d'auto-attention, pas une étape après les représentations contextualisées.
 
 ## 6. État de l'ingestion canonique dans Wiki Knowledge
