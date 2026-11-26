@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["fr/tokenizer-multilingual-evaluation"]
-related: ["fr/tokenization-strategies", "fr/tokenizer-multilingual-evaluation", "fr/text-data", "fr/unicode-text", "fr/exercises-text-data"]
+related: ["fr/tokenization-strategies", "fr/text-data", "fr/unicode-text", "fr/exercises-text-data"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:fr", "status:published"]
 -->
 
