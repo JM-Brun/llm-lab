@@ -13,7 +13,7 @@ summary: "Explique comment attribuer un score à une séquence de tokens déjà 
 scope: "Attribue un score à une séquence déjà observée avec un contexte et des paramètres fixés."
 purpose: "Calculer la vraisemblance d’une continuation en multipliant les probabilités conditionnelles, puis retrouver sa log-vraisemblance et sa NLL."
 suggested_route:
-  previous: "fr/probabilites"
+  previous: "fr/entropy"
   next: "fr/cross-entropy"
 hierarchy:
   parents: []
