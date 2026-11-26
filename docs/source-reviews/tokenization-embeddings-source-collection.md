@@ -451,3 +451,110 @@ The ingestion/model layer is ready; the remaining work is primarily editorial in
 - [#156](https://github.com/JM-Brun/llm-lab/issues/156) continues to own asset-level rights verification.
 
 This dossier is the shared editorial reference. The issues track implementation and validation; they should link here rather than reproduce the full matrix independently.
+
+
+### 9.7 Embedding-space — page-by-page synthesis and implementation decisions
+
+The embedding work has a different editorial shape from tokenizer construction: the core lesson is intentionally narrow, while the historical, geometric and task-oriented comparisons belong to Deepen. The source audit is sufficiently mature to support this division; the remaining work is selective integration and validation, not another broad source scan.
+
+#### Source evidence and its limits
+
+The Hesam Sheikh Hessani tutorial is represented by:
+- catalogue record \`hesam-sheikh-hessani-llm-embeddings-explained-2025\` (partially scanned; integration status remains partial; licence unknown; text and figures link-only);
+- five atomic items in \`data/extractions/hesam-sheikh-hessani-llm-embeddings-explained-2025.yml\`;
+- a source-specific review in \`hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md\`.
+
+The extraction's source-local graph and teaching route are editorial reconstructions, not author-published canonical structures. Its useful contribution is the visual bridge from a real model's input table to cosine neighbours and a token graph. The static code inspection identified important implementation risks: checkpoint-specific dimensions, tokenizer/model vocabulary mismatch after adding a special token, decoding/re-tokenizing to recover IDs, string-based graph node identity, and loss of direction when top-k neighbours are rendered as an undirected graph.
+
+The live atlas has not been operated and the implementation has not been executed. No checkpoint-level result, benchmark, responsive usability result or learner outcome is claimed. The earlier \`llm-mechanics\` repository and the Space-linked \`primer-llm-embeddings\` repository are distinct; only the latter's relevant source paths were inspected statically.
+
+The source record has no explicit \`collections\` assignment in the current catalogue. Under the membership contract in #1306, thematic tags and page links are not grounds to infer membership. It is therefore used here as a related source and is not added to the validated \`tokenization-embeddings\` collection count.
+
+#### Canonical page responsibilities
+
+| Destination | Owns | Keep out |
+|---|---|---|
+| \`site/{fr,en}/embedding-space.qmd\` — Understand | Token ID as vocabulary-local row address; lookup \(E_{i,:}\); matrix shape \(V\times d\); distinction between row index and vector; same ID → same initial lookup; concise explanation that \(E\) is learned | Word2Vec history, TF-IDF, general embedding taxonomy, cosine theory, sentence retrieval, atlas implementation |
+| \`site/{fr,en}/gpt-model-walkthrough.qmd\` — Build | Tensor shapes and actual lookup in the GPT implementation; parameter table in the forward pass; code-level relation to model weights and training | A second conceptual overview or a separate generic embedding implementation |
+| \`site/{fr,en}/embeddings-deep-dive.qmd\` — Deepen | Sparse/dense families; TF-IDF vs learned word vectors; Word2Vec; contextual, sentence/document and multimodal representations; learning objectives; task-dependent quality; evaluation and non-LLM applications | Re-teaching the row-address mechanism at the same level of detail as Understand |
+| \`site/{fr,en}/cosine-similarity.qmd\` — Deepen | Dot product, Euclidean distance, cosine, normalization, anisotropy, hubness, metric choice and limits of semantic interpretation | A general history of embedding families or claims that cosine is a universal semantic score |
+| \`site/{fr,en}/linearite-embeddings.qmd\` — Deepen | Linear representation, decodability, functional use, probes, superposition and counterexamples | A synonym for geometric proximity or a claim that all concepts are linearly encoded |
+| \`site/{fr,en}/contextualized-representations.qmd\` — Understand | How later network computation turns initial lookups into position- and context-dependent states | Sentence/document embedding methods or a second explanation of the embedding-table lookup |
+| \`site/{fr,en}/exercises/embedding-space.qmd\` — Practice | Self-check questions, active-recall cards, the tiny NumPy table, and the distinct Apple Embedding Atlas exploration | New theory that belongs in the lesson or an assertion that the Hesam atlas has been reproduced |
+
+The Apple Embedding Atlas activity in the Practice page is a separate tool and activity from Hesam's DeepSeek token atlas. Do not conflate their data, implementation or evidence.
+
+#### Cross-source synthesis: what should survive in the learner-facing material?
+
+1. **Identity before geometry.** Raschka's implementation-oriented route and the Hesam case study both support direct lookup by token ID. Preserve IDs as canonical row identity; decoded strings are labels, not a safe key for recovering rows.
+2. **Static lookup before contextualization.** The input table maps a fixed ID to an initial vector. Context-dependent hidden states are produced later by the network. Sentence/document vectors are a further, task-specific representation.
+3. **Objective before interpretation.** Mikolov's static word-vector work, contextual representation research and sentence-embedding methods optimize different objectives over different objects. Do not collapse them into a single chronological ladder or one interchangeable geometry.
+4. **Metric before neighbour claim.** A nearest-neighbour result is conditional on checkpoint, representation source/layer, normalization, metric, \(k\), candidate set and self-neighbour policy. It does not establish synonymy, substitutability or retrieval quality.
+5. **Projection before visual conclusion.** PCA/t-SNE/UMAP and graph layouts are derived views. Their visible clusters and edges do not certify the original high-dimensional distances or a semantic ontology.
+6. **Evaluation before quality claim.** Intrinsic geometry, downstream task performance, robustness, coverage and operational cost are separate evaluation dimensions.
+
+#### Metadata and graph decisions
+
+- Reuse the existing canonical \`token-embedding\` concept (importance \`core\`, domains \`text-tokenization\` and \`mathematical-tools-geometry\`) and \`contextualized-representation\`; do not create a generic \`embedding-space\` concept merely to mirror the page title.
+- Keep the page's editorial tags as \`type:concept-lesson\`, \`destination:understand\`, \`topic:embedding-space\`, \`level:core\`, language and publication status. The concept's multiple domains do not justify forcing a single page-level domain.
+- Preserve the page-map distinction between \`suggested_route\`, \`hierarchy\` and \`related\`. The route remains \`text-data → embedding-space → positional-encoding\`; cosine similarity and linearity remain optional Deepen children, not mandatory intermediate steps.
+- Keep source-local \`src-*\` nodes, canonical concepts, computational operations, page navigation and guided-route stages as separate structures. Promote no source-local edge automatically.
+- Keep revision support on the Understand page concise; place the active-recall cards with the existing Practice questions rather than adding a second visible revision panel to the lesson.
+
+#### Remaining work, ordered by evidence value
+
+1. **Review the bilingual page diff and rendered trace.** Confirm the worked GPT-2 token ID agrees with the upstream Text and data example in both languages (the FR prefix's final token is ID 5633; the EN prefix's final token is ID 30). Confirm the toy sequence remains explicitly synthetic and does not imply tokenizer universality.
+2. **Validate the learning statement.** Check that the concise note about \(E\) being learned is aligned with the Build implementation and the loss/gradient lessons; do not imply that the tokenizer learns embedding values.
+3. **Validate Practice parity.** Check all five FR/EN recall cards, their answer reveals, the existing NumPy example and the Apple Atlas activity; keep the cards as recall aids, not substitutes for applied exercises.
+4. **Check Deepen boundaries.** Ensure the broad taxonomy, cosine geometry and linearity questions remain in their existing pages, with reciprocal links and no duplicate core lesson.
+5. **Run source/metadata and concept validators, Python tests for embedding inspection, full bilingual Quarto render, local-link/anchor checks and the existing browser suite.** Report each check separately; do not infer visual accessibility or learning outcomes from a successful build.
+6. **If a real-checkpoint lab is later justified**, pin model and tokenizer revisions, library versions, dtype/device, matrix shape, normalization, candidate and top-k policies; preserve IDs end-to-end; execute the code and inspect the live atlas before claiming reproducibility. This remains optional and does not block the conceptual lesson.
+
+**Decision:** keep the current core route and page boundaries. The immediate learner-facing change is limited to making the learned status of the embedding table explicit and adding short recall cards to the existing Practice page. No new concept, page, route, source collection, workflow or model-download dependency is warranted.
+
+
+### 9.8 Validation snapshot after the first CI run
+
+The first CI run on the original branch revision completed 832 tests successfully and failed only the two locale variants of \`test_map_artifacts_freshness.py\`. Both failures identified the same deterministic omission: the newly authored Practice heading (\`Cartes de révision\` / \`Recall cards\`) was absent from the corresponding generated \`section_headings\` arrays.
+
+The bilingual Quarto site/browser audit completed successfully on that revision. Python quality and domain checks also passed (25 steps); secret scanning passed.
+
+The two generated map records have since been updated to include the new heading. The branch was rebased onto the current \`main\` commit to retain the intervening text-data and learning-page-workflow changes. The map update was applied as the exact one-item delta indicated by the failing test output; the generator itself could not be executed in the available environment. Therefore:
+- the stale-artifact discrepancy identified by CI has been corrected in both tracked files;
+- the generator command remains the authoritative reproducibility check;
+- a fresh CI run on the final rebased head is still required before merge;
+- no claim is made that the final revision has passed CI or that a learner pilot has been performed.
+
+The first failure was not caused by the embedding lookup explanation, its exercises, or the Python quality checks. It was a generated-navigation freshness issue introduced by the new Practice heading.
+
+
+### 9.9 Cross-page transition audit: text → lookup → position → context
+
+A targeted review of the French and English pages confirms that the conceptual hand-offs are coherent and that the route should remain unchanged.
+
+| Step | What the learner should carry forward | Boundary to preserve |
+|---|---|---|
+| \`text-data\` → \`embedding-space\` | The tokenizer-specific final GPT-2 token ID (FR example: \`5633\`) identifies a row in the matching model's embedding table. | The ID is meaningful only with the matching tokenizer/vocabulary; it is not a vector or a portable semantic number. |
+| \`embedding-space\` → \`positional-encoding\` | A token ID retrieves an initial vector; repeated occurrences of the same ID retrieve the same row at fixed parameters. | The lookup itself does not encode sequence position or mix neighbouring-token information. |
+| \`positional-encoding\` → \`contextualized-representations\` | The architecture must account for order; absolute embeddings and relative mechanisms are distinct choices. | RoPE rotates projected queries and keys inside attention; it is not a universal position vector added to the token lookup. |
+| \`contextualized-representations\` → Transformer details | Later blocks produce states dependent on the accessible context and the architecture's position mechanism. | The same initial lookup does not imply identical contextualized states. |
+
+The route is pedagogical, not a claim that every architecture has a standalone positional-encoding layer between lookup and the Transformer. The contextualized-representations page correctly qualifies this: position handling is architecture-dependent, and RoPE is injected inside attention. Its numbered pipeline has also been revised so the position-handling step no longer reads as a universal operation before the Transformer blocks: it now states that position is handled either in the input representation or inside attention.
+
+The audit found one stale cross-page exercise destination in both embedding-space lessons. It pointed to the old page-specific text-data exercise anchor, while the current text-data lesson and the canonical lookup exercise use \`exercises-text-data.qmd#ex-text-data-embedding-lookup\`. The FR and EN links have been aligned to that destination. The exercise exists in both locale collections and its preparation section links back to the embedding-space lesson.
+
+No new route edge, concept, prerequisite or page is justified by this audit. The existing sequence and page ownership remain appropriate.
+
+**Remaining validation:** run the fresh CI on the final PR head; confirm the map generator reproduces both committed map files; and verify the corrected exercise anchors in the rendered bilingual site. This source-level review does not replace browser inspection or a learner pilot.
+
+
+### 9.10 Architecture-neutral statement about repeated lookup rows
+
+The bilingual matrix explanation originally said that repeated IDs produce identical rows before positional information is “added”. That wording could imply that every architecture adds a positional vector directly to the token embedding. It is not architecture-neutral: RoPE acts on projected queries and keys inside attention, and relative biases can modify attention scores without adding a vector to the lookup.
+
+The FR and EN statements now say that repeated IDs yield identical rows of the initial lookup matrix before any architecture-specific position-dependent processing. This preserves the mathematical claim while leaving the location and form of positional handling to the positional-encoding lesson.
+
+
+### 9.11 Revision-support metadata parity
+
+The bilingual lesson front matter already declares the stable \`revision-summary\` anchor and describes the recall support. After adding five active-recall cards to the dedicated Practice pages, the FR/EN \`revision_support\` notes were updated to mention those cards alongside the three answered lesson questions and the guided exploration. The metadata now describes the actual support available without moving cards or exercises back into the main lesson.
