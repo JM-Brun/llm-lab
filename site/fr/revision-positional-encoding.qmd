@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-positional-encoding"
-scope: "L’ordre des occurrences, la distinction entre une position absolue en entrée et une information relative dans le calcul de l’attention."
-purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+scope: "Fiche de rappel sur le rôle de l’ordre, les points d’injection positionnels et leur distinction avec la visibilité causale."
+purpose: "Distinguer ce qu’indiquent la position et le masque causal, puis prédire l’effet d’une permutation."
 revision_role: synthesis
 revision_of: ["fr/positional-encoding"]
 suggested_route:
@@ -38,6 +38,17 @@ Après tokenisation, on échange les positions de deux IDs dans la séquence. Le
 <summary>Afficher la réponse</summary>
 
 Non, leurs IDs choisissent les mêmes lignes. Leurs positions dans la séquence changent, ce qui peut modifier le calcul des états contextualisés.
+
+</details>
+
+### Une deuxième question pour vérifier la distinction
+
+Le masque causal suffit-il à indiquer la position absolue de chaque token ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Il détermine quelles positions peuvent être consultées. Un mécanisme positionnel fournit une information d’ordre ou de décalage. Les deux rôles sont complémentaires.
 
 </details>
 
