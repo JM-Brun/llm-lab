@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/tokenization-and-tokenizers"]
   children: []
-related: ["en/text-data", "en/training-examples", "en/tokenization-strategies-exercises"]
+related: ["en/text-data", "en/unicode-text", "en/tokenizer-design-evaluation", "en/training-examples", "en/tokenization-strategies-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -301,6 +301,43 @@ The controlled comparison on the fixed text 2 + 2 = 4, including fragments, IDs,
 ## Where does this page sit in the route?
 
 This page is an **optional deepening** of [From text to tokens](text-data.qmd): it compares the strategies that turn text into tokens and IDs. You do not need to know BPE, WordPiece, or unigram tokenization to understand embedding lookup. The core route continues directly with [From token IDs to vectors](embedding-space.qmd), which shows how IDs select initial vectors. For empirical evaluation criteria, see [tokenizer design and evaluation](tokenizer-design-evaluation.qmd); for character representation, see [Unicode and text](unicode-text.qmd).
+
+## Resources for visualizing mechanisms and inspecting implementations {#mechanism-resources-and-implementations}
+
+### Visualizing merges and the pipeline
+
+- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): follow candidate pairs and merges on a small corpus.
+- [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): structured explanation of BPE training.
+- [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
+- [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): a progression from Unicode and UTF-8 to BPE, whitespace, and special tokens.
+- [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): optional community visualization. **Source-audit caveat (2026-10-30):** the inspected implementation replays the model's merge list over raw Unicode characters; it does not reproduce the tokenizer's byte-level mapping and pre-tokenization pipeline. Treat its graph as a schematic of merge operations, not a faithful trace of GPT-2 token boundaries. Its package metadata also omits runtime dependencies although the README lists graphviz and transformers; inspect and pin dependencies before installing.
+
+### Useful timestamps in Karpathy's video
+
+The video is long; these chapter markers let you select only the relevant parts:
+
+- [14:56 — Unicode code points and strings](https://www.youtube.com/watch?v=zduSFxRajkE&t=896s), then [18:15 — UTF encodings and bytes](https://www.youtube.com/watch?v=zduSFxRajkE&t=1095s).
+- [23:50 — BPE intuition](https://www.youtube.com/watch?v=zduSFxRajkE&t=1430s) and [28:35 — counting and merging frequent pairs](https://www.youtube.com/watch?v=zduSFxRajkE&t=1715s).
+- [39:20 — tokenizer as a separate pipeline stage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2360s), [42:47 — decoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2567s), and [48:21 — encoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2901s).
+- [57:36 — regex pre-tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=3456s) and [1:11:38 — GPT-2/GPT-4 regex differences](https://www.youtube.com/watch?v=zduSFxRajkE&t=4298s).
+- [1:18:15 — special tokens and API handling](https://www.youtube.com/watch?v=zduSFxRajkE&t=4695s).
+- [1:28:42 — SentencePiece](https://www.youtube.com/watch?v=zduSFxRajkE&t=5322s); [1:49:58 — multimodal tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=6598s) is an optional extension beyond this text-tokenization sequence.
+
+These are navigation aids, not a substitute for checking implementation details against the relevant tokenizer documentation and source code.
+
+### Educational code and suggested reading order
+
+1. Watch the relevant parts of Karpathy's video on Unicode, merges, pre-tokenization, and special tokens.
+2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
+3. Inspect the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) or [minbpe](https://github.com/karpathy/minbpe); these make mechanisms inspectable but are not interchangeable with production paths.
+4. Compare conventions in the documentation for [tiktoken](https://github.com/openai/tiktoken), [SentencePiece](https://github.com/google/sentencepiece), and [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index).
+5. Return to [Raschka's Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2) and its [associated code](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect tokenization, IDs, and training-example preparation.
+6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
+
+- [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
+- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook. **Implementation caveat (source audit, 2026-10-30):** the notebook's custom from-scratch training path uses character/string symbols and simplified whitespace/newline splitting; it does not reproduce the full UTF-8 byte-level GPT-2 pipeline. Its separate GPT-2 loading path uses the pretrained vocabulary and merge ranks, with tests against selected tiktoken cases. Those checks do not establish exhaustive compatibility. See the [full notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch.ipynb), [simple notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb), and [tests](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/tests.py).
+
+The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
 
 ## External tools
 
