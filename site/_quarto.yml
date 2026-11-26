@@ -394,6 +394,10 @@ website:
               href: fr/contextualized-representations.qmd
             - text: "Transformer"
               href: fr/transformer.qmd
+            - section: "Architectures et variantes (facultatif)"
+              contents:
+                - text: "Comparer les architectures Transformer"
+                  href: fr/transformer-architectures.qmd
             - text: "Requêtes, clés, valeurs"
               href: fr/queries-keys-values.qmd
             - text: "Calcul de l’attention"
@@ -656,6 +660,10 @@ website:
               href: en/contextualized-representations.qmd
             - text: "Transformer"
               href: en/transformer.qmd
+            - section: "Architecture comparison (optional)"
+              contents:
+                - text: "Compare Transformer architectures"
+                  href: en/transformer-architectures.qmd
             - text: "Queries, keys, values"
               href: en/queries-keys-values.qmd
             - text: "Attention computation"
