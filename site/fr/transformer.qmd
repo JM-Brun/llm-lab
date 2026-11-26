@@ -72,7 +72,7 @@ Ce second schéma répond à une autre question : il replace le réseau dans le 
 
 ## 1. De l'entrée au premier bloc
 
-Les leçons précédentes ont établi comment le texte devient une suite d'identifiants, puis comment ces identifiants deviennent des vecteurs auxquels l'architecture apporte une information de position. Le premier bloc reçoit donc une séquence de représentations, et non du texte brut. Dans le GPT de référence, les embeddings de tokens et de positions sont additionnés ; avec RoPE, l'information positionnelle intervient dans les transformations des requêtes et des clés. Les détails restent dans les leçons sur les [embeddings](embedding-space.qmd), l'[information positionnelle](positional-encoding.qmd) et les [représentations contextualisées](contextualized-representations.qmd).
+Les leçons précédentes ont établi comment le texte devient une suite d'identifiants, puis comment ces identifiants deviennent des vecteurs auxquels l'architecture apporte une information de position. Le premier bloc reçoit donc une séquence de représentations, et non du texte brut. Dans le GPT du projet à encodage positionnel absolu additif, les embeddings de tokens et de positions sont additionnés avant le premier bloc. Ce n’est pas une règle universelle : avec RoPE, l’information positionnelle intervient sur les requêtes et les clés après projection, dans l’attention. Les détails restent dans les leçons sur les [embeddings](embedding-space.qmd), l'[information positionnelle](positional-encoding.qmd) et les [représentations contextualisées](contextualized-representations.qmd).
 
 identifiants → représentations initiales → entrée du premier bloc
 
