@@ -415,3 +415,12 @@ The fourth source-level pilot reviews logits, probabilities, entropy, generation
 | `entropy-distributions-en-mobile.svg`, `entropy-distributions-fr-mobile.svg` | EN/FR `entropy.qmd` | Original mobile composition comparing concentrated, example and uniform distributions with their entropy values. Owner provenance confirmation remains pending; no asset-level licence declared. |
 
 All four new files include SVG `title` and `desc` elements and contain no embedded raster, script, foreignObject or external href. The logits and entropy pages now use responsive `picture` embeds with page-level alt text and captions. Source-level checks only; Quarto rendering, responsive legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain unverified.
+
+
+The same audit was extended to the adjacent core visual sequence:
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `llm-generation-process-en-mobile.svg`, `llm-generation-process-fr-mobile.svg` | EN/FR `llm-overview.qmd` | Original mobile compositions of the six-stage autoregressive generation overview. They return the feedback loop to the initial-representation stage and state that positional handling is architecture-dependent. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The overview's second figure (one predictive computation, three uses) already has responsive EN/FR variants. The Q/K/V lesson's computational-path and S/A/O matrix diagrams also already have responsive EN/FR variants. The training-loop and optional optimizer-comparison figures likewise already have responsive EN/FR variants. They were reviewed and retained; no duplicate assets were created. The detailed decisions are included in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
