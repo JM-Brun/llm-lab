@@ -44,6 +44,18 @@ def _page_paths(items: list[Any]) -> list[str]:
             paths.extend(_page_paths(item.get("contents", [])))
     return paths
 
+def _direct_page_paths(items: list[Any]) -> list[str]:
+    """Collect only direct page entries, excluding optional nested sections."""
+    paths: list[str] = []
+    for item in items:
+        if isinstance(item, str):
+            paths.append(item)
+        elif isinstance(item, dict):
+            href = item.get("href")
+            if isinstance(href, str) and href.endswith(".qmd"):
+                paths.append(href)
+    return paths
+
 
 @pytest.mark.parametrize(
     ("language", "understand_title", "review_title", "extra_review_pages"),
@@ -88,10 +100,36 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
         *extra_review_pages,
     ]
 
-    assert _page_paths(understand["contents"]) == expected_understand
+    assert _direct_page_paths(understand["contents"]) == expected_understand
+    optional_title = (
+        "Architectures et variantes (facultatif)"
+        if language == "fr"
+        else "Architecture comparison (optional)"
+    )
+    optional_sections = [
+        item for item in understand["contents"]
+        if isinstance(item, dict) and "section" in item
+    ]
+    assert optional_sections == [
+        {
+            "section": optional_title,
+            "contents": [
+                {
+                    "text": (
+                        "Comparer les architectures Transformer"
+                        if language == "fr"
+                        else "Compare Transformer architectures"
+                    ),
+                    "href": f"{language}/transformer-architectures.qmd",
+                }
+            ],
+        }
+    ]
     assert _page_paths(review["contents"]) == expected_review
     assert all(
-        isinstance(item, dict) and set(item) == {"text", "href"} for item in understand["contents"]
+        isinstance(item, dict) and set(item) == {"text", "href"}
+        for item in understand["contents"]
+        if "section" not in item
     )
     # Review entries intentionally retain their canonical path-only labels;
     # unlike the main learning path, they are not part of the compact-label pass.
@@ -118,7 +156,7 @@ def test_foundational_lessons_are_not_misclassified_as_deep_dive_or_core_sidebar
     deepen = _section(sidebar, deepen_title)
     practice = _section(sidebar, practice_title)
 
-    core_paths = set(_page_paths(understand["contents"]))
+    core_paths = set(_direct_page_paths(understand["contents"]))
     deepen_paths = set(_page_paths(deepen["contents"]))
     practice_paths = set(_page_paths(practice["contents"]))
     editorial_hub = (SITE / language / "deepen.qmd").read_text(encoding="utf-8")
