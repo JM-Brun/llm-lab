@@ -281,3 +281,71 @@ Une durée hors intervalle déclenche une revue éditoriale, jamais une correcti
 - **Logits** : ne pas ajouter une section sur le *weight tying* uniquement pour augmenter la durée ou le nombre de sources. Ne l'intégrer au tronc que si cette distinction est nécessaire pour comprendre la projection de sortie ; sinon, conserver une ressource facultative / Build / Deepen.
 
 Le classement initial par nombre de mots reste un signal exploratoire. Il doit être remplacé, pour le suivi régulier, par une estimation de durée tenant compte des différents types de contenu et accompagnée d'une validation éditoriale.
+
+
+## 9. Première cartographie de longueur du parcours principal
+
+Un relevé complémentaire a été effectué sur les 20 pages françaises déclarées dans les champs `pages.fr` des étapes de `data/guided-route.yml`. Les pages de `optional_pages`, les pages d'exercices et les pages de transition non présentes dans les étapes n'ont pas été comptées comme leçons principales.
+
+### 9.1 Mesure exploratoire
+
+Le comptage ci-dessous porte sur le texte de la page après retrait du front matter, des commentaires HTML, des directives d'inclusion Quarto et des blocs de code clôturés. Il reste un comptage lexical approximatif : les composants, tableaux, contenus repliés et ressources peuvent encore être comptés même s'ils ne font pas partie de la lecture centrale. Les blocs de code sont indiqués séparément lorsqu'ils ont été relevés.
+
+La fourchette de lecture indicative est calculée à 130–150 mots/minute, arrondie à la minute. Elle **n'est pas encore une durée de leçon validée** : elle ne mesure pas correctement l'interprétation des équations, des schémas ou des exemples, et ne distingue pas systématiquement le tronc principal du contenu facultatif. Elle sert uniquement à repérer les pages à examiner en premier.
+
+| Leçon (FR) | Mots approx. | Sources catalogue reliées | Lecture brute indicative |
+|---|---:|---:|---:|
+| Vue d'ensemble | 2 367 | 1 | 16–18 min |
+| Du texte aux tokens | 1 913 | 1 | 13–15 min |
+| Espace des embeddings | 1 453 | 2 | 10–11 min |
+| Encodage positionnel | 1 689 | 1 | 11–13 min |
+| Représentations contextualisées | 1 746 | 4 | 12–13 min |
+| Transformer | 1 934 | 3 | 13–15 min |
+| Queries, Keys, Values | 1 762 | 4 | 12–14 min |
+| Attention à produit scalaire | 2 321 | 4 | 16–18 min |
+| Masquage causal | 1 983 | 1 | 13–15 min |
+| Logits | 1 282 | 0 | 9–10 min |
+| Probabilités de sortie | 1 235 | 1 | 8–10 min |
+| Entropie | 1 527 | 0 | 10–12 min |
+| Génération | 3 245 | 2 | 22–25 min |
+| Apprentissage en contexte (ICL) | 1 118 | 1 | 7–9 min |
+| Ingénierie du contexte | 1 654 | 0 | 11–13 min |
+| Vraisemblance | 1 254 | 1 | 8–10 min |
+| Cross-entropy | 2 404 | 0 | 16–19 min |
+| Loss | 1 617 | 0 | 11–12 min |
+| Gradients | 1 741 | 0 | 12–13 min |
+| Training loop | 3 012 | 0 | 20–23 min |
+
+**Important :** le nombre de sources est celui des identifiants canoniques dont `related.pages` référence la page dans `data/sources.yml`. Ce n'est ni le nombre de références bibliographiques visibles ni le nombre de sources effectivement mobilisées. Par exemple, l'unique source reliée à ICL dans le catalogue est actuellement la vidéo générale d'Andrej Karpathy ; la page cite aussi quatre articles scientifiques visibles. La couverture catalogue ne doit donc pas être lue comme une mesure de qualité ou de profondeur bibliographique.
+
+### 9.2 Première lecture des déséquilibres
+
+**Pages à examiner en priorité pour un possible découpage ou déplacement de contenu :**
+
+- **Génération (3 245 mots)** : la page réunit la boucle autorégressive, la sélection du prochain token, le prefill/decode et des éléments de latence, d'ordonnancement et de cache pour le service de plusieurs requêtes. Le fil principal doit conserver la boucle de génération et le couple prefill/decode. Les détails de serving, d'ordonnancement et d'optimisation du cache sont des candidats naturels pour Build / Deepen, à condition de préserver les liens explicatifs utiles.
+- **Training loop (3 012 mots)** : le corps précédant la section « Approfondissements » représente environ 1 979 mots dans le même comptage. La page semble donc déjà proche de la cible dans son tronc principal ; il faut éviter de la raccourcir sur la base du volume total sans distinguer les sections facultatives. Les comparaisons d'optimiseurs, workflows et détails d'implémentation doivent rester clairement hors du tronc principal.
+- **Cross-entropy (2 404 mots)** : le texte avant « Cibles souples et divergence KL » représente environ 1 348 mots ; avant les sections d'implémentation, environ 1 424 mots. Le contenu sur labels souples / KL et les implémentations NumPy/PyTorch / stabilité numérique doit être évalué comme approfondissement ou Build, plutôt que d'être nécessairement imposé dans le parcours principal. Le noyau doit garder le lien entre cible observée, probabilité, perte par token, agrégation sur les positions, masques et perplexité si ces éléments sont nécessaires à la transition vers l'entraînement.
+- **Vue d'ensemble (2 367 mots)** et **Attention à produit scalaire (2 321 mots)** : leur longueur brute mérite une lecture éditoriale, mais aucun découpage ne doit être décidé sans vérifier la fonction de synthèse de la première et le fil de calcul de la seconde.
+
+**Pages courtes à examiner sans présumer qu'elles sont insuffisantes :**
+
+- **ICL (1 118 mots)**, **Logits (1 282)**, **Probabilités (1 235)** et **Vraisemblance (1 254)**. Ces pages peuvent être des unités conceptuelles volontairement resserrées. Leur durée réelle doit intégrer la lecture des exemples et des formules. Pour ICL, l'ajout Min / Yoo ne se justifie que par la nuance scientifique ; il ne doit pas être utilisé comme remplissage.
+- **Logits** n'a aucune source catalogue reliée à ce jour, mais contient une référence PyTorch visible. Il faut réconcilier cette référence avant de conclure à un défaut de sources.
+- **ICL** a une source catalogue reliée (vidéo générale Karpathy), mais ses quatre articles visibles ne sont pas encore représentés comme des entrées dédiées dans le registre. La priorité est la traçabilité bibliographique, non l'augmentation du volume de texte.
+
+### 9.3 Conséquences éditoriales provisoires
+
+1. Ne pas appliquer une règle « toute page sous 15 min doit grossir ». Une durée de 8–12 min peut convenir à une notion étroite si la leçon est autonome et correctement reliée à ses prérequis et à la suivante.
+2. Ne pas appliquer une règle « toute page au-dessus de 20 min doit être scindée ». Vérifier d'abord si le dépassement vient du contenu facultatif ou d'une unité pédagogique réellement trop large.
+3. Distinguer explicitement, dans les estimations futures, le **temps du tronc principal**, le **temps des approfondissements facultatifs** et le **temps des exercices**.
+4. Pour les pages bilingues, utiliser la même méthode mais calculer les durées FR et EN indépendamment ; ne pas recopier une durée d'une langue à l'autre.
+5. Ne pas remplir `estimated_reading_minutes` avec les fourchettes lexicales ci-dessus. Ce champ ne doit être renseigné qu'après mise en place d'une méthode qui distingue le contenu principal des ressources repliées et qui prend en compte équations, figures et exemples.
+
+### 9.4 Ordre recommandé de la revue éditoriale
+
+1. Génération : décider précisément de la frontière entre compréhension de l'inférence et optimisation du serving.
+2. Cross-entropy : séparer le noyau conceptuel des variantes soft-target / KL et des implémentations.
+3. Training loop : vérifier que le corps principal, hors approfondissements, forme une leçon cohérente et proche de la cible.
+4. Vue d'ensemble et attention : vérifier les répétitions et les objectifs distincts avant tout déplacement.
+5. Leçons courtes : examiner l'autonomie, les exemples, les transitions et les sources ; ne pas ajouter de contenu par quota.
+6. Après ces décisions, établir la méthode de durée et renseigner les métadonnées FR/EN.
