@@ -36,7 +36,7 @@ But the second tokenizer may have a smaller vocabulary. Vocabulary size also aff
 
 **So which tokenizer should they choose?** They must compare the same texts, define what “shorter” means, measure model costs, and evaluate performance on the intended tasks. Compression is a useful signal, not a verdict.
 
-This page follows that problem: understand the mechanisms that produce segmentations, measure their effects, and build a comparison whose conclusions stay within the limits of its protocol.
+This page relies on the mechanism explanations in [Tokenization strategies](tokenization-strategies.qmd), then examines their effects and builds a comparison whose conclusions stay within the limits of its protocol.
 :::
 
 ::: {.chapter-lead}
@@ -50,10 +50,6 @@ By the end of this page, you will be able to:
 - distinguish representation length, system cost, and downstream quality;
 - interpret metrics and studies of multilingual disparities with appropriate caution.
 :::
-
-## Segmentation mechanisms
-
-The detailed explanation of BPE, WordPiece, and Unigram, their training and encoding procedures, and implementation-specific caveats is now consolidated in [Tokenization strategies](tokenization-strategies.qmd#bpe-wordpiece-and-unigram). This page focuses on the consequences of those choices: vocabulary, budgets, metrics, system costs, and downstream quality.
 
 ## 1. Vocabulary size: architecture and budget
 
