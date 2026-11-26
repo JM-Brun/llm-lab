@@ -32,7 +32,7 @@ The calendar story introduces the design trade-off and a first comparison protoc
 
 **Return to the main page:** [The tokenizer as a compression engineer](tokenizer-design-evaluation.qmd).
 
-## 3. Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
+## Evaluation dimensions {#tokenizer-evaluation}
 
 Comparing algorithms is not enough to establish whether a tokenizer is suitable for a use case. Several empirical questions must be separated; they do not collapse into one score.
 
