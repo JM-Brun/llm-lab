@@ -119,7 +119,7 @@ For a small revision, update only the affected decisions. For a new or substanti
 
 ### When a lesson belongs to a series or page group
 
-Do not expand an individual page blueprint into a full series plan. First use the existing [page-group-audit skill](../.agents/skills/page-group-audit/SKILL.md) to define the group purpose, reader journey, page roles, transitions, boundaries and cross-page coverage. Then give each substantial page its own concise blueprint. A group-level plan coordinates the pages; it does not create a parallel route or imply that every page is a prerequisite for the next.
+Do not expand an individual page blueprint into a full series plan. First write a provisional group contract (shared purpose, reader journey, page roles, transitions, boundaries and cross-page coverage), then review it with the existing [page-group-audit skill](../.agents/skills/page-group-audit/SKILL.md). Give each substantial page its own concise blueprint. A group-level plan coordinates the pages; it does not create a parallel route or imply that every page is a prerequisite for the next.
 
 ### The worked thread is a teaching device, not a decorative example
 
