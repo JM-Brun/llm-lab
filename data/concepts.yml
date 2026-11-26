@@ -874,7 +874,7 @@ concepts:
       fr: "Distribution empirique des nombres d'occurrences des formes lexicales dans un corpus défini, sous des conventions explicites de segmentation et de normalisation. Elle dépend du corpus et de l'unité comptée ; elle ne doit pas être confondue avec la distribution conditionnelle du prochain token prédite par un modèle."
       en: "Empirical distribution of occurrence counts for lexical forms in a defined corpus, under explicit segmentation and normalization conventions. It depends on the corpus and counted unit; it must not be confused with a model's conditional distribution over the next token."
     domains: [probabilistic-foundations-training, text-tokenization]
-    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/zipf-law-deep-dive, en/zipf-law-deep-dive, fr/exercises-zipf-law, en/exercises-zipf-law, fr/text-data, en/text-data]
+    resources: [fr/advent-calendar-story-day-01, en/advent-calendar-story-day-01, fr/exercises-zipf-law, en/exercises-zipf-law, fr/text-data, en/text-data]
   - id: zipf-law
     importance: supporting
     labels: {fr: "Loi de Zipf", en: "Zipf's law"}
