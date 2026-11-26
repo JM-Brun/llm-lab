@@ -58,7 +58,6 @@ Distinguer le texte, les tokens et les identifiants qui constituent l'entrée di
 - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
 - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
-- [Évaluer les tokenizers : coûts, performances et équité multilingue](tokenizer-multilingual-evaluation.html)
 
 :::
 
@@ -118,10 +117,6 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 - [Logits : les scores avant normalisation](logits.html)
 - [Probabilités de sortie : des logits à une distribution](probabilites.html)
 - [Entropie : incertitude sur le prochain token](entropy.html)
-
-**Ressources facultatives**
-
-- [Au-delà de la loi de Zipf : données, usages et limites](zipf-law-deep-dive.html)
 
 :::
 
