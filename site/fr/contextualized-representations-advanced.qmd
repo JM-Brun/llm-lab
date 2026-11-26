@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/deepen"]
   children: []
-related: ["fr/queries-keys-values-advanced", "fr/rope", "fr/transformer"]
+related: ["fr/contextualized-representations", "fr/queries-keys-values-advanced", "fr/rope", "fr/transformer"]
 tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:fr", "status:published"]
 -->
 
