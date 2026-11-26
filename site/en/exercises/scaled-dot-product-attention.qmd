@@ -26,9 +26,9 @@ tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-at
 
 ## Check your understanding
 
-## Full calculation: scores, weights, and output {#full-calculation-scores-weights-output}
+<a id="full-calculation-scores-weights-output"></a>
 
-For a complete calculation of Q/K scores, scaling, softmax, and the weighted output, use the [guided exercise in the Attention collection](../exercises-attention.qmd#ex-attention-scores-to-output). The collection also contains the more advanced exercises.
+**Full calculation:** For a complete calculation of Q/K scores, scaling, softmax, and the weighted output, use the [guided exercise in the Attention collection](../exercises-attention.qmd#ex-attention-scores-to-output). The collection also contains the more advanced exercises.
 
 1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
 
