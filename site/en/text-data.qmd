@@ -74,7 +74,7 @@ The distinction matters when we change only one thing:
 
 **Key point:** the tokenizer defines the symbolic interface between text and model; the embedding table then maps IDs to vectors. Contextualization belongs to later network computations, not to the tokenizer.
 
-To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then the exercise that follows an ID to its embedding row.
+To verify the chain with concrete values, use the [reproducible tokenizer and lookup trace](exercises-text-data.qmd#tokenizer-embedding-trace), then [the exercise that follows an ID to its embedding row](exercises/text-data.qmd#ex-text-to-embedding-lookup).
 
 ::: {.callout-tip title="Token, ID, and embedding" #revision-summary}
 The **token** is the unit produced by the split. The **ID** is its reference number in the vocabulary, like a catalogue number. The **embedding** is the learned vector that the model reads from the corresponding row. A table with $V$ rows holds a vector with $d$ components per row. Two occurrences of the same ID select the same initial vector with fixed parameters. The Transformer can then represent them differently depending on context.
