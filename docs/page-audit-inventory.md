@@ -2056,3 +2056,36 @@ No content rewrite or metadata change is warranted for the four first-segment pa
 ### Recommended next session entry point
 
 Start with the FR/EN `transformer.qmd` pair, then follow the existing route into Q/K/V, scaled attention and causal masking. Use the current source audit in the first vertical slice above as a closed baseline; reopen those pages only if the block-level audit identifies a specific upstream contradiction. Update this inventory with dated evidence and exact residual checks after each bounded group.
+
+
+## 2026-11-26: main Understand route — Transformer block, Q/K/V and causal attention
+
+**Scope.** Bounded FR/EN source review of `transformer`, `queries-keys-values`, `scaled-dot-product-attention` and `causal-masking`. Cross-checked page-map navigation, the computation-stage sequence in `data/guided-route.yml`, and the corresponding nodes/edges/resources in `data/computational-graph.yml`. This pass inspected the lesson explanations and representative equations; it did not render the pages, re-derive every optional advanced equation, or repeat the Practice arithmetic audit recorded on 2026-11-25.
+
+### Findings
+
+- **The Transformer overview is fit for the main route.** FR/EN versions describe a decoder-only GPT, distinguish the network forward pass from downstream softmax/token selection, and show both the full stack and a pre-LN block. They locate attention, the position-wise MLP, residual stream, normalization, final normalization and vocabulary projection. The text explicitly scopes pre-LN as the illustrated arrangement and notes architectural variation. It also separates parallel masked training computation from sequential autoregressive generation.
+- **The Q/K/V lesson correctly starts inside a block.** It says the shared input is the current block state, not the final contextualized output of the entire network. For the reference pre-LN GPT it writes the normalized projection input as $X=\operatorname{LN}_1(H_{\mathrm{in}})$ while the residual path receives $H_{\mathrm{in}}$. It also explains that in later blocks the input already contains contextualized states. RoPE is located after Q/K projection and before score computation; the lesson explicitly says its projection equations precede the rotation.
+- **The Q/K/V tensor contracts are internally consistent.** For one self-attention head, $X\in\mathbb{R}^{T\times d_{model}}$, $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$, and $W_V\in\mathbb{R}^{d_{model}\times d_v}$ give $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. The page keeps self-attention provenance distinct from cross-attention, where Q and K/V come from different streams.
+- **The attention page has the correct operation order and axes.** It presents $S=QK^\top$, scaling by $\sqrt{d_k}$, optional additive masking, row-wise softmax over accessible key positions, then $O=AV$. Shapes are $T\times T$ for scores/mask/weights and $T\times d_v$ for the output. It distinguishes this positional softmax from the later vocabulary softmax and warns against interpreting weights as semantic relevance or causal attribution.
+- **The causal-mask lesson is consistent with the attention formula.** It defines allowed $j\le i$ / blocked $j>i$, applies the additive mask before softmax, explains why the diagonal is allowed under shifted next-token targets, and separates causal, padding, document-boundary and loss masks. It also records API-specific boolean-mask polarity and the exact limitations of the repository's reference implementation.
+- **The graph and route match the page explanations.** The computation-stage order is Transformer overview → Q/K/V → scaled attention → causal masking. The computational graph represents Q/K/V projections as operations from `transformer-block-input`, and the causal mask as a control on the attention-score path. This is consistent with the four separate project representations; no route or graph change is warranted.
+- **FR/EN semantic parity is strong for the inspected core explanations.** Page titles, scopes, objectives, equations, major diagrams and transition links correspond. The running narrative differs between languages, which is appropriate for the language-specific examples and does not alter the underlying mechanism.
+
+### Status decision
+
+| Page pair | Source status | Remaining validation |
+|---|---|---|
+| `transformer` | **Ready for the main route** | Render both architecture diagrams; inspect first-screen legibility, equations, and the hand-off to Q/K/V and logits. |
+| `queries-keys-values` | **Ready for the main route** | Render projection equations and responsive diagrams; verify that the pre-LN input notation is legible to a first-time reader and that the one-head scope is explicit. |
+| `scaled-dot-product-attention` | **Ready for the main route** | Render formula and attention-flow diagrams; independently recompute the lesson's worked example if changed. |
+| `causal-masking` | **Ready for the main route** | Render the triangular mask and verify links/anchors; keep implementation/API detail in its supplementary section. |
+
+No source-level mathematical or architectural correction was identified in this bounded pass. The existing Practice audit of Q/K/V, scaled attention and causal masking is recorded above (2026-11-25); it should not be repeated without a specific changed source or a failed validation.
+
+### Remaining work after this slice
+
+1. Complete rendered FR/EN review of these four pages: responsive diagrams (especially the Q/K/V and attention matrices), math rendering, page transitions, Practice links, keyboard/focus behavior and accessibility.
+2. Audit the next prediction group: `logits` → `probabilites` / `probabilities` → `entropy`. Explicitly distinguish the final hidden state, output projection, vocabulary softmax and attention softmax.
+3. Audit the branch point from the conditional distribution into generation, observed-target scoring/evaluation and training. Reuse the dated scoring, prefill/teacher-forcing and gradient audits already in this inventory; do not rebuild the same evidence.
+4. Keep manual FR/EN screen-reader and native breadcrumb ancestry/label checks tracked in #584. Automated axe results do not close them.
