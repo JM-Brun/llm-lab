@@ -19,8 +19,8 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/deepen"]
-  children: []
-related: ["fr/zipf-law-deep-dive","fr/exercises-zipf-law","fr/text-data","fr/tokenization-strategies"]
+  children: ["fr/zipf-law-deep-dive"]
+related: ["fr/exercises-zipf-law","fr/text-data","fr/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:overview", "language:fr", "status:published"]
 -->
 
