@@ -26,9 +26,9 @@ tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-at
 
 ## Vérifier sa compréhension
 
-## Calcul complet : scores, poids et sortie {#calcul-complet-scores-poids-sortie}
+<a id="calcul-complet-scores-poids-sortie"></a>
 
-Pour un calcul complet des scores Q/K, de la mise à l’échelle, du softmax et de la sortie pondérée, consultez l’[exercice guidé de la collection Attention](../exercises-attention.qmd#ex-attention-scores-to-output). La collection rassemble aussi les exercices plus avancés.
+**Calcul complet :** Pour un calcul complet des scores Q/K, de la mise à l’échelle, du softmax et de la sortie pondérée, consultez l’[exercice guidé de la collection Attention](../exercises-attention.qmd#ex-attention-scores-to-output). La collection rassemble aussi les exercices plus avancés.
 
 1. Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle.
 
