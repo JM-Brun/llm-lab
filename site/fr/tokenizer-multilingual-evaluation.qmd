@@ -123,15 +123,6 @@ Cette bibliographie rassemble les références complémentaires en distinguant l
 Les visualiseurs, les repères de la vidéo de Karpathy et l'illustration du pipeline sont désormais regroupés près des explications de mécanismes dans [Stratégies de tokenisation](tokenization-strategies.qmd#ressources-pedagogiques-et-implementations).
 :::
 
-### Références de recherche complémentaires
-
-- [Ali et al. (2024), *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/) : examine les effets du choix du tokenizer sur les coûts et les performances, en rappelant que les métriques intrinsèques ne prédisent pas toujours les résultats en aval.
-- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) : analyse les variations linguistiques et le rôle du pré-tokenizer.
-- [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) : étudie les écarts de coût entre langues et des facteurs de conception tels que la taille du vocabulaire et le pré-tokenizer.
-- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) : compare le coût de tokenisation entre 22 langues et discute ses implications pour les API.
-- [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/) : outil de mesure comparative multilingue à examiner comme méthode et logiciel, pas comme preuve qu'une seule métrique intrinsèque suffit.
-- [Petrov et al. (2023), *Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/) : étudie les écarts de longueur de tokenisation et de temps d'exécution entre langues ; consulter l'article pour le protocole expérimental.
-
 <!-- Ancre historique : les ressources de code sont désormais regroupées dans tokenization-strategies. -->
 <span id="code-pedagogique-et-references-historiques"></span>
 
