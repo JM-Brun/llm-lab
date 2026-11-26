@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises-text-data"
-scope: "Formative practice on tokenization, embeddings, windows, target alignment, BPE, and data leakage."
+scope: "Formative practice on tokenization, inspecting real tokenizers, embeddings, windows, target alignment, BPE, and data leakage."
 purpose: "Work through the text data exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
   previous: null
@@ -281,8 +281,6 @@ Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P
 [Return to the tokenization example in the lesson](text-data.qmd#tokenizer-output).
 
 #### Inspect a Hugging Face tokenizer {#tokenizer-huggingface-probe}
-
-This trace inspects a specific Hugging Face tokenizer. The first load may require network access; for a reproducible experiment, record library versions and pin a model revision rather than relying on a moving reference.
 
 The example below inspects a specific Hugging Face tokenizer. The first load may require network access; for a reproducible experiment, record library versions and pin a model revision rather than relying on a moving default branch.
 
