@@ -65,47 +65,6 @@ Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on Engl
 
 **Practical rule:** choose vocabulary size jointly with model architecture, language mix, data distribution, and compute budget. Compare both model quality and total system cost; token count alone is not enough.
 
-## 5. A design decision: fewer positions, a larger vocabulary
-
-Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
-
-| | Tokenizer A | Tokenizer B |
-|---|---:|---:|
-| Vocabulary size | $V$ | $4V$ |
-| Average sequence length | 120 positions | 80 positions |
-| Input embedding parameters | $Vd$ | $4Vd$ |
-| Position pairs in dense attention | $120^2$ | $80^2$ |
-
-These values are a **constructed example**, not benchmark results. They isolate two effects. B reduces average sequence length by one third. For standard dense attention, the number of position pairs falls from $120^2$ to $80^2$, a ratio of $4/9$. But B's embedding table has four times as many parameters; an untied output projection may add a similar cost.
-
-We cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
-
-### Which budget is held fixed?
-
-The comparison changes with the experimental constraint:
-
-- With an **equal number of training tokens**, both models process the same number of positions, but not necessarily the same number of passes over the raw corpus.
-- With an **equal number of epochs**, both process the same corpus passes, but B may produce fewer positions to process.
-- With an **equal compute budget**, the number of optimization steps, tokens seen, and amount of raw text consumed may differ.
-
-A study that merely says “same data” therefore does not establish a fair comparison. It must specify what is held fixed: raw text, tokens, optimization steps, FLOPs, elapsed time, or financial budget.
-
-### Build a defensible decision
-
-A tokenizer choice should state the priority constraints and accepted trade-offs:
-
-| Dominant constraint | Measures to prioritize | Essential check |
-|---|---|---|
-| Limited context window | Tokens per document and language | Does useful content fit after preprocessing? |
-| Model memory | Vocabulary size, embeddings, output head | Are input and output weights tied? |
-| Latency and throughput | Sequence length, tokenizer time, model time | Measure on the target hardware and batch |
-| Multilingual service | Metrics by language and text type | Do not let a global average hide disparities |
-| Task quality | Downstream scores by task and language | Compare under comparable budgets and protocols |
-
-The right decision is not “choose the tokenizer that compresses best,” but **choose the tokenizer whose trade-offs match the intended system and use cases**, then test empirically whether those trade-offs hold.
-
-
-
 ## 2. Reproducible comparison
 
 1. Fix the texts, encoding, cleaning, and document handling.
@@ -182,6 +141,45 @@ Imagine an assistant that processes documents in several languages, with a conte
 The final choice depends on the distribution of actual use cases and operational constraints. It cannot be reduced to minimizing average token count.
 
 
+
+## 5. A design decision: fewer positions, a larger vocabulary
+
+Consider two fictional tokenizers applied to the same text collection and paired with the same hidden dimension $d$:
+
+| | Tokenizer A | Tokenizer B |
+|---|---:|---:|
+| Vocabulary size | $V$ | $4V$ |
+| Average sequence length | 120 positions | 80 positions |
+| Input embedding parameters | $Vd$ | $4Vd$ |
+| Position pairs in dense attention | $120^2$ | $80^2$ |
+
+These values are a **constructed example**, not benchmark results. They isolate two effects. B reduces average sequence length by one third. For standard dense attention, the number of position pairs falls from $120^2$ to $80^2$, a ratio of $4/9$. But B's embedding table has four times as many parameters; an untied output projection may add a similar cost.
+
+We cannot conclude that B is cheaper overall. Total cost also depends on hidden dimension, layers, weight tying, attention implementation, hardware throughput, and the number of tokens processed during training. The table identifies which terms change; it does not add unlike costs into one score.
+
+### Which budget is held fixed?
+
+The comparison changes with the experimental constraint:
+
+- With an **equal number of training tokens**, both models process the same number of positions, but not necessarily the same number of passes over the raw corpus.
+- With an **equal number of epochs**, both process the same corpus passes, but B may produce fewer positions to process.
+- With an **equal compute budget**, the number of optimization steps, tokens seen, and amount of raw text consumed may differ.
+
+A study that merely says “same data” therefore does not establish a fair comparison. It must specify what is held fixed: raw text, tokens, optimization steps, FLOPs, elapsed time, or financial budget.
+
+### Build a defensible decision
+
+A tokenizer choice should state the priority constraints and accepted trade-offs:
+
+| Dominant constraint | Measures to prioritize | Essential check |
+|---|---|---|
+| Limited context window | Tokens per document and language | Does useful content fit after preprocessing? |
+| Model memory | Vocabulary size, embeddings, output head | Are input and output weights tied? |
+| Latency and throughput | Sequence length, tokenizer time, model time | Measure on the target hardware and batch |
+| Multilingual service | Metrics by language and text type | Do not let a global average hide disparities |
+| Task quality | Downstream scores by task and language | Compare under comparable budgets and protocols |
+
+The right decision is not “choose the tokenizer that compresses best,” but **choose the tokenizer whose trade-offs match the intended system and use cases**, then test empirically whether those trade-offs hold.
 
 ## Deep dive: mechanisms and evaluation
 
