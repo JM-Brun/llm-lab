@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées et l'exploration guidée renforcent le rappel."
+      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées, cinq cartes de rappel sur la page Practice dédiée et l'exploration guidée renforcent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
