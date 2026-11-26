@@ -32,7 +32,6 @@ scan:
     - "A reproducible rerun requires auditing the repository revision, dataset preparation, benchmark data and statistical scripts."
     - "The current word-boundary assumptions for Chinese, Japanese and Thai need language-specific segmenter alternatives."
 items:
-items:
   - id: chiu-toklens-acl-srw-2026:six-intrinsic-metrics
     kind: definition
     summary: "TokLens defines six complementary corpus-level tokenizer metrics: fertility (tokens per whitespace-delimited unit), characters per token, UTF-8 bytes per token, normalized sequence length (tokens per character), single-token retention rate, and cross-lingual parity (target tokens-per-character relative to English)."

@@ -32,7 +32,6 @@ scan:
     - "The reported API cost ratios should not be presented as current prices or current model behaviour."
     - "A reproducibility pass requires identifying the exact tokenizer/API snapshots and inspecting the linked code and evaluation data."
 items:
-items:
   - id: ahia-do-all-languages-cost-the-same-2023:token-count-as-cost-unit
     kind: definition
     summary: "The paper treats the number of processed and generated tokens as the operational billing unit for commercial LM APIs and measures fragmentation as average tokens per sentence on parallel text, rather than fertility, to compare equivalent content without requiring language-specific word segmenters."

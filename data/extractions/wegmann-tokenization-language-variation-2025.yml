@@ -32,7 +32,6 @@ scan:
     - "Generalization requires replication across languages, model families and generation tasks."
     - "A reproducibility review would require the authors' code, data and tokenizer configurations."
 items:
-items:
   - id: wegmann-tokenization-language-variation-2025:task-dependent-objectives
     kind: definition
     summary: "The paper distinguishes tasks that should be robust to linguistic variation (for example semantic inference) from tasks that should remain sensitive to form or style variation (for example authorship verification and dialect classification)."

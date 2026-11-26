@@ -32,7 +32,6 @@ scan:
     - "Reproducibility requires independent inspection of training code, data and evaluation scripts."
     - "The single-seed design does not quantify seed variance."
 items:
-items:
   - id: ali-tokenizer-choice-llm-training-2024:intrinsic-extrinsic-evaluation
     kind: definition
     summary: "The paper distinguishes intrinsic tokenizer evaluation (fertility, parity and vocabulary overlap) from extrinsic evaluation of the downstream model trained with that tokenizer."

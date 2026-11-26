@@ -34,7 +34,6 @@ scan:
     - "Does the live visualizer remain available and accessible with keyboard and mobile interaction?"
     - "Can the metric definitions and aggregation choices be independently reproduced from the code and sample data?"
 items:
-items:
   - id: varis-stephen-libovicky-tokcollate-2026:two-stage-evaluation-architecture
     kind: mechanism
     summary: "TokCollate separates evaluation from exploration: a Python evaluation script consumes already-tokenized text files and emits metadata plus result matrices; a web visualizer then loads those outputs for interactive inspection. The paper explicitly says the current tool does not execute tokenization itself."

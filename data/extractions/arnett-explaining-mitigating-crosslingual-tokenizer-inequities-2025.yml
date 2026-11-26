@@ -32,7 +32,6 @@ scan:
     - "The released tokenizers and training/evaluation code need independent inspection before reproducibility claims."
     - "No language models were trained with the experimental tokenizers, so downstream model-quality effects remain untested."
 items:
-items:
   - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:token-premium-and-ctc
     kind: definition
     summary: "The paper defines token premiums as relative token-count differences for content-matched texts across languages and operationalizes compression with corpus token count (CTC) over parallel FLORES text; it avoids fertility because whitespace-delimited wordhood is not comparable across many languages."

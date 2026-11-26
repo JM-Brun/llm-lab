@@ -214,7 +214,6 @@ pedagogical_model:
       - "Bilingual page navigation and project learning path"
 
 items:
-items:
   - id: andrej-karpathy-gpt-tokenizer-video:unicode-bytes
     kind: definition
     summary: "Unicode code points, UTF-8 bytes and visible characters are different representational units; a code point may encode to multiple bytes."
