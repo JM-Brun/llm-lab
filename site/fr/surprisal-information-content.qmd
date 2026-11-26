@@ -170,6 +170,26 @@ Cette dépendance explique aussi pourquoi une fréquence globale ne suffit pas �
 
 
 
+### Calculer l'entropie de notre distribution jouet
+
+Nous pouvons maintenant calculer l'entropie de la distribution du premier exemple. Pour chaque issue, on multiplie son surprisal par sa probabilité, puis on additionne :
+
+| Token | Probabilité | Surprisal | Contribution $p(x)I(x)$ |
+|---|---:|---:|---:|
+| `Paris` | $0{,}80$ | $0{,}32$ bit | $0{,}26$ bit |
+| `Lyon` | $0{,}10$ | $3{,}32$ bits | $0{,}33$ bit |
+| `Marseille` | $0{,}05$ | $4{,}32$ bits | $0{,}22$ bit |
+| `Lille` | $0{,}05$ | $4{,}32$ bits | $0{,}22$ bit |
+
+Ainsi,
+
+$
+H(X\mid c)\approx0{,}26+0{,}33+0{,}22+0{,}22
+\approx1{,}02\text{ bits}.
+$
+
+L'entropie est inférieure au surprisal de l'issue observée `Lyon` (environ 3,32 bits). Il n'y a aucune contradiction : l'entropie est la moyenne pondérée sur toutes les issues possibles, tandis que le surprisal de Lyon ne concerne qu'une issue particulière. Les contributions des événements rares peuvent être importantes, mais elles sont pondérées par leur faible probabilité.
+
 ## Surprisal observé et entropie prédictive : deux questions différentes
 
 Fixons un contexte $c$. Un modèle de langage produit une distribution sur les tokens possibles :
