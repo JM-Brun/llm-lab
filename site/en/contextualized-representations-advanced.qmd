@@ -134,6 +134,12 @@ In a causal decoder, the representational difference at that position can then c
 
 This comparison is a controlled pedagogical setup, not a claim that a model encodes human word senses in sharply separated geometric regions.
 
+## 4 bis. A dependency between positions: pronoun reference
+
+Consider: “The animal was tired because it had been running.” The pronoun “it” refers to “the animal”. This is not a case of disambiguating two senses of one token; it is a relation between distinct positions in the sequence.
+
+The pronoun's representation can incorporate information from its accessible prefix. This example motivates the study of interactions between positions; it does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution.
+
 ## 5. Following one position through the layers
 
 $h_t^{(0)}$ denotes the initial input at position $t$. Each block produces a new state, $h_t^{(1)}$, then $h_t^{(2)}$, and so on. The index $t$ stays fixed: we follow the representation at that position through network depth.
