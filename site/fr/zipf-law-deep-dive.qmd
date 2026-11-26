@@ -2,7 +2,7 @@
 title: "Au-delà de la loi de Zipf : données, usages et limites"
 subtitle: "Comparer les corpus, comprendre la longue traîne et interpréter les modèles"
 description-meta: "Approfondissement sur Zipf-Mandelbrot, les observations multilingues, l'histoire de la loi, ses usages et ses limites."
-keywords: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:zipf-law-deep-dive", "level:advanced", "language:fr", "status:published"]
 lang: fr
 toc: true
 ---
@@ -21,7 +21,7 @@ hierarchy:
   parents: ["fr/advent-calendar-story-day-01"]
   children: []
 related: ["fr/exercises-zipf-law", "fr/text-data", "fr/tokenization-strategies"]
-tags: ["type:deep-dive", "destination:deepen", "topic:zipfs-law", "level:advanced", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:zipf-law-deep-dive", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
