@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/embedding-space", "en/positional-encoding", "en/queries-keys-values", "en/transformer", "en/contextualized-representations-exercises"]
+related: ["en/embedding-space", "en/positional-encoding", "en/transformer", "en/queries-keys-values", "en/contextualized-representations-advanced", "en/contextualized-representations-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
