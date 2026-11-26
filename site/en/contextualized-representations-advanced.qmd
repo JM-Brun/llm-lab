@@ -146,6 +146,39 @@ $h_t^{(0)}$ denotes the initial input at position $t$. Each block produces a new
 
 The vector is not replaced by a sense label. It is transformed by learned operations that progressively integrate information allowed by the architecture and mask.
 
+## 6. What empirical studies allow us to claim
+
+Studies of contextualized representations provide complementary evidence, but they do not all measure the same object or examine the same architecture.
+
+### Sequence-dependent representations before Transformers
+
+Peters et al. (2018) introduce ELMo (*Embeddings from Language Models*), whose word representations are learned functions of the internal states of a bidirectional LSTM language model. This work establishes the value of context-sensitive representations before Transformers became the dominant architecture. It does not describe GPT self-attention.
+
+### Measuring contextuality and its geometric limits
+
+Ethayarajh (2019) studies ELMo, BERT, and GPT-2. In the configurations examined, representations of the same word in different contexts remain more similar to one another on average than representations of different words, but this self-similarity decreases in upper layers. The paper also reports that, on average, less than 5% of the variance in contextualized representations is explained by a static representation of the word.
+
+Two qualifications matter:
+
+- this is an aggregate result over the models, layers, and data studied in 2019, not a universal constant for every LLM;
+- the representations are anisotropic, so a high cosine similarity between two vectors is not sufficient to establish that they carry the same meaning.
+
+The measurement supports a substantial contextual contribution in the studied models; it does not prove that every human word sense corresponds to a distinct geometric region.
+
+### Linguistic information across layers
+
+Tenney, Das, and Pavlick (2019) use probing tasks to investigate where linguistic information is accessible in BERT. On average, they observe a progression from part-of-speech information through syntax, named entities, semantic roles, and coreference. Their qualitative analysis also shows that the model can revise lower-level decisions in light of higher-level contextual information.
+
+A probing result indicates that information can be decoded from a representation under a particular protocol. By itself, it does not demonstrate that the model uses that information as a human would, that a layer has an exclusive function, or that a particular head performs an identifiable linguistic operation.
+
+**Takeaway:** hidden states are context-dependent in the studied models, but their content, geometry, and organization across layers depend on architecture, training objective, model, and measurement method.
+
+Primary references:
+
+- Peters et al. (2018), [*Deep Contextualized Word Representations*](https://aclanthology.org/N18-1202/).
+- Ethayarajh (2019), [*How Contextual are Contextualized Word Representations?*](https://aclanthology.org/D19-1006/).
+- Tenney, Das, and Pavlick (2019), [*BERT Rediscovers the Classical NLP Pipeline*](https://aclanthology.org/P19-1452/).
+
 ## Limits of this formalization
 
 - Hidden states are learned vectors; this notation does not assign them a unique semantic interpretation.
