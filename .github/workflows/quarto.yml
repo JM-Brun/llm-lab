@@ -350,7 +350,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           BRANCH_NAME: ${{ github.head_ref }}
         run: |
-          python - <<'PY'
+          .venv/bin/python - <<'PY'
           import json
           import os
           import sys
