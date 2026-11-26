@@ -54,7 +54,13 @@ Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour sit
 
 ## Le Transformer : le réseau au cœur d'un GPT
 
-![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau inférieur agrandit un bloc typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
+<figure id="fig-transformer-stack">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/transformer-stack-fr-mobile.svg">
+    <img src="../images/transformer-stack-fr.svg" alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d’un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le premier panneau situe le réseau complet ; le second détaille un bloc pré-LN courant. L’attention mélange l’information entre positions, tandis que le MLP transforme chaque position séparément.</figcaption>
+</figure>
 
 *La pile de blocs constitue le Transformer du GPT représenté ici. Le détail agrandi montre une organisation dite **pré-LN** : chaque sous-couche est précédée de sa normalisation. C'est une disposition courante ; l'ordre des sous-couches et les variantes de normalisation peuvent différer selon les modèles.*
 
