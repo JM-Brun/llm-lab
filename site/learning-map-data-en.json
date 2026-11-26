@@ -638,9 +638,9 @@
       "type": "concept-lesson",
       "topic": "positional-encoding",
       "domain": null,
-      "scope": "Introduces the role of positional information and locates absolute encodings and relative mechanisms in the computation. RoPE derivations and sinusoidal properties belong in the deep dives.",
+      "scope": "Explains why order must be represented and compares the insertion points of absolute encodings, relative representations, score biases and RoPE. Distinguishes these signals from causal visibility and locates NoPE as the omission of an explicit positional mechanism. Derivations remain in the deep dives.",
       "summary": "Shows why token content alone does not represent order, then distinguishes positional signals from causal visibility constraints.",
-      "purpose": "Explain why order must be represented, distinguish position from causal visibility, and locate the main insertion points.",
+      "purpose": "Explain why content alone is insufficient, compare where positional mechanisms act in the computation, and distinguish explicit information, implicit order and causal visibility.",
       "covered_stages": [],
       "section_headings": [
         "Why add positional information?",
@@ -4008,13 +4008,14 @@
       "type": "exercise-hub",
       "topic": "positional-encoding-exercises",
       "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Positional encoding lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "scope": "Collects the questions, five recall cards, and worked exercises for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions, five recall cards, and exercises associated with the Positional encoding lesson.",
+      "purpose": "Recall the essential distinctions, check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
       "covered_stages": [],
       "section_headings": [
         "Check your understanding",
-        "Compare two visible prefixes"
+        "Compare two visible prefixes",
+        "Recall cards"
       ],
       "route": {
         "previous": null,
