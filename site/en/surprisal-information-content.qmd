@@ -28,22 +28,22 @@ tags: ["type:deep-dive", "destination:deepen", "topic:surprisal-information-cont
 
 ## Surprise is not an emotion
 
-After the prefix “The capital of France is…”, imagine that a model assigns the following probabilities to possible continuations. These numbers are **constructed for explanation**; they are not outputs measured from a real model.
+After the prefix “The capital of France is…”, imagine that a model assigns the following probabilities to possible continuations. These numbers are **constructed for explanation**; they are not outputs measured from a real model. In this toy vocabulary, each label represents exactly one token; a real tokenizer may segment these strings differently.
 
 | Candidate token | Predicted probability |
 |---|---:|
 | `Paris` | $0.80$ |
 | `Lyon` | $0.10$ |
 | `Marseille` | $0.05$ |
-| Other token | $0.05$ |
+| `Lille` | $0.05$ |
 
-![Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and all other tokens 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.](../images/advent-surprisal-distribution.svg){#fig-surprisal-distribution width=95%}
+![Illustrative predictive distribution: Paris receives 80% probability, Lyon 10%, and Marseille and Lille 5% each. The observed target Lyon has 3.32 bits of surprisal, while the distribution entropy is about 1.02 bits.](../images/advent-surprisal-distribution-en.svg){#fig-surprisal-distribution width=95%}
 
 Suppose the observed text nevertheless continues with `Lyon`. The model assigned this token probability $0.10$. Its surprisal is:
 
-$
+$$
 I(\text{Lyon}\mid c)=-\log_2(0.10)\approx 3.32\text{ bits}.
-$
+$$
 
 This number describes **the outcome that occurred**. It does not, by itself, describe the distribution's average uncertainty before the outcome was known. That second question is about entropy, which we will calculate below.
 
