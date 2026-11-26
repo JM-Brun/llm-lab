@@ -24,8 +24,6 @@ related: ["en/tokenization-strategies", "en/text-data", "en/scaling-laws"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-tokenizer-design-evaluation.qmd >}}
-
 ::: {.chapter-lead}
 The calendar story introduces the design trade-off and a first comparison protocol. This deep dive examines what studies actually measure: representation length, downstream performance, differences across languages, and reproducibility.
 :::
