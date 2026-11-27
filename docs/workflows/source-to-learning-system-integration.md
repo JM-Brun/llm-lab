@@ -288,7 +288,7 @@ Use the templates in [`docs/workflows/templates/`](templates/) as starting point
 | [Source registration](templates/source-registration-template.yml) | Register provenance, metadata, licence, scan history and project relations | One entry in `data/sources.yml` |
 | [Structured source extraction](templates/source-extraction-template.yml) | Record scan coverage, source-local graph/route and atomic evidence-backed contributions | One file under `data/extractions/` |
 | [Source review](templates/source-review-template.md) | Human-readable technical and pedagogical audit with bounded integration decision | One file under `docs/source-reviews/` |
-| [Multi-source comparison](templates/multi-source-comparison-template.md) | Compare sources consistently and explain aggregate impact on the learning system | One living topic dossier under `docs/source-reviews/` |
+| [Multi-source comparison](templates/multi-source-comparison-template.md) | Compare sources consistently and explain aggregate impact on the learning system | One living topic dossier under `docs/source-syntheses/` |
 | [Visual asset audit](templates/visual-asset-audit-template.md) | Inspect exact figure assets, provenance, accessibility and reuse rights | One audit per source or figure set |
 
 ### Template use rules
@@ -296,7 +296,7 @@ Use the templates in [`docs/workflows/templates/`](templates/) as starting point
 - Copy a template and replace every placeholder; do not leave template placeholders in a published record.
 - Keep the structured extraction as the evidence-oriented record and the Markdown review as its human-readable interpretation. Avoid maintaining two competing copies of the same facts.
 - The source register is the canonical bibliographic/provenance inventory; do not duplicate the full extraction into `data/sources.yml`.
-- Use one cross-source dossier per topic, not one comparison file per pair of sources.
+- Use one cross-source dossier per topic, not one comparison file per pair of sources. Store source-specific reviews in `docs/source-reviews/` and topic-level cross-source syntheses in `docs/source-syntheses/`; do not use these destinations interchangeably.
 - Use the visual audit only when the source actually contains relevant media. Preserve existing embedded assets during the audit; unknown rights are recorded and escalated, not treated as authorization to remove or convert them. Link-only/defer applies to proposed new uses, not existing embeds.
 - Templates are operational starting points. The source catalogue contract, taxonomy and validator are authoritative; keep templates aligned with them and run the repository's validators against completed records.
 - Preserve unknown values as null/unknown and distinguish `not-inspected`, `unavailable`, `not-applicable` and `not-verified` where relevant.
