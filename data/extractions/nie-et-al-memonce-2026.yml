@@ -48,9 +48,9 @@ items:
     disposition_rationale: "Cross-link to fine-tuning/LoRA only if the recipe adds pedagogical value."
   - id: nie-et-al-memonce-2026:reported-1m-results
     kind: result
-    summary: "For the adapted Qwen3.5-4B setup at one-million-token context, the paper reports 25 MB memory-state cache in Figure 1 versus 144 GB for the standard Transformer, 6.9× lower prefill latency, 3.5× throughput and 60.07% overall memory-benchmark performance versus 54.30% for the full-context baseline."
+    summary: "For the adapted Qwen3.5-4B setup at one-million-token context, the paper reports 25 MB memory-state cache in Figure 1 versus approximately 32 GB for the Qwen3.5 hybrid baseline (the paper's 1,313× comparison); the standard Transformer is plotted separately at 144 GB. The 6.9× lower prefill latency, 3.5× throughput and 60.07% overall memory-benchmark performance versus 54.30% for the full-context baseline."
     locator: {type: figure, value: "Figure 1; Figure 4; Section 4", label: "Headline memory and inference comparisons"}
-    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Authors' Qwen3.5-4B adaptation and selected memory benchmark aggregation.", assumptions: ["The paper's model, hardware, context and benchmark setup apply."], limitations: ["Not independently reproduced; memory-state cache is not total persistent storage or total system memory."]}
+    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Authors' Qwen3.5-4B adaptation and selected memory benchmark aggregation.", assumptions: ["The paper's model, hardware, context and benchmark setup apply."], limitations: ["Not independently reproduced; the 1,313× comparison is against the 32 GB hybrid baseline, not the 144 GB standard Transformer; memory-state cache is not total persistent storage or total system memory."]}
     classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:long-context, topic:kv-cache, topic:benchmark], concept_ids: [kv-cache, persistent-memory]}
     candidate_destinations: {pages: [], concepts: []}
     disposition: cite
