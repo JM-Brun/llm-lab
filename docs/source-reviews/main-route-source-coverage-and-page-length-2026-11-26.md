@@ -136,7 +136,7 @@ Pour ICL — première réconciliation bibliographique effectuée le 2026-11-27 
 - les six notices sont reliées aux pages FR/EN et aux concepts existants pertinents ;
 - les liens bibliographiques des quatre références initiales pointent désormais vers les versions publiées ; Yoo et Xiang figurent dans une section d'approfondissement bilingue ;
 - les six sources restent `partially-scanned` et `deferred` : la vérification des métadonnées et abstracts ne vaut pas lecture complète ni intégration claim-level ;
-- la synthèse des résultats Min/Yoo, les limites de preuve d'Olsson et le cadre théorique de Xie restent à vérifier par lecture ciblée des articles ;
+- les articles Min/Yoo ont fait l'objet d'une lecture ciblée, de deux extractions atomiques et d'une intégration nuancée dans les pages FR/EN ; les limites de preuve d'Olsson et le cadre théorique de Xie restent à vérifier par lecture ciblée ;
 - Xiang reste une ressource facultative d'approfondissement sur la sensibilité à l'ordre des démonstrations.
 
 Ne pas confondre l'association `related.pages` avec l'intégration effective d'un résultat dans le contenu pédagogique. Le détail de cette passe est documenté dans `docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md`.
@@ -178,9 +178,9 @@ Les tests doivent couvrir au minimum : exclusion des pages optionnelles, dédupl
 | Priorité | Action | Critère d'acceptation |
 |---|---|---|
 | P0 | Réconciliation bibliographique ICL (Brown, Olsson, Xie, Min, Yoo, Xiang) | Notices canoniques et liaisons bilingues créées ; PR #1756 en revue ; validation CI encore attendue |
-| P0 | Lecture ciblée des articles Min et Yoo | Protocole, métriques, résultats par tâche/modèle et limites comparés avant toute synthèse pédagogique |
+| P0 | Lecture ciblée Min/Yoo | Sections principales et figures pertinentes relues ; extractions créées ; synthèse comparative intégrée en FR/EN ; annexes non exhaustivement auditées |
 | P1 | Lecture ciblée d'Olsson et Xie | Niveau de preuve mécaniste et portée du cadre bayésien explicités sans généralisation abusive |
-| P1 | Valider l'intégration de Yoo dans ICL FR et EN | Contraste scientifique équilibré et même nuance dans les deux langues |
+| P1 | Vérifier l'intégration Min/Yoo après revue | Contraste scientifique équilibré, limites et conditions expérimentales conservées dans les deux langues |
 | P1 | Conserver Xiang en approfondissement | Ressource bilingue ajoutée ; approfondissement claim-level après lecture du protocole |
 | P1 | Réexaminer Jay Alammar pour Logits | Décision d'intégration explicite, liaison aux concepts et pages si retenue |
 | P2 | Étendre le rapport de couverture | Classements sources / références / longueur reproductibles depuis le parcours principal |
