@@ -75,3 +75,24 @@ La limite actuelle est plutôt documentaire : l'identité des apports propres à
 - [Audit des contributions des représentations](understand-representations-intellectual-contributions-audit-2026-11.md)
 - [Audit des contributions génération/scoring/apprentissage](understand-generation-scoring-training-contributions-audit-2026-11.md)
 - [Audit des contributions autour du contexte](understand-context-use-intellectual-contributions-audit-2026-11.md)
+
+
+## 6. Contrôle de couverture par rapport au parcours canonique
+
+Un contrôle de cohérence a comparé les pages requises de chaque étape de `data/guided-route.yml` (champ `pages.fr`, en excluant volontairement `optional_pages`) aux identifiants de page de cette matrice.
+
+- **20 pages Understand requises** dans le parcours.
+- **20/20 identifiants retrouvés** dans la matrice.
+- **Aucune page requise manquante.**
+- Les pages optionnelles, pages Deepen, Build et Practice ne sont pas comptées dans ce contrôle : elles relèvent d'audits complémentaires et ne doivent pas être assimilées aux leçons canoniques du parcours.
+
+Ce contrôle vérifie la couverture des identifiants, pas la qualité du contenu, la visibilité effective des apports ou leur rendu. Il devra être rejoué à chaque modification de `data/guided-route.yml`.
+
+
+### Portée de cette décision par rapport aux autres extensions PAGE-MAP
+
+La conclusion ci-dessus est **spécifique à la modélisation des contributions intellectuelles** : les sources, extractions, dossiers de synthèse et relations conceptuelles suffisent ; un champ `intellectual_contributions` serait redondant.
+
+Elle ne constitue pas une interdiction générale d'étendre PAGE-MAP v1. L'audit distinct du contrat PAGE-MAP daté du 27 novembre autorise en principe des extensions additives facultatives, si chaque champ est documenté, validé et testé dans ses consommateurs. Son cas d'usage `estimated_reading_minutes` répond à une autre question éditoriale et doit suivre son propre contrat et sa propre calibration.
+
+Il faut donc appliquer une règle de décision par usage : **ne pas ajouter un champ parce qu'une dimension éditoriale est intéressante ; l'ajouter uniquement si aucune représentation existante ne répond au besoin et si tous ses consommateurs sont explicitement pris en charge.** Les décisions « pas de champ pour les contributions » et « extension facultative possible pour une durée de lecture » sont compatibles.
