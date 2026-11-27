@@ -17,16 +17,20 @@ pedagogical_model:
       - {id: src-token-identity, kind: representation, description: "Token identity alone does not specify the occurrence's position in a sequence.", locator: "Introduction"}
       - {id: src-learned-absolute, kind: mechanism, description: "A learned vector is selected for each sequence slot and added to the token vector.", locator: "Introduction; four-method outline"}
       - {id: src-sinusoidal, kind: mechanism, description: "A fixed sine/cosine vector is computed for each sequence position and added to the token vector.", locator: "Introduction; four-method outline"}
-      - {id: src-rope, kind: mechanism, description: "Position-dependent rotations are applied to vectors used to compare tokens, making the query-key dot product depend on relative position.", locator: "Introduction; four-method outline"}
+      - {id: src-query-key, kind: representation, description: "Projected query and key vectors are compared to form attention scores.", locator: "Introduction; RoPE outline"}
+      - {id: src-rope, kind: mechanism, description: "Position-dependent rotations are applied to query and key vectors, making their dot product depend on relative position.", locator: "Introduction; four-method outline"}
       - {id: src-alibi, kind: mechanism, description: "A distance-dependent penalty is subtracted from attention scores, with different strengths across heads.", locator: "Introduction; four-method outline"}
       - {id: src-causal-visibility, kind: constraint, description: "A causal mask determines which positions a token may consult; it is distinct from an explicit positional rule.", locator: "Introduction"}
-      - {id: src-attention-weight, kind: result, description: "The final attention weight depends on positional information, content and the set of available tokens.", locator: "Introduction"}
+      - {id: src-attention-score, kind: intermediate, description: "Content-derived query-key scores are modified by positional terms and visibility constraints.", locator: "Introduction"}
+      - {id: src-attention-weight, kind: result, description: "Softmax-normalized attention weights depend on the resulting scores and the available-token set.", locator: "Introduction"}
     edges:
       - {from: src-learned-absolute, type: adds-position-vector-to, to: src-token-identity}
       - {from: src-sinusoidal, type: adds-position-vector-to, to: src-token-identity}
-      - {from: src-rope, type: modifies-position-sensitive-comparison-of, to: src-token-identity}
-      - {from: src-alibi, type: modifies, to: src-attention-weight}
-      - {from: src-causal-visibility, type: constrains-access-for, to: src-attention-weight}
+      - {from: src-rope, type: applies-to, to: src-query-key}
+      - {from: src-query-key, type: contributes-to, to: src-attention-score}
+      - {from: src-alibi, type: modifies, to: src-attention-score}
+      - {from: src-causal-visibility, type: constrains, to: src-attention-score}
+      - {from: src-attention-score, type: normalized-into, to: src-attention-weight}
     interpretation: "Compact reconstruction of the indexed introduction and outline only. It is not a complete graph authored by the source; detailed mathematical operations and exact score equations were not available for inspection."
 
 items:
