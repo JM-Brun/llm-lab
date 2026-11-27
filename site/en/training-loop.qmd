@@ -191,7 +191,7 @@ Language-model training commonly uses *adaptive* optimizers such as Adam and its
   <figcaption>SGD, Newton and Adam can optimize the same objective while using different information to choose an update. Adam's second moment tracks squared gradients; it does not calculate curvature.</figcaption>
 </figure>
 
-::: {.callout-note collapse="true" title="Why not use exact Newton updates for every LLM parameter? (advanced)"}
+::: {.callout-note collapse="true" title="Why not use exact Newton updates for every LLM parameter? (advanced)" data-reading-time="exclude"}
 A full Newton step solves $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ and updates $\theta_{k+1}=\theta_k-d_k$. For a model with millions or billions of parameters, storing and factorizing the dense Hessian is generally prohibitive. The Hessian can also be singular or indefinite, so an undamped Newton direction is not automatically a descent direction; practical second-order methods need safeguards such as damping, trust regions, or structured approximations. Quasi-Newton methods (for example L-BFGS) and structured preconditioners explore ways to capture curvature more cheaply, but they are not the same algorithm as Adam. This is why large-scale language-model training commonly favours first-order adaptive methods.
 :::
 
