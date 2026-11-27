@@ -1,14 +1,14 @@
 # Decision record — add a motivation page before text-data
 
 **Date:** 2026-11-27  
-**Status:** architectural recommendation; implementation not yet performed  
+**Status:** bilingual lesson drafted and added to the Understand route; awaiting CI and rendered-page review  
 **Scope:** Understand route, bilingual page architecture, page metadata, concept graph, guided-route projection, and the boundary with the existing `text-data` lesson.
 
 ## 1. Decision to evaluate
 
 The preferred direction is to add a short conceptual bridge immediately before `text-data`, rather than expanding `text-data` into a combined motivation-and-procedure lesson.
 
-The two pages would have distinct jobs:
+The two pages have distinct jobs:
 
 - **Why represent language numerically?** explains the problem and motivation: why a neural model needs a numerical representation, why token IDs alone are insufficient, what learned vector representations make possible, and why context-dependent transformations matter.
 - **Text and data (`text-data`)** explains the concrete input path and how it works: text, tokenizer, tokens, vocabulary, IDs, the tokenizer/model compatibility contract, and the transition to the initial embedding lookup.
@@ -64,7 +64,7 @@ The example should be explanatory, not a second worked tokenizer trace. Keep the
 | Status | `planned` until both pages are ready; then `published` |
 | Suggested route | `llm-overview → language-representation → text-data → embedding-space` |
 
-The page should be concise and motivating, not a new technical chapter. It should answer:
+The page is concise and motivating, not a new technical chapter. It should answer:
 
 1. What makes raw text different from the numerical objects a neural network operates on?
 2. Why are token IDs labels rather than meaningful coordinates?
@@ -259,3 +259,36 @@ Only after the bilingual explanation is authored and reviewed should the next in
 4. regenerate and validate the learning-map projections, breadcrumbs, sidebars and bilingual navigation.
 
 This staging prevents a planned page from becoming a broken published route or a partially visible graph node. It also keeps the canonical computational graph unchanged: the bridge explains why the existing numerical operations are useful; it does not add a computational operation or alter dataflow.
+
+
+## 11. Current implementation and review state
+
+The bilingual pages have now been authored and activated:
+
+- `site/fr/language-representation.qmd`
+- `site/en/language-representation.qmd`
+
+Both use the existing `concept-lesson` type, `understand` destination, `language-representation` topic, `overview` level and `published` status. No new metadata vocabulary or schema field was introduced.
+
+The page content follows the intended conceptual boundary:
+- why neural computation uses numerical tensors;
+- why token IDs are vocabulary-local addresses rather than semantic coordinates;
+- how a learned embedding vector differs from its ID;
+- why learned vector geometry should not be treated as an explicit semantic ontology;
+- why contextualized states require later model computation.
+
+The existing Understand stage `text-input` now includes the bridge before `text-data`. Its objective and overview question explicitly cover both motivation and input encoding. The stage count and topology are unchanged. The published page routes are now:
+
+`llm-overview → language-representation → text-data → embedding-space`
+
+The bilingual Quarto render list and Understand sidebars include the new pages. The reciprocal `suggested_route` links on the overview and text-data pages were updated. The canonical concept registry associations were retained and reused; no computational graph nodes or edges were added.
+
+### Remaining validation before merge
+
+- Confirm the page metadata validator accepts both new records and the shared topic.
+- Run the guided-route and learning-map generators; confirm the new focus references resolve to concepts whose resource lists include the bridge pages.
+- Render both languages and inspect mathematical notation, the flow sketch, links, mobile layout, and Quarto previous/next navigation.
+- Confirm the generated learning-map JSON and graph projections are reproducible; do not hand-edit generated artifacts.
+- Check that the page remains an overview and does not duplicate the technical explanation in `text-data`, `embedding-space`, or `contextualized-representations`.
+
+No CI success is claimed until those checks have actually run.
