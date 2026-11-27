@@ -2121,3 +2121,12 @@ No mathematical correction was identified in this bounded pass. The downstream p
 2. Verify in the rendered FR/EN pages that the global entropy → likelihood scoring cue remains reciprocal and that the contextual guided-route transition separately exposes prediction → inference/generation. Do not conflate the page-map suggested-route chain with the guided-route stage graph.
 3. Continue with a cross-branch audit of generation, observed-target scoring/evaluation and training. Use the existing 2026-11-25 audit entries for prefill, teacher forcing, likelihood, cross-entropy, loss and gradients; inspect only gaps or contradictions, not already checked arithmetic.
 4. Record manual screen-reader and native breadcrumb evidence under #584; automated browser/Axe checks remain a separate evidence class.
+
+
+## Issue #1739 — Understand representation lessons (2026-11-27)
+
+A source-grounded page-by-page audit of the bilingual **Positional encoding** and **Contextualized representations** lessons, their revision sheets, Practice companions and existing Deepen destinations is recorded in [the representation contribution audit](source-syntheses/understand-representations-intellectual-contributions-audit-2026-11.md).
+
+This batch confirms that both lessons already have several substantial contributions: positional insertion-point distinctions and the separation of positional information from causal visibility; shared embedding lookup versus context-dependent hidden states, causal dependency boundaries, and limits on semantic interpretation. The source-derived empirical measurements for contextuality remain in Deepen. No new page metadata field, contribution registry, concept node or route step is justified.
+
+The audit is source-only. It does not claim rendered visual, accessibility or learner validation. The next #1739 batch should continue in canonical Understand route order and reuse the existing Q/K/V pilot rather than repeat it.
