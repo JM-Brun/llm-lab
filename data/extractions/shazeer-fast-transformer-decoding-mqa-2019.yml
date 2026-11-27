@@ -1,0 +1,50 @@
+schema_version: 1
+source_id: shazeer-fast-transformer-decoding-mqa-2019
+items:
+  - id: shazeer-fast-transformer-decoding-mqa-2019:shared-kv-heads
+    kind: architecture
+    summary: "Multi-query attention keeps distinct query heads but shares one set of key and value heads across them; this removes the K/V head dimension while retaining the query-head dimension."
+    locator: {type: section, value: "3", label: "Multi-Query Attention"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper defines MQA as a variation of MHA in which the different heads share a single set of keys and values, and gives batched and incremental tensor shapes."
+      assumptions:
+        - "The comparison is between the paper's multi-head and multi-query formulations with otherwise comparable model dimensions."
+      limitations:
+        - "MQA changes K/V head sharing; it does not remove attention or eliminate the KV cache."
+        - "The paper's implementation notation is specific to its TensorFlow einsum formulation."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-query-attention, topic:kv-cache, application:incremental-decoding]
+      concept_ids: [kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides the primary definition for the MQA comparison already cited by the bilingual walkthrough."
+
+  - id: shazeer-fast-transformer-decoding-mqa-2019:incremental-decode-bandwidth
+    kind: result
+    summary: "The paper identifies repeated K/V memory access as a bottleneck for incremental decoding and reports large speed gains for MQA in its tested setup, with a small quality difference relative to MHA."
+    locator: {type: section, value: "3.1 and 4.2–4.3", label: "Incremental performance analysis, model quality and speed"}
+    evidence:
+      kind: empirical-result
+      confidence: context-dependent
+      scope: "The analysis estimates memory-access reduction; experiments report WMT14 and Billion-Word results and TPUv2 inference timings."
+      assumptions:
+        - "Reported speed depends on batch size, sequence length, TPU generation, implementation and the paper's fixed-shape setup."
+      limitations:
+        - "The measured speed-up is not a portable multiplier for current GPUs or serving stacks."
+        - "The tested MQA model is slightly worse on some quality metrics; the paper does not establish zero quality cost."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-query-attention, topic:kv-cache, application:incremental-decoding]
+      concept_ids: [kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the memory-bandwidth motivation and the quality/speed caveat without importing the paper's benchmark values as universal claims."
