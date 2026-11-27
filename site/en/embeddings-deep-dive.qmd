@@ -57,7 +57,7 @@ This chain highlights an essential distinction: **the encoder builds a represent
 
 A representation may preserve some information and discard other information. An embedding trained to retrieve relevant documents may prioritize signals useful for search, not every linguistic nuance. An image embedding trained to distinguish visual categories is not necessarily suitable for aesthetic similarity search. A vector always reflects choices about representation and objective.
 
-## 2. Major families: a map, not a sequence of replacements
+## 2. Major families: a map, not a sequence of replacements {#embedding-families}
 
 The families below sometimes overlap. They do not form a timeline in which every method makes the previous one obsolete.
 
@@ -236,7 +236,7 @@ This project reuses the progression as a **case study**, while qualifying severa
 LLM Lab provides a NumPy helper that requires no model download: [inspect a tiny embedding table in the bilingual exercise](exercises/embedding-space.qmd). It retrieves rows directly by ID and computes a deterministic cosine top-k. It does not claim to reproduce the source checkpoint or interactive atlas.
 
 
-### Explore an embedding dataset with Embedding Atlas
+### Explore an embedding dataset with Embedding Atlas {#explore-embedding-atlas}
 
 [Embedding Atlas](https://apple.github.io/embedding-atlas/) supports exploration of large embedding projections, nearest-neighbour search, cluster inspection, and cross-filtering between geometry and metadata. It can also act as a tabular dashboard; it does not create semantic relevance in the vectors by itself.
 
