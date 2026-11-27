@@ -1064,7 +1064,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 107
+      "rank": 119
     },
     {
       "id": "en/build-path",
@@ -1858,7 +1858,7 @@
         "en/llm-evolution",
         "en/llm-computational-complexity"
       ],
-      "rank": 59
+      "rank": 58
     },
     {
       "id": "en/contextualized-representations-advanced",
@@ -1896,7 +1896,7 @@
         "en/rope",
         "en/transformer"
       ],
-      "rank": 62
+      "rank": 59
     },
     {
       "id": "en/decoding-strategies",
@@ -1934,7 +1934,7 @@
         "en/exercises-generation",
         "en/decoding-strategies-exercises"
       ],
-      "rank": 67
+      "rank": 60
     },
     {
       "id": "en/deepen",
@@ -1974,7 +1974,7 @@
         "en/tokenization-and-tokenizers"
       ],
       "related": [],
-      "rank": 69
+      "rank": 61
     },
     {
       "id": "en/document-retrieval",
@@ -2011,7 +2011,7 @@
         "en/context-engineering",
         "en/in-context-learning"
       ],
-      "rank": 70
+      "rank": 62
     },
     {
       "id": "en/embeddings-deep-dive",
@@ -2050,7 +2050,7 @@
         "en/embedding-linearity",
         "en/tokenizer-design-evaluation"
       ],
-      "rank": 72
+      "rank": 63
     },
     {
       "id": "en/emergence",
@@ -2086,7 +2086,7 @@
         "en/experimental-evaluation",
         "en/emergence-exercises"
       ],
-      "rank": 74
+      "rank": 64
     },
     {
       "id": "en/hybrid-llm-architectures",
@@ -2123,7 +2123,7 @@
         "en/scaling-laws",
         "en/hybrid-llm-architectures-exercises"
       ],
-      "rank": 85
+      "rank": 113
     },
     {
       "id": "en/jepa-platonic-representation",
@@ -2160,7 +2160,7 @@
         "en/llm-limits",
         "en/jepa-platonic-representation-exercises"
       ],
-      "rank": 88
+      "rank": 114
     },
     {
       "id": "en/llm-evolution",
@@ -2205,7 +2205,7 @@
         "en/experimental-evaluation",
         "en/llm-evolution-exercises"
       ],
-      "rank": 92
+      "rank": 115
     },
     {
       "id": "en/multimodal-architectures",
@@ -2242,7 +2242,7 @@
         "en/transformer-architectures",
         "en/llm-evolution"
       ],
-      "rank": 98
+      "rank": 116
     },
     {
       "id": "en/next-concept-modeling",
@@ -2280,7 +2280,7 @@
         "en/llm-computational-complexity",
         "en/transformer-architectures"
       ],
-      "rank": 100
+      "rank": 117
     },
     {
       "id": "en/rag-memory-boundaries",
@@ -2320,7 +2320,7 @@
         "en/post-training",
         "en/document-retrieval"
       ],
-      "rank": 105
+      "rank": 118
     },
     {
       "id": "en/scaling-laws",
@@ -2351,7 +2351,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 132
+      "rank": 142
     },
     {
       "id": "en/score-centering",
@@ -2385,7 +2385,7 @@
         "en/gradients",
         "en/llm-evolution"
       ],
-      "rank": 133
+      "rank": 143
     },
     {
       "id": "en/surprisal-information-content",
@@ -2424,7 +2424,7 @@
         "en/language-modeling-math",
         "en/experience-information-theory"
       ],
-      "rank": 135
+      "rank": 144
     },
     {
       "id": "en/tokenization-and-tokenizers",
@@ -2465,7 +2465,7 @@
         "en/exercises-text-data",
         "en/tokenization-strategies-exercises"
       ],
-      "rank": 137
+      "rank": 145
     },
     {
       "id": "en/tokenization-strategies",
@@ -2505,7 +2505,7 @@
         "en/training-examples",
         "en/tokenization-strategies-exercises"
       ],
-      "rank": 138
+      "rank": 146
     },
     {
       "id": "en/tokenizer-design-evaluation",
@@ -2545,7 +2545,7 @@
         "en/unicode-text",
         "en/exercises-text-data"
       ],
-      "rank": 140
+      "rank": 147
     },
     {
       "id": "en/tokenizer-multilingual-evaluation",
@@ -2581,7 +2581,7 @@
         "en/text-data",
         "en/scaling-laws"
       ],
-      "rank": 141
+      "rank": 148
     },
     {
       "id": "en/unicode-text",
@@ -2615,7 +2615,7 @@
       "related": [
         "en/text-data"
       ],
-      "rank": 147
+      "rank": 149
     },
     {
       "id": "en/universal-artificial-intelligence",
@@ -2652,7 +2652,7 @@
         "en/cross-entropy",
         "en/llm-computational-complexity"
       ],
-      "rank": 149
+      "rank": 150
     },
     {
       "id": "en/zipf-law-deep-dive",
@@ -2689,7 +2689,7 @@
         "en/text-data",
         "en/tokenization-strategies"
       ],
-      "rank": 150
+      "rank": 151
     },
     {
       "id": "en/exercises",
@@ -3129,355 +3129,6 @@
       "rank": 56
     },
     {
-      "id": "en/causal-masking-exercises",
-      "title": "Exercises — Causal masking",
-      "href": "exercises/causal-masking.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "causal-masking-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Causal masking lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "CA-A — Causal masking and prefix invariance"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/causal-masking"
-      ],
-      "rank": 58
-    },
-    {
-      "id": "en/compression-revision-exercises",
-      "title": "Questions and exercises — Compression and LLMs",
-      "href": "exercises/compression-revision.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "compression-revision-exercises",
-      "domain": null,
-      "scope": "Preserves the numerical checks on entropy and Huffman coding, the five self-check questions, and the MDL check question.",
-      "summary": "Calculation, self-check, and reasoning exercises on model description cost.",
-      "purpose": "Calculate a simple coding cost, distinguish surprisal from entropy, explain lossless reconstruction, and reason about the trade-off between model cost and residual cost.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check question: model description cost",
-        "Self-check"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/compression-revision"
-      ],
-      "rank": 60
-    },
-    {
-      "id": "en/context-engineering-exercises",
-      "title": "Exercises — Context engineering",
-      "href": "exercises/context-engineering.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "context-engineering-exercises",
-      "domain": null,
-      "scope": "Provides applied scenarios and answer criteria without repeating the conceptual lesson.",
-      "summary": "Exercises for designing, diagnosing, and evaluating the context supplied to a model.",
-      "purpose": "Readers should distinguish context components, identify context failures, and propose controlled evaluations.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Design a context",
-        "Evaluate",
-        "Distinguish the levels of context",
-        "Trace context across two calls"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/context-engineering",
-        "en/in-context-learning"
-      ],
-      "rank": 61
-    },
-    {
-      "id": "en/contextualized-representations-exercises",
-      "title": "Exercises — Contextualized representations",
-      "href": "exercises/contextualized-representations.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "contextualized-representations-exercises",
-      "domain": null,
-      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
-      "summary": "Self-check questions associated with the Contextualized representations lesson.",
-      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Review cards",
-        "Which change can reach the current state?",
-        "Guided investigation — an SAE feature in Neuronpedia"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/contextualized-representations"
-      ],
-      "rank": 63
-    },
-    {
-      "id": "en/corpus-preparation-exercises",
-      "title": "Exercises — Corpus preparation",
-      "href": "exercises/corpus-preparation.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "corpus-preparation-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Corpus preparation lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/corpus-preparation"
-      ],
-      "rank": 64
-    },
-    {
-      "id": "en/cross-attention-exercises",
-      "title": "Exercises — Cross-attention",
-      "href": "exercises/cross-attention.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "cross-attention-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Cross-attention lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/cross-attention"
-      ],
-      "rank": 65
-    },
-    {
-      "id": "en/cross-entropy-exercises",
-      "title": "Exercises — Cross-entropy and KL divergence",
-      "href": "exercises/cross-entropy.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "cross-entropy-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Cross-entropy and KL divergence lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/cross-entropy"
-      ],
-      "rank": 66
-    },
-    {
-      "id": "en/decoding-strategies-exercises",
-      "title": "Question — Decoding strategies",
-      "href": "exercises/decoding-strategies.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "decoding-strategies-exercises",
-      "domain": null,
-      "scope": "A comprehension question about the difference between local distribution transformation and search over multiple sequences.",
-      "summary": "A comprehension question about the difference between local distribution transformation and search over multiple sequences.",
-      "purpose": "Distinguish local distribution transformations from search methods over multiple sequences.",
-      "covered_stages": [],
-      "section_headings": [
-        "Comprehension question"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/decoding-strategies"
-      ],
-      "rank": 68
-    },
-    {
-      "id": "en/embedding-space-exercises",
-      "title": "Exercises — Embedding space",
-      "href": "exercises/embedding-space.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "embedding-space-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Embedding space lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Recall cards",
-        "Inspect a tiny input embedding table",
-        "Guided exploration — Embedding Atlas"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/embedding-space"
-      ],
-      "rank": 71
-    },
-    {
-      "id": "en/embeddings-deep-dive-exercises",
-      "title": "Experiment — Explore an embedding dataset",
-      "href": "exercises/embeddings-deep-dive.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "embeddings-deep-dive-exercises",
-      "domain": null,
-      "scope": "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks.",
-      "summary": "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks.",
-      "purpose": "Examine what projections, neighbourhoods, clusters, and metadata do and do not show, separating original-space geometry from 2D visualization.",
-      "covered_stages": [],
-      "section_headings": [],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/embeddings-deep-dive"
-      ],
-      "rank": 73
-    },
-    {
-      "id": "en/emergence-exercises",
-      "title": "Exercises — Emergent capabilities",
-      "href": "exercises/emergence.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "emergence-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Emergent capabilities lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/emergence"
-      ],
-      "rank": 75
-    },
-    {
-      "id": "en/entropy-exercises",
-      "title": "Exercises — Entropy: uncertainty over the next token",
-      "href": "exercises/entropy.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "entropy-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions, exercises, and worked answers for the Entropy lesson.",
-      "purpose": "Check understanding, calculate token-level surprisal, and distinguish observed sequence surprise from expected predictive entropy.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Calculate token surprisal",
-        "From token surprisal to a sequence score"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/entropy"
-      ],
-      "rank": 76
-    },
-    {
       "id": "en/entropy-synthesis",
       "title": "Synthesis sheet — Entropy, from language to LLMs",
       "href": "entropy-synthesis.html",
@@ -3517,7 +3168,1354 @@
         "en/loss",
         "en/compression-revision"
       ],
+      "rank": 65
+    },
+    {
+      "id": "en/causal-masking-exercises",
+      "title": "Exercises — Causal masking",
+      "href": "exercises/causal-masking.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "causal-masking-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Causal masking lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "CA-A — Causal masking and prefix invariance"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/causal-masking"
+      ],
+      "rank": 66
+    },
+    {
+      "id": "en/compression-revision-exercises",
+      "title": "Questions and exercises — Compression and LLMs",
+      "href": "exercises/compression-revision.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "compression-revision-exercises",
+      "domain": null,
+      "scope": "Preserves the numerical checks on entropy and Huffman coding, the five self-check questions, and the MDL check question.",
+      "summary": "Calculation, self-check, and reasoning exercises on model description cost.",
+      "purpose": "Calculate a simple coding cost, distinguish surprisal from entropy, explain lossless reconstruction, and reason about the trade-off between model cost and residual cost.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check question: model description cost",
+        "Self-check"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/compression-revision"
+      ],
+      "rank": 67
+    },
+    {
+      "id": "en/context-engineering-exercises",
+      "title": "Exercises — Context engineering",
+      "href": "exercises/context-engineering.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "context-engineering-exercises",
+      "domain": null,
+      "scope": "Provides applied scenarios and answer criteria without repeating the conceptual lesson.",
+      "summary": "Exercises for designing, diagnosing, and evaluating the context supplied to a model.",
+      "purpose": "Readers should distinguish context components, identify context failures, and propose controlled evaluations.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Design a context",
+        "Evaluate",
+        "Distinguish the levels of context",
+        "Trace context across two calls"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/context-engineering",
+        "en/in-context-learning"
+      ],
+      "rank": 68
+    },
+    {
+      "id": "en/contextualized-representations-exercises",
+      "title": "Exercises — Contextualized representations",
+      "href": "exercises/contextualized-representations.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "contextualized-representations-exercises",
+      "domain": null,
+      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
+      "summary": "Self-check questions associated with the Contextualized representations lesson.",
+      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Review cards",
+        "Which change can reach the current state?",
+        "Guided investigation — an SAE feature in Neuronpedia"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/contextualized-representations"
+      ],
+      "rank": 69
+    },
+    {
+      "id": "en/corpus-preparation-exercises",
+      "title": "Exercises — Corpus preparation",
+      "href": "exercises/corpus-preparation.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "corpus-preparation-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Corpus preparation lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/corpus-preparation"
+      ],
+      "rank": 70
+    },
+    {
+      "id": "en/cross-attention-exercises",
+      "title": "Exercises — Cross-attention",
+      "href": "exercises/cross-attention.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "cross-attention-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Cross-attention lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/cross-attention"
+      ],
+      "rank": 71
+    },
+    {
+      "id": "en/cross-entropy-exercises",
+      "title": "Exercises — Cross-entropy and KL divergence",
+      "href": "exercises/cross-entropy.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "cross-entropy-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Cross-entropy and KL divergence lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/cross-entropy"
+      ],
+      "rank": 72
+    },
+    {
+      "id": "en/decoding-strategies-exercises",
+      "title": "Question — Decoding strategies",
+      "href": "exercises/decoding-strategies.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "decoding-strategies-exercises",
+      "domain": null,
+      "scope": "A comprehension question about the difference between local distribution transformation and search over multiple sequences.",
+      "summary": "A comprehension question about the difference between local distribution transformation and search over multiple sequences.",
+      "purpose": "Distinguish local distribution transformations from search methods over multiple sequences.",
+      "covered_stages": [],
+      "section_headings": [
+        "Comprehension question"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/decoding-strategies"
+      ],
+      "rank": 73
+    },
+    {
+      "id": "en/embedding-space-exercises",
+      "title": "Exercises — Embedding space",
+      "href": "exercises/embedding-space.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "embedding-space-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Embedding space lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Recall cards",
+        "Inspect a tiny input embedding table",
+        "Guided exploration — Embedding Atlas"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/embedding-space"
+      ],
+      "rank": 74
+    },
+    {
+      "id": "en/embeddings-deep-dive-exercises",
+      "title": "Experiment — Explore an embedding dataset",
+      "href": "exercises/embeddings-deep-dive.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "embeddings-deep-dive-exercises",
+      "domain": null,
+      "scope": "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks.",
+      "summary": "A protocol for exploring an embedding dataset with Embedding Atlas, metadata, and reproducibility checks.",
+      "purpose": "Examine what projections, neighbourhoods, clusters, and metadata do and do not show, separating original-space geometry from 2D visualization.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/embeddings-deep-dive"
+      ],
+      "rank": 75
+    },
+    {
+      "id": "en/emergence-exercises",
+      "title": "Exercises — Emergent capabilities",
+      "href": "exercises/emergence.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "emergence-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Emergent capabilities lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/emergence"
+      ],
+      "rank": 76
+    },
+    {
+      "id": "en/entropy-exercises",
+      "title": "Exercises — Entropy: uncertainty over the next token",
+      "href": "exercises/entropy.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "entropy-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions, exercises, and worked answers for the Entropy lesson.",
+      "purpose": "Check understanding, calculate token-level surprisal, and distinguish observed sequence surprise from expected predictive entropy.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Calculate token surprisal",
+        "From token surprisal to a sequence score"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/entropy"
+      ],
       "rank": 77
+    },
+    {
+      "id": "en/generation-exercises",
+      "title": "Exercises — Autoregressive generation",
+      "href": "exercises/generation.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "inference-generation-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Autoregressive generation lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Extended practice"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/generation",
+        "en/exercises-generation"
+      ],
+      "rank": 78
+    },
+    {
+      "id": "en/gpt-config-walkthrough-exercises",
+      "title": "Exercises — GPT configuration",
+      "href": "exercises/gpt-config-walkthrough.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-config-exercises",
+      "domain": null,
+      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
+      "summary": "Exercises associated with the GPT configuration guided tour.",
+      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/gpt-config-walkthrough"
+      ],
+      "rank": 79
+    },
+    {
+      "id": "en/gpt-generation-walkthrough-exercises",
+      "title": "Exercises — GPT generation",
+      "href": "exercises/gpt-generation-walkthrough.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-generation-exercises",
+      "domain": null,
+      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
+      "summary": "Exercises associated with the GPT generation guided tour.",
+      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
+      "covered_stages": [],
+      "section_headings": [
+        "Exercises"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/gpt-generation-walkthrough"
+      ],
+      "rank": 80
+    },
+    {
+      "id": "en/gpt-model-walkthrough-exercises",
+      "title": "Exercises — Complete GPT model",
+      "href": "exercises/gpt-model-walkthrough.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-model-exercises",
+      "domain": null,
+      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
+      "summary": "Exercises associated with the Complete GPT model guided tour.",
+      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/gpt-model-walkthrough"
+      ],
+      "rank": 81
+    },
+    {
+      "id": "en/gpt-ops-walkthrough-exercises",
+      "title": "Exercises — GPT numerical operations",
+      "href": "exercises/gpt-ops-walkthrough.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-ops-exercises",
+      "domain": null,
+      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
+      "summary": "Exercises associated with the GPT numerical operations guided tour.",
+      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/gpt-ops-walkthrough"
+      ],
+      "rank": 82
+    },
+    {
+      "id": "en/gradients-exercises",
+      "title": "Exercises — Gradients and backpropagation",
+      "href": "exercises/gradients.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "gradients-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Gradients and backpropagation lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "How do updates compare at equal loss?"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/gradients",
+        "en/cross-entropy"
+      ],
+      "rank": 83
+    },
+    {
+      "id": "en/hybrid-llm-architectures-exercises",
+      "title": "Exercises — Hybrid LLM architectures",
+      "href": "exercises/hybrid-llm-architectures.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "hybrid-llm-architectures-exercises",
+      "domain": null,
+      "scope": "Collects questions and worked exercises on hybrid architectures, top-k routing, and expert-capacity trade-offs.",
+      "summary": "Self-check questions and exercises associated with the Hybrid LLM architectures lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Exercise: deterministic top-k routing"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/hybrid-llm-architectures"
+      ],
+      "rank": 84
+    },
+    {
+      "id": "en/in-context-learning-exercises",
+      "title": "Exercises — In-context learning",
+      "href": "exercises/in-context-learning.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "in-context-learning-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the In-context learning lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/in-context-learning"
+      ],
+      "rank": 85
+    },
+    {
+      "id": "en/jepa-platonic-representation-exercises",
+      "title": "Exercises — JEPA and the Platonic Representation Hypothesis",
+      "href": "exercises/jepa-platonic-representation.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "jepa-platonic-representation-exercises",
+      "domain": null,
+      "scope": "Assesses good-versus-bad-view distinctions, theorem assumptions, interpretation of sample-count comparisons, and the status of the next-token-prediction analogy.",
+      "summary": "Self-check questions for the JEPA and Platonic Representation Hypothesis deep dive.",
+      "purpose": "Check that readers can state the conditions of a theoretical result and avoid overinterpreting empirical findings.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Good views and bad views",
+        "2. Theorem assumptions",
+        "3. Samples and compute",
+        "4. Theoretical status of the analogy"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/jepa-platonic-representation"
+      ],
+      "rank": 86
+    },
+    {
+      "id": "en/likelihood-exercises",
+      "title": "Exercises — Likelihood and log-likelihood",
+      "href": "exercises/likelihood.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "vraisemblance-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Likelihood and log-likelihood lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Calculate likelihood for the running example",
+        "Generate or score from the same prefix"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/likelihood",
+        "en/generation"
+      ],
+      "rank": 87
+    },
+    {
+      "id": "en/llm-computational-complexity-exercises",
+      "title": "Exercises — Computational complexity of LLMs",
+      "href": "exercises/llm-computational-complexity.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-computational-complexity-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Computational complexity of LLMs lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/llm-computational-complexity"
+      ],
+      "rank": 88
+    },
+    {
+      "id": "en/llm-evolution-exercises",
+      "title": "Exercises — Evolution of language models",
+      "href": "exercises/llm-evolution.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-evolution-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Evolution of language models lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/llm-evolution"
+      ],
+      "rank": 89
+    },
+    {
+      "id": "en/llm-limits-exercises",
+      "title": "Exercises — LLM limitations",
+      "href": "exercises/llm-limits.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-limits-exercises",
+      "domain": null,
+      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
+      "summary": "Self-check questions associated with the LLM limitations lesson.",
+      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/llm-limits"
+      ],
+      "rank": 90
+    },
+    {
+      "id": "en/llm-overview-exercises",
+      "title": "Exercises — Language model overview",
+      "href": "exercises/llm-overview.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-overview-exercises",
+      "domain": null,
+      "scope": "Collects the overview's comprehension questions without duplicating the general presentation of model families.",
+      "summary": "Comprehension questions associated with the language model overview.",
+      "purpose": "Distinguish architecture, adaptation, information retrieval, message-format roles, and model-generated tool requests from application-side execution.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/llm-overview"
+      ],
+      "rank": 91
+    },
+    {
+      "id": "en/logits-exercises",
+      "title": "Exercises — Logits",
+      "href": "exercises/logits.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "logits-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Logits lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "From final states to the next-token distribution",
+        "Two softmax operations, two axes"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/logits",
+        "en/transformer",
+        "en/scaled-dot-product-attention"
+      ],
+      "rank": 92
+    },
+    {
+      "id": "en/loss-exercises",
+      "title": "Exercises — Loss: objective and masking",
+      "href": "exercises/loss.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "loss-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Loss: objective and masking lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "A token visible as input and ignored as a target",
+        "Compare checkpoints by validation loss"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/loss"
+      ],
+      "rank": 93
+    },
+    {
+      "id": "en/multimodal-architectures-exercises",
+      "title": "Questions — Analysing a multimodal architecture",
+      "href": "exercises/multimodal-architectures.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "multimodal-architectures-exercises",
+      "domain": null,
+      "scope": "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence.",
+      "summary": "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence.",
+      "purpose": "Analyse a multimodal architecture without conflating understanding, generation, components, and performance evidence.",
+      "covered_stages": [],
+      "section_headings": [
+        "Questions to ask when reading an architecture"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/multimodal-architectures"
+      ],
+      "rank": 94
+    },
+    {
+      "id": "en/next-concept-modeling-exercises",
+      "title": "Exercises — Next-Concept Modeling",
+      "href": "exercises/next-concept-modeling.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "next-concept-modeling-exercises",
+      "domain": null,
+      "scope": "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results.",
+      "summary": "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results.",
+      "purpose": "Distinguish sequential generation across code levels from parallel prediction within one level, and limit the scope of an experimental result.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the mechanism and the scope of the evidence"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/next-concept-modeling"
+      ],
+      "rank": 95
+    },
+    {
+      "id": "en/positional-encoding-exercises",
+      "title": "Exercises — Positional encoding",
+      "href": "exercises/positional-encoding.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "positional-encoding-exercises",
+      "domain": null,
+      "scope": "Collects the questions, five recall cards, and worked exercises for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions, five recall cards, and exercises associated with the Positional encoding lesson.",
+      "purpose": "Recall the essential distinctions, check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Compare two visible prefixes",
+        "Recall cards"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/positional-encoding"
+      ],
+      "rank": 96
+    },
+    {
+      "id": "en/probabilities-exercises",
+      "title": "Exercises — Probabilities and softmax",
+      "href": "exercises/probabilities.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "probabilites-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Probabilities and softmax lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the essential idea"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/probabilities",
+        "en/exercises-foundations",
+        "en/exercises-generation",
+        "en/decoding-strategies"
+      ],
+      "rank": 97
+    },
+    {
+      "id": "en/queries-keys-values-exercises",
+      "title": "Exercises — Queries, keys, and values (Q, K, V)",
+      "href": "exercises/queries-keys-values.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "queries-keys-values-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Queries, keys, and values (Q, K, V) lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the essential idea"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/queries-keys-values",
+        "en/exercises-attention"
+      ],
+      "rank": 98
+    },
+    {
+      "id": "en/rag-memory-boundaries-exercises",
+      "title": "Exercises — RAG, memory, and document retrieval",
+      "href": "exercises/rag-memory-boundaries.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "rag-memory-exercises",
+      "domain": null,
+      "scope": "Provides diagnostic scenarios and a controlled experiment on the boundaries between document retrieval, memory, RAG, and ICL.",
+      "summary": "Exercises for distinguishing storage, search, model transmission, and use.",
+      "purpose": "Identify what is actually visible to the model, locate failures, and design an evaluation separating retrieval from generation.",
+      "covered_stages": [],
+      "section_headings": [
+        "1. Identify the transmission boundary",
+        "2. Diagnose a failing RAG system",
+        "3. Distinguish RAG, memory, and ICL",
+        "4. Design a controlled experiment",
+        "5. Separate retrieval quality from use quality",
+        "6. Govern a memory"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/rag-memory-boundaries",
+        "en/context-engineering",
+        "en/in-context-learning"
+      ],
+      "rank": 99
+    },
+    {
+      "id": "en/rope-exercises",
+      "title": "Exercises — RoPE",
+      "href": "exercises/rope.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "rope-exercises",
+      "domain": null,
+      "scope": "Questions and reasoning associated with rotary positional encoding (RoPE).",
+      "summary": "Questions and reasoning associated with rotary positional encoding (RoPE).",
+      "purpose": "Check understanding of Q/K rotations, relative offsets, and the limits of common-shift invariance.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/rope"
+      ],
+      "rank": 100
+    },
+    {
+      "id": "en/scaled-dot-product-attention-exercises",
+      "title": "Exercises — Scaled dot-product attention",
+      "href": "exercises/scaled-dot-product-attention.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "scaled-dot-product-attention-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Scaled dot-product attention lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Weighted mixture or selection?"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/scaled-dot-product-attention"
+      ],
+      "rank": 101
+    },
+    {
+      "id": "en/sinusoidal-positional-encoding-exercises",
+      "title": "Exercises — Sinusoidal positional encoding",
+      "href": "exercises/sinusoidal-positional-encoding.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "sinusoidal-positional-encoding-exercises",
+      "domain": null,
+      "scope": "Questions and answer sketches associated with sinusoidal positional encoding.",
+      "summary": "Questions and answer sketches associated with sinusoidal positional encoding.",
+      "purpose": "Apply the relationships between dimension, frequencies, offsets, positional similarity, and extrapolation.",
+      "covered_stages": [],
+      "section_headings": [
+        "8. Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/sinusoidal-positional-encoding"
+      ],
+      "rank": 102
+    },
+    {
+      "id": "en/text-data-exercises",
+      "title": "Exercises — Text and data",
+      "href": "exercises/text-data.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "text-data-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Text and data lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Encode the prefix and its continuation",
+        "From text to embedding rows",
+        "From embedding to first-block input"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/text-data",
+        "en/embedding-space"
+      ],
+      "rank": 103
+    },
+    {
+      "id": "en/tokenization-strategies-exercises",
+      "title": "Exercises — Tokenization strategies",
+      "href": "exercises/tokenization-strategies.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "tokenization-strategies-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the Tokenization strategies lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "Experiment: compare multiple tokenizers"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/tokenization-strategies"
+      ],
+      "rank": 104
+    },
+    {
+      "id": "en/training-examples-exercises",
+      "title": "Exercises — Training examples",
+      "href": "exercises/training-examples.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "training-examples-exercises",
+      "domain": null,
+      "scope": "Collects six questions and transfer scenarios without duplicating the lesson’s conceptual explanation.",
+      "summary": "Six progressive exercises on alignment, teacher forcing, masks, packing, padding, and logits dimensions.",
+      "purpose": "Check token alignment, causality, mask roles, document boundaries, loss reduction, and logits dimensions.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Input-target shift",
+        "2. Teacher forcing and causality",
+        "3. Attention mask and loss mask",
+        "4. Logits axes",
+        "Apply the mechanisms"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/training-examples"
+      ],
+      "rank": 105
+    },
+    {
+      "id": "en/training-loop-exercises",
+      "title": "Exercises — Training loop",
+      "href": "exercises/training-loop.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "training-loop-exercises",
+      "domain": null,
+      "scope": "Questions on parameter updates, overfitting, validation and test sets, one SGD step, and an end-to-end toy-GPT training scenario.",
+      "summary": "Questions, calculations, and an integrative exercise associated with the training loop.",
+      "purpose": "Connect the forward pass, loss, gradients, parameter updates, and evaluation on held-out data.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "End-of-path transfer exercise"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/training-loop"
+      ],
+      "rank": 106
+    },
+    {
+      "id": "en/transformer-architectures-exercises",
+      "title": "Exercises — Transformer architectures",
+      "href": "exercises/transformer-architectures.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "transformer-architectures-exercises",
+      "domain": null,
+      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
+      "summary": "Self-check questions associated with the Transformer architectures lesson.",
+      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/transformer-architectures"
+      ],
+      "rank": 107
+    },
+    {
+      "id": "en/transformer-block-walkthrough-exercises",
+      "title": "Exercises — Transformer block",
+      "href": "exercises/transformer-block-walkthrough.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-transformer-block-exercises",
+      "domain": null,
+      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
+      "summary": "Exercises associated with the Transformer block guided tour.",
+      "purpose": "Check understanding of the block invariants, shapes, and implementation choices, as well as the comparison of attention variants.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/transformer-block-walkthrough"
+      ],
+      "rank": 108
+    },
+    {
+      "id": "en/transformer-exercises",
+      "title": "Exercises — GPT and Transformers: architecture and data flow",
+      "href": "exercises/transformer.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "transformer-exercises",
+      "domain": null,
+      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
+      "summary": "Self-check questions and exercises associated with the GPT and Transformers: architecture and data flow lesson.",
+      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson's questions and exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the essential idea",
+        "Suggested answers",
+        "Read the original 2017 diagram"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/transformer",
+        "en/transformer-history"
+      ],
+      "rank": 109
+    },
+    {
+      "id": "en/unicode-text-exercises",
+      "title": "Exercises — Unicode, UTF-8, and normalization",
+      "href": "exercises/unicode-text.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "unicode-text-exercises",
+      "domain": null,
+      "scope": "Comprehension question about characters, Unicode code points, and UTF-8 bytes.",
+      "summary": "Comprehension question about characters, Unicode code points, and UTF-8 bytes.",
+      "purpose": "Distinguish an abstract character, a Unicode code point, and a UTF-8 byte without confusing them with a tokenizer's tokens and IDs.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the distinctions"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/unicode-text"
+      ],
+      "rank": 110
+    },
+    {
+      "id": "en/zipf-law-exercises",
+      "title": "Exercises — Zipf’s law",
+      "href": "exercises/zipf-law.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "zipf-law-exercises",
+      "domain": null,
+      "scope": "Checks the central rank-frequency relation, the interpretation of log-log plots, and the distinction between lexical and token frequencies; points to the extended exercise collection.",
+      "summary": "Short self-check questions accompanying the lesson on Zipf's law.",
+      "purpose": "Verify the essential idea before moving to the longer calculations and transfer exercises.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check the essential idea",
+        "Extended practice"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/advent-calendar-story-day-01",
+        "en/exercises-zipf-law",
+        "en/text-data",
+        "en/tokenization-strategies"
+      ],
+      "rank": 111
     },
     {
       "id": "en/experience-information-theory",
@@ -3553,650 +4551,7 @@
         "en/revision-information-theory",
         "en/surprisal-information-content"
       ],
-      "rank": 78
-    },
-    {
-      "id": "en/generation-exercises",
-      "title": "Exercises — Autoregressive generation",
-      "href": "exercises/generation.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "inference-generation-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Autoregressive generation lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Extended practice"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/generation",
-        "en/exercises-generation"
-      ],
-      "rank": 79
-    },
-    {
-      "id": "en/gpt-config-walkthrough-exercises",
-      "title": "Exercises — GPT configuration",
-      "href": "exercises/gpt-config-walkthrough.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-config-exercises",
-      "domain": null,
-      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
-      "summary": "Exercises associated with the GPT configuration guided tour.",
-      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/gpt-config-walkthrough"
-      ],
-      "rank": 80
-    },
-    {
-      "id": "en/gpt-generation-walkthrough-exercises",
-      "title": "Exercises — GPT generation",
-      "href": "exercises/gpt-generation-walkthrough.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-generation-exercises",
-      "domain": null,
-      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
-      "summary": "Exercises associated with the GPT generation guided tour.",
-      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
-      "covered_stages": [],
-      "section_headings": [
-        "Exercises"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/gpt-generation-walkthrough"
-      ],
-      "rank": 81
-    },
-    {
-      "id": "en/gpt-model-walkthrough-exercises",
-      "title": "Exercises — Complete GPT model",
-      "href": "exercises/gpt-model-walkthrough.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-model-exercises",
-      "domain": null,
-      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
-      "summary": "Exercises associated with the Complete GPT model guided tour.",
-      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/gpt-model-walkthrough"
-      ],
-      "rank": 82
-    },
-    {
-      "id": "en/gpt-ops-walkthrough-exercises",
-      "title": "Exercises — GPT numerical operations",
-      "href": "exercises/gpt-ops-walkthrough.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-ops-exercises",
-      "domain": null,
-      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
-      "summary": "Exercises associated with the GPT numerical operations guided tour.",
-      "purpose": "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/gpt-ops-walkthrough"
-      ],
-      "rank": 83
-    },
-    {
-      "id": "en/gradients-exercises",
-      "title": "Exercises — Gradients and backpropagation",
-      "href": "exercises/gradients.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "gradients-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Gradients and backpropagation lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "How do updates compare at equal loss?"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/gradients",
-        "en/cross-entropy"
-      ],
-      "rank": 84
-    },
-    {
-      "id": "en/hybrid-llm-architectures-exercises",
-      "title": "Exercises — Hybrid LLM architectures",
-      "href": "exercises/hybrid-llm-architectures.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "hybrid-llm-architectures-exercises",
-      "domain": null,
-      "scope": "Collects questions and worked exercises on hybrid architectures, top-k routing, and expert-capacity trade-offs.",
-      "summary": "Self-check questions and exercises associated with the Hybrid LLM architectures lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Exercise: deterministic top-k routing"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/hybrid-llm-architectures"
-      ],
-      "rank": 86
-    },
-    {
-      "id": "en/in-context-learning-exercises",
-      "title": "Exercises — In-context learning",
-      "href": "exercises/in-context-learning.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "in-context-learning-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the In-context learning lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/in-context-learning"
-      ],
-      "rank": 87
-    },
-    {
-      "id": "en/jepa-platonic-representation-exercises",
-      "title": "Exercises — JEPA and the Platonic Representation Hypothesis",
-      "href": "exercises/jepa-platonic-representation.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "jepa-platonic-representation-exercises",
-      "domain": null,
-      "scope": "Assesses good-versus-bad-view distinctions, theorem assumptions, interpretation of sample-count comparisons, and the status of the next-token-prediction analogy.",
-      "summary": "Self-check questions for the JEPA and Platonic Representation Hypothesis deep dive.",
-      "purpose": "Check that readers can state the conditions of a theoretical result and avoid overinterpreting empirical findings.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "1. Good views and bad views",
-        "2. Theorem assumptions",
-        "3. Samples and compute",
-        "4. Theoretical status of the analogy"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/jepa-platonic-representation"
-      ],
-      "rank": 89
-    },
-    {
-      "id": "en/likelihood-exercises",
-      "title": "Exercises — Likelihood and log-likelihood",
-      "href": "exercises/likelihood.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "vraisemblance-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Likelihood and log-likelihood lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Calculate likelihood for the running example",
-        "Generate or score from the same prefix"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/likelihood",
-        "en/generation"
-      ],
-      "rank": 90
-    },
-    {
-      "id": "en/llm-computational-complexity-exercises",
-      "title": "Exercises — Computational complexity of LLMs",
-      "href": "exercises/llm-computational-complexity.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-computational-complexity-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Computational complexity of LLMs lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/llm-computational-complexity"
-      ],
-      "rank": 91
-    },
-    {
-      "id": "en/llm-evolution-exercises",
-      "title": "Exercises — Evolution of language models",
-      "href": "exercises/llm-evolution.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-evolution-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Evolution of language models lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/llm-evolution"
-      ],
-      "rank": 93
-    },
-    {
-      "id": "en/llm-limits-exercises",
-      "title": "Exercises — LLM limitations",
-      "href": "exercises/llm-limits.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-limits-exercises",
-      "domain": null,
-      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
-      "summary": "Self-check questions associated with the LLM limitations lesson.",
-      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
-      "covered_stages": [],
-      "section_headings": [],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/llm-limits"
-      ],
-      "rank": 94
-    },
-    {
-      "id": "en/llm-overview-exercises",
-      "title": "Exercises — Language model overview",
-      "href": "exercises/llm-overview.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-overview-exercises",
-      "domain": null,
-      "scope": "Collects the overview's comprehension questions without duplicating the general presentation of model families.",
-      "summary": "Comprehension questions associated with the language model overview.",
-      "purpose": "Distinguish architecture, adaptation, information retrieval, message-format roles, and model-generated tool requests from application-side execution.",
-      "covered_stages": [],
-      "section_headings": [],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/llm-overview"
-      ],
-      "rank": 95
-    },
-    {
-      "id": "en/logits-exercises",
-      "title": "Exercises — Logits",
-      "href": "exercises/logits.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "logits-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Logits lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "From final states to the next-token distribution",
-        "Two softmax operations, two axes"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/logits",
-        "en/transformer",
-        "en/scaled-dot-product-attention"
-      ],
-      "rank": 96
-    },
-    {
-      "id": "en/loss-exercises",
-      "title": "Exercises — Loss: objective and masking",
-      "href": "exercises/loss.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "loss-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Loss: objective and masking lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "A token visible as input and ignored as a target",
-        "Compare checkpoints by validation loss"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/loss"
-      ],
-      "rank": 97
-    },
-    {
-      "id": "en/multimodal-architectures-exercises",
-      "title": "Questions — Analysing a multimodal architecture",
-      "href": "exercises/multimodal-architectures.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "multimodal-architectures-exercises",
-      "domain": null,
-      "scope": "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence.",
-      "summary": "A question framework for analysing modalities, component boundaries, predicted representations, output mechanisms, and comparative evidence.",
-      "purpose": "Analyse a multimodal architecture without conflating understanding, generation, components, and performance evidence.",
-      "covered_stages": [],
-      "section_headings": [
-        "Questions to ask when reading an architecture"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/multimodal-architectures"
-      ],
-      "rank": 99
-    },
-    {
-      "id": "en/next-concept-modeling-exercises",
-      "title": "Exercises — Next-Concept Modeling",
-      "href": "exercises/next-concept-modeling.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "next-concept-modeling-exercises",
-      "domain": null,
-      "scope": "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results.",
-      "summary": "A comprehension question and reasoning about hierarchical code generation in Next-Concept Modeling and the scope of Sudoku results.",
-      "purpose": "Distinguish sequential generation across code levels from parallel prediction within one level, and limit the scope of an experimental result.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the mechanism and the scope of the evidence"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/next-concept-modeling"
-      ],
-      "rank": 101
-    },
-    {
-      "id": "en/positional-encoding-exercises",
-      "title": "Exercises — Positional encoding",
-      "href": "exercises/positional-encoding.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "positional-encoding-exercises",
-      "domain": null,
-      "scope": "Collects the questions, five recall cards, and worked exercises for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions, five recall cards, and exercises associated with the Positional encoding lesson.",
-      "purpose": "Recall the essential distinctions, check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Compare two visible prefixes",
-        "Recall cards"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/positional-encoding"
-      ],
-      "rank": 102
-    },
-    {
-      "id": "en/probabilities-exercises",
-      "title": "Exercises — Probabilities and softmax",
-      "href": "exercises/probabilities.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "probabilites-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Probabilities and softmax lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the essential idea"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/probabilities",
-        "en/exercises-foundations",
-        "en/exercises-generation",
-        "en/decoding-strategies"
-      ],
-      "rank": 103
-    },
-    {
-      "id": "en/queries-keys-values-exercises",
-      "title": "Exercises — Queries, keys, and values (Q, K, V)",
-      "href": "exercises/queries-keys-values.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "queries-keys-values-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Queries, keys, and values (Q, K, V) lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the essential idea"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/queries-keys-values",
-        "en/exercises-attention"
-      ],
-      "rank": 104
-    },
-    {
-      "id": "en/rag-memory-boundaries-exercises",
-      "title": "Exercises — RAG, memory, and document retrieval",
-      "href": "exercises/rag-memory-boundaries.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "rag-memory-exercises",
-      "domain": null,
-      "scope": "Provides diagnostic scenarios and a controlled experiment on the boundaries between document retrieval, memory, RAG, and ICL.",
-      "summary": "Exercises for distinguishing storage, search, model transmission, and use.",
-      "purpose": "Identify what is actually visible to the model, locate failures, and design an evaluation separating retrieval from generation.",
-      "covered_stages": [],
-      "section_headings": [
-        "1. Identify the transmission boundary",
-        "2. Diagnose a failing RAG system",
-        "3. Distinguish RAG, memory, and ICL",
-        "4. Design a controlled experiment",
-        "5. Separate retrieval quality from use quality",
-        "6. Govern a memory"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/rag-memory-boundaries",
-        "en/context-engineering",
-        "en/in-context-learning"
-      ],
-      "rank": 106
+      "rank": 112
     },
     {
       "id": "en/revision-causal-masking",
@@ -4226,7 +4581,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 108
+      "rank": 120
     },
     {
       "id": "en/revision-context-engineering",
@@ -4256,7 +4611,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 109
+      "rank": 121
     },
     {
       "id": "en/revision-contextualized-representations",
@@ -4287,7 +4642,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 110
+      "rank": 122
     },
     {
       "id": "en/revision-cross-entropy",
@@ -4317,7 +4672,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 111
+      "rank": 123
     },
     {
       "id": "en/revision-embedding-space",
@@ -4347,7 +4702,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 112
+      "rank": 124
     },
     {
       "id": "en/revision-entropy",
@@ -4379,7 +4734,7 @@
       "related": [
         "en/entropy-synthesis"
       ],
-      "rank": 113
+      "rank": 125
     },
     {
       "id": "en/revision-gradients",
@@ -4409,7 +4764,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 114
+      "rank": 126
     },
     {
       "id": "en/revision-in-context-learning",
@@ -4439,7 +4794,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 115
+      "rank": 127
     },
     {
       "id": "en/revision-inference-generation",
@@ -4470,7 +4825,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 116
+      "rank": 128
     },
     {
       "id": "en/revision-information-theory",
@@ -4503,7 +4858,7 @@
       "related": [
         "en/experience-information-theory"
       ],
-      "rank": 117
+      "rank": 129
     },
     {
       "id": "en/revision-language-representation",
@@ -4537,7 +4892,7 @@
         "en/revision-text-data",
         "en/revision-embedding-space"
       ],
-      "rank": 118
+      "rank": 130
     },
     {
       "id": "en/revision-llm-overview",
@@ -4567,7 +4922,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 119
+      "rank": 131
     },
     {
       "id": "en/revision-logits",
@@ -4597,7 +4952,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 120
+      "rank": 132
     },
     {
       "id": "en/revision-loss",
@@ -4627,7 +4982,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 121
+      "rank": 133
     },
     {
       "id": "en/revision-positional-encoding",
@@ -4659,7 +5014,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 122
+      "rank": 134
     },
     {
       "id": "en/revision-probabilites",
@@ -4689,7 +5044,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 123
+      "rank": 135
     },
     {
       "id": "en/revision-queries-keys-values",
@@ -4720,7 +5075,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 124
+      "rank": 136
     },
     {
       "id": "en/revision-scaled-dot-product-attention",
@@ -4750,7 +5105,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 125
+      "rank": 137
     },
     {
       "id": "en/revision-text-data",
@@ -4784,7 +5139,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 126
+      "rank": 138
     },
     {
       "id": "en/revision-training-loop",
@@ -4814,7 +5169,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 127
+      "rank": 139
     },
     {
       "id": "en/revision-transformer",
@@ -4844,7 +5199,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 128
+      "rank": 140
     },
     {
       "id": "en/revision-vraisemblance",
@@ -4874,362 +5229,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 129
-    },
-    {
-      "id": "en/rope-exercises",
-      "title": "Exercises — RoPE",
-      "href": "exercises/rope.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "rope-exercises",
-      "domain": null,
-      "scope": "Questions and reasoning associated with rotary positional encoding (RoPE).",
-      "summary": "Questions and reasoning associated with rotary positional encoding (RoPE).",
-      "purpose": "Check understanding of Q/K rotations, relative offsets, and the limits of common-shift invariance.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/rope"
-      ],
-      "rank": 130
-    },
-    {
-      "id": "en/scaled-dot-product-attention-exercises",
-      "title": "Exercises — Scaled dot-product attention",
-      "href": "exercises/scaled-dot-product-attention.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "scaled-dot-product-attention-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Scaled dot-product attention lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Weighted mixture or selection?"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/scaled-dot-product-attention"
-      ],
-      "rank": 131
-    },
-    {
-      "id": "en/sinusoidal-positional-encoding-exercises",
-      "title": "Exercises — Sinusoidal positional encoding",
-      "href": "exercises/sinusoidal-positional-encoding.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "sinusoidal-positional-encoding-exercises",
-      "domain": null,
-      "scope": "Questions and answer sketches associated with sinusoidal positional encoding.",
-      "summary": "Questions and answer sketches associated with sinusoidal positional encoding.",
-      "purpose": "Apply the relationships between dimension, frequencies, offsets, positional similarity, and extrapolation.",
-      "covered_stages": [],
-      "section_headings": [
-        "8. Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/sinusoidal-positional-encoding"
-      ],
-      "rank": 134
-    },
-    {
-      "id": "en/text-data-exercises",
-      "title": "Exercises — Text and data",
-      "href": "exercises/text-data.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "text-data-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Text and data lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Encode the prefix and its continuation",
-        "From text to embedding rows",
-        "From embedding to first-block input"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/text-data",
-        "en/embedding-space"
-      ],
-      "rank": 136
-    },
-    {
-      "id": "en/tokenization-strategies-exercises",
-      "title": "Exercises — Tokenization strategies",
-      "href": "exercises/tokenization-strategies.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "tokenization-strategies-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Tokenization strategies lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "Experiment: compare multiple tokenizers"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/tokenization-strategies"
-      ],
-      "rank": 139
-    },
-    {
-      "id": "en/training-examples-exercises",
-      "title": "Exercises — Training examples",
-      "href": "exercises/training-examples.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "training-examples-exercises",
-      "domain": null,
-      "scope": "Collects six questions and transfer scenarios without duplicating the lesson’s conceptual explanation.",
-      "summary": "Six progressive exercises on alignment, teacher forcing, masks, packing, padding, and logits dimensions.",
-      "purpose": "Check token alignment, causality, mask roles, document boundaries, loss reduction, and logits dimensions.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "1. Input-target shift",
-        "2. Teacher forcing and causality",
-        "3. Attention mask and loss mask",
-        "4. Logits axes",
-        "Apply the mechanisms"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/training-examples"
-      ],
-      "rank": 142
-    },
-    {
-      "id": "en/training-loop-exercises",
-      "title": "Exercises — Training loop",
-      "href": "exercises/training-loop.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "training-loop-exercises",
-      "domain": null,
-      "scope": "Questions on parameter updates, overfitting, validation and test sets, one SGD step, and an end-to-end toy-GPT training scenario.",
-      "summary": "Questions, calculations, and an integrative exercise associated with the training loop.",
-      "purpose": "Connect the forward pass, loss, gradients, parameter updates, and evaluation on held-out data.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding",
-        "End-of-path transfer exercise"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/training-loop"
-      ],
-      "rank": 143
-    },
-    {
-      "id": "en/transformer-architectures-exercises",
-      "title": "Exercises — Transformer architectures",
-      "href": "exercises/transformer-architectures.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "transformer-architectures-exercises",
-      "domain": null,
-      "scope": "Collects the lesson's comprehension questions without duplicating its conceptual explanation.",
-      "summary": "Self-check questions associated with the Transformer architectures lesson.",
-      "purpose": "Check understanding and distinguish the lesson's central ideas through focused questions.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/transformer-architectures"
-      ],
-      "rank": 144
-    },
-    {
-      "id": "en/transformer-block-walkthrough-exercises",
-      "title": "Exercises — Transformer block",
-      "href": "exercises/transformer-block-walkthrough.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-transformer-block-exercises",
-      "domain": null,
-      "scope": "Collects exercises and worked answers for the guided tour without duplicating its code explanation.",
-      "summary": "Exercises associated with the Transformer block guided tour.",
-      "purpose": "Check understanding of the block invariants, shapes, and implementation choices, as well as the comparison of attention variants.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check your understanding"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/transformer-block-walkthrough"
-      ],
-      "rank": 145
-    },
-    {
-      "id": "en/transformer-exercises",
-      "title": "Exercises — GPT and Transformers: architecture and data flow",
-      "href": "exercises/transformer.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "transformer-exercises",
-      "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the GPT and Transformers: architecture and data flow lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson's questions and exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the essential idea",
-        "Suggested answers",
-        "Read the original 2017 diagram"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/transformer",
-        "en/transformer-history"
-      ],
-      "rank": 146
-    },
-    {
-      "id": "en/unicode-text-exercises",
-      "title": "Exercises — Unicode, UTF-8, and normalization",
-      "href": "exercises/unicode-text.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "unicode-text-exercises",
-      "domain": null,
-      "scope": "Comprehension question about characters, Unicode code points, and UTF-8 bytes.",
-      "summary": "Comprehension question about characters, Unicode code points, and UTF-8 bytes.",
-      "purpose": "Distinguish an abstract character, a Unicode code point, and a UTF-8 byte without confusing them with a tokenizer's tokens and IDs.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the distinctions"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/unicode-text"
-      ],
-      "rank": 148
-    },
-    {
-      "id": "en/zipf-law-exercises",
-      "title": "Exercises — Zipf’s law",
-      "href": "exercises/zipf-law.html",
-      "language": "en",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "zipf-law-exercises",
-      "domain": null,
-      "scope": "Checks the central rank-frequency relation, the interpretation of log-log plots, and the distinction between lexical and token frequencies; points to the extended exercise collection.",
-      "summary": "Short self-check questions accompanying the lesson on Zipf's law.",
-      "purpose": "Verify the essential idea before moving to the longer calculations and transfer exercises.",
-      "covered_stages": [],
-      "section_headings": [
-        "Check the essential idea",
-        "Extended practice"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "en/advent-calendar-story-day-01",
-        "en/exercises-zipf-law",
-        "en/text-data",
-        "en/tokenization-strategies"
-      ],
-      "rank": 151
+      "rank": 141
     },
     {
       "id": "reference/references",
