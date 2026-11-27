@@ -233,4 +233,79 @@ The bilingual caveats are materially aligned. Different running examples are acc
 
 **Correction found:** the English Likelihood page had a double-escaped bit-scale formula, `2^{\\bar{\\ell}}`, while the French page correctly used a single LaTeX command. [PR #1783](https://github.com/JM-Brun/llm-lab/pull/1783) changes it to `2^{\bar{\ell}}`. This is a rendering-level source correction, not a change to the mathematical claim.
 
-**Remaining scope:** continue the same targeted method on the loss/cross-entropy and training-loop group, then the Transformer/attention group. Do not infer that the full 20-lesson scientific caveat audit is complete from this slice. Keep findings in this validation document; do not create another claim or lesson registry.
+**Remaining scope:** continue with the input/representation group and the other remaining core lessons. This targeted slice does not complete the scientific-caveat audit for all 20 lessons. Keep findings in this validation document; do not create another claim or lesson registry.
+
+### Targeted scientific-caveat audit — loss and optimization branch (2026-11-27)
+
+A second focused FR/EN review covered **Cross-entropy**, **Loss** and **Training loop**. It follows the output/scoring audit above and remains a targeted slice, not a completed scientific re-review of all 20 core lessons.
+
+- **Cross-entropy:** both languages distinguish predictive entropy from scoring an observed target, one-token loss from sequence/batch reduction, causal target shift from masking, and data loss from the full training objective. They state that ignored positions must be excluded from both numerator and denominator, that reduction conventions change scale, and that tokenizer/corpus/position conventions constrain comparisons. The reference NumPy implementation's narrow contract is explicitly separated from a complete sequence-level LLM loss.
+- **Loss:** both languages distinguish the loss mask from the attention mask. Excluding a target from the objective does not prevent its content from influencing other positions; visibility is controlled by attention masking. Both explain teacher forcing as reference-prefix conditioning and distinguish it from prefill. Perplexity assumptions (log base, tokenizer, corpus and reduction) and the limits of interpreting a falling training curve are stated. The optional note on alternative reductions and weighting is explicitly marked as supplementary in both languages, rather than silently included in the core reading-time budget.
+- **Training loop:** both languages distinguish forward pass, loss, gradient and parameter update; stochastic mini-batch fluctuations; training/validation/test roles; validation-selection bias; overfitting; and the limited scope of the tiny numerical experiment. They also distinguish Adam's second moment from a Hessian and state why the toy experiment is not a general proof.
+
+**Bilingual corrections in [PR #1784](https://github.com/JM-Brun/llm-lab/pull/1784):**
+- Add the missing French counterpart of the English caveat that a one-token alignment error can yield a finite, decreasing loss while training the wrong task.
+- Make the simplified-token assumption explicit in the English three-token loss calculation, matching the French caveat that the displayed units are not a measured tokenizer segmentation.
+- Align the headings for the running-example calculations in the English Cross-entropy and Loss pages with their French counterparts.
+
+The examples use different language-specific tokens, but the probability values, reductions and conclusions are equivalent. No objective, prerequisite or route membership is changed.
+
+**Remaining scope:** the Transformer/attention group is recorded below. Continue with the input/representation group and other remaining core lessons; the 20-lesson scientific-caveat audit remains open.
+
+### Targeted scientific-caveat audit — Transformer and attention branch (2026-11-27)
+
+A third focused FR/EN review covered **Transformer**, **Q/K/V**, **Scaled dot-product attention**, **Causal masking** and **Positional encoding**. No new content correction was required in this group; the caveats below are present in both languages.
+
+- **Transformer:** the decoder-only GPT scope is explicit; pre-LN is presented as common, not universal; residual/normalization order may vary. Training can process known positions in parallel under a causal mask, while generation remains autoregressive. The KV cache reduces recomputation of past keys/values but does not remove sequential token generation; prefill and decode are distinguished.
+- **Q/K/V:** both pages state that projections are recomputed inside each attention sublayer from that block's own input state, including already-contextualized states in later blocks. They explicitly reject placing Q/K/V after the final contextualized representations. Self-attention and cross-attention have different input provenance; `d_k` and `d_v` need not match; attention weights are not universal semantic relevance and are not nearest-neighbour search in initial embeddings.
+- **Scaled dot-product attention:** the pages distinguish raw scores, scaled scores, optional masked scores, row-wise softmax weights and the weighted sum of V. The softmax axis is the key axis for each query. Normalized weights do not establish semantic relevance or causality; the additive hard mask is applied before softmax.
+- **Causal masking:** both languages state the information constraint, the `j <= i` convention and why the current position is generally allowed when predicting the next token. Causal, padding and loss masks have distinct roles; boolean-mask conventions are API-specific.
+- **Positional encoding:** absolute and relative mechanisms are distinguished; RoPE is correctly placed in the relative family and acts on Q/K after projection. NoPE can obtain an implicit ordering signal from nested causal prefixes, but that supplies neither an explicit absolute coordinate nor relative distance and does not guarantee long-context generalization. Positional information and causal visibility remain distinct.
+
+The bilingual explanations are materially aligned, including the central computational correction in #575: Q/K/V are computed within each block from its own input state, not after the final contextualized representations.
+
+**Remaining scope:** this closes only the reviewed Transformer/attention group. The scientific-caveat criterion for all 20 core lessons remains open until the remaining input/representation and other lesson groups are checked.
+
+
+### Targeted scientific-caveat audit — input and representation branch (2026-11-27)
+
+A fourth focused FR/EN review covered **Text data**, **Embedding space** and **Contextualized representations**. No new content correction was required in this group.
+
+- **Text data:** both languages distinguish text, token boundaries, token IDs and special tokens. They state that tokenization is not word segmentation, token IDs are arbitrary model-specific indices rather than semantic values, and tokenizer choice affects sequence length and evaluation comparability.
+- **Embedding space:** both languages describe the embedding table as learned parameters, not a dictionary of fixed semantic definitions. They distinguish token embeddings from layer-specific contextualized states, explain that positional information is a separate architectural contribution, and present input/output weight tying as a common option rather than a universal rule.
+- **Contextualized representations:** both languages state that a token's hidden state depends on its context and layer; it is not a permanent vector representing the token's meaning. They distinguish the residual stream and block transformations from a single static embedding and avoid treating hidden dimensions as directly interpretable semantic features.
+
+The FR/EN explanations are materially aligned. This group also preserves the computational provenance needed by the central spine: token IDs are mapped to learned input states, positional information is incorporated, and the Transformer blocks produce layer-specific contextualized states from which each block computes its own Q/K/V projections.
+
+**Remaining scope:** continue with generation/decoding and evaluation-oriented core lessons, then reconcile the complete 20-lesson review. The scientific-caveat criterion remains open until all core groups have been checked.
+
+
+### Targeted scientific-caveat audit — overview, generation and context-use branch (2026-11-27)
+
+The final focused FR/EN review covered **LLM overview**, **Language representation**, **Generation**, **In-context learning** and **Context engineering**. No additional scientific content correction was required in this group.
+
+- **LLM overview:** the pages state that the next-token distribution supports three distinct uses—generation, scoring and training—not three steps in one execution. The examples are labelled illustrative; token is distinguished from word; parameters remain fixed during ordinary inference; and probable continuation is explicitly not equated with truth or human-like understanding.
+- **Language representation:** both languages distinguish text, tokenizer units, arbitrary vocabulary IDs, learned vectors and later contextualized states. The examples explicitly avoid treating IDs as quantities or embeddings as dictionary definitions; the small illustrative example is not presented as sufficient evidence for learning a word's meaning.
+- **Generation:** both pages distinguish model computation from external token selection and the full autoregressive loop. They cover stochastic sampling, local greedy choices, temperature's effect on the distribution (not parameters or truth), stopping rules, prefill versus incremental decode, KV-cache reuse as an optional efficiency optimization, and teacher forcing as a different training-time conditioning strategy. They also state that a high token probability does not guarantee correctness and that repetition can arise from decoding without a programming bug.
+- **In-context learning:** both pages distinguish prompt-conditioned behavior from parameter updates and fine-tuning. The term's scope is qualified; findings from Min et al. and Yoo et al. are tied to their tasks and protocols; induction-head evidence is bounded to small attention-only models, with larger-model claims described as preliminary; and the Bayesian account is explicitly tied to its HMM assumptions and synthetic experiments. Neither ICL nor a successful few-shot example is presented as a guarantee of correct generalization or human-like understanding.
+- **Context engineering:** both languages distinguish system-stored information, the sequence actually supplied, and positions accessible under the architecture and mask. They state that a larger context window does not guarantee useful information or reliable use; identify position effects, noise, contradictions, indirect prompt injection, stale or misattributed retrieval, cost and latency; and propose controlled evaluation with known answers and irrelevant/contradictory inputs. They explicitly reject guarantees of truth, instruction compliance or complete security.
+
+The FR/EN explanations are materially aligned across this group. The scientific-caveat review has now covered all 20 core lesson pairs in focused groups. This is a completed **targeted page-level caveat audit**, not a line-by-line verification of every equation, cited paper or source claim; those deeper checks remain source- and claim-specific work rather than an implied guarantee.
+
+**Separate editorial follow-up, not a scientific defect:** the French running example used by LLM overview and Language representation appears to be a recognizable cultural quotation, whereas the English continuation is explicitly described as original LLM Lab text. Verify provenance and attribution before expanding or reusing the French wording. No example, image or source was removed or silently rewritten during this audit.
+
+
+### Reading-time audit — 2026-11-27
+
+The duration estimate is a balance signal, not a content quota. The current policy is:
+
+- **10–15 minutes:** editorial target for a core lesson, not a minimum to be reached by padding.
+- **25 minutes:** hard ceiling; exceeding it requires a split/refocus or a documented pedagogical exception.
+- The estimator measures the required reading path, not every optional implementation/deepening detail. Optional blocks are excluded only when explicitly marked `data-reading-time="exclude"`; `collapse="true"` alone is a presentation choice and does not imply optionality.
+- Quarto fenced-div delimiters are markup, not prose. Code blocks remain available to the estimator's separate code-line component; div-like syntax inside fenced code is not parsed as a real callout.
+
+[PR #1781](https://github.com/JM-Brun/llm-lab/pull/1781) implements and tests this measurement contract. Its CI test suite passed (845 passed, 1 skipped).
+
+After correcting the estimator and marking clearly optional callouts, the two pages above the 10–15 minute target are **FR Generation (15.5 min)** and **FR Training loop (15.5 min)**. Neither exceeds the 25-minute ceiling. Their extra half-minute retains central integration distinctions; shortening them solely to hit 15 minutes would remove useful content. The remaining warnings are focused lessons below 10 minutes. They should remain concise where their scope and outcome are genuinely narrow rather than being expanded to satisfy a numerical floor.
+
+This duration audit does not replace the content and scientific-caveat review above. It is a measurement of the required reading path under the explicit optional-content contract.

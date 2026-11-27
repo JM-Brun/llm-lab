@@ -70,6 +70,8 @@ $$
 
 The cost increases when the model assigns low probability to the observed token. A wrong but highly confident prediction is therefore strongly penalized.
 
+### Running-example calculation
+
 For the Romans example, let $p=(0.6,0.2,0.1,0.1)$ for “They”, “Aqueducts”, “Nothing”, and “Well”, and let the one-hot target be $q=(1,0,0,0)$ because “They” is the observed next token. Then:
 
 $$
@@ -141,7 +143,7 @@ The one-hot case is sufficient to compute the penalty for an observed token. For
 
 ## Implementations — NumPy, PyTorch, and numerical stability
 
-::::: {.callout-note collapse="true" title="Show code examples" data-reading-time="exclude"}
+::::: {.callout-note collapse="true" title="Show code examples"}
 
 ::: {.callout-note collapse="true" title="NumPy implementation and tests (advanced)"}
 The [NumPy reference implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) cover a deliberately small case: logits with shape $(B,C)$, one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
