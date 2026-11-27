@@ -1,0 +1,71 @@
+schema_version: 1
+source_id: ainslie-et-al-gqa-2023
+items:
+  - id: ainslie-et-al-gqa-2023:grouped-query-head-sharing
+    kind: architecture
+    summary: "Grouped-query attention partitions query heads into G groups; each group shares one key head and one value head. G=1 recovers MQA, while G equal to the number of query heads recovers MHA."
+    locator: {type: section, value: "2.2", label: "Grouped-query attention; Figure 2"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper defines GQA-G and explicitly identifies the MQA and MHA boundary cases; Figure 2 compares the three head-sharing patterns."
+      assumptions:
+        - "The group count divides the query-head arrangement used by the model."
+      limitations:
+        - "The definition does not prescribe one universally optimal group count."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, topic:multi-query-attention, topic:kv-cache]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides the primary definition for the GQA comparison already cited by the walkthrough."
+
+  - id: ainslie-et-al-gqa-2023:mha-checkpoint-uptraining
+    kind: method
+    summary: "The paper converts MHA checkpoints to MQA/GQA by mean-pooling the original K/V projection matrices within each target group, then performs additional pre-training so the model adapts to the changed structure."
+    locator: {type: section, value: "2.1", label: "Uptraining; Figure 1"}
+    evidence:
+      kind: method-description
+      confidence: established
+      scope: "The method describes checkpoint conversion followed by additional pre-training; the paper reports an uptraining budget of 5% of the original pre-training compute for its experiments."
+      assumptions:
+        - "The conversion begins from an available MHA checkpoint and continues with the original pre-training recipe."
+      limitations:
+        - "The reported 5% budget is specific to the paper's T5 models and recipe, not a general conversion guarantee."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, method:uptraining, topic:kv-cache]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserves the distinction between an attention architecture and the training procedure used to convert existing checkpoints."
+
+  - id: ainslie-et-al-gqa-2023:gqa-quality-speed-tradeoff
+    kind: result
+    summary: "In the paper's T5 experiments, uptrained GQA approaches MHA quality while retaining inference speed closer to MQA."
+    locator: {type: section, value: "3.2–3.3", label: "Main results and ablations"}
+    evidence:
+      kind: empirical-result
+      confidence: context-dependent
+      scope: "The comparison is reported across the paper's summarization, translation and question-answering tasks, with timing measurements on TPUv4."
+      assumptions:
+        - "The reported trade-off is conditioned on the tested T5 checkpoints, group counts, datasets and hardware."
+      limitations:
+        - "Do not present the result as a universal quality/speed guarantee for arbitrary architectures or deployment environments."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, topic:kv-cache, application:incremental-decoding]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides an evidence-backed caveat for the GQA trade-off without transferring benchmark values to the project's toy implementation."
