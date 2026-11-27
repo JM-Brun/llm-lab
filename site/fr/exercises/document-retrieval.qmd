@@ -54,18 +54,16 @@ Non. Le reranker réordonne les candidats qu'il reçoit ; il ne peut pas récup�
 
 </details>
 
-### 3. Interpréter MRR@5
+### 3. Calculer MRR@5
 
-Pour une requête, le premier document pertinent apparaît au rang 2 dans la liste rerankée. Quelle est la valeur de $\mathrm{RR}@5$ pour cette requête ? Pourquoi ne faut-il pas la confondre avec Recall@100 ?
+Pour trois requêtes, le premier document pertinent apparaît respectivement aux rangs 2, 1 et 4 dans les listes rerankées. Calculez MRR@5. Pourquoi cette métrique ne doit-elle pas être confondue avec Recall@100 ?
 
 <details>
 <summary>Afficher le corrigé</summary>
 
-$$
-\mathrm{RR}@5=\frac{1}{2}=0,5.
-$$
+MRR@5 = (1/2 + 1 + 1/4) / 3 = 7/12 ≈ 0,583.
 
-Le reciprocal rank mesure la position du premier résultat pertinent. Recall@100 mesure la proportion de tous les documents pertinents retrouvés dans les 100 candidats. Ces métriques évaluent deux étapes et deux propriétés différentes.
+MRR@5 moyenne le rang réciproque du premier résultat pertinent sur les requêtes. Recall@100 mesure la proportion de tous les documents pertinents retrouvés dans les 100 candidats. Ces métriques évaluent deux étapes et deux propriétés différentes.
 
 </details>
 
