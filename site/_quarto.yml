@@ -426,6 +426,8 @@ website:
           contents:
             - text: "Panorama LLM"
               href: fr/llm-overview.qmd
+            - text: "Objectif d’entraînement : garanties et limites (facultatif)"
+              href: fr/llm-limits.qmd
             - text: "Pourquoi représenter le langage ?"
               href: fr/language-representation.qmd
             - text: "Texte et tokens"
@@ -702,6 +704,8 @@ website:
           contents:
             - text: "LLM overview"
               href: en/llm-overview.qmd
+            - text: "Training objective: guarantees and limits (optional)"
+              href: en/llm-limits.qmd
             - text: "Why represent language?"
               href: en/language-representation.qmd
             - text: "Text and tokens"
