@@ -60,7 +60,7 @@ Pour un lot de $B$ séquences de longueur $T$, la forme usuelle de l'entrée est
 
 Cette écriture est une expansion de la formule matricielle, pas un autre mécanisme. Elle aide à suivre l'indexation des positions et à éviter de confondre la longueur de séquence $T$ avec les dimensions de représentation.
 
-## Géométrie des compatibilités Q–K
+## Géométrie des compatibilités Q–K {#geometrie-compatibilites-qk}
 
 Pour une requête $q_i$ et une clé $k_j$, le score non normalisé standard est leur produit scalaire :
 
@@ -141,7 +141,7 @@ Dans une attention multi-tête classique, chaque tête dispose de sous-projectio
 
 Il faut distinguer ce partage de têtes du **partage des paramètres de projection** : lier, par exemple, des paramètres de projection K et V est une autre modification de la paramétrisation. Les résultats empiriques dépendent de l'architecture et du protocole ; ils ne démontrent pas qu'une variante est universellement supérieure. Pour la provenance distincte des flux, voir la page dédiée à [l'attention croisée](cross-attention.qmd) ; pour le coût mémoire du cache, [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd).
 
-## Interpréter les représentations sans surinterpréter les poids
+## Interpréter les représentations sans surinterpréter les poids {#interpretation-representations-limites}
 
 Un contexte lexical peut modifier l'interprétation d'un token : dans « He sat by the bank », le contexte d'une rivière rend plus probable le sens de *bank* comme rive plutôt que celui d'établissement financier. Cela illustre l'intérêt des représentations contextualisées, mais ne prouve pas qu'une tête isolée effectue seule la désambiguïsation. Une carte d'attention ne suffit pas, à elle seule, à expliquer une décision du modèle ou à établir une relation causale.
 
