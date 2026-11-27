@@ -79,6 +79,7 @@ pedagogical_model:
     - "The example is single-head and non-causal, not a faithful GPT forward pass."
     - "The GPT mapping omits the MLP residual branch and does not describe the complete Transformer block."
     - "Bank, pronoun and adjective examples are intuitions, not measured head-level evidence."
+    - "The toy state is unconstrained: negative needs are allowed, and a hypothetical second meeting can produce a counterintuitive preference for the participant with no offer."
   comparison:
     dossier: "docs/source-reviews/qkv-source-collection.md"
     canonical_graph: "data/concepts.yml"
