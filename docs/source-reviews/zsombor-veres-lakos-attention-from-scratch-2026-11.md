@@ -42,19 +42,19 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 
 ### Correct and useful
 
-- The toy construction uses a shared state matrix (X) and three distinct projections: (Q=XW_Q), (K=XW_K), (V=XW_V) (pp. 2–7).
-- Under the stated row convention, (QK^\top) produces one score row per query. Row-wise softmax yields attention weights (pp. 4–6).
-- (PV) is the weighted aggregation of Value vectors (p. 8).
-- (W_O) maps the aggregate back to the toy state coordinates; (Delta X=(PV)W_O) and (X_{new}=X+Delta X) (pp. 8–9).
+- The toy construction uses a shared state matrix $X$ and three distinct projections: $Q=XW_Q$, $K=XW_K$, $V=XW_V$ (pp. 2–7).
+- Under the stated row convention, $QK^\top$ produces one score row per query. Row-wise softmax yields attention weights (pp. 4–6).
+- $PV$ is the weighted aggregation of Value vectors (p. 8).
+- $W_O$ maps the aggregate back to the toy state coordinates; (Delta X=$PV$W_O) and $X_{new}=X+\Delta X$ (pp. 8–9).
 - The mapping from the toy competence matrix to the GPT residual stream is a useful conceptual bridge (p. 10).
 - The article explicitly acknowledges that its attention figure omits GPT's causal restriction and that masking and multi-head attention are outside its scope (pp. 11–12).
 
 ### Claims and formulations requiring qualification
 
-1. **The scalar 10 is not standard attention scaling.** It is a separate pedagogical multiplier introduced to sharpen the softmax distribution (pp. 4 and 6). It is not the fixed (1/\sqrt{d_k}) factor. Learned projection norms can affect logit magnitudes, but this is not equivalent to inserting a separately learned temperature parameter. The canonical attention lesson and score-scaling deep dive remain authoritative.
-2. **The all-zero score row becomes uniform.** Cara's query is the zero vector, so all scores are zero and softmax returns approximately ((1/3,1/3,1/3)) (p. 6). This is correct for the unmasked toy example. It does not mean causal GPT attention must allocate mass to every token: the causal mask limits accessible positions.
-3. **The toy state is not a full GPT block.** The source maps the attention branch's (Delta X) to a residual-stream update, but does not trace the MLP branch and its residual update (pp. 8–10). Its shorthand about each attention block adding (Delta X) must not replace the complete block computation.
-4. **(W_O) is not the vocabulary output projection.** Here it is the attention sublayer's output projection back into the residual-stream dimension (p. 8), not the final language-model head mapping hidden states to vocabulary logits.
+1. **The scalar 10 is not standard attention scaling.** It is a separate pedagogical multiplier introduced to sharpen the softmax distribution (pp. 4 and 6). It is not the fixed $1/\sqrt{d_k}$ factor. Learned projection norms can affect logit magnitudes, but this is not equivalent to inserting a separately learned temperature parameter. The canonical attention lesson and score-scaling deep dive remain authoritative.
+2. **The all-zero score row becomes uniform.** Cara's query is the zero vector, so all scores are zero and softmax returns approximately $(1/3,1/3,1/3)$ (p. 6). This is correct for the unmasked toy example. It does not mean causal GPT attention must allocate mass to every token: the causal mask limits accessible positions.
+3. **The toy state is not a full GPT block.** The source maps the attention branch's $\Delta X$ to a residual-stream update, but does not trace the MLP branch and its residual update (pp. 8–10). Its shorthand about each attention block adding $\Delta X$ must not replace the complete block computation.
+4. **$W_O$ is not the vocabulary output projection.** Here it is the attention sublayer's output projection back into the residual-stream dimension (p. 8), not the final language-model head mapping hidden states to vocabulary logits.
 5. **The clean needs/offers features are hand-designed.** The article itself cautions that real model features are rarely as clean as “need adjective” and are distributed over many dimensions (p. 11).
 6. **The linguistic examples are illustrative.** “Bank”, “Peter … he” and “quick brown fox” motivate contextual information flow (pp. 11–12); they do not establish that a specific attention head performs word-sense disambiguation, coreference or adjective composition.
 
@@ -68,7 +68,7 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 
 The article's teaching sequence can be reconstructed as:
 
-[
+$
 X \xrightarrow{W_Q,W_K,W_V} Q,K,V
 \quad ; \quad
 S=10QK^\top
@@ -80,7 +80,7 @@ C=PV
 \Delta X=CW_O
 \quad ; \quad
 X_{new}=X+\Delta X.
-]
+$
 
 This is an editorial reconstruction, not a graph supplied by the author. The example uses one head, three participants, four toy state coordinates and a manually selected scalar 10.
 
@@ -150,4 +150,4 @@ The canonical pages already provide stronger mathematical precision, tensor-shap
 
 - If the live Substack page later becomes accessible, compare it with the supplied PDF for post-export edits, comments and linked resources.
 - During the broader conceptual-architecture audit, decide whether “residual stream” warrants a canonical concept identity distinct from generic hidden/contextualized representations.
-- Keep this article's (W_O) distinct from the final vocabulary projection whenever referenced.
+- Keep this article's $W_O$ distinct from the final vocabulary projection whenever referenced.
