@@ -111,7 +111,7 @@ George Kingsley Zipf, *Human Behavior and the Principle of Least Effort: An Intr
 
 Les notices bibliographiques confirment l'édition de 1949 et un chapitre intitulé “On the Economy of Words”. Le texte du livre n'a pas été lu dans cette passe. Il ne faut donc pas lui attribuer ici une démonstration précise ni une interprétation détaillée du principe du moindre effort.
 
-**Disposition actuelle :** piste historique, pas source extraite. Une lecture ciblée du chapitre consacré aux mots est nécessaire avant toute intégration historique.
+**Disposition actuelle :** `scan_status: discovered`, `integration_status: deferred` ; piste historique, pas source extraite. Les notices bibliographiques et le sommaire ne permettent pas d'attribuer un argument précis au livre. Une lecture ciblée du chapitre consacré aux mots est nécessaire avant toute intégration historique.
 
 ## 4. Comparaison transversale : les contributions complémentaires
 

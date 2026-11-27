@@ -2,16 +2,16 @@
 
 **Source:** [How LLM Distillation Trains Smaller Models](https://newsletter.theaiedge.io/p/how-llm-distillation-trains-smaller-models)  
 **Source record:** `aiedge-how-llm-distillation-trains-smaller-models`  
-**Review date:** 2026-11-06  
-**Status:** access blocked; article-specific extraction not yet possible
+**Review date:** 2026-11-27  
+**Status:** article body inaccessible; metadata verified from newsletter listing; article-level integration deferred
 
 ## 1. Evidence boundary
 
-The canonical URL was opened directly; retrieval returned a cache miss. Searches for the exact title and slug did not expose the article body, section headings, figures or references. The newsletter homepage identifies The AiEdge Newsletter as a publication by Damien Benveniste, but that does not establish the byline of this specific article; the source record therefore leaves `creators` empty.
+The canonical URL was opened directly on 2026-11-06 and again on 2026-11-27; both attempts returned a cache miss. The newsletter homepage listing now exposes this article's title, a 2026-11-06 date, the byline Damien Benveniste and a one-sentence teaser (“From teacher-written answers to probability targets and feedback on the student's own output”). These listing fields support the source-record creator/date update, but the teaser is not the article body and does not establish its section structure, figures, references or detailed claims.
 
-This review deliberately does **not** attribute claims from other articles or papers to the AiEdge article. No article-specific extraction file is created until its text can be inspected. The source remains `inaccessible`, not `partially-scanned` or `scanned`.
+This review deliberately does **not** attribute claims from other articles or papers to the AiEdge article. No article-specific extraction file is created until its text can be inspected. The source remains `inaccessible`, not `partially-scanned` or `scanned`; its integration status is now `deferred` because the audit has made an explicit no-integration decision pending readable source text.
 
-Unresolved: article text and structure, byline, publication/update date, figures, linked sources, code/data, comments and reuse rights.
+Unresolved: article text and structure, update date, figures, linked sources, code/data, comments and reuse rights. The byline and publication date are now verified from the newsletter listing.
 
 ## 2. Preliminary LLM Lab coverage check
 
@@ -63,7 +63,7 @@ This is only a hypothesis pending comparison with the article and the existing l
 
 ## 6. Integration decision
 
-**Current decision: defer article-level integration.**
+**Current decision: defer article-level integration** (source record `integration_status: deferred`, `scan_status: inaccessible`).
 
 - Register the source and preserve its canonical URL and access history.
 - Do not create an extraction containing guessed content.
@@ -91,3 +91,10 @@ The target article remains inaccessible and its source status is unchanged. If t
 ## 7. Correction — canonical concept already exists (2026-11-18)
 
 A re-check of `data/concepts.yml` on main found that the earlier statement in §2 saying no knowledge-distillation concept existed was stale: `knowledge-distillation` is already a canonical bilingual concept, linked to `fr/en/llm-evolution`, `fr/en/language-modeling-math` and `fr/en/compression-revision`, and related to `model-compression`. The AiEdge source record's empty `classification.concept_ids` was therefore inconsistent with its explicit title/topic tag. The source record now links to `knowledge-distillation` at the topic/metadata level. This does not upgrade its inaccessible scan status, attribute claims to the article, or justify an extraction.
+
+
+## 9. Revalidation — 2026-11-27
+
+The current newsletter homepage listing resolves two metadata unknowns: the byline is Damien Benveniste and the publication date is 2026-11-06. These are recorded in `data/sources.yml` with a new append-only access-history entry.
+
+The canonical article page still returns a cache miss. The homepage teaser is a discovery aid only; it is not sufficient to extract or attribute claims. The source remains inaccessible and no extraction file is warranted. The explicit no-integration decision is now reflected as `integration_status: deferred`. Reopen the review only when the article body becomes available.

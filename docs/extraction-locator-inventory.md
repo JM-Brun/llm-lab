@@ -148,3 +148,93 @@ The opt-in GitHub Actions inventory completed successfully on commit `0c856b92eb
 - 418 locator mappings with keys `label,type,value`; 71 with `type,value`.
 
 The same workflow's canonical `site/tools/check_source_catalogue.py` step passed. That validator checks extraction source identity resolution, filename/source_id equality and duplicate extraction identities in addition to item structure. These results establish structural validity for this snapshot, not external locator resolution, source inspection completeness, evidential support, scientific correctness or independent corroboration. The earlier 84-file / 432-item snapshot is retained above as historical evidence.
+
+
+## Current corpus revalidation — 2026-11-27
+
+The 2026-11-19 baseline (96 extraction files / 489 items) is historical. The current-main catalogue and extraction-directory snapshot recorded in #1211 reports **177 source records and 137 extraction YAML files**. These raw counts do not establish valid extraction identities, item totals, locator quality, or destination/reference integrity.
+
+A new full-corpus run is requested through the existing opt-in CI job. The run must capture:
+- locator shape and required-field inventory;
+- extraction destination and field inventory;
+- exact commit SHA, workflow run/attempt, command, timestamp, runtime and platform metadata.
+
+Do not turn this observational inventory into a new hard validation gate. Do not infer locator resolution, source inspection, claim support or scientific validity from the presence of a locator. The 2026-11-19 report remains historical until the new artifact is inspected.
+
+
+### Verified current snapshot — 2026-11-27
+
+The opt-in inventory was rerun successfully after the two source dispositions on commit `0e80d5317b7a72430c775d3dede2d4e3a8878ac2`, Actions run [`46071776232`](https://github.com/JM-Brun/llm-lab/actions/runs/46071776232), attempt 1. The raw artifact is `extraction-locator-inventory-0e80d5317b7a72430c775d3dede2d4e3a8878ac2` (90-day retention; archive SHA-256 `109c592782cefdd2f0fb8b1860336dcf980a2d8e2c768951b163bbcccad88d46`). The run took 3 seconds on Linux x64, CPython 3.12.16, PyYAML 6.0.3 and uv 0.13.7.
+
+**Corrected corpus grain:** `data/extractions/` contains 136 `.yml` extraction records plus `README.md` (137 directory entries), not 137 extraction YAML files.
+
+| Measure | Current value | Interpretation |
+|---|---:|---|
+| Source records | 177 | Canonical source catalogue records |
+| Extraction files | 136 | One extraction record per file |
+| Extraction items | 639 | All have mapping-shaped locators |
+| Sources without extraction | 41 | Review/disposition queue, not automatically an error |
+| Integrated sources without extraction | 18 | Must retain an explicit audit rationale; do not create empty extraction files |
+| Sources without extraction with audit record | 41 | All 41 are represented in the source-coverage audit |
+| Sources without extraction without audit record | 0 | No uncovered filename gap in this snapshot |
+| Unknown extraction source IDs / filename mismatches | 0 / 0 | All extraction identities resolve structurally |
+| Malformed records or items | 0 | Source-coverage validator passed |
+
+**Locator-shape inventory:** 639 items; 0 without locators, scalar locators, unsupported locator shapes, malformed extraction records, missing required locator fields or YAML/record errors. The corpus has 17 observed locator types. Counts include `section` 540, `page` 28, `chapter` 11, `page-section` 8, `heading` 7, `figure` 6, `file` 5, `paragraph` 4, `article` 3, `comment` 3, `abstract` 2, `code` 2, `external-source` 2, `table` 2, `timestamp` 14, and the single-count types `code-symbol` and `external-code` (the complete exact distribution is in the artifact).
+
+The dominant `section` type is semantically heterogeneous: 454 opaque text values, 45 section-like values, 25 line-reference-like values and 16 page-number-like values. The `page` type also mixes 18 HTTP URLs and 10 page-number-like values. This is the highest-value next semantic review; it is **not** a structural failure and does not justify a type-specific validator yet. Locator mappings contain `label,type,value` in 531 cases and `type,value` in 108 cases; `label` remains optional.
+
+**Destination and field inventory:**
+- `candidate_destinations.pages`: 521 records, 1,114 references, 104 unique page IDs, 0 invalid entries.
+- `candidate_destinations.concepts`: 451 records, 505 references, 79 unique concept IDs, 0 invalid entries.
+- `classification.concept_ids`: 475 records, 924 references, 94 unique concept IDs, 0 invalid entries.
+- `source.related.pages`: 177 records, 750 references, 114 unique page IDs, 0 invalid entries.
+- `source.related.concepts`: 176 records, 688 references; no unknown concept references.
+- `mapped_concepts`: 46 records, 118 references, 26 unique values.
+- `target_resources`: 46 records, 126 references, 26 unique values.
+- Source-local pedagogical models contain 372 teaching-route steps; these are source-local reconstructions, not canonical learning-route memberships.
+- `candidate_destinations.route_ids` is present in 198 mappings but contributes zero references. Treat this as an observed empty field, not a defect, until its intended contract is decided.
+
+The destination inventory reports field presence, not field requiredness. For example, `classification`, `disposition_rationale`, `technical_assessment`, `pedagogical_assessment`, `mapped_concepts` and `target_resources` are not present on every item. Do not call these missing-data defects without checking item-kind and schema-version contracts. Likewise, `candidate_destinations` are editorial proposals, `mapped_concepts` and `target_resources` are legacy/authoring fields, and source-local teaching routes are not canonical route declarations.
+
+The same CI run validated **6 domains, 125 concepts and 147 relations**. This establishes structural/reference integrity under current validators, not external locator resolution, source inspection completeness, claim support, scientific correctness or independent corroboration.
+
+**Next actions:** review the 41 no-extraction audit decisions (especially the 18 integrated sources); inspect the semantic use of `section` and `page` before defining any grammar; keep the observed empty `route_ids` field report-only; do not add empty extraction files or promote locator presence into evidence of source inspection.
+
+
+#### Cross-check against the canonical source-coverage report
+
+The same CI run's `report_source_coverage.py` output adds context that the locator-shape report alone cannot provide:
+
+| Measure | Count |
+|---|---:|
+| Canonical concepts | 125 |
+| Sources without a concept link | 7 |
+| Sources without a page destination | 8 |
+| Concepts without a source | 12 |
+| Concepts with exactly one source | 26 |
+| Publication dates unknown | 46 |
+| Licence status unknown | 155 |
+| Extraction source references unknown | 0 |
+| Concept references unknown | 0 |
+| Scan-history/status mismatches | 0 |
+
+Source status distribution: scan `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`; integration `deferred=10`, `integrated=54`, `not-reviewed=2`, `partially-integrated=79`, `rejected=1`, `reviewed=31`. These are canonical metadata counts, not a judgment that 171 sources need full rescanning. Do not promote scan status without component-level evidence.
+
+The 41 sources without extraction have this integration-status distribution after the two targeted decisions below: `integrated=18`, `reviewed=6`, `deferred=10`, `partially-integrated=7`, `not-reviewed=0`. Each has at least one `related.audit_records` reference (1–4 per source). This proves an audit reference exists, not that the rationale is complete or current. Prioritize the seven `partially-integrated` sources for a targeted decision check; retain the 18 integrated cases only when their no-extraction rationale is explicit.
+
+Collection coverage in the same report is **69 explicit decisions**, **14 explicitly unassigned**, **108 without a decision**, and **55 total memberships**. This is included only as a cross-report diagnostic; collection identity and membership decisions remain exclusively owned by #1306. Do not reconcile or copy those decisions in this issue.
+
+The 7 source/concept-link gaps, 8 page-destination gaps, 12 concepts without sources and 26 single-source concepts are graph-coverage review queues, not locator-shape errors. Coordinate their semantics with #416/#512; do not silently create links to improve counts. The 47 unknown publication dates and 155 unknown licence statuses remain unknown unless publisher/author/repository evidence supports a value.
+
+
+The two former `not-reviewed` records were explicitly dispositioned without creating extractions:
+- `aiedge-how-llm-distillation-trains-smaller-models`: `inaccessible / deferred`. The newsletter listing now verifies Damien Benveniste and 2026-11-06, but the canonical article body still returns a cache miss; the teaser is not evidence for article-specific claims.
+- `zipf-human-behavior-least-effort-1949`: `discovered / deferred`. The book's bibliographic/table-of-contents metadata is available, but its argument and relevant chapter text remain uninspected; targeted reading is deferred until a claim requires it.
+
+After these decisions, the global integration status distribution is `deferred=12`, `integrated=54`, `partially-integrated=79`, `rejected=1`, `reviewed=31`, with no `not-reviewed` sources. Scan status is unchanged: `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`.
+
+
+#### Empty relation arrays — direct source-catalogue count
+
+A direct count of the current 177 source records finds **8 empty `related.pages` arrays** and **6 empty `related.concepts` arrays**. These are not malformed references and should not be auto-filled. Review each against the source's role and evidence: some records are discovery-only, inaccessible, bibliography-only or intentionally not integrated; others may expose a genuine missing relation. The exact source IDs are visible in the canonical catalogue. This field-level count is distinct from the report's 7 sources without a concept link and 8 without a page destination.
