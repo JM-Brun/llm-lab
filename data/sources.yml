@@ -7354,7 +7354,7 @@ sources:
         limitations:
           - "The full mechanistic analysis, model sweep, ablations and supporting appendices were not re-audited in this ingestion pass."
           - "The source's stronger causal evidence for small attention-only models must not be generalized to large models, where the authors describe more indirect evidence."
-          - "No claim-level integration into the current ICL lesson has been validated."
+          - "At the initial metadata-only pass, no claim-level integration had been validated; a targeted claim-level integration was added in the subsequent review recorded below."
           - "No figure or asset reuse rights were established."
     related:
       pages: [en/in-context-learning, fr/in-context-learning]
@@ -7481,7 +7481,7 @@ sources:
         inspected_scope:
           - "ACL Anthology published metadata, abstract, DOI and pages 2422–2437"
         limitations:
-          - "The full experimental protocol, metrics, prompt-template ablations, model-specific results and appendices were not re-audited in this ingestion pass."
+          - "At the initial metadata-only pass, the full protocol and results had not been re-audited; a targeted review of the main sections and figures was added in the subsequent scan-history event."
           - "The authors report that label correctness effects vary with experimental configuration; the abstract does not support treating labels as universally necessary or irrelevant."
           - "No claim-level integration into the current ICL lesson has been validated."
       - accessed_at: "2026-11-27"
