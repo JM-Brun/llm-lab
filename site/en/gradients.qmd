@@ -106,6 +106,14 @@ Here, $z$ denotes all logits involved in the objective (for example, the logits 
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
 
+<figure id="fig-gradient-backpropagation">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/gradients-en-mobile.svg">
+    <img src="../images/gradients-en.svg" alt="The forward pass goes from parameters to logits, probabilities, local losses and batch loss. Backpropagation starts at the loss, moves to the logit gradient, then applies the chain rule to obtain parameter gradients. The optimizer subsequently applies a separate update rule." style="width:100%;height:auto">
+  </picture>
+  <figcaption>The forward pass computes values; backpropagation carries derivatives backward through the computation graph. The parameter gradient is then used by the optimizer: computing a gradient and updating weights are distinct operations.</figcaption>
+</figure>
+
 ## From gradient to parameter update
 
 The gradient describes local loss sensitivity; it does not specify the update rule on its own. The optimizer turns it into a parameter update, and the learning rate sets its scale. The SGD rule and optimizer choices are covered in the [training loop](training-loop.qmd).

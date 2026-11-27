@@ -38,6 +38,14 @@ project:
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
     - images/advent-zipf-rank-frequency.svg
+    - images/likelihood-fr-mobile.svg
+    - images/likelihood-en-mobile.svg
+    - images/loss-fr-mobile.svg
+    - images/loss-en-mobile.svg
+    - images/gradients-fr-mobile.svg
+    - images/gradients-en-mobile.svg
+    - images/context-engineering-fr-mobile.svg
+    - images/context-engineering-en-mobile.svg
   render:
     - index.qmd
     - fr/scientific-calendar.qmd

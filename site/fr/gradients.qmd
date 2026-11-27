@@ -106,6 +106,14 @@ Ici, $z$ représente l'ensemble des logits concernés par l'objectif (par exempl
 
 Dans un réseau profond, la rétropropagation applique efficacement cette règle de chaîne à travers le graphe de calcul. Les dimensions doivent être cohérentes : les dérivées sont des vecteurs ou tenseurs de même forme que les variables différentiées.
 
+<figure id="fig-gradient-backpropagation">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/gradients-fr-mobile.svg">
+    <img src="../images/gradients-fr.svg" alt="La passe avant va des paramètres aux logits, aux probabilités, aux pertes locales et à la loss. La rétropropagation repart de la loss vers le gradient des logits, puis applique la règle de chaîne pour obtenir le gradient des paramètres. L’optimiseur applique ensuite une règle de mise à jour distincte." style="width:100%;height:auto">
+  </picture>
+  <figcaption>La passe avant calcule les valeurs ; la rétropropagation transporte les dérivées en sens inverse à travers le graphe. Le gradient des paramètres est ensuite utilisé par l’optimiseur : calculer un gradient et mettre à jour les poids sont deux opérations distinctes.</figcaption>
+</figure>
+
 ## Du gradient à la mise à jour
 
 Le gradient décrit la sensibilité locale de la loss ; il ne définit pas à lui seul la règle de mise à jour. L'optimiseur transforme le gradient en mise à jour et le taux d'apprentissage en règle la taille. La règle SGD et les choix d'optimiseur sont traités dans la [boucle d'entraînement](training-loop.qmd).
