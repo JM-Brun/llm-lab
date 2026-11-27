@@ -300,3 +300,131 @@ The component is ready for public navigation when:
 **Next action:** perform Phase 1 as a read-only audit. Start with the existing concept registry and current bilingual pages, then inspect the computational graph and curriculum. Return an evidence-backed coverage matrix and a proposed canonical concept/relation delta before changing page content or navigation.
 
 The audit should explicitly reconcile this component with [the information architecture](information-architecture.md), [the learning path](learning-path.md), and [the canonical computational spine](canonical-computational-spine.md). Preserve the project's rule: one canonical owner per kind of information, with reader-facing routes and graphs generated as projections rather than competing sources of truth.
+
+
+## 14. Phase 1 audit hand-off (2026-11-27)
+
+**Audit status:** source-level inventory and structural checks substantially completed; Phase 1 remains open pending rendered-site inspection and owner review. This section records the current evidence and the remaining work. It does not authorize content, registry, route or navigation changes.
+
+### 14.1 Evidence-backed inventory
+
+The following counts were checked against `main`:
+
+| Item | Verified result |
+|---|---:|
+| Canonical concepts in `data/concepts.yml` | 125 |
+| Concept domains in `data/domains.yml` | 6 |
+| Concept-to-resource references | 394 |
+| Stable page IDs reconstructed from Quarto sources | 315 |
+| Unresolved resource references | 0 |
+| Published pages in the learning-map projections | 153 FR + 153 EN |
+
+Resource resolution must follow the actual page identity contract. In particular, `site/<lang>/exercises/<slug>.qmd` maps to the stable ID `<lang>/<slug>-exercises`; treating every resource ID as a direct `site/<id>.qmd` path produces false missing-file reports.
+
+A targeted sample of 42 mathematical/theoretical pages (21 FR/EN pairs) was also inspected:
+
+- all 42 pages exist in the generated learning-map projections;
+- the compared `topic`, `type`, `destination`, `level` and `domain` metadata agree across the 21 language pairs;
+- local file targets checked in the sample resolve;
+- representative anchors were checked against source headings or route-generated fragments;
+- the 18 pages not listed directly in `concepts.yml.resources` have editorial relationships or optional-route roles. They are not 18 registry errors and must not be associated mechanically.
+
+The 18 pages are: `attention-score-scaling`, `cosine-similarity`, `embedding-linearity` / `linearite-embeddings`, `entropy-synthesis` / `synthese-entropie`, `experience-information-theory`, `mathematical-foundations`, `queries-keys-values-advanced`, `scaling-laws` and `tensors`.
+
+These results are a targeted audit, not a claim that every mathematical statement on every site page has received a scientific review.
+
+### 14.2 Coverage findings to carry into Phase 2
+
+**Already explained in canonical LLM-oriented pages:** embeddings and contextual representations; Q/K/V and attention operations; categorical next-token distributions; likelihood, log-likelihood, NLL, cross-entropy and entropy; loss, gradients, partial derivatives in the loss calculation, chain rule and backpropagation.
+
+**Still implicit, scattered or lacking a reusable general concept identity in the current inventory:**
+
+- Linear algebra: vector, matrix, vector space, linear transformation, dot product and norm.
+- Probability: random variable, general probability distribution, expectation, variance and covariance.
+- Differential calculus: function/composition, derivative, partial derivative, Jacobian and chain rule as reusable mathematical concepts.
+- Numerical analysis: floating-point representation, rounding, conditioning and general numerical stability.
+
+These are candidate coverage gaps, not yet approved additions to the concept registry. The existing probability and gradient lessons explain LLM applications; they should not be mistaken for complete general introductions to probability theory or differential calculus. The tensors page is a technical reference about shapes and axes, not a general linear-algebra course.
+
+**Specific concept candidate:** `scaling-laws` is the strongest candidate for a canonical concept identity: its page is a `concept-lesson` with an autonomous scientific objective, but the concept registry has no corresponding concept. Its scope and relations to model parameters, data, compute and loss still need a precise definition.
+
+**Do not create automatically:** `tensor` and `cosine-similarity` require a granularity decision. The remaining unassociated pages are mainly deep dives, summaries, experiments or optional reading resources, not evidence of one missing concept per page.
+
+The six existing domains appear sufficient for the pilot. No seventh domain is justified by the current evidence.
+
+### 14.3 Architecture constraints confirmed
+
+- The current page destination vocabulary is `orient`, `understand`, `build`, `deepen`, `practice` and `reference`; it has no `foundations` destination.
+- Adding a new destination would require a coordinated change to the metadata contract, validator, learning-map builder/renderers and Quarto navigation/render configuration. Adding only a validator value would be incomplete.
+- The current page-map `domain` field has a specific role for Deepen pages; it must not be silently repurposed as a general Foundations subject classification.
+- `data/guided-route.yml` is the Understand route, not a generic route registry. Foundations must not be inserted as mandatory Understand stages.
+- The concept relation model, pedagogical prerequisites, page graph and computational graph have distinct semantics. Only the existing `prerequisite` relation is currently suitable for directed pedagogical dependencies; mathematical objects must not be represented as computational operations.
+- Existing ownership remains in force: #1554 for cross-registry inventory, #416 for concept-relation semantics, #575 for the canonical computational spine, and #1512 for the exercise-page model.
+
+### 14.4 Confirmed source anomalies — defer changes until review
+
+1. `site/fr/exercises-foundations.qmd` and `site/en/exercises-foundations.qmd` contain literal backslash-n sequences in the continuation-links paragraph before exercises 8 and 9.
+2. `site/en/likelihood.qmd` contains doubled backslashes in `2^{\\bar{\\ell}}`, while the French source uses `2^{\bar{\ell}}`.
+3. `attention-score-scaling` describes its derivation as relying on Gaussian assumptions, while the displayed variance derivation requires independence, centering and unit variance; Gaussianity is used for the simulation. The proof assumptions and simulation choice should be distinguished.
+
+These are source-level findings. Fixes are intentionally deferred until the audit is reviewed and the implementation scope is approved.
+
+### 14.5 Remaining work, in execution order
+
+#### A. Close Phase 1 — rendered and scientific verification
+
+- [ ] Inspect the published HTML for the 42-page sample when the Pages deployment is reachable. Record the deployment/version inspected.
+- [ ] Verify rendered equations, equation numbering/references, diagrams and figures, captions, code blocks and cross-language notation.
+- [ ] Test representative internal links and anchors in a browser, including route-generated anchors.
+- [ ] Inspect responsive layouts at desktop and mobile widths; check horizontal overflow, equation clipping and diagram readability.
+- [ ] Perform keyboard navigation and a focused screen-reader/accessibility pass on representative page structures.
+- [ ] Review the scientific claims and derivations on the proposed pilot pages, distinguishing formal assumptions from illustrative or simulation choices.
+- [ ] Review the coverage matrix and candidate gaps with the project owner. Mark each item as covered, partially covered, intentionally out of scope or approved gap, with source evidence and confidence.
+
+**Exit condition:** the audit records both source-level and rendered-page evidence, and the project owner accepts the coverage findings. A successful Quarto build or metadata CI is necessary but does not satisfy this exit condition by itself.
+
+#### B. Phase 2 — decide the minimal concept and relation delta
+
+- [ ] For each candidate, write a scope statement, definition, bilingual labels, boundaries and LLM use cases before assigning an ID.
+- [ ] Review the linear-algebra, probability and differential-calculus clusters for useful prerequisite order without forcing them into one linear course.
+- [ ] Decide whether `scaling-laws` merits a canonical concept and define its scope and relations.
+- [ ] Decide whether `tensor` and `cosine-similarity` deserve concept identities or remain applications/references.
+- [ ] Reuse existing concepts and relation types wherever their semantics fit; coordinate any relation-model change with #416.
+- [ ] Confirm domain membership using the six existing domains; coordinate cross-registry consequences with #1554.
+- [ ] Keep all mathematical prerequisites out of `data/computational-graph.yml`.
+
+**Exit condition:** a reviewed, minimal concept/relation proposal with no page-per-concept assumption and no duplicate registry.
+
+#### C. Phase 3 — resolve the component/navigation representation
+
+- [ ] Compare two explicit options: a coordinated `destination:foundations` extension, or a Foundations navigation projection that preserves existing destination semantics.
+- [ ] For either option, enumerate every affected contract, validator, generator, renderer, navigation entry and bilingual page.
+- [ ] Decide how subject/domain classification works without overloading the current Deepen-only page-map field.
+- [ ] Define Foundations entry points and path objectives, prerequisites, optional branches and expected outcomes.
+- [ ] Keep Foundations independent from the Understand guided route; do not make it a gate before Understand or Build.
+- [ ] Coordinate any exercise links and collections with #1512.
+
+**Exit condition:** a minimal architecture decision and migration plan accepted before implementation.
+
+#### D. Phase 4 — pilot before broad rollout
+
+- [ ] Select a small representative pilot from existing pages; prefer upgrading a canonical page over creating a duplicate.
+- [ ] Test the learning contract with definitions, stated assumptions, derivations, hand-computable examples, numerical verification and explicit LLM applications.
+- [ ] Have mathematical correctness reviewed independently from code/tests.
+- [ ] Validate French/English equivalence, rendered LaTeX, links, accessibility and mobile behavior.
+- [ ] Keep growing exercise banks in Practice & Experiment, linked from the explanatory pages.
+
+**Exit condition:** the pilot demonstrates that a learner can move between intuition, formalism, implementation and LLM application without unnecessary duplication.
+
+#### E. Phase 5 — progressive extension and maintenance
+
+- [ ] Extend only from demonstrated gaps, learner needs and justified prerequisites.
+- [ ] Add advanced theory when a specific learning or research objective warrants it.
+- [ ] Document where future concepts, pages, exercises, code artifacts and references should be added.
+- [ ] Re-run bilingual, metadata, link, rendered-equation and accessibility checks as part of normal content maintenance.
+
+### 14.6 Current implementation boundary
+
+No lesson page, source anomaly, concept, relation, domain, route, destination, renderer or navigation entry was changed by the Phase 1 audit. The documentation above records findings and work still to be done; it is not an implementation approval.
+
+**Immediate next action:** complete the rendered-page and scientific review in section 14.5.A, then obtain explicit owner acceptance of the coverage matrix before starting the concept delta in Phase 2.
