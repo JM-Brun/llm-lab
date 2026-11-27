@@ -1410,7 +1410,8 @@ sources:
       pages: [en/gradients, fr/gradients]
       concepts: [gradient]
       audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-gradcheck-api.yml]
-- id: su-roformer-rope-2021
+
+  - id: su-roformer-rope-2021
     title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
     creators: ["Jianlin Su et al."]
     source_type: paper
