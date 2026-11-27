@@ -9,17 +9,17 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations-advanced"
-summary: "Formalizes contextual dependencies and deepens the internal operation of Transformer blocks: self-attention, MLP, residual connections, and normalization."
-scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, the roles of self-attention and the MLP, the residual stream, and normalization."
+summary: "Formalizes contextual dependencies, deepens Transformer blocks, and relates the conceptual model to empirical findings about representations and layers."
+scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, self-attention and MLP, the residual stream, normalization, empirical studies of contextuality, and layer probing."
 domain: "architectures-mechanisms"
-purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain Transformer sublayers, residual connections, and normalization variants."
+purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, explain Transformer sublayers, and critically interpret empirical findings about contextuality, representation geometry, and information decoded across layers."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["en/deepen"]
   children: []
-related: ["en/queries-keys-values-advanced", "en/rope", "en/transformer"]
+related: ["en/contextualized-representations", "en/queries-keys-values-advanced", "en/rope", "en/transformer"]
 tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -145,6 +145,41 @@ The pronoun's representation can incorporate information from its accessible pre
 $h_t^{(0)}$ denotes the initial input at position $t$. Each block produces a new state, $h_t^{(1)}$, then $h_t^{(2)}$, and so on. The index $t$ stays fixed: we follow the representation at that position through network depth.
 
 The vector is not replaced by a sense label. It is transformed by learned operations that progressively integrate information allowed by the architecture and mask.
+
+## 6. What empirical studies allow us to claim
+
+Studies of contextualized representations provide complementary evidence, but they do not all measure the same object or examine the same architecture.
+
+### Sequence-dependent representations before Transformers
+
+Peters et al. (2018) introduce ELMo (*Embeddings from Language Models*), whose word representations are learned functions of the internal states of a bidirectional LSTM language model. This work establishes the value of context-sensitive representations before Transformers became the dominant architecture. It does not describe GPT self-attention.
+
+### Measuring contextuality and its geometric limits
+
+Ethayarajh (2019) studies ELMo, BERT, and GPT-2. After adjusting for anisotropy, representations of the same word in different contexts remain more similar to one another on average than representations of different words, but this self-similarity decreases in upper layers.
+
+The paper also reports an **average Maximum Explainable Variance (MEV) below 5%** across the studied layers after anisotropy adjustment. MEV estimates the proportion of a word's representation variance explained by its first principal component; in this protocol, it gives an upper bound on what a single static vector could explain. It is therefore neither a raw variance measure nor a direct comparison with any arbitrary pretrained static embedding.
+
+Two qualifications matter:
+
+- this is an aggregate result over the models, layers, and data studied in 2019, not a universal constant for every LLM;
+- contextualized representations are anisotropic: a high raw cosine similarity can arise from this geometry and does not by itself establish that two vectors carry the same meaning.
+
+Under this measurement protocol, a static vector explains little of the variability across a word's occurrences; this does not prove that every human word sense corresponds to a distinct geometric region.
+
+### Linguistic information across layers
+
+Tenney, Das, and Pavlick (2019) use probing tasks to investigate where linguistic information is accessible in BERT. On average, they observe a progression from part-of-speech information through syntax, named entities, semantic roles, and coreference. Their qualitative analysis also shows that the model can revise lower-level decisions in light of higher-level contextual information.
+
+A probing result indicates that information can be decoded from a representation under a particular protocol. By itself, it does not demonstrate that the model uses that information as a human would, that a layer has an exclusive function, or that a particular head performs an identifiable linguistic operation.
+
+**Takeaway:** hidden states are context-dependent in the studied models, but their content, geometry, and organization across layers depend on architecture, training objective, model, and measurement method.
+
+Primary references:
+
+- Peters et al. (2018), [*Deep Contextualized Word Representations*](https://aclanthology.org/N18-1202/).
+- Ethayarajh (2019), [*How Contextual are Contextualized Word Representations?*](https://aclanthology.org/D19-1006/).
+- Tenney, Das, and Pavlick (2019), [*BERT Rediscovers the Classical NLP Pipeline*](https://aclanthology.org/P19-1452/).
 
 ## Limits of this formalization
 

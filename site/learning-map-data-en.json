@@ -5889,7 +5889,7 @@
     {
       "id": "contextualized-representation",
       "label": "Contextualized representation",
-      "definition": "Vector state whose value depends on the token, its context, and the network computation.",
+      "definition": "Vector state associated with a token occurrence, computed from its initial representation, positional information, and the context accessible under the model architecture.",
       "importance": "core",
       "domains": [
         "architectures-mechanisms",
@@ -5900,6 +5900,11 @@
           "id": "en/contextualized-representations",
           "title": "Why can the same token have different contextualized representations?",
           "href": "contextualized-representations.html"
+        },
+        {
+          "id": "en/contextualized-representations-advanced",
+          "title": "Contextualized representations: dependencies across positions and layers",
+          "href": "contextualized-representations-advanced.html"
         }
       ],
       "code_resources": [
