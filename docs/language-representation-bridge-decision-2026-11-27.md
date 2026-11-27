@@ -250,7 +250,7 @@ The first implementation increment is deliberately metadata-only. It creates the
 
 The existing typed concept relations already express the important conceptual transitions: a token is represented by an ID and by an embedding; the ID is a prerequisite for the initial embedding; the initial embedding is a prerequisite for the contextualized representation. **Do not add a generic “numerical representation” concept or new relation type merely to name the motivation.** The bridge is a pedagogical explanation connecting existing scientific concepts, not necessarily a new ontology entity.
 
-The planned page records reuse the existing `concept-lesson` type, `understand` destination, and `overview` level. `language-representation` is a page topic, not a new scientific domain. The page sources remain `status:planned`; they are therefore excluded from the published-page index and learning-map projection. They are not yet added to `site/_quarto.yml`, the active `suggested_route` edges of published pages, or `data/guided-route.yml`.
+The page records use the existing `concept-bridge` type, `understand` destination, and `overview` level. This is more precise than `concept-lesson`: the page's editorial job is to connect the symbolic input to the numerical representations unpacked by the following lessons. `language-representation` is a page topic, not a new scientific domain. The page sources remain `status:planned`; they are therefore excluded from the published-page index and learning-map projection. They are not yet added to `site/_quarto.yml`, the active `suggested_route` edges of published pages, or `data/guided-route.yml`.
 
 Only after the bilingual explanation is authored and reviewed should the next increment:
 1. change the two page statuses to `published` and add both sources to Quarto's explicit render list;
@@ -268,7 +268,7 @@ The bilingual pages have now been authored and activated:
 - `site/fr/language-representation.qmd`
 - `site/en/language-representation.qmd`
 
-Both use the existing `concept-lesson` type, `understand` destination, `language-representation` topic, `overview` level and `published` status. No new metadata vocabulary or schema field was introduced.
+Both use the existing `concept-bridge` type, `understand` destination, `language-representation` topic, `overview` level and `published` status. The type follows the page design system's definition: connect a concept to its prerequisites or applications. No new metadata vocabulary or schema field was introduced.
 
 The page content follows the intended conceptual boundary:
 - why neural computation uses numerical tensors;
