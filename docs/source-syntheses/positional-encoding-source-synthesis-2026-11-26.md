@@ -33,8 +33,8 @@ The collection deliberately distinguishes primary technical sources from pedagog
 | Raffel et al. (2020), [T5](https://arxiv.org/abs/1910.10683), §2.1 | Primary paper section defining the T5 positional mechanism | A learned scalar indexed by a logarithmically bucketed query–key offset is added to each pre-softmax attention logit; parameters are shared across layers and distinct per head | Primary source for bucketed relative score bias; the 32 buckets and 128-token cap are T5 configuration choices |
 | Press et al. (2022), [ALiBi](https://arxiv.org/abs/2108.12409) | Primary paper abstract and §§2–4 | A fixed, head-specific linear distance penalty is added to attention scores before softmax; no positional vector is added at the input | Primary source for ALiBi and its reported length-extrapolation experiments; results are protocol-specific |
 | Su et al. (2021), [RoFormer](https://arxiv.org/abs/2104.09864) | RoPE formulation, derivation and relevant experiments; see the existing source review | Position-dependent rotations of paired query/key coordinates produce a relative-offset contribution to their dot product | Primary source for the RoPE deep dive |
-| Damien Benveniste (2026), [How LLMs Encode Token Position](https://newsletter.theaiedge.io/p/how-llms-encode-token-position) | Indexed snapshot: title, author, date, introduction, four-method outline and causal-mask distinction; full article body unavailable | Clear four-way framing of learned absolute vectors, sinusoids, RoPE and ALiBi; explicitly separates positional information from causal visibility and cautions that position alone does not determine attention/retrieval | Independent introductory cross-check for the core comparison; no new concept or page justified by the available snapshot |
-| Damien Benveniste (2026), [How LLMs Encode Token Position](https://newsletter.theaiedge.io/p/how-llms-encode-token-position) (same post as [Substack inbox URL](https://substack.com/inbox/post/225953856)) | Indexed snapshot: title, author, subtitle, introduction, four-method outline and causal-visibility distinction; full body and figures unavailable | Short-form insertion-point framing from token indices to scores; explicit position-versus-mask contrast | Supplementary cross-check only; no new mechanism, page, concept, diagram or route justified by available evidence |
+| Damien Benveniste (2026), [How LLMs Encode Token Position](https://newsletter.theaiedge.io/p/how-llms-encode-token-position) ([same post: Substack inbox alias](https://substack.com/inbox/post/225953856)) | One indexed snapshot: title, author, subtitle, introduction, four-method outline and causal-visibility distinction; full body and figures unavailable | Short-form insertion-point framing from token indices to scores; explicit position-versus-mask contrast | Supplementary cross-check only; no new mechanism, page, concept, diagram or route justified by available evidence |
+
 | Sebastian Raschka (2026), [Understanding Positional Embeddings in Modern LLMs](https://magazine.sebastianraschka.com/p/understanding-positional-embeddings) | Full article text, equations, code snippets and 38 figure captions/context; linked Qwen3 notebook statically inspected | Modern architecture comparison: partial RoPE, NoPE, hybrid layers, relative bias, frequency configuration and implementation conventions | Cross-check and implementation comparison; figures were not individually inspected as image files and the notebook was not executed |
 | Khan et al. (2026), [Fractional Rotation, Full Potential?](https://arxiv.org/abs/2603.11611) | arXiv v2: abstract, setup, principal partial-RoPE analysis, conclusion and Appendix C | Experimental study of partial-RoPE fractions and the size of precomputed sine/cosine tables | Qualifies the partial-RoPE discussion; findings are bounded to the studied model sizes, data and training protocol |
 
@@ -144,16 +144,29 @@ A separate relative-bias deep dive (Shaw → T5 → ALiBi) is a **future candida
 
 ## 7. Remaining work and validation gates
 
-1. Run the source-catalogue and source-collection validators after the metadata changes.
-2. Run the bilingual metadata, revision-coverage and learning-map freshness checks; regenerate the map artifacts from site/tools/build_learning_map.py.
-3. Render the Quarto site and check all new links, anchors and mathematical rendering.
-4. Inspect the FR/EN lesson, synthesis and Practice pages at desktop and mobile widths, including keyboard operation of the answer disclosures.
-5. Revisit the visual design only if an original three-way insertion-point diagram (input addition / QK rotation / score bias) materially improves comprehension; do not copy third-party figures.
-6. Consider a separate Shaw/T5/ALiBi deep dive only after a concrete implementation or mathematical need is identified.
+The original integration checklist is retained here as a set of follow-up gates, not as a claim that every item is currently blocking the source record.
+
+### Open source-inspection task
+
+1. **AiEdge full-text audit — blocked by source access.** If the complete article becomes directly accessible, inspect its full section sequence, equations, diagrams, worked examples, exercises, implementation details and outbound references. Update the structured extraction and this dossier only with evidence actually inspected.
+2. **Complete route crosswalk — dependent on item 1.** Compare the article section by section with the corresponding LLM Lab lesson route and the wider project learning route. Record ordering, prerequisites, teaching moves, practice and conclusion separately. Until then, the current crosswalk remains explicitly partial; do not infer that unobserved elements are absent.
+
+### Revalidation triggers for future content changes
+
+3. After any future source-catalogue or collection-membership edit, run the source-catalogue, collection and extraction-locator validators.
+4. After any future bilingual lesson, synthesis or Practice edit, run metadata, revision-coverage and learning-map freshness checks; regenerate map artifacts with `site/tools/build_learning_map.py` where required.
+5. After any Quarto content or link change, render the site and check links, anchors and mathematical rendering. For UI changes, inspect FR/EN pages at desktop and mobile widths and verify keyboard operation of answer disclosures.
+
+The AiEdge ingestion PR #1765 passed Python quality, tests, Quarto/browser audit and secret scanning; its full-corpus extraction-locator inventory also passed. The opt-in concept-registry scale benchmark was skipped. These automated checks do not replace the manual responsive/accessibility checks above or a learner-outcome evaluation.
+
+### Deferred, evidence-triggered work
+
+6. Revisit the visual design only if an original three-way insertion-point diagram (input addition / QK rotation / score bias) materially improves comprehension. Do not copy third-party figures; the current lesson already has a relevant comparison.
+7. Consider a separate Shaw/T5/ALiBi deep dive only when concrete implementation or mathematical material outgrows the concise core comparison and existing deep dives.
 
 No learner outcome, independent benchmark reproduction or long-context performance claim is made by this source compilation.
 
 ### Additional source access note (2026-11-27)
 
 - Damien Benveniste's *How LLMs Encode Token Position* is registered and reviewed from the indexed snapshot available on 27 November 2026. Its contribution is complementary but does not justify a new canonical concept, page, computation node or learning-route stage. The complete article remains unverified because direct retrieval returned a cache miss.
-- The accompanying user-supplied URL https://substack.com/inbox/post/225953856 could not be resolved to a public article identity. It is intentionally not matched to another AiEdge post by author or topic. Ingestion of that third reference is pending its public post URL or title.
+- The Substack inbox URL `https://substack.com/inbox/post/225953856` is confirmed as an alias for the same AiEdge article, not a third source. The canonical URL and alias are recorded in the source catalogue and source review.

@@ -64,7 +64,21 @@ These are useful as a compact orientation and a reminder of common confusions. T
 | Partial RoPE, NoPE and hybrid architectures | No; covered by Raschka and Khan | No change |
 | New experiment or benchmark | Not evidenced in the accessible snapshot | Do not infer one |
 
-## 3. Placement in the canonical computational model
+## 3. Source-route crosswalk (partial evidence only)
+
+The full article was not accessible, so its section-by-section teaching route cannot be reconstructed. The available indexed material supports only this limited route sketch:
+
+| Learning function | AiEdge evidence available | LLM Lab comparison | Decision |
+|---|---|---|---|
+| Orientation | Frames the question as encoding token position | The existing core lesson already motivates why order must be represented | No new introduction |
+| Method comparison | Names learned absolute vectors, sinusoids, RoPE and ALiBi | The bilingual lesson and existing diagram compare the mechanisms by computational insertion point | Retain as a concise cross-check |
+| Computational placement | The indexed framing runs from token indices toward attention scores | The canonical lesson distinguishes input addition, Q/K rotation and score-level bias; the synthesis preserves Shaw's separate key/value path | No new route stage or diagram |
+| Qualification | Separates positional information from causal visibility | The lesson already distinguishes positional mechanisms from the causal mask and discusses NoPE | No new section |
+| Practice / implementation / conclusion | Not available in the inspected snapshot | Cannot compare these stages or claim that the source lacks them | Keep unknown; do not infer |
+
+This is not a full route comparison. In particular, the source's ordering, prerequisites, worked examples, exercises, implementation sequence and conclusion remain unverified. The decision not to change the LLM Lab route is based on the overlap of the *visible* framing with existing material, not on a claim that the complete article has been audited.
+
+## 4. Placement in the canonical computational model
 
 The article's visible insertion-point framing is consistent with the project's computational spine, but the mechanisms must not be collapsed into a single pre-block operation:
 
@@ -77,7 +91,7 @@ The article's visible insertion-point framing is consistent with the project's c
 
 Thus the source is relevant to the forward-pass subgraph (input embeddings, block-local attention, scores and masking), but it does not motivate a new computational node or relation. The canonical concept graph, computational graph and learning routes remain unchanged.
 
-## 4. Disposition and maintenance
+## 5. Disposition and maintenance
 
 - **Source identity:** one record, with the AiEdge URL canonical and the Substack inbox URL recorded as an alias.
 - **Collection:** existing `positional-encoding`; no new collection.
@@ -86,6 +100,6 @@ Thus the source is relevant to the forward-pass subgraph (input embeddings, bloc
 - **Deep dives:** no edits; Su, Shaw, T5, ALiBi, Raschka and Khan already supply the detailed evidence and derivations.
 - **Rights:** no text, code or figures copied; permissions remain unknown.
 
-## 5. Remaining gate
+## 6. Remaining gate
 
 If the complete AiEdge article becomes directly accessible, inspect its full section sequence, equations, diagrams, examples and outbound references. Reopen this decision only if it reveals a distinct explanation, a missing mechanism or evidence not already represented. Until then, keep the source partially scanned and avoid promoting the indexed outline into a full-text audit.
