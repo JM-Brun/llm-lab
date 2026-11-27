@@ -124,12 +124,12 @@ Les relations de concepts existantes doivent être conservées. L'ajout d'une so
 
 ### 3.2 Registre des sources
 
-Pour Logits :
-- réexaminer l'entrée existante `jay-alammar-illustrated-gpt2` ;
-- si l'apport est retenu, ajouter `fr/logits` et `en/logits` à `related.pages` ;
-- ajouter `logits` et `output-projection` aux concepts pertinents de la classification ;
-- ne pas déclarer la source entièrement intégrée tant que son statut de scan, les limites d'inspection et la décision d'intégration ne sont pas cohérents ;
-- ne pas réutiliser ses figures sans vérification spécifique de provenance et de droits.
+Pour Logits et Gradients — audit pédagogique et mathématique effectué dans la PR #1757 :
+- les dérivations des logits, de la cross-entropie one-hot, du gradient `p-y`, de la moyenne sur positions valides et de la règle de chaîne ont été vérifiées ;
+- les trois références PyTorch déjà liées aux pages sont maintenant cataloguées : CrossEntropyLoss, Autograd mechanics et gradcheck ;
+- les trois notices disposent d'extractions atomiques et de relations vers les pages FR/EN et concepts existants ;
+- les pages explicitent désormais `p = softmax(z)` et les conditions de précision/validité de `gradcheck` ;
+- l'entrée existante `jay-alammar-illustrated-gpt2` reste à réexaminer spécifiquement pour sa contribution à Logits ; aucune figure ne sera réutilisée sans audit de provenance et de droits.
 
 Pour ICL :
 - créer ou réconcilier les entrées canoniques des références Brown, Olsson, Xie et Min déjà présentes dans la bibliographie ;
