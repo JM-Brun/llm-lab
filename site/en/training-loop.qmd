@@ -135,7 +135,7 @@ After this path, you can study [post-training](post-training.qmd) or apply an [e
 
 ### Implementation
 
-::: {.callout-note collapse="true" title="Show the runnable code"}
+::: {.callout-note collapse="true" title="Show the runnable code" data-reading-time="exclude"}
 
 <span class="epistemic-badge badge-code">Run locally</span> The code uses the maintained `llm_lab.foundations.losses` functions for the loss and its gradient with respect to logits, and adds only the loop. Run it from the repository root after `uv sync`.
 
