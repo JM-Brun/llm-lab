@@ -265,3 +265,16 @@ A third focused FR/EN review covered **Transformer**, **Q/K/V**, **Scaled dot-pr
 The bilingual explanations are materially aligned, including the central computational correction in #575: Q/K/V are computed within each block from its own input state, not after the final contextualized representations.
 
 **Remaining scope:** this closes only the reviewed Transformer/attention group. The scientific-caveat criterion for all 20 core lessons remains open until the remaining input/representation and other lesson groups are checked.
+
+
+### Targeted scientific-caveat audit — input and representation branch (2026-11-27)
+
+A fourth focused FR/EN review covered **Text data**, **Embedding space** and **Contextualized representations**. No new content correction was required in this group.
+
+- **Text data:** both languages distinguish text, token boundaries, token IDs and special tokens. They state that tokenization is not word segmentation, token IDs are arbitrary model-specific indices rather than semantic values, and tokenizer choice affects sequence length and evaluation comparability.
+- **Embedding space:** both languages describe the embedding table as learned parameters, not a dictionary of fixed semantic definitions. They distinguish token embeddings from layer-specific contextualized states, explain that positional information is a separate architectural contribution, and present input/output weight tying as a common option rather than a universal rule.
+- **Contextualized representations:** both languages state that a token's hidden state depends on its context and layer; it is not a permanent vector representing the token's meaning. They distinguish the residual stream and block transformations from a single static embedding and avoid treating hidden dimensions as directly interpretable semantic features.
+
+The FR/EN explanations are materially aligned. This group also preserves the computational provenance needed by the central spine: token IDs are mapped to learned input states, positional information is incorporated, and the Transformer blocks produce layer-specific contextualized states from which each block computes its own Q/K/V projections.
+
+**Remaining scope:** continue with generation/decoding and evaluation-oriented core lessons, then reconcile the complete 20-lesson review. The scientific-caveat criterion remains open until all core groups have been checked.
