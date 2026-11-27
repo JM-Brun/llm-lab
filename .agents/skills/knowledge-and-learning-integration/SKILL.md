@@ -7,7 +7,7 @@ description: Integrate validated source-extraction records into the LLM Lab know
 
 ## Mission and phase boundary
 
-This is **Phase B: integration**. Consume persistent, reviewable records produced by `source-extraction`. Decide which items genuinely improve LLM Lab, then integrate them into the canonical knowledge graph and/or learning experience.
+This is **Phase B: integration**. Consume persistent, reviewable records produced by `source-extraction`. Decide which items genuinely improve LLM Lab, then integrate them into the canonical knowledge graph and/or learning experience. This skill owns source-backed concept, resource and learning-content integration; when an accepted item requires a change to the canonical computational/dataflow graph, coordinate with `knowledge-architecture-audit` rather than editing that model as a side effect.
 
 Do not rescan by default. If an extraction is incomplete, stale or tied to a different version, request targeted re-extraction. An extracted item is not automatically accepted. A fully catalogued source can produce no graph or page change.
 
@@ -19,7 +19,7 @@ Before changing anything, inspect:
 - `docs/knowledge-graph-standards.md` and `docs/knowledge-graph-implementation-audit.md`;
 - `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`;
 - `site/tools/export_knowledge_graph.py`, schemas, graph validators and tests;
-- `docs/learning-path.md`, `docs/content-section-mapping.md`, page inventory and templates;
+- `docs/learning-path.md`, `docs/content-section-mapping.md`, `docs/computational-graph-schema.md`, `docs/canonical-computational-spine.md`, page inventory and templates;
 - editorial principles, reader-experience guidance and page metadata schema;
 - relevant pages in both `site/fr/` and `site/en/`, including prerequisites and downstream pages;
 - source catalogue, references, resource library, asset register, experiments and open issues/PRs.
