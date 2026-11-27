@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap distinguishes the role of an ID, a learned vector, and a contextualized state, and recalls why the network needs numerical objects."
+      note: "The recap explains why the network needs learnable numerical representations to exploit linguistic regularities, then distinguishes the ID, initial vector, and contextualized state."
 tags:
   - "type:concept-bridge"
   - "destination:understand"
