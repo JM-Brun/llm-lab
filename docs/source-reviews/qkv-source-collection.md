@@ -60,7 +60,7 @@ The collection now compares three introductory tutorials, not just their repeate
 
 | Source | Strongest distinctive contribution | Example / teaching device | What it should change in the project |
 |---|---|---|---|
-| Nishanthan K (DEV) | Compact visual/functional walkthrough linking roles to the attention pipeline; explicit warnings against semantic-similarity and winner-take-all readings | Search/retrieval framing; bank ambiguity and pronoun reference | Keep the source as an optional alternative explanation; retain its misconception checks where they reinforce the canonical treatment. Its visual remains uninspected and is link-only. |
+| Nishanthan K (DEV) | Compact visual/functional walkthrough linking roles to the attention pipeline; explicit warnings against semantic-similarity and winner-take-all readings | Search/retrieval framing; bank ambiguity and pronoun reference | Keep the article as a reader-facing visual reference. Its role, projection and misconception items are rejected as redundant; its context-example item is not integrated as a distinct Nishanthan-specific page contribution. The illustration was visually inspected on 2026-11-12 but remains link-only because reuse rights are unknown. |
 | Neha KK (Medium) | Explicit design question: why learn three projections, separating matching from payload; concise score-to-output sequence | Pronoun “it” with competing antecedents | The rationale is made explicit in the existing Q/K/V lesson; the pronoun example illustrates cross-position information flow, not measured coreference resolution. |
 | Codefinity | Geometric perspective on query-key compatibility, plus a role-discrimination check | Q/K vector alignment; “bank” in a river context | Add the bounded geometric lens and contrast lexical polysemy with coreference; preserve its quiz distractor pattern for later exercise revision. |
 
@@ -74,7 +74,8 @@ The collection now compares three introductory tutorials, not just their repeate
 
 ### Source-to-project disposition
 
-- **Already integrated:** Neha’s matching-versus-payload rationale and pronoun example; Nishanthan’s contextual examples and misconception cautions; Codefinity’s optional geometric lens and bank/polysemy contrast.
+- **Integrated in current pages:** Neha’s role-decoupling clarification and pronoun example; Codefinity’s geometric lens and bank/river example in the advanced Q/K/V deep dive; Brenndoerfer’s routing/payload distinction in the core Q/K/V prose.
+- **Not integrated as new page content:** Nishanthan’s role, shared-projection, computation and misconception items are rejected as redundant; its combined context-example item is also rejected as a distinct page edit. The DEV article remains a reader-facing visual reference.
 - **Retain as references:** Codefinity’s Q/K/V role-confusion distractors for the next exercise revision; alternative database/search analogies in source-specific extractions.
 - **Do not duplicate:** the complete score/scale/softmax/weighted-sum derivation, already owned by the scaled-dot-product-attention lesson.
 - **Do not promote to canonical graph nodes:** no new stable mechanism is introduced by these tutorial perspectives; they enrich explanations and examples, not the semantic ontology.
@@ -85,9 +86,9 @@ See the [initial three-source complementary-perspectives synthesis](../source-sy
 
 ### Learning content
 - The Q/K/V explanation makes the separation between matching (Q/K) and payload (V) explicit, including Neha KK’s design rationale for learning these roles through separate projections.
-- The optional geometric lens from Codefinity connects Q/K compatibility to the dot product, vector norms and angle, while distinguishing dot product from cosine similarity.
-- A bounded pronoun-context example is used as an illustration of cross-position information flow; Codefinity’s bank example is contrasted with it as lexical polysemy rather than coreference.
-- The example is explicitly not presented as evidence of measured attention, coreference resolution or interpretability.
+- The Codefinity geometric lens is located in the advanced Q/K/V deep dive, where it connects Q/K compatibility to the dot product, vector norms and angle and distinguishes dot product from cosine similarity; it is not a collapsible note on the core lesson.
+- The core Q/K/V page's pronoun-context example is explicitly adapted from Neha KK. The Codefinity bank/river example appears in the advanced Q/K/V deep dive; it is not owned by the current contextualized-representations pages.
+- Both linguistic examples remain illustrations, not evidence of measured attention, coreference resolution or interpretability.
 - The attention equations and detailed computation remain in the dedicated scaled-dot-product-attention lesson.
 - The current input to Q/K/V is described as the representation entering the attention sublayer, not always as raw token embeddings; positional information may be injected at different points, including mechanisms such as RoPE.
 
@@ -190,16 +191,16 @@ These are complementary records, not duplicate versions of the same document: ca
 | Contribution | What it adds beyond current LLM Lab content | Integration |
 |---|---|---|
 | Q/K/V role definitions | Reinforces the canonical functional split but adds no new definition | Already covered; retain provenance |
-| Geometric Q/K framing | A spatial/vector lens alongside the existing index-card analogy; bridges the conceptual role to dot-product geometry | Integrated as an optional collapsible note on both Q/K/V pages, with dot-product norms/angle and warnings against cosine/nearest-neighbour interpretations |
-| Bank / river example | Lexical polysemy (competing senses of one word), distinct from the pronoun-coreference example already on the Q/K/V page | Integrated as a compact optional contrast on both pages; full bank discussion remains on contextualized-representations |
+| Geometric Q/K framing | A spatial/vector lens alongside the existing index-card analogy; bridges the conceptual role to dot-product geometry | Integrated in the advanced Q/K/V deep dive in both languages; not a collapsible note on the core lesson |
+| Bank / river example | Lexical polysemy (competing senses of one word), distinct from the pronoun-coreference example on the core Q/K/V page | Integrated in the advanced Q/K/V deep dive in both languages; not owned by the current contextualized-representations pages |
 | Three-question knowledge check | Compact checks of Q/K/V purpose, dynamic attention versus pooling, and contextual aggregation | Retained as a future exercise-design reference; no duplicate quiz |
 | Course-level sequence | Places Q/K/V between motivation and relevance scoring, then lists later attention topics | Confirms compatibility with current route; no route change from titles alone |
 
 ### What the combined explanation now offers
 
-1. **Functional analogy:** index cards distinguish what Q, K and V do.
-2. **Geometric perspective:** query/key vectors connect that role distinction to the dot product, with its magnitude-and-angle dependence.
-3. **Linguistic transfer:** pronoun coreference and lexical polysemy illustrate two different reasons context matters.
+1. **Core intuition:** the core Q/K/V lesson uses one functional analogy and a pronoun-coreference motivation.
+2. **Advanced geometry:** the advanced Q/K/V deep dive connects query/key vectors to the dot product, with its magnitude-and-angle dependence.
+3. **Advanced linguistic transfer:** the advanced deep dive uses bank/river lexical ambiguity; the core pronoun example is attributed to Neha KK.
 4. **Formal computation:** the next page remains responsible for scaling, softmax, masking and weighted aggregation.
 
 The new perspectives are optional and attributed. No canonical concept, graph edge, new page or route dependency is added. No source image is copied. The original examples remain illustrations, not evidence that one particular attention head performs a linguistic task.
@@ -312,7 +313,8 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 | Why three learned projections? | Neha's design rationale and canonical page's joint learned-projection explanation | Covered |
 | Shared input and projection equations | Canonical equations and Vaswani primary paper | Covered; §3.2.2 supports the learned per-head projections and §3.2.3 supports the shared previous-layer input in self-attention |
 | Routing/compatibility versus payload/content | Brenndoerfer's comparative treatment and canonical page | Covered; preserve the distinction as a functional explanation, not a claim that dimensions are human-readable semantic features |
-| Geometric intuition | Codefinity and Brenndoerfer; canonical optional note | Covered at the intended depth; avoid equating dot product with cosine similarity |
+| Geometric intuition | Codefinity and Brenndoer; canonical advanced Q/K/V deep dive | Covered at the deeper destination through the Q–K compatibility geometry section; the core lesson links onward rather than duplicating the derivation. Avoid equating dot product with cosine similarity |
+| Convex-hull consequence / message-passing analogy | Brenndoerfer | Not present in the current scaled-attention pages; keep both deferred until a concrete learner task justifies the added geometric or graph-oriented interpretation |
 | Scores, scaling, softmax and weighted aggregation | Dedicated scaled-dot-product-attention page and Vaswani §3.2.1 | Deliberately delegated to the next page; do not duplicate the full derivation here |
 | Causal masking and accessible positions | Dedicated causal-masking page | Correctly outside this page's main scope |
 | Implementation and tensor-level behavior | Transformer-block walkthrough and Build resources | Covered by a neighboring implementation destination; not a missing source requirement for this Understand page |
