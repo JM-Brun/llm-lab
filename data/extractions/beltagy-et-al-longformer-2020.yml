@@ -1,0 +1,51 @@
+schema_version: 1
+source_id: beltagy-et-al-longformer-2020
+items:
+  - id: beltagy-et-al-longformer-2020:local-dilated-global-attention
+    kind: architecture
+    summary: "Longformer combines fixed sliding-window attention, optional dilation and task-specific global attention on selected positions; global tokens attend to all positions and all positions attend back to them."
+    locator: {type: section, value: "3.1", label: "Attention Pattern; Figure 2"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper describes local windows, dilated windows and symmetric global attention, with examples for classification and question answering."
+      assumptions:
+        - "Global positions are selected according to the downstream task."
+      limitations:
+        - "Longformer's global/local pattern is distinct from Mistral's sliding-window-only description and should not be collapsed into one generic mechanism."
+        - "The page's reference implementation does not implement Longformer."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sliding-window-attention, topic:global-attention, topic:sparse-attention, application:long-document]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides the primary source for the local/dilated/global pattern used in the page's sparse-attention comparison."
+
+  - id: beltagy-et-al-longformer-2020:linear-scaling-fixed-window
+    kind: result
+    summary: "For a fixed local window w, the local attention pattern costs O(n×w), which is linear in sequence length n; with a small number of global tokens, the combined pattern remains linear in n."
+    locator: {type: section, value: "3.1–3.2", label: "Attention Pattern and Implementation"}
+    evidence:
+      kind: mathematical-claim
+      confidence: context-dependent
+      scope: "The paper derives O(n×w) for sliding-window attention and describes an implementation that computes only selected diagonals of QKᵀ."
+      assumptions:
+        - "The window size is fixed as sequence length grows."
+        - "The number of global positions remains small relative to and independent of n."
+      limitations:
+        - "Linear scaling does not mean constant cost; the window width and global-token policy still matter."
+        - "The complexity statement does not imply the same implementation strategy or memory profile for every sparse-attention architecture."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sparse-attention, topic:sliding-window-attention, topic:global-attention, application:long-document]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides a precise complexity locator and its assumptions for the page's sparse/local attention comparison."

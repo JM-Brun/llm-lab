@@ -3784,7 +3784,7 @@ sources:
           - "The paper's per-head multi-head notation is not identical to the page's compact single-head XW_Q, XW_K, XW_V notation; the page uses a simplified specialization."
           - "No paper figure, text, code or dataset was copied; reuse rights were not assessed."
     related:
-      pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/queries-keys-values, en/queries-keys-values]
+      pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [positional-encoding, query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md, docs/source-reviews/vaswani-attention-formulation-2026-11.md]
   - id: harvardnlp-annotated-transformer
@@ -4090,7 +4090,7 @@ sources:
           - "The exact dense algorithm and the separate block-sparse approximate extension must not be conflated."
           - "No paper figures, source code or benchmark data were copied or reproduced."
     related:
-      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling]
       concepts: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax]
       audit_records: [docs/source-reviews/flashattention-primary-paper-2022.md, docs/source-reviews/flashattention-io-aware-2026-11.md, docs/experiments/flashattention-benchmark-protocol.md]
 
@@ -4131,7 +4131,7 @@ sources:
           - "No newsletter figures or benchmark results were reused or independently reproduced."
           - "Reuse rights are unknown; link-only treatment."
     related:
-      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling]
       concepts: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax, causal-mask]
       audit_records: [docs/source-reviews/flashattention-io-aware-2026-11.md]
 
@@ -4786,7 +4786,7 @@ sources:
         inspected_scope: ["Indexed article introduction, GQA sections, sparse-attention sections and conclusion"]
         limitations: ["Full article and all architecture entries not independently checked.", "Model examples are time-sensitive and require primary-source verification.", "Not a controlled benchmark; figure reuse rights not established."]
     related:
-      pages: [fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation]
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [scaled-dot-product-attention, multi-head-attention, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
@@ -8014,3 +8014,243 @@ sources:
       pages: []
       concepts: [model-compression, pruning, inference-time-compute]
       audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
+
+  - id: xiong-et-al-layer-normalization-transformer-2020
+    title: "On Layer Normalization in the Transformer Architecture"
+    creators: ["Ruibin Xiong", "Yunchang Yang", "Di He", "Kai Zheng", "Shuxin Zheng", "Chen Xing", "Huishuai Zhang", "Yanyan Lan", "Liwei Wang", "Tie-Yan Liu"]
+    source_type: paper
+    identifiers: {arxiv: "2002.04745"}
+    canonical_url: "https://proceedings.mlr.press/v119/xiong20b.html"
+    publisher: "Proceedings of Machine Learning Research (ICML 2020)"
+    publication_date: "2020-02-12"
+    updated_date: null
+    language: en
+    version: "PMLR 119:10524–10533 (ICML 2020); arXiv:2002.04745v1"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:transformer, topic:layer-normalization, method:pre-layer-normalization]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary PMLR paper PDF: abstract and sections 3.3 (initialization assumptions and Theorem 1) and 4.2 (translation and BERT experiment results, Figures 4–5)"
+        limitations:
+          - "Focused on the Pre-LN/Post-LN optimization claims used by the page; the complete paper and supplementary proofs were not re-audited."
+          - "The theoretical analysis assumes a simplified single-head setting, zero-initialized Q/K projections, Gaussian inputs and bounded derivatives; it is not a universal result for every Transformer implementation."
+          - "No paper figures, supplementary material, code or datasets were copied or independently executed; reuse rights remain unassessed."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: shazeer-fast-transformer-decoding-mqa-2019
+    title: "Fast Transformer Decoding: One Write-Head is All You Need"
+    creators: ["Noam Shazeer"]
+    source_type: paper
+    identifiers: {arxiv: "1911.02150"}
+    canonical_url: "https://arxiv.org/abs/1911.02150"
+    publisher: "arXiv"
+    publication_date: "2019-11-06"
+    updated_date: null
+    language: en
+    version: "arXiv:1911.02150v1"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-query-attention, topic:kv-cache, application:incremental-decoding]
+      concept_ids: [kv-cache]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, mathematical-derivation, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary arXiv PDF: section 3 (Multi-Query Attention), section 3.1 (incremental-decoding performance analysis), sections 4.2–4.3 (model quality and speed), and the incremental K/V tensor shapes"
+        limitations:
+          - "The speed and quality comparisons use 2019-era Transformer models, TPUv2/v3 hardware, fixed sequence and batch settings; they are not universal modern-GPU benchmarks."
+          - "The paper reduces the K/V head dimension; it does not eliminate the KV cache or the attention computation."
+          - "No reference implementation, figures or benchmark data were independently executed or copied; reuse rights remain unassessed."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [kv-cache]
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: ainslie-et-al-gqa-2023
+    title: "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints"
+    creators: ["Joshua Ainslie", "James Lee-Thorp", "Michiel de Jong", "Yury Zemlyanskiy", "Federico Lebrón", "Sumit Sanghai"]
+    source_type: paper
+    identifiers: {arxiv: "2305.13245", doi: "10.18653/v1/2023.emnlp-main.298"}
+    canonical_url: "https://aclanthology.org/2023.emnlp-main.298/"
+    publisher: "Association for Computational Linguistics (EMNLP 2023)"
+    publication_date: "2023-05-22"
+    updated_date: "2023-12-23"
+    language: en
+    version: "EMNLP 2023 proceedings; arXiv:2305.13245v3"
+    revision: "v3"
+    licence: {identifier: "CC BY 4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: declared}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, topic:multi-query-attention, topic:kv-cache, method:uptraining]
+      concept_ids: [multi-head-attention, kv-cache]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, mathematical-derivation, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, sections 2.1–2.2 (checkpoint uptraining and GQA head grouping), Figure 2, and sections 3.1–3.3 (experimental setup, main results and ablations)"
+        limitations:
+          - "The 5% uptraining compute and quality/speed trade-off are specific to the T5 checkpoints, datasets, hardware and training recipe reported in the paper."
+          - "The source supports the GQA definition and its tested trade-offs; it does not establish that one group count is optimal for every model or serving workload."
+          - "Figures, code and datasets were not copied or independently reproduced; only the declared paper licence was recorded."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: deepseek-ai-deepseek-v2-2024
+    title: "DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model"
+    creators: ["DeepSeek-AI"]
+    source_type: paper
+    identifiers: {arxiv: "2405.04434", doi: "10.48550/arXiv.2405.04434"}
+    canonical_url: "https://arxiv.org/abs/2405.04434"
+    publisher: "arXiv"
+    publication_date: "2024-05-07"
+    updated_date: "2024-06-19"
+    language: en
+    version: "arXiv:2405.04434v5"
+    revision: "v5"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-head-latent-attention, topic:kv-cache, method:low-rank-compression, topic:mixture-of-experts]
+      concept_ids: [multi-head-attention, kv-cache]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, mathematical-derivation, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary arXiv PDF v5: section 2.1.1 (standard MHA baseline), section 2.1.2 (low-rank joint K/V compression, equations 9–11), section 2.1.3 (decoupled RoPE), section 2.1.4 (KV-cache comparison, Table 1), and Figure 3"
+        limitations:
+          - "MLA's cache reduction and quality comparisons are DeepSeek-V2-specific; reported percentages must not be generalized to all architectures."
+          - "This pass covers MLA only; DeepSeekMoE, training, alignment and the full evaluation sections were not audited."
+          - "No paper figures, code, model checkpoints or datasets were copied or independently executed; reuse rights remain unassessed."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: jiang-et-al-mistral-7b-2023
+    title: "Mistral 7B"
+    creators: ["Albert Q. Jiang", "Alexandre Sablayrolles", "Arthur Mensch", "Chris Bamford", "Devendra Singh Chaplot", "Diego de las Casas", "Florian Bressand", "Gianna Lengyel", "Guillaume Lample", "Lucile Saulnier", "Lélio Renard Lavaud", "Marie-Anne Lachaux", "Pierre Stock", "Teven Le Scao", "Thibaut Lavril", "Thomas Wang", "Timothée Lacroix", "William El Sayed"]
+    source_type: paper
+    identifiers: {arxiv: "2310.06825"}
+    canonical_url: "https://arxiv.org/abs/2310.06825"
+    publisher: "arXiv"
+    publication_date: "2023-10-10"
+    updated_date: null
+    language: en
+    version: "arXiv:2310.06825v1"
+    revision: "v1"
+    licence: {identifier: "CC BY 4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: declared}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, topic:sliding-window-attention, topic:kv-cache, application:long-context]
+      concept_ids: [multi-head-attention, kv-cache]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary arXiv PDF v1: abstract, section 1, section 2 (Architectural details), Table 1, Figure 1 and the Sliding Window Attention discussion"
+        limitations:
+          - "The reported n_kv_heads, window size, context length and theoretical receptive-field figures are a configuration-specific Mistral 7B example."
+          - "The paper cites Ainslie et al. for GQA; it is a model case, not the primary source for the GQA definition."
+          - "No reference code, weights, figures or benchmark results were independently executed or copied; reuse rights for individual figures remain unassessed."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: beltagy-et-al-longformer-2020
+    title: "Longformer: The Long-Document Transformer"
+    creators: ["Iz Beltagy", "Matthew E. Peters", "Arman Cohan"]
+    source_type: paper
+    identifiers: {arxiv: "2004.05150"}
+    canonical_url: "https://arxiv.org/abs/2004.05150"
+    publisher: "arXiv"
+    publication_date: "2020-04-10"
+    updated_date: "2020-12-02"
+    language: en
+    version: "arXiv:2004.05150v2"
+    revision: "v2"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sliding-window-attention, topic:global-attention, topic:sparse-attention, application:long-document]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, mathematical-derivation, experiment, implementation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary arXiv PDF v2: section 3.1 (sliding-window, dilated and global attention patterns), section 3.2 (implementation and complexity), Figure 2 and the abstract"
+        limitations:
+          - "The linear-in-sequence-length claim assumes a fixed local window and a small number of global tokens; it is not equivalent to dense full attention."
+          - "Longformer's task-specific global attention is distinct from Mistral's sliding-window configuration and should not be collapsed into one generic sparse-attention mechanism."
+          - "No CUDA implementation, figures, datasets or model checkpoints were independently executed or copied; reuse rights remain unassessed."
+    related:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+      audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
