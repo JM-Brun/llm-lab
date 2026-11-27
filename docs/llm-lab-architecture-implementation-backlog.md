@@ -298,3 +298,59 @@ The standard CI workflow skips the opt-in full-corpus extraction locator invento
 - Do not bulk-migrate page metadata or create a universal graph/registry.
 - Keep source membership, revision sufficiency, scientific evidence and learner outcomes as distinct assertions.
 - Update this dated handoff when CI/PR states change; the specialist issues remain the source of truth for their detailed acceptance criteria.
+
+
+## Backlog reconciliation — 2026-11-27
+
+This is a bounded operational refresh, not a new roadmap or a claim that every open issue has been re-reviewed line by line.
+
+### Repository-level snapshot
+
+- The open-issue search was partitioned by creation period to avoid the 100-result search cap: 0 issues created before October 2026, 8 in October, 91 from 1–26 November, and 4 on 27 November (103 open issues returned across the disjoint periods).
+- The only open PR identified in the preceding snapshot, #1770, was merged on 2026-11-27. No open PR was returned by the subsequent open-PR search.
+- The initial no-label sweep identified 25 open issues. Labels were applied to the 24 calendar/story issues and to #1637; selected recent workstreams were also classified. Search-index results for `no:label` can lag writes, so use direct issue fetches before treating a zero-result search as proof that every issue is labelled.
+
+### Recent issue ownership and boundaries
+
+| Workstream | Canonical owner(s) | Boundary |
+|---|---|---|
+| Foundations and mathematical depth | #1732 | Audit coverage and reuse existing concepts/domains; no parallel registry or automatic page-per-topic expansion. |
+| Distinctive pedagogical contribution | #1739 | Page-by-page audit of intellectual value; do not turn the 2–3 contribution heuristic into a quota. |
+| Source quality by learning page | #1741 | Evidence diversity/complementarity and claim support; distinct from source membership and ingestion. |
+| Source collection membership | #1306 | Explicit reviewed membership decisions only. |
+| Source provenance and coverage | #1211 | Provenance, scan history, locator quality and graph reconciliation; do not create extractions just to close count gaps. |
+| Registry and experience contracts | #1554 | Bounded inventory/reconciliation of canonical owners; no universal registry. |
+| Cross-domain evidence queries | #1233 | Read/query adapters over existing canonical records; no second graph. |
+| Scalability evidence | #1257 | Benchmarks and measured bottlenecks; no speculative infrastructure. |
+| Tokenization editorial architecture | #1698 | Understand/Deepen boundary and page ownership; implementation edits remain with #1492 and the page-specific tasks. |
+| Practice separation | #1512 | Learning pages teach; dedicated Practice pages assess. |
+| Advent Calendar | #1513 | Collection-level editorial and learner validation; individual story changes remain with their day-specific issues. |
+
+### Status corrections recorded on 2026-11-27
+
+- #584: PRs #1602, #1604 and #1606 are merged. Their pre-merge CI failures are historical; remaining work is the targeted route audit, manual screen-reader/breadcrumb review and learner validation under #447.
+- #1637: PR #1636 is merged; the checklist now reflects completion.
+- #1664: PRs #1691, #1692 and #1693 are merged; individual page follow-ups remain with #1653, #1666 and #1667.
+- #1306 and #1211: current-main source inventory is 150 source records, 100 extraction files and 520 atomic items; 50 collection decisions are explicit (48 non-empty, 2 explicitly empty), 100 remain undecided, and 42 source IDs lack a matching extraction filename. These are separate queues. The latest locator-quality report still covers 96 files / 489 items and must be refreshed before making current locator-completeness claims.
+- #1770: merged on 2026-11-27; no longer an open PR.
+
+### Recommended execution order
+
+1. **Finish active learner-facing work already in progress:** #1492 → #1493, with #1698 coordinating the Understand/Deepen tokenization boundary; keep #1499 as the separate positional-concepts task.
+2. **Complete the source-quality pilot:** #1741, while keeping #1306 membership decisions and #1211 provenance/locator checks separate.
+3. **Run the Foundations and distinctive-value audits:** #1732 and #1739, using #1554's canonical contract inventory rather than introducing new metadata systems.
+4. **Continue ingestion only where a source has a documented use:** #1761 and #1768; ingestion does not imply page integration.
+5. **Keep learner validation explicit:** #584 technical route/manual checks and #447 independent learner evidence are not interchangeable.
+
+### Backlog hygiene rules reaffirmed
+
+- A parent issue coordinates and links work; it does not duplicate child checklists.
+- A merged PR or completed subtask must be reflected in the owning issue, while preserving historical snapshots with dates.
+- P1 means a near-term blocker or committed next execution slice, not merely important long-term work. Do not add P1 labels until the active sequence is genuinely narrowed.
+- Use `area:*` for ownership domain, `type:*` for work nature, and existing priority labels for sequencing. Do not invent new label families until the current taxonomy has been audited against actual queries.
+- Keep content, source ingestion/provenance, architecture/meta contracts, CI/maintenance and learner validation as distinct work types.
+- Do not create a second canonical registry, a per-concept workflow, or a duplicate issue when an existing owner already covers the work.
+
+### Audit limits
+
+The period-partitioned search establishes the 103-issue open inventory at the time of this review, but it does not constitute a semantic re-read of all 103 issue bodies, all comments, all milestones or all assignees. The owner/boundary table above covers the principal overlapping workstreams examined in detail. Remaining older and specialist issues still require targeted review before declaring the entire backlog fully reconciled.
