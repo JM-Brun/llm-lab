@@ -99,7 +99,7 @@ What are the two obstacles behind AIXI's non-limit-computability result, and how
 <details>
 <summary>Show the answer</summary>
 
-Exact ties between action values and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
+Exact ties between action values and the recursive definition of the infinite-horizon discounted value; ε-optimality avoids exact tie-breaking, while a recursive value function addresses the infinite-horizon problem.
 
 </details>
 
