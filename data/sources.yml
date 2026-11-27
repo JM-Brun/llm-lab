@@ -7810,3 +7810,127 @@ sources:
       audit_records:
         - docs/source-reviews/towardsai-tokenization-2026-11.md
         - data/extractions/towardsai-understanding-llms-tokenization-2026.yml
+
+  - id: stateai-self-pruning-transformers-memonce-2026-11-23
+    title: "Self-Pruning Transformers Beat Baselines Trained on 1.7× More Compute, and a New Memory Architecture Shrinks the Cache 1,313×"
+    creators: ["State of AI editorial team"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://stateai.substack.com/p/self-pruning-transformers-memonce-memory-cache"
+    aliases: ["https://substack.com/inbox/post/226235776"]
+    publisher: "State of AI"
+    publication_date: "2026-11-23"
+    updated_date: null
+    language: en
+    version: "Indexed newsletter introduction and contents; two linked primary papers inspected in full"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:long-context, topic:kv-cache, topic:model-memory, method:structured-pruning, method:sparse-attention]
+      concept_ids: [kv-cache, persistent-memory, model-compression, pruning, inference-time-compute]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, experiment, benchmark, pedagogy]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed newsletter introduction, headline claims and contents list naming 15 research items"
+          - "Full text of linked arXiv preprints Model Carving (2611.27962v1) and MemOnce (2611.27973v1), including methods, architecture figures, experimental sections, appendices and stated limitations"
+        limitations:
+          - "Direct Substack page retrieval returned a cache miss; the complete newsletter body and all 15 individual paper summaries were not fully inspected."
+          - "Only the two headline papers were examined as primary sources; the other 13 items remain discovered references, not reviewed evidence."
+          - "No licence or permission for reuse of newsletter text or figures was established."
+    related:
+      pages: []
+      concepts: [kv-cache, persistent-memory, model-compression, pruning, inference-time-compute]
+      audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
+
+  - id: zheng-sharma-model-carving-2026
+    title: "Model Carving: Training Transformers That Optimize Their Own Topology"
+    creators: ["Kaden Zheng", "Pratyusha Sharma"]
+    source_type: paper
+    identifiers: {arxiv: "2611.27962"}
+    canonical_url: "https://arxiv.org/abs/2611.27962"
+    publisher: "arXiv"
+    publication_date: "2026-11-20"
+    updated_date: null
+    language: en
+    version: "arXiv:2611.27962v1"
+    revision: "v1"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency, probabilistic-foundations-training]
+      tags: [topic:transformer-architecture, topic:model-compression, method:structured-pruning, method:learned-gating]
+      concept_ids: [model-compression, pruning, inference-time-compute]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, method, mathematical-derivation, experiment, benchmark]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Full v1 paper: method, equations, architecture figure, training objective, pressure estimation, removal schedule, experiments, appendices and limitations"
+        limitations:
+          - "No independent reproduction of training runs or benchmark results."
+          - "The study covers standard Transformers up to 2.7B and looped Transformers up to 1.3B; larger-scale generalization remains open."
+          - "The cooldown does not account for the pruning pressure and yields 10–16% less gain than dense models according to the authors."
+          - "No code execution or hardware-level profiling was performed in this ingestion."
+    related:
+      pages: []
+      concepts: [model-compression, pruning, inference-time-compute]
+      audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
+
+  - id: nie-et-al-memonce-2026
+    title: "MemOnce: A Scalable Memory Architecture for Large Language Models"
+    creators: ["Chang Nie", "Chaoyou Fu", "Songlin Liu", "Yiqing Hu", "Caifeng Shan"]
+    source_type: paper
+    identifiers: {arxiv: "2611.27973"}
+    canonical_url: "https://arxiv.org/abs/2611.27973"
+    publisher: "arXiv"
+    publication_date: "2026-11-20"
+    updated_date: null
+    language: en
+    version: "arXiv:2611.27973v1"
+    revision: "v1"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms, mathematical-tools-geometry]
+      tags: [topic:long-context, topic:kv-cache, topic:persistent-memory, method:sparse-attention, method:memory-retrieval]
+      concept_ids: [kv-cache, persistent-memory, self-attention, inference-time-compute, contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, method, experiment, benchmark]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Full v1 paper: formulation, architecture, Figures 1–3, memory encoder-decoder, sparse retrieval, optimization, benchmarks, appendices and limitations"
+        limitations:
+          - "No independent reproduction of results or end-to-end implementation."
+          - "Headline 1,313× result is a cache-state comparison in the stated 1M-context Qwen3.5-4B setup, not a universal total-memory reduction."
+          - "The persistent memory bank still grows with history; bounded active GPU state is achieved through sparse retrieval and possible offloading."
+          - "No code execution, deployment profiling or security/privacy audit of persistent memory was performed."
+    related:
+      pages: []
+      concepts: [kv-cache, persistent-memory, self-attention, inference-time-compute, contextualized-representation]
+      audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
