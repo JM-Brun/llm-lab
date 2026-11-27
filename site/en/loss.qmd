@@ -123,7 +123,7 @@ The formula with $\exp$ assumes mean NLL is computed with the natural logarithm 
 - **“Mean loss is always comparable across experiments.”** Check tokenizer, data, masks, sequence length, reduction, and the exact objective.
 :::
 
-::: {.callout-note collapse="true" title="Pipeline diagnostics (advanced)"}
+::: {.callout-note collapse="true" data-reading-time="exclude" title="Pipeline diagnostics (advanced)"}
 Before interpreting a curve, document the objective, input/target shift, ignore mask, reduction, train/validation split, and any regularization terms. Overfitting a tiny batch is a useful pipeline sanity check, but not evidence of generalization.
 :::
 
