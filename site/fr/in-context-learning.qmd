@@ -124,7 +124,7 @@ Un modèle peut reproduire le format sans avoir identifié la règle pertinente.
 ::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
 Le calcul conditionné par les exemples décrit le comportement observable. Les recherches sur les mécanismes de cette adaptation examinent la reconnaissance de motifs, l'inférence sur la règle qui a généré les exemples, l'apprentissage implicite d'algorithmes pendant le préentraînement et les circuits d'attention qui facilitent la copie ou l'association entre exemples.
 
-Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+Les *induction heads* sont un mécanisme étudié dans certains Transformers : une tête peut exploiter l'information écrite par une tête précédente pour retrouver une occurrence antérieure du token courant et reprendre le token qui la suivait. Olsson et al. (2022) apportent des preuves mécanistes et causales fortes dans de petits Transformers *attention-only*, notamment par ablation directe. Pour les modèles plus grands avec MLP, leur hypothèse d'un rôle majoritaire des induction heads repose surtout sur des indices indirects et corrélationnels ; les auteurs la présentent comme préliminaire, pas comme une conclusion établie.
 :::
 
 ::: {.callout-note collapse="true" title="Approfondissement : une explication par inférence bayésienne"}
