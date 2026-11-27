@@ -39,6 +39,8 @@ On considère la séquence d’IDs jouet $[17,42,8,17]$, avec une indexation des
 
 Les lignes lues sont $E_{17,:}$, $E_{42,:}$, $E_{8,:}$ et $E_{17,:}$, dans cet ordre. Les deux occurrences de l’ID 17 récupèrent le même vecteur initial. Dans l’[exercice sur l’entrée du premier bloc](exercises/text-data.qmd#ex-token-to-block-input), ce vecteur est fixé à $(2,-1)$ ; les autres valeurs ne sont pas nécessaires pour établir l’ordre.
 
+Si l'on remplace les IDs par une permutation et que l'on déplace les lignes correspondantes de la même façon, le lookup produit les mêmes vecteurs. Renuméroter les IDs sans permuter la table change au contraire les lignes lues. Cette invariance au niveau du lookup ne suffit pas à préserver un modèle complet : les autres paramètres indexés par le vocabulaire doivent aussi être permutés de façon cohérente.
+
 Les IDs 41 et 42 n’ont pas nécessairement des vecteurs proches : la proximité des indices dans le vocabulaire ne contraint pas la géométrie des lignes apprises.
 
 </details>

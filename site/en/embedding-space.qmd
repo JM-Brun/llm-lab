@@ -123,6 +123,8 @@ $T$ is the number of positions in the sequence and $d$ is the dimension of each 
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
+ID numbers are labels, not properties of the vectors: renumbering the vocabulary while moving the corresponding matrix rows preserves lookup. The [lesson on turning text into tokens](text-data.qmd#text-id-experiment) explains this invariance at the tokenizer–model contract level; the associated exercise lets you verify it on a concrete sequence.
+
 The tokenizer fixes the vocabulary and the token-to-ID mapping; it does not provide the values of $E$. Those values are **learned network parameters**: they are initialized and then adjusted during training. When an example uses ID $i$, the loss gradient can contribute to updating row $E_{i,:}$. Lookup selects that row; it does not compute its contents.
 
 ## From the initial vector to a contextualized representation
