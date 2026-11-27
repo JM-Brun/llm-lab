@@ -45,7 +45,7 @@ This is an implementation-critical distinction for Build material. Do not copy m
 
 ### Causal masking
 
-The API documents `is_causal=True` as a causal mask and rejects simultaneous use of `attn_mask` and `is_causal`. The exact alignment for non-square query/key lengths is version-specific and documented through the causal-bias behavior. The conceptual lesson should continue to delegate mask construction and edge cases to the canonical causal-masking page.
+The API documents `is_causal=True` as a causal mask and rejects simultaneous use of `attn_mask` and `is_causal`. The exact alignment for non-square query/key lengths follows the documented upper-left causal-bias behavior. The API rejects passing both `attn_mask` and `is_causal=True`. The conceptual lesson should continue to delegate mask construction and edge cases to the canonical causal-masking page.
 
 ### Dropout
 
@@ -85,4 +85,4 @@ The page's external references remain English-only. This is not automatically a 
 - The stable URL's redirect was observed once; recheck before any version-sensitive implementation change.
 - The PyTorch source code and release history were not inspected.
 - No backend, device, dtype, performance or numerical-equivalence test was executed.
-- The API page's own beta/version warnings remain relevant; this review does not guarantee future compatibility.
+- The PyTorch 2.15 page labels the function beta and subject to change. Its version and backend notes must be rechecked before version-sensitive implementation guidance; this review does not guarantee future compatibility.
