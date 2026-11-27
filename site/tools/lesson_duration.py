@@ -93,9 +93,9 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
             stack.append((fence_length, is_excluded))
             continue
 
-        if closing and stack and len(closing.group("fence")) >= stack[-1][0]:
-            _, is_excluded = stack.pop()
-            parent_is_excluded = stack[-1][1] if stack else False
+        if closing:
+            if stack and len(closing.group("fence")) >= stack[-1][0]:
+                stack.pop()
             continue
 
         if stack and stack[-1][1]:
