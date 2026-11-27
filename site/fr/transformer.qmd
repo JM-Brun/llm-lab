@@ -52,6 +52,8 @@ Un GPT décodeur seul est un réseau Transformer composé de blocs répétés. D
 
 Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour situer le flux des données, puis un bloc agrandi, pour comprendre les opérations répétées. Nous suivrons ensuite ce flux de l'entrée du réseau jusqu'aux logits, sans refaire la tokenisation ni la boucle de génération.
 
+<span id="transformer-network-overview"></span>
+
 ## Le Transformer : le réseau au cœur d'un GPT
 
 <figure id="fig-transformer-stack">
@@ -89,6 +91,8 @@ Les leçons précédentes ont établi comment le texte devient une suite d'ident
 identifiants → représentations initiales → entrée du premier bloc
 
 Le préfixe « C'est une bonne situation, ça, scribe ? » traverse ensuite la pile de blocs avant que le modèle ne produise les logits du prochain token. La continuation se construit au fil de la boucle de génération ; elle n'est pas écrite à l'avance dans le prompt.
+
+<span id="transformer-block-anatomy"></span>
 
 ## 2. Les blocs Transformer
 
