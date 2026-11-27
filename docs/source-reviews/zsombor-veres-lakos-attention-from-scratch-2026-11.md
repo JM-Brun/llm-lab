@@ -100,7 +100,7 @@ The distinctive teaching move is to keep one analogy alive across every operatio
 9. Map the toy example to GPT's embedding space, residual stream and learned projections (p. 10).
 10. Interpret an attention matrix and give token examples; state masking and multi-head omissions (pp. 11–12).
 
-The source assumes matrix multiplication, vectors and softmax but states no formal prerequisites or learning outcomes. Its worked numerical sequence is its strongest pedagogical feature.
+The source assumes matrix multiplication, vectors and softmax but states no formal prerequisites or learning outcomes. Its worked numerical sequence is its strongest pedagogical feature. The author explicitly positions the post as a minimal conceptual extension to Chapter 3 of Sebastian Raschka's *Build a Large Language Model (From Scratch)* (p. 12), which explains why masking and multi-head attention are omitted.
 
 ## 6. Differential comparison with LLM Lab
 
