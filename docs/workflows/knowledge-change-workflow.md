@@ -33,6 +33,25 @@ Start by identifying what is being added. A single request may combine modes, bu
 
 Do not invoke every skill. Use the smallest combination that covers distinct decisions. The [skill routing matrix](../../.agents/skills/audit-skill-routing/SKILL.md) is the operational index.
 
+### Cross-workflow ownership and hand-off matrix
+
+Use this compact matrix to choose the workflow boundary and preserve distinct completion evidence. Specialist skills provide the detailed procedures; this table is the shared routing crosswalk, not a second checklist.
+
+| Work unit / trigger | Entry skill or workflow | Specialist owner(s) | Canonical owner(s) | Validation / hand-off |
+|---|---|---|---|---|
+| Review an individual lesson | `audit-skill-routing` → `page-content-audit` | `scientific-content-audit` only for disputed claims; `rendered-site-audit` for observed UI | Page source, page metadata, relevant concepts/resources | Page audit findings, relevant tests, render/accessibility evidence kept separate |
+| Review a page group or route | `audit-skill-routing` → `page-group-audit` / `understand-path-audit` / `build-path-audit` | `editorial-boundary-audit`, `scientific-content-audit`, `knowledge-architecture-audit` only for their distinct questions | `docs/learning-path.md`, `data/guided-route.yml`, page metadata | Group/route transitions, prerequisite evidence, FR/EN parity; no inferred curriculum from sidebar |
+| Review formal architecture or metadata | `audit-skill-routing` → `knowledge-architecture-audit` | `scientific-content-audit` for semantic correctness | `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`, page-map metadata and their schemas | Existing registry/page validators and graph tests |
+| Discover or inspect an external source | `source-to-learning-integration` → Phase A | `source-extraction`; `visual-asset-audit` for asset-specific provenance/rights | Current `data/sources.yml`, `data/source-taxonomy.yml`, scan history | Exact scan scope, retrieval route, version, rights and limitations |
+| Extract source contributions | `source-extraction` | Technical review only where needed | `data/extractions/<source-id>.yml` | Atomic items, exact locators, evidence/confidence, source-local pedagogical model; no page/graph mutation |
+| Compare sources and synthesize | `source-to-learning-integration` / source-to-knowledge validation protocol | `knowledge-and-learning-integration` for accepted Phase B decisions | Existing source reviews/syntheses and extraction records | Contribution comparison, convergence/disagreement, dispositions and rationale |
+| Integrate validated knowledge | `knowledge-change-workflow` → `knowledge-and-learning-integration` | `new-learning-page`, page/group/editorial/scientific specialists only as needed | Concepts, domains, resources, page sources, references and existing route owners | Canonical diffs, preservation ledger, bilingual parity, tests and rendered checks |
+| Model computation/dataflow | `knowledge-change-workflow` → `knowledge-architecture-audit` | `scientific-content-audit` when operation semantics are disputed | `data/computational-graph.yml`, `docs/computational-graph-schema.md` | `site/tools/check_computational_graph.py`, `tests/site/test_computational_graph.py`, generated views |
+| Change page metadata/navigation | `knowledge-change-workflow` → `knowledge-architecture-audit` | `page-group-audit` for learner consequences; `rendered-site-audit` for rendered behavior | `LLM-LAB-PAGE-MAP v1` in page source | `site/tools/check_page_metadata.py`, map generator/tests, FR/EN route/link checks |
+| Validate actual learner experience | `audit-skill-routing` → `rendered-site-audit` or relevant route/page skill | `page-content-audit`, `page-group-audit` as appropriate | Rendered Quarto site and its canonical sources | Browser, keyboard, responsive and accessibility evidence; learner tasks are a separate validation state |
+
+The hand-off states are independent: **source inspected → extraction complete → synthesis complete → integration decision → implementation complete → structural/technical validation → rendered validation → learner validation**. A later state does not retroactively prove an earlier one, and no single `done` flag should collapse them.
+
 ## 3. Gate 0 — establish the current baseline
 
 Before editing:
@@ -73,6 +92,7 @@ Use the existing canonical ownership model. Do not infer ownership from filename
 | Atomic source evidence and item dispositions | `data/extractions/<source-id>.yml`, controlled by `data/source-taxonomy.yml` |
 | Stable concepts and typed semantic relations | `data/concepts.yml` |
 | Controlled knowledge domains | `data/domains.yml` |
+| Computational graph | `data/computational-graph.yml`, governed by `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md` | Computational nodes, operations, dataflow edges, operational branches and named graph views | The concept graph, pedagogical route, Build dependencies or page navigation |
 | Non-page implementation resources | `data/resources.yml` |
 | Page identity, editorial role, destination, tags, hierarchy, related and suggested navigation | `LLM-LAB-PAGE-MAP` metadata in page source |
 | Reader-facing nine-stage Understand route | `data/guided-route.yml` (machine-readable stages); `docs/learning-path.md` explains the route |
@@ -165,6 +185,8 @@ Do not invent a new Understand route. If the sequential route genuinely needs ch
 Add a concept only if it is stable, reusable, clearly distinguishable and useful beyond one page/source. Reuse existing IDs and relations. Every new relation must have a precise meaning, direction and evidence. Do not turn examples, transient claims, section headings, tools or source-local nodes into canonical concepts automatically.
 
 A new concept should have bilingual labels/definitions and useful page-resource associations. Update the concept registry and its validator fixtures/tests; regenerate graph projections through their canonical generator.
+
+A computational-graph change is a separate decision, not a side effect of adding a concept or page. Update `data/computational-graph.yml` only when the computation/dataflow model itself needs correction or extension. Follow `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md`; preserve node/edge identity, branch membership, abstraction level and the explicit semantics of feedback, repeated and optional edges. Update the graph validator/tests and regenerate its bilingual views through the existing generator. Never translate a computational edge automatically into a concept relation, page hierarchy or pedagogical prerequisite.
 
 ## 8. Gate 5 — connect the knowledge, not just the files
 
