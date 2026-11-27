@@ -47,6 +47,34 @@ Pour un sujet couvert par plusieurs sources pertinentes, créer un dossier dans 
 
 Le dossier est un index de synthèse éditoriale, pas un remplacement des enregistrements de sources, de la bibliographie, du graphe de concepts ou du contenu des leçons. Conserver les affirmations détaillées et leurs localisateurs dans les extractions ; les lier plutôt que les recopier.
 
+### Vérifier la destination réelle des contributions
+
+Une décision éditoriale et une présence publiée sont deux faits différents. Pour chaque contribution retenue ou déclarée déjà couverte, documenter dans le dossier de synthèse une destination vérifiable :
+
+- identifiant local de contribution dans ce dossier ;
+- item(s) d'extraction source qui l'étayent, avec liens vers les fichiers canoniques ;
+- question ou affirmation pédagogique précise que la contribution informe ;
+- page cible et langue ;
+- section ou ancre exacte, avec lien vers la page source Quarto lorsque possible ;
+- état constaté : `explicit` (traitement explicite), `implicit` (présent mais non nommé ou non développé), `absent`, `not-verified` ou `historical-only` ;
+- preuve de vérification : commit/PR ou date de contrôle, fichier consulté et extrait/localisateur pertinent ;
+- décision et justification : intégrer, clarifier, lier, déjà couvert, différer ou rejeter.
+
+Les valeurs ci-dessus sont un vocabulaire de travail documentaire, pas une nouvelle taxonomie canonique ni un nouveau champ d'extraction. Les identifiants de contribution restent locaux au dossier. Ne pas créer de registre global tant que plusieurs pilotes n'ont pas démontré un besoin de requête ou de validation machine qui ne peut être satisfait par les dossiers.
+
+Règles de preuve :
+1. `integrate` ne signifie pas automatiquement `explicit` : vérifier la page actuelle, pas seulement une ancienne PR, une décision ou un souvenir.
+2. Une formule générale proche ne prouve pas la présence d'une interprétation, d'une analogie ou d'une limite spécifique.
+3. Vérifier séparément les pages FR et EN ; une présence dans une langue ne prouve pas la parité.
+4. Si l'ancre a changé, rechercher le contenu par son sens et réviser la destination ; ne pas conserver une ancre cassée comme preuve.
+5. Si le traitement est seulement implicite, ne pas le présenter comme une intégration complète. Décider si cette implicitation est suffisante pour l'objectif de la leçon.
+6. Si la page n'a pas été inspectée directement, conserver `not-verified`. Une destination candidate ou une association `related.pages` n'est pas une preuve de présence.
+7. Si la preuve est historique uniquement, marquer `historical-only` et vérifier le contenu courant avant de fermer la décision.
+
+Distinguer aussi trois rôles d'une source par rapport à une page : **ressource de construction** (a informé la conception), **preuve d'un claim** (étaye une affirmation précise) et **ressource de lecture** (recommandée au lecteur). Une source peut avoir plusieurs rôles, mais aucun ne doit être inféré automatiquement d'une citation, d'un lien bibliographique ou de `related.pages`.
+
+Pour une synthèse multi-sources, ajouter une matrice concise `contribution × source-item × claim/enseignement × page/ancre × langue × statut`. Elle sert de vue de travail et doit pointer vers les enregistrements canoniques ; elle ne recopie ni les claims détaillés ni les métadonnées source.
+
 ## 5. Synthétiser sans aplatir les différences
 
 Une bonne synthèse n'est pas une concaténation de résumés. Rédiger une explication cohérente avec la voix du projet. Utiliser l'explication la plus claire comme socle, puis introduire une perspective complémentaire lorsqu'elle résout une difficulté différente. Placer les dérivations avancées, détails d'implémentation et points de vue spécialisés dans les niveaux adaptés. Conserver des explications alternatives comme perspectives optionnelles ou ressources liées lorsqu'elles offrent un choix utile sans interrompre le parcours central. Garder les exemples qui éclairent des phénomènes différents. Délimiter chaque analogie. Distinguer illustration pédagogique et preuve sur le comportement interne du modèle. Attribuer les exemples et idées issus des sources ; ne pas copier de texte, code ou figure protégé sans droits vérifiés. Ne jamais fusionner des affirmations distinctes en une phrase qui semblerait provenir d'une seule source ou disposer de preuves plus fortes qu'en réalité.

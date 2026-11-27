@@ -35,6 +35,7 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 4. **Synthèse** — perspectives complémentaires, convergences, désaccords et dépendances.
 5. **Décisions d'intégration** — socle, approfondissement optionnel, études de cas, expériences, références ou liens ; éléments différés/rejetés et raisons.
 6. **Lacunes et suites** — affirmations non résolues, perspectives manquantes, vérifications de provenance/droits et déclencheurs de révision.
+7. **Traçabilité des destinations** — pour chaque contribution retenue ou déclarée déjà couverte, item(s) source, claim/enseignement, page et ancre FR/EN, statut de présence et preuve de vérification ; distinguer ressource de construction, preuve de claim et ressource recommandée au lecteur.
 
 Préférer les liens vers les extractions et sections de pages aux duplications de texte. Mettre à jour le dossier lorsque les évaluations de sources ou les intégrations publiées changent.
 
