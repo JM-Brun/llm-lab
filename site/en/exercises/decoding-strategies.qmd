@@ -24,7 +24,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-e
 
 [← Back to the lesson: Decoding strategies](../decoding-strategies.qmd)
 
-## Comprehension questions
+## Check your understandings
 
 1. Can you distinguish transforming a distribution at one position from searching over multiple sequences?
 
