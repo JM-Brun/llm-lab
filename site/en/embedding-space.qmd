@@ -89,7 +89,7 @@ In the following [first-block-input exercise](exercises/text-data.qmd#ex-token-t
 
 The phrase **row address** therefore describes access to the table, not the token's geometric position. The vector is a list of coordinates; it is the vector that can be represented as a point in a $d$-dimensional space.
 
-## The matrix in one formula
+## The matrix in one formula {#embedding-matrix-lookup} {#embedding-matrix-lookup}
 
 If the vocabulary contains $V$ IDs and each vector has $d$ components, the matrix has $V$ rows and $d$ columns:
 
@@ -127,7 +127,7 @@ ID numbers are labels, not properties of the vectors: renumbering the vocabulary
 
 The tokenizer fixes the vocabulary and the token-to-ID mapping; it does not provide the values of $E$. Those values are **learned network parameters**: they are initialized and then adjusted during training. When an example uses ID $i$, the loss gradient can contribute to updating row $E_{i,:}$. Lookup selects that row; it does not compute its contents.
 
-## From the initial vector to a contextualized representation
+## From the initial vector to a contextualized representation {#from-lookup-to-contextualized-representation} {#from-lookup-to-contextualized-representation}
 
 With a fixed matrix, two occurrences of the same ID select the same row and therefore retrieve the same initial vector. The lookup does not read neighbouring words or disambiguate the meaning of a sentence.
 
