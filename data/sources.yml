@@ -3726,6 +3726,8 @@ sources:
         - en/contextualized-representations
         - fr/cosine-similarity
         - en/cosine-similarity
+        - fr/embeddings-deep-dive
+        - en/embeddings-deep-dive
       concepts: [token, token-embedding, contextualized-representation]
       audit_records:
         - docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
