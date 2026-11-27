@@ -121,10 +121,10 @@ items:
       tags: [topic:information-theory]
       concept_ids: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     candidate_destinations:
-      pages: [fr/cross-entropy, en/cross-entropy]
+      pages: [fr/language-modeling-math, en/language-modeling-math]
       concepts: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     disposition: integrate
-    disposition_rationale: "Add the identity and assumptions to the existing bilingual cross-entropy lesson, with consistent log units and a worked numerical example."
+    disposition_rationale: "Integrate the soft-target cross-entropy/KL identity and its assumptions in the bilingual advanced language-modeling mathematics pages; the core cross-entropy lesson links to this destination rather than duplicating the derivation."
 
   - id: wayland-zhang-information-theory-llm-2026:attention-mutual-information
     kind: misconception
