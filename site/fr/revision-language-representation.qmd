@@ -28,7 +28,7 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-language-r
 
 - Un réseau neuronal apprend en ajustant des paramètres au moyen d'opérations mathématiques sur des tableaux numériques. Des représentations apprenables lui permettent d'exploiter les régularités du langage pour sa tâche de prédiction.
 - Un **ID** est une adresse dans un vocabulaire. Sa valeur ne mesure ni une quantité linguistique ni une proximité sémantique.
-- Un **embedding initial** est un vecteur appris sélectionné par l'ID. C'est ce vecteur, et non le numéro de l'ID, qui entre dans les transformations du réseau.
+- Un **embedding initial** est un vecteur de paramètres sélectionné par l'ID. Les gradients issus de la fonction de perte peuvent ajuster ses valeurs par rétropropagation ; l'ID reste un indice discret et n'est pas appris.
 - Les couches du Transformer construisent des **états contextualisés** à partir des vecteurs initiaux et du contexte accessible.
 - Une proximité dans l'espace vectoriel peut refléter des régularités statistiques, mais ne constitue pas à elle seule une définition du sens ou une preuve de compréhension.
 
