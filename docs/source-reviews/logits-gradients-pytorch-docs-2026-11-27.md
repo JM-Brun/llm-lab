@@ -68,6 +68,14 @@ Trois notices PyTorch ont été ajoutées à `data/sources.yml`, avec extraction
 
 Les sources restent `partially-scanned` et `partially-integrated` : le périmètre API utile aux pages a été vérifié, sans revue exhaustive de PyTorch ni exécution des exemples de code. La documentation PyTorch est vivante ; la version et les redirections doivent être revérifiées lors d'une mise à jour future.
 
+## 6. Décision sur Jay Alammar — The Illustrated GPT-2
+
+La section *Model Output* de [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) explique que le vecteur final est multiplié par la matrice d'embedding pour obtenir un score par élément du vocabulaire. C'est une illustration utile du passage représentation finale → scores vocabulaire dans le cas GPT-2.
+
+La source est toutefois spécifique à GPT-2 et son propre auteur signale plusieurs simplifications : vocabulaire décrit comme des « words », différences entre inférence et entraînement, et éléments de normalisation omis ou simplifiés dans les figures. L'usage de la matrice d'embedding comme projection de sortie ne doit pas être généralisé à toutes les architectures.
+
+**Décision : ne pas intégrer de nouveau paragraphe ni de figure.** La page Logits possède déjà un exemple numérique autonome qui expose explicitement la matrice de projection, les dimensions et les scores. Le contenu d'Alammar serait largement redondant et n'apporterait pas une nuance nécessaire au tronc principal. La source reste disponible comme ressource GPT-2 générale ; aucune figure n'est reprise, les droits de réutilisation des images n'étant pas établis.
+
 ## 5. Décisions et limites
 
 Aucune erreur mathématique bloquante n'a été identifiée dans les deux leçons auditées. Les corrections portent sur l'explicitation des notations et les conditions d'interprétation de la vérification numérique.
