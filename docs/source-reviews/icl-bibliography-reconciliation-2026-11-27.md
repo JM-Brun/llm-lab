@@ -84,11 +84,35 @@ Les notices Min et Yoo passent à `integration_status: partially-integrated`. Le
 
 La première page du PDF Min et al. écrit le nom du deuxième auteur « Xinyi Lyu », tandis que la notice ACL Anthology, sa page auteur et le dépôt de code indiquent « Xinxi Lyu ». La notice canonique conserve provisoirement la forme de l'ACL Anthology, sans masquer cette divergence. Une correction définitive nécessite une confirmation bibliographique indépendante.
 
+## Revue ciblée d'Olsson et Xie
+
+### Olsson et al. (2022) — induction heads et force des preuves
+
+La revue de la publication Transformer Circuits distingue explicitement trois niveaux de preuve :
+
+- **Petits Transformers attention-only :** preuves mécanistes et causales fortes. Les auteurs combinent l'analyse du circuit à deux têtes, la coïncidence avec une transition de phase pendant l'entraînement, des perturbations architecturales et des ablations directes.
+- **Petits modèles avec MLP :** certaines preuves causales subsistent, mais les interactions entre attention et MLP rendent les ablations plus difficiles à interpréter.
+- **Modèles de grande taille avec MLP :** les preuves que les induction heads expliquent la majorité de l'ICL sont surtout indirectes et corrélationnelles. Les auteurs n'ont pas réalisé d'ablations complètes des têtes sur leurs modèles pleine échelle et signalent des hypothèses alternatives, notamment d'autres mécanismes de composition.
+
+La page ne présente donc plus les induction heads comme une explication générale. Elle indique le circuit de copie étudié et sépare explicitement la force des preuves selon la famille de modèles. L'extraction est dans `data/extractions/olsson-et-al-induction-heads-2022.yml`.
+
+### Xie et al. (2022) — cadre théorique bayésien
+
+La revue du PDF ICLR 2022 confirme un cadre théorique où les documents de préentraînement sont générés sous un mélange de HMM indexés par un concept latent. Les exemples d'un prompt partagent un concept `θ*` ; le modèle peut l'inférer implicitement et marginaliser les concepts possibles pour produire une distribution prédictive.
+
+Le résultat formel dépend d'hypothèses explicites : adéquation du modèle à la distribution de préentraînement, concept du prompt appartenant à la famille considérée, propriétés des délimiteurs, contrôle du décalage entre distribution de préentraînement et distribution des prompts, et condition de distinguabilité formulée à l'aide de divergences KL. Le papier montre également que la longueur des exemples peut apporter un signal supplémentaire.
+
+Les expériences GINC contrôlent un mélange synthétique de HMM ; elles montrent des comportements ICL dans des Transformers et des LSTMs, mais ne démontrent pas que tout LLM sur corpus naturel applique universellement cette explication bayésienne. Les auteurs observent aussi des échecs d'extrapolation vers des concepts absents de la famille de préentraînement.
+
+Un encadré facultatif a été ajouté aux deux pages pour présenter ce cadre comme une explication théorique conditionnelle, distincte des induction heads qui relèvent de l'interprétabilité mécaniste. L'extraction est dans `data/extractions/xie-et-al-implicit-bayesian-icl-2022.yml`.
+
+Les notices Olsson et Xie passent à `integration_status: partially-integrated`. Leurs statuts de scan restent partiels : les sections pertinentes ont été étudiées, mais les annexes et tous les détails expérimentaux n'ont pas été audités exhaustivement.
+
 ## Limites de cette passe d'ingestion
 
 Cette passe combine la vérification bibliographique des six notices et une lecture ciblée des sections pertinentes des PDF Min et Yoo. Deux extractions atomiques evidence-linked ont été créées. Aucun résultat expérimental n'a été reproduit ; les annexes et détails d'implémentation n'ont pas été audités exhaustivement.
 
-Min et Yoo sont partiellement intégrés aux pages FR/EN. Les lectures ciblées d'Olsson et Xie restent à effectuer pour stabiliser les niveaux de preuve mécaniste et théorique. Xiang reste une ressource facultative d'approfondissement et son protocole complet doit encore être étudié.
+Min et Yoo sont partiellement intégrés aux pages FR/EN. Les lectures ciblées d'Olsson et Xie ont été effectuées et leurs limites de preuve sont maintenant explicitées dans les pages. Xiang reste une ressource facultative d'approfondissement ; son protocole complet doit encore être étudié.
 
 ## Sources de vérification
 
