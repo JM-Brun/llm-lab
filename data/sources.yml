@@ -30,7 +30,7 @@ sources:
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: integrated
+    integration_status: reviewed
     collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-04"
@@ -129,7 +129,7 @@ sources:
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: integrated
+    integration_status: partially-integrated
     collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-04"
@@ -2391,7 +2391,7 @@ sources:
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: integrated
+    integration_status: partially-integrated
     collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-05"
@@ -2497,7 +2497,7 @@ sources:
       contribution_types: [pedagogy, mathematical-derivation, implementation, visualization]
       audiences: [learner, practitioner]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: partially-integrated
     collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-05"
