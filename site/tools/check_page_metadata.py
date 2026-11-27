@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from page_index import group_bilingual_topics
+from page_index import group_bilingual_topics, validate_optional_summary
 from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -209,6 +209,11 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     if not isinstance(metadata, dict):
         errors.append(f"{relative}: page-map block must be a YAML mapping")
         return None
+
+    try:
+        validate_optional_summary(metadata, relative)
+    except ValueError as exc:
+        errors.append(str(exc))
 
     required = {"id", "scope", "purpose", "suggested_route", "hierarchy", "related", "tags"}
     missing = required - set(metadata)
