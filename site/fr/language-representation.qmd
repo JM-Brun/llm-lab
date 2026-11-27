@@ -19,6 +19,11 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/text-data", "fr/embedding-space", "fr/contextualized-representations"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "La synthèse distingue le rôle de l’ID, du vecteur appris et de l’état contextualisé, et rappelle pourquoi le réseau a besoin d’objets numériques."
 tags:
   - "type:concept-lesson"
   - "destination:understand"
@@ -126,6 +131,10 @@ Il ne faut donc pas confondre trois objets :
 | ID de token | Désigne une entrée du vocabulaire |
 | Embedding initial | Vecteur appris sélectionné par cet ID |
 | Représentation contextualisée | État calculé par le réseau pour cette occurrence dans son contexte |
+
+::: {.callout-tip title="À retenir" #revision-summary}
+Un **ID** est une adresse dans le vocabulaire, pas une mesure du sens. Le **lookup** sélectionne un vecteur appris sur lequel le réseau peut calculer. Les couches du modèle transforment ensuite ces vecteurs pour construire des états dépendant du contexte.
+:::
 
 ## 6. La suite du parcours
 
