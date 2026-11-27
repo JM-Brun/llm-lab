@@ -89,7 +89,7 @@ Le stockage de la durée dans PAGE-MAP et son affichage sont deux décisions dif
 
 Le point d'injection exact dans le rendu Quarto reste à décider après inspection des mécanismes communs de mise en page. Il ne faut pas détourner le panneau de détails de la learning map pour en faire le mécanisme d'affichage des leçons.
 
-## 7. Tests à ajouter au moment de l'implémentation
+## 7. Tests de validation
 
 ### Validation PAGE-MAP
 
@@ -129,9 +129,9 @@ Cette décision autorise le futur champ `estimated_reading_minutes`, mais n'auto
 
 Ordre de suite :
 
-1. ajouter le contrôle de type de `summary` et les tests de non-régression ;
+1. terminer la revue et la validation CI de PR #1759, qui implémente le contrôle de type de `summary` et ses tests ;
 2. ajouter la validation facultative de `estimated_reading_minutes` et ses tests, lorsque l'estimateur sera prêt ;
 3. inspecter les conventions de rendu Quarto et choisir le point d'injection commun ;
 4. construire le rapport et calibrer l'estimateur avant toute population des pages.
 
-Aucune page de leçon, durée, source, relation, route ou workflow CI n'est modifié par cet audit.
+L'audit initial ne modifiait aucune page de leçon, durée, source, relation, route ou workflow CI. Le suivi PR #1759 ajoute uniquement la validation de type de `summary`, ses tests et la documentation du contrat.
