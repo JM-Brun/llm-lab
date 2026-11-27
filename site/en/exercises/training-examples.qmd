@@ -9,8 +9,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples-exercises"
-summary: "Six progressive exercises on alignment, teacher forcing, masks, packing, padding, and logits dimensions."
-scope: "Collects six questions and transfer scenarios without duplicating the lesson’s conceptual explanation."
+summary: "Six progressive exercises and a debugging checklist on alignment, teacher forcing, masks, packing, padding, and logits dimensions."
+scope: "Collects six exercises, transfer scenarios, and a debugging checklist without duplicating the lesson’s conceptual explanation."
 purpose: "Check token alignment, causality, mask roles, document boundaries, loss reduction, and logits dimensions."
 suggested_route:
   previous: null
@@ -30,6 +30,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:training-examples-exe
 
 For stream `[4, 7, 2, 9]` and input length 3, what is the first input-target pair?
 
+Extension: for stream [8, 3, 3, 9, 2, 7], with length 3 and stride 1, write the first two input-target pairs.
+
 <details>
 <summary>Hint</summary>
 
@@ -41,6 +43,11 @@ Each target is the token immediately following the input token at the same posit
 <summary>Show the answer</summary>
 
 Input `[4, 7, 2]`, target `[7, 2, 9]`. Both sequences have the same length; the target is shifted by one index in the source stream.
+
+For the second stream, the two windows are:
+
+- Input [8, 3, 3], target [3, 3, 9].
+- Input [3, 3, 9], target [3, 9, 2].
 
 </details>
 
@@ -184,6 +191,19 @@ The naive mean also includes the two PAD losses from A:
 It optimizes a different objective, which here depends on the losses assigned to padding positions. The attention mask determines which positions may be consulted; it does not automatically remove PAD labels from the loss function. A consistent loss mask or explicit ignored-label convention is required, followed by reduction over the number of valid targets.
 
 </details>
+
+## Debugging checklist {#debugging-checklist}
+
+When loss is unexpectedly low, high, or unstable, check:
+
+1. Is every target the next token in the source stream?
+2. Are input and target lengths compatible?
+3. Is the final token without a successor handled explicitly?
+4. Are padding positions excluded from loss as intended?
+5. Do causal, padding, and loss masks have distinct roles?
+6. Are cross-document transitions intentional?
+7. Do axes B, L, and V match the loss function’s expectations?
+8. Can a future target be accessed by the context used to predict it?
 
 ::: {.callout-note}
 **Scope of these exercises.** The scenarios are conceptual and illustrate possible policies. They do not prescribe a universal packing format, cross-document mask, or reduction convention; those choices must be defined by the training pipeline and objective.
