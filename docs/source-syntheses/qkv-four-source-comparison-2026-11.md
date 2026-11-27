@@ -1,5 +1,7 @@
 # Q/K/V — four-source comparison and canonical-page audit
 
+> **Scope clarification (2026-11-27):** this is a deliberately bounded comparison of four tutorial resources, not the complete bibliography, construction corpus or claim-evidence inventory for the current Q/K/V page. Jose Parreño Garcia is a later page-cited blog with its own source review; Vaswani et al. is the primary research anchor with a separate focused review. Their roles are reconciled in [the Q/K/V source collection, §12](../source-reviews/qkv-source-collection.md#12-page-level-diversity-and-coverage-audit--2026-11-27). Do not infer page usage or claim support from membership in this four-tutorial comparison.
+
 **Review date:** 2026-11-05  
 **Sources:** Nishanthan K (DEV), Neha KK (Medium), Codefinity, Michael Brenndoerfer  
 **Canonical pages:** [Q/K/V (EN)](../../site/en/queries-keys-values.qmd) · [Q/K/V (FR)](../../site/fr/queries-keys-values.qmd) · [Scaled dot-product attention (EN)](../../site/en/scaled-dot-product-attention.qmd) · [Scaled dot-product attention (FR)](../../site/fr/scaled-dot-product-attention.qmd)
