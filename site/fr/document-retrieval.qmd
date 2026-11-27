@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/deepen"]
   children: []
-related: ["fr/rag-memory-boundaries", "fr/context-engineering", "fr/in-context-learning"]
+related: ["fr/rag-memory-boundaries", "fr/context-engineering", "fr/in-context-learning", "fr/document-retrieval-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -124,7 +124,7 @@ Le schéma bi-encoder / cross-encoder donne un exemple concret de classement en 
 
 ## Pour pratiquer
 
-Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memory-boundaries.qmd) restent une pratique intégratrice de bout en bout : ils aident à relier la qualité de la recherche à la transmission et à l'exploitation des résultats. Ils ne constituent pas un atelier spécialisé de classement documentaire.
+Les questions ciblées de cette leçon sont regroupées sur la page compagne [Exercices — Récupération documentaire](exercises/document-retrieval.qmd). Pour une pratique intégratrice de bout en bout, utilisez aussi [RAG, mémoire et frontières de transmission](exercises/rag-memory-boundaries.qmd), qui relie qualité de la recherche, transmission et exploitation des résultats.
 
 Pour le cycle complet, voir [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd).
 
