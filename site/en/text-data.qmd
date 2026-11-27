@@ -13,7 +13,7 @@ summary: "Follows an occurrence from text to its token ID and initial vector, co
 scope: "Covers the path from text to tokens, tokens to IDs, and IDs to embedding lookup. Distinguishes prompt encoding from corpus preparation; segmentation algorithms belong to the dedicated deep dive."
 purpose: "Explain the text → tokens → IDs → initial vectors chain, compare two tokenizers on the same input, distinguish IDs from numerical quantities, and understand why tokenizer and weights form a contract."
 suggested_route:
-  previous: "en/llm-overview"
+  previous: "en/language-representation"
   next: "en/embedding-space"
 hierarchy:
   parents: []

@@ -82,8 +82,10 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
         details,
         re.MULTILINE,
     )
-    assert len(rows) == 20
-    assert len({page_slug for _, _, page_slug, _ in rows}) == 20
+    assert len(rows) == 21
+    assert len({page_slug for _, _, page_slug, _ in rows}) == 21
+    lesson_order = [page_slug for _, _, page_slug, _ in rows]
+    assert lesson_order.index("language-representation") < lesson_order.index("text-data")
     assert next(sheet for _, _, lesson, sheet in rows if lesson == "entropy") == (
         "revision-entropy.html"
     )

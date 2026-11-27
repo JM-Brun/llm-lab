@@ -8,7 +8,7 @@ concepts:
       fr: "Unité discrète produite par la tokenisation et consommée par le modèle."
       en: "Discrete unit produced by tokenization and consumed by the model."
     domains: [text-tokenization]
-    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/language-representation, en/language-representation]
   - id: tokenizer
     importance: core
     labels: {fr: "Tokenizer", en: "Tokenizer"}
@@ -80,7 +80,7 @@ concepts:
       fr: "Identifiant entier d'une entrée du vocabulaire ; sa signification dépend du tokenizer et de son vocabulaire."
       en: "Integer identifier for a vocabulary entry; its meaning depends on the tokenizer and its vocabulary."
     domains: [text-tokenization]
-    resources: [fr/text-data, en/text-data, fr/embedding-space, en/embedding-space]
+    resources: [fr/text-data, en/text-data, fr/embedding-space, en/embedding-space, fr/language-representation, en/language-representation]
   - id: subword-tokenization
     importance: core
     labels: {fr: "Tokenisation en sous-mots", en: "Subword tokenization"}
@@ -184,7 +184,7 @@ concepts:
       fr: "Vecteur obtenu par consultation de la matrice de plongements à partir de l’identifiant du token."
       en: "Vector retrieved from the embedding matrix using the token ID."
     domains: [text-tokenization, mathematical-tools-geometry]
-    resources: [fr/embedding-space, en/embedding-space]
+    resources: [fr/embedding-space, en/embedding-space, fr/language-representation, en/language-representation]
   - id: contextualized-representation
     importance: core
     labels: {fr: "Représentation contextualisée", en: "Contextualized representation"}
@@ -192,7 +192,7 @@ concepts:
       fr: "État vectoriel associé à une occurrence de token, calculé à partir de sa représentation initiale, de l'information positionnelle et du contexte accessible selon l'architecture du modèle."
       en: "Vector state associated with a token occurrence, computed from its initial representation, positional information, and the context accessible under the model architecture."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/contextualized-representations, en/contextualized-representations, fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+    resources: [fr/contextualized-representations, en/contextualized-representations, fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/language-representation, en/language-representation]
   - id: query
     importance: supporting
     labels: {fr: "Query (requête)", en: "Query"}

@@ -37,27 +37,37 @@ stages:
 
   - id: text-input
     title:
-      fr: "Du texte aux tokens"
-      en: "From text to tokens"
+      fr: "Du langage aux tokens"
+      en: "From language to tokens"
     objective:
-      fr: "Distinguer le texte, les tokens et les identifiants qui constituent l'entrée discrète du modèle, sans devoir connaître les algorithmes de segmentation."
-      en: "Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms."
+      fr: "Comprendre pourquoi le réseau a besoin de représentations numériques, puis distinguer le texte, les tokens et les IDs qui constituent son entrée discrète, sans devoir connaître les algorithmes de segmentation."
+      en: "Understand why the network needs numerical representations, then distinguish text, tokens, and IDs that form its discrete input without studying segmentation algorithms."
     overview:
       question:
-        fr: 'Comment le texte devient-il une entrée du réseau ?'
-        en: 'How does text become input to the network?'
+        fr: 'Pourquoi et comment le texte devient-il une entrée calculable du réseau ?'
+        en: 'Why and how does text become computable input to the network?'
       result:
-        fr: 'Un tokenizer découpe le texte en tokens et retrouve l’identifiant de chacun dans son vocabulaire.'
-        en: 'A tokenizer splits the text into tokens and looks up each token’s ID in its vocabulary.'
+        fr: 'Le réseau opère sur des objets numériques : le tokenizer fournit des IDs, qui servent d’adresses avant le lookup des vecteurs appris.'
+        en: 'The network operates on numerical objects: the tokenizer supplies IDs, which act as addresses before learned-vector lookup.'
       signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \mathcal{I}_{\mathrm{tok}}'
       criterion:
-        fr: 'La longueur $T$ dépend du texte $s$ et du tokenizer choisi. $\mathcal{I}_{\mathrm{tok}}$ est l’ensemble des IDs valides de ce tokenizer.'
-        en: 'The length $T$ depends on the text $s$ and the tokenizer used. $\mathcal{I}_{\mathrm{tok}}$ is the set of valid IDs for that tokenizer.'
+        fr: >-
+          La longueur $T$ dépend du texte $s$ et du tokenizer choisi. Les IDs appartiennent au vocabulaire de ce tokenizer :
+          leurs valeurs servent d'adresses et ne mesurent ni une quantité linguistique ni une distance sémantique.
+        en: >-
+          Sequence length $T$ depends on text $s$ and the tokenizer. IDs belong to that tokenizer's vocabulary:
+          their values act as addresses and measure neither a linguistic quantity nor semantic distance.
     pages:
-      fr: [fr/text-data]
-      en: [en/text-data]
-    compact_title: {fr: "Tokeniser", en: "Tokenize"}
+      fr: [fr/language-representation, fr/text-data]
+      en: [en/language-representation, en/text-data]
+    compact_title: {fr: "Encoder", en: "Encode"}
     conceptual_focus:
+      language-representation:
+        mobilizes: ["concept:token"]
+        objects: ["concept:token-id", "concept:token-embedding", "concept:contextualized-representation"]
+        outcome:
+          fr: "Justifier le recours à des représentations numériques et distinguer ID, vecteur initial et état contextualisé."
+          en: "Explain why numerical representations are needed and distinguish an ID, an initial vector, and a contextualized state."
       text-data:
         mobilizes: ["node:raw-text-context"]
         objects: ["concept:token", "node:token-ids"]
@@ -477,6 +487,9 @@ transitions:
 lesson_contracts:
   llm-overview:
     synthesis: revision-llm-overview
+  language-representation:
+    synthesis: revision-language-representation
+    requires: [llm-overview]
   text-data:
     synthesis: revision-text-data
     requires: [llm-overview]

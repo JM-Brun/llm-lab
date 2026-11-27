@@ -1,0 +1,56 @@
+---
+title: "Révision — Pourquoi représenter le langage numériquement ?"
+description-meta: "Les raisons de convertir les symboles en objets numériques et les distinctions entre IDs, vecteurs appris et états contextualisés."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-language-representation", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-language-representation"
+scope: "Fiche de rappel sur la motivation de la représentation numérique du langage, le rôle des IDs, des embeddings initiaux et des états contextualisés."
+purpose: "Reconstruire de mémoire pourquoi le réseau a besoin de représentations numériques et distinguer les trois objets manipulés au début du parcours."
+revision_role: synthesis
+revision_of: ["fr/language-representation"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/revision-text-data", "fr/revision-embedding-space"]
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-language-representation", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](language-representation.qmd) · [Leçon suivante : texte et tokens](text-data.qmd) · [Plan du parcours](review-path.qmd#text-input)
+
+## À retenir {#revision-essentials}
+
+- Un réseau neuronal effectue des opérations mathématiques sur des tenseurs numériques ; les unités discrètes du texte doivent donc être représentées sous une forme adaptée à ces opérations.
+- Un **ID** est une adresse dans un vocabulaire. Sa valeur ne mesure ni une quantité linguistique ni une proximité sémantique.
+- Un **embedding initial** est un vecteur appris sélectionné par l'ID. C'est ce vecteur, et non le numéro de l'ID, qui entre dans les transformations du réseau.
+- Les couches du Transformer construisent des **états contextualisés** à partir des vecteurs initiaux et du contexte accessible.
+- Une proximité dans l'espace vectoriel peut refléter des régularités statistiques, mais ne constitue pas à elle seule une définition du sens ou une preuve de compréhension.
+
+## Vérifier de mémoire {#revision-check}
+
+Pourquoi ne peut-on pas soustraire les IDs de deux tokens pour mesurer leur proximité sémantique ? Quel objet numérique le modèle transforme-t-il ensuite, et pourquoi cet objet doit-il encore être contextualisé ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Les IDs sont des indices arbitraires propres au vocabulaire ; leur différence dépend de la numérotation et ne porte pas de signification linguistique. Le lookup utilise l'ID pour sélectionner un vecteur appris dans la matrice d'embeddings. Les couches du réseau transforment ensuite ce vecteur en tenant compte des autres positions accessibles, afin que l'état associé à une occurrence dépende de son contexte.
+
+</details>
+
+## Relier les trois représentations
+
+| Objet | Question à se poser |
+|---|---|
+| ID de token | Quelle entrée du vocabulaire désigne-t-il ? |
+| Embedding initial | Quel vecteur appris est sélectionné ? |
+| État contextualisé | Que calcule le réseau pour cette occurrence dans ce contexte ? |
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-language-representation.qmd) · [English](../en/revision-language-representation.qmd)
+:::

@@ -3,6 +3,7 @@
   - Architectures et variantes (facultatif)
     - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
   - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
+  - [Pourquoi représenter le langage numériquement ?](language-representation.html)
   - [Du texte aux tokens : représenter le langage](text-data.html)
   - [Des identifiants aux vecteurs : les embeddings](embedding-space.html)
   - [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
@@ -25,6 +26,7 @@
 - **Réviser**
   - [Plan du parcours et fiches de révision](review-path.html)
   - [Révision — Fonctionnement d’un LLM](revision-llm-overview.html)
+  - [Révision — Pourquoi représenter le langage numériquement ?](revision-language-representation.html)
   - [Révision — Du texte aux tokens](revision-text-data.html)
   - [Révision — Embeddings et recherche dans la table](revision-embedding-space.html)
   - [Révision — Information positionnelle](revision-positional-encoding.html)

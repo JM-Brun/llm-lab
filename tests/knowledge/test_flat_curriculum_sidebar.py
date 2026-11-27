@@ -134,8 +134,8 @@ def test_understand_and_review_sidebars_are_flat_canonical_projections(
     # Review entries intentionally retain their canonical path-only labels;
     # unlike the main learning path, they are not part of the compact-label pass.
     assert all(isinstance(item, str) for item in review["contents"])
-    assert len(core_page_ids) == 20
-    assert len(review_page_ids) == 20
+    assert len(core_page_ids) == 21
+    assert len(review_page_ids) == 21
 
 
 @pytest.mark.parametrize(

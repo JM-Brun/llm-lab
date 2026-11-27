@@ -1,0 +1,150 @@
+---
+title: "Why represent language numerically?"
+subtitle: "From readable symbols to objects a network can compute with"
+description-meta: "Explains why a neural network processes language through learned numerical representations, distinguishing identifiers, initial vectors, and contextualized states."
+keywords: ["type:concept-bridge", "destination:understand", "topic:language-representation", "level:overview", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/language-representation"
+summary: "Introduces the motivation for numerical language representations and distinguishes identifiers from learned vectors and contextualized states."
+scope: "Explains why neural networks use numerical objects to process language, what learned vectors make computable, and why representations are subsequently context-dependent. Concrete tokenization, detailed lookup, vector geometry, and Transformer mechanisms remain in their dedicated lessons."
+purpose: "Explain why an integer identifier is not enough to represent a token for neural computation, distinguish a lookup address from a learned vector, and connect initial representations to contextualized states."
+suggested_route:
+  previous: "en/llm-overview"
+  next: "en/text-data"
+hierarchy:
+  parents: []
+  children: []
+related: ["en/text-data", "en/embedding-space", "en/contextualized-representations"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes the role of an ID, a learned vector, and a contextualized state, and recalls why the network needs numerical objects."
+tags:
+  - "type:concept-bridge"
+  - "destination:understand"
+  - "topic:language-representation"
+  - "level:overview"
+  - "language:en"
+  - "status:published"
+-->
+
+{{< include ../includes/generated-guided-context-en-language-representation.qmd >}}
+
+::: {.chapter-lead}
+A language model learns to produce sequences of tokens. But a neural network does not compute directly on words as we read them: its operations act on **numbers arranged in tensors**. We therefore need a bridge between language symbols and the numerical objects the network can transform.
+
+This is more than changing notation. We must distinguish an identifier that names a symbol, a learned vector used in computation, and the states the model constructs while taking context into account.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="What you should understand"}
+By the end of this page, you should be able to:
+
+- explain why a neural network's computations require numerical representations;
+- distinguish a token ID from a learned vector;
+- explain why an initial vector is not enough to represent an occurrence's role in a sentence;
+- locate tokenization, lookup, and contextualization in the learning path.
+:::
+
+## 1. The problem: moving from symbols to computation
+
+Text consists of discrete symbols: characters, punctuation marks, words, or word fragments. A conventional program can compare strings, search for patterns, or apply symbolic rules. A Transformer-style neural network follows a different strategy: it applies parameterized mathematical operations to arrays of numbers.
+
+These operations — projections, matrix products, weighted combinations, and nonlinear transformations — allow the network to adjust its parameters from examples. For a neural model to use patterns in language through these operations, discrete text units must therefore be converted into numerical objects suited to computation. This does not mean that computers cannot manipulate character strings; it is the representation and computational approach chosen by this family of architectures.
+
+**The goal is not to replace language with an arbitrary sequence of numbers.** It is to construct learned representations on which the network can perform transformations useful for prediction.
+
+## 2. An identifier is not a representation of meaning
+
+Tokenization assigns each discrete unit an integer identifier in a vocabulary. Suppose, for simplicity, that a tokenizer assigns:
+
+| Token | ID |
+|---|---:|
+| `cat` | 17 |
+| `dog` | 42 |
+
+The difference between these IDs is 25. But this does not mean that *dog* is “closer” to *cat* than to a token with ID 100, or that ID 42 contains more meaning than ID 17.
+
+These numbers are primarily **addresses**. The vocabulary could have assigned 42 to `cat` and 17 to `dog` without changing the problem, provided the corresponding rows of vocabulary-indexed parameters were permuted in the same way.
+
+An ID therefore retrieves an entry; it is not, by itself, a semantic coordinate. Computing directly on ID values would confuse the label chosen by the tokenizer with the representation used by the network.
+
+## 3. The learned vector: an object the network can compute with
+
+The model associates each ID with a row in a parameter matrix called the **embedding matrix**. If the vocabulary contains $V$ tokens and each vector has $d$ components, this matrix can be written as:
+
+\[
+E \in \mathbb{R}^{V \times d}.
+\]
+
+For an ID $i_t$, lookup selects the vector:
+
+\[
+x_t = E[i_t] \in \mathbb{R}^{d}.
+\]
+
+The ID tells the model which row to read; the vector contains the numerical values used by subsequent operations. The vector components are parameters learned during training, not numbers manually assigned to each word from a dictionary definition.
+
+This distinction makes an essential property possible: vectors can be transformed and combined by the network's layers. Training adjusts parameters — including selected embeddings and later transformations — to improve predictions on examples. Differentiable operations make it possible to compute gradients with respect to these parameters. Gradients can update the selected row and later layers, but they do not move the integer ID itself: it remains a discrete index.
+
+<figure>
+  <pre>
+Text
+  ↓ tokenization
+Tokens → IDs (addresses)
+              ↓ lookup
+        Learned vectors
+              ↓ transformations
+    Contextualized states
+              ↓
+          Prediction
+  </pre>
+  <figcaption>Conceptual view: each step changes the kind of object being handled. This shows broad classes of transformations, not every operation in a GPT.</figcaption>
+</figure>
+
+## 4. What vector representations make possible
+
+A vector has multiple components. It can therefore serve as the input to learned transformations that combine information and produce new vectors. In a Transformer, projections, attention, and feed-forward networks transform representations across layers.
+
+The geometry of a learned space can reflect useful statistical regularities: tokens used in comparable contexts may have nearby representations under a given measure. But this requires care:
+
+- a dimension is not generally a named linguistic feature;
+- coordinates depend on the parameters and the chosen basis;
+- vector proximity alone is neither a definition of meaning nor evidence of understanding.
+
+Vector representations provide the network with a flexible numerical substrate. They do not automatically turn language into an explicit semantic map.
+
+## 5. Why must context still transform these vectors?
+
+The initial lookup depends on the ID, not on the sentence in which the token appears. Two occurrences of the same ID therefore select the same initial vector when the parameters are fixed.
+
+Yet an occurrence does not always play the same role depending on the words around it. In English, *bank* appears in “river bank” and “bank account”: if the tokenizer assigns the same ID to both occurrences, their initial vector is identical even though the relevant context differs. Lookup alone does not make this distinction.
+
+Transformer layers construct **contextualized representations** by transforming initial vectors using other accessible positions. In a causal model, a position can use only the prefix up to and including itself. This transformation allows the state associated with an occurrence to depend on its context.
+
+Do not confuse these three objects:
+
+| Object | Role |
+|---|---|
+| Token ID | Identifies a vocabulary entry |
+| Initial embedding | Learned vector selected by that ID |
+| Contextualized representation | State computed by the network for that occurrence in context |
+
+::: {.callout-tip title="Key idea" #revision-summary}
+A **token ID** is an address in the vocabulary, not a measure of meaning. **Lookup** selects a learned vector the network can compute with. Model layers then transform these vectors into context-dependent states.
+:::
+
+## 6. Where the learning path goes next
+
+We can now study each step without confusing its role:
+
+1. **[From text to tokens](text-data.qmd)** — how the tokenizer splits text, assigns IDs, and supplies the model's discrete input.
+2. **[From IDs to vectors](embedding-space.qmd)** — how an ID selects a row in the embedding matrix.
+3. **[Positional information](positional-encoding.qmd)** — how the model accounts for token order.
+4. **[Contextualized representations](contextualized-representations.qmd)** — how Transformer blocks turn initial vectors into context-dependent states.
+
+**The key idea:** IDs make vocabulary units addressable; embeddings provide learned vectors; network layers transform those vectors into states suited to context and prediction. The next page begins with the first concrete transition: from text to tokens and their identifiers.

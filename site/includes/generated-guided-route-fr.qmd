@@ -2,7 +2,7 @@
   <span class="guided-rail__part" data-part="discover">Le modèle</span>
   <a class="guided-rail__stage" href="#guided-stage-orientation" title="Fonctionnement d’un LLM" aria-label="01 · Fonctionnement d’un LLM" data-stage-id="orientation" data-stage-index="1"><span class="guided-rail__number">01</span><span class="guided-rail__title">Vue d’ensemble</span></a>
   <span class="guided-rail__part" data-part="prediction">Prédire un token</span>
-  <a class="guided-rail__stage" href="#guided-stage-text-input" title="Du texte aux tokens" aria-label="02 · Du texte aux tokens" data-stage-id="text-input" data-stage-index="2"><span class="guided-rail__number">02</span><span class="guided-rail__title">Tokeniser</span></a>
+  <a class="guided-rail__stage" href="#guided-stage-text-input" title="Du langage aux tokens" aria-label="02 · Du langage aux tokens" data-stage-id="text-input" data-stage-index="2"><span class="guided-rail__number">02</span><span class="guided-rail__title">Encoder</span></a>
   <a class="guided-rail__stage" href="#guided-stage-representations" title="Des identifiants aux représentations" aria-label="03 · Des identifiants aux représentations" data-stage-id="representations" data-stage-index="3"><span class="guided-rail__number">03</span><span class="guided-rail__title">Représenter</span></a>
   <a class="guided-rail__stage" href="#guided-stage-computation" title="Comprendre le calcul du Transformer" aria-label="04 · Comprendre le calcul du Transformer" data-stage-id="computation" data-stage-index="4"><span class="guided-rail__number">04</span><span class="guided-rail__title">Contextualiser</span></a>
   <a class="guided-rail__stage" href="#guided-stage-prediction" title="Des états à la distribution prédictive" aria-label="05 · Des états à la distribution prédictive" data-stage-id="prediction" data-stage-index="5"><span class="guided-rail__number">05</span><span class="guided-rail__title">Prédire</span></a>
@@ -45,12 +45,13 @@ Situer le contexte et les paramètres du modèle. Suivre deux tours de générat
 
 ::: {.guided-route-stage #guided-stage-text-input}
 
-### 02 · Du texte aux tokens
+### 02 · Du langage aux tokens
 
-Distinguer le texte, les tokens et les identifiants qui constituent l'entrée discrète du modèle, sans devoir connaître les algorithmes de segmentation.
+Comprendre pourquoi le réseau a besoin de représentations numériques, puis distinguer le texte, les tokens et les IDs qui constituent son entrée discrète, sans devoir connaître les algorithmes de segmentation.
 
 **Pages centrales**
 
+- [Pourquoi représenter le langage numériquement ?](language-representation.html)
 - [Du texte aux tokens : représenter le langage](text-data.html)
 
 **Ressources facultatives**

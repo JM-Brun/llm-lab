@@ -2,7 +2,7 @@
   <span class="guided-rail__part" data-part="discover">The model</span>
   <a class="guided-rail__stage" href="#guided-stage-orientation" title="How an LLM works" aria-label="01 · How an LLM works" data-stage-id="orientation" data-stage-index="1"><span class="guided-rail__number">01</span><span class="guided-rail__title">Overview</span></a>
   <span class="guided-rail__part" data-part="prediction">Predict a token</span>
-  <a class="guided-rail__stage" href="#guided-stage-text-input" title="From text to tokens" aria-label="02 · From text to tokens" data-stage-id="text-input" data-stage-index="2"><span class="guided-rail__number">02</span><span class="guided-rail__title">Tokenize</span></a>
+  <a class="guided-rail__stage" href="#guided-stage-text-input" title="From language to tokens" aria-label="02 · From language to tokens" data-stage-id="text-input" data-stage-index="2"><span class="guided-rail__number">02</span><span class="guided-rail__title">Encode</span></a>
   <a class="guided-rail__stage" href="#guided-stage-representations" title="From IDs to representations" aria-label="03 · From IDs to representations" data-stage-id="representations" data-stage-index="3"><span class="guided-rail__number">03</span><span class="guided-rail__title">Represent</span></a>
   <a class="guided-rail__stage" href="#guided-stage-computation" title="Understand Transformer computation" aria-label="04 · Understand Transformer computation" data-stage-id="computation" data-stage-index="4"><span class="guided-rail__number">04</span><span class="guided-rail__title">Contextualize</span></a>
   <a class="guided-rail__stage" href="#guided-stage-prediction" title="From hidden states to the predictive distribution" aria-label="05 · From hidden states to the predictive distribution" data-stage-id="prediction" data-stage-index="5"><span class="guided-rail__number">05</span><span class="guided-rail__title">Predict</span></a>
@@ -45,12 +45,13 @@ Locate the model’s context and parameters. Follow two generation steps in the 
 
 ::: {.guided-route-stage #guided-stage-text-input}
 
-### 02 · From text to tokens
+### 02 · From language to tokens
 
-Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms.
+Understand why the network needs numerical representations, then distinguish text, tokens, and IDs that form its discrete input without studying segmentation algorithms.
 
 **Core pages**
 
+- [Why represent language numerically?](language-representation.html)
 - [From text to tokens: representing language](text-data.html)
 
 **Optional resources**

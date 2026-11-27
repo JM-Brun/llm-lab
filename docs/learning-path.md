@@ -8,7 +8,7 @@ This plan defines two paths with different completion evidence, not one sequence
 
 ## Reader-facing Understand route: current refactor
 
-The bilingual Understand sidebar now exposes the twenty core lessons as one flat sequence, with the nine conceptual stages retained as orientation labels rather than nested navigation levels. The peer Review sidebar is also flat and follows the same lesson order (PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549)). This is a navigation change, not a change to the curriculum's conceptual dependencies or to the separate Build path.
+The bilingual Understand sidebar now exposes the twenty-one core lessons as one flat sequence, with the nine conceptual stages retained as orientation labels rather than nested navigation levels. The peer Review sidebar is also flat and follows the same lesson order (PR [#1549](https://github.com/JM-Brun/llm-lab/pull/1549)). This is a navigation change, not a change to the curriculum's conceptual dependencies or to the separate Build path.
 
 The editorial refactor remains in progress: lesson content, review companions, metadata relations and rendered learner experience still require bounded audits. In particular, page hierarchy must express genuine containment/decomposition, not computational or reading order; suggested_route and the canonical route carry those other meanings. See the [linear route refactor analysis](linear-understand-route-refactor.md) for the migration boundaries, preservation rules and acceptance criteria.
 

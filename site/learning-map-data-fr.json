@@ -75,7 +75,7 @@
       ],
       "route": {
         "previous": "fr/index",
-        "next": "fr/text-data"
+        "next": "fr/language-representation"
       },
       "parents": [
         "fr/index"
@@ -192,42 +192,37 @@
       "rank": 4
     },
     {
-      "id": "fr/text-data",
-      "title": "Du texte aux tokens : représenter le langage",
-      "href": "text-data.html",
+      "id": "fr/language-representation",
+      "title": "Pourquoi représenter le langage numériquement ?",
+      "href": "language-representation.html",
       "language": "fr",
       "destination": "understand",
-      "level": "core",
-      "type": "concept-lesson",
-      "topic": "text-data",
+      "level": "overview",
+      "type": "concept-bridge",
+      "topic": "language-representation",
       "domain": null,
-      "scope": "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée.",
-      "summary": "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, compare deux tokenizers sur une même entrée et explique pourquoi le tokenizer doit rester associé aux poids.",
-      "purpose": "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat.",
+      "scope": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
+      "summary": "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés.",
+      "purpose": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
       "covered_stages": [],
       "section_headings": [
-        "Du préfixe aux identifiants",
-        "Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?",
-        "Une expérience mentale : que reçoit réellement le modèle ?",
-        "Le tokenizer fait partie du contrat du modèle",
-        "Pourquoi le découpage compte",
-        "Exercices"
+        "1. Le problème : passer des symboles au calcul",
+        "2. Un identifiant n'est pas une représentation du sens",
+        "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
+        "4. Ce que les vecteurs rendent possible",
+        "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
+        "6. La suite du parcours"
       ],
       "route": {
         "previous": "fr/llm-overview",
-        "next": "fr/embedding-space"
+        "next": "fr/text-data"
       },
       "parents": [],
       "children": [],
       "related": [
-        "fr/generation",
-        "fr/context-engineering",
-        "fr/transformer",
+        "fr/text-data",
         "fr/embedding-space",
-        "fr/text-data-exercises",
-        "fr/deepen",
-        "fr/tokenization-and-tokenizers",
-        "fr/tokenization-strategies"
+        "fr/contextualized-representations"
       ],
       "rank": 9
     },
@@ -367,7 +362,7 @@
       "domain": null,
       "scope": "Distingue les trois projections apprises d’un état de bloc et leur rôle dans une tête d’auto-attention.",
       "summary": "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé.",
-      "purpose": "Prédire ce qu’un changement des valeurs peut modifier dans une tête d’attention lorsque requêtes, clés et masque restent fixes.",
+      "purpose": "Expliquer pourquoi l’auto-attention projette l’état d’entrée du bloc en Q, K et V, distinguer la compatibilité (Q/K) du contenu agrégé (V), et prévoir les effets d’une modification isolée de projection.",
       "covered_stages": [],
       "section_headings": [
         "Le problème : utiliser le contexte",
@@ -408,7 +403,7 @@
       "domain": null,
       "scope": "Suit le calcul d’une ligne d’attention, de la comparaison Q–K aux valeurs pondérées.",
       "summary": "Déroule le calcul d’attention de bout en bout : compatibilité entre Q et K, mise à l’échelle, normalisation des scores et agrégation pondérée de V.",
-      "purpose": "Calculer une sortie d’attention sur un petit exemple et expliquer l’effet de la mise à l’échelle avant le softmax.",
+      "purpose": "Expliquer et reconstruire le calcul d’une ligne d’attention — scores, mise à l’échelle, masque, softmax et agrégation — et justifier les dimensions et la normalisation des intermédiaires.",
       "covered_stages": [],
       "section_headings": [
         "Le calcul d'un seul regard",
@@ -475,42 +470,42 @@
       "rank": 24
     },
     {
-      "id": "fr/embedding-space",
-      "title": "Des identifiants aux vecteurs : les embeddings",
-      "href": "embedding-space.html",
+      "id": "fr/text-data",
+      "title": "Du texte aux tokens : représenter le langage",
+      "href": "text-data.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "embedding-space",
+      "topic": "text-data",
       "domain": null,
-      "scope": "Montre comment un ID indexe une ligne apprise de la matrice de plongements.",
-      "summary": "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs.",
-      "purpose": "Pour un ID donné, retrouver la ligne du plongement initial et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs.",
+      "scope": "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée.",
+      "summary": "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, compare deux tokenizers sur une même entrée et explique pourquoi le tokenizer doit rester associé aux poids.",
+      "purpose": "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat.",
       "covered_stages": [],
       "section_headings": [
-        "Le point de départ : le préfixe fourni au modèle",
-        "Le lookup : sélectionner une ligne, pas une coordonnée",
-        "La matrice en une formule",
-        "Du vecteur initial à la représentation contextualisée",
-        "Exercices",
-        "Approfondir"
+        "Du préfixe aux identifiants",
+        "Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?",
+        "Une expérience mentale : que reçoit réellement le modèle ?",
+        "Le tokenizer fait partie du contrat du modèle",
+        "Pourquoi le découpage compte",
+        "Exercices"
       ],
       "route": {
-        "previous": "fr/text-data",
-        "next": "fr/positional-encoding"
+        "previous": "fr/language-representation",
+        "next": "fr/embedding-space"
       },
       "parents": [],
-      "children": [
-        "fr/cosine-similarity",
-        "fr/linearite-embeddings"
-      ],
+      "children": [],
       "related": [
-        "fr/text-data",
-        "fr/positional-encoding",
-        "fr/contextualized-representations",
-        "fr/embedding-space-exercises",
-        "fr/gpt-model-walkthrough"
+        "fr/generation",
+        "fr/context-engineering",
+        "fr/transformer",
+        "fr/embedding-space",
+        "fr/text-data-exercises",
+        "fr/deepen",
+        "fr/tokenization-and-tokenizers",
+        "fr/tokenization-strategies"
       ],
       "rank": 31
     },
@@ -628,41 +623,42 @@
       "rank": 40
     },
     {
-      "id": "fr/positional-encoding",
-      "title": "Encodage positionnel : donner un ordre aux tokens",
-      "href": "positional-encoding.html",
+      "id": "fr/embedding-space",
+      "title": "Des identifiants aux vecteurs : les embeddings",
+      "href": "embedding-space.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "positional-encoding",
+      "topic": "embedding-space",
       "domain": null,
-      "scope": "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements.",
-      "summary": "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale.",
-      "purpose": "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale.",
+      "scope": "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés.",
+      "summary": "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions.",
+      "purpose": "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée.",
       "covered_stages": [],
       "section_headings": [
-        "Pourquoi ajouter une information de position ?",
-        "Deux familles et plusieurs mécanismes",
-        "Une permutation suffit à révéler le problème",
-        "Idées reçues",
-        "Où se situe cette étape dans le parcours ?",
-        "Exercices"
+        "Le point de départ : le préfixe fourni au modèle",
+        "Le lookup : sélectionner une ligne, pas une coordonnée",
+        "La matrice en une formule",
+        "Du vecteur initial à la représentation contextualisée",
+        "Exercices",
+        "Approfondir"
       ],
       "route": {
-        "previous": "fr/embedding-space",
-        "next": "fr/contextualized-representations"
+        "previous": "fr/text-data",
+        "next": "fr/positional-encoding"
       },
       "parents": [],
       "children": [
-        "fr/rope",
-        "fr/sinusoidal-positional-encoding"
+        "fr/cosine-similarity",
+        "fr/linearite-embeddings"
       ],
       "related": [
-        "fr/embedding-space",
+        "fr/text-data",
+        "fr/positional-encoding",
         "fr/contextualized-representations",
-        "fr/transformer",
-        "fr/positional-encoding-exercises"
+        "fr/embedding-space-exercises",
+        "fr/gpt-model-walkthrough"
       ],
       "rank": 41
     },
@@ -704,7 +700,7 @@
         "fr/rag-memory-boundaries",
         "fr/document-retrieval"
       ],
-      "rank": 44
+      "rank": 42
     },
     {
       "id": "fr/entropy",
@@ -744,43 +740,46 @@
         "fr/compression-revision",
         "fr/experience-information-theory"
       ],
-      "rank": 45
+      "rank": 44
     },
     {
-      "id": "fr/contextualized-representations",
-      "title": "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?",
-      "href": "contextualized-representations.html",
+      "id": "fr/positional-encoding",
+      "title": "Encodage positionnel : donner un ordre aux tokens",
+      "href": "positional-encoding.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "contextualized-representations",
+      "topic": "positional-encoding",
       "domain": null,
-      "scope": "Compare le lookup initial et les états cachés par position, puis explique leur dépendance au contexte accessible dans un GPT causal. La formalisation des sous-couches et l’analyse de dépendances linguistiques particulières sont réservées à l’approfondissement.",
-      "summary": "Distingue le vecteur initial sélectionné par l’ID de l’état caché construit pour chaque occurrence à partir de sa position et du contexte accessible.",
-      "purpose": "Prédire ce qui peut modifier l’état d’une occurrence, en séparant l’ID, la position, le préfixe accessible et les transformations du réseau.",
+      "scope": "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements.",
+      "summary": "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale.",
+      "purpose": "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale.",
       "covered_stages": [],
       "section_headings": [
-        "Ce qui reste identique",
-        "Ce qui change avec la position et le contexte",
-        "Distinguer les étapes et les représentations",
-        "Une expérience contrôlée : modifier le passé ou le futur",
-        "Où se situe cette étape dans le modèle ?"
+        "Pourquoi ajouter une information de position ?",
+        "Deux familles et plusieurs mécanismes",
+        "Une permutation suffit à révéler le problème",
+        "Idées reçues",
+        "Où se situe cette étape dans le parcours ?",
+        "Exercices"
       ],
       "route": {
-        "previous": "fr/positional-encoding",
-        "next": "fr/transformer"
+        "previous": "fr/embedding-space",
+        "next": "fr/contextualized-representations"
       },
       "parents": [],
-      "children": [],
+      "children": [
+        "fr/rope",
+        "fr/sinusoidal-positional-encoding"
+      ],
       "related": [
         "fr/embedding-space",
-        "fr/positional-encoding",
-        "fr/queries-keys-values",
+        "fr/contextualized-representations",
         "fr/transformer",
-        "fr/contextualized-representations-exercises"
+        "fr/positional-encoding-exercises"
       ],
-      "rank": 46
+      "rank": 45
     },
     {
       "id": "fr/vraisemblance",
@@ -816,7 +815,7 @@
         "fr/cross-entropy",
         "fr/vraisemblance-exercises"
       ],
-      "rank": 49
+      "rank": 47
     },
     {
       "id": "fr/cross-entropy",
@@ -854,7 +853,44 @@
         "fr/language-modeling-math",
         "fr/cross-entropy-exercises"
       ],
-      "rank": 50
+      "rank": 48
+    },
+    {
+      "id": "fr/contextualized-representations",
+      "title": "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?",
+      "href": "contextualized-representations.html",
+      "language": "fr",
+      "destination": "understand",
+      "level": "core",
+      "type": "concept-lesson",
+      "topic": "contextualized-representations",
+      "domain": null,
+      "scope": "Compare le lookup initial et les états cachés par position, puis explique leur dépendance au contexte accessible dans un GPT causal. La formalisation des sous-couches et l’analyse de dépendances linguistiques particulières sont réservées à l’approfondissement.",
+      "summary": "Distingue le vecteur initial sélectionné par l’ID de l’état caché construit pour chaque occurrence à partir de sa position et du contexte accessible.",
+      "purpose": "Prédire ce qui peut modifier l’état d’une occurrence, en séparant l’ID, la position, le préfixe accessible et les transformations du réseau.",
+      "covered_stages": [],
+      "section_headings": [
+        "Ce qui reste identique",
+        "Ce qui change avec la position et le contexte",
+        "Distinguer les étapes et les représentations",
+        "Une expérience contrôlée : modifier le passé ou le futur",
+        "Où se situe cette étape dans le modèle ?"
+      ],
+      "route": {
+        "previous": "fr/positional-encoding",
+        "next": "fr/transformer"
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/embedding-space",
+        "fr/positional-encoding",
+        "fr/transformer",
+        "fr/queries-keys-values",
+        "fr/contextualized-representations-advanced",
+        "fr/contextualized-representations-exercises"
+      ],
+      "rank": 49
     },
     {
       "id": "fr/loss",
@@ -890,7 +926,7 @@
         "fr/training-loop",
         "fr/loss-exercises"
       ],
-      "rank": 51
+      "rank": 52
     },
     {
       "id": "fr/gradients",
@@ -925,7 +961,7 @@
         "fr/training-loop",
         "fr/gradients-exercises"
       ],
-      "rank": 52
+      "rank": 53
     },
     {
       "id": "fr/training-loop",
@@ -964,7 +1000,7 @@
         "fr/build-path",
         "fr/evaluation-experimentale"
       ],
-      "rank": 53
+      "rank": 54
     },
     {
       "id": "fr/post-training",
@@ -1006,7 +1042,7 @@
         "fr/glossary",
         "fr/llm-limits"
       ],
-      "rank": 54
+      "rank": 55
     },
     {
       "id": "fr/review-path",
@@ -1030,7 +1066,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 117
+      "rank": 118
     },
     {
       "id": "fr/build-path",
@@ -1638,7 +1674,7 @@
       "related": [
         "fr/exercises-foundations"
       ],
-      "rank": 42
+      "rank": 43
     },
     {
       "id": "fr/linearite-embeddings",
@@ -1673,7 +1709,7 @@
       "related": [
         "fr/exercises-foundations"
       ],
-      "rank": 43
+      "rank": 46
     },
     {
       "id": "fr/rope",
@@ -1710,7 +1746,7 @@
         "fr/scaled-dot-product-attention",
         "fr/causal-masking"
       ],
-      "rank": 47
+      "rank": 50
     },
     {
       "id": "fr/sinusoidal-positional-encoding",
@@ -1747,7 +1783,7 @@
         "fr/queries-keys-values",
         "fr/scaled-dot-product-attention"
       ],
-      "rank": 48
+      "rank": 51
     },
     {
       "id": "fr/advent-calendar-story-day-01",
@@ -1758,7 +1794,7 @@
       "level": "overview",
       "type": "deep-dive",
       "topic": "zipfs-law",
-      "domain": "probabilistic-foundations-training",
+      "domain": "text-tokenization",
       "scope": "Introduit les unités de comptage, construit une distribution rang-fréquence, interprète la loi de Zipf et ses limites ; renvoie les variantes, données comparatives, histoire et applications détaillées vers un approfondissement.",
       "summary": "Construit un petit corpus, étudie les fréquences lexicales et découvre la loi de Zipf, ses usages et ses limites.",
       "purpose": "Construire un petit corpus, distinguer types et occurrences, lire une relation rang-fréquence et éviter les interprétations abusives.",
@@ -1786,7 +1822,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 56
+      "rank": 57
     },
     {
       "id": "fr/compression-revision",
@@ -1825,7 +1861,7 @@
         "fr/llm-evolution",
         "fr/llm-computational-complexity"
       ],
-      "rank": 57
+      "rank": 58
     },
     {
       "id": "fr/contextualized-representations-advanced",
@@ -1837,9 +1873,9 @@
       "type": "deep-dive",
       "topic": "contextualized-representations-advanced",
       "domain": "architectures-mechanisms",
-      "scope": "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel et normalisation.",
-      "summary": "Formalise les dépendances contextuelles et approfondit le fonctionnement interne des blocs Transformer : auto-attention, MLP, connexions résiduelles et normalisation.",
-      "purpose": "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, puis expliquer les sous-couches, les connexions résiduelles et les variantes de normalisation d'un bloc.",
+      "scope": "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel, normalisation, études empiriques de contextualité et probing des couches.",
+      "summary": "Formalise les dépendances contextuelles, approfondit les blocs Transformer et confronte les intuitions aux résultats empiriques sur les représentations et les couches.",
+      "purpose": "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, expliquer les sous-couches et interpréter avec prudence les résultats empiriques sur la contextualité, la géométrie et les informations décodables entre couches.",
       "covered_stages": [],
       "section_headings": [
         "1. De l'embedding initial à l'entrée du réseau",
@@ -1858,11 +1894,12 @@
       ],
       "children": [],
       "related": [
+        "fr/contextualized-representations",
         "fr/queries-keys-values-advanced",
         "fr/rope",
         "fr/transformer"
       ],
-      "rank": 58
+      "rank": 59
     },
     {
       "id": "fr/decoding-strategies",
@@ -1900,7 +1937,7 @@
         "fr/exercises-generation",
         "fr/decoding-strategies-exercises"
       ],
-      "rank": 59
+      "rank": 60
     },
     {
       "id": "fr/deepen",
@@ -1918,11 +1955,11 @@
       "covered_stages": [],
       "section_headings": [
         "Choisir par question",
+        "Modélisation du langage",
         "Attention, position et architectures",
-        "Ressources dédiées aux encodages sinusoïdaux",
-        "Ressources complémentaires pour comprendre le Transformer",
-        "Texte et tokenisation",
-        "Statistiques du langage"
+        "Texte, corpus et tokenisation",
+        "Statistiques du langage",
+        "Tokenisation et évaluation"
       ],
       "route": {
         "previous": null,
@@ -1940,7 +1977,7 @@
         "fr/tokenization-and-tokenizers"
       ],
       "related": [],
-      "rank": 60
+      "rank": 61
     },
     {
       "id": "fr/document-retrieval",
@@ -1977,7 +2014,7 @@
         "fr/context-engineering",
         "fr/in-context-learning"
       ],
-      "rank": 61
+      "rank": 62
     },
     {
       "id": "fr/embeddings-deep-dive",
@@ -2016,7 +2053,7 @@
         "fr/linearite-embeddings",
         "fr/tokenizer-design-evaluation"
       ],
-      "rank": 62
+      "rank": 63
     },
     {
       "id": "fr/emergence",
@@ -2052,7 +2089,7 @@
         "fr/evaluation-experimentale",
         "fr/emergence-exercises"
       ],
-      "rank": 63
+      "rank": 64
     },
     {
       "id": "fr/hybrid-llm-architectures",
@@ -2089,7 +2126,7 @@
         "fr/scaling-laws",
         "fr/hybrid-llm-architectures-exercises"
       ],
-      "rank": 111
+      "rank": 112
     },
     {
       "id": "fr/jepa-platonic-representation",
@@ -2126,7 +2163,7 @@
         "fr/llm-limits",
         "fr/jepa-platonic-representation-exercises"
       ],
-      "rank": 112
+      "rank": 113
     },
     {
       "id": "fr/llm-evolution",
@@ -2171,7 +2208,7 @@
         "fr/evaluation-experimentale",
         "fr/llm-evolution-exercises"
       ],
-      "rank": 113
+      "rank": 114
     },
     {
       "id": "fr/multimodal-architectures",
@@ -2208,7 +2245,7 @@
         "fr/transformer-architectures",
         "fr/llm-evolution"
       ],
-      "rank": 114
+      "rank": 115
     },
     {
       "id": "fr/next-concept-modeling",
@@ -2246,7 +2283,7 @@
         "fr/llm-computational-complexity",
         "fr/transformer-architectures"
       ],
-      "rank": 115
+      "rank": 116
     },
     {
       "id": "fr/rag-memory-boundaries",
@@ -2286,7 +2323,7 @@
         "fr/post-training",
         "fr/document-retrieval"
       ],
-      "rank": 116
+      "rank": 117
     },
     {
       "id": "fr/scaling-laws",
@@ -2317,7 +2354,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 139
+      "rank": 141
     },
     {
       "id": "fr/score-centering",
@@ -2351,7 +2388,7 @@
         "fr/gradients",
         "fr/llm-evolution"
       ],
-      "rank": 140
+      "rank": 142
     },
     {
       "id": "fr/surprisal-information-content",
@@ -2390,7 +2427,7 @@
         "fr/language-modeling-math",
         "fr/experience-information-theory"
       ],
-      "rank": 141
+      "rank": 143
     },
     {
       "id": "fr/tokenization-and-tokenizers",
@@ -2431,7 +2468,7 @@
         "fr/exercises-text-data",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 143
+      "rank": 145
     },
     {
       "id": "fr/tokenization-strategies",
@@ -2471,7 +2508,7 @@
         "fr/training-examples",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 144
+      "rank": 146
     },
     {
       "id": "fr/tokenizer-design-evaluation",
@@ -2511,7 +2548,7 @@
         "fr/unicode-text",
         "fr/exercises-text-data"
       ],
-      "rank": 145
+      "rank": 147
     },
     {
       "id": "fr/tokenizer-multilingual-evaluation",
@@ -2547,7 +2584,7 @@
         "fr/text-data",
         "fr/scaling-laws"
       ],
-      "rank": 146
+      "rank": 148
     },
     {
       "id": "fr/unicode-text",
@@ -2581,7 +2618,7 @@
       "related": [
         "fr/text-data"
       ],
-      "rank": 147
+      "rank": 149
     },
     {
       "id": "fr/universal-artificial-intelligence",
@@ -2618,7 +2655,7 @@
         "fr/cross-entropy",
         "fr/llm-computational-complexity"
       ],
-      "rank": 148
+      "rank": 150
     },
     {
       "id": "fr/zipf-law-deep-dive",
@@ -2629,7 +2666,7 @@
       "level": "advanced",
       "type": "deep-dive",
       "topic": "zipf-law-deep-dive",
-      "domain": "probabilistic-foundations-training",
+      "domain": "text-tokenization",
       "scope": "Rassemble les extensions mathématiques, résultats empiriques comparatifs, repères historiques et usages en analyse de corpus, recherche d'information et étude des modèles.",
       "summary": "Approfondit la loi de Zipf : variante de Mandelbrot, données multilingues, histoire, applications et limites.",
       "purpose": "Interpréter les résultats empiriques sans généralisation abusive et relier la statistique rang-fréquence aux usages concrets.",
@@ -2655,7 +2692,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 149
+      "rank": 151
     },
     {
       "id": "fr/exercises",
@@ -3092,7 +3129,7 @@
         "fr/training-loop",
         "fr/llm-limits"
       ],
-      "rank": 55
+      "rank": 56
     },
     {
       "id": "fr/causal-masking-exercises",
@@ -3121,7 +3158,7 @@
       "related": [
         "fr/causal-masking"
       ],
-      "rank": 64
+      "rank": 65
     },
     {
       "id": "fr/compression-revision-exercises",
@@ -3150,7 +3187,7 @@
       "related": [
         "fr/compression-revision"
       ],
-      "rank": 65
+      "rank": 66
     },
     {
       "id": "fr/context-engineering-exercises",
@@ -3183,7 +3220,7 @@
         "fr/context-engineering",
         "fr/in-context-learning"
       ],
-      "rank": 66
+      "rank": 67
     },
     {
       "id": "fr/contextualized-representations-exercises",
@@ -3201,6 +3238,7 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
+        "Cartes de révision",
         "Quel changement peut atteindre l'état courant ?",
         "Enquête guidée — une feature SAE dans Neuronpedia"
       ],
@@ -3213,7 +3251,7 @@
       "related": [
         "fr/contextualized-representations"
       ],
-      "rank": 67
+      "rank": 68
     },
     {
       "id": "fr/corpus-preparation-exercises",
@@ -3241,7 +3279,7 @@
       "related": [
         "fr/corpus-preparation"
       ],
-      "rank": 68
+      "rank": 69
     },
     {
       "id": "fr/cross-attention-exercises",
@@ -3269,7 +3307,7 @@
       "related": [
         "fr/cross-attention"
       ],
-      "rank": 69
+      "rank": 70
     },
     {
       "id": "fr/cross-entropy-exercises",
@@ -3297,7 +3335,7 @@
       "related": [
         "fr/cross-entropy"
       ],
-      "rank": 70
+      "rank": 71
     },
     {
       "id": "fr/decoding-strategies-exercises",
@@ -3325,7 +3363,7 @@
       "related": [
         "fr/decoding-strategies"
       ],
-      "rank": 71
+      "rank": 72
     },
     {
       "id": "fr/embedding-space-exercises",
@@ -3343,6 +3381,7 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
+        "Cartes de révision",
         "Inspecter une petite matrice d'embeddings d'entrée",
         "Exploration guidée — Embedding Atlas"
       ],
@@ -3355,7 +3394,7 @@
       "related": [
         "fr/embedding-space"
       ],
-      "rank": 72
+      "rank": 73
     },
     {
       "id": "fr/embeddings-deep-dive-exercises",
@@ -3381,7 +3420,7 @@
       "related": [
         "fr/embeddings-deep-dive"
       ],
-      "rank": 73
+      "rank": 74
     },
     {
       "id": "fr/emergence-exercises",
@@ -3409,7 +3448,7 @@
       "related": [
         "fr/emergence"
       ],
-      "rank": 74
+      "rank": 75
     },
     {
       "id": "fr/entropy-exercises",
@@ -3439,7 +3478,7 @@
       "related": [
         "fr/entropy"
       ],
-      "rank": 75
+      "rank": 76
     },
     {
       "id": "fr/generation-exercises",
@@ -3469,7 +3508,7 @@
         "fr/generation",
         "fr/exercises-generation"
       ],
-      "rank": 76
+      "rank": 77
     },
     {
       "id": "fr/gpt-config-walkthrough-exercises",
@@ -3497,7 +3536,7 @@
       "related": [
         "fr/gpt-config-walkthrough"
       ],
-      "rank": 77
+      "rank": 78
     },
     {
       "id": "fr/gpt-generation-walkthrough-exercises",
@@ -3525,7 +3564,7 @@
       "related": [
         "fr/gpt-generation-walkthrough"
       ],
-      "rank": 78
+      "rank": 79
     },
     {
       "id": "fr/gpt-model-walkthrough-exercises",
@@ -3553,7 +3592,7 @@
       "related": [
         "fr/gpt-model-walkthrough"
       ],
-      "rank": 79
+      "rank": 80
     },
     {
       "id": "fr/gpt-ops-walkthrough-exercises",
@@ -3581,7 +3620,7 @@
       "related": [
         "fr/gpt-ops-walkthrough"
       ],
-      "rank": 80
+      "rank": 81
     },
     {
       "id": "fr/gradients-exercises",
@@ -3611,7 +3650,7 @@
         "fr/gradients",
         "fr/cross-entropy"
       ],
-      "rank": 81
+      "rank": 82
     },
     {
       "id": "fr/hybrid-llm-architectures-exercises",
@@ -3640,7 +3679,7 @@
       "related": [
         "fr/hybrid-llm-architectures"
       ],
-      "rank": 82
+      "rank": 83
     },
     {
       "id": "fr/in-context-learning-exercises",
@@ -3668,7 +3707,7 @@
       "related": [
         "fr/in-context-learning"
       ],
-      "rank": 83
+      "rank": 84
     },
     {
       "id": "fr/jepa-platonic-representation-exercises",
@@ -3700,7 +3739,7 @@
       "related": [
         "fr/jepa-platonic-representation"
       ],
-      "rank": 84
+      "rank": 85
     },
     {
       "id": "fr/llm-computational-complexity-exercises",
@@ -3728,7 +3767,7 @@
       "related": [
         "fr/llm-computational-complexity"
       ],
-      "rank": 85
+      "rank": 86
     },
     {
       "id": "fr/llm-evolution-exercises",
@@ -3756,7 +3795,7 @@
       "related": [
         "fr/llm-evolution"
       ],
-      "rank": 86
+      "rank": 87
     },
     {
       "id": "fr/llm-limits-exercises",
@@ -3782,7 +3821,7 @@
       "related": [
         "fr/llm-limits"
       ],
-      "rank": 87
+      "rank": 88
     },
     {
       "id": "fr/llm-overview-exercises",
@@ -3808,7 +3847,7 @@
       "related": [
         "fr/llm-overview"
       ],
-      "rank": 88
+      "rank": 89
     },
     {
       "id": "fr/logits-exercises",
@@ -3840,7 +3879,7 @@
         "fr/transformer",
         "fr/scaled-dot-product-attention"
       ],
-      "rank": 89
+      "rank": 90
     },
     {
       "id": "fr/loss-exercises",
@@ -3870,7 +3909,7 @@
       "related": [
         "fr/loss"
       ],
-      "rank": 90
+      "rank": 91
     },
     {
       "id": "fr/multimodal-architectures-exercises",
@@ -3898,7 +3937,7 @@
       "related": [
         "fr/multimodal-architectures"
       ],
-      "rank": 91
+      "rank": 92
     },
     {
       "id": "fr/next-concept-modeling-exercises",
@@ -3926,7 +3965,7 @@
       "related": [
         "fr/next-concept-modeling"
       ],
-      "rank": 92
+      "rank": 93
     },
     {
       "id": "fr/positional-encoding-exercises",
@@ -3956,7 +3995,7 @@
       "related": [
         "fr/positional-encoding"
       ],
-      "rank": 93
+      "rank": 94
     },
     {
       "id": "fr/probabilites-exercises",
@@ -3987,7 +4026,7 @@
         "fr/exercises-generation",
         "fr/decoding-strategies"
       ],
-      "rank": 94
+      "rank": 95
     },
     {
       "id": "fr/queries-keys-values-exercises",
@@ -4016,7 +4055,7 @@
         "fr/queries-keys-values",
         "fr/exercises-attention"
       ],
-      "rank": 95
+      "rank": 96
     },
     {
       "id": "fr/rag-memory-boundaries-exercises",
@@ -4051,7 +4090,7 @@
         "fr/context-engineering",
         "fr/in-context-learning"
       ],
-      "rank": 96
+      "rank": 97
     },
     {
       "id": "fr/rope-exercises",
@@ -4079,7 +4118,7 @@
       "related": [
         "fr/rope"
       ],
-      "rank": 97
+      "rank": 98
     },
     {
       "id": "fr/scaled-dot-product-attention-exercises",
@@ -4108,7 +4147,7 @@
       "related": [
         "fr/scaled-dot-product-attention"
       ],
-      "rank": 98
+      "rank": 99
     },
     {
       "id": "fr/sinusoidal-positional-encoding-exercises",
@@ -4136,7 +4175,7 @@
       "related": [
         "fr/sinusoidal-positional-encoding"
       ],
-      "rank": 99
+      "rank": 100
     },
     {
       "id": "fr/text-data-exercises",
@@ -4168,7 +4207,7 @@
         "fr/text-data",
         "fr/embedding-space"
       ],
-      "rank": 100
+      "rank": 101
     },
     {
       "id": "fr/tokenization-strategies-exercises",
@@ -4197,7 +4236,7 @@
       "related": [
         "fr/tokenization-strategies"
       ],
-      "rank": 101
+      "rank": 102
     },
     {
       "id": "fr/training-examples-exercises",
@@ -4230,7 +4269,7 @@
       "related": [
         "fr/training-examples"
       ],
-      "rank": 102
+      "rank": 103
     },
     {
       "id": "fr/training-loop-exercises",
@@ -4259,7 +4298,7 @@
       "related": [
         "fr/training-loop"
       ],
-      "rank": 103
+      "rank": 104
     },
     {
       "id": "fr/transformer-architectures-exercises",
@@ -4287,7 +4326,7 @@
       "related": [
         "fr/transformer-architectures"
       ],
-      "rank": 104
+      "rank": 105
     },
     {
       "id": "fr/transformer-block-walkthrough-exercises",
@@ -4315,7 +4354,7 @@
       "related": [
         "fr/transformer-block-walkthrough"
       ],
-      "rank": 105
+      "rank": 106
     },
     {
       "id": "fr/transformer-exercises",
@@ -4346,7 +4385,7 @@
         "fr/transformer",
         "fr/transformer-history"
       ],
-      "rank": 106
+      "rank": 107
     },
     {
       "id": "fr/unicode-text-exercises",
@@ -4374,7 +4413,7 @@
       "related": [
         "fr/unicode-text"
       ],
-      "rank": 107
+      "rank": 108
     },
     {
       "id": "fr/vraisemblance-exercises",
@@ -4405,7 +4444,7 @@
         "fr/vraisemblance",
         "fr/generation"
       ],
-      "rank": 108
+      "rank": 109
     },
     {
       "id": "fr/zipf-law-exercises",
@@ -4437,7 +4476,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 109
+      "rank": 110
     },
     {
       "id": "fr/experience-information-theory",
@@ -4473,7 +4512,7 @@
         "fr/revision-information-theory",
         "fr/surprisal-information-content"
       ],
-      "rank": 110
+      "rank": 111
     },
     {
       "id": "fr/revision-causal-masking",
@@ -4502,7 +4541,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 118
+      "rank": 119
     },
     {
       "id": "fr/revision-context-engineering",
@@ -4531,7 +4570,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 119
+      "rank": 120
     },
     {
       "id": "fr/revision-contextualized-representations",
@@ -4561,7 +4600,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 120
+      "rank": 121
     },
     {
       "id": "fr/revision-cross-entropy",
@@ -4590,7 +4629,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 121
+      "rank": 122
     },
     {
       "id": "fr/revision-embedding-space",
@@ -4610,7 +4649,7 @@
       ],
       "covered_stages": [],
       "section_headings": [
-        "Vérifier de mémoire"
+        "Prédire avant de vérifier"
       ],
       "route": {
         "previous": null,
@@ -4619,7 +4658,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 122
+      "rank": 123
     },
     {
       "id": "fr/revision-entropy",
@@ -4650,7 +4689,7 @@
       "related": [
         "fr/synthese-entropie"
       ],
-      "rank": 123
+      "rank": 124
     },
     {
       "id": "fr/revision-gradients",
@@ -4679,7 +4718,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 124
+      "rank": 125
     },
     {
       "id": "fr/revision-in-context-learning",
@@ -4708,7 +4747,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 125
+      "rank": 126
     },
     {
       "id": "fr/revision-inference-generation",
@@ -4738,7 +4777,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 126
+      "rank": 127
     },
     {
       "id": "fr/revision-information-theory",
@@ -4771,7 +4810,40 @@
       "related": [
         "fr/experience-information-theory"
       ],
-      "rank": 127
+      "rank": 128
+    },
+    {
+      "id": "fr/revision-language-representation",
+      "title": "Révision — Pourquoi représenter le langage numériquement ?",
+      "href": "revision-language-representation.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "core",
+      "type": "concept-bridge",
+      "topic": "revision-language-representation",
+      "domain": null,
+      "scope": "Fiche de rappel sur la motivation de la représentation numérique du langage, le rôle des IDs, des embeddings initiaux et des états contextualisés.",
+      "summary": "",
+      "purpose": "Reconstruire de mémoire pourquoi le réseau a besoin de représentations numériques et distinguer les trois objets manipulés au début du parcours.",
+      "revision_of": [
+        "fr/language-representation"
+      ],
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier de mémoire",
+        "Relier les trois représentations"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/revision-text-data",
+        "fr/revision-embedding-space"
+      ],
+      "rank": 129
     },
     {
       "id": "fr/revision-llm-overview",
@@ -4800,7 +4872,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 128
+      "rank": 130
     },
     {
       "id": "fr/revision-logits",
@@ -4829,7 +4901,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 129
+      "rank": 131
     },
     {
       "id": "fr/revision-loss",
@@ -4858,7 +4930,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 130
+      "rank": 132
     },
     {
       "id": "fr/revision-positional-encoding",
@@ -4870,7 +4942,7 @@
       "type": "concept-bridge",
       "topic": "revision-positional-encoding",
       "domain": null,
-      "scope": "Fiche de rappel sur le rôle de l’ordre, les points d’injection positionnels et leur distinction avec la visibilité causale.",
+      "scope": "Fiche de synthèse sur l’ordre, les points d’injection absolus et relatifs, les biais de score et la distinction entre visibilité causale et ordre implicite dans NoPE.",
       "summary": "",
       "purpose": "Distinguer ce qu’indiquent la position et le masque causal, puis prédire l’effet d’une permutation.",
       "revision_of": [
@@ -4889,7 +4961,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 131
+      "rank": 133
     },
     {
       "id": "fr/revision-probabilites",
@@ -4918,7 +4990,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 132
+      "rank": 134
     },
     {
       "id": "fr/revision-queries-keys-values",
@@ -4948,7 +5020,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 133
+      "rank": 135
     },
     {
       "id": "fr/revision-scaled-dot-product-attention",
@@ -4977,7 +5049,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 134
+      "rank": 136
     },
     {
       "id": "fr/revision-text-data",
@@ -4998,7 +5070,10 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier de mémoire",
-        "Une deuxième question pour vérifier le modèle mental"
+        "Une deuxième question pour vérifier le modèle mental",
+        "Vérifier le lookup initial",
+        "Distinguer encodage et apprentissage du tokenizer",
+        "Interpréter le nombre de tokens"
       ],
       "route": {
         "previous": null,
@@ -5007,7 +5082,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 135
+      "rank": 137
     },
     {
       "id": "fr/revision-training-loop",
@@ -5036,7 +5111,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 136
+      "rank": 138
     },
     {
       "id": "fr/revision-transformer",
@@ -5065,7 +5140,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 137
+      "rank": 139
     },
     {
       "id": "fr/revision-vraisemblance",
@@ -5094,7 +5169,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 138
+      "rank": 140
     },
     {
       "id": "fr/synthese-entropie",
@@ -5136,7 +5211,7 @@
         "fr/loss",
         "fr/compression-revision"
       ],
-      "rank": 142
+      "rank": 144
     },
     {
       "id": "reference/references",
@@ -5167,7 +5242,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 150
+      "rank": 152
     }
   ],
   "navigation": [
@@ -5176,6 +5251,7 @@
       "title": "Comprendre les LLM",
       "pages": [
         "fr/llm-overview",
+        "fr/language-representation",
         "fr/text-data",
         "fr/embedding-space",
         "fr/positional-encoding",
@@ -5196,7 +5272,14 @@
         "fr/gradients",
         "fr/training-loop"
       ],
-      "sections": []
+      "sections": [
+        {
+          "title": "Architectures et variantes (facultatif)",
+          "pages": [
+            "fr/transformer-architectures"
+          ]
+        }
+      ]
     },
     {
       "id": "reviser",
@@ -5204,6 +5287,7 @@
       "pages": [
         "fr/review-path",
         "fr/revision-llm-overview",
+        "fr/revision-language-representation",
         "fr/revision-text-data",
         "fr/revision-embedding-space",
         "fr/revision-positional-encoding",
@@ -5321,32 +5405,72 @@
       ],
       "sections": [
         {
-          "title": "Attention, position et architectures",
-          "pages": [
-            "fr/attention-score-scaling",
-            "fr/contextualized-representations-advanced",
-            "fr/queries-keys-values-advanced",
-            "fr/cross-attention",
-            "fr/transformer-architectures",
-            "fr/multimodal-architectures",
-            "fr/rope",
-            "fr/sinusoidal-positional-encoding",
-            "fr/hybrid-llm-architectures",
-            "fr/next-concept-modeling"
-          ]
-        },
-        {
-          "title": "Texte et tokenisation",
+          "title": "Modélisation du langage",
           "pages": [],
           "sections": [
             {
-              "title": "Tokenisation et tokenizers",
+              "title": "Attention, position et architectures",
               "pages": [
-                "fr/tokenization-and-tokenizers",
-                "fr/tokenization-strategies",
-                "fr/unicode-text",
-                "fr/tokenizer-design-evaluation",
-                "fr/tokenizer-multilingual-evaluation"
+                "fr/attention-score-scaling",
+                "fr/contextualized-representations-advanced",
+                "fr/queries-keys-values-advanced",
+                "fr/cross-attention",
+                "fr/multimodal-architectures",
+                "fr/rope",
+                "fr/sinusoidal-positional-encoding",
+                "fr/hybrid-llm-architectures",
+                "fr/next-concept-modeling"
+              ]
+            },
+            {
+              "title": "Texte, corpus et tokenisation",
+              "pages": [],
+              "sections": [
+                {
+                  "title": "Tokenisation et tokenizers",
+                  "pages": [
+                    "fr/tokenization-and-tokenizers",
+                    "fr/tokenization-strategies",
+                    "fr/unicode-text",
+                    "fr/tokenizer-design-evaluation",
+                    "fr/tokenizer-multilingual-evaluation"
+                  ]
+                },
+                {
+                  "title": "Statistiques du langage",
+                  "pages": [
+                    "fr/advent-calendar-story-day-01",
+                    "fr/zipf-law-deep-dive"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Formalisation probabiliste et chaîne de l’entraînement",
+              "pages": [
+                "fr/surprisal-information-content",
+                "fr/language-modeling-math",
+                "fr/mathematical-foundations",
+                "fr/score-centering"
+              ]
+            },
+            {
+              "title": "Inférence et efficacité",
+              "pages": [
+                "fr/decoding-strategies",
+                "fr/llm-computational-complexity",
+                "fr/compression-revision",
+                "fr/rag-memory-boundaries",
+                "fr/document-retrieval"
+              ]
+            },
+            {
+              "title": "Échelle et questions de recherche",
+              "pages": [
+                "fr/scaling-laws",
+                "fr/emergence",
+                "fr/llm-evolution",
+                "fr/jepa-platonic-representation"
               ]
             }
           ]
@@ -5357,39 +5481,8 @@
             "fr/embeddings-deep-dive",
             "fr/tensors",
             "fr/cosine-similarity",
-            "fr/linearite-embeddings"
-          ]
-        },
-        {
-          "title": "Formalisation probabiliste et chaîne de l’entraînement",
-          "pages": [
-            "fr/surprisal-information-content",
-            "fr/zipf-law-deep-dive",
-            "fr/language-modeling-math",
-            "fr/mathematical-foundations",
-            "fr/universal-artificial-intelligence",
-            "fr/score-centering",
-            "fr/post-training"
-          ]
-        },
-        {
-          "title": "Inférence et efficacité",
-          "pages": [
-            "fr/decoding-strategies",
-            "fr/llm-computational-complexity",
-            "fr/compression-revision",
-            "fr/rag-memory-boundaries",
-            "fr/document-retrieval"
-          ]
-        },
-        {
-          "title": "Échelle et questions de recherche",
-          "pages": [
-            "fr/scaling-laws",
-            "fr/emergence",
-            "fr/llm-limits",
-            "fr/llm-evolution",
-            "fr/jepa-platonic-representation"
+            "fr/linearite-embeddings",
+            "fr/universal-artificial-intelligence"
           ]
         }
       ]
@@ -5423,6 +5516,11 @@
           "id": "fr/tokenization-strategies",
           "title": "Stratégies de tokenisation : granularité, algorithmes et compromis",
           "href": "tokenization-strategies.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [
@@ -5614,6 +5712,11 @@
           "id": "fr/embedding-space",
           "title": "Des identifiants aux vecteurs : les embeddings",
           "href": "embedding-space.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": []
@@ -5857,6 +5960,11 @@
           "id": "fr/embedding-space",
           "title": "Des identifiants aux vecteurs : les embeddings",
           "href": "embedding-space.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [
@@ -5888,6 +5996,11 @@
           "id": "fr/contextualized-representations-advanced",
           "title": "Représentations contextualisées : dépendances entre positions et couches",
           "href": "contextualized-representations-advanced.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [

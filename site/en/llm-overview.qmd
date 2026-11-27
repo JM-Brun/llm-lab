@@ -14,7 +14,7 @@ scope: "Places the language model, its parameters and its context. Introduces th
 purpose: "Trace two generation steps with fixed parameters and distinguish generating a token, scoring an observed target and training."
 suggested_route:
   previous: "en/index"
-  next: "en/text-data"
+  next: "en/language-representation"
 hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]

@@ -87,6 +87,8 @@ project:
     - en/advent-calendar-day-02.qmd
     - en/advent-calendar-day-03.qmd
     - en/learning-map.qmd
+    - fr/language-representation.qmd
+    - en/language-representation.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
     - fr/tokenization-and-tokenizers.qmd
@@ -337,6 +339,8 @@ project:
     - en/review-path.qmd
     - fr/revision-llm-overview.qmd
     - en/revision-llm-overview.qmd
+    - fr/revision-language-representation.qmd
+    - en/revision-language-representation.qmd
     - fr/revision-text-data.qmd
     - en/revision-text-data.qmd
     - fr/revision-embedding-space.qmd
@@ -414,6 +418,8 @@ website:
           contents:
             - text: "Panorama LLM"
               href: fr/llm-overview.qmd
+            - text: "Pourquoi représenter le langage ?"
+              href: fr/language-representation.qmd
             - text: "Texte et tokens"
               href: fr/text-data.qmd
             - text: "Embeddings"
@@ -460,6 +466,7 @@ website:
           contents:
             - fr/review-path.qmd
             - fr/revision-llm-overview.qmd
+            - fr/revision-language-representation.qmd
             - fr/revision-text-data.qmd
             - fr/revision-embedding-space.qmd
             - fr/revision-positional-encoding.qmd
@@ -680,6 +687,8 @@ website:
           contents:
             - text: "LLM overview"
               href: en/llm-overview.qmd
+            - text: "Why represent language?"
+              href: en/language-representation.qmd
             - text: "Text and tokens"
               href: en/text-data.qmd
             - text: "Embeddings"
@@ -726,6 +735,7 @@ website:
           contents:
             - en/review-path.qmd
             - en/revision-llm-overview.qmd
+            - en/revision-language-representation.qmd
             - en/revision-text-data.qmd
             - en/revision-embedding-space.qmd
             - en/revision-positional-encoding.qmd

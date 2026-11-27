@@ -14,7 +14,7 @@ scope: "Situe le modèle de langage, ses paramètres et son contexte. Introduit 
 purpose: "Suivre deux tours de génération à paramètres fixes et distinguer générer un token, scorer une cible observée et apprendre."
 suggested_route:
   previous: "fr/index"
-  next: "fr/text-data"
+  next: "fr/language-representation"
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]

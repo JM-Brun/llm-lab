@@ -1,0 +1,150 @@
+---
+title: "Pourquoi représenter le langage numériquement ?"
+subtitle: "Des symboles lisibles aux objets sur lesquels le réseau peut calculer"
+description-meta: "Explique pourquoi un réseau neuronal traite le langage au moyen de représentations numériques apprises, et distingue identifiants, vecteurs initiaux et états contextualisés."
+keywords: ["type:concept-bridge", "destination:understand", "topic:language-representation", "level:overview", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/language-representation"
+summary: "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés."
+scope: "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées."
+purpose: "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés."
+suggested_route:
+  previous: "fr/llm-overview"
+  next: "fr/text-data"
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/text-data", "fr/embedding-space", "fr/contextualized-representations"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "La synthèse distingue le rôle de l’ID, du vecteur appris et de l’état contextualisé, et rappelle pourquoi le réseau a besoin d’objets numériques."
+tags:
+  - "type:concept-bridge"
+  - "destination:understand"
+  - "topic:language-representation"
+  - "level:overview"
+  - "language:fr"
+  - "status:published"
+-->
+
+{{< include ../includes/generated-guided-context-fr-language-representation.qmd >}}
+
+::: {.chapter-lead}
+Un modèle de langage apprend à produire des suites de tokens. Mais un réseau neuronal ne calcule pas directement sur les mots comme nous les lisons : ses opérations portent sur des **nombres organisés en tenseurs**. Il faut donc établir un passage entre les symboles du langage et les objets numériques que le réseau peut transformer.
+
+Ce passage n'est pas un simple changement d'écriture. Il distingue un identifiant qui désigne un symbole, un vecteur appris qui le représente pour le calcul, puis des états que le modèle construit en tenant compte du contexte.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Ce que vous devez comprendre"}
+À la fin de cette page, vous devriez pouvoir :
+
+- expliquer pourquoi les calculs d'un réseau neuronal nécessitent des représentations numériques ;
+- distinguer un ID de token d'un vecteur appris ;
+- expliquer pourquoi un vecteur initial ne suffit pas à représenter le rôle d'une occurrence dans une phrase ;
+- situer la tokenisation, le lookup et la contextualisation dans la suite du parcours.
+:::
+
+## 1. Le problème : passer des symboles au calcul
+
+Le texte est composé de symboles discrets : caractères, signes, mots ou fragments de mots. Un programme classique peut comparer des chaînes, rechercher des motifs ou appliquer des règles symboliques. Un réseau neuronal de type Transformer suit une autre stratégie : il applique des opérations mathématiques paramétrées à des tableaux de nombres.
+
+Ces opérations — projections, produits matriciels, combinaisons pondérées et transformations non linéaires — permettent au réseau d'ajuster progressivement ses paramètres à partir d'exemples. Pour qu'un modèle neuronal exploite les régularités du langage avec ces opérations, il faut donc convertir les unités discrètes du texte en objets numériques adaptés au calcul. Cela ne signifie pas qu'un ordinateur ne peut pas manipuler des chaînes de caractères : c'est le mode de représentation et de calcul choisi par cette famille d'architectures.
+
+**L'objectif n'est pas de remplacer le langage par une suite de nombres arbitraires.** Il est de construire des représentations apprises sur lesquelles le réseau peut effectuer des transformations utiles à la prédiction.
+
+## 2. Un identifiant n'est pas une représentation du sens
+
+La tokenisation associe chaque unité discrète à un identifiant entier dans un vocabulaire. Imaginons, pour simplifier, que le tokenizer attribue :
+
+| Token | ID |
+|---|---:|
+| `cat` | 17 |
+| `dog` | 42 |
+
+La différence entre les IDs vaut 25. Mais cela ne signifie pas que *dog* est « plus proche » de *cat* que d'un token portant l'ID 100, ni que l'ID 42 contient davantage de sens que l'ID 17.
+
+Ces nombres servent d'abord d'**adresses**. Le vocabulaire aurait pu attribuer 42 à `cat` et 17 à `dog` sans changer le problème à résoudre, à condition de réorganiser de la même manière les lignes des paramètres indexés par ce vocabulaire.
+
+Un ID permet donc de retrouver une entrée ; il ne constitue pas, à lui seul, une coordonnée sémantique. Faire des calculs directement sur les valeurs des IDs confondrait l'étiquette choisie par le tokenizer avec la représentation utilisée par le réseau.
+
+## 3. Le vecteur appris : un objet sur lequel le réseau peut calculer
+
+Le modèle associe à chaque ID une ligne d'une matrice de paramètres appelée **matrice d'embeddings**. Si le vocabulaire contient $V$ tokens et que chaque vecteur a $d$ composantes, cette matrice peut s'écrire :
+
+\[
+E \in \mathbb{R}^{V \times d}.
+\]
+
+Pour un ID $i_t$, le lookup sélectionne le vecteur :
+
+\[
+x_t = E[i_t] \in \mathbb{R}^{d}.
+\]
+
+L'ID indique quelle ligne lire ; le vecteur contient les valeurs numériques utilisées par les opérations suivantes. Les composantes de ces vecteurs sont des paramètres appris pendant l'entraînement, pas des nombres attribués manuellement à chaque mot selon une définition de dictionnaire.
+
+Cette distinction rend possible une propriété essentielle : les vecteurs peuvent être transformés et combinés par les couches du réseau. L'entraînement ajuste les paramètres — notamment les embeddings sélectionnés et les transformations ultérieures — pour améliorer les prédictions sur les exemples. Les opérations différentiables permettent de calculer des gradients par rapport à ces paramètres. Le gradient peut modifier la ligne sélectionnée et les couches suivantes, mais il ne déplace pas l'ID entier : celui-ci reste un indice discret.
+
+<figure>
+  <pre>
+Texte
+  ↓ tokenisation
+Tokens → IDs (adresses)
+              ↓ lookup
+        Vecteurs appris
+              ↓ transformations
+      États contextualisés
+              ↓
+        Prédiction
+  </pre>
+  <figcaption>Vue conceptuelle : chaque étape change la nature de l'objet manipulé. Ce schéma présente les grandes familles de transformations, pas toutes les opérations d'un GPT.</figcaption>
+</figure>
+
+## 4. Ce que les vecteurs rendent possible
+
+Un vecteur possède plusieurs composantes. Il peut donc servir d'entrée à des transformations apprises qui combinent de l'information et produisent de nouveaux vecteurs. Dans un Transformer, les projections, l'attention et les réseaux feed-forward transforment ainsi les représentations au fil des couches.
+
+La géométrie de l'espace appris peut refléter certaines régularités statistiques utiles : des tokens employés dans des contextes comparables peuvent présenter des représentations proches selon une mesure donnée. Mais il faut rester prudent :
+
+- une dimension n'est pas, en général, une caractéristique linguistique nommée ;
+- les coordonnées dépendent des paramètres et de la base choisie ;
+- une proximité vectorielle ne constitue pas à elle seule une définition du sens ni une preuve de compréhension.
+
+La représentation vectorielle fournit au réseau un support numérique flexible. Elle ne transforme pas automatiquement le langage en une carte sémantique explicite.
+
+## 5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?
+
+Le lookup initial dépend de l'ID, pas de la phrase dans laquelle le token apparaît. Deux occurrences d'un même ID sélectionnent donc le même vecteur initial à paramètres fixés.
+
+Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. En anglais, *bank* apparaît dans « river bank » ou « bank account » : si le tokenizer attribue le même ID aux deux occurrences, le vecteur initial est identique alors que le contexte pertinent diffère. Le lookup seul ne réalise pas cette distinction.
+
+Les couches du Transformer construisent des **représentations contextualisées** en transformant les vecteurs initiaux à partir des autres positions accessibles. Dans un modèle causal, une position ne peut utiliser que le préfixe qui la précède et elle-même. C'est cette transformation qui permet à l'état associé à une occurrence de dépendre de son contexte.
+
+Il ne faut donc pas confondre trois objets :
+
+| Objet | Rôle |
+|---|---|
+| ID de token | Désigne une entrée du vocabulaire |
+| Embedding initial | Vecteur appris sélectionné par cet ID |
+| Représentation contextualisée | État calculé par le réseau pour cette occurrence dans son contexte |
+
+::: {.callout-tip title="À retenir" #revision-summary}
+Un **ID** est une adresse dans le vocabulaire, pas une mesure du sens. Le **lookup** sélectionne un vecteur appris sur lequel le réseau peut calculer. Les couches du modèle transforment ensuite ces vecteurs pour construire des états dépendant du contexte.
+:::
+
+## 6. La suite du parcours
+
+Nous pouvons maintenant étudier chaque étape sans confondre sa fonction :
+
+1. **[Du texte aux tokens](text-data.qmd)** — comment le tokenizer découpe le texte, construit les IDs et fournit l'entrée discrète du modèle.
+2. **[Des identifiants aux vecteurs](embedding-space.qmd)** — comment un ID sélectionne une ligne de la matrice d'embeddings.
+3. **[L'information de position](positional-encoding.qmd)** — comment le modèle tient compte de l'ordre des tokens.
+4. **[Les représentations contextualisées](contextualized-representations.qmd)** — comment les blocs du Transformer transforment les vecteurs initiaux en états dépendant du contexte.
+
+**L'idée à retenir :** les IDs rendent les unités du vocabulaire adressables ; les embeddings fournissent des vecteurs appris ; les couches du réseau transforment ces vecteurs pour construire des états adaptés au contexte et à la prédiction. La page suivante commence par le premier passage concret : du texte aux tokens et à leurs identifiants.
