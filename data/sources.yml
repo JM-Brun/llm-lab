@@ -7814,7 +7814,7 @@ sources:
   - id: stateai-self-pruning-transformers-memonce-2026-11-23
     title: "Self-Pruning Transformers Beat Baselines Trained on 1.7× More Compute, and a New Memory Architecture Shrinks the Cache 1,313×"
     creators: ["State of AI editorial team"]
-    source_type: blog
+    source_type: other
     identifiers: {}
     canonical_url: "https://stateai.substack.com/p/self-pruning-transformers-memonce-memory-cache"
     aliases: ["https://substack.com/inbox/post/226235776"]
