@@ -119,9 +119,9 @@ Considérez deux vecteurs : $z=(2,1)$ et $z'=(102,101)$. Leurs scores sont très
 
 Plus généralement, si $p=\operatorname{softmax}(z)$, alors $\log p_i=z_i-\log\sum_j e^{z_j}$ et donc :
 
-$
+$$
 \log\frac{p_i}{p_j}=z_i-z_j.
-$
+$$
 
 L'écart entre deux logits est exactement le log-rapport des probabilités correspondantes.
 
