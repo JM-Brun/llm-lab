@@ -38,11 +38,11 @@ The current refinement also:
 
 | Check on the latest PR #1762 head at this update | Status |
 |---|---|
-| Python quality and domain checks | Passed on an earlier refinement head; rerun required after the latest edits |
-| Full test suite | Pending current-head result |
-| Full Quarto render | Pending current-head result |
-| Current-head browser audit | Not yet completed |
-| Secret scanning | Successful on earlier heads; verify latest head |
+| Python quality and domain checks | Passed on head `a1f9fbd` |
+| Full test suite | Passed: 839 passed, 1 skipped, 1 warning |
+| Full Quarto render | Passed |
+| Current-head browser audit | Passed: FR/EN desktop and mobile, no overflow, no unrendered math, no Axe violations on desktop; report has no failures |
+| Secret scanning | Passed |
 
 The browser audit from PR #1754 must not be treated as final validation for PR #1762: the page text, examples, learning outcomes, and visual content have changed.
 
@@ -50,15 +50,15 @@ The browser audit from PR #1754 must not be treated as final validation for PR #
 
 ### P0 — Complete validation of the current content
 
-- [ ] Wait for the full test suite on PR #1762; inspect and fix any regression rather than relying on the previous PR's test count.
-- [ ] Complete the full Quarto render. Inspect the build log if it fails; distinguish page-specific errors from unrelated pre-existing warnings.
-- [ ] Run the current-head browser audit for both languages at desktop and mobile widths.
-- [ ] Inspect the actual rendered pages, not only the source: heading hierarchy, figure/diagram rendering, line lengths, spacing, callouts, tables, language switch, breadcrumbs, previous/next links, and sidebar placement.
-- [ ] Check horizontal overflow, keyboard navigation, and Axe accessibility results.
-- [ ] Verify the generated map projections match the page metadata and route sources. Do not hand-edit generated files to make a test pass.
-- [ ] Confirm the current page's math-rendering expectations. The revised explanation no longer visibly depends on the earlier matrix/lookup equations; decide whether that is the right level for an overview. Do not add equations merely to satisfy a numeric span count.
+- [x] Full test suite on the current PR head: 839 passed, 1 skipped, 1 warning.
+- [x] Full Quarto render completed successfully.
+- [x] Browser audit completed for French and English at desktop (1440 px) and mobile (390 px) widths.
+- [x] Inspected the four rendered lesson screenshots: hierarchy, lead, tables, diagram, callouts, language switch, breadcrumbs, and previous/next links render correctly; no visible clipping or layout defect was found.
+- [x] Browser report confirms no horizontal overflow on the lesson and review pages; desktop lesson pages have 0 Axe violations and all four lesson views render 4 math spans with 0 unrendered math.
+- [x] Generated map freshness tests pass; the canonical generator output matches the tracked map data. No hand-edits to generated artifacts were used.
+- [x] The lookup equation is retained as a concise bridge from ID to learned vector, not as a detailed implementation lesson.
 
-**Known CI defects from earlier heads:** on `9bc83e5`, `tests/knowledge/test_map_artifacts_freshness.py` found stale FR/EN section-heading inventories. After those headings were synchronized, the run on `f4ba645` exposed a second mismatch: the generated map still carried the previous `purpose` values for the two review sheets. Both the lesson headings and review-sheet purpose values have since been synchronized in the tracked map data. The next current-head freshness test must confirm that every generated field matches the canonical generator output; do not claim this is resolved until that test passes.
+**Resolved CI defects:** an earlier head (`9bc83e5`) had stale FR/EN section-heading inventories; a later head (`f4ba645`) exposed stale `purpose` values for the two review sheets. The canonical learning-map generator was rerun and its outputs committed. On head `a1f9fbd`, both bilingual freshness tests pass as part of the 839-passed test suite.
 
 **Acceptance:** current PR head has successful CI and Quarto/browser checks, with any remaining warnings identified and judged. A successful render alone is not a substitute for inspecting the page in the browser.
 
@@ -69,18 +69,18 @@ The content has shifted from a mostly representational distinction toward a moti
 - [x] Revisit the bilingual page-map `purpose`, `summary`, and `scope` for alignment with the revised opening and learning outcomes.
 - [x] Update the `language-representation` outcome in `data/guided-route.yml` to cover learned vectors, network transformations, linguistic regularities, prediction, and the distinction between IDs, initial embeddings, and contextualized states.
 - [x] Update the bilingual `revision-language-representation` sheets so their recall question and answer cover the motivation for learnable numerical representations and the role of the prediction objective.
-- [ ] Recheck the lesson's `revision_support` evidence and the review-sheet `scope`/ `purpose` after that update. Preserve the existing typed `revision_of` relation and synthesis contract.
-- [ ] Keep the main lesson and review sheet aligned in French and English; do not allow the two language versions to drift in emphasis or scientific claims.
+- [x] Recheck the bilingual `revision_support` evidence and review-sheet `scope`/`purpose`; preserve the existing typed `revision_of` relation and synthesis contract.
+- [x] Confirm that the main lesson and review sheets remain aligned in French and English.
 
 **Acceptance:** a learner reviewing the sheet can reconstruct the *why* (learnable numerical representations and linguistic regularities), not only the *what/how* (ID → embedding → contextualized state).
 
 ### P1 — Tighten scientific precision in the examples
 
 - [x] Clarify that the integer table using *chat/chien/voiture* and *cat/dog/car* is a simplified illustration. Real tokenizers assign IDs to tokens, which may be words, subwords, punctuation, or other units; a written word is not necessarily one token.
-- [ ] Ensure the distributional example (*chat/félin*, *cat/feline*) illustrates evidence from usage and context, not a guarantee that every next-token model places synonyms near one another in its embedding table.
-- [ ] Keep the distinction between an embedding's learned parameters and an explicit dictionary definition. Avoid implying that a vector contains a human-readable semantic description.
-- [ ] Preserve the qualification that contextualization depends on the architecture and accessible context. The same token ID gives the same initial embedding at fixed parameters, but later states may differ by occurrence.
-- [ ] If the lesson mentions parameter learning more explicitly, use a short and accurate bridge: gradients update embedding parameters and later network parameters through the training objective; the discrete token ID itself is not a differentiable parameter. Leave the derivation of backpropagation and optimization to their dedicated lessons.
+- [x] Confirm that the distributional example (*chat/félin*, *cat/feline*) illustrates evidence from usage and context, not a guarantee that every next-token model places synonyms near one another in its embedding table.
+- [x] Keep the distinction between an embedding's learned parameters and an explicit dictionary definition; vectors are not human-readable dictionary entries.
+- [x] Preserve the qualification that contextualization depends on the architecture and accessible context. The same token ID gives the same initial embedding at fixed parameters, but later states may differ by occurrence.
+- [x] Explain briefly that gradients update embedding parameters and later network parameters through the training objective; discrete token IDs are not differentiable parameters. The derivation remains in the dedicated training lessons.
 
 **Acceptance:** no claim equates token IDs with semantic coordinates, vector proximity with synonymy or understanding, or a token's initial embedding with its contextualized state.
 
@@ -113,13 +113,13 @@ These would expand the architecture without being required to complete the curre
 
 ## 4. Recommended execution sequence
 
-1. Finish CI and full-site rendering for PR #1762.
-2. Perform and record the current-head desktop/mobile browser review.
-3. Make the minimal content/metadata/review-sheet alignment changes identified in P1.
-4. Regenerate affected map projections and rerun their validators.
-5. Run the full tests and browser audit again on the final head.
-6. Conduct the short learner transfer check (P2).
-7. Merge only when the automated and rendered-site checks pass; keep learner validation findings as a follow-up if no reader is available before merge.
+1. [x] Finish CI and full-site rendering.
+2. [x] Complete and inspect the current-head desktop/mobile browser review.
+3. [x] Align the bilingual lesson, metadata, route outcome, revision sheets, and scientific qualifications.
+4. [x] Regenerate affected map projections and pass their freshness validators.
+5. [x] Run the full tests and browser audit on the final code head `a1f9fbd`.
+6. [ ] Conduct the short learner transfer check (P2).
+7. Keep PR #1762 open until the user decides whether to merge; the automated and rendered-site checks are green.
 
 ## 5. Completion record
 
@@ -127,8 +127,8 @@ Update this section when work is performed:
 
 | Item | Result | Evidence |
 |---|---|---|
-| PR #1762 CI | Pending at document creation | [PR #1762](https://github.com/JM-Brun/llm-lab/pull/1762) |
-| Full Quarto render | Pending at document creation | [PR #1762](https://github.com/JM-Brun/llm-lab/pull/1762) |
-| Current-head browser audit | Pending at document creation | Add workflow run and rendered-page evidence |
-| Review-sheet and route-outcome alignment | Open | Commit/PR reference |
-| Learner transfer check | Open | Record reader feedback and resulting changes |
+| PR #1762 CI | Passed — 839 passed, 1 skipped, 1 warning | [CI run 8227](https://github.com/JM-Brun/llm-lab/actions/runs/46033531255) |
+| Full Quarto render | Passed | [Quarto run 7573](https://github.com/JM-Brun/llm-lab/actions/runs/46033531298) |
+| Current-head browser audit | Passed — FR/EN desktop and mobile, no overflow, 0 Axe violations on desktop, no audit failures | [Browser-review artifact](https://github.com/JM-Brun/llm-lab/actions/runs/46033531298) |
+| Review-sheet and route-outcome alignment | Completed | [PR #1762](https://github.com/JM-Brun/llm-lab/pull/1762) |
+| Learner transfer check | Open — requires an independent reader | Record reader feedback and resulting changes |
