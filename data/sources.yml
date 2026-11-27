@@ -3884,6 +3884,7 @@ sources:
           - "Only the API reference page was inspected; PyTorch implementation source code was not inspected or executed."
           - "No backend selection, GPU performance, numerical parity or deployment behavior was tested."
           - "This is framework API documentation, not a primary mathematical derivation or independent proof of the attention operator."
+          - "The inspected PyTorch 2.15 page labels the function beta and subject to change; API details must be rechecked before version-sensitive implementation guidance."
     related:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, causal-mask]
