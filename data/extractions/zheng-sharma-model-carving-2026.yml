@@ -1,0 +1,57 @@
+schema_version: 1
+source_id: zheng-sharma-model-carving-2026
+items:
+  - id: zheng-sharma-model-carving-2026:joint-topology-training
+    kind: architecture
+    summary: "Model Carving jointly optimizes Transformer weights, scalar sublayer gates and learned residual connections in one training run, allowing a heterogeneous static topology to emerge from an overparameterized network."
+    locator: {type: section, value: "2.1, Eqs. 1–2; Figure 1", label: "Overparameterizing and gating a Transformer"}
+    evidence: {kind: architecture-description, confidence: well-supported, scope: "Standard and looped Transformer formulations.", assumptions: ["The initial network defines the candidate components and connections."], limitations: ["The method does not search arbitrary architectures outside its initial supernetwork."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [topic:transformer-architecture, method:learned-gating, method:architecture-optimization], concept_ids: [model-compression, pruning]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Compare with structured pruning, neural architecture search and layer dropping."
+  - id: zheng-sharma-model-carving-2026:compute-pressure
+    kind: method
+    summary: "Each retained sublayer receives a pressure estimating the loss reduction that additional training tokens would buy if its FLOPs were saved. The pressure is estimated online from the learning curve and remaining compute budget."
+    locator: {type: section, value: "2.2–2.3, Eqs. 3–5", label: "Training objective and value of compute"}
+    evidence: {kind: mathematical-derivation, confidence: well-supported, scope: "Compute-budget-aware pressure formulation.", assumptions: ["The projected end-of-run learning rate is estimated from the observed learning curve."], limitations: ["Forecast quality depends on the fitted learning-curve model and learning-rate assumptions."]}
+    classification: {primary_theme: probabilistic-foundations-training, secondary_themes: [mathematical-tools-geometry], tags: [method:compute-aware-optimization, topic:training-compute], concept_ids: [model-compression]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Potential mathematical case study; check existing optimization lessons first."
+  - id: zheng-sharma-model-carving-2026:log-gate-penalty
+    kind: mechanism
+    summary: "A logarithmic penalty on each nonzero gate supplies a nearly size-independent pressure under relative gate changes; when the gate reaches zero it is clipped to zero and the corresponding sublayer is removed from the compiled computation graph."
+    locator: {type: section, value: "2.4, Eqs. 6–8", label: "Applying the pressure to the gates"}
+    evidence: {kind: algorithm-description, confidence: well-supported, scope: "Gate update, logarithmic penalty and graph-removal schedule.", assumptions: ["The implementation follows the described Adam adjustment and clipping rule."], limitations: ["Fixed hyperparameters and removal schedule are part of the method."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [method:structured-pruning, method:learned-gating], concept_ids: [pruning, model-compression]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Explain as training-time structured sublayer removal, not inference-time routing or unstructured sparsity."
+  - id: zheng-sharma-model-carving-2026:static-carved-inference
+    kind: limitation
+    summary: "After training, the result is a static heterogeneous Transformer with removed sublayers; inference uses an ordinary compiled graph without per-token routing, and retained attention applications continue to use standard KV caches."
+    locator: {type: section, value: "2.4 and Appendix B", label: "Removing sublayers inside the run and inference"}
+    evidence: {kind: implementation-detail, confidence: well-supported, scope: "Final inference graph described by the authors.", assumptions: [], limitations: ["Speed benefits depend on compiled implementation and hardware."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:inference, topic:kv-cache], concept_ids: [inference-time-compute, kv-cache, model-compression]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Prevents conflation with dynamic conditional computation or KV-cache pruning."
+  - id: zheng-sharma-model-carving-2026:reported-efficiency
+    kind: result
+    summary: "Across evaluated standard models (140M–2.7B) and looped models (140M–1.3B), the authors report up to 34% fewer inference FLOPs per token and up to 1.61× decode throughput in largest-batch H100 measurements at 4096-token context."
+    locator: {type: figure, value: "Figures 2 and 4; Sections 4–5", label: "Compute, loss and decoding comparisons"}
+    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Paper pretraining runs and H100 decoding measurements.", assumptions: ["Paper's compute matching, model configurations and evaluation harness apply."], limitations: ["Not independently reproduced; maxima are selected results and depend on batch, context and hardware."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:benchmark, topic:inference-efficiency], concept_ids: [model-compression, pruning, inference-time-compute]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: cite
+    disposition_rationale: "Cite with model scale, comparison regime and hardware/context conditions."
+  - id: zheng-sharma-model-carving-2026:study-limitations
+    kind: limitation
+    summary: "The authors identify limited scale (2.7B standard, 1.3B looped), mismatch between pruning-pressure forecasts and cooldown learning-rate decay, and reliance on fixed initial gate and penalty settings."
+    locator: {type: section, value: "8, Limitations and future work", label: "Limitations and future work"}
+    evidence: {kind: author-stated-limitation, confidence: well-supported, scope: "Limitations explicitly acknowledged by the paper.", assumptions: [], limitations: ["These are author-identified and may not exhaust independent concerns."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [topic:research-limitations, method:structured-pruning], concept_ids: [model-compression, pruning]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Retain with any future learner-facing explanation to teach critical interpretation of research claims."
