@@ -319,7 +319,7 @@ items:
 
 
   - id: towardsai-understanding-llms-tokenization-2026:bpe-low-lowest-example
-    kind: worked-example
+    kind: mechanism
     summary: "The article walks through BPE merges on the toy corpus containing low and lowest, illustrating repeated adjacent-pair merges and a shared low prefix."
     locator: {type: section, value: "II.2 BPE", label: "low / lowest merge walkthrough"}
     evidence:
