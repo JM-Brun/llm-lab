@@ -148,3 +148,15 @@ The opt-in GitHub Actions inventory completed successfully on commit `0c856b92eb
 - 418 locator mappings with keys `label,type,value`; 71 with `type,value`.
 
 The same workflow's canonical `site/tools/check_source_catalogue.py` step passed. That validator checks extraction source identity resolution, filename/source_id equality and duplicate extraction identities in addition to item structure. These results establish structural validity for this snapshot, not external locator resolution, source inspection completeness, evidential support, scientific correctness or independent corroboration. The earlier 84-file / 432-item snapshot is retained above as historical evidence.
+
+
+## Current corpus revalidation — 2026-11-27
+
+The 2026-11-19 baseline (96 extraction files / 489 items) is historical. The current-main catalogue and extraction-directory snapshot recorded in #1211 reports **177 source records and 137 extraction YAML files**. These raw counts do not establish valid extraction identities, item totals, locator quality, or destination/reference integrity.
+
+A new full-corpus run is requested through the existing opt-in CI job. The run must capture:
+- locator shape and required-field inventory;
+- extraction destination and field inventory;
+- exact commit SHA, workflow run/attempt, command, timestamp, runtime and platform metadata.
+
+Do not turn this observational inventory into a new hard validation gate. Do not infer locator resolution, source inspection, claim support or scientific validity from the presence of a locator. The 2026-11-19 report remains historical until the new artifact is inspected.
