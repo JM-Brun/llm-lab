@@ -7974,3 +7974,43 @@ sources:
       pages: []
       concepts: [kv-cache, persistent-memory, inference-time-compute]
       audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
+
+  - id: kaden-zheng-model-carving-implementation
+    title: "Model Carving — official implementation"
+    creators: ["Kaden Zheng", "Pratyusha Sharma"]
+    source_type: repository
+    identifiers: {repository: "KadenZheng/model-carving"}
+    canonical_url: "https://github.com/KadenZheng/model-carving"
+    publisher: "GitHub"
+    publication_date: null
+    updated_date: "2026-11-25"
+    language: en
+    version: "main branch inspected 2026-11-27"
+    revision: null
+    licence: {identifier: "MIT", url: "https://github.com/KadenZheng/model-carving/blob/main/LICENSE", status: declared}
+    reuse: {text: link-only, figures: link-only, code: licensed, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training, inference-efficiency]
+      tags: [topic:transformer-architecture, method:structured-pruning, method:learned-gating, ecosystem:jax]
+      concept_ids: [model-compression, pruning, inference-time-compute]
+    metadata:
+      technical_level: advanced
+      contribution_types: [implementation, architecture]
+      audiences: [practitioner, researcher, maintainer]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository metadata, README, MIT LICENSE, carving/carver.py, gates.py, budget.py, residual.py and rate.py"
+        limitations:
+          - "No JAX/CUDA environment was installed and no training run, smoke test or benchmark was executed."
+          - "The README's Python/JAX dependency versions and dataset requirements were inspected but not installed."
+          - "No independent comparison of code outputs against paper figures was performed."
+    related:
+      pages: []
+      concepts: [model-compression, pruning, inference-time-compute]
+      audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
