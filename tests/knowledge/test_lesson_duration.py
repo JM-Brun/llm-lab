@@ -64,12 +64,12 @@ Neither should this.
     assert estimate.minutes == 0.5
 
 
-def test_estimator_excludes_collapsed_optional_callouts_with_nested_divs() -> None:
+def test_estimator_excludes_marked_optional_callouts_with_nested_divs() -> None:
     sample = """## Main idea
 
 Visible content remains in the estimate.
 
-::::: {.callout-note collapse="true" title="Optional deep dive"}
+::::: {.callout-note collapse="true" data-reading-time="exclude" title="Optional deep dive"}
 This outer content is optional.
 
 ::: {.callout-tip}
@@ -83,11 +83,11 @@ More visible content remains in the estimate.
     assert estimate.prose_words == 15
 
 
-def test_estimator_counts_expanded_callouts() -> None:
+def test_estimator_counts_collapsed_callouts_without_exclusion_marker() -> None:
     sample = """## Main idea
 
-::: {.callout-note}
-This expanded content is part of the reading path.
+::: {.callout-note collapse="true"}
+This collapsed content remains part of the reading path.
 :::
 """
     estimate = estimate_lesson_duration(sample)
@@ -124,3 +124,14 @@ def test_core_route_lessons_stay_within_the_editorial_duration_budget(
             UserWarning,
             stacklevel=1,
         )
+
+
+def test_estimator_counts_expanded_callouts() -> None:
+    sample = """## Main idea
+
+::: {.callout-note}
+This expanded content is part of the reading path.
+:::
+"""
+    estimate = estimate_lesson_duration(sample)
+    assert estimate.prose_words == 11
