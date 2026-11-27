@@ -128,5 +128,5 @@ The trace displays the full ordered token-byte fragments and IDs, so the learner
 
 The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context. The existing CI checker now validates the localized prefix and expected GPT-2 boundary for each language, compares normalized executable structure rather than requiring identical text literals, and executes both snippets with the pinned tokenizer.
 
-This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy exercises where they serve a distinct comparison purpose.
+This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy lessons, where they serve distinct algorithmic and comparative purposes.
 
