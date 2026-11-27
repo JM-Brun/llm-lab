@@ -1,0 +1,324 @@
+schema_version: 1
+source_id: towardsai-understanding-llms-tokenization-2026
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Complete author-authored body as represented in the indexed search snapshot retrieved 2026-11-27."
+      - "Direct canonical and Freedium retrieval attempts returned cache misses."
+    inferred_elements:
+      - "The teaching route is reconstructed from the article's section order."
+      - "The article's four visual placements are not reconstructed because image bytes and reliable captions were unavailable."
+  source_graph:
+    nodes:
+      - id: src-tokenization-problem
+        kind: framing
+        description: "Motivates tokenization through vocabulary coverage and sequence-length tradeoffs."
+        locator: "I. Introduction & The Limits of Classical Approaches"
+        inferred: false
+      - id: src-subword-families
+        kind: method-comparison
+        description: "Introduces WordPiece and Unigram before presenting BPE and byte-level BPE."
+        locator: "II. The Subword Revolution: A Panorama of Standards"
+        inferred: false
+      - id: src-byte-level-coverage
+        kind: mechanism
+        description: "Uses UTF-8 byte sequences, including an emoji, to illustrate byte-level fallback."
+        locator: "II.3. The Ultimate Solution: Byte-Level BPE"
+        inferred: false
+      - id: src-special-tokens
+        kind: mechanism
+        description: "Introduces reserved tokens as structural markers in model inputs."
+        locator: "III.1. Special Tokens"
+        inferred: false
+      - id: src-language-cost
+        kind: application
+        description: "Connects token counts to language-dependent context and API cost."
+        locator: "III.2. Cost and Performance Disparities"
+        inferred: false
+      - id: src-tiktoken-example
+        kind: code-example
+        description: "Inspects token IDs and token bytes using tiktoken and a special-token allowlist."
+        locator: "III.3. Hands-on: Tokenization with Python"
+        inferred: false
+    edges:
+      - from: src-tokenization-problem
+        type: motivates
+        to: src-subword-families
+        inferred: true
+      - from: src-subword-families
+        type: extends-to
+        to: src-byte-level-coverage
+        inferred: true
+      - from: src-byte-level-coverage
+        type: followed-by
+        to: src-special-tokens
+        inferred: true
+      - from: src-special-tokens
+        type: contextualized-by
+        to: src-language-cost
+        inferred: true
+      - from: src-language-cost
+        type: demonstrated-by
+        to: src-tiktoken-example
+        inferred: true
+    interpretation: "This is an editorial reconstruction of the article's teaching sequence, not a formal model supplied by the author. The article groups multiple algorithm families and implementation conventions into one introductory narrative."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Explain why word-level and character-level tokenization have different vocabulary and sequence-length costs."
+      basis: "The opening comparison of classical approaches."
+    - status: inferred
+      outcome: "Recognize BPE, WordPiece, Unigram and byte-level BPE as distinct approaches or variants."
+      basis: "The subword and byte-level sections."
+    - status: inferred
+      outcome: "Inspect token IDs and underlying bytes with a concrete tiktoken example."
+      basis: "The Python example and displayed output."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic familiarity with strings, vocabularies and Python."
+      basis: "The article uses these ideas without a formal prerequisite section."
+  teaching_route:
+    - order: 1
+      section: "Classical word- and character-level tokenization"
+      function: problem-framing
+      moves: ["Compare vocabulary size, unknown units and sequence length."]
+    - order: 2
+      section: "WordPiece, Unigram, SentencePiece and BPE"
+      function: method-survey
+      moves: ["Introduce several subword approaches and their vocabulary-building intuitions."]
+    - order: 3
+      section: "Byte-Level BPE"
+      function: coverage-extension
+      moves: ["Move from Unicode characters to UTF-8 bytes and illustrate multilingual and emoji inputs."]
+    - order: 4
+      section: "Special tokens and language costs"
+      function: operational-context
+      moves: ["Connect tokenization conventions to structured prompts and token budgets."]
+    - order: 5
+      section: "tiktoken example"
+      function: concrete-demonstration
+      moves: ["Inspect token IDs and byte sequences for a short mixed input."]
+  pedagogical_strengths:
+    - "Compact introductory panorama from basic granularities to subword and byte-level approaches."
+    - "The emoji example makes the distinction between a visible character and its UTF-8 bytes concrete."
+    - "The tiktoken snippet connects tokenization to inspectable IDs and token bytes."
+  pedagogical_limits:
+    - "The article compresses several distinct layers—algorithm, tokenizer library, normalization, pre-tokenization and byte fallback—into a short overview."
+    - "Several claims are overgeneralized or insufficiently sourced, especially the alleged abandonment of WordPiece for compute reasons, fixed Unigram pruning percentages, lossless SentencePiece decoding and the numerical English/Arabic cost example."
+    - "SentencePiece is presented too narrowly as a wrapper; it provides tokenizer training and encoding implementations for models such as BPE and Unigram."
+    - "The Llama 3 byte-level BPE description should not be conflated with use of OpenAI's tiktoken library."
+    - "The tiktoken code was not executed, and the retrieved code formatting around the main guard is ambiguous."
+    - "The article's visual assets and their rights could not be inspected."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["site/fr/text-data.qmd", "site/en/text-data.qmd", "site/fr/tokenization-strategies.qmd", "site/en/tokenization-strategies.qmd"]
+    decision: "Register as a screened, non-selected source. It provides no unique concept, reliable experiment, or pedagogical structure that warrants changing the current lessons. Retain the emoji/byte and tiktoken examples as possible future reference only; do not copy them or add a new page."
+    structures_kept_separate:
+      - "Article-local teaching sequence"
+      - "Canonical concept graph"
+      - "Computational graph"
+      - "Project learning routes"
+
+items:
+  - id: towardsai-understanding-llms-tokenization-2026:granularity-tradeoff
+    kind: mental-model
+    summary: "The article motivates tokenization by contrasting large word vocabularies with long character sequences, then positions subwords as a compromise."
+    locator: {type: section, value: "I.1–I.3", label: "The tokenization challenge"}
+    evidence:
+      kind: author-explanation
+      confidence: established
+      scope: "Introductory qualitative comparison in the article."
+      assumptions: []
+      limitations: ["The tradeoff is presented qualitatively; no measured corpus or model comparison is supplied."]
+    technical_assessment:
+      status: correct
+      rationale: "The broad vocabulary-versus-sequence-length tradeoff is sound, though the article's account of Transformer cost is simplified."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Why not represent every word or every character as one token?"
+      explanatory_lens: "Compare vocabulary growth, unknown units and sequence length."
+      teaching_form: [comparison, mental-model]
+      novelty: {level: low, rationale: "The same contrast is already explicit in the bilingual tokenization-strategies lesson."}
+      complementarity: {level: low, rationale: "No new learner question or explanatory mechanism is introduced."}
+      pedagogical_value: {level: moderate, rationale: "It is a concise introductory framing, but the project has a more qualified comparison."}
+      applicability: {level: low, rationale: "No change to the existing lesson is justified."}
+      redundancy: {level: high, rationale: "Word, character, byte and subword tradeoffs are already compared."}
+      evidence_quality: {level: moderate, rationale: "A qualitative explanatory claim without supporting measurements."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, topic:tokenizer-design]
+      concept_ids: [tokenization, subword-tokenization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The existing lesson compares word, character, byte and learned subword granularities and qualifies their limitations."
+
+  - id: towardsai-understanding-llms-tokenization-2026:wordpiece-compute-claim
+    kind: claim
+    summary: "The article attributes the decline of WordPiece in modern LLMs to the compute cost of repeatedly evaluating a pair-cohesion score."
+    locator: {type: section, value: "II.1.1 WordPiece", label: "WordPiece and computational cost"}
+    evidence:
+      kind: author-assertion
+      confidence: unverified
+      scope: "A broad historical and computational explanation without cited measurements or comparative evidence in the retrieved article."
+      assumptions: []
+      limitations: ["The article does not establish that modern LLMs generally abandoned WordPiece or that this score was the decisive reason."]
+    technical_assessment:
+      status: qualified
+      rationale: "The score is a known WordPiece-style heuristic, but the sweeping adoption-history and compute-causality claim is unsupported. Do not repeat it as fact."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:wordpiece, topic:tokenizer-design]
+      concept_ids: [wordpiece]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: reject
+    disposition_rationale: "The project already distinguishes WordPiece from BPE; the article's explanation for modern adoption is not sufficiently evidenced."
+
+  - id: towardsai-understanding-llms-tokenization-2026:unigram-pruning
+    kind: mechanism
+    summary: "The article describes Unigram as starting from a large candidate vocabulary and pruning tokens according to their effect on corpus likelihood."
+    locator: {type: section, value: "II.1.2 Unigram", label: "Probabilistic pruning"}
+    evidence:
+      kind: author-explanation
+      confidence: context-dependent
+      scope: "High-level description of Unigram vocabulary reduction."
+      assumptions: []
+      limitations: ["The stated 10–20% pruning rate per iteration is not established as a general property; the example is illustrative, not a reproduced calculation."]
+    technical_assessment:
+      status: qualified
+      rationale: "The top-down pruning intuition is broadly appropriate, but the article presents implementation-dependent details as fixed behavior."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:unigram-tokenization, method:probabilistic-model]
+      concept_ids: [unigram-tokenization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The existing lesson already introduces Unigram as a probabilistic subword method. The article's fixed pruning percentage should not be imported."
+
+  - id: towardsai-understanding-llms-tokenization-2026:sentencepiece-description
+    kind: claim
+    summary: "The article describes SentencePiece as a wrapper around BPE or Unigram that replaces spaces with a visible marker and guarantees lossless reconstruction."
+    locator: {type: section, value: "II.1.3 SentencePiece", label: "SentencePiece"}
+    evidence:
+      kind: author-explanation
+      confidence: context-dependent
+      scope: "The article's simplified description of SentencePiece's whitespace and model behavior."
+      assumptions: []
+      limitations: ["The description omits SentencePiece's own training and encoding implementation and overstates losslessness independently of normalization and configuration."]
+    technical_assessment:
+      status: qualified
+      rationale: "Whitespace escaping is a useful part of SentencePiece's design, but calling the library merely a wrapper and promising unconditional lossless recovery are misleading."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:sentencepiece, topic:tokenizer-pipeline]
+      concept_ids: [tokenizer, tokenizer-pipeline, text-normalization]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: reject
+    disposition_rationale: "The current lesson already points to SentencePiece and distinguishes tokenizer components. The article's simplification would reduce technical accuracy."
+
+  - id: towardsai-understanding-llms-tokenization-2026:byte-level-emoji-example
+    kind: code-example
+    summary: "The article decomposes the waving-hand emoji into its four UTF-8 bytes to motivate byte-level fallback."
+    locator: {type: section, value: "II.3 The Ultimate Solution: Byte-Level BPE", label: "Emoji byte sequence"}
+    evidence:
+      kind: author-example
+      confidence: established
+      scope: "The UTF-8 byte sequence shown for U+1F44B waving hand."
+      assumptions: []
+      limitations: ["The example illustrates UTF-8 encoding, not the actual token segmentation or token IDs produced by a particular byte-level BPE tokenizer."]
+    technical_assessment:
+      status: correct
+      rationale: "The four-byte UTF-8 sequence is correct for the specified emoji, but byte sequence and tokenizer output must remain distinct."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Why can one visible emoji correspond to several bytes?"
+      explanatory_lens: "Contrast a Unicode code point with its UTF-8 encoding."
+      teaching_form: [worked-example, byte-inspection]
+      novelty: {level: low, rationale: "The Unicode lesson already contrasts code points and UTF-8 bytes with a composed/decomposed accented character."}
+      complementarity: {level: moderate, rationale: "An emoji is a more intuitive multilingual example but does not add a new mechanism."}
+      pedagogical_value: {level: moderate, rationale: "Could diversify examples if the lesson later needs a second visual case."}
+      applicability: {level: low, rationale: "No evidence that replacing or extending the current Unicode example would improve learning."}
+      redundancy: {level: moderate, rationale: "It reinforces the existing code-point/byte distinction."}
+      evidence_quality: {level: high, rationale: "The UTF-8 bytes are directly checkable and unambiguous."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:byte-level-encoding, modality:worked-example]
+      concept_ids: [byte-level-encoding]
+    candidate_destinations:
+      pages: [fr/unicode-text, en/unicode-text, fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The Unicode lesson already teaches the code-point/byte distinction with exact byte-level output. Keep this emoji as an optional future alternative, not a required addition."
+
+  - id: towardsai-understanding-llms-tokenization-2026:multilingual-cost-claim
+    kind: claim
+    summary: "The article gives a ten-versus-thirty-token English/Arabic translation example and attributes the disparity to English-heavy training data."
+    locator: {type: section, value: "III.2 Cost and Performance Disparities", label: "Language-dependent token costs"}
+    evidence:
+      kind: author-assertion
+      confidence: unverified
+      scope: "Illustrative numerical claim with no named tokenizer, exact sentence, token counts or reproducible measurement."
+      assumptions: []
+      limitations: ["Token counts depend on the exact text, tokenizer, version and normalization; the proposed causal explanation is not established by this example."]
+    technical_assessment:
+      status: qualified
+      rationale: "Language-dependent fertility and token costs are real topics, but the article's 10-versus-30 comparison is not reproducible and should not be reused."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:token-fertility]
+      concept_ids: [multilingual-tokenization, token-fertility]
+    candidate_destinations:
+      pages: [fr/tokenizer-multilingual-evaluation, en/tokenizer-multilingual-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: reject
+    disposition_rationale: "The project already covers language-dependent tokenization with more carefully scoped evidence; this unsourced numerical illustration adds no value."
+
+  - id: towardsai-understanding-llms-tokenization-2026:special-tokens-and-tiktoken
+    kind: code-example
+    summary: "The article shows tiktoken encoding a mixed text and explicitly authorizing the end-of-text special token, then inspecting each token's bytes."
+    locator: {type: section, value: "III.1–III.3", label: "Special tokens and tiktoken example"}
+    evidence:
+      kind: author-code-and-output
+      confidence: context-dependent
+      scope: "The displayed cl100k_base example and output in the indexed article text."
+      assumptions: []
+      limitations: ["The snippet was not executed; behavior is specific to the named encoding and tiktoken API version. The retrieved formatting around the main guard is ambiguous."]
+    technical_assessment:
+      status: qualified
+      rationale: "The allowlist and byte-inspection ideas are consistent with tiktoken's API, but the article's code is not independently validated."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:special-token, ecosystem:tiktoken, modality:code-example]
+      concept_ids: [special-token, token-encoding, tokenizer]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current lesson already explains implementation-specific special-token policies and links the tiktoken API. A second unexecuted snippet is unnecessary."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "No canonical concept, relation, page, or route change is proposed. The source is screened and documented as non-selected; its useful examples are redundant with stronger existing material, while several broad or quantitative claims should not be imported."
