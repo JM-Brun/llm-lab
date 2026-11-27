@@ -191,7 +191,7 @@ L'entraînement des modèles de langage emploie couramment des optimiseurs *adap
   <figcaption>SGD, Newton et Adam peuvent optimiser le même objectif tout en utilisant des informations différentes pour choisir une mise à jour. Le second moment d'Adam suit les carrés des gradients ; il ne calcule pas la courbure.</figcaption>
 </figure>
 
-::: {.callout-note collapse="true" title="Pourquoi ne pas appliquer Newton exactement à chaque paramètre d'un LLM ? (approfondissement)"}
+::: {.callout-note collapse="true" title="Pourquoi ne pas appliquer Newton exactement à chaque paramètre d'un LLM ? (approfondissement)" data-reading-time="exclude"}
 Un pas de Newton complet résout $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ puis met à jour $\theta_{k+1}=\theta_k-d_k$. Pour un modèle de millions ou de milliards de paramètres, stocker et factoriser une hessienne dense est généralement prohibitif. La hessienne peut aussi être singulière ou indéfinie : une direction de Newton non amortie n'est donc pas automatiquement une direction de décroissance. Les méthodes du second ordre pratiques ajoutent des garde-fous, comme l'amortissement, les régions de confiance ou des approximations structurées. Les méthodes quasi-Newton (par exemple L-BFGS) et les préconditionneurs structurés cherchent à exploiter la courbure à moindre coût, mais ne sont pas le même algorithme qu'Adam. C'est l'une des raisons pour lesquelles l'entraînement à grande échelle des modèles de langage privilégie couramment des méthodes adaptatives du premier ordre.
 :::
 
