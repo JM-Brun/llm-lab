@@ -6,7 +6,7 @@
 **Accessed:** 2026-11-05  
 **Canonical URL:** https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism
 
-> **Post-integration reconciliation (2026-11-05):** the item-level comparison below records the initial assessment. The later [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md) supersedes the provisional deferral of the convex-hull property: it is now integrated, with precise scope limits, in the bilingual scaled-attention pages. Routing/payload and message-passing interpretations are also integrated as bounded explanatory notes.
+> **Destination re-verification (2026-11-27):** the earlier post-integration note was not supported by the current page files. Direct inspection confirms that the routing/payload distinction is present in the main prose of the core Q/K/V pages; it is not a separate source-attributed collapsible note. The message-passing analogy and convex-hull property are absent from both current scaled-attention pages. Their earlier integrated dispositions are corrected below to defer.
 
 ## 1. Inspection and effort
 
@@ -64,7 +64,7 @@ The source was compared against the existing Nishanthan, Neha KK and Codefinity 
 | Explicit variance derivation for scaling | Moderate–high: connects `sqrt(d_k)` to a probabilistic model and exposes assumptions | Requires independent, zero-mean, unit-variance components; not a universal activation law | Integrate by reference as optional intermediate depth; do not duplicate canonical derivation |
 | Tensor shape walkthrough | Moderate reference value, especially explicit `d_v != d_k` | Single-head, unbatched; no masks, head axes, cross-attention or GQA/MQA | Already covered in canonical implementation/shape work; retain as alternative reference |
 | End-to-end “The cat sat” trace | Moderate as a debugging/reference example | Inputs are hand-designed; projections are seeded random matrices, not trained weights | Integrate by reference; no second numerical workbench |
-| Convex-hull property of weighted values | Mathematically valid and useful for geometry-oriented learners | Applies only to the normalized weighted sum over accessible values before output projection/residual/MLP; not to fully masked rows | Integrated in the bilingual scaled-attention pages, with scope bounded |
+| Convex-hull property of weighted values | Mathematically valid and potentially useful for geometry-oriented learners | Applies only to the normalized weighted sum over accessible values before output projection/residual/MLP; not to fully masked rows | Defer: absent from the current bilingual scaled-attention pages; no learner evidence currently requires adding it |
 | Claims about learned linguistic head patterns and symmetry | Useful review stress-test | Broad claims exceed evidence shown; masks and positional mechanisms complicate symmetry | Clarify/retain as a source-quality regression case |
 
 ### Candidate contribution tested against canonical content
@@ -91,7 +91,7 @@ This is a real item-level decision, not a topic-count decision.
 - No new canonical concept, relation, page, navigation item or learning-route edge.
 - Keep the variance derivation as an optional reference linked to the existing scaled-attention topic.
 - Keep the shape walkthrough and numerical trace as alternative references; do not duplicate the canonical workbench.
-- The convex-hull observation is now integrated as an optional note in the bilingual scaled-attention pages; the later decision is recorded in the four-source audit.
+- The convex-hull observation remains a mathematically valid candidate, but it is absent from the current bilingual scaled-attention pages; defer it until a concrete learner need is established.
 - Retain the database analogy as already covered.
 - Preserve the technical caveats as source-review regression examples.
 - Do not reuse the article's charts or images; visual inspection and reuse rights remain open.
@@ -106,7 +106,7 @@ The source's main value is a coherent intermediate-level teaching route and an a
 | Inspection | Partial pass | Long chapter structure is easy to enumerate; figures, interactive controls and outbound links require separate work |
 | Extraction | Pass for selected text items | Source-local model captures a route with 11 sections; care needed not to over-extract every repeated explanation |
 | Comparison | Pass | Existing Q/K/V dossier and coverage matrix made overlap visible; exact item-level decisions still required |
-| Integration decision | Pass | Bounded routing/payload, message-passing and convex-hull notes integrated in existing bilingual pages; scaling derivation remains reference-only |
+| Integration decision | Partial pass | Routing/payload is present in the core Q/K/V prose; message passing and convex-hull geometry are not present in the scaled-attention pages and remain deferred; scaling derivation is present in the deep dive but is not attributed to this source |
 | Validation | Partial | Structural and technical reasoning documented; YAML/build/schema checks still required; no browser or learner validation |
 | Effort measurement | Provisional | Manual estimates only; no phase telemetry or automation timing yet |
 
@@ -133,4 +133,4 @@ Remaining: validate the new YAML against the canonical schema and validators; in
 
 ## 8. Post-integration reconciliation
 
-The initial comparison in sections 3 and 5 was written before the final page edits. The current disposition is maintained in the [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md): routing versus payload is integrated on the Q/K/V pages; message passing and the convex-hull property are integrated on the scaled-attention pages; the variance derivation and worked example remain references rather than duplicated content. The source remains partially scanned, and the original visual assets and rights remain unresolved.
+The initial comparison in sections 3 and 5 and the earlier post-integration note are historical records, not proof of current page presence. The current disposition is maintained in the [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md): routing versus payload is present in the main prose of the Q/K/V core pages; message passing and the convex-hull property are absent from the scaled-attention pages and deferred; the variance derivation exists in the advanced scaling lesson but is not explicitly attributed to this source. The source remains partially scanned, and the original visual assets and rights remain unresolved.
