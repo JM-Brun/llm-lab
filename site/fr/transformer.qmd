@@ -99,6 +99,8 @@ La pile est composée de blocs de même type, répétés en profondeur. Chaque b
 
 Chaque sous-couche s'insère dans le **flux résiduel** : sa correction est ajoutée à la représentation qui circule, et une normalisation accompagne les transformations. L'ordre précis varie selon les architectures (pré-LN, post-LN, RMSNorm, etc.). Cette leçon en donne le rôle ; la page d'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd) explique le détail des sous-couches, des connexions résiduelles et de la normalisation. La [visite guidée du bloc](transformer-block-walkthrough.qmd) reste, elle, consacrée à l'implémentation Python.
 
+<span id="transformer-training-generation"></span>
+
 ### Parallélisme à l'entraînement, génération séquentielle
 
 Pendant l'entraînement, les tokens d'une séquence sont connus : le réseau peut calculer en parallèle les représentations de plusieurs positions, tandis que le masque causal empêche chacune d'utiliser les tokens futurs. Cela supprime la dépendance récurrente position par position propre aux RNN.
@@ -115,6 +117,8 @@ Pendant la génération, le token suivant dépend des tokens déjà produits : l
 
 Ces deux dimensions décrivent la structure générale, mais ne suffisent pas à prédire les performances. Les dimensions internes \(d_{\mathrm{head}}\) et \(d_{\mathrm{ff}}\), les formes des tenseurs et les valeurs de référence de GPT-2 sont regroupées dans la page [Tenseurs](tensors.qmd) ; la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd) montre leur emploi dans le modèle du projet.
 
+<span id="transformer-three-levels"></span>
+
 ### Trois niveaux à ne pas confondre
 
 1. **La sous-couche d'attention** échange de l'information entre les positions autorisées.
@@ -122,6 +126,8 @@ Ces deux dimensions décrivent la structure générale, mais ne suffisent pas à
 3. **Le GPT complet** assemble les représentations d'entrée, une pile de blocs, puis une normalisation finale et une tête de sortie.
 
 L'attention est une partie du bloc ; le bloc est l'unité répétée ; le Transformer ne désigne pas à lui seul le GPT complet.
+
+<span id="transformer-to-logits"></span>
 
 ## 3. Des représentations aux logits
 
