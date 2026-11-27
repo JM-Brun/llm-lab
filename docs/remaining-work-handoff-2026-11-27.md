@@ -9,8 +9,17 @@
 
 **Implemented:** the three refactor lots are merged through #1213: shorter bilingual overview, retrieval/RAG/context-engineering ownership, and Generation / complexity / training-loop boundaries. Browser coverage was extended in [PR #1803](https://github.com/JM-Brun/llm-lab/pull/1803) for the moved modules and Practice companions.
 
+**Browser audit evidence from #1803 (head `6db7780`):** Secret scanning and the Python/domain CI job passed, but the Quarto/browser job failed. The failures are actionable findings, not a clean acceptance report:
+
+- `exercises/llm-computational-complexity.html` (FR/EN, desktop/mobile): no native initially-collapsed worked-answer disclosure. The current source contains five self-check questions but no worked answers. This is a genuine Practice-content/contract gap; add answers in the dedicated Practice page, not the core lesson, then rerun the browser check.
+- `llm-limits.html` (FR/EN, desktop): browser review found that the rendered page does not expose exactly one native Quarto breadcrumb. Inspect the rendered DOM and source navigation before deciding whether the source or test contract is wrong.
+- `rag-memory-boundaries.html`, `document-retrieval.html`, `context-engineering.html` (FR/EN, desktop): generated single-stage context fails the route-context contract (repeated heading, incorrect stage/role or missing labelled stage link). Inspect the generated include and route metadata; fix the shared generator/metadata contract where possible rather than patching six pages independently.
+
+These failures are distinct from the browser coverage addition itself. Do not weaken the assertions or mark the pages reviewed until the cause is resolved. `llm-limits` and the three moved core modules need source/DOM diagnosis; the complexity Practice page needs missing worked-answer content.
+
 **Remaining, in order:**
-1. Merge #1803 only after its complete CI/browser report passes and inspect its browser artefacts.
+1. Resolve the three failure groups above; update #1208/#1512 as appropriate and rerun the existing full browser audit.
+2. Merge #1803 only after its complete CI/browser report passes and inspect its browser artefacts.
 2. On the current main HEAD, inspect the rendered FR/EN overview and moved modules at desktop and mobile widths: equations/figures, responsive tables, anchors, internal links, language switching, focus/keyboard, Axe findings and console errors.
 3. Recheck the nine overview self-check anchors and bilingual conservation against the existing inventory; do not infer preservation from source word counts.
 4. Obtain a short novice review of the overview and the modules whose ownership changed, or record explicitly that learner review is deferred.
