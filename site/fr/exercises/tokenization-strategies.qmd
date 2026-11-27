@@ -77,7 +77,7 @@ Pour chaque entrée, testez la question associée et notez le risque d'une inter
 | `situation` puis ` situation` | L'espace initial change-t-il la segmentation du mot du fil rouge ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
 | `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |
 | `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
-| `café` et `cafe\\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
+| `café` et `cafe\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
 | `2026-10-29`, `123456789` | Comment chiffres et séparateurs sont-ils segmentés ? | Un token n'est pas nécessairement un nombre entier |
 | `你好` | Le système dépend-il des espaces entre mots ? | La séparation sur espaces peut ne donner aucune frontière utile |
 | `def predict_next(x): return x + 1` | Comment espaces, identifiants et opérateurs sont-ils traités ? | La segmentation peut sembler arbitraire |
