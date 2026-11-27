@@ -419,6 +419,22 @@ The source-level visual audit pilot adds 16 original bilingual responsive SVG as
 All 16 files were authored in this contribution and include SVG `title` and `desc` elements. The pages provide separate alt text and captions and select mobile variants through responsive `picture` elements. These are source-level checks only: XML conformance, Quarto rendering, browser display, responsive legibility, accessibility-tree behavior, owner confirmation and asset-level licensing remain unverified. Do not count this pilot as completion of the route-wide rendered-DOM inventory or as closure of #156 / #163.
 
 
+## Understand route visual pilot — tokenization, position and attention — 2026-11-26
+
+The second source-level pilot reviews the EN/FR tokenization, positional-encoding, scaled-dot-product-attention and causal-masking lessons. It adds seven responsive/localized SVG assets and changes the placement of one existing figure. Full decisions and remaining validation are documented in [the second visual audit](visual-audit-second-pilot-2026-11-26.md).
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `positional-entry-points-en-mobile.svg`, `positional-entry-points-fr-mobile.svg` | EN/FR `positional-encoding.qmd` responsive figure | Original mobile compositions authored for this contribution from the existing three-lane positional-mechanism diagram. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `causal-attention-mask-fr.svg` | FR `causal-masking.qmd` desktop figure | Localized project-authored counterpart to the existing EN causal mask matrix. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `causal-attention-mask-mobile.svg`, `causal-attention-mask-fr-mobile.svg` | EN/FR `causal-masking.qmd` mobile figure | Original mobile compositions of the four-position query/key visibility matrix. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `attention-calculation-flow-en-mobile.svg`, `attention-calculation-flow-fr-mobile.svg` | EN/FR `scaled-dot-product-attention.qmd` mobile figure | Original mobile compositions of the existing Q/K → scores → mask → softmax path and the separate A/V inputs to O=AV. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The positional-encoding desktop diagram was moved from a collapsed callout into the main lesson flow; the partial two-branch stepper was removed because it repeated only a subset of the three mechanisms. The existing desktop attention diagram was retained and paired with mobile compositions. The causal-mask figure now has language-specific desktop/mobile variants and explicit query-row/key-column semantics.
+
+All seven new files include SVG `title` and `desc` elements. These are source-level checks only: XML conformance, Quarto rendering, responsive legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain unverified. The existing provenance/licence constraints in #156 and #163 continue to apply. No existing asset was removed or replaced.
+
+
 ## Understand route visual pilot — prediction and inference — 2026-11-26
 
 The fourth source-level pilot reviews logits, probabilities, entropy, generation and in-context learning in EN/FR. It adds four mobile SVGs; the other pages retain their existing table/flow, generation timeline and Mermaid diagram. Full decisions are recorded in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).

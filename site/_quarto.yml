@@ -37,6 +37,20 @@ project:
     - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
+    - images/positional-entry-points-en-mobile.svg
+    - images/positional-entry-points-fr-mobile.svg
+    - images/attention-calculation-flow-en-mobile.svg
+    - images/attention-calculation-flow-fr-mobile.svg
+    - images/causal-attention-mask-mobile.svg
+    - images/causal-attention-mask-fr-mobile.svg
+    - images/llm-generation-process-en-mobile.svg
+    - images/llm-generation-process-fr-mobile.svg
+    - images/logits-common-shift-en-mobile.svg
+    - images/logits-common-shift-fr-mobile.svg
+    - images/cross-entropy-target-probability-mobile.svg
+    - images/cross-entropy-target-probability-fr-mobile.svg
+    - images/entropy-distributions-en-mobile.svg
+    - images/entropy-distributions-fr-mobile.svg
     - images/advent-zipf-rank-frequency.svg
     - images/likelihood-fr-mobile.svg
     - images/likelihood-en-mobile.svg
@@ -46,14 +60,6 @@ project:
     - images/gradients-en-mobile.svg
     - images/context-engineering-fr-mobile.svg
     - images/context-engineering-en-mobile.svg
-    - images/llm-generation-process-en-mobile.svg
-    - images/llm-generation-process-fr-mobile.svg
-    - images/logits-common-shift-en-mobile.svg
-    - images/logits-common-shift-fr-mobile.svg
-    - images/cross-entropy-target-probability-mobile.svg
-    - images/cross-entropy-target-probability-fr-mobile.svg
-    - images/entropy-distributions-en-mobile.svg
-    - images/entropy-distributions-fr-mobile.svg
   render:
     - index.qmd
     - fr/scientific-calendar.qmd

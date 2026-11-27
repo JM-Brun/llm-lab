@@ -8,10 +8,11 @@
 
 ## Applied audit records
 
-
   - [Understand route visual audit status (2026-11-26)](understand-route-visual-audit-status-2026-11-26.md): consolidated 20-page coverage matrix, applied PRs and closure criteria.
-
   - [Fourth Understand visual audit pilot (2026-11-26)](visual-audit-fourth-pilot-2026-11-26.md): logits, probabilities, entropy, generation and in-context learning.
+
+
+  - [Second Understand visual audit pilot (2026-11-26)](visual-audit-second-pilot-2026-11-26.md): decisions and changes for tokenization, positional encoding, scaled dot-product attention and causal masking.
   - [Four-page Understand visual audit pilot (2026-11-26)](visual-audit-priority-pages-2026-11-26.md): concrete design decisions, placement, captions, caveats and remaining validation for likelihood, loss, gradients and context engineering.
 
 ## 1. Purpose and governing rule
