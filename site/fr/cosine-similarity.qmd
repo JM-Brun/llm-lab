@@ -45,7 +45,7 @@ La normalisation retire l'information portée par la norme. C'est souhaitable si
 
 ## 2. Pourquoi le cosinus peut être trompeur
 
-### Anisotropie et concentration des scores
+### Anisotropie et concentration des scores {#anisotropie-concentration-scores}
 
 Un espace est anisotrope lorsque les vecteurs ne sont pas répartis uniformément dans toutes les directions. Dans ce cas, des paires de phrases peu liées peuvent malgré tout avoir des cosinus élevés. Li et al. (EMNLP 2020) analysent l'anisotropie des embeddings de phrases BERT pré-entraînés et montrent qu'elle nuit à la similarité sémantique dans leurs expériences. Ethayarajh (2019) observe également des représentations contextualisées non isotropes dans BERT, ELMo et GPT-2.
 
