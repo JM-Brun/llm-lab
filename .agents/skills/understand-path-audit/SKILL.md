@@ -43,6 +43,7 @@ Read the relevant current versions before auditing; do not reproduce their rules
 - `docs/reader-experience-and-editorial-method.md`: progressive disclosure, page roles, meaningful links, editorial economy and self-checks.
 - `docs/pedagogical-breadcrumb-and-page-navigation-contract.md`: breadcrumb and navigation behavior.
 - `docs/roadmap.md` and `docs/project-status.md`: planned versus implemented content.
+- `docs/workflows/understand-lesson-audit.md`: normative page-by-page review procedure for the guided Understand lessons; apply it when the scope is lesson-by-lesson, then synthesize route-level findings with this skill.
 
 If a referenced document has moved, locate its current canonical owner. Do not silently invent a replacement contract.
 
