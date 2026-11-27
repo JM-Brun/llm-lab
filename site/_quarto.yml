@@ -46,6 +46,14 @@ project:
     - images/gradients-en-mobile.svg
     - images/context-engineering-fr-mobile.svg
     - images/context-engineering-en-mobile.svg
+    - images/embedding-lookup-en-mobile.svg
+    - images/embedding-lookup-fr-mobile.svg
+    - images/contextualized-embeddings-en-mobile.svg
+    - images/contextualized-embeddings-fr-mobile.svg
+    - images/gpt-data-flow-en-mobile.svg
+    - images/gpt-data-flow-fr-mobile.svg
+    - images/transformer-stack-en-mobile.svg
+    - images/transformer-stack-fr-mobile.svg
   render:
     - index.qmd
     - fr/scientific-calendar.qmd
