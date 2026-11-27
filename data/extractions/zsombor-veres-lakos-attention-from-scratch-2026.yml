@@ -15,16 +15,16 @@ pedagogical_model:
   source_graph:
     nodes:
       - {id: src-state, kind: input-matrix, description: "X records known and needed Python/design competencies for each participant.", locator: "pp. 1–2"}
-      - {id: src-wq, kind: learned-projection, description: "W_Q selects the competencies each participant needs.", locator: "pp. 2–3"}
-      - {id: src-wk, kind: learned-projection, description: "W_K selects the competencies each participant can offer.", locator: "pp. 3–4"}
-      - {id: src-wv, kind: learned-projection, description: "W_V maps offered knowledge to transmissible information, with toy absorption rates.", locator: "pp. 6–7"}
+      - {id: src-wq, kind: projection-matrix, description: "W_Q selects the competencies each participant needs.", locator: "pp. 2–3"}
+      - {id: src-wk, kind: projection-matrix, description: "W_K selects the competencies each participant can offer.", locator: "pp. 3–4"}
+      - {id: src-wv, kind: projection-matrix, description: "W_V maps offered knowledge to transmissible information, with toy absorption rates.", locator: "pp. 6–7"}
       - {id: src-q, kind: representation, description: "Q = X W_Q represents what each participant seeks.", locator: "p. 3"}
       - {id: src-k, kind: representation, description: "K = X W_K represents what each participant offers.", locator: "p. 4"}
       - {id: src-v, kind: representation, description: "V = X W_V represents information each participant can transmit.", locator: "p. 7"}
       - {id: src-scores, kind: intermediate, description: "S = 10 Q K^T; rows are attention payers/queries and columns are recipients/keys.", locator: "pp. 4–5"}
       - {id: src-weights, kind: intermediate, description: "P = row-wise softmax(S); each row sums to one, including a uniform row for equal zero logits.", locator: "pp. 5–6"}
       - {id: src-context, kind: intermediate, description: "P V aggregates value vectors according to attention weights.", locator: "p. 8"}
-      - {id: src-wo, kind: learned-projection, description: "W_O maps context from the value-feature space back to the four-dimensional toy state space.", locator: "p. 8"}
+      - {id: src-wo, kind: projection-matrix, description: "W_O maps context from the value-feature space back to the four-dimensional toy state space.", locator: "p. 8"}
       - {id: src-delta, kind: state-update, description: "Delta X = (P V) W_O is added to X to form X_new.", locator: "pp. 8–9"}
       - {id: src-residual-stream, kind: representation, description: "The toy state is mapped to GPT's residual stream: token-position states in the model embedding space; GPT-2 Small is given as a 768-dimensional example, and the author notes that actual tokens are subwords but uses whole-word examples for simplicity.", locator: "p. 10"}
       - {id: src-causal-mask, kind: constraint, description: "The article says its attention illustration omits GPT's restriction to the current and earlier tokens.", locator: "p. 11"}
@@ -45,7 +45,6 @@ pedagogical_model:
       - {from: src-context, type: projected-by, to: src-wo}
       - {from: src-wo, type: produces, to: src-delta}
       - {from: src-delta, type: added-to, to: src-state}
-      - {from: src-causal-mask, type: constrains, to: src-weights}
     interpretation: "Editorial reconstruction of the meeting analogy and its GPT mapping, not a graph authored by the source. The toy example uses one head and omits causal masking and multi-head composition."
   learning_outcomes:
     - {status: inferred, outcome: "Explain Q/K as matching needs against offers.", basis: "W_Q and W_K are constructed from the competence matrix on pp. 2–4."}
