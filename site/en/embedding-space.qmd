@@ -123,11 +123,7 @@ $T$ is the number of positions in the sequence and $d$ is the dimension of each 
 
 The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
-### ID numbers are labels, not properties of the vector
-
-The vocabulary can be renumbered without changing the lookup result, provided the corresponding rows of the matrix are moved consistently. If a permutation \(\pi\) replaces ID \(i\) with \(\pi(i)\), construct the new table \(E'\) so that \(E'_{\pi(i),:}=E_{i,:}\). The retrieved vector is then unchanged: only the row address has changed. By contrast, renumbering IDs without permuting the rows changes which vectors are selected.
-
-This invariance applies to lookup. In a complete model, every other vocabulary-indexed structure — including the output projection and any associated biases — must also be permuted consistently to preserve the overall behavior.
+ID numbers are labels, not properties of the vectors: renumbering the vocabulary while moving the corresponding matrix rows preserves lookup. The [lesson on turning text into tokens](text-data.qmd#text-id-experiment) explains this invariance at the tokenizer–model contract level; the associated exercise lets you verify it on a concrete sequence.
 
 The tokenizer fixes the vocabulary and the token-to-ID mapping; it does not provide the values of $E$. Those values are **learned network parameters**: they are initialized and then adjusted during training. When an example uses ID $i$, the loss gradient can contribute to updating row $E_{i,:}$. Lookup selects that row; it does not compute its contents.
 
