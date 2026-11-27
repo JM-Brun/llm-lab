@@ -2169,3 +2169,21 @@ Audit source FR/EN des leçons Understand `in-context-learning` et `context-engi
 ### Décision et limites
 
 Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification de leçon, nouveau concept ou extension des métadonnées n'est justifié. Le lot est source-only : rendu des diagrammes FR/EN, mobile, navigation, clavier et accessibilité manuelle restent à vérifier.
+
+
+## Issue #1739 — panorama et entrée texte (2026-11-27)
+
+Audit source FR/EN des premières leçons Understand `llm-overview` et `text-data`, ainsi que de la page Practice dédiée à `text-data`. Le pilote `embedding-space` est réutilisé sans répétition. Voir [le dossier panorama et entrée texte](source-syntheses/understand-overview-text-input-intellectual-contributions-audit-2026-11.md).
+
+### Résultats
+
+- Le panorama définit une distribution conditionnelle du prochain token et distingue génération, scoring et apprentissage comme trois usages, pas comme étapes d'une seule exécution.
+- Il sépare architecture, apprentissage et utilisation, et distingue LLM (catégorie), Transformer (famille d'architectures) et GPT (famille decoder-only).
+- Il distingue paramètres appris, contexte transmis et informations externes récupérées ; les poids ne sont pas une base documentaire consultable.
+- `text-data` suit une occurrence de texte jusqu'aux tokens, IDs et vecteurs ; les IDs sont locaux à un vocabulaire et ne sont pas des quantités sémantiques.
+- Le tokenizer fait partie du contrat du checkpoint : vocabulaire et conventions doivent rester associés aux poids, qui indexent les embeddings d'entrée et les logits de sortie.
+- Les conséquences du nombre de tokens sur le budget et le coût sont présentées avec des limites explicites ; un découpage plus court ne prouve ni meilleure qualité ni meilleure maîtrise linguistique.
+
+### Décision et limites
+
+Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification, nouveau concept ou extension des métadonnées n'est justifié. Les rendus FR/EN, figures, blocs d'exemple, affichage mobile et accessibilité restent à vérifier.
