@@ -59,7 +59,7 @@ The gradient describes a local change. A step that is too large can leave the re
 
 Keep the prefix and the observed token $A$ fixed. In this toy model, the logits are $z=u+b$, where $u$ is fixed and only the output bias $b$ is trainable. Two settings of $b$ give the following distributions over $(A,B,C)$.
 
-$$
+$$$
 p=(1/2,\;1/4,\;1/4),\qquad q=(1/2,\;3/8,\;1/8).
 $$
 
@@ -89,7 +89,7 @@ Take the [output matrix from the logits example](../logits.qmd#running-example-o
 
 The weight gradient is the outer product $g_z h^\top$. The new weights are $W'=W-\eta g_z h^\top$. For the same state, the updated score vector is:
 
-$
+$$
 z'=W'h=z-\eta\lVert h\rVert^2 g_z
 =(\ln 6+0.08,\ \ln 2-0.04,\ -0.02,\ -0.02).
 $
