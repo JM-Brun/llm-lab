@@ -117,6 +117,14 @@ To connect the position axis to the vocabulary axis, [compare two observed targe
 
 Consider two vectors: $z=(2,1)$ and $z'=(102,101)$. Their scores differ greatly in absolute value, but the second vector is obtained by adding 100 to every component. Softmax gives exactly the same distribution for both vectors: the common offset cancels between numerator and denominator. **Differences between logits determine probability ratios, not their absolute level.**
 
+More generally, if $p=\operatorname{softmax}(z)$, then $\log p_i=z_i-\log\sum_j e^{z_j}$ and therefore:
+
+$
+\log\frac{p_i}{p_j}=z_i-z_j.
+$
+
+The gap between two logits is exactly the log-ratio of their corresponding probabilities.
+
 By contrast, multiplying every logit by a positive factor can change the distribution's concentration even when candidate ranking stays the same. Temperature uses precisely this property; the [output probabilities](probabilities.qmd) page explains its effect.
 
 Converting scores into a probability distribution is a separate operation. It is covered in [Output probabilities](probabilities.qmd), the canonical page for softmax, temperature, and distribution interpretation.
