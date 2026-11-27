@@ -52,6 +52,8 @@ A decoder-only GPT is a Transformer network made of repeated blocks. Within each
 
 The diagram below offers two levels of view: the complete GPT, to locate the data flow, and an enlarged block, to understand the repeated operations. We will then follow this flow from the network input to the logits, without retelling tokenization or the generation loop.
 
+<span id="transformer-network-overview"></span>
+
 ## The Transformer: the network at the heart of a GPT
 
 <figure id="fig-transformer-stack">
@@ -89,6 +91,8 @@ The previous lessons established how text becomes a sequence of IDs, then how th
 token IDs → initial representations → first-block input
 
 The prefix “It is a good situation, scribe?” then passes through the block stack before the model produces the next-token logits. The continuation is built through the generation loop; it is not written in advance in the prompt.
+
+<span id="transformer-block-anatomy"></span>
 
 ## 2. Transformer blocks
 
