@@ -1,6 +1,6 @@
 # Q/K/V source collection and comparative synthesis
 
-**Status:** living dossier · **Last reviewed:** 2026-11-05  
+**Status:** living dossier · **Last reviewed:** 2026-11-27  
 **Scope:** external explanations of Query, Key, Value, self-attention and closely related mechanisms.
 
 **Project self-assessment:** the [LLM Lab Q/K/V self-audit and comparative positioning](llm-lab-qkv-self-audit-2026-11.md) evaluates the canonical bilingual lesson as a potential public source, separately from this catalogue of external sources.  
@@ -16,6 +16,7 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: visible author text now directly reconciled against the live page-text view; actual figure files, linked resources and rights unresolved |
 | `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson and parent outline inspected; two interface SVG URLs identified but bytes/rights unresolved; full interactive course, other lessons, assignments and linked resources uninspected |
 | `mbrenndoerfer-qkv-attention-mechanism` | [Michael Brenndoerfer — Query, Key, Value: The Foundation of Transformer Attention](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) | 2025-06-01; updated 2025-06-04 | [YAML extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) | [Review](qkv-mbrenndoerfer-2026-11.md) · [Visual inventory](qkv-brenndoerfer-visual-inventory-2026-11.md) | Partially scanned: chapter text inspected; nine visual teaching moves inventoried but original assets/rights unresolved; code not executed; quiz interactions and linked resources uninspected |
+| `zsombor-veres-lakos-attention-from-scratch-2026` | [Zsombor Veres-Lakos — Attention from scratch](https://zsomborvereslakos.substack.com/p/attention-from-scratch) | 2026-11-16 | [YAML extraction](../../data/extractions/zsombor-veres-lakos-attention-from-scratch-2026.yml) | [Review](zsombor-veres-lakos-attention-from-scratch-2026-11.md) | Partially scanned: complete 12-page PDF inspected, including worked matrices and figures; live page, comments, links and reuse rights unresolved |
 | `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not an additional Q/K/V tutorial |
 
 **Medium scan refinement (2026-11-05):** the canonical page is now directly readable through the page reader; the visible text reconciles with the earlier indexed snapshot. Four in-body image placements remain visible (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. A “No responses yet” state was visible at this recheck; this is point-in-time evidence only. The raw DOM, cover/hero asset and reuse rights remain unresolved.
@@ -367,7 +368,16 @@ The table below maps the important claim families in the Q/K/V lesson to the sou
 
 ### 12.9 Collection membership and bilingual parity closure
 
-- `qkv-attention` now contains the four pedagogical comparison resources plus Jose Parreño Garcia and Vaswani et al., because all six were deliberately selected for the Q/K/V page's construction or technical grounding.
+- `qkv-attention` now contains five pedagogical comparison resources plus Jose Parreño Garcia and Vaswani et al.; the new Veres-Lakos source is registered as an optional worked analogy, not a new canonical explanation.
 - The four-source pedagogical matrix remains unchanged in scope; it is not expanded with a primary paper or a later page-cited blog because its comparison question is specifically the original four pedagogical resources.
-- The current Q/K/V FR and EN pages were rechecked after the dossier and registry changes. Each contains the same four external URLs, in the same order: Neha KK, Jose Parreño Garcia, Vaswani et al., and Nishanthan K.
+- The current Q/K/V FR and EN pages now include the Veres-Lakos article as an optional external worked analogy alongside the existing resources; bilingual parity must be rechecked by the project validation workflow.
 - No public page edit is required. This audit changes source provenance and traceability, not the learner-facing content.
+
+
+### 12.10 Veres-Lakos — meeting analogy and residual update (2026-11-27)
+
+The complete 12-page PDF export was inspected. Its distinctive contribution is a continuous numerical analogy: a competence matrix is projected into needs (Q), offers (K) and transmissible information (V); scores are normalized row-wise; values are aggregated; W_O maps the context back to the state coordinates; and the resulting Delta X is added to X.
+
+**Integration decision:** add the source to the collection and link it from both Q/K/V pages as optional further reading. Do not copy its tables or attention figure. The project already owns the general Q/K/V and attention derivations, numerical workbench, causal masking and multi-head material.
+
+**Technical guardrails:** the source's scalar 10 is a pedagogical sharpness multiplier, not the standard 1/sqrt(d_k) factor; its zero-score row becomes uniform because no mask is applied; W_O is the attention sublayer's output projection, not the final vocabulary head; the GPT mapping omits the MLP residual branch. The bank, pronoun and adjective examples are illustrations, not empirical head-level evidence. The page-11 attention matrix is credited to Raschka Figure 3.11 and remains link-only because asset rights are unknown.
