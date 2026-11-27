@@ -1,7 +1,7 @@
 # Test and CI performance — remaining work
 
 **Status:** active optimization track; the first low-risk changes in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636) merged on 2026-11-25. Repeated timing and follow-up profiling remain open.  
-**Last measured:** 2026-11-25.  
+**Last measured:** 2026-11-27.  
 **Scope:** contributor feedback time, Python test runtime, GitHub Actions overhead and the integrity of the validation gates.
 
 This document is the focused execution plan for test/CI latency. It complements, rather than replaces, the broader [scalability and capacity audit](scalability-capacity-audit-2026-11-18.md), which covers the knowledge-management data model and corpus growth.
@@ -18,6 +18,60 @@ Two GitHub Actions runs on 2026-11-25 provide an initial before/after observatio
 Both runs used **pytest-xdist 3.8.0, two workers and `--dist loadscope`**. Parallel execution was already enabled before this work; it is not the explanation for the observed difference. The wall-clock difference is approximately 48%, but this is a single pair of hosted-runner observations, not yet a controlled performance claim. Repeat measurements before attributing the full gain to any one change.
 
 The test suite and coverage gate were preserved. The run on the PR branch reported 832 passed, one skipped, and 98.27% coverage.
+
+## 1a. Repeated current-main baseline — 27 November 2026
+
+Six successful main-branch CI runs were inspected. The three runs with **845 collected items** are the current comparable group; the three runs with 841 items are retained separately because four tests were added between the groups. Do not pool the two groups.
+
+### Current group: 845 items
+
+All three runs used Ubuntu 26.04, Python 3.12.16, pytest 9.2.0, pytest-xdist 3.8.0, two workers, `--dist loadscope --durations=20`, and 98.27% coverage. Each run reported 845 passed, one skipped and one warning.
+
+| CI run | Main commit | Test duration |
+|---|---|---:|
+| [#8404](https://github.com/JM-Brun/llm-lab/actions/runs/46074046450) | `26cdd58f` | 126.17 s |
+| [#8390](https://github.com/JM-Brun/llm-lab/actions/runs/46072634942) | `246d23c3` | 166.98 s |
+| [#8360](https://github.com/JM-Brun/llm-lab/actions/runs/46070622602) | `c4fc7aa7` | 174.29 s |
+
+**Median: 166.98 s. Range: 126.17–174.29 s.** The 48.12 s spread is substantial relative to the median. These runs establish a repeated current-main reference, not a causal estimate for PR #1636 or any later optimization.
+
+### Previous group: 841 items
+
+The three earlier runs used the same runner image, Python, pytest/xdist versions, worker count, distribution strategy and 98.27% coverage. Each reported 841 passed, one skipped and one warning.
+
+| CI run | Main commit | Test duration |
+|---|---|---:|
+| [#8349](https://github.com/JM-Brun/llm-lab/actions/runs/46069832822) | `a8ebacf0` | 120.24 s |
+| [#8329](https://github.com/JM-Brun/llm-lab/actions/runs/46068924846) | `66876f0d` | 139.96 s |
+| [#8317](https://github.com/JM-Brun/llm-lab/actions/runs/46067695181) | `39d24d40` | 108.21 s |
+
+**Median: 120.24 s. Range: 108.21–139.96 s.** Keep this group separate from the 845-item group.
+
+### First hotspot profile on the current 845-item run
+
+The latest `--durations=20` output identifies these priorities:
+
+| Test / operation | Call or setup time |
+|---|---:|
+| Understand-boundaries pilot FR | 7.95 s |
+| Understand-boundaries pilot EN | 7.94 s |
+| Cross-graph query CLI | 6.66 s |
+| Cross-graph projection setup | 6.56 s |
+| Source taxonomy contract | 5.36 s |
+| Extraction-history reconciliation | 5.09 s |
+| Revision-coverage inventory | 5.05 s |
+| Map-artifact freshness EN | 4.32 s |
+| Map-artifact freshness FR | 4.20 s |
+| Conceptual route EN / FR | 4.29 / 4.27 s |
+
+This is a pytest duration profile, not yet a decomposition of filesystem reads, YAML parsing, index construction and subprocess startup. The explicit 6.56 s setup cost in the cross-graph projection test is a useful profiling target. The two bilingual Understand tests must remain separate correctness checks.
+
+### Measurement limitations and next step
+
+- The six runs are hosted-runner observations on different main commits, not repeated executions of one immutable commit. Test count, runner image and execution configuration are matched within each group; other commit/data changes may still affect duration.
+- The normalized job metadata available in this pass did not expose exact job start/completion fields. The pytest duration is measured; setup/install time is **not yet separately isolated**.
+- The current group has only three observations and a wide range. Collect additional runs before setting a performance target or attributing changes.
+- No assertions, coverage gates, bilingual checks or full-corpus validators were removed or weakened.
 
 ### Slow-test observations
 
