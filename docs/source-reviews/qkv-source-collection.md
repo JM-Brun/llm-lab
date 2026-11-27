@@ -274,7 +274,7 @@ Codefinity's parent course is labelled Advanced, but the inspected lesson is int
 | Source | Page role | Metadata/evidence boundary | Audit decision |
 |---|---|---|---|
 | Jose Parreño Garcia, *Understanding Transformers (Part 4)* | Complementary intuition linked from the Q/K/V page | English introductory blog; visible article body reviewed; figures not inspected; no code/experiment executed; licence unknown; no explicit qkv-attention collection membership | Add to the page-level comparison, but do not silently rewrite historical collection membership. Decide whether the collection is a tutorial comparison set or a complete topic source family before changing membership. |
-| Vaswani et al., *Attention Is All You Need* | Primary formulation cited for learned Q/K/V projections | English advanced research paper; partially scanned; focused review exists for §3.2.1 scaled dot-product attention | Retain as primary anchor. The exact projection claim is now traced to §3.2.2, with §3.2.3 supporting the shared input stream in self-attention; the page's XW_Q notation is identified as a compact specialization. |
+| Vaswani et al., *Attention Is All You Need* | Primary formulation cited for learned Q/K/V projections | English advanced research paper; partially scanned; focused review now covers §§3.2.1–3.2.3 for scaled attention, learned projections and self-attention data flow | Retain as primary anchor. The exact projection claim is now traced to §3.2.2, with §3.2.3 supporting the shared input stream in self-attention; the page's XW_Q notation is identified as a compact specialization. |
 
 The page-visible citation inventory is four URLs in both languages:
 - Neha KK (example adapted from the article);
@@ -307,7 +307,7 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 | Motivation for contextual information | Page narrative and Neha's coreference example; contextualized-representations is the upstream page | Covered; keep the example explicitly illustrative, not empirical evidence of head-level coreference |
 | Functional roles of Q, K and V | Canonical page explanation, Nishanthan and Codefinity | Covered; repeated definitions do not require more sources |
 | Why three learned projections? | Neha's design rationale and canonical page's joint learned-projection explanation | Covered |
-| Shared input and projection equations | Canonical equations and Vaswani primary paper | Conceptually covered; exact primary locator for the projection matrices needs a focused §3.2.2 check |
+| Shared input and projection equations | Canonical equations and Vaswani primary paper | Covered; §3.2.2 supports the learned per-head projections and §3.2.3 supports the shared previous-layer input in self-attention |
 | Routing/compatibility versus payload/content | Brenndoerfer's comparative treatment and canonical page | Covered; preserve the distinction as a functional explanation, not a claim that dimensions are human-readable semantic features |
 | Geometric intuition | Codefinity and Brenndoerfer; canonical optional note | Covered at the intended depth; avoid equating dot product with cosine similarity |
 | Scores, scaling, softmax and weighted aggregation | Dedicated scaled-dot-product-attention page and Vaswani §3.2.1 | Deliberately delegated to the next page; do not duplicate the full derivation here |
