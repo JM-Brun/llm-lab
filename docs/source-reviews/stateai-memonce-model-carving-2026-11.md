@@ -105,15 +105,77 @@ Do not merge these under a generic pruning/compression concept. Their optimizati
 - **No new canonical concept IDs yet:** existing concepts cover the current mapping; concept additions require a separate ontology review.
 - **No learner-facing page edits in this ingestion PR:** this PR records sources and evidence. A page integration should be a subsequent scoped change after the existing lessons and graphs are audited.
 
-## 5. Remaining work
+## 5. Remaining work — staged plan
 
-- [ ] Retrieve and inspect the complete newsletter body and all 15 linked items; record each as reviewed, deferred or rejected.
-- [ ] Inspect official project/code repositories for both papers, implementation availability, licences and reproducibility instructions.
-- [ ] Independently verify benchmark arithmetic, hardware, memory accounting and model configurations.
-- [ ] Compare MemOnce against existing lessons on KV cache, YOCO/cross-layer sharing, linear attention, retrieval and persistent memory.
-- [ ] Compare Model Carving against existing pruning, architecture-search and model-compression material.
-- [ ] Decide whether new concepts are justified only after canonical concept and graph review.
-- [ ] Run source catalogue/extraction validators and open a separate integration PR if warranted.
+The two headline papers and their official repositories have now been inspected, and four atomic extraction records have been created. The remaining work is no longer a generic “read more” list: it is split into distinct closure, validation, comparison and integration gates. Do not reopen completed research tasks unless a later audit finds a concrete discrepancy.
+
+### Gate A — close the newsletter scan (source completeness)
+
+**Status: blocked by source access; highest remaining ingestion priority.**
+
+- [ ] Retry the canonical Substack article and the inbox alias through an authenticated/alternate retrieval path, without treating the alias as a second source.
+- [ ] If the full newsletter remains inaccessible, record that limitation as final for this scan and use the contents list only as a discovery queue.
+- [ ] Triage the 13 discovered references individually before creating source records: DICE speculative decoding; ScopeAct; hierarchical task planning; UniEvo-VL; NoiseRater; MemLife; EMA Policy Gradient; Mixture of Latent Recursions; scientific-discovery/monofact analysis; massive activations in hybrid linear-attention LLMs; StereoVLM; Generalist Action Critic; La-JEPA.
+- [ ] For each candidate, record a decision (ingest / defer / reject), a canonical primary-source URL, relevance to LLM Lab, and a short rationale. Ingest only those with a clear project fit; do not turn the newsletter table of contents into 13 automatic ingestion obligations.
+- [ ] Update the newsletter's `scan_status` only when the actual inspection scope supports the change. The two headline papers being fully reviewed does not make the newsletter fully scanned.
+
+**Acceptance:** every item visible in the newsletter contents has an explicit disposition; any uninspected item remains clearly marked as discovered/deferred, never as reviewed.
+
+### Gate B — validate the ingestion artefacts (technical integrity)
+
+**Status: latest commit-associated CI, Quarto site and secret-scanning runs are successful; catalogue-specific semantics still deserve a targeted check.**
+
+- [ ] Run the repository's existing source-catalogue and extraction validators against `data/sources.yml` and the four new extraction files; do not create a new workflow just for this ingestion.
+- [ ] Check controlled vocabularies, required fields, unique source IDs, canonical URLs/aliases, extraction item IDs, source locators, and consistency between each source's `related.audit_records` and the files that exist.
+- [ ] Confirm that `method`/contribution tags and source types use the repository's current allowed values; do not silently broaden the schema to accommodate one source.
+- [ ] Verify that the 1,313× statement is consistently scoped to 32.05 GB active GPU cache versus 25.0 MB active cache in the Qwen3.5-4B 1M-context repository table, while retaining the 640 MB offloaded pool. Keep the paper's separate 144 GB comparison distinct.
+- [ ] Confirm that licence statements are scoped to the two repositories' code only, not automatically to checkpoints, base models, datasets, benchmark assets or dependencies.
+
+**Acceptance:** existing validators pass; source/extraction references resolve; no unsupported status or licence claim is introduced. CI success is recorded separately from semantic catalogue validation.
+
+### Gate C — compare against the existing LLM Lab knowledge model (no page edits yet)
+
+**Status: not started as a systematic page-by-page audit.**
+
+- [ ] For MemOnce, inspect the existing bilingual material and graph around KV cache, long context, YOCO/cross-layer sharing, linear attention, recurrent state, RAG/retrieval and persistent memory. Reuse the relevant work already tracked in #765, #1237 and the canonical computational spine #575.
+- [ ] Compare the three memory quantities explicitly in the conceptual model: expandable persistent/offloaded bank; bounded active retrieved state; layer-specific KV tensors materialized for attention. Check whether current pages distinguish them or collapse them under “KV cache”.
+- [ ] For Model Carving, inspect the existing material on model compression, structured pruning, layer dropping, architecture search, distillation and compute-aware training. Keep it distinct from token pruning (#1136), unstructured weight sparsity and inference-time dynamic routing.
+- [ ] Use the project's semantic concept IDs and relation conventions. Do not create placeholder IDs, duplicate existing concepts, or force either paper into the #575 computational spine if it is only a neighbouring architectural concern.
+- [ ] Produce a compact comparison matrix: existing page/concept → supported overlap → genuinely new distinction → evidence locator → proposed action (reuse / clarify / cross-link / new concept / no change).
+
+**Acceptance:** every proposed addition is justified by a demonstrated gap in the current knowledge model; “paper introduces a term” is not sufficient justification.
+
+### Gate D — decide and implement learner-facing integration (separate change)
+
+**Status: deliberately deferred from this ingestion PR.**
+
+- [ ] Make an explicit editorial decision for each paper after Gate C. Prefer extending an existing lesson over creating a new page.
+- [ ] If MemOnce adds a useful learning contribution, integrate the lifecycle and memory-accounting distinctions into the appropriate inference/long-context/KV-cache material, with a precise comparison to existing approaches.
+- [ ] If Model Carving adds a useful learning contribution, place it with training-time architecture optimization/model compression; explain the compute-budget objective and static resulting topology without implying dynamic inference routing.
+- [ ] Update FR and EN counterparts together, then update the knowledge graph, learning map and relevant routes only where the new relationships are pedagogically meaningful.
+- [ ] Keep exercises and questions in the separate “Practice & experiment” area rather than expanding the main explanatory pages with a growing exercise bank.
+- [ ] Preserve source attribution and figure/code reuse boundaries. Link to figures when rights are unknown; do not copy assets by default.
+
+**Acceptance:** a separate, reviewable PR contains only justified learner-facing changes, with bilingual parity, correct graph relations and working navigation.
+
+### Gate E — optional reproducibility follow-up (not a prerequisite for source ingestion)
+
+- [ ] If a concrete implementation-learning objective emerges, create a small, isolated smoke-test plan for each repository using its documented environment; do not download large checkpoints or datasets by default.
+- [ ] For MemOnce, distinguish inference-path smoke testing from reproducing 1M-context memory/latency/throughput claims.
+- [ ] For Model Carving, distinguish code-path validation from reproducing long training runs and hardware throughput claims.
+- [ ] Record hardware, software versions, model/checkpoint provenance, dataset licences, memory accounting and deviations. Never relabel author-reported results as independently reproduced.
+
+**Acceptance:** any experiment is reproducible and narrowly scoped; otherwise the work remains explicitly paper/code inspection only.
+
+### Recommended execution order
+
+1. **B first:** validate the artefacts already committed, since this can close the ingestion PR without waiting for Substack access.
+2. **A in parallel as source discovery:** recover the newsletter if possible; otherwise disposition the 13 references and close the access limitation honestly.
+3. **C next:** perform the comparative audit against existing pages and the canonical knowledge graph.
+4. **D only after C:** open a separate integration PR if a real pedagogical gap remains.
+5. **E only on demand:** do not make reproduction a hidden prerequisite for documenting the papers.
+
+The ingestion PR should not absorb Gates C–E. Its scope is source registration, evidence extraction and a trustworthy audit trail; learner-facing architecture changes belong in a subsequent, smaller change.
 
 ## Evidence boundary
 
