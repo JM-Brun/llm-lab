@@ -23,8 +23,6 @@
   - [From token penalties to batch loss](loss.html)
   - [Gradients: connecting loss to parameters](gradients.html)
   - [The training loop: from gradients to a trained model](training-loop.html)
-- **Optional perspectives**
-  - [The training objective: guarantees and limits](llm-limits.html)
 - **Review**
   - [Learning path plan and review sheets](review-path.html)
   - [Review — How an LLM works](revision-llm-overview.html)
