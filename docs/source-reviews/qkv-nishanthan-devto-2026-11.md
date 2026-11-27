@@ -35,7 +35,7 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 | Shared input X and learned projections | Low | Low | Reject as a new page edit; the canonical lesson already has equations, dimensions and self-/cross-attention caveats |
 | Score → scale → softmax → aggregation | Low | Low | Reject as a new page edit; retain the full computation in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
 | Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Reject as a new page edit; the Transformer overview and block walkthrough already serve both levels |
-| bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
+| bank ambiguity → pronoun it | Low | High as two distinct context-dependent teaching examples, but their current destinations and provenance differ | No separate Nishanthan-specific page integration is verified: the bank/river example is in the advanced Q/K/V deep dive; the core page's pronoun example is explicitly adapted from Neha KK. Do not attribute the latter to Nishanthan or add a duplicate subsection to contextualized-representations |
 | Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Reject as a new page edit; the Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
 | Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Reject as a new page edit; the attention lesson's equation and numerical example already show weighted Value aggregation |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
@@ -52,7 +52,7 @@ The article's central equations and role distinctions are sound at the introduct
 
 ## 5. Integration decision
 
-**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing is rejected as a new page edit because the current lesson already explains it more precisely; the source is now linked as an optional external visual reference.
+**The historical integration rationale is not supported by the current page files.** The core Q/K/V page contains a pronoun example explicitly adapted from Neha KK; the advanced Q/K/V deep dive contains the bank/river lexical-ambiguity example. The current contextualized-representations pages do not contain the claimed paired examples. No separate Nishanthan-specific page integration is therefore verified. Keep the DEV article as an optional reader-facing visual reference; do not attribute the current Neha example to Nishanthan or add duplicate content.
 
 The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material is rejected as new page content because the project already provides more complete treatments at the appropriate locations.
 
@@ -62,9 +62,7 @@ This is the intended workflow outcome: preserve plausible complementary value du
 
 ## 6. Integration update
 
-The targeted comparison found a real complementarity: the canonical page used lexical ambiguity (bank) but not cross-position pronoun reference. Both language versions now include the it → the animal example. The wording treats it as an illustration of contextual dependency, not evidence that a particular attention head performs coreference resolution. The extraction disposition is updated to integrate.
-
-The article is cited as the pedagogical origin of the example, not as a primary scientific source. The source catalogue records the integration as partial because only the pronoun-reference contribution was integrated; other items were deferred or rejected. The source remains partially scanned because linked materials, embedded assets, publication metadata and reuse rights remain unverified.
+Current destination check (2026-11-27): the article's combined bank/pronoun item is not integrated as a distinct Nishanthan-specific page contribution. The bank example is in the advanced Q/K/V deep dive; the core page's pronoun example is explicitly adapted from Neha KK. The earlier plan to place a Nishanthan pronoun subsection on contextualized-representations is not reflected in the current files. The item disposition is corrected to reject as a new page edit. The article remains a reader-facing visual reference; its other role, projection and computation items are rejected as redundant or retained only as source-level comparisons. The source remains partially scanned because linked materials, embedded assets, publication metadata and reuse rights remain unverified.
 
 ## 7. Follow-up scan reconciliation
 
