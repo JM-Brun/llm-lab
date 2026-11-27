@@ -139,9 +139,9 @@ items:
       tags: [topic:embedding-geometry, method:cosine-similarity, ecosystem:pytorch]
       concept_ids: [token-embedding]
     candidate_destinations:
-      pages: [fr/embedding-space, en/embedding-space, fr/cosine-similarity, en/cosine-similarity]
+      pages: [fr/embeddings-deep-dive, en/embeddings-deep-dive]
     disposition: integrate-by-reference
-    disposition_rationale: "The interactive atlas is a useful optional visual companion to the existing explanation, but its figures/code should not be copied and its quantitative claims should not be treated as independently reproduced."
+    disposition_rationale: "The bilingual embeddings Deepen dossier links to the original Hugging Face Space and to the Embedding Atlas tool in its model-inspection section. This is a by-reference visual destination, not a reproduction of the source's DeepSeek checkpoint, code, graph or quantitative results; those remain unverified and must not be presented as independently reproduced."
     pedagogical_profile:
       learner_question: "What do the learned input vectors of a real LLM look like, and what can their nearest neighbours tell us?"
       explanatory_lens: visual
