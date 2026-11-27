@@ -2,6 +2,19 @@ schema_version: 1
 source_id: aiedge-how-llms-encode-token-position-2026
 
 pedagogical_model:
+  pedagogical_strengths:
+    - "The visible framing compares mechanisms by where they enter the computation, which is an efficient organizing question for learners."
+    - "The indexed introduction explicitly distinguishes positional information from causal visibility."
+  pedagogical_limits:
+    - "The article body, diagrams, examples and complete section sequence could not be inspected; no claim is made about their actual explanatory quality."
+    - "The four-method overview is less comprehensive than the existing collection: the accessible outline does not cover Shaw-style relative key/value representations, T5's bucketed scalar bias, NoPE, partial RoPE or hybrid layers."
+    - "The same overview is already developed in greater technical and visual depth by the Raschka source and the primary-source extractions."
+  comparison:
+    dossier: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Keep as a supplementary, short-form cross-check in the source collection. Do not add a page, concept, computational node, route stage or new diagram. Reconsider only if full-text inspection reveals a distinct explanatory sequence or evidence not already covered."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
   reconstruction:
     status: partial
     basis:
@@ -11,6 +24,7 @@ pedagogical_model:
       - "The four-method comparison is reconstructed from the visible outline; the complete section sequence and examples are unavailable."
     limitations:
       - "Direct article retrieval returned a cache miss; this is not a full-text or figure-level audit."
+      - "The Substack inbox URL with post ID 225953856 is confirmed by the user to be an alternate URL for this same article; it is not a separate source."
       - "No formal source-local graph or complete teaching route can be reconstructed from the available snapshot."
   source_graph:
     nodes:
@@ -78,8 +92,15 @@ items:
       prerequisites: [token embeddings, self-attention, query/key vectors, attention scores]
       distinctive_value: "A concise insertion-point taxonomy suitable for a first comparison."
       limitations: ["The available source snapshot does not support detailed derivations."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The four visible method families and their insertion points are already represented in the positional-encoding collection."}
+      complementarity: {level: moderate, rationale: "It offers an independent short-form framing from token indices to attention scores, but only the indexed outline is available for comparison."}
+      pedagogical_value: {level: moderate, rationale: "The insertion-point framing is useful for orientation; the actual exposition and visuals cannot be assessed without the full article."}
+      applicability: {level: low, rationale: "The bilingual core lesson already has a three-point insertion diagram and a broader comparison; no new project artifact is justified."}
+      redundancy: {level: high, rationale: "Raschka provides a more extensive comparison and the primary-source records establish each mechanism in greater depth."}
+      evidence_quality: {level: moderate, rationale: "The method families and stated framing are visible in indexed text, but equations, examples and full article context were inaccessible."}
     disposition: already-covered
-    disposition_rationale: "The current positional-encoding synthesis already compares these families and their computational insertion points."
+    disposition_rationale: "Retain as a supplementary reference; do not reproduce the already-covered comparison in another lesson."
 
   - id: aiedge-how-llms-encode-token-position-2026:mask-versus-position
     kind: misconception
