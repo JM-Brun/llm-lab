@@ -66,12 +66,12 @@ class LessonDuration:
 
 
 def _remove_excluded_fenced_divs(markdown: str) -> str:
-    """Remove Quarto fenced divs explicitly excluded from reading time.
+    """Strip Quarto fenced-div markup and omit content explicitly excluded from reading time.
 
     Optional callouts can remain available to interested readers without
     being part of the required reading path. The data attribute is the
     semantic contract; collapsed presentation alone does not imply
-    optionality. Track fenced-div depth to support nested callouts.
+    optionality. Opening and closing div markers are markup, not prose.
     """
     output: list[str] = []
     # Each entry stores the opening fence length and whether its contents
@@ -91,15 +91,11 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
                 EXCLUDE_FROM_READING_TIME.search(attributes[1:-1])
             )
             stack.append((fence_length, is_excluded))
-            if not is_excluded:
-                output.append(line)
             continue
 
         if closing and stack and len(closing.group("fence")) >= stack[-1][0]:
             _, is_excluded = stack.pop()
             parent_is_excluded = stack[-1][1] if stack else False
-            if not (is_excluded or parent_is_excluded):
-                output.append(line)
             continue
 
         if stack and stack[-1][1]:
