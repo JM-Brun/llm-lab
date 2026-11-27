@@ -1,6 +1,6 @@
 # Text-data lesson — implementation follow-up and remaining work
 
-**Date:** 2026-11-26  
+**Date:** 2026-11-27 — updated after running-example integration  
 **Scope:** `site/{fr,en}/text-data.qmd`, its revision sheets, Practice links, generated learning-map artifacts, and the tokenization/embedding source corpus.  
 **Related:** [PR #1713](https://github.com/JM-Brun/llm-lab/pull/1713), [issue #1492](https://github.com/JM-Brun/llm-lab/issues/1492), [issue #1319](https://github.com/JM-Brun/llm-lab/issues/1319), [issue #584](https://github.com/JM-Brun/llm-lab/issues/584).
 
@@ -100,7 +100,7 @@ Start with PR #1713 and its latest checks. Do not repeat source ingestion or reb
 The following checks were made against the issue's detailed acceptance list:
 
 **Already present and retained**
-- The GPT-2 running examples and tokenizer-specific IDs remain in the main lessons; the fixed `2 + 2 = 4` comparison remains reproducible.
+- The main tokenization example now uses each language's canonical running-example prefix. The exercise trace prints its exact GPT-2 fragments and IDs, compares `gpt2` and `cl100k_base` on that same input, and reuses its GPT-2 IDs for the synthetic lookup. The unrelated `hello world` and `2 + 2 = 4` examples have been removed from this primary trace.
 - The exercise collection contains the Python tokenizer/embedding trace and the lookup exercise. Two Practice destinations coexist: the page-specific exercise hub is `exercises/text-data.qmd`; the extended collection is `exercises-text-data.qmd`. Use the hub for general Practice navigation and the collection for its trace and lookup anchors.
 - The `data/guided-route.yml` outcome for `text-data` already matches the bilingual objective: follow text to IDs and explain what can vary between tokenizers.
 - The lesson's `revision_support` evidence anchor `revision-summary` is explicitly present in both lesson sources.
@@ -116,3 +116,17 @@ The following checks were made against the issue's detailed acceptance list:
 - [ ] Preserve the external source-comparison decisions in the existing audit trail (#756) where they are not already recorded.
 
 Issue #1492 remains the canonical tracker for these broader lesson-level and shared-navigation tasks. This follow-up does not close them by implication.
+
+## 8. Follow-up — running example as the tokenization input (2026-11-27)
+
+The tokenization lesson and its bilingual practical trace now use the localized running-example prefix as their primary input:
+
+- French: `C'est une bonne situation, ça, scribe ?` (GPT-2: 15 tokens; final token `b" ?"`, ID `5633`).
+- English: `What have the Romans ever done for us?` (GPT-2: 9 tokens; final token `b"?"`, ID `30`).
+
+The trace displays the full ordered token-byte fragments and IDs, so the learner can inspect the actual segmentation. With GPT-2 (`tiktoken==0.14.0`), French `situation` is the single fragment `b' situation'` (ID `3074`), while `scribe` is split into `b' sc'` (`629`) and `b'ribe'` (`4892`). The UTF-8 bytes of `ç` in `ça` are split across `b' \\xc3'` (`6184`) and `b'\\xa7'` (`100`), followed by `b'a'` (`64`). In English, `Romans` is `b' Romans'` (ID `22482`). The full GPT-2 ID sequences are asserted in both source snippets. The trace compares GPT-2 and `cl100k_base` on the exact same local prefix (FR: 15 vs 11 tokens; EN: 9 vs 9), then uses the GPT-2 IDs to index a synthetic embedding table. The vectors remain explicitly illustrative; no pretrained GPT-2 weights are claimed.
+
+The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context. The existing CI checker now validates the localized prefix and expected GPT-2 boundary for each language, compares normalized executable structure rather than requiring identical text literals, and executes both snippets with the pinned tokenizer.
+
+This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. The leading-space contrast in the Deepen page now uses `situation` / ` situation`; other specialist inputs remain where they test distinct behavior (case, morphology, Unicode normalization, numerals, scripts, code and emoji).
+

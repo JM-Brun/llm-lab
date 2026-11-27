@@ -66,7 +66,13 @@ The initial lookup is not the whole network input: the architecture must also ha
 
 In the running example, “What have the Romans ever done for us?” is already in the context. As “They built roads between distant towns.” is generated, each new token is processed against the context available at that step, which grows throughout the loop.
 
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
+<figure id="fig-contextualized-embeddings">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/contextualized-embeddings-en-mobile.svg">
+    <img src="../images/contextualized-embeddings-en.svg" alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ.</figcaption>
+</figure>
 
 This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
 
@@ -150,12 +156,8 @@ Comparing these objects prepares you to read the Transformer. In the computation
 :::
 ::::
 
-::: {.callout-note collapse="true" title="From text to hidden states in one diagram"}
-
-![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
-
-This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
-
+::: {.callout-note title="Another pedagogical perspective"}
+For a complementary overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 :::
 
 ::: {.callout-note title="Where do Q/K/V fit?"}

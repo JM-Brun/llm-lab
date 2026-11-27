@@ -40,28 +40,24 @@ Un **tokenizer** découpe le texte en unités appelées **tokens**. Un token n'e
 ::: {#tokenizer-output}
 Préfixe exact à copier (apostrophe droite `'`, U+0027, et non apostrophe typographique `’`, U+2019) : Les deux caractères ne s’encodent pas avec les mêmes octets en UTF-8 et le découpage peut s’en trouver modifié. `C'est une bonne situation, ça, scribe ?`. Le tokenizer GPT-2 produit 15 tokens. Le dernier contient **l’espace et le point d’interrogation** (`" ?"`) et son ID est `5633`.
 
-Sur le texte plus court `hello world`, on peut suivre la séquence entière. Les guillemets délimitent le contenu de chaque token.
+Le tokenizer GPT-2 montre immédiatement pourquoi il est utile de garder cet exemple. Dans ce préfixe précis, `situation` forme un token, tandis que `scribe` est découpé en deux. Les fragments incluent parfois l'espace qui précède le mot :
 
-| Token | ID GPT-2 |
-|---|---:|
-| `"hello"` | `31373` |
-| `" world"` | `995` |
+| Mot visible dans le préfixe | Fragments exacts GPT-2 | IDs |
+|---|---|---:|
+| `situation` | `" situation"` | `3074` |
+| `scribe` | `" sc"` · `"ribe"` | `629, 4892` |
+| `ça` | `b' \\xc3'` · `b'\\xa7'` · `b'a'` | `6184, 100, 64` |
 
-L'espace devant `world` fait partie du deuxième token. Dans les deux exemples, les espaces et la ponctuation comptent dans le découpage. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les IDs, affiche la décomposition complète des deux préfixes et illustre la lecture de la table avec des vecteurs synthétiques.
+Le dernier cas montre que le caractère `ç`, encodé sur plusieurs octets en UTF-8, peut lui-même être réparti entre plusieurs tokens. Les frontières des tokens ne sont donc ni celles des mots ni nécessairement celles des caractères Unicode. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) affiche la décomposition complète, dans l'ordre, et vérifie les IDs avec `tiktoken==0.14.0`.
+
+La continuation « Vous savez, moi je ne crois pas… » n'appartient pas encore au prompt : elle sera encodée au fur et à mesure qu'elle sera générée et ajoutée au contexte.
 :::
 
 Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer différent. Même si deux tokenizers reconnaissent le même fragment, ils peuvent lui attribuer des numéros différents. Utilisez le tokenizer associé aux poids du modèle pour que chaque ID sélectionne la ligne de plongement prévue.
 
 <span id="comparaison-de-deux-tokenizers"></span>
 
-Comparons deux encodages du **même texte exact**, `2 + 2 = 4`, avec `tiktoken==0.14.0`. Le symbole `␠` rend visibles les espaces qui appartiennent aux fragments :
-
-| Encodage | Fragments de tokens | IDs | Total |
-|---|---|---|---:|
-| `gpt2` | `2` · `␠+` · `␠2` · `␠=` · `␠4` | `17, 1343, 362, 796, 604` | **5** |
-| `cl100k_base` | `2` · `␠+` · `␠` · `2` · `␠=` · `␠` · `4` | `17, 489, 220, 17, 284, 220, 19` | **7** |
-
-Les deux séquences se décodent en `2 + 2 = 4`. Les IDs sont propres à chaque vocabulaire : ils ne sont pas comparables numériquement entre encodages. Ce contraste montre un effet sur la longueur de représentation, pas une différence de qualité linguistique. La [trace reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les fragments, les IDs et le décodage complet.
+Pour comparer deux tokenizers sans changer de matériau pédagogique, la trace encode **le même préfixe du fil rouge** avec `gpt2` et `cl100k_base`. Elle affiche pour chacun les fragments exacts, les IDs, le nombre de tokens et le texte reconstruit. Les frontières et les IDs peuvent différer, mais les deux séquences doivent se décoder vers le même préfixe. Les IDs restent locaux à leur vocabulaire : leurs valeurs numériques ne sont pas comparables entre tokenizers. Cette comparaison est reproductible avec `tiktoken==0.14.0` dans la [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace).
 
 ### Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?
 

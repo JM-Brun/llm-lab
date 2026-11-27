@@ -69,7 +69,13 @@ Une précision : un mot visible ne correspond pas nécessairement à un seul tok
 
 Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux emplois de situation, l'un au sens de poste et l'autre au sens de circonstances, sont alignés à une même position simplifiée. Sous l'hypothèse d'un ID commun, le lookup initial est identique ; les contextes diffèrent et les états cachés peuvent différer." fig-cap="Même ID et position simplifiée identique : le lookup initial est le même. Les contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
+<figure id="fig-contextualized-embeddings">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/contextualized-embeddings-fr-mobile.svg">
+    <img src="../images/contextualized-embeddings-fr.svg" alt="Deux emplois de situation, l’un au sens de poste et l’autre au sens de circonstances, sont alignés à une même position simplifiée. Sous l’hypothèse d’un ID commun, le lookup initial est identique ; les contextes diffèrent et les états cachés peuvent différer." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Même ID et position simplifiée identique : le lookup initial est le même. Les contextes accessibles diffèrent ; les états cachés peuvent donc différer.</figcaption>
+</figure>
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
@@ -162,12 +168,8 @@ Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcu
 :::
 ::::
 
-::: {.callout-note collapse="true" title="Du texte aux états cachés en un schéma"}
-
-![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
-
-Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
-
+::: {.callout-note title="Autre présentation pédagogique"}
+Pour une présentation complémentaire du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 :::
 
 ::: {.callout-note title="Où se situent Q/K/V ?"}

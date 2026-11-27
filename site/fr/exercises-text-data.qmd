@@ -200,7 +200,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 #### Trace pratique facultative — du texte aux vecteurs {#tokenizer-embedding-trace}
 
-Cette trace complète l'exercice sur le lookup avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
+Cette trace complète l'exercice sur le lookup avec le préfixe français du fil rouge, un tokenizer réel et une table d'embeddings synthétique. Elle affiche le découpage de la phrase entière — notamment les fragments autour de « situation » et « scribe » — puis compare deux tokenizers sur exactement le même texte. Elle suit les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
 
 Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
 
@@ -208,72 +208,54 @@ Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy
 import numpy as np
 import tiktoken
 
-text = "hello world"
-utf8_bytes = text.encode("utf-8")
+# Préfixe exact du fil rouge français : conserver l'apostrophe droite U+0027.
+prefix = "C'est une bonne situation, ça, scribe ?"
 encoding = tiktoken.get_encoding("gpt2")
-token_ids = encoding.encode(text)
+token_ids = encoding.encode(prefix)
 token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
-token_strings = [part.decode("utf-8") for part in token_bytes]
 
-assert utf8_bytes == b"hello world"
-assert token_ids == [31373, 995]
-assert token_strings == ["hello", " world"]
-assert encoding.decode(token_ids) == text
+assert encoding.decode(token_ids) == prefix
+assert token_ids == [34, 6, 395, 17809, 5351, 710, 3074, 11, 6184, 100, 64, 11, 629, 4892, 5633]
+assert token_bytes[-1] == b" ?"
 
-# Dernier token des préfixes des leçons anglaise et française.
-prefix_cases = (
-    ("What have the Romans ever done for us?", 9, 30, b"?"),
-    ("C'est une bonne situation, ça, scribe ?", 15, 5633, b" ?"),
-)
-for prefix, expected_count, expected_id, expected_bytes in prefix_cases:
-    prefix_ids = encoding.encode(prefix)
-    assert len(prefix_ids) == expected_count
-    assert encoding.decode(prefix_ids) == prefix
-    assert prefix_ids[-1] == expected_id
-    assert encoding.decode_single_token_bytes(prefix_ids[-1]) == expected_bytes
+print("Préfixe français — fragments exacts et IDs GPT-2 :")
+for fragment, token_id in zip(token_bytes, token_ids):
+    # Les fragments sont affichés comme octets : un token peut couper
+    # au milieu de la représentation UTF-8 d'un caractère accentué.
+    print(f"  {fragment!r} -> {token_id}")
 
-
-# Décomposition complète du préfixe français, à comparer au tableau de la leçon.
-fr_prefix_ids = encoding.encode("C'est une bonne situation, ça, scribe ?")
-fr_fragments = [encoding.decode_single_token_bytes(i) for i in fr_prefix_ids]
-assert encoding.decode(fr_prefix_ids) == "C'est une bonne situation, ça, scribe ?"
-assert len(fr_prefix_ids) == 15
-assert fr_fragments[-1] == b" ?"
-print("French prefix:")
-for fragment, fragment_id in zip(fr_fragments, fr_prefix_ids):
-    print(f"  {fragment!r} -> {fragment_id}")
-
-# Comparaison à entrée fixe : certains tokens contiennent ici uniquement un espace.
-fixed_text = "2 + 2 = 4"
-comparisons = (
-    ("gpt2", [17, 1343, 362, 796, 604], [b"2", b" +", b" 2", b" =", b" 4"]),
-    (
-        "cl100k_base",
-        [17, 489, 220, 17, 284, 220, 19],
-        [b"2", b" +", b" ", b"2", b" =", b" ", b"4"],
-    ),
-)
-for name, expected_ids, expected_fragments in comparisons:
+# Comparaison contrôlée : même texte, deux vocabulaires différents.
+for name in ("gpt2", "cl100k_base"):
     tokenizer = tiktoken.get_encoding(name)
-    ids = tokenizer.encode(fixed_text)
-    assert ids == expected_ids
-    assert [tokenizer.decode_single_token_bytes(i) for i in ids] == expected_fragments
-    assert tokenizer.decode(ids) == fixed_text
+    ids = tokenizer.encode(prefix)
+    fragments = [tokenizer.decode_single_token_bytes(i) for i in ids]
+    assert tokenizer.decode(ids) == prefix
+    print(f"\n{name}: {len(ids)} tokens")
+    for fragment, token_id in zip(fragments, ids):
+        print(f"  {fragment!r} -> {token_id}")
+    print("  decoded:", tokenizer.decode(ids))
 
 # Table synthétique : GPT-2 réel utilise d'autres dimensions et poids appris.
+# Les vecteurs ci-dessous sont arbitraires ; seuls les IDs viennent du tokenizer.
 vocab_size, d = 50_257, 2
 E = np.zeros((vocab_size, d), dtype=np.float32)
-E[31373] = [0.1, 0.2]
-E[995] = [-0.3, 0.4]
+for row, token_id in enumerate(dict.fromkeys(token_ids), start=1):
+    E[token_id] = [0.1 * row, -0.2 * row]
+
 X = E[token_ids]
-assert X.shape == (2, 2)
-assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+assert X.shape == (15, 2)
+
+# Deux occurrences d'un même ID sélectionnent bien le même vecteur initial.
+for i, token_id in enumerate(token_ids):
+    for j, other_id in enumerate(token_ids):
+        if token_id == other_id:
+            assert np.array_equal(X[i], X[j])
 
 # Vecteurs positionnels illustratifs, pas les paramètres réels de GPT-2.
-P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+positions = np.arange(len(token_ids), dtype=np.float32)
+P = np.column_stack((0.01 * positions, 0.02 * positions))
 Z = X + P
-assert Z.shape == (2, 2)
-assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+assert Z.shape == (15, 2)
 ```
 
 À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir l'exercice sur les fusions BPE.
@@ -291,7 +273,7 @@ from transformers import AutoTokenizer
 model_id = "gpt2"
 revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
 tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
-text = " Hello world — café"
+text = "C'est une bonne situation, ça, scribe ?"
 
 ids = tokenizer.encode(text, add_special_tokens=False)
 tokens = tokenizer.convert_ids_to_tokens(ids)
