@@ -59,9 +59,9 @@ The gradient describes a local change. A step that is too large can leave the re
 
 Keep the prefix and the observed token $A$ fixed. In this toy model, the logits are $z=u+b$, where $u$ is fixed and only the output bias $b$ is trainable. Two settings of $b$ give the following distributions over $(A,B,C)$.
 
-$
+$$
 p=(1/2,\;1/4,\;1/4),\qquad q=(1/2,\;3/8,\;1/8).
-$
+$$
 
 1. Calculate the log-likelihood of $A$ and the [loss for this target](../cross-entropy.qmd) in both cases. This is the only target included.
 2. With the one-hot target $y=(1,0,0)$, calculate the gradient of the loss with respect to the bias. The addition $z=u+b$ passes each logit derivative to the corresponding bias.
@@ -89,10 +89,10 @@ Take the [output matrix from the logits example](../logits.qmd#running-example-o
 
 The weight gradient is the outer product $g_z h^\top$. The new weights are $W'=W-\eta g_z h^\top$. For the same state, the updated score vector is:
 
-$
+$$
 z'=W'h=z-\eta\lVert h\rVert^2 g_z
 =(\ln 6+0.08,\ \ln 2-0.04,\ -0.02,\ -0.02).
-$
+$$
 
 The score for “They” rises by $0.08$. A fresh softmax gives $p'(\text{They})\approx0.626$, up from $0.600$ before the update. This calculation shows the effect on **the target used in this step**.
 
