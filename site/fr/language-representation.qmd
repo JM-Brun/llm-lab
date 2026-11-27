@@ -82,7 +82,7 @@ Un vecteur est une liste ordonnée de nombres réels. Contrairement à un identi
 
 On peut se représenter chaque unité du vocabulaire comme un point dans un espace à plusieurs dimensions. Au départ, ces coordonnées ne constituent pas une définition du mot. Elles sont apprises : pendant l'entraînement, le modèle ajuste ses représentations et les autres paramètres pour améliorer ses prédictions.
 
-Si $E$ désigne la matrice d'embeddings, de taille $|V| \times d$ (taille du vocabulaire par dimension des vecteurs), l'ID $i$ sélectionne la ligne correspondante : $\\mathbf{e}_i = E[i, :]$. L'ID sert donc à adresser une ligne ; ce sont les valeurs de cette ligne qui forment le vecteur utilisé par le réseau.
+Si $E$ désigne la matrice d'embeddings, de taille $|V| \times d$ (taille du vocabulaire par dimension des vecteurs), l'ID $i$ sélectionne la ligne correspondante : $\mathbf{e}_i = E[i, :]$. L'ID sert donc à adresser une ligne ; ce sont les valeurs de cette ligne qui forment le vecteur utilisé par le réseau.
 
 La fonction de perte fournit ensuite un signal d'apprentissage : par rétropropagation, les gradients peuvent modifier cette ligne de la matrice d'embeddings ainsi que les autres paramètres du réseau. **Les IDs entiers ne sont pas ajustés** : ils restent les indices discrets du vocabulaire.
 
