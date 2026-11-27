@@ -376,3 +376,22 @@ The P1 review also found:
 The remaining P1 set is not a promise that all items should be executed concurrently. Several are conditional/gated: #78/#656 (private prerequisite review before G8 implementation), #220 (independent subject-matter review before learner pilot), #1513 (pilot evidence before scaling the calendar), and #1541/#988 (manual rendered/accessibility evidence before closure).
 
 No milestones or assignees were added: the repository's available milestone taxonomy and project-owner assignment policy were not sufficiently established by this review. Do not invent milestones or assign the user automatically.
+
+
+### Priority and PR snapshot — 2026-11-27 20:04 UTC
+
+After the priority reconciliation and classification of newly created work, the partitioned open-issue search returns **104 open issues**: **17 P1**, **81 P2**, and **6 P3**. The four creation windows used for the inventory are disjoint (before October; October; 1–26 November; 27 November). The direct no-label search now returns zero issues. P3 issues are intentionally not folded into the P1/P2 counts.
+
+Newly classified work:
+- #1773 is P1 / architecture / audit because it documents concrete contradictions in canonical paths and skill contracts that can misroute future work.
+- #1653 is P1 / pedagogy / documentation as the active Day 01 editorial slice.
+- #1664 and #1666–#1689 are P2 / pedagogy / documentation (with #1664 also an audit): the story collection is coordinated as a portfolio, while page-specific work remains individually owned.
+- #1732, #1739, #1761 and #1768 are P2 pending their bounded audits/ingestion checks; they are important but not all immediate parallel work.
+- #1633 and #1637 are P2; #1637's first latency improvement PR #1636 is merged, while comparable timing/profile evidence remains.
+
+At this snapshot, three PRs are open and mergeable:
+- #1771 — this backlog reconciliation.
+- #1772 — Otis running example in the bilingual language-representation lesson.
+- #1774 — first implementation slice for #1773's workflow/skill contract audit.
+
+The workflow-run lookup returned no PR-triggered runs for these branch heads at the time of this check. Do not describe their CI as green; verify checks on GitHub before merging. The open-PR inventory is time-sensitive and must be refreshed before a later handoff.
