@@ -16,6 +16,8 @@ HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 INCLUDE_LINE = re.compile(r"^\s*\{\{<\s*include\b.*?>\}\}\s*$", re.MULTILINE)
 FENCED_DIV_OPEN = re.compile(r"^\s*(?P<fence>:{3,})\s+(?P<attrs>\{.*\})\s*$")
 FENCED_DIV_CLOSE = re.compile(r"^\s*(?P<fence>:{3,})\s*$")
+CODE_FENCE_OPEN = re.compile(r"^\s*(?P<fence>`{3,}|~{3,})")
+CODE_FENCE_CLOSE = re.compile(r"^\s*(?P<fence>`{3,}|~{3,})\s*$")
 EXCLUDE_FROM_READING_TIME = re.compile(
     r"""(?:^|\s)data-reading-time\s*=\s*(?:"exclude"|'exclude'|exclude)(?=\s|$)""",
     re.IGNORECASE,
@@ -66,20 +68,43 @@ class LessonDuration:
 
 
 def _remove_excluded_fenced_divs(markdown: str) -> str:
-    """Strip Quarto fenced-div markup and omit content explicitly excluded from reading time.
+    """Strip Quarto fenced-div markup and omit explicitly excluded content.
 
     Optional callouts can remain available to interested readers without
     being part of the required reading path. The data attribute is the
     semantic contract; collapsed presentation alone does not imply
-    optionality. Opening and closing div markers are markup, not prose.
+    optionality. Code fences are tracked so examples containing div syntax
+    are not mistaken for real Quarto callouts.
     """
     output: list[str] = []
     # Each entry stores the opening fence length and whether its contents
     # should be omitted (inherited from an excluded parent or local to it).
     stack: list[tuple[int, bool]] = []
+    code_fence: tuple[str, int] | None = None
 
     for line in markdown.splitlines(keepends=True):
         line_without_newline = line.rstrip("\r\n")
+
+        if code_fence is not None:
+            closing_code = CODE_FENCE_CLOSE.match(line_without_newline)
+            if (
+                closing_code
+                and closing_code.group("fence")[0] == code_fence[0]
+                and len(closing_code.group("fence")) >= code_fence[1]
+            ):
+                code_fence = None
+            if not (stack and stack[-1][1]):
+                output.append(line)
+            continue
+
+        opening_code = CODE_FENCE_OPEN.match(line_without_newline)
+        if opening_code:
+            fence = opening_code.group("fence")
+            code_fence = (fence[0], len(fence))
+            if not (stack and stack[-1][1]):
+                output.append(line)
+            continue
+
         opening = FENCED_DIV_OPEN.match(line_without_newline)
         closing = FENCED_DIV_CLOSE.match(line_without_newline)
 
@@ -105,13 +130,13 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
     return "".join(output)
 
 
+
 def _main_lesson(markdown: str) -> str:
     """Remove metadata and content explicitly outside the main learning lesson."""
     text = FRONT_MATTER.sub("", markdown, count=1)
     text = HTML_COMMENT.sub("", text)
     text = INCLUDE_LINE.sub("", text)
     text = END_OF_CORE.split(text, maxsplit=1)[0]
-    text = FENCED_BLOCK.sub("", text)
     text = _remove_excluded_fenced_divs(text)
     return text
 
