@@ -72,7 +72,13 @@ To work out the rows and vectors by hand, distinguish the GPT-2 prefix output fr
 
 In the following [first-block-input exercise](exercises/text-data.qmd#ex-token-to-block-input), the toy vector for row 17 is fixed at $(2,-1)$ so that both occurrences of `cat` can be traced into the positional step. This value is illustrative; it is not a row extracted from the real GPT-2 weights. Both occurrences retrieve exactly the same vector because they use the same ID and the same table. The vectors in rows 42 and 8 remain symbolic here; the exercise lets us reason about their order without inventing their values.
 
-![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
+<figure id="fig-embedding-lookup">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/embedding-lookup-en-mobile.svg">
+    <img src="../images/embedding-lookup-en.svg" alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." style="width:100%;height:auto">
+  </picture>
+  <figcaption>The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space.</figcaption>
+</figure>
 
 | Object | What it denotes | Role |
 |---|---|---|
