@@ -70,7 +70,7 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
   <figcaption>Two paths meet: Q and K determine the weights, while V supplies the aggregated content. Raw scores, normalized weights, and the output are distinct objects; allowed weights sum to 1 in each non-empty row.</figcaption>
 </figure>
 
-## Five computation steps {#five-computation-steps}
+## Five computation steps {#five-computation-steps} {#five-computation-steps}
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$, where $T$ is the sequence length.
 
@@ -129,7 +129,7 @@ Follow the final position of the prefix. Its input state supplies the query for 
 
 <script src="../scripts/attention-intervention.js" defer></script>
 
-## Provenance and purpose
+## Provenance and purpose {#provenance-and-purpose}
 
 The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.
 
