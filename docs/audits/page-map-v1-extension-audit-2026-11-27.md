@@ -109,6 +109,18 @@ Le point d'injection exact dans le rendu Quarto reste à décider après inspect
 - les pages d'exercices et d'approfondissement ne récupèrent pas par erreur la durée du tronc principal ;
 - les artefacts générés restent déterministes et à jour.
 
+## Follow-up implementation — PR #1759
+
+The validation gap identified above is addressed in the follow-up implementation:
+
+- `summary` remains optional; absence is accepted.
+- When present, it must be a non-empty string. Null, booleans, numbers, collections, empty strings and whitespace-only strings are rejected.
+- The shared published-page index and the full PAGE-MAP validator use the same validation helper.
+- The learning-map projection no longer coerces the value with `str()`.
+- Tests cover absent, valid and invalid values through both consumers.
+
+The implementation preserves PAGE-MAP v1 and the existing `summary || purpose` discovery fallback. PR #1759 carries the code, tests and schema wording; CI is in progress at the time of this update.
+
 ## 8. Conclusion et travail restant
 
 **Choix technique validé : extension additive facultative de PAGE-MAP v1, sans changement de marqueur.**
