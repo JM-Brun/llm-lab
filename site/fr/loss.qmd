@@ -97,7 +97,7 @@ La somme, environ $1{,}427$ nats, est la NLL de la séquence calculée dans [Vra
 
 La moyenne résume les trois pénalités. Pour voir comment une cible contribue au gradient, [isolez la première, « Vous »](gradients.qmd#exemple-numérique-de-la-loss-aux-poids-de-sortie), et suivez sa perte jusqu’aux logits.
 
-::: {.callout-note collapse="true" title="Autres réductions et pondération"}
+::: {.callout-note collapse="true" data-reading-time="exclude" title="Autres réductions et pondération"}
 La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
 :::
 
@@ -121,6 +121,8 @@ Le *teacher forcing* ne doit pas être confondu avec le *prefill*. Le prefill tr
 
 Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
 
+Une erreur d'alignement d'un seul token peut produire une loss finie et décroissante tout en entraînant la mauvaise tâche.
+
 [Exercice corrigé sur le décalage, la visibilité et le dénominateur de la perte](exercises/loss.qmd#ex-visible-token-masked-target).
 
 ## Loss d'entraînement et métriques
@@ -139,7 +141,7 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 - **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
 :::
 
-::: {.callout-note collapse="true" title="Diagnostic de pipeline (approfondissement)"}
+::: {.callout-note collapse="true" data-reading-time="exclude" title="Diagnostic de pipeline (approfondissement)"}
 Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
 :::
 
