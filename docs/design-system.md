@@ -45,6 +45,73 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 - In diagrams, define a stable legend. Green may identify the main data path, but tokens, tensor axes, masks, parameters, and outputs must not be distinguished by colour alone.
 - Amber, blue, and violet are reserved for semantic or data-specific distinctions, not competing brand identities.
 
+## Semantic colour layers for computation and data
+
+The visual system distinguishes two independent questions:
+
+- **Computational role:** what operation is being performed (generation, observed-target scoring, evaluation, or training)?
+- **Data representation:** what kind of object is being manipulated (text, token, token ID, embedding, hidden state, logit, probability, etc.)?
+
+These dimensions must never be collapsed into one colour taxonomy. An embedding remains an embedding during inference, scoring, and training. Conversely, a training operation may consume token IDs, hidden states, logits, and target labels; it is not represented by one data-type colour.
+
+### Computational roles: a deliberately limited vocabulary
+
+For diagrams whose instructional purpose is to compare the three uses of the shared prediction mechanism, the candidate mapping is:
+
+| Role | Candidate visual accent | Meaning |
+|---|---|---|
+| Generation / inference | Green | Decode/select a token and feed it back into the context; model parameters remain fixed |
+| Observed-target scoring / evaluation | Blue | Evaluate the probability or log-probability assigned to an observed target; no parameter update |
+| Training | Violet | Derive an objective, gradients, and parameter updates |
+
+This mapping is a **scoped proposal, not yet a site-wide implementation contract**. Before adoption, reconcile it with existing meanings in this design system: green is the brand and main information-flow colour; violet currently identifies explicit learning-stage transitions. Do not let training and stage-transition violet become indistinguishable. Either revise the stage-transition treatment to a neutral dashed connector, or keep the three-way comparison labelled and use a different, validated visual encoding. Do not silently reuse one colour for unrelated meanings.
+
+The shared computational trunk (context, forward pass, logits, softmax and conditional distribution) remains neutral. The three branches receive an accent only after the distribution, where their operational purposes diverge. Keep explicit labels; do not colour every operation or every page. Likelihood, loss, gradients and parameter updates are not part of ordinary generation.
+
+### Data representations: shape and notation before colour
+
+Do **not** assign a unique hue to every representation. The text → tokens → token IDs → embeddings → contextualized hidden states progression is better taught through changes in form, notation and explicit labels:
+
+| Representation | Preferred visual encoding | Important distinction |
+|---|---|---|
+| Text | Neutral text/string container | Human-readable source content |
+| Tokens | Preserve the text, but segment it into visibly bounded spans | Token boundaries are tokenizer-dependent; a token is not necessarily a word or character |
+| Token IDs | Compact integer labels in a monospace or numeric style, aligned one-to-one with the displayed tokens | IDs are vocabulary indices, not semantic coordinates or embeddings |
+| Embeddings | Vector/matrix notation, visible dimensions and (when useful) a compact vector-cell depiction; one restrained shared data accent at most | Learned dense numerical vectors obtained through an embedding lookup |
+| Contextualized hidden states | Reuse the vector/matrix visual grammar, with a clear contextualization/layer marker | Representations transformed by the Transformer; not the original token embeddings |
+| Logits and probabilities | Keep distinct mathematical labels and scales; show logits as unconstrained scores and probabilities as normalized values | Do not imply that logits are probabilities |
+
+The same representation should retain the same visual form wherever it appears. A token ID must not change colour because it is used as a target; a vector must not change its data-type encoding because it is processed by an attention block.
+
+Use colour only when it adds a real discrimination that shape and notation cannot provide. In most prose pages, show these distinctions inline through typography, delimiters, labels and equations; reserve coloured data objects for diagrams where readers must track a representation across multiple transformations. Do not add a legend to a page when only one representation is present.
+
+### Composing the two dimensions
+
+When a diagram needs to show both an operation and the data it manipulates:
+
+- Encode **data identity** through shape, notation, labels and (only if necessary) a restrained representation accent.
+- Encode **operation identity** through the branch treatment and its explicit label.
+- Keep arrows neutral unless their direction or role is itself the instructional focus.
+- Never make a data object's fill inherit the colour of the operation currently processing it.
+- Avoid stacking multiple saturated fills, badges and outlines on the same node. Prefer one accent plus a clear label.
+- Provide a textual explanation or legend; colour is never the only carrier of meaning.
+
+For example, a blue scoring branch may consume a neutral token-ID target and compare it with a probability selected from the model's output distribution. The target remains a token ID; blue identifies the scoring operation, not the target's data type.
+
+### Application and restraint
+
+Apply this grammar selectively, not as a mass restyling exercise:
+
+1. Introduce the representation sequence in the tokenization/embedding lesson, where the learner needs to understand the successive changes of representation.
+2. Reuse it in the embedding and Transformer lessons only when tracking the same object across operations improves comprehension.
+3. Use the computational-role accents in the shared prediction overview and dedicated generation, scoring and training explanations, after resolving the violet stage-transition collision.
+4. Do not add colour keys to the learning map, every lesson header, code listings, or concept cards merely for consistency.
+5. Prefer the existing design tokens and reusable diagram classes. Do not scatter literal hex values through lesson content.
+
+### Acceptance criteria
+
+A visual change is justified only if it improves at least one of these tasks: identifying the current representation, following a transformation, distinguishing an operation from its input/output data, or comparing the three operational branches. Review each candidate in French and English, on light and dark themes, at desktop and narrow-mobile widths, and in grayscale or a colour-vision simulation. Keep labels, mathematical notation, shapes and line styles sufficient to recover the meaning without colour.
+
 ## 3. Typography and layout
 
 - Use a readable sans-serif for prose and a monospace face for code, identifiers, and compact technical metadata.
