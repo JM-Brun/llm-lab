@@ -9,7 +9,7 @@ description: Orchestrate the two-phase workflow that turns external sources into
 
 Coordinate two distinct phases with an explicit, persistent hand-off:
 
-1. **Extraction** — inspect external sources and record their useful content as structured, evidence-linked data. Do not edit pedagogical pages or mutate the canonical knowledge graph.
+1. **Extraction** — inspect external sources and record their useful content as structured, evidence-linked data. Do not edit pedagogical pages or mutate canonical knowledge or computational graphs.
 2. **Integration** — review validated extraction records, decide what belongs in the knowledge graph and learning experience, then update canonical data, pages, assets, experiments, references, and navigation as justified.
 
 The phases may run in separate sessions and PRs. Extraction is a durable research result, not a promise that every item will be published. Integration is a deliberate graph/editorial decision, not a mechanical copy of extraction notes.\n\nFor cross-cutting requests that combine source intake, new knowledge, page creation and graph connections, use the [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) to coordinate scope and ownership. This skill remains the specialist orchestrator for the two source-specific phases; it does not replace the [new-learning-page](../new-learning-page/SKILL.md) page-necessity procedure.
