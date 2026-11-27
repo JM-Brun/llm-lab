@@ -135,8 +135,9 @@ Pour ICL — première réconciliation bibliographique effectuée le 2026-11-27 
 - six notices canoniques ont été ajoutées à `data/sources.yml` : Brown, Olsson, Xie, Min, Yoo et Xiang ;
 - les six notices sont reliées aux pages FR/EN et aux concepts existants pertinents ;
 - les liens bibliographiques des quatre références initiales pointent désormais vers les versions publiées ; Yoo et Xiang figurent dans une section d'approfondissement bilingue ;
-- les six sources restent `partially-scanned` et `deferred` : la vérification des métadonnées et abstracts ne vaut pas lecture complète ni intégration claim-level ;
-- les articles Min/Yoo ont fait l'objet d'une lecture ciblée, de deux extractions atomiques et d'une intégration nuancée dans les pages FR/EN ; les limites de preuve d'Olsson et le cadre théorique de Xie restent à vérifier par lecture ciblée ;
+- les six sources restent `partially-scanned` ; Min, Yoo, Olsson et Xie sont `partially-integrated` après revue ciblée et ajout de contenu FR/EN, tandis que Brown reste différé au-delà de sa référence bibliographique et Xiang reste une ressource d'approfondissement ;
+- quatre extractions atomiques evidence-linked ont été créées pour Min, Yoo, Olsson et Xie ; elles conservent les localisateurs, niveaux de confiance et limites de portée ;
+- les pages distinguent maintenant les quatre composantes d'une démonstration, la sensibilité contextuelle à la correction des labels, le cadre bayésien HMM de Xie et les niveaux de preuve des induction heads selon la taille/architecture des modèles ;
 - Xiang reste une ressource facultative d'approfondissement sur la sensibilité à l'ordre des démonstrations.
 
 Ne pas confondre l'association `related.pages` avec l'intégration effective d'un résultat dans le contenu pédagogique. Le détail de cette passe est documenté dans `docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md`.
@@ -178,9 +179,8 @@ Les tests doivent couvrir au minimum : exclusion des pages optionnelles, dédupl
 | Priorité | Action | Critère d'acceptation |
 |---|---|---|
 | P0 | Réconciliation bibliographique ICL (Brown, Olsson, Xie, Min, Yoo, Xiang) | Notices canoniques et liaisons bilingues créées ; PR #1756 en revue ; validation CI encore attendue |
-| P0 | Lecture ciblée Min/Yoo | Sections principales et figures pertinentes relues ; extractions créées ; synthèse comparative intégrée en FR/EN ; annexes non exhaustivement auditées |
-| P1 | Lecture ciblée d'Olsson et Xie | Niveau de preuve mécaniste et portée du cadre bayésien explicités sans généralisation abusive |
-| P1 | Vérifier l'intégration Min/Yoo après revue | Contraste scientifique équilibré, limites et conditions expérimentales conservées dans les deux langues |
+| P0 | Lecture ciblée de Min, Yoo, Olsson et Xie | Sections pertinentes relues ; quatre extractions créées ; synthèses intégrées en FR/EN ; annexes non exhaustivement auditées |
+| P1 | Vérifier l'équilibre éditorial ICL après intégration | Les résultats empiriques, le cadre théorique et les hypothèses mécanistes restent clairement séparés et correctement nuancés |
 | P1 | Conserver Xiang en approfondissement | Ressource bilingue ajoutée ; approfondissement claim-level après lecture du protocole |
 | P1 | Réexaminer Jay Alammar pour Logits | Décision d'intégration explicite, liaison aux concepts et pages si retenue |
 | P2 | Étendre le rapport de couverture | Classements sources / références / longueur reproductibles depuis le parcours principal |
@@ -191,7 +191,7 @@ Les tests doivent couvrir au minimum : exclusion des pages optionnelles, dédupl
 - Les nombres de mots sont des estimations issues d'un comptage heuristique et doivent être recalculés par un outil versionné avant toute comparaison future.
 - Le nombre de sources du catalogue mesure la traçabilité documentaire, pas la qualité d'une page.
 - L'inspection des articles et les résultats empiriques cités ne permettent pas de généraliser au-delà des tâches, modèles et protocoles étudiés par les auteurs.
-- Aucune modification de page, de registre de sources, de concept ou de graphe n'est incluse dans ce document.
+- L'audit initial était documentaire ; les modifications de catalogue, extractions et pages issues des travaux de suivi sont portées par la PR #1756. Aucun nouveau concept canonique ni nouvelle relation de graphe n'a été créé.
 - La vérification des licences et des droits de réutilisation des figures doit être effectuée séparément avant toute reprise d'illustration.
 
 ## 7. Sources de l'audit
