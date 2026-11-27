@@ -236,7 +236,7 @@ This project reuses the progression as a **case study**, while qualifying severa
 LLM Lab provides a NumPy helper that requires no model download: [inspect a tiny embedding table in the bilingual exercise](exercises/embedding-space.qmd). It retrieves rows directly by ID and computes a deterministic cosine top-k. It does not claim to reproduce the source checkpoint or interactive atlas.
 
 
-### Explore an embedding dataset with Embedding Atlas
+### Explore an embedding dataset with Embedding Atlas {#explore-embedding-atlas}
 
 [Embedding Atlas](https://apple.github.io/embedding-atlas/) supports exploration of large embedding projections, nearest-neighbour search, cluster inspection, and cross-filtering between geometry and metadata. It can also act as a tabular dashboard; it does not create semantic relevance in the vectors by itself.
 
