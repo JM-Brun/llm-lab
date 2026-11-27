@@ -1,6 +1,6 @@
 # Test and CI performance — remaining work
 
-**Status:** active optimization track; first low-risk changes are under review in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636).  
+**Status:** active optimization track; the first low-risk changes in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636) merged on 2026-11-25. Repeated timing and follow-up profiling remain open.  
 **Last measured:** 2026-11-25.  
 **Scope:** contributor feedback time, Python test runtime, GitHub Actions overhead and the integrity of the validation gates.
 
@@ -48,22 +48,13 @@ Do not add one workflow per concept, test file or validator. Keep a small number
 
 ## 2. Work remaining — prioritized
 
-### P0 — close and validate the first optimization
+### P0 — first optimization delivered; measurement remains open
 
-1. **Complete PR #1636 validation.**
-   - Confirm formatting, lint, mypy, full pytest, Quarto and secret scanning after the formatting-only follow-up.
-   - Review the diff for accidental test or assertion changes.
-   - Merge only when required checks pass.
-2. **Preserve cache isolation.**
-   - Confirm that the extraction-history tests do not mutate the cached dictionaries or nested lists.
-   - Add a short comment or fixture contract explaining that the cached corpus is read-only.
-   - If mutation becomes necessary, copy only the relevant record at the mutation boundary; do not deep-copy the entire corpus in every test.
-3. **Record a reproducible baseline.**
-   - Run the full suite several times on the same branch/runner configuration.
-   - Compare medians, not a single fastest run.
-   - Record test count, coverage, worker count, test duration and job duration.
+[PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636) merged on 2026-11-25. It caches the immutable YAML corpus within extraction-history tests and removes the full pytest suite from the pre-commit hook. The full suite and coverage gate remain required. The implementation and review gate are complete; do not keep the PR-validation checklist open.
 
-**Exit gate:** PR checks pass; all existing assertions and the coverage threshold remain; repeated timings confirm that the improvement is not merely runner noise.
+The cached corpus is read-only by contract. If a future test needs mutation, copy the relevant record at the mutation boundary rather than mutating shared dictionaries or nested lists.
+
+**Remaining measurement:** repeat the full suite several times on comparable runners and report median/range, test count, coverage, worker/scheduling configuration and job setup time. The current two-run comparison is one observation pair, not a controlled estimate of causal improvement.
 
 ### P1 — remove repeated expensive setup in repository-level tests
 
@@ -166,8 +157,8 @@ Do not set a hard numeric runtime target until the repeated baseline is availabl
 
 | Item | State |
 |---|---|
-| Cache immutable YAML corpus in extraction-history tests | Implemented in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636), pending final checks |
-| Remove full pytest suite from pre-commit | Implemented in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636), pending final checks |
+| Cache immutable YAML corpus in extraction-history tests | Merged in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636) on 2026-11-25 |
+| Remove full pytest suite from pre-commit | Merged in [PR #1636](https://github.com/JM-Brun/llm-lab/pull/1636) on 2026-11-25 |
 | pytest-xdist with two workers | Already present before this work; do not count as a new optimization |
 | Full pytest suite and 90% coverage threshold | Retained |
 | Quarto incremental rendering/site cache | Already present; optimize only the unnecessary container startup |
