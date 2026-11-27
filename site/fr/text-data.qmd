@@ -57,7 +57,14 @@ Le même texte peut produire d'autres tokens et d'autres IDs avec un tokenizer d
 
 <span id="comparaison-de-deux-tokenizers"></span>
 
-Pour comparer deux tokenizers sans changer de matériau pédagogique, la trace encode **le même préfixe du fil rouge** avec `gpt2` et `cl100k_base`. Elle affiche pour chacun les fragments exacts, les IDs, le nombre de tokens et le texte reconstruit. Les frontières et les IDs peuvent différer, mais les deux séquences doivent se décoder vers le même préfixe. Les IDs restent locaux à leur vocabulaire : leurs valeurs numériques ne sont pas comparables entre tokenizers. Cette comparaison est reproductible avec `tiktoken==0.14.0` dans la [trace Python](exercises-text-data.qmd#tokenizer-embedding-trace).
+Comparons maintenant les deux encodages **du même préfixe exact** avec `tiktoken==0.14.0` :
+
+| Préfixe du fil rouge | Encodage | Nombre de tokens |
+|---|---|---:|
+| `C'est une bonne situation, ça, scribe ?` | `gpt2` | **15** |
+| Même préfixe | `cl100k_base` | **11** |
+
+Sur cet exemple français, `cl100k_base` représente donc le même texte avec quatre tokens de moins. Ce résultat dépend du texte choisi et ne signifie pas que ce tokenizer est globalement meilleur : le découpage varie selon les mots, la langue et le domaine. Les IDs sont propres à chaque vocabulaire et ne sont pas comparables numériquement. La [trace Python reproductible](exercises-text-data.qmd#tokenizer-embedding-trace) vérifie les deux nombres et affiche les fragments, les IDs et le texte reconstruit.
 
 ### Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?
 
