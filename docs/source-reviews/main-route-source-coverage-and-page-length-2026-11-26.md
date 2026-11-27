@@ -129,7 +129,7 @@ Pour Logits et Gradients — audit pédagogique et mathématique effectué dans 
 - les trois références PyTorch déjà liées aux pages sont maintenant cataloguées : CrossEntropyLoss, Autograd mechanics et gradcheck ;
 - les trois notices disposent d'extractions atomiques et de relations vers les pages FR/EN et concepts existants ;
 - les pages explicitent désormais `p = softmax(z)` et les conditions de précision/validité de `gradcheck` ;
-- l'entrée existante `jay-alammar-illustrated-gpt2` reste à réexaminer spécifiquement pour sa contribution à Logits ; aucune figure ne sera réutilisée sans audit de provenance et de droits.
+- l'entrée `jay-alammar-illustrated-gpt2` a été réexaminée : sa section *Model Output* est pertinente mais redondante avec l'exemple autonome actuel et spécifique à GPT-2 ; aucune intégration ni reprise de figure n'est retenue.
 
 Pour ICL :
 - créer ou réconcilier les entrées canoniques des références Brown, Olsson, Xie et Min déjà présentes dans la bibliographie ;
