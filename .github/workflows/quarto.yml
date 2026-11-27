@@ -459,10 +459,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: site-browser-review-${{ github.sha }}
-          path: |
-            artifacts/site-browser-review/
-            site/includes/generated-*.qmd
-            site/learning-map-data-*.json
-            site/knowledge-graph.jsonld
+          path: artifacts/site-browser-review/
           if-no-files-found: warn
           retention-days: 30

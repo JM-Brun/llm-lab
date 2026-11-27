@@ -3,6 +3,7 @@
   - Architecture comparison (optional)
     - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
   - [Overview: what is an LLM?](llm-overview.html)
+  - [Why represent language numerically?](language-representation.html)
   - [From text to tokens: representing language](text-data.html)
   - [From token IDs to vectors: embeddings](embedding-space.html)
   - [Positional encoding: giving tokens an order](positional-encoding.html)
@@ -25,6 +26,7 @@
 - **Review**
   - [Learning path plan and review sheets](review-path.html)
   - [Review — How an LLM works](revision-llm-overview.html)
+  - [Review — Why represent language numerically?](revision-language-representation.html)
   - [Review — From text to tokens](revision-text-data.html)
   - [Review — Embeddings and table lookup](revision-embedding-space.html)
   - [Review — Positional information](revision-positional-encoding.html)

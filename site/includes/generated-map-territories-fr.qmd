@@ -23,6 +23,7 @@
 <span id="mode=concepts&amp;concept=sequence-likelihood" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=token" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=token-embedding" aria-hidden="true"></span>
+<span id="mode=concepts&amp;concept=token-id" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=training-loop" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=value" aria-hidden="true"></span>
 ```
