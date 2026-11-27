@@ -283,7 +283,14 @@ The existing Understand stage `text-input` now includes the bridge before `text-
 
 The bilingual Quarto render list and Understand sidebars include the new pages. The reciprocal `suggested_route` links on the overview and text-data pages were updated. The canonical concept registry associations were retained and reused; no computational graph nodes or edges were added.
 
-The existing core-route contract requires one synthesis companion for every core lesson. A dedicated bilingual recall sheet was therefore added at `revision-language-representation`, with a single retrieval question and a typed `revision_of` link. The new lesson contract requires `llm-overview`; `text-data` retains its existing `llm-overview` prerequisite. The suggested reading route places the bridge before `text-data`, but that order is not itself encoded as a hard prerequisite: the two concepts remain independently understandable. This preserves the distinction between route order and learning dependency, as well as the separation between main explanations and Practice/Review material.
+The existing core-route contract requires one synthesis companion for every core lesson. A dedicated bilingual recall sheet was therefore added at `revision-language-representation`, with a single retrieval question and a typed `revision_of` link. The new lesson contract requires `llm-overview`; `text-data` retains its existing `llm-overview` prerequisite. The suggested reading route places the bridge before `text-data`, but that order is not itself encoded as a hard prerequisite.
+
+This distinction is intentional and important:
+- `suggested_route` and the ordered `pages` list express a recommended learning traversal;
+- `lesson_contracts.requires` expresses knowledge genuinely needed to understand a lesson;
+- the bridge improves the learner's motivation and mental model, but the tokenizer procedure in `text-data` remains understandable without having read it.
+
+The new page is therefore part of the core route without being promoted into an artificial hard dependency for the mechanics page. The separate bilingual recall sheets satisfy the existing synthesis contract without putting exercises into the main explanation.
 
 ### Remaining validation before merge
 
