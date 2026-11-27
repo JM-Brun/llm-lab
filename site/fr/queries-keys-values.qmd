@@ -70,7 +70,7 @@ Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understandi
 Q et K déterminent les poids ; V fournit le contenu à mélanger
 :::
 ::: {.meta-flow__result}
-<strong>QKᵀ → scores → <a href="scaled-dot-product-attention.qmd#calcul-en-cinq-étapes">calcul des poids</a></strong>
+<strong>QKᵀ → scores → <a href="scaled-dot-product-attention.qmd#calcul-en-cinq-etapes">calcul des poids</a></strong>
 :::
 ::: {.meta-flow__result}
 <strong>Poids × V → somme pondérée → sortie de l’attention</strong>
