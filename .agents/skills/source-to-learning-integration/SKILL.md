@@ -17,7 +17,8 @@ The phases may run in separate sessions and PRs. Extraction is a durable researc
 ## Specialist skills
 
 - `source-extraction`: provenance, access and scan scope, structured claims/ideas/artifacts, confidence, source catalogue, extraction records and hand-off.
-- `knowledge-and-learning-integration`: graph impact, concept/relation decisions, page mapping, content/assets/experiments, bilingual parity and validation.
+- `knowledge-and-learning-integration`: source-backed concept/relation/resource decisions, page mapping, content/assets/experiments, bilingual parity and validation.
+- `knowledge-architecture-audit`: canonical computational-graph changes when accepted source evidence warrants a change to computation/dataflow semantics; use `scientific-content-audit` for disputed technical semantics.
 
 Use this skill to orchestrate both. Run extraction first unless a complete, trustworthy record already exists. Run integration only against persistent, reviewable records. Do not repeat scans unnecessarily.
 
@@ -45,7 +46,7 @@ Input: reviewed extraction records and current repository state.
 
 Output:
 - accepted/deferred/rejected dispositions with rationale;
-- canonical graph changes, or an explicit no-change decision;
+- canonical concept/resource graph changes, or an explicit no-change decision; computational-graph changes are separately owned and validated through `knowledge-architecture-audit`;
 - updates to existing pages or justified new pages;
 - asset, experiment, implementation, reference, route and bilingual updates as needed;
 - a differential comparison of source graph/route versus the canonical LLM Lab graph, guided route, page routes and Build route;
