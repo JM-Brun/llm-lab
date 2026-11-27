@@ -57,7 +57,7 @@ The example should be explanatory, not a second worked tokenizer trace. Keep the
 | English title | Why represent language numerically? |
 | Stable page IDs | `fr/language-representation`, `en/language-representation` |
 | Quarto sources | `site/fr/language-representation.qmd`, `site/en/language-representation.qmd` |
-| Editorial type | `concept-bridge` |
+| Editorial type | `concept-lesson` (reuse the existing type; no new page archetype) |
 | Destination | `understand` |
 | Topic | `language-representation` (shared by both languages) |
 | Level | `overview` |
@@ -238,3 +238,24 @@ This proposal is consistent with:
 - `docs/information-architecture.md`: page graph, concept graph, computational graph, source catalogue and reader-facing routes have separate canonical ownership.
 
 This record recommends an architectural direction. It does not claim that either bilingual page, route, registry or generated map has already been changed.
+
+
+## 10. Implementation order: model the learning job before writing the lesson
+
+The first implementation increment is deliberately metadata-only. It creates the bilingual page sources with their page-map contracts and associates the planned pages with the existing canonical concepts they will introduce or connect:
+
+- `token` and `token-id`: discrete symbols and tokenizer-local identifiers;
+- `token-embedding`: the learned vector selected from the model's embedding table;
+- `contextualized-representation`: the state produced by subsequent context-dependent computation.
+
+The existing typed concept relations already express the important conceptual transitions: a token is represented by an ID and by an embedding; the ID is a prerequisite for the initial embedding; the initial embedding is a prerequisite for the contextualized representation. **Do not add a generic “numerical representation” concept or new relation type merely to name the motivation.** The bridge is a pedagogical explanation connecting existing scientific concepts, not necessarily a new ontology entity.
+
+The planned page records reuse the existing `concept-lesson` type, `understand` destination, and `overview` level. `language-representation` is a page topic, not a new scientific domain. The page sources remain `status:planned`; they are therefore excluded from the published-page index and learning-map projection. They are not yet added to `site/_quarto.yml`, the active `suggested_route` edges of published pages, or `data/guided-route.yml`.
+
+Only after the bilingual explanation is authored and reviewed should the next increment:
+1. change the two page statuses to `published` and add both sources to Quarto's explicit render list;
+2. connect `llm-overview → language-representation → text-data` in the published page-map routes and update reciprocal navigation where appropriate;
+3. place the page before `text-data` inside the existing `text-input` stage, without creating a tenth stage, and update that stage's question/objective/result only if its new scope genuinely requires it;
+4. regenerate and validate the learning-map projections, breadcrumbs, sidebars and bilingual navigation.
+
+This staging prevents a planned page from becoming a broken published route or a partially visible graph node. It also keeps the canonical computational graph unchanged: the bridge explains why the existing numerical operations are useful; it does not add a computational operation or alter dataflow.
