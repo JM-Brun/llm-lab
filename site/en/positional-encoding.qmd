@@ -51,12 +51,11 @@ In “What have the Romans ever done for us?”, token order is part of the inpu
 
 The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares three insertion points: absolute addition at the input, Q/K rotation, and a relative bias added to attention scores before softmax. The causal mask remains a separate visibility constraint.
 
-| Family | Insertion point | Example | Main effect |
+| Mechanism | Insertion point | Example | Main effect |
 |---|---|---|---|
-| Absolute position | At the input, added to the token embedding | Sinusoidal encoding, learned positional embeddings | Supplies an absolute-position representation. |
-| Relative representation | In query-key interactions and, in some formulations, aggregation | Shaw et al. | Encodes relations between positions in attention computations. |
-| Relative bias | On attention scores, before softmax | T5, ALiBi | Changes compatibility according to the offset between positions. |
-| Rotary relative encoding | On Q and K after projection, before the QKᵀ product | RoPE | Makes the score depend on relative offset by rotating Q and K. |
+| Absolute encoding | At the input, added to the token embedding | Sinusoidal encoding, learned positional embeddings | Supplies an absolute-position representation. |
+| RoPE (relative) | On Q and K after projection, before the QKᵀ product | RoPE | Makes attention scores depend on relative offset through rotations. |
+| Relative bias | On attention scores, before softmax | T5, ALiBi | Adds an offset-dependent term to attention scores. |
 
 <figure id="fig-positional-entry-points">
   <picture>
