@@ -395,3 +395,14 @@ At this snapshot, three PRs are open and mergeable:
 - #1774 — first implementation slice for #1773's workflow/skill contract audit.
 
 The workflow-run lookup returned no PR-triggered runs for these branch heads at the time of this check. Do not describe their CI as green; verify checks on GitHub before merging. The open-PR inventory is time-sensitive and must be refreshed before a later handoff.
+
+
+### PR status refresh — 2026-11-27 20:35 UTC
+
+This section supersedes the earlier **20:04 UTC** statement that PRs #1771, #1772 and #1774 were open:
+
+- [#1771 — backlog snapshot and workstream ownership](https://github.com/JM-Brun/llm-lab/pull/1771) was merged at 20:13 UTC. This document is now on `main`; the merged snapshot is a hand-off, not a second roadmap.
+- [#1772 — Otis running example](https://github.com/JM-Brun/llm-lab/pull/1772) was merged at 20:13 UTC.
+- [#1774 — workflow and skill architecture contracts](https://github.com/JM-Brun/llm-lab/pull/1774) was merged at 20:13 UTC. Static link checks passed. The final PR-head runs are now verified: test suite and Python quality succeeded, Quarto site & browser audit succeeded, and secret scanning succeeded; the two opt-in full-corpus/scale jobs were skipped. These results are recorded in #1773.
+
+The three PRs in the earlier snapshot are therefore no longer open. This refresh does **not** claim a complete repository-wide open-PR inventory; refresh that separately before the next hand-off. The static ownership/delegation matrix, link/path checks and six representative routing cases are now documented in #1773. The only remaining evidence limitation is actual runtime skill activation, which requires invocation traces and is not established by static repository checks. The two opt-in full-corpus/scale jobs remain skipped by design for this change.
