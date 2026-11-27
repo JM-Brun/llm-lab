@@ -57,7 +57,7 @@ This chain highlights an essential distinction: **the encoder builds a represent
 
 A representation may preserve some information and discard other information. An embedding trained to retrieve relevant documents may prioritize signals useful for search, not every linguistic nuance. An image embedding trained to distinguish visual categories is not necessarily suitable for aesthetic similarity search. A vector always reflects choices about representation and objective.
 
-## 2. Major families: a map, not a sequence of replacements
+## 2. Major families: a map, not a sequence of replacements {#embedding-families}
 
 The families below sometimes overlap. They do not form a timeline in which every method makes the previous one obsolete.
 
