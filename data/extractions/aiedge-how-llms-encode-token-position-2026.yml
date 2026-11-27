@@ -2,6 +2,17 @@ schema_version: 1
 source_id: aiedge-how-llms-encode-token-position-2026
 
 pedagogical_model:
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish learned absolute vectors, fixed sinusoidal encodings, RoPE and ALiBi by their stated computational insertion points.", basis: "The indexed article outline names these four mechanisms and frames the explanation from token indices to attention scores."}
+    - {status: inferred, outcome: "Explain why positional information and causal visibility are different mechanisms.", basis: "The indexed introduction explicitly distinguishes positional rules from causal access constraints."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Token embeddings and sequence indices.", basis: "The article's visible framing starts from token indices and positional representations."}
+    - {status: inferred, topic: "Basic self-attention, query/key vectors and attention scores.", basis: "The visible outline locates RoPE and ALiBi in the query-key and score computation."}
+  teaching_route:
+    - {order: 1, section: "Why token position is needed", function: "separate token identity from sequence index", moves: ["Introduce the need to identify where a token occurs", "Frame the explanation from token indices to attention scores"]}
+    - {order: 2, section: "Learned and sinusoidal vectors", function: "compare absolute input representations", moves: ["Locate learned position vectors at the input", "Locate fixed sinusoidal vectors at the input"]}
+    - {order: 3, section: "RoPE and ALiBi", function: "compare attention-level insertion points", moves: ["Locate RoPE on query/key vectors", "Locate ALiBi as a distance-dependent score term"]}
+    - {order: 4, section: "Position versus causal visibility", function: "separate positional signal from access constraint", moves: ["Distinguish positional rules from the causal mask", "Qualify the role of content and available positions"]}
   pedagogical_strengths:
     - "The visible framing compares mechanisms by where they enter the computation, which is an efficient organizing question for learners."
     - "The indexed introduction explicitly distinguishes positional information from causal visibility."
