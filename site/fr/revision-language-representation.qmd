@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-language-representation"
 scope: "Fiche de rappel sur la motivation de la représentation numérique du langage, le rôle des IDs, des embeddings initiaux et des états contextualisés."
-purpose: "Reconstruire de mémoire pourquoi le réseau a besoin de représentations numériques et distinguer les trois objets manipulés au début du parcours."
+purpose: "Reconstruire pourquoi un réseau a besoin de représentations numériques apprenables pour exploiter des régularités linguistiques, puis distinguer les IDs, les embeddings initiaux et les états contextualisés."
 revision_role: synthesis
 revision_of: ["fr/language-representation"]
 suggested_route:
@@ -26,20 +26,20 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-language-r
 
 ## À retenir {#revision-essentials}
 
-- Un réseau neuronal effectue des opérations mathématiques sur des tenseurs numériques ; les unités discrètes du texte doivent donc être représentées sous une forme adaptée à ces opérations.
+- Un réseau neuronal apprend en ajustant des paramètres au moyen d'opérations mathématiques sur des tableaux numériques. Des représentations apprenables lui permettent d'exploiter les régularités du langage pour sa tâche de prédiction.
 - Un **ID** est une adresse dans un vocabulaire. Sa valeur ne mesure ni une quantité linguistique ni une proximité sémantique.
-- Un **embedding initial** est un vecteur appris sélectionné par l'ID. C'est ce vecteur, et non le numéro de l'ID, qui entre dans les transformations du réseau.
+- Un **embedding initial** est un vecteur de paramètres sélectionné par l'ID. Les gradients issus de la fonction de perte peuvent ajuster ses valeurs par rétropropagation ; l'ID reste un indice discret et n'est pas appris.
 - Les couches du Transformer construisent des **états contextualisés** à partir des vecteurs initiaux et du contexte accessible.
 - Une proximité dans l'espace vectoriel peut refléter des régularités statistiques, mais ne constitue pas à elle seule une définition du sens ou une preuve de compréhension.
 
 ## Vérifier de mémoire {#revision-check}
 
-Pourquoi ne peut-on pas soustraire les IDs de deux tokens pour mesurer leur proximité sémantique ? Quel objet numérique le modèle transforme-t-il ensuite, et pourquoi cet objet doit-il encore être contextualisé ?
+Pourquoi les IDs seuls ne permettent-ils pas au réseau d'apprendre des régularités linguistiques ? Quel rôle les vecteurs appris jouent-ils dans les calculs, comment l'objectif de prédiction contribue-t-il à leur apprentissage, et pourquoi les états doivent-ils encore dépendre du contexte ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Les IDs sont des indices arbitraires propres au vocabulaire ; leur différence dépend de la numérotation et ne porte pas de signification linguistique. Le lookup utilise l'ID pour sélectionner un vecteur appris dans la matrice d'embeddings. Les couches du réseau transforment ensuite ce vecteur en tenant compte des autres positions accessibles, afin que l'état associé à une occurrence dépende de son contexte.
+Les IDs sont des étiquettes arbitraires propres au vocabulaire : leur valeur ne décrit aucune relation linguistique. Le lookup sélectionne un vecteur appris, que les opérations du réseau peuvent transformer et combiner. Pendant l'entraînement, l'objectif de prédiction fournit un signal qui ajuste ces vecteurs et les autres paramètres pour rendre certaines régularités des usages utiles à la prédiction ; le modèle ne reçoit pas pour autant une définition explicite des mots. Les couches du Transformer transforment ensuite les vecteurs initiaux en tenant compte du contexte accessible, de sorte que l'état associé à une occurrence dépend de sa phrase.
 
 </details>
 

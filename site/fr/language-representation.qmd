@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/language-representation"
 summary: "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés."
 scope: "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées."
-purpose: "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés."
+purpose: "Expliquer pourquoi le langage doit être représenté par des objets mathématiques manipulables, comment des vecteurs appris rendent certaines régularités linguistiques exploitables par le réseau, et pourquoi le contexte transforme ensuite ces représentations."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/text-data"
@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "La synthèse distingue le rôle de l’ID, du vecteur appris et de l’état contextualisé, et rappelle pourquoi le réseau a besoin d’objets numériques."
+      note: "La synthèse explique pourquoi le réseau a besoin de représentations numériques apprenables pour exploiter des régularités linguistiques, puis distingue l’ID, le vecteur initial et l’état contextualisé."
 tags:
   - "type:concept-bridge"
   - "destination:understand"
@@ -36,93 +36,100 @@ tags:
 {{< include ../includes/generated-guided-context-fr-language-representation.qmd >}}
 
 ::: {.chapter-lead}
-Un modèle de langage apprend à produire des suites de tokens. Mais un réseau neuronal ne calcule pas directement sur les mots comme nous les lisons : ses opérations portent sur des **nombres organisés en tenseurs**. Il faut donc établir un passage entre les symboles du langage et les objets numériques que le réseau peut transformer.
+Comment un réseau de neurones peut-il apprendre quelque chose du sens des mots et des phrases s'il ne manipule que des nombres ?
 
-Ce passage n'est pas un simple changement d'écriture. Il distingue un identifiant qui désigne un symbole, un vecteur appris qui le représente pour le calcul, puis des états que le modèle construit en tenant compte du contexte.
+Un mot n'est pas naturellement un nombre. Lui attribuer un numéro permet de le désigner, mais ce numéro ne dit rien de ce qu'il signifie ni de ses relations avec les autres mots. Pour apprendre à exploiter les régularités du langage, le modèle doit donc disposer de **représentations mathématiques qu'il puisse transformer et combiner**.
+
+L'idée est d'associer aux unités du texte des vecteurs dont les valeurs sont apprises à partir des usages du langage et d'un objectif d'entraînement. Les opérations du réseau peuvent alors exploiter certaines régularités statistiques — et ainsi modéliser des aspects de la sémantique — sans qu'on lui fournisse une définition explicite de chaque mot.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Ce que vous devez comprendre"}
 À la fin de cette page, vous devriez pouvoir :
 
-- expliquer pourquoi les calculs d'un réseau neuronal nécessitent des représentations numériques ;
-- distinguer un ID de token d'un vecteur appris ;
-- expliquer pourquoi un vecteur initial ne suffit pas à représenter le rôle d'une occurrence dans une phrase ;
-- situer la tokenisation, le lookup et la contextualisation dans la suite du parcours.
+- expliquer pourquoi un réseau neuronal a besoin de représentations mathématiques pour apprendre à partir du langage ;
+- comprendre pourquoi un numéro arbitraire ne suffit pas à représenter les relations entre unités linguistiques ;
+- expliquer comment des vecteurs appris et les opérations du réseau peuvent exploiter des régularités des usages ;
+- distinguer la représentation initiale d'une unité et l'état que le modèle construit en fonction du contexte.
 :::
 
-## 1. Le problème : passer des symboles au calcul
+## 1. Pourquoi rendre le langage calculable ?
 
-Le texte est composé de symboles discrets : caractères, signes, mots ou fragments de mots. Un programme classique peut comparer des chaînes, rechercher des motifs ou appliquer des règles symboliques. Un réseau neuronal de type Transformer suit une autre stratégie : il applique des opérations mathématiques paramétrées à des tableaux de nombres.
+Le langage est constitué d'unités discrètes : caractères, signes, mots ou fragments de mots. Un programme peut déjà manipuler ces symboles : comparer deux chaînes, rechercher un motif ou appliquer une règle grammaticale. Il serait donc faux de dire qu'un ordinateur est incapable de faire quoi que ce soit avec du texte.
 
-Ces opérations — projections, produits matriciels, combinaisons pondérées et transformations non linéaires — permettent au réseau d'ajuster progressivement ses paramètres à partir d'exemples. Pour qu'un modèle neuronal exploite les régularités du langage avec ces opérations, il faut donc convertir les unités discrètes du texte en objets numériques adaptés au calcul. Cela ne signifie pas qu'un ordinateur ne peut pas manipuler des chaînes de caractères : c'est le mode de représentation et de calcul choisi par cette famille d'architectures.
+Un réseau neuronal comme un Transformer suit toutefois une autre stratégie. Il apprend à partir d'exemples en ajustant des paramètres au moyen d'opérations mathématiques : additions, multiplications matricielles, projections, combinaisons pondérées et transformations non linéaires. Ces opérations portent sur des tableaux de nombres, pas directement sur des mots considérés comme des objets symboliques.
 
-**L'objectif n'est pas de remplacer le langage par une suite de nombres arbitraires.** Il est de construire des représentations apprises sur lesquelles le réseau peut effectuer des transformations utiles à la prédiction.
+**La question est donc la suivante : comment représenter le langage pour que ces calculs puissent apprendre et exploiter ses régularités ?** Il ne suffit pas de remplacer chaque mot par un numéro. Il faut construire des objets numériques dont les valeurs peuvent être ajustées et dont les relations peuvent être exploitées par les transformations du réseau.
 
-## 2. Un identifiant n'est pas une représentation du sens
+## 2. Pourquoi un numéro ne suffit-il pas ?
 
-La tokenisation associe chaque unité discrète à un identifiant entier dans un vocabulaire. Imaginons, pour simplifier, que le tokenizer attribue :
+Pour simplifier, imaginons qu'un vocabulaire associe un ID à trois unités — ici, des mots entiers :
 
-| Token | ID |
+| Mot | Numéro |
 |---|---:|
-| `cat` | 17 |
-| `dog` | 42 |
+| chat | 17 |
+| chien | 42 |
+| voiture | 8 |
 
-La différence entre les IDs vaut 25. Mais cela ne signifie pas que *dog* est « plus proche » de *cat* que d'un token portant l'ID 100, ni que l'ID 42 contient davantage de sens que l'ID 17.
+Dans un vrai tokenizer, les unités ne sont pas nécessairement des mots entiers : elles peuvent être des fragments de mots, des signes de ponctuation ou d'autres tokens. Ces IDs permettent de retrouver les entrées du vocabulaire, mais ils ne décrivent aucune propriété linguistique. Le fait que 17 et 42 soient plus proches que 17 et 8 n'a aucune signification : on aurait pu permuter les numéros sans modifier le langage ni la tâche à apprendre.
 
-Ces nombres servent d'abord d'**adresses**. Le vocabulaire aurait pu attribuer 42 à `cat` et 17 à `dog` sans changer le problème à résoudre, à condition de réorganiser de la même manière les lignes des paramètres indexés par ce vocabulaire.
+Un calcul direct sur ces identifiants — par exemple une distance entre 17 et 42 — exploiterait donc une propriété accidentelle de la numérotation. Le réseau apprendrait à partir d'une convention arbitraire, pas d'une relation entre les mots.
 
-Un ID permet donc de retrouver une entrée ; il ne constitue pas, à lui seul, une coordonnée sémantique. Faire des calculs directement sur les valeurs des IDs confondrait l'étiquette choisie par le tokenizer avec la représentation utilisée par le réseau.
+Un identifiant reste utile : il sert d'étiquette stable pour désigner une unité du vocabulaire. Mais il faut lui associer une représentation numérique plus riche si l'on veut que les calculs du réseau puissent apprendre des régularités.
 
-## 3. Le vecteur appris : un objet sur lequel le réseau peut calculer
+## 3. Pourquoi représenter les unités par des vecteurs ?
 
-Le modèle associe à chaque ID une ligne d'une matrice de paramètres appelée **matrice d'embeddings**. Si le vocabulaire contient $V$ tokens et que chaque vecteur a $d$ composantes, cette matrice peut s'écrire :
+Un vecteur est une liste ordonnée de nombres réels. Contrairement à un identifiant isolé, il possède plusieurs composantes que les opérations du réseau peuvent combiner, transformer et ajuster.
 
-\[
-E \in \mathbb{R}^{V \times d}.
-\]
+On peut se représenter chaque unité du vocabulaire comme un point dans un espace à plusieurs dimensions. Au départ, ces coordonnées ne constituent pas une définition du mot. Elles sont apprises : pendant l'entraînement, le modèle ajuste ses représentations et les autres paramètres pour améliorer ses prédictions.
 
-Pour un ID $i_t$, le lookup sélectionne le vecteur :
+Si $E$ désigne la matrice d'embeddings, de taille $|V| \times d$ (taille du vocabulaire par dimension des vecteurs), l'ID $i$ sélectionne la ligne correspondante : $\mathbf{e}_i = E[i, :]$. L'ID sert donc à adresser une ligne ; ce sont les valeurs de cette ligne qui forment le vecteur utilisé par le réseau.
 
-\[
-x_t = E[i_t] \in \mathbb{R}^{d}.
-\]
+La fonction de perte fournit ensuite un signal d'apprentissage : par rétropropagation, les gradients peuvent modifier cette ligne de la matrice d'embeddings ainsi que les autres paramètres du réseau. **Les IDs entiers ne sont pas ajustés** : ils restent les indices discrets du vocabulaire.
 
-L'ID indique quelle ligne lire ; le vecteur contient les valeurs numériques utilisées par les opérations suivantes. Les composantes de ces vecteurs sont des paramètres appris pendant l'entraînement, pas des nombres attribués manuellement à chaque mot selon une définition de dictionnaire.
-
-Cette distinction rend possible une propriété essentielle : les vecteurs peuvent être transformés et combinés par les couches du réseau. L'entraînement ajuste les paramètres — notamment les embeddings sélectionnés et les transformations ultérieures — pour améliorer les prédictions sur les exemples. Les opérations différentiables permettent de calculer des gradients par rapport à ces paramètres. Le gradient peut modifier la ligne sélectionnée et les couches suivantes, mais il ne déplace pas l'ID entier : celui-ci reste un indice discret.
+C'est cette possibilité d'apprentissage qui est décisive. Le réseau peut appliquer aux vecteurs des transformations paramétrées, comparer des informations, les mélanger et construire de nouvelles représentations. Les vecteurs ne sont donc pas de simples étiquettes numériques : ils constituent le support sur lequel le calcul neuronal opère.
 
 <figure>
   <pre>
 Texte
-  ↓ tokenisation
-Tokens → IDs (adresses)
-              ↓ lookup
+  ↓ découpage en unités
+Unités → identifiants (les désigner)
+              ↓ représentation
         Vecteurs appris
-              ↓ transformations
-      États contextualisés
+              ↓ opérations du réseau
+      Représentations transformées
               ↓
-        Prédiction
+           Prédiction
   </pre>
-  <figcaption>Vue conceptuelle : chaque étape change la nature de l'objet manipulé. Ce schéma présente les grandes familles de transformations, pas toutes les opérations d'un GPT.</figcaption>
+  <figcaption>Vue conceptuelle : l'identifiant désigne une unité ; le vecteur fournit un objet numérique appris ; les opérations du réseau transforment ces représentations pour effectuer une prédiction. Ce schéma ne détaille pas toutes les étapes d'un GPT.</figcaption>
 </figure>
 
-## 4. Ce que les vecteurs rendent possible
+## 4. En quoi cela aide-t-il à modéliser le sens ?
 
-Un vecteur possède plusieurs composantes. Il peut donc servir d'entrée à des transformations apprises qui combinent de l'information et produisent de nouveaux vecteurs. Dans un Transformer, les projections, l'attention et les réseaux feed-forward transforment ainsi les représentations au fil des couches.
+Les exemples qui suivent utilisent des mots entiers pour faciliter la lecture. En pratique, les unités manipulées par le modèle sont celles produites par le tokenizer : elles peuvent correspondre à un mot, à un fragment de mot, à un caractère ou à un signe de ponctuation.
 
-La géométrie de l'espace appris peut refléter certaines régularités statistiques utiles : des tokens employés dans des contextes comparables peuvent présenter des représentations proches selon une mesure donnée. Mais il faut rester prudent :
+Considérons deux phrases :
 
-- une dimension n'est pas, en général, une caractéristique linguistique nommée ;
-- les coordonnées dépendent des paramètres et de la base choisie ;
-- une proximité vectorielle ne constitue pas à elle seule une définition du sens ni une preuve de compréhension.
+- « Le chat dort sur le canapé. »
+- « Le félin dort sur le canapé. »
 
-La représentation vectorielle fournit au réseau un support numérique flexible. Elle ne transforme pas automatiquement le langage en une carte sémantique explicite.
+Un lecteur reconnaît que chat et félin peuvent jouer ici un rôle proche. Le modèle ne reçoit pas cette explication sous la forme d'une règle écrite. Il rencontre au fil de l'entraînement de nombreux mots dans de nombreux contextes. Les unités qui apparaissent dans des environnements linguistiques comparables peuvent ainsi acquérir des représentations qui rendent certaines régularités communes exploitables par le réseau.
+
+C'est une intuition centrale de la **modélisation distributionnelle** : les usages et les contextes fournissent des indices sur les relations entre les unités linguistiques. Dans un modèle de langage, ces indices sont notamment exploités au travers de l'objectif de prédiction du prochain token. Pour prédire correctement, le réseau a intérêt à construire des représentations qui conservent et combinent les informations utiles présentes dans le contexte.
+
+Il faut néanmoins éviter une interprétation trop forte :
+
+- le modèle n'apprend pas nécessairement une relation explicite « chat = félin » ;
+- deux mots proches dans certains contextes ne sont pas interchangeables dans toutes les phrases ;
+- une proximité entre vecteurs dépend de la représentation et de la mesure choisies ;
+- les coordonnées ne correspondent généralement pas à des propriétés sémantiques lisibles une par une.
+
+**Les vecteurs ne contiennent pas le sens comme un dictionnaire le ferait.** Ils permettent au réseau d'apprendre des régularités et des relations utiles à sa tâche. C'est en ce sens qu'une représentation mathématique peut contribuer à modéliser certains aspects de la sémantique.
 
 ## 5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?
 
 Le lookup initial dépend de l'ID, pas de la phrase dans laquelle le token apparaît. Deux occurrences d'un même ID sélectionnent donc le même vecteur initial à paramètres fixés.
 
-Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. En anglais, *bank* apparaît dans « river bank » ou « bank account » : si le tokenizer attribue le même ID aux deux occurrences, le vecteur initial est identique alors que le contexte pertinent diffère. Le lookup seul ne réalise pas cette distinction.
+Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. En français, *avocat* désigne une personne qui exerce une profession juridique ou un fruit : si le tokenizer attribue le même ID aux deux occurrences, le vecteur initial est identique alors que le contexte pertinent diffère. Le lookup seul ne réalise pas cette distinction.
 
 Les couches du Transformer construisent des **représentations contextualisées** en transformant les vecteurs initiaux à partir des autres positions accessibles. Dans un modèle causal, une position ne peut utiliser que le préfixe qui la précède et elle-même. C'est cette transformation qui permet à l'état associé à une occurrence de dépendre de son contexte.
 
@@ -135,7 +142,7 @@ Il ne faut donc pas confondre trois objets :
 | Représentation contextualisée | État calculé par le réseau pour cette occurrence dans son contexte |
 
 ::: {.callout-tip title="À retenir" #revision-summary}
-Un **ID** est une adresse dans le vocabulaire, pas une mesure du sens. Le **lookup** sélectionne un vecteur appris sur lequel le réseau peut calculer. Les couches du modèle transforment ensuite ces vecteurs pour construire des états dépendant du contexte.
+Le langage doit être représenté par des objets mathématiques que le réseau peut transformer et ajuster. Les **vecteurs appris** rendent certaines régularités linguistiques exploitables par les calculs du modèle ; les couches du Transformer construisent ensuite des états qui dépendent du contexte. Un vecteur n'est pas une définition du sens : c'est un support de calcul appris à partir des usages et de l'objectif d'entraînement.
 :::
 
 ## 6. La suite du parcours
