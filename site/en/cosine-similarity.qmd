@@ -45,7 +45,7 @@ Normalization removes information carried by vector magnitude. This is useful wh
 
 ## 2. Why cosine can mislead
 
-### Anisotropy and concentrated scores
+### Anisotropy and concentrated scores {#anisotropy-concentrated-scores}
 
 An embedding space is anisotropic when vectors are not distributed uniformly across directions. In such spaces, unrelated sentence pairs can still receive high cosine scores. Li et al. (EMNLP 2020) analyse anisotropy in pretrained BERT sentence embeddings and report that it harms semantic similarity in their experiments. Ethayarajh (2019) also finds non-isotropic contextual representations in BERT, ELMo, and GPT-2.
 
