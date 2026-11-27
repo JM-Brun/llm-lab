@@ -69,3 +69,98 @@ Convergence on the standard operator is explanatory convergence, not independent
 - Keep third-party visual asset rights and uninspected source modalities explicit.
 
 This second pilot tests a mathematical/computational page archetype. It does not establish that the seven-stage workflow is effective for all page types; an implementation-heavy Build page would be a distinct future test.
+
+## 7. Page-level source diversity and claim-evidence audit — 2026-11-27
+
+**Audit method:** distinguish the page's external citations, internal project artefacts, construction sources and the broad set of `related.pages` associations. The latter is a discovery index, not evidence that a source was used to construct or support a claim.
+
+### 7.1 Reconciled source sets
+
+| Source set | Inventory | What it means |
+|---|---|---|
+| External references visible in both published-language source files | Vaswani et al. (2017); Dao et al. (2022); PyTorch SDPA API | Three external references, all English: two primary research papers and one official API reference |
+| Internal project artefacts linked by the page | FlashAttention source review; FlashAttention benchmark protocol | Repository documentation and a measurement plan, not independent external sources |
+| Construction sources named in this pilot's source contribution map | Vaswani; Jay Joshi; 3Blue1Brown; Jay Alammar, *The Illustrated GPT-2* | A bounded editorial corpus: primary mathematical anchor plus complementary sequencing, geometry and architecture explanations |
+| FlashAttention implementation bridge | Dao et al.; The AI Edge excerpt; PyTorch SDPA documentation | A distinct subtopic: algorithmic IO efficiency, secondary teaching explanation and framework API contract |
+| Catalogue associations through `related.pages` | 16 source records currently point to the bilingual scaled-attention pages | Candidate discovery set only; do not count these 16 as sources used or cited by the page |
+
+The three external references are not interchangeable:
+- **Vaswani et al.** is primary evidence for the mathematical attention operator and its original formulation.
+- **Dao et al.** is primary evidence for the IO-aware exact attention algorithm, its online-softmax tiling and its stated IO/compute analysis. It is not a second independent derivation of the base operator.
+- **PyTorch SDPA** is authoritative for the documented PyTorch function contract. It is not a mathematical research source and does not prove which backend ran in a particular environment.
+
+The two internal links are useful traceability artefacts, but must not inflate the external source count or be presented as independent evidence.
+
+### 7.2 Diversity profile — visible bibliography versus discovery set
+
+| Dimension | Visible external references (n=3) | `related.pages` candidate set (n=16) |
+|---|---|---|
+| Source type | 2 papers, 1 official documentation page | 9 blogs, 2 courses, 2 tutorials, 1 video, 2 papers |
+| Language | 3 English | 15 English, 1 French |
+| Technical role | Mathematical specification, algorithmic implementation research, framework API contract | Mixed: Q/K/V tutorials, Transformer visual explanations, attention mathematics, FlashAttention, information theory and positional-embedding resources |
+| Origin | Vaswani et al./NeurIPS; Dao et al./NeurIPS; PyTorch project | Multiple creators/platforms; several are shared with the upstream Q/K/V page |
+| Inspection | Focused primary reviews for both papers; PyTorch API reference inspected on 2026-11-27 | Heterogeneous and partial; association alone does not establish inspection for this page |
+| Independence | Distinct sources, but their claims are not all the same claim | Unknown; no independence claim is made |
+
+The visible bibliography is concentrated in English and in formal/technical references. For this mathematical/computational page, that is defensible: the primary paper anchors the operator, the second paper anchors an implementation algorithm, and the official API anchors framework behavior. The bilingual LLM Lab lesson is the learner-facing explanation. A French source should be added only if it contributes a distinct mathematical derivation, counterexample or implementation perspective; language quotas would be artificial.
+
+The 16 associated records are not a coherent 16-source corpus. They include resources whose primary scope is Q/K/V or general Transformer architecture, plus an apparent outlier association to the Karatsuba multiplication article. The outlier and the broader associations should be reviewed individually before changing `related.pages`; no automatic cleanup is justified from association counts alone.
+
+### 7.3 Provenance gap found and repaired: PyTorch SDPA
+
+The page cited the official PyTorch SDPA API, but the matching source was absent from `data/sources.yml`. The stable documentation URL redirected to the versioned PyTorch 2.15 page during the 2026-11-27 inspection.
+
+The missing provenance has now been added in this branch:
+- `data/sources.yml`: `pytorch-scaled-dot-product-attention-api`, with the observed version and scan boundary;
+- `data/extractions/pytorch-scaled-dot-product-attention-api.yml`: atomic API claims;
+- `docs/source-reviews/pytorch-sdpa-api-reference-2026-11.md`: focused review and implementation decision.
+
+The extraction separates five distinct API concerns:
+1. reference operator and default scale;
+2. boolean mask polarity (`True` means participate, opposite to `MultiheadAttention.key_padding_mask`);
+3. caller-controlled dropout, including explicit zero during evaluation;
+4. automatic backend dispatch, eligibility constraints and floating-point output differences;
+5. version-specific experimental GQA support.
+
+The review records a strict boundary: the API reference documents the function contract; it does not establish runtime backend selection, GPU speed, exact numerical parity or a general mathematical proof. The stable alias's redirect is a version/freshness risk and must be rechecked before version-sensitive Build guidance.
+
+### 7.4 Claim-to-evidence map
+
+| Page claim / learner need | Best supporting source | Evidence class | Boundary / non-claim |
+|---|---|---|---|
+| Standard operator `softmax(QKᵀ / √dₖ)V` | Vaswani et al., §3.2.1, Eq. (1) | Primary mathematical definition | Do not attribute the full masked implementation contract to Eq. (1); the optional mask is shown in Fig. 2 |
+| Scale rationale and dimension dependence | Vaswani et al., §3.2.1; Brenndoerfer source review as a secondary derivation | Primary theory plus secondary explanation | The variance argument depends on assumptions; it is not a universal claim that every high-dimensional row saturates |
+| Softmax normalization axis | Vaswani notation and the page's row-query/column-key convention; PyTorch pseudocode uses the final/key dimension | Mathematical convention plus API implementation reference | 3Blue1Brown uses a column-vector convention; it is compatible after transposition, not a contradiction |
+| Mask placement and allowed positions | Vaswani Fig. 2; canonical causal-masking lesson; PyTorch SDPA for API-specific mask semantics | Primary figure, canonical project derivation and official API contract | Boolean mask polarity is API-specific; do not transfer it to other PyTorch APIs |
+| Weighted aggregation and convex-hull property | Vaswani Eq. (1) plus the project's mathematical derivation; Jay Joshi review identifies the source's cone/hull terminology issue | Primary operator plus project derivation and secondary critique | Convex-hull membership applies to a normalized weighted sum before output projection, residual addition or later transformations |
+| Exact IO-aware FlashAttention and online softmax | Dao et al. (2022), §§3.1–3.3 and Theorems 1–2 | Primary algorithm and complexity analysis | Exact dense attention retains quadratic arithmetic; IO complexity is not wall-clock performance |
+| FlashAttention empirical speed/memory claims | Dao et al. (2022), §4 and appendices | Primary empirical results | Results are tied to the paper's hardware, shapes, dtype, workloads and baselines |
+| PyTorch API backend dispatch and numerical differences | PyTorch SDPA API reference | Official API documentation | An SDPA call does not prove that FlashAttention ran; actual backend must be observed |
+| Attention weights as semantic or causal explanations | No source in this page corpus establishes such a general interpretation | Explicit epistemic limit | Keep the page's interpretive caveat; do not convert mathematical weights into claims about causal importance or human-readable meaning |
+
+### 7.5 Findings and decisions
+
+1. **The cited bibliography is appropriately specialized, not generically diverse.** Two papers and one official API reference serve three different evidence functions. Adding another generic attention tutorial would not improve the technical evidence.
+2. **The construction corpus is pedagogically more diverse than the visible bibliography.** Jay Joshi, 3Blue1Brown and Jay Alammar contribute alternative teaching sequences, geometric intuition and an architecture bridge; their inspection boundaries remain explicit.
+3. **The PyTorch source-register omission was a real provenance defect.** It is repaired in this branch with a source record, extraction and review.
+4. **The `related.pages` set is not a valid denominator for source diversity.** It includes 16 records with mixed scope and at least one association requiring scrutiny. Keep it as discovery metadata until each association is justified.
+5. **No additional language, video or blog source is required at this stage.** The relevant question is whether each mathematical/API claim has the correct evidence class, not whether every source type is represented.
+6. **No change to the public lesson is justified by this audit.** Keep the core page mathematical; route API-specific dropout, boolean-mask polarity and backend constraints to Build/Deepen material.
+
+### 7.6 Remaining work and validation gates
+
+- [x] Reconcile visible external citations in FR and EN; the same three external URLs and two internal artefact URLs occur in the same order.
+- [x] Separate page-visible citations, construction sources, internal project artefacts and thematic associations.
+- [x] Record the visible bibliography's source-type, language and evidence-role profile.
+- [x] Register the PyTorch SDPA API and record the observed 2.15 documentation redirect.
+- [x] Create a source extraction for the PyTorch API's operator, mask, dropout, dispatch and GQA contract.
+- [x] Create a focused PyTorch API review and distinguish API evidence from mathematical and algorithmic primary sources.
+- [x] Add a claim-to-evidence map for the page's mathematical, masking, FlashAttention and API claims.
+- [ ] Review the 16 `related.pages` associations individually; correct only demonstrably stale or over-broad links.
+- [ ] Run source-catalogue and extraction schema validators on the final branch head.
+- [ ] Run Quarto render and relevant CI for both language versions.
+- [ ] Inspect the rendered equations, links, code/API callouts and mobile layout.
+- [ ] Complete the live accessibility checks tracked in #483.
+- [ ] Run the learner transfer pilot tracked in #447 after deployment/accessibility gates.
+
+**Second-pilot conclusion:** the scaled-attention page has good evidence-role diversity for its actual mathematical/computational scope, but its visible references are English-only and its `related.pages` candidate set is broader than the page's real source corpus. The highest-value fix was not adding another tutorial; it was registering the already-cited PyTorch API and tracing each claim to the correct evidence class.
