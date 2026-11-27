@@ -51,12 +51,11 @@ Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tok
 
 La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare trois points d'injection : ajout absolu à l'entrée, rotation de Q/K et biais relatif ajouté aux scores avant softmax. Le masque causal reste une contrainte de visibilité distincte.
 
-| Famille | Point d’injection | Exemple | Effet principal |
+| Mécanisme | Point d’injection | Exemple | Effet principal |
 |---|---|---|---|
-| Position absolue | À l’entrée, ajoutée à l’embedding du token | Encodage sinusoïdal, embeddings positionnels appris | Fournit une représentation de la position absolue. |
-| Représentation relative | Dans les interactions entre requêtes et clés, et éventuellement dans l’agrégation | Shaw et al. | Encode des relations entre positions dans les calculs d’attention. |
-| Biais relatif | Sur les scores d’attention, avant softmax | T5, ALiBi | Modifie la compatibilité selon le décalage entre positions. |
-| Encodage rotatif relatif | Sur Q et K après projection, avant le produit QKᵀ | RoPE | Rend le score sensible au décalage relatif par rotation de Q et K. |
+| Encodage absolu | À l’entrée, ajouté à l’embedding du token | Encodage sinusoïdal, embeddings positionnels appris | Fournit une représentation de la position absolue. |
+| RoPE (relatif) | Sur Q et K après projection, avant le produit QKᵀ | RoPE | Rend les scores d’attention sensibles au décalage relatif par rotation. |
+| Biais relatif | Sur les scores d’attention, avant softmax | T5, ALiBi | Ajoute un terme dépendant du décalage aux scores d’attention. |
 
 <figure id="fig-positional-entry-points">
   <picture>
