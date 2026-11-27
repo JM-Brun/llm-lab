@@ -40,9 +40,9 @@ Agreement on the standard score → scale → softmax → weighted-sum pipeline 
 | Explicit variance derivation | More developed than earlier brief scaling explanations | Dedicated attention-score-scaling lesson owns derivation and simulation | Integrate by reference; do not duplicate |
 | Tensor shapes, including d_k and d_v | More explicit exposition than short tutorials | Q/K/V, attention lessons and NumPy implementation cover shapes and unequal widths | Already covered; alternative reference |
 | “The cat sat” trace | More complete than compact examples in earlier sources | Project already has a hand-worked attention calculation and NumPy projection/shape exercise | Integrate by reference; no second workbench |
-| Routing versus payload | Makes the functional distinction unusually explicit | Dedicated optional note exists on Q/K/V EN/FR | Integrated |
-| Message-passing interpretation | Not comparably explicit in the earlier three records | Attention page describes values as messages and Q/K weights as content-dependent routing | Integrated as an analogy, not a fixed-graph claim |
-| Convex-hull property | Distinct mathematical consequence, not developed by earlier three tutorials | Attention page states the nonnegative/normalized-weight conditions and bounds the claim to the pre-projection weighted sum | Integrated with scope limitations |
+| Routing versus payload | Makes the functional distinction unusually explicit | The core Q/K/V pages state the distinction in their main prose; the advanced page develops its mathematical interpretation | Present in the core lesson; no separate source-attributed collapsible note or empirical claim about specialized heads |
+| Message-passing interpretation | Not comparably explicit in the earlier three records | The current scaled-attention pages contain weighted aggregation but no message-passing framing | Absent in FR and EN; defer unless a learner need justifies this additional analogy |
+| Convex-hull property | Distinct mathematical consequence, not developed by earlier three tutorials | The current scaled-attention pages do not state the convex-hull consequence | Absent in FR and EN; defer pending a demonstrated learner need; do not treat the extraction's earlier disposition as proof of integration |
 | Random-init attention visual | No equivalent qualified visualization in earlier scanned material | Project cautions against reading examples as empirical evidence; visual inventory records the heatmap's limits | Retain as source-quality and learner-misconception case |
 | Symmetry, linguistic-head and linearity claims | Richer technical stress-test material | Source review records necessary qualifications | Retain as technical regression cases |
 
@@ -66,7 +66,7 @@ is a convex combination of the accessible value vectors, so it belongs to their 
 
 This applies to the weighted sum **before** output projection, residual addition, normalization or MLP transformation. It does not apply to a fully masked row, whose weights are not a probability distribution, and does not imply that the final Transformer-block representation remains in the same convex hull.
 
-The fact is useful as a precise geometric interpretation of aggregation, but does not require a new page or canonical concept node.
+The fact is mathematically valid and useful as a possible geometric interpretation of aggregation, but it is not currently present in the bilingual scaled-attention pages (checked 2026-11-27). Keep it as a source-level candidate; do not claim integration or add it to the core lesson without learner evidence. It does not require a new page or canonical concept node.
 
 ### 3.3 Routing versus payload
 
@@ -76,20 +76,23 @@ This distinction is the most useful bridge between the role explanation and the 
 
 ## 4. Audit of the canonical pages
 
-### Q/K/V pages (EN and FR)
+### Q/K/V core lesson and advanced deep dive (EN and FR)
 
-The current bilingual pages cover:
+The current bilingual core Understand pages cover:
 - learned Q/K/V projections of the representation entering the attention sublayer;
 - the functional roles and shared-input projection equations;
 - current hidden representations versus first-layer token embeddings;
 - positional-information variants, including RoPE-style injection;
 - self-attention versus cross-attention;
-- matching/routing (Q/K) versus payload/content (V);
-- coreference versus lexical polysemy as distinct contextual phenomena;
-- the limitation that linguistic examples are not evidence that a particular head solves a task;
-- dot product versus cosine similarity, hard retrieval and attention-weight interpretation caveats.
+- matching/routing (Q/K) versus payload/content (V), stated in the main explanatory prose;
+- a pronoun-coreference example, explicitly labelled as illustrative rather than evidence of a trained head's behavior.
 
-**Assessment:** Brenndoerfer's routing/payload distinction clarifies the explanation but does not create a new mechanism or justify a new page. It belongs as an optional note in the existing Q/K/V page.
+The advanced Q/K/V deep dives additionally cover:
+- dot-product geometry and the distinction from cosine similarity;
+- the bank/river lexical-ambiguity example;
+- interpretation limits for contextual representations and attention weights.
+
+The geometric lens and lexical-ambiguity example are therefore present in the advanced destination, not as optional collapsible notes on the core Q/K/V pages. The Codefinity contribution is integrated at the deeper level; it should not be described as content on the core lesson.
 
 ### Scaled-attention pages (EN and FR)
 
@@ -97,28 +100,28 @@ The current bilingual pages cover:
 - \(S=QK^\top\), scaling, optional additive masking, row-wise softmax and \(O=AV\);
 - tensor shapes and a worked one-query/two-key numerical example;
 - scores, weights and outputs as distinct objects;
-- message passing as a content-dependent analogy;
-- the convex-hull property under nonnegative normalized weights, bounded to the pre-projection weighted sum;
 - why attention weights are not causal explanations;
-- fully masked-row behavior and the contract of the current single-head, unbatched NumPy implementation.
+- the distinction between attention weights over positions and the later vocabulary softmax.
 
-**Assessment:** the message-passing and convex-hull additions are complementary notes, not a reason to expand the core pipeline.
+The current source files do not contain the message-passing analogy or the convex-hull consequence. The weighted-sum formula alone does not establish that either interpretation has been taught explicitly.
+
+**Assessment:** message passing and convex-hull geometry remain candidate explanatory additions, not current page content. The present core pipeline is coherent without them; defer both until a learner task demonstrates a concrete need.
 
 ### Bilingual parity
 
-The EN and FR source files contain corresponding routing/payload and message-passing/convex-hull notes. This establishes source-content parity, not rendered visual parity. Browser rendering, mobile behavior, keyboard navigation, disclosure interaction and screen-reader behavior remain subject to the separate visual/accessibility review.
+The FR and EN pages have matching core computation and interpretive safeguards. Neither currently contains the message-passing or convex-hull note, so there is no language-parity defect for those deferred contributions. This source-file check does not establish rendered visual parity; browser rendering, mobile behavior, keyboard navigation and screen-reader behavior remain separate validation gates.
 
 ## 5. Source-to-project coverage and genuine remaining gaps
 
 | Learner question | Canonical owner | Brenndoerfer's incremental value | Decision / remaining action |
 |---|---|---|---|
 | What are Q, K and V? | Q/K/V page | Alternative analogy and projection exposition | No new content |
-| Why separate matching from payload? | Q/K/V page | Explicit routing/payload formulation | Integrated |
-| How are scores calculated and normalized? | Scaled-attention page | Detailed intermediate trace | Reference only |
-| Why divide by sqrt(d_k)? | Attention-score-scaling deep dive | Assumption-led variance argument | Check assumptions in deep dive; no duplication |
+| Why separate matching from payload? | Q/K/V core lesson | Explicit routing/payload formulation | Present in the main prose; do not describe it as a separate source-attributed note |
+| How are scores calculated and normalized? | Scaled-attention page | Detailed intermediate trace | Explicitly taught; source reference only |
+| Why divide by sqrt(d_k)? | Attention-score-scaling deep dive | Assumption-led variance argument | Present as a derivation in the deep dive; source-specific attribution is not explicit |
 | What are the tensor shapes? | Q/K/V, tensors, attention implementation | Alternative shape walkthrough | Already covered |
-| What does the weighted sum mean geometrically? | Scaled-attention page | Convex-hull interpretation | Integrated; pilot can test comprehension |
-| Can attention be viewed as message passing? | Scaled-attention page | Explicit message/payload analogy | Integrated; retain analogy boundary |
+| What does the weighted sum mean geometrically? | Scaled-attention page | Convex-hull interpretation | Weighted sum is explicit; convex-hull consequence is absent and deferred |
+| Can attention be viewed as message passing? | Scaled-attention page | Explicit message/payload analogy | Absent; defer pending learner need |
 | Do random heatmaps show learned specialization? | Interpretation safeguards | Concrete cautionary example | Keep as pilot/review prompt; no semantic inference |
 | Does a head perform coreference or syntax? | Q/K/V and contextualized-representations pages | Example exposes risk of overinterpretation | No empirical claim without model/head evidence |
 | How does this extend to multi-head, cross-attention, GQA/MQA? | Architecture and Build pages | Source is narrower than project route | Keep existing page ownership |
@@ -160,9 +163,9 @@ A new source should trigger a canonical change only when it adds a learner quest
 | Variance derivation | Integrate by reference |
 | Tensor-shape walkthrough | Already covered / reference |
 | “The cat sat” trace | Integrate by reference |
-| Routing versus payload | Integrated in Q/K/V EN/FR |
-| Message-passing interpretation | Integrated in attention EN/FR |
-| Convex-hull property | Integrated in attention EN/FR, scope qualified |
+| Routing versus payload | Present in the main prose of Q/K/V EN/FR; not a separate source-attributed callout |
+| Message-passing interpretation | Absent in scaled-attention EN/FR; deferred |
+| Convex-hull property | Absent in scaled-attention EN/FR; deferred pending learner evidence |
 | Random-init heatmap | Retain as caution / pilot prompt |
 | Symmetry, nonlinearity and learned-head claims | Technical regression cases |
 | New canonical page, graph node or route | Not justified |
@@ -353,3 +356,23 @@ This means the earlier statements in sections 8 and 9.3 that both additions were
 3. Either restore a minimal bilingual treatment with exact source/page references and rendered validation, or correct the earlier synthesis disposition to deferred/not integrated. Do not leave the discrepancy unresolved or preserve an inaccurate “integrated” status.
 
 This finding is a concrete preservation/traceability failure mode for issue #1739: a contribution's extraction and a prior integration decision do not prove that the corresponding content is still present in the current published lesson. The audit must verify the actual destination in both languages.
+
+
+## 11. Current source-to-page destination verification — 2026-11-27
+
+This matrix checks the current Quarto source files after the source-to-page traceability contract was added. It distinguishes the core Understand page from the advanced Q/K/V destination. “Explicit” describes the teaching content currently present; it does not by itself mean that the source is the technical evidence for the claim.
+
+**Excluded from the integration rows:** Nishanthan's role-separation item is disposition reject because the canonical lesson already teaches the same distinction more precisely. Its combined context-examples item is also rejected as a distinct page edit: the core pronoun example is attributed to Neha KK, while the bank/river example is present in the advanced destination through the Codefinity synthesis. Nishanthan remains a reader-facing visual reference; neither rejected item is counted as a page integration.
+
+| Contribution and canonical source item | Learner claim / teaching point | FR destination | EN destination | Current presence | Source role and decision |
+|---|---|---|---|---|---|
+| Neha KK — [extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml), role-decoupling | Why learn separate matching (Q/K) and payload (V) projections? | [Core Q/K/V](../../site/fr/queries-keys-values.qmd#pourquoi-trois-projections-à-partir-de-la-même-entrée) | [Core Q/K/V](../../site/en/queries-keys-values.qmd#why-three-projections-from-the-same-input) | explicit | Construction resource; extraction disposition clarify. The page explains the design rationale, but the tutorial is not primary technical evidence. |
+| Neha KK — same extraction, pronoun-context-example | Why can a position need information from another position? | [Core Q/K/V](../../site/fr/queries-keys-values.qmd#probleme-utiliser-contexte) | [Core Q/K/V](../../site/en/queries-keys-values.qmd#problem-using-context) | explicit | Construction resource and local example attribution; illustration, not evidence of a trained head's behavior. |
+| Codefinity — [extraction](../../data/extractions/codefinity-qkv-building-blocks.yml), geometric-alignment-framing | What does Q–K compatibility mean geometrically? | [Advanced Q/K/V](../../site/fr/queries-keys-values-advanced.qmd#geometrie-compatibilites-qk) | [Advanced Q/K/V](../../site/en/queries-keys-values-advanced.qmd#qk-compatibility-geometry) | explicit | Construction resource; deeper destination only. Dot product is not generally cosine similarity. |
+| Codefinity — same extraction, bank-polysemy-example | Distinguish lexical ambiguity from pronoun coreference | [Advanced Q/K/V](../../site/fr/queries-keys-values-advanced.qmd#interpretation-representations-limites) | [Advanced Q/K/V](../../site/en/queries-keys-values-advanced.qmd#interpreting-representations-limits) | explicit | Construction resource; illustrative example, not empirical head-level evidence. |
+| Brenndoerfer — [extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml), routing-versus-payload | Separate the representation that controls compatibility from the content aggregated | [Core Q/K/V](../../site/fr/queries-keys-values.qmd#trois-roles-complementaires) | [Core Q/K/V](../../site/en/queries-keys-values.qmd#three-complementary-roles) | explicit | Construction resource; present in main prose, not as the previously claimed source-attributed collapsible note. |
+| Brenndoerfer — same extraction, message-passing | Interpret attention as content-dependent message passing | [Scaled attention](../../site/fr/scaled-dot-product-attention.qmd#calcul-en-cinq-etapes) | [Scaled attention](../../site/en/scaled-dot-product-attention.qmd#five-computation-steps) | absent | The destination contains weighted aggregation, not the message-passing analogy. Defer; no page change justified without learner evidence. |
+| Brenndoerfer — same extraction, convex-hull | Infer the convex-hull constraint from normalized nonnegative weights | [Scaled attention](../../site/fr/scaled-dot-product-attention.qmd#calcul-en-cinq-etapes) | [Scaled attention](../../site/en/scaled-dot-product-attention.qmd#five-computation-steps) | absent | The mathematical property is valid for a non-empty normalized row before later transformations, but is not stated on the current pages. Defer; do not imply integration. |
+| Vaswani et al. — [extraction](../../data/extractions/vaswani-et-al-attention-is-all-you-need-2017.yml), learned-qkv-projections | Learned projections and their relation to the self-attention input | [Core Q/K/V](../../site/fr/queries-keys-values.qmd#pourquoi-trois-projections-à-partir-de-la-même-entrée) | [Core Q/K/V](../../site/en/queries-keys-values.qmd#why-three-projections-from-the-same-input) | explicit | Primary architectural support, with the page's compact single-head notation distinguished from the paper's per-head formulation. |
+
+**Verification boundary:** this is a source-file inspection on 2026-11-27, not a fresh browser/rendered-page or accessibility audit. The FR/EN source destinations were checked separately. No global contribution registry or PAGE-MAP field is introduced.

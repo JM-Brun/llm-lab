@@ -45,7 +45,7 @@ q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
 
 This distinction matters. Describing vectors as “aligned” can tempt the learner to think only about angle or cosine similarity. The dot product is not generally cosine similarity because the vector norms also matter. In scaled dot-product attention, scores are divided by \(\sqrt{d_k}\), normalized with softmax over accessible keys, and used to weight values. No hard nearest-neighbour selection is implied.
 
-**Integration:** the geometric perspective is an optional, collapsible note on both Q/K/V pages. It is attributed to Codefinity but rewritten in original project language and mathematically bounded. The original Codefinity figure was not reused: it was not visually inspected and its reuse rights are unknown.
+**Current destination (verified 2026-11-27):** the geometric treatment is in the dedicated advanced Q/K/V deep dive, not in the core Understand page. The FR and EN advanced pages each have a section on Q–K compatibility geometry. It is a deeper treatment, not an optional collapsible note on both core pages. The original Codefinity figure was not reused: it was not visually inspected and its reuse rights are unknown.
 
 ### 4.2 Coreference and lexical polysemy are complementary examples
 
@@ -58,7 +58,7 @@ The two examples share a broad theme—context affects interpretation—but teac
 
 Treating both as merely “the bank example already exists” would miss their different teaching functions. The contrast helps learners transfer the idea of contextual information flow beyond one linguistic task.
 
-**Integration:** a compact optional comparison appears on both Q/K/V pages. The full bank discussion remains owned by contextualized-representations and is linked rather than duplicated. Both examples are explicitly labelled illustrative; neither is evidence that a particular attention head alone performs the linguistic task.
+**Current destination (verified 2026-11-27):** the bank/river lexical-ambiguity example appears in the advanced Q/K/V deep dive in both languages, alongside the interpretation limits. It is not present as a compact comparison on the core Q/K/V pages, and the current contextualized-representations pages do not own this specific example. The pronoun-coreference example remains on the core Q/K/V page. Both examples are illustrative; neither is evidence that a particular attention head alone performs the linguistic task.
 
 ### 4.3 Why three representations? A design rationale
 
@@ -114,8 +114,8 @@ The three tutorials' agreement on Q/K matching and V aggregation should not be c
 | Contribution | Destination | Decision |
 |---|---|---|
 | Functional Q/K/V definitions | Existing canonical page | Already covered; retain source provenance only |
-| Geometric Q/K lens | Q/K/V FR/EN, optional collapsed note | Integrated |
-| Bank lexical-polysemy example | Q/K/V FR/EN contrast with coreference; full treatment remains contextualized-representations | Integrated by reference |
+| Geometric Q/K lens | Advanced Q/K/V deep dive FR/EN, dedicated geometry section | Present in the advanced destination; not a core-page note |
+| Bank lexical-polysemy example | Advanced Q/K/V deep dive FR/EN, interpretation-limits section | Present in the advanced destination; core Q/K/V keeps the distinct pronoun-coreference example |
 | Pronoun coreference example | Q/K/V FR/EN | Retained as a distinct example |
 | Q/K/V role-confusion distractors | Exercise design backlog | Reference; revisit when exercises are next revised |
 | Codefinity media | Asset register / future audit | Not reused; inspect actual image and rights before any reuse |
@@ -123,12 +123,13 @@ The three tutorials' agreement on Q/K matching and V aggregation should not be c
 
 ## 8. Current result and remaining opportunities
 
-The bilingual Q/K/V pages now offer a layered explanation:
+The bilingual Q/K/V learning sequence now separates the levels:
 
-1. **Core intuition:** index-card analogy.
-2. **Optional alternative lens:** geometric view of query-key compatibility, with a precise dot-product qualification.
-3. **Contextual transfer:** coreference versus lexical polysemy.
-4. **Formal next step:** scaled dot-product attention on the following page.
+1. **Core Understand page:** role intuition, shared-input projections, matching versus payload, and the pronoun-coreference example.
+2. **Advanced Q/K/V deep dive:** dot-product geometry, the distinction from cosine similarity, and the bank/river lexical-ambiguity example.
+3. **Next core lesson:** the formal scaled dot-product attention computation.
+
+The geometric and lexical-ambiguity contributions are present in the advanced destination; they should not be reported as content on the core page.
 
 No new page, concept, graph edge or prerequisite is introduced. This is deliberate: the new value is explanatory complementarity, not ontology growth.
 

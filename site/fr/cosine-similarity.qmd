@@ -45,7 +45,7 @@ La normalisation retire l'information portée par la norme. C'est souhaitable si
 
 ## 2. Pourquoi le cosinus peut être trompeur
 
-### Anisotropie et concentration des scores
+### Anisotropie et concentration des scores {#anisotropie-concentration-scores}
 
 Un espace est anisotrope lorsque les vecteurs ne sont pas répartis uniformément dans toutes les directions. Dans ce cas, des paires de phrases peu liées peuvent malgré tout avoir des cosinus élevés. Li et al. (EMNLP 2020) analysent l'anisotropie des embeddings de phrases BERT pré-entraînés et montrent qu'elle nuit à la similarité sémantique dans leurs expériences. Ethayarajh (2019) observe également des représentations contextualisées non isotropes dans BERT, ELMo et GPT-2.
 
@@ -59,7 +59,7 @@ Dans les espaces de grande dimension, certains points peuvent devenir les plus p
 
 Deux textes peuvent être très proches lexicalement ou thématiquement mais exprimer des faits opposés (« le traitement fonctionne » / « le traitement ne fonctionne pas »). Inversement, deux formulations très différentes peuvent répondre à la même question. La similarité de représentation n'est donc pas automatiquement équivalente à l'équivalence logique, à la pertinence documentaire ou à l'utilité pour un RAG.
 
-### La métrique dépend du modèle et de l'objectif d'entraînement
+### La métrique dépend du modèle et de l'objectif d'entraînement {#metrique-modele-objectif}
 
 Les modèles Sentence Transformers ne partagent pas tous la même fonction de score cible : certains sont entraînés ou recommandés pour le produit scalaire, d'autres pour le cosinus. La documentation Sentence Transformers précise que le produit scalaire de vecteurs normalisés équivaut au cosinus, tandis que le produit scalaire de vecteurs non normalisés conserve l'information de norme. Il faut respecter les hypothèses du modèle choisi plutôt que remplacer la métrique par défaut sans évaluation.
 

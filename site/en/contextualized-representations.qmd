@@ -60,7 +60,7 @@ The embedding lookup is a table access. It does not inspect the surrounding word
 
 One qualification: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
 
-## What changes with position and context
+## What changes with position and context {#position-and-context-effects}
 
 The initial lookup is not the whole network input: the architecture must also handle position, and Transformer blocks then build states that depend on accessible context. Positional mechanisms vary across models; a position vector is therefore not always added directly to the embedding.
 

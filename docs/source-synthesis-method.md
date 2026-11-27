@@ -52,7 +52,7 @@ Le dossier est un index de synthèse éditoriale, pas un remplacement des enregi
 Une décision éditoriale et une présence publiée sont deux faits différents. Pour chaque contribution retenue ou déclarée déjà couverte, documenter dans le dossier de synthèse une destination vérifiable :
 
 - identifiant local de contribution dans ce dossier ;
-- item(s) d'extraction source qui l'étayent, avec liens vers les fichiers canoniques ;
+- item(s) d'extraction source qui l'étayent, avec liens vers les fichiers canoniques, **ou une provenance explicitement marquée `project-derived`** lorsqu'il s'agit d'une conséquence construite par LLM Lab ;
 - question ou affirmation pédagogique précise que la contribution informe ;
 - page cible et langue ;
 - section ou ancre exacte, avec lien vers la page source Quarto lorsque possible ;
@@ -71,7 +71,7 @@ Règles de preuve :
 6. Si la page n'a pas été inspectée directement, conserver `not-verified`. Une destination candidate ou une association `related.pages` n'est pas une preuve de présence.
 7. Si la preuve est historique uniquement, marquer `historical-only` et vérifier le contenu courant avant de fermer la décision.
 
-Distinguer aussi trois rôles d'une source par rapport à une page : **ressource de construction** (a informé la conception), **preuve d'un claim** (étaye une affirmation précise) et **ressource de lecture** (recommandée au lecteur). Une source peut avoir plusieurs rôles, mais aucun ne doit être inféré automatiquement d'une citation, d'un lien bibliographique ou de `related.pages`.
+Distinguer aussi trois rôles d'une source par rapport à une page : **ressource de construction** (a informé la conception), **preuve d'un claim** (étaye une affirmation précise) et **ressource de lecture** (recommandée au lecteur). Une source peut avoir plusieurs rôles, mais aucun ne doit être inféré automatiquement d'une citation, d'un lien bibliographique ou de `related.pages`. Une contribution peut aussi être **dérivée par le projet** à partir d'une définition, d'une équation ou d'un contrat déjà établi : ne pas lui inventer un item source. Dans ce cas, documenter explicitement les prémisses et le raisonnement, puis vérifier la conséquence dans la page et, si nécessaire, dans un calcul ou un test. Une source qui étaye une prémisse ne devient pas automatiquement la source de la dérivation.
 
 Pour une synthèse multi-sources, ajouter une matrice concise `contribution × source-item × claim/enseignement × page/ancre × langue × statut`. Elle sert de vue de travail et doit pointer vers les enregistrements canoniques ; elle ne recopie ni les claims détaillés ni les métadonnées source.
 

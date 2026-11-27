@@ -70,7 +70,7 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
   <figcaption>Deux chemins se rejoignent : Q et K déterminent les poids, tandis que V fournit le contenu agrégé. Les scores bruts, les poids normalisés et la sortie sont trois objets différents ; pour chaque ligne non vide, les poids autorisés somment à 1.</figcaption>
 </figure>
 
-## Calcul en cinq étapes {#calcul-en-cinq-étapes}
+## Calcul en cinq étapes {#calcul-en-cinq-etapes}
 
 Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$, où $T$ désigne ici la longueur de la séquence.
 
@@ -129,7 +129,7 @@ Suivez la dernière position du préfixe. Son état d'entrée fournit la requêt
 
 <script src="../scripts/attention-intervention.js" defer></script>
 
-## Origine et rôle
+## Origine et rôle {#origine-et-role}
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
 
@@ -145,7 +145,7 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 </details>
 - **« Le facteur d'échelle est une constante empirique sans justification. »** Non : il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis. La dérivation complète et la simulation numérique sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
 
-### Attention et information mutuelle : une analogie, pas une identité
+### Attention et information mutuelle : une analogie, pas une identité {#attention-information-mutuelle}
 
 L'information mutuelle entre deux variables aléatoires dépend d'une distribution jointe :
 

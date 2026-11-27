@@ -33,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [The Transformer in a GPT: architecture and computation](transformer.qmd), showed that self-attention is a sublayer within the repeated block. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
-## The problem: using context
+## The problem: using context {#problem-using-context}
 
 In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
 
@@ -77,7 +77,7 @@ Q and K determine the weights; V provides the content to mix
 :::
 ::::
 
-## Three complementary roles
+## Three complementary roles {#three-complementary-roles}
 
 The three projections are easiest to distinguish by following the flow of information:
 
