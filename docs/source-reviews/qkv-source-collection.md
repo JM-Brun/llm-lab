@@ -239,7 +239,7 @@ The pilot identifies two operational improvements only: record text reconstructi
 
 **Audit owner:** issue [#1741 — page-level source diversity, complementarity and blind-spot audit](https://github.com/JM-Brun/llm-lab/issues/1741).  
 **Pilot pages:** [Q/K/V FR](../../site/fr/queries-keys-values.qmd) · [Q/K/V EN](../../site/en/queries-keys-values.qmd).  
-**Method:** reconcile page-visible citations, source catalogue associations, the four-tutorial comparison corpus, source-specific reviews and claim-level primary-source reviews. This is a review of repository artefacts; it does not repeat external scans, inspect unavailable image bytes, execute code or validate learner outcomes.
+**Method:** reconcile page-visible citations, source catalogue associations, the four-resource pedagogical comparison corpus, source-specific reviews and claim-level primary-source reviews. This is a review of repository artefacts; it does not repeat external scans, inspect unavailable image bytes, execute code or validate learner outcomes.
 
 ### 12.1 Four distinct source sets
 
@@ -293,7 +293,7 @@ Codefinity and Brenndoerfer are legitimate construction/comparison inputs, but a
 | Construction corpus technical level | 2 introductory, 1 mixed, 1 intermediate | A useful progression from orientation to mathematical/implementation depth |
 | Construction corpus origin | 4 distinct creators/platforms | No single-author/platform concentration in this small sample |
 | Page-visible sources | 2 blogs, 1 research paper, 1 blog on Substack (three blog posts plus one paper) | The public citation set includes a primary research anchor, but the explanatory citations remain secondary |
-| Inspection completeness | All four tutorial records and both additional cited sources remain partially scanned | Do not present any of them as exhaustively audited |
+| Inspection completeness | All four pedagogical-resource records and both additional cited sources remain partially scanned | Do not present any of them as exhaustively audited |
 | Independent corroboration | Not established | Repeated tutorial descriptions are pedagogical convergence, not independent experimental evidence |
 
 No entropy score is calculated for this four-source pilot. With four deliberately selected, non-representative resources, a numerical diversity score would add false precision. The counts above are descriptive only; they are not targets or quality grades.
@@ -330,7 +330,7 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 
 - [x] Compare external citations in Q/K/V FR and EN; confirm the same four URLs.
 - [x] Separate the four-source construction/comparison corpus from the four page-visible citations.
-- [x] Classify the four tutorial sources by type, origin, language, level, function, scan and integration status.
+- [x] Classify the four pedagogical resources by type, origin, language, level, function, scan and integration status.
 - [x] Identify Jose Parreño Garcia as a later page-cited source absent from the historical four-source matrix.
 - [x] Identify Vaswani as the primary source and preserve the focused/partial scan boundary.
 - [x] Record that `related.pages` does not establish source usage or claim support.
