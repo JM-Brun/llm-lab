@@ -82,7 +82,7 @@ A vector is an ordered list of real numbers. Unlike a single identifier, it has 
 
 We can think of each vocabulary unit as a point in a multidimensional space. Initially, these coordinates are not a definition of the word. They are learned: during training, the model adjusts its representations and other parameters to improve its predictions.
 
-Let $E$ denote the embedding matrix, with shape $|V| \\times d$ (vocabulary size by vector dimension). Token ID $i$ selects the corresponding row: $\\mathbf{e}_i = E[i, :]$. The ID therefore addresses a row; the values in that row form the vector used by the network.
+Let $E$ denote the embedding matrix, with shape $|V| \\times d$ (vocabulary size by vector dimension). Token ID $i$ selects the corresponding row: $\mathbf{e}_i = E[i, :]$. The ID therefore addresses a row; the values in that row form the vector used by the network.
 
 The loss function then provides a learning signal: through backpropagation, gradients can update that row of the embedding matrix as well as other network parameters. **Integer IDs are not updated**; they remain the discrete indices of the vocabulary.
 
