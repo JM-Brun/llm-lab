@@ -66,8 +66,8 @@ stages:
         mobilizes: ["concept:token"]
         objects: ["concept:token-id", "concept:token-embedding", "concept:contextualized-representation"]
         outcome:
-          fr: "Justifier le recours à des représentations numériques et distinguer ID, vecteur initial et état contextualisé."
-          en: "Explain why numerical representations are needed and distinguish an ID, an initial vector, and a contextualized state."
+          fr: "Expliquer comment des vecteurs appris et les transformations du réseau rendent exploitables des régularités linguistiques pour la prédiction, tout en distinguant ID, vecteur initial et état contextualisé."
+          en: "Explain how learned vectors and network transformations make linguistic regularities usable for prediction, while distinguishing an ID, an initial vector, and a contextualized state."
       text-data:
         mobilizes: ["node:raw-text-context"]
         objects: ["concept:token", "node:token-ids"]
