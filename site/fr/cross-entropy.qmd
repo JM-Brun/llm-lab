@@ -54,7 +54,7 @@ Pour relier cette formule à l’entraînement, voir aussi la construction des [
 
 Dans cet exemple, le token cible est le prochain token effectivement présent dans la continuation de référence. La cross-entropie pénalise le modèle lorsque la probabilité attribuée à ce token est faible ; elle ne compare pas directement des phrases entières comme des objets indivisibles.
 
-## Objectif pour un token {#objectif-pour-un-token}
+## Objectif pour un token {#objectif-pour-un-token} {#objectif-pour-un-token}
 
 Ici, $t$ indexe le **token cible** : les logits sont alignés sur $x_t$ et représentent $p_\theta(x_t\mid x_{<t})$. Certaines implémentations indexent plutôt les logits par la position d'entrée ; la ligne correspondant à l'entrée $t$ prédit alors $x_{t+1}$. Ces conventions ne sont équivalentes que si les logits et les labels sont décalés de manière cohérente. Pour une cible one-hot, la perte vaut :
 
@@ -90,7 +90,7 @@ Reprenez le même préfixe et les mêmes probabilités. Le décodage glouton cho
 
 Après le premier token, la génération poursuit avec « Vous » dans son préfixe. Le scoring poursuit avec « Je » dans le sien. [Comparer les deux préfixes sur une trace de deux tokens](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
 
-## Intuition visuelle : la perte mesure la surprise du token observé {#intuition-visuelle}
+## Intuition visuelle : la perte mesure la surprise du token observé {#intuition-visuelle} {#intuition-visuelle}
 
 <figure id="fig-cross-entropy-target-probability">
   <picture>
@@ -108,7 +108,7 @@ Cette image illustre la perte d'un token avec une cible one-hot ; elle ne repré
 
 La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathbb{1}[i=y]$. Son interprétation et son rôle dans la rétropropagation sont développés dans la page [Gradients](gradients.qmd).
 
-## Plusieurs positions : décalage causal et masques {#plusieurs-positions}
+## Plusieurs positions : décalage causal et masques {#plusieurs-positions} {#plusieurs-positions}
 
 Dans un modèle autorégressif, la représentation à la position $t$ sert à prédire le token suivant. Selon la convention du code, les logits et les labels doivent donc être décalés de manière cohérente : le modèle ne doit pas recevoir le token cible comme contexte non masqué pour prédire ce même token.
 
@@ -124,7 +124,7 @@ Pour un batch, les logits ont souvent la forme $(B,T,V)$ et les labels $(B,T)$. 
 
 Pour une cible one-hot, la cross-entropie moyenne calculée sur les mêmes positions valides et avec la même convention de réduction coïncide avec la NLL moyenne. La définition de la perplexité, son interprétation et les conditions nécessaires pour comparer des scores sont regroupées dans la page [Vraisemblance](vraisemblance.qmd).
 
-## Idées reçues {#idees-recues}
+## Idées reçues {#idees-recues} {#idees-recues}
 
 - **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
 
@@ -137,7 +137,7 @@ Pour une cible one-hot, la cross-entropie moyenne calculée sur les mêmes posit
 
 {{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
 
-## Cibles souples et divergence KL {#cibles-souples-kl}
+## Cibles souples et divergence KL {#cibles-souples-kl} {#cibles-souples-kl}
 
 Le cas one-hot suffit pour calculer la pénalité d'un token observé. Pour une cible qui répartit sa masse sur plusieurs tokens, la relation $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, ses hypothèses et ses cas limites sont développés dans l'approfondissement [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd). Cette dérivation n'est pas nécessaire pour calculer la NLL d'un token observé.
 
