@@ -1,0 +1,123 @@
+schema_version: 1
+source_id: yoo-et-al-ground-truth-labels-icl-2022
+items:
+  - id: yoo-et-al-ground-truth-labels-icl-2022:label-correctness-sensitivity
+    kind: definition
+    summary: "Label-correctness sensitivity is the slope of a linear regression of task performance against the proportion of correctly labelled demonstrations; it estimates how performance changes as label correctness varies."
+    locator:
+      type: section
+      value: "§2.3, Equation 1 and §2.4"
+      label: "Metrics for measuring the impact of input-label demonstrations"
+    evidence:
+      kind: formal-definition
+      confidence: well-supported
+      scope: "The paper defines sensitivity using a single-scalar linear regression y = β0 + β1s, where s is the proportion of correctly labelled examples."
+      assumptions:
+        - "The linear slope is used as a summary of sensitivity over the tested corruption levels."
+      limitations:
+        - "The metric is not sufficient by itself: low sensitivity can also occur on tasks where the model cannot use demonstrations effectively."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: yoo-et-al-ground-truth-labels-icl-2022:gler
+    kind: definition
+    summary: "Ground-Truth Label Effect Ratio (GLER) compares the performance gap between ground-truth and random-label demonstrations with the gain of ground-truth demonstrations over the no-demonstration baseline, clipped to [0, 1]."
+    locator:
+      type: section
+      value: "§2.3, Equation 1"
+      label: "Ground-Truth Label Effect Ratio"
+    evidence:
+      kind: formal-definition
+      confidence: well-supported
+      scope: "GLER = (y_GT - y_RL) / (y_GT - y_empty), where the terms denote ground-truth, random-label, and no-demonstration performance."
+      assumptions:
+        - "The denominator is intended to normalize the label effect against the demonstration gain over zero-shot."
+      limitations:
+        - "The ratio is clipped to [0, 1] in the paper and inherits the limitations of the underlying performance metric and baseline."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: yoo-et-al-ground-truth-labels-icl-2022:configuration-dependent-label-effect
+    kind: result
+    summary: "Correct input-label mappings can materially affect ICL performance in some evaluated configurations; the observed effect varies with dataset, inference method, metric, prompt design, and model."
+    locator:
+      type: section
+      value: "§2.1–§2.4, Figures 1–2 and Table 1"
+      label: "Revisiting input-label sensitivity"
+    evidence:
+      kind: experimental-result
+      confidence: context-dependent
+      scope: "The paper contrasts the Noisy Channel / macro-F1 / selected-dataset setup with Direct inference / accuracy / a broader classification-dataset set, then analyses sensitivity across 17 classification datasets."
+      assumptions:
+        - "The comparison is interpreted as evidence that the measured effect is protocol-dependent, not as a controlled replication of every Min et al. condition."
+      limitations:
+        - "The studies do not use identical inference methods, metrics, templates, or dataset subsets."
+        - "The authors note prompt-choice sensitivity and possible confounding among demonstration components."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: yoo-et-al-ground-truth-labels-icl-2022:prompt-and-model-factors
+    kind: result
+    summary: "Prompt-template verbosity, the inference method, the number of examples, and model size change the measured sensitivity to label corruption; more verbose task descriptions can reduce label sensitivity without necessarily reducing final performance."
+    locator:
+      type: section
+      value: "§3.2 and §4, Figures 5–8"
+      label: "Prompt templates, inference methods, and model scale"
+    evidence:
+      kind: experimental-result
+      confidence: context-dependent
+      scope: "The authors analyse variations in inference method, calibration, number of demonstrations, prompt verbosity, and model size."
+      assumptions:
+        - "The observed directions and magnitudes apply to the paper's models, tasks, and templates."
+      limitations:
+        - "Model-size effects are not a universal monotonic law; the paper reports a plateau in sensitivity after the GPT-J 6B scale."
+        - "The authors identify prompt-choice sensitivity as a limitation."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: yoo-et-al-ground-truth-labels-icl-2022:scope-limitations
+    kind: limitation
+    summary: "The authors warn that prompt choice affects results, that demonstration components are difficult to disentangle, and that label distribution can confound measured sensitivity."
+    locator:
+      type: section
+      value: "§6, Limitations"
+      label: "Limitations"
+    evidence:
+      kind: author-stated-limitation
+      confidence: well-supported
+      scope: "The paper explicitly discusses prompt sensitivity, interaction among demonstration components, and potential distributional confounds."
+      assumptions: []
+      limitations:
+        - "These limitations are reported by the authors; they do not resolve all possible confounders in other ICL studies."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
