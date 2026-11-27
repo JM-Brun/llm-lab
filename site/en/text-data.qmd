@@ -40,7 +40,13 @@ A **tokenizer** splits text into units called **tokens**. A token is not necessa
 ::: {#tokenizer-output}
 Exact prefix to copy: `What have the Romans ever done for us?`. The GPT-2 tokenizer produces nine tokens. The last is the **question mark** (`"?"`), with ID `30`.
 
-Use the text already present in the running example instead: `Romans` appears in the same prefix supplied to the model. Do not assume that a visible word corresponds to one token: GPT-2 may keep it whole or split it into several fragments, and a preceding space may belong to a fragment. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) prints the exact ordered fragments (as bytes) and GPT-2 IDs for the full prefix. This lets you inspect the actual segmentation rather than inventing word boundaries. The continuation “They built roads between distant towns.” is not part of the prompt yet; it is encoded as it is generated and appended to the context.
+The GPT-2 tokenizer makes the value of this running example concrete. In this exact prefix, `Romans` is represented by one token, including its preceding space:
+
+| Visible word in the prefix | Exact GPT-2 fragment | ID |
+|---|---|---:|
+| `Romans` | `" Romans"` | `22482` |
+
+The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) prints and checks the complete ordered sequence of fragments and IDs with `tiktoken==0.14.0`. The continuation “They built roads between distant towns.” is not part of the prompt yet; it is encoded as it is generated and appended to the context.
 :::
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
