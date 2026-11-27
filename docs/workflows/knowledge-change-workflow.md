@@ -26,7 +26,9 @@ Start by identifying what is being added. A single request may combine modes, bu
 | New project knowledge | A derived insight, corrected explanation, new relation, cross-domain synthesis | `knowledge-change-workflow` + `knowledge-and-learning-integration` | Evidence-backed page/graph/resource delta and provenance |
 | New learning page | A durable learner question not served adequately by current pages | `new-learning-page` + `knowledge-and-learning-integration` when graph/source integration is involved | Page contract, bilingual page(s), metadata/navigation, links and tests |
 | Existing page improvement | Missing explanation, better example, correction, scope/ownership issue | `page-content-audit` or `editorial-boundary-audit`, then integration | Bounded content change and preservation record |
-| Cross-page or graph evolution | New concept, relation, domain impact, metadata/projection change | `knowledge-architecture-audit` | Canonical registry/metadata changes and regenerated projections |
+| Knowledge-graph evolution | New concept, semantic relation, domain impact or knowledge-map projection | `knowledge-architecture-audit` | Canonical concept/domain/resource changes and regenerated projections |
+| Computational-graph evolution | New operation, data representation, dataflow relation, execution branch, feedback/repetition rule or computational view | `knowledge-architecture-audit` | Canonical `data/computational-graph.yml` change, schema/validator/tests and regenerated computational views |
+| Page-navigation evolution | Page identity, suggested route, hierarchy, related links or page-map projection | `knowledge-architecture-audit` | Canonical page metadata change and regenerated page-map projection |
 | External learning project | Coherent course/site/book/repository ecosystem | `project-learning-resource-audit` first | Project model, source map, comparative integration decisions |
 
 Do not invoke every skill. Use the smallest combination that covers distinct decisions. The [skill routing matrix](../../.agents/skills/audit-skill-routing/SKILL.md) is the operational index.
@@ -73,10 +75,12 @@ Use the existing canonical ownership model. Do not infer ownership from filename
 | Controlled knowledge domains | `data/domains.yml` |
 | Non-page implementation resources | `data/resources.yml` |
 | Page identity, editorial role, destination, tags, hierarchy, related and suggested navigation | `LLM-LAB-PAGE-MAP` metadata in page source |
-| Sequential Understand route | `data/guided-route.yml` only |
+| Reader-facing nine-stage Understand route | `data/guided-route.yml` (machine-readable stages); `docs/learning-path.md` explains the route |
+| Overall curriculum and Build order/status | `docs/learning-path.md`, `docs/full-curriculum-plan.md` and existing Build lesson/code evidence |
 | Build route and deliverables | Existing Build route definitions and docs |
 | Source-to-project synthesis and provenance | Existing `docs/source-reviews/`, `docs/source-syntheses/`, extraction records and references |
-| Generated graph, map, route and navigation projections | Existing generators; never hand-edit generated outputs |
+| Computational graph | `data/computational-graph.yml`, governed by `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md` |
+| Generated knowledge/page/computational graph, map, route and navigation projections | Existing generators; never hand-edit generated outputs |
 
 Keep these structures distinct:
 - concept graph relations are semantic, not reading instructions;

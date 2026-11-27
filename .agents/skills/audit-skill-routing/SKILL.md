@@ -21,7 +21,8 @@ This is a routing skill, not a substitute for specialist analysis.
 | Is this one page pedagogically clear, complete and well structured? | `page-content-audit` | `scientific-content-audit` for technical claims; `editorial-boundary-audit` for cross-page ownership |
 | Do these pages form a coherent sequence, family or local window? | `page-group-audit` | `page-content-audit` for deep page-level review; `editorial-boundary-audit` for overlap; `knowledge-architecture-audit` for canonical graph/route changes |
 | Are explanations duplicated, misplaced or ambiguously owned? | `editorial-boundary-audit` | `page-group-audit` for sequence implications; `scientific-content-audit` for factual disputes |
-| Are concepts, relations, domains, metadata, routes or graph projections coherent and valid? | `knowledge-architecture-audit` | `scientific-content-audit` when relation semantics depend on disputed technical truth; `page-group-audit` for learner-facing route effects |
+| Are concepts, domains, metadata, routes or knowledge-map projections coherent and valid? | `knowledge-architecture-audit` | `scientific-content-audit` when relation semantics depend on disputed technical truth; `page-group-audit` for learner-facing route effects |
+| Does the canonical computational graph correctly represent operations, dataflow, branches, feedback and repeated computation, and remain distinct from concepts/routes/navigation? | `knowledge-architecture-audit` | `scientific-content-audit` for disputed computational semantics; `page-group-audit` or `rendered-site-audit` only for learner-facing view/behavior |
 | Are equations, algorithms, statistical claims, code behavior or experimental conclusions correct? | `scientific-content-audit` | `page-content-audit` for teaching implications; `page-group-audit` for downstream route consequences |
 | Does the rendered site display or operate correctly across viewport, theme, language, keyboard and accessibility cases? | `rendered-site-audit` | `page-content-audit` for teaching implications; `page-group-audit` for route/group implications; `knowledge-architecture-audit` for canonical graph/route changes |
 | Is this a full external-source scan, including its figures and media? | `source-extraction` | `visual-asset-audit` only when an asset-specific rights/reuse decision needs separate focused review |
@@ -38,7 +39,7 @@ Do not invoke every skill for every request. A named page does not automatically
 ### 1. Parse the requested outcome
 
 Identify:
-- object: page, group, route, concept graph, source, code, experiment or site-wide system;
+- object: page, group, route, concept graph, computational graph, source/extraction, code, experiment or site-wide system;
 - question: correctness, pedagogy, overlap, architecture, navigation, visual behavior or integration;
 - expected action: diagnose, recommend, implement, create issues or validate an existing change;
 - scope: named pages/files, language versions, local window or bounded project area.
