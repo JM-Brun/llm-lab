@@ -75,3 +75,15 @@ La limite actuelle est plutôt documentaire : l'identité des apports propres à
 - [Audit des contributions des représentations](understand-representations-intellectual-contributions-audit-2026-11.md)
 - [Audit des contributions génération/scoring/apprentissage](understand-generation-scoring-training-contributions-audit-2026-11.md)
 - [Audit des contributions autour du contexte](understand-context-use-intellectual-contributions-audit-2026-11.md)
+
+
+## 6. Contrôle de couverture par rapport au parcours canonique
+
+Un contrôle de cohérence a comparé les pages requises de chaque étape de `data/guided-route.yml` (champ `pages.fr`, en excluant volontairement `optional_pages`) aux identifiants de page de cette matrice.
+
+- **20 pages Understand requises** dans le parcours.
+- **20/20 identifiants retrouvés** dans la matrice.
+- **Aucune page requise manquante.**
+- Les pages optionnelles, pages Deepen, Build et Practice ne sont pas comptées dans ce contrôle : elles relèvent d'audits complémentaires et ne doivent pas être assimilées aux leçons canoniques du parcours.
+
+Ce contrôle vérifie la couverture des identifiants, pas la qualité du contenu, la visibilité effective des apports ou leur rendu. Il devra être rejoué à chaque modification de `data/guided-route.yml`.
