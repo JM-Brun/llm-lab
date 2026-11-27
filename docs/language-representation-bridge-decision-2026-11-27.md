@@ -283,6 +283,8 @@ The existing Understand stage `text-input` now includes the bridge before `text-
 
 The bilingual Quarto render list and Understand sidebars include the new pages. The reciprocal `suggested_route` links on the overview and text-data pages were updated. The canonical concept registry associations were retained and reused; no computational graph nodes or edges were added.
 
+The existing core-route contract requires one synthesis companion for every core lesson. A dedicated bilingual recall sheet was therefore added at `revision-language-representation`, with a single retrieval question and a typed `revision_of` link. The new lesson contract requires only `llm-overview`; `text-data` now requires `language-representation`. This preserves the user's separation between the main explanation and Practice/Review material without reusing an unrelated synthesis sheet.
+
 ### Remaining validation before merge
 
 - Confirm the page metadata validator accepts both new records and the shared topic.
