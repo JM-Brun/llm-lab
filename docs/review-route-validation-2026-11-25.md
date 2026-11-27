@@ -236,3 +236,18 @@ A second focused FR/EN review covered **Cross-entropy**, **Loss** and **Training
 The examples use different language-specific tokens, but the probability values, reductions and conclusions are equivalent. No objective, prerequisite or route membership is changed.
 
 **Remaining scope:** continue with the Transformer/attention group. Do not treat these two targeted groups as completion of the 20-lesson scientific-caveat audit.
+
+
+### Targeted scientific-caveat audit — Transformer and attention branch (2026-11-27)
+
+A third focused FR/EN review covered **Transformer**, **Q/K/V**, **Scaled dot-product attention**, **Causal masking** and **Positional encoding**. No new content correction was required in this group; the caveats below are present in both languages.
+
+- **Transformer:** the decoder-only GPT scope is explicit; pre-LN is presented as common, not universal; residual/normalization order may vary. Training can process known positions in parallel under a causal mask, while generation remains autoregressive. The KV cache reduces recomputation of past keys/values but does not remove sequential token generation; prefill and decode are distinguished.
+- **Q/K/V:** both pages state that projections are recomputed inside each attention sublayer from that block's own input state, including already-contextualized states in later blocks. They explicitly reject placing Q/K/V after the final contextualized representations. Self-attention and cross-attention have different input provenance; (d_k) and (d_v) need not match; attention weights are not universal semantic relevance and are not nearest-neighbour search in initial embeddings.
+- **Scaled dot-product attention:** the pages distinguish raw scores, scaled scores, optional masked scores, row-wise softmax weights and the weighted sum of V. The softmax axis is the key axis for each query. Normalized weights do not establish semantic relevance or causality; the additive hard mask is applied before softmax.
+- **Causal masking:** both languages state the information constraint, the (j\leq i) convention and why the current position is generally allowed when predicting the next token. Causal, padding and loss masks have distinct roles; boolean-mask conventions are API-specific.
+- **Positional encoding:** absolute and relative mechanisms are distinguished; RoPE is correctly placed in the relative family and acts on Q/K after projection. NoPE can obtain an implicit ordering signal from nested causal prefixes, but that supplies neither an explicit absolute coordinate nor relative distance and does not guarantee long-context generalization. Positional information and causal visibility remain distinct.
+
+The bilingual explanations are materially aligned, including the central computational correction in #575: Q/K/V are computed within each block from its own input state, not after the final contextualized representations.
+
+**Remaining scope:** this closes only the reviewed Transformer/attention group. The scientific-caveat criterion for all 20 core lessons remains open until the remaining input/representation and other lesson groups are checked.
