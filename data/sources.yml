@@ -7344,7 +7344,7 @@ sources:
       contribution_types: [theory, experiment, architecture]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-27"
         status: partially-scanned
@@ -7356,10 +7356,19 @@ sources:
           - "The source's stronger causal evidence for small attention-only models must not be generalized to large models, where the authors describe more indirect evidence."
           - "At the initial metadata-only pass, no claim-level integration had been validated; a targeted claim-level integration was added in the subsequent review recorded below."
           - "No figure or asset reuse rights were established."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Official Transformer Circuits Thread: abstract, induction-head circuit description, evidence-strength summary, six arguments, direct ablation discussion and model-scale extrapolation"
+          - "Evidence distinction between small attention-only models, small models with MLPs and full-scale models"
+        limitations:
+          - "The article is long; the review focused on the mechanistic definition and the strength/boundaries of the evidence rather than every appendix, model-analysis row or training detail."
+          - "The authors report no full-scale head ablations; the majority-ICL claim for large models remains mainly correlational and preliminary."
+          - "No figure assets were reused."
     related:
       pages: [en/in-context-learning, fr/in-context-learning]
       concepts: [in-context-learning, self-attention, multi-head-attention, causal-mask]
-      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/olsson-et-al-induction-heads-2022.yml]
 
   - id: xie-et-al-implicit-bayesian-icl-2022
     title: "An Explanation of In-context Learning as Implicit Bayesian Inference"
