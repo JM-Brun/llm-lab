@@ -2573,12 +2573,12 @@ sources:
 
   - id: aiedge-how-llm-distillation-trains-smaller-models
     title: "How LLM Distillation Trains Smaller Models"
-    creators: []
+    creators: ["Damien Benveniste"]
     source_type: blog
     identifiers: {}
     canonical_url: "https://newsletter.theaiedge.io/p/how-llm-distillation-trains-smaller-models"
     publisher: "The AiEdge Newsletter"
-    publication_date: null
+    publication_date: "2026-11-06"
     updated_date: null
     language: en
     version: null
@@ -2598,7 +2598,7 @@ sources:
       contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner]
     scan_status: inaccessible
-    integration_status: not-reviewed
+    integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-06"
         status: inaccessible
@@ -2609,6 +2609,14 @@ sources:
           - "Search-index queries did not expose the article body or its section structure."
           - "The article author, publication/update dates, figures, linked references and claims could not be verified."
           - "No article-specific knowledge items were extracted; related publications are not treated as substitutes for this source."
+      - accessed_at: "2026-11-27"
+        status: inaccessible
+        inspected_scope:
+          - "The AiEdge newsletter homepage listing for the canonical article; title, 2026-11-06 date, byline Damien Benveniste and a one-sentence teaser were visible."
+        limitations:
+          - "Direct article URL still returned a cache miss."
+          - "The homepage teaser is not the article body; section structure, figures, linked references and claims remain uninspected."
+          - "No article-specific extraction or claim attribution is justified by the listing alone."
     related:
       pages:
         - fr/training-examples
@@ -7356,7 +7364,7 @@ sources:
       contribution_types: [theory, historical-context]
       audiences: [learner, researcher, educator]
     scan_status: discovered
-    integration_status: not-reviewed
+    integration_status: deferred
     collections: [zipf-law]
     scan_history:
       - accessed_at: "2026-11-24"
