@@ -40,28 +40,14 @@ A **tokenizer** splits text into units called **tokens**. A token is not necessa
 ::: {#tokenizer-output}
 Exact prefix to copy: `What have the Romans ever done for us?`. The GPT-2 tokenizer produces nine tokens. The last is the **question mark** (`"?"`), with ID `30`.
 
-The shorter text `hello world` lets you follow the entire sequence. The quotes mark the contents of each token.
-
-| Token | GPT-2 ID |
-|---|---:|
-| `"hello"` | `31373` |
-| `" world"` | `995` |
-
-The space before `world` is part of the second token. Across the two examples, spaces and punctuation affect the split. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks the IDs, prints the full decomposition of both prefixes, and illustrates table lookup using synthetic vectors.
+Use the text already present in the running example instead: `Romans` appears in the same prefix supplied to the model. Do not assume that a visible word corresponds to one token: GPT-2 may keep it whole or split it into several fragments, and a preceding space may belong to a fragment. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) prints the exact ordered fragments (as bytes) and GPT-2 IDs for the full prefix. This lets you inspect the actual segmentation rather than inventing word boundaries.
 :::
 
 A different tokenizer can give the same text different tokens and IDs. Even when two tokenizers recognize the same fragment, they can assign it different numbers. Use the tokenizer paired with the model weights so that each ID selects the intended embedding row.
 
 <span id="comparison-of-two-tokenizers"></span>
 
-Compare two encodings of the **exact same input**, `2 + 2 = 4`, using `tiktoken==0.14.0`. The symbol `␠` makes spaces that belong to fragments visible:
-
-| Encoding | Token fragments | IDs | Total |
-|---|---|---|---:|
-| `gpt2` | `2` · `␠+` · `␠2` · `␠=` · `␠4` | `17, 1343, 362, 796, 604` | **5** |
-| `cl100k_base` | `2` · `␠+` · `␠` · `2` · `␠=` · `␠` · `4` | `17, 489, 220, 17, 284, 220, 19` | **7** |
-
-Both sequences decode to `2 + 2 = 4`. IDs are local to each vocabulary, so their numerical values are not comparable across encodings. This contrast demonstrates an effect on representation length, not a difference in linguistic quality. The [reproducible trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks the fragments, IDs, and full decode.
+To compare two tokenizers without changing the pedagogical material, the trace encodes **the same running-example prefix** with `gpt2` and `cl100k_base`. For each tokenizer it prints the exact fragments, IDs, token count, and reconstructed text. Boundaries and IDs may differ, but both sequences must decode to the same prefix. IDs are local to their vocabulary, so their numeric values are not comparable across tokenizers. This comparison is reproducible with `tiktoken==0.14.0` in the [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 
 ### Why do two tokenizers produce different sequences?
 
