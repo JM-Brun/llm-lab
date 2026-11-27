@@ -2544,7 +2544,7 @@ sources:
       concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, contextualized-representation]
     metadata:
       technical_level: introductory
-      contribution_types: [pedagogy, mathematical-derivation, visualization]
+      contribution_types: [pedagogy, architecture, visualization]
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
