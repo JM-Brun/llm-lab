@@ -241,3 +241,12 @@ The source-level findings and remaining tasks are recorded in [the audit report]
 - The CA-A causal-mask/prefix-invariance exercise was found in the shared Attention collection even though the causal-masking lesson linked to a dedicated Practice companion. The companion held only a short check. PR #1622 is merged after its Python CI, Quarto/browser review and secret scanning passed. PR #1626 moves CA-A into the dedicated companion, preserves the old collection anchors as link-only aliases, aligns the lesson's test-scope claims with the existing full-GPT test, and reconciles the roadmap status. No new implementation or test framework is needed.
 - After CA-A integration, the next exercise gap to inspect is the text-data transfer sequence: BPE merge tracing, shifted windows and leakage/document-boundary handling. The existing TR-A/B/C and training-example material must be compared first; do not duplicate their representation/shape activities.
 - Do not repeat the validated scoring/loss, gradient/training-loop, inference/context-use, text-input/representations, or Transformer/QKV/attention scientific audits. Reuse their evidence and only correct reproducible regressions.
+
+
+## Fil rouge narratif et clin d'œil culturel — audit du 2026-11-26
+
+Le contrat éditorial, l'état source-level FR/EN, la carte d'utilisation par étape Understand et les travaux restants sont consignés dans [running-example-and-editorial-easter-egg.md](running-example-and-editorial-easter-egg.md).
+
+Décision : conserver le fil rouge comme support de raisonnement récurrent mais facultatif. Les exemples français et anglais peuvent être localisés différemment ; leur parité est conceptuelle et computationnelle, pas littérale. Ne pas forcer le clin d'œil dans chaque page, dans les exemples spécialisés d'ICL/context engineering ou dans les fixtures Build.
+
+Le travail restant est borné : vérifier les traces numériques et conventions de tokenisation FR/EN, compléter éventuellement une expérience ICL à paramètres fixes, puis contrôler le rendu publié après déploiement. L'intégration dans Build reste différée et appartient à [#924](https://github.com/JM-Brun/llm-lab/issues/924). Aucun nouveau registre, graphe, workflow ou parcours n'est requis.
