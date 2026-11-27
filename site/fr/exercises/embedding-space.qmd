@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Vérifier sa compréhension
 
-Les exercices d'application sont regroupés dans la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et conserve les questions de vérification ci-dessous ; elle ne fait pas partie du parcours principal.
+Cette page regroupe les questions, exercices et expériences propres à la leçon Espace des embeddings. Pour les exercices transversaux sur les données textuelles, consultez la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et ne fait pas partie du parcours principal.
 
 1. Une matrice contient $V$ lignes et des vecteurs de dimension $d$. Combien de paramètres contient-elle, et que sélectionne l'ID $i$ ?
 
@@ -57,6 +57,19 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 Les deux architectures partagent la même table de plongements. Pour chaque ID, elles lisent donc la même ligne, quelle que soit la position. Dans A, le vecteur positionnel appris est ajouté aux embeddings avant les blocs. Dans B, RoPE transforme les composantes des requêtes et des clés dans le calcul d'attention ; il n'ajoute pas un vecteur positionnel au résultat du lookup. Dans les deux architectures, les couches du Transformer produisent ensuite des états contextualisés qui dépendent des autres positions accessibles et du mécanisme positionnel. Il faut donc distinguer le vecteur de token initial, le mécanisme positionnel propre à l'architecture et l'état contextualisé.
 
 **Critère de réussite :** décrire correctement les deux lieux d'injection de l'information positionnelle sans généraliser le mécanisme de A à tous les modèles, et distinguer lookup initial et état contextualisé.
+
+</details>
+
+4. On renumérote les IDs de la séquence \([17,42,8,17]\) en \([2,0,1,2]\). La nouvelle table \(E'\) déplace les lignes de sorte que \(E'_{2,:}=E_{17,:}\), \(E'_{0,:}=E_{42,:}\) et \(E'_{1,:}=E_{8,:}\). Le lookup produit-t-il les mêmes vecteurs ? Que se passe-t-il si l'on renumérote les IDs sans déplacer les lignes ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Oui, le lookup produit la même séquence de vecteurs : \(E'_{2,:},E'_{0,:},E'_{1,:},E'_{2,:}\) correspond respectivement à \(E_{17,:},E_{42,:},E_{8,:},E_{17,:}\). Seul le nom numérique des adresses a changé. Si les IDs sont renumérotés sans déplacer les lignes, le lookup lit généralement d'autres vecteurs.
+
+Cette invariance ne porte que sur la table d'entrée. Pour préserver le comportement d'un modèle complet, il faut aussi permuter de façon cohérente les autres paramètres indexés par le vocabulaire, notamment la projection de sortie.
+
+**Critère de réussite :** expliquer pourquoi les valeurs numériques des IDs sont arbitraires, mais pourquoi la correspondance ID–ligne doit rester cohérente.
 
 </details>
 
