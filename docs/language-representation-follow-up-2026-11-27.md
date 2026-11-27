@@ -23,24 +23,26 @@ PR #1754 also passed a full test run at its validated head (832 passed, 1 skippe
 
 ### Current content refinement
 
-PR #1762 is open. Its diff is deliberately limited to:
+PR #1762 is open. The current refinement changes the bilingual lesson, its two review sheets, the text-input outcome in `data/guided-route.yml`, and the corresponding generated learning-map data. It also updates this handoff and the architecture decision record.
 
-- `site/fr/language-representation.qmd`;
-- `site/en/language-representation.qmd`;
-- `site/includes/generated-map-data-fr.qmd`;
-- `site/includes/generated-map-data-en.qmd`.
+Its pedagogical correction is important: the page's primary job is to explain **why language must be represented mathematically so a neural network can learn and exploit linguistic regularities**. The distinction between an ID, an initial embedding, and a contextualized state remains necessary, but it supports the broader explanation.
 
-Its pedagogical correction is important: the page's primary job is now to explain **why language must be represented mathematically so a neural network can learn and exploit linguistic regularities**. It should not reduce its purpose to distinguishing an integer ID from an embedding vector. That distinction remains necessary, but it supports the broader explanation.
+The current refinement also:
+- clarifies that tokenizer units are not necessarily whole words;
+- connects the embedding matrix to the learned vector and explains that backpropagation updates embedding parameters, not discrete token IDs;
+- uses a distributional example to explain how usage contexts provide statistical evidence, without treating vector proximity as a complete definition of meaning;
+- updates the bilingual review sheets so learners reconstruct the motivation and the role of the prediction objective, not merely recall that ID subtraction is meaningless;
+- aligns the guided-route outcome with learned representations, linguistic regularities, prediction, and contextualization.
 
 ### Validation status at this update
 
-| Check on PR #1762 head `9bc83e5` | Status |
+| Check on the latest PR #1762 head at this update | Status |
 |---|---|
-| Python quality and domain checks | Passed |
-| Full test suite | Running; no result to claim yet |
-| Full Quarto render | Running at `Render full site` |
+| Python quality and domain checks | Passed on an earlier refinement head; rerun required after the latest edits |
+| Full test suite | Pending current-head result |
+| Full Quarto render | Pending current-head result |
 | Current-head browser audit | Not yet completed |
-| Secret scanning | Passed |
+| Secret scanning | Successful on earlier heads; verify latest head |
 
 The browser audit from PR #1754 must not be treated as final validation for PR #1762: the page text, examples, learning outcomes, and visual content have changed.
 
@@ -56,13 +58,7 @@ The browser audit from PR #1754 must not be treated as final validation for PR #
 - [ ] Verify the generated map projections match the page metadata and route sources. Do not hand-edit generated files to make a test pass.
 - [ ] Confirm the current page's math-rendering expectations. The revised explanation no longer visibly depends on the earlier matrix/lookup equations; decide whether that is the right level for an overview. Do not add equations merely to satisfy a numeric span count.
 
-**Known CI defect to resolve:** on head \`9bc83e5\`, \`tests/knowledge/test_map_artifacts_freshness.py\` failed for both \`fr\` and \`en\`. The tracked \`site/includes/generated-map-data-{fr,en}.qmd\` artifacts still contained the old section-heading inventory while the renderer expected the revised headings. The test output explicitly recommends regenerating with:
-
-\`\`\`bash
-uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
-\`\`\`
-
-Regenerate from the canonical sources, inspect the resulting diff, and commit the artifacts. Do not repair the JSON/QMD by hand. The current documentation commit has restarted CI; verify that this failure is gone on its head.
+**Known CI defect from an earlier head: on `9bc83e5`, `tests/knowledge/test_map_artifacts_freshness.py` failed for both `fr` and `en`: the tracked learning-map data still listed the previous section headings. The FR/EN heading inventories have since been synchronized with the current lesson sources. The current-head freshness test must confirm that the tracked artifacts exactly match the canonical generator output; do not claim this is resolved until that test passes.
 
 **Acceptance:** current PR head has successful CI and Quarto/browser checks, with any remaining warnings identified and judged. A successful render alone is not a substitute for inspecting the page in the browser.
 
@@ -70,9 +66,9 @@ Regenerate from the canonical sources, inspect the resulting diff, and commit th
 
 The content has shifted from a mostly representational distinction toward a motivation grounded in mathematical modelling and distributional learning. Some supporting metadata and revision material still reflect the earlier emphasis.
 
-- [ ] Revisit the bilingual page-map `purpose`, `summary`, and `scope` for alignment with the revised opening and learning outcomes.
-- [ ] Update the `language-representation` outcome in `data/guided-route.yml` so it captures the central learning result: explain why numerical vectors and parameterized transformations let the network exploit regularities in language, while distinguishing IDs, initial embeddings, and contextualized states.
-- [ ] Review the bilingual `revision-language-representation` sheets. Their current recall question is almost entirely about why IDs cannot be subtracted and what lookup selects. Add a recall prompt about why mathematical representations are useful for learning linguistic regularities, without turning the sheet into a duplicate of the lesson.
+- [x] Revisit the bilingual page-map `purpose`, `summary`, and `scope` for alignment with the revised opening and learning outcomes.
+- [x] Update the `language-representation` outcome in `data/guided-route.yml` to cover learned vectors, network transformations, linguistic regularities, prediction, and the distinction between IDs, initial embeddings, and contextualized states.
+- [x] Update the bilingual `revision-language-representation` sheets so their recall question and answer cover the motivation for learnable numerical representations and the role of the prediction objective.
 - [ ] Recheck the lesson's `revision_support` evidence and the review-sheet `scope`/ `purpose` after that update. Preserve the existing typed `revision_of` relation and synthesis contract.
 - [ ] Keep the main lesson and review sheet aligned in French and English; do not allow the two language versions to drift in emphasis or scientific claims.
 
@@ -80,7 +76,7 @@ The content has shifted from a mostly representational distinction toward a moti
 
 ### P1 — Tighten scientific precision in the examples
 
-- [ ] Clarify that the integer table using *chat/chien/voiture* and *cat/dog/car* is a simplified illustration. Real tokenizers assign IDs to tokens, which may be words, subwords, punctuation, or other units; a written word is not necessarily one token.
+- [x] Clarify that the integer table using *chat/chien/voiture* and *cat/dog/car* is a simplified illustration. Real tokenizers assign IDs to tokens, which may be words, subwords, punctuation, or other units; a written word is not necessarily one token.
 - [ ] Ensure the distributional example (*chat/félin*, *cat/feline*) illustrates evidence from usage and context, not a guarantee that every next-token model places synonyms near one another in its embedding table.
 - [ ] Keep the distinction between an embedding's learned parameters and an explicit dictionary definition. Avoid implying that a vector contains a human-readable semantic description.
 - [ ] Preserve the qualification that contextualization depends on the architecture and accessible context. The same token ID gives the same initial embedding at fixed parameters, but later states may differ by occurrence.
