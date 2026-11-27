@@ -167,3 +167,14 @@ items:
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value], route_ids: []}
     disposition: cite
     disposition_rationale: "Keep source and figure credit as links only; do not reproduce the article's or book's visuals."
+
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:worked-numeric-trace
+    kind: derivation
+    summary: "The three-participant example traces X (3x4) through Q/K/V (3x2), scores S = 10 Q K^T (3x3), row-wise weights P, context C = P V (3x2), W_O (2x4), Delta X (3x4) and X_new (3x4); the displayed matrices are rounded to two decimals where applicable."
+    locator: {type: page, value: "2–9", label: "Complete numerical meeting example"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "All intermediate projection and output tables in the supplied PDF.", assumptions: ["The participant features and projection matrices are hand-designed.", "The scalar 10 is manually chosen.", "No causal mask is applied."], limitations: ["The example is single-head and non-causal.", "Values in the final matrices are rounded."]}
+    technical_assessment: {status: algebraically-checked, rationale: "The matrix products, row-wise softmax and residual update are consistent with the displayed inputs and stated conventions.", corroborating_sources: ["Vaswani et al. (2017), https://arxiv.org/abs/1706.03762"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, topic:residual-stream], concept_ids: [query, key, value, attention-score, attention-weight, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [query, key, value, self-attention], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the complete numerical trace in the source note and cite the article from the Q/K/V lesson; do not create a second canonical numerical workbench."
