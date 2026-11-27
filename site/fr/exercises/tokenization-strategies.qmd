@@ -55,6 +55,36 @@ Oui en général : un identifiant n'a de sens que relativement au vocabulaire du
 
 </details>
 
+
+## Diagnostiquer les composants du pipeline {#pipeline-diagnostic}
+
+Pour chaque composant, formulez une prédiction avant de tester un tokenizer configuré. La question est un guide d'observation, pas une règle universelle.
+
+| Composant | Question de vérification |
+|---|---|
+| **Normalisation** | Deux chaînes visuellement semblables sont-elles normalisées de la même façon ? |
+| **Pré-tokenisation** | Les espaces, la ponctuation ou les nombres créent-ils des frontières ? |
+| **Modèle de tokenisation** | Quelle unité de base, quel vocabulaire et quelles règles sont utilisés ? |
+| **Post-traitement** | BOS, EOS, séparateurs ou tokens de tâche sont-ils ajoutés ? |
+| **Décodeur** | Les espaces, octets et caractères sont-ils reconstruits comme prévu ? |
+
+## Cas de diagnostic qui révèlent les compromis {#tokenizer-diagnostic-cases}
+
+Pour chaque entrée, testez la question associée et notez le risque d'une interprétation naïve. Ne supposez pas les sorties à l'avance : elles dépendent du tokenizer et de sa configuration.
+
+| Entrée | Question à poser | Risque naïf |
+|---|---|---|
+| `situation` puis ` situation` | L'espace initial change-t-il la segmentation du mot du fil rouge ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
+| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |
+| `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
+| `café` et `cafe\\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
+| `2026-10-29`, `123456789` | Comment chiffres et séparateurs sont-ils segmentés ? | Un token n'est pas nécessairement un nombre entier |
+| `你好` | Le système dépend-il des espaces entre mots ? | La séparation sur espaces peut ne donner aucune frontière utile |
+| `def predict_next(x): return x + 1` | Comment espaces, identifiants et opérateurs sont-ils traités ? | La segmentation peut sembler arbitraire |
+| Emoji et symboles rares | Quelle couverture et quelle longueur ? | Couverture ne signifie pas efficacité uniforme |
+
+Pour documenter chaque résultat, notez tokenizer/version, chaîne d'entrée, tokens visibles et nombre de tokens. Comparez les résultats sans confondre couverture, compression, adéquation linguistique et qualité en aval.
+
 ## Expérimenter : comparer plusieurs tokenizers
 
 Encodez le même texte — « C'est une bonne situation, ça, scribe ? » — avec au moins deux tokenizers. Si possible, choisissez des familles ou des vocabulaires différents.
