@@ -1,8 +1,8 @@
 # Source reviews and comparative collections
 
-This directory contains source-specific reviews and living multi-source collections. It is the human-readable navigation layer for the machine-readable catalogue in [data/sources.yml](../../data/sources.yml) and atomic evidence records in [data/extractions/](../../data/extractions/).
+This directory contains source-specific reviews and navigation to living multi-source collections, which are maintained separately in [docs/source-syntheses/](../source-syntheses/). It is the human-readable review layer for the machine-readable catalogue in [data/sources.yml](../../data/sources.yml) and atomic evidence records in [data/extractions/](../../data/extractions/).
 
-A collection dossier is not a replacement for the canonical concept graph, bilingual learning pages or project learning route. It compares external perspectives and records their integration decisions.
+Source reviews assess individual sources. Cross-source dossiers compare perspectives and record aggregate integration decisions; neither replaces the canonical concept graph, bilingual learning pages or project learning route.
 
 ## Compression and information theory
 
@@ -55,6 +55,7 @@ The current concept model adds 21 tokenization-specific concepts and typed relat
 | Review | Scope | Entry point | Current state |
 |---|---|---|---|
 | Jose Parreño Garcia — “The 3-layer framework behind chatGPT & friends” | Classical ML analogy for corpus collection, base-model training and fine-tuning; critical assessment of truthfulness, reasoning and the confounded model comparison | [Source review](jose-parreno-garcia-how-llms-work-three-layers-2026-11.md) · [Structured extraction](../../data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml) | Full article and both embedded images inspected; retained by reference only because the bilingual overview and post-training lessons already cover the technical content |
+| Damien Benveniste — “How LLMs Encode Token Position” | Short-form comparison of learned absolute vectors, sinusoids, RoPE and ALiBi; distinguishes positional information from causal visibility | [Source review](aiedge-positional-encoding-2026-11.md) · [Structured extraction](../../data/extractions/aiedge-how-llms-encode-token-position-2026.yml) · [Cross-source synthesis](../source-syntheses/positional-encoding-source-synthesis-2026-11-26.md) | Partial indexed scan only; full article, figures, examples and implementation remain uninspected |
 
 | Review | Scope | Entry point | Current state |
 |---|---|---|---|
