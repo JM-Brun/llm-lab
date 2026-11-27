@@ -55,7 +55,7 @@ Pour chaque token cible de la continuation, on calcule d’abord comment la pert
 
 ## Gradient par rapport aux logits
 
-Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
+Pour une cible one-hot $y$, posons $p=\operatorname{softmax}(z)$. Pour la cross-entropie non pondérée calculée à partir de cette distribution :
 
 $$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
@@ -75,7 +75,7 @@ $$
 
 ::: {.callout-note collapse="true" title="Gradient de la moyenne sur les positions valides"}
 
-Cette formule donne la dérivée de la perte **pour une seule position**. Pour la moyenne non pondérée sur l'ensemble $\mathcal{M}$ des positions cibles valides définie dans [Loss](loss.qmd), le gradient par logit devient :
+À chaque position, $p_{b,t}=\operatorname{softmax}(z_{b,t})$. Cette formule donne la dérivée de la perte **pour une seule position**. Pour la moyenne non pondérée sur l'ensemble $\mathcal{M}$ des positions cibles valides définie dans [Loss](loss.qmd), le gradient par logit devient :
 
 $$
 \frac{\partial\mathcal{L}}{\partial z_{b,t,i}}=
