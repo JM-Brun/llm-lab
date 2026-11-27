@@ -42,7 +42,7 @@ Un mot n'est pas naturellement un nombre. Lui attribuer un numéro permet de le 
 
 L'idée est d'associer aux unités du texte des vecteurs dont les valeurs sont apprises à partir des usages du langage et d'un objectif d'entraînement. Les opérations du réseau peuvent alors exploiter certaines régularités statistiques — et ainsi modéliser des aspects de la sémantique — sans qu'on lui fournisse une définition explicite de chaque mot.
 
-Nous allons suivre un même exemple tout au long de la page : la réplique d'Otis, « C'est une bonne situation, ça, scribe ? ». Pour l'instant, lisons-la comme une simple chaîne de caractères. Nous allons voir ce qui change — et ce qui ne change pas — lorsque le modèle la transforme en objets numériques.
+Nous allons suivre le même fil rouge que dans le reste du parcours : la question d'Otis, « C'est une bonne situation, ça, scribe ? », puis le début de sa réponse : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Pour l'instant, lisons ces phrases comme des chaînes de caractères. Nous allons suivre ce qui change — et ce qui ne change pas — lorsque le modèle les transforme en objets numériques.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Ce que vous devez comprendre"}
@@ -78,7 +78,7 @@ Un calcul direct sur ces identifiants — par exemple une distance entre 17 et 4
 
 Un identifiant reste utile : il sert d'étiquette stable pour désigner une unité du vocabulaire. Mais il faut lui associer une représentation numérique plus riche si l'on veut que les calculs du réseau puissent apprendre des régularités.
 
-Dans notre exemple, un tokenizer donné attribue un ID à chaque token de la réplique. Imaginons que l'unité correspondant à `situation` reçoive l'ID fictif `314`. Ce nombre permet de retrouver l'entrée du vocabulaire ; il ne dit pas si la situation est bonne, mauvaise, professionnelle ou absurde. Le nombre `314` est un exemple pédagogique, pas l'ID réel d'un tokenizer particulier.
+Dans le préfixe d'Otis, le tokenizer GPT-2 étudié dans la page suivante produit notamment le token `" situation"` (avec son espace initial), auquel il attribue l'ID `3074`. Cet entier permet de retrouver une entrée du vocabulaire ; il ne dit pas que la situation est un poste, une profession ou un ensemble de circonstances. C'est une adresse dans une table, pas une propriété linguistique. Cet ID est propre au tokenizer GPT-2 et à ce fragment exact : il ne doit pas être généralisé à un autre tokenizer ni à une autre segmentation.
 
 ## 3. Pourquoi représenter les unités par des vecteurs ?
 
@@ -92,7 +92,7 @@ La fonction de perte fournit ensuite un signal d'apprentissage : par rétropropa
 
 C'est cette possibilité d'apprentissage qui est décisive. Le réseau peut appliquer aux vecteurs des transformations paramétrées, comparer des informations, les mélanger et construire de nouvelles représentations. Les vecteurs ne sont donc pas de simples étiquettes numériques : ils constituent le support sur lequel le calcul neuronal opère.
 
-Pour notre unité fictive `314`, le lookup sélectionne la ligne correspondante : $\mathbf{e}_{314}=E[314,:]$. Le vecteur obtenu n'est pas une définition de « situation » ; ses composantes sont des paramètres appris. C'est ce vecteur, et non le nombre `314`, que les opérations du réseau vont transformer.
+Pour le token GPT-2 `" situation"`, le lookup sélectionne la ligne 3074 de la matrice : $\mathbf{e}_{3074}=E[3074,:]$. Le vecteur obtenu n'est pas une définition de « situation » ; ses composantes sont des paramètres appris. C'est ce vecteur, et non l'entier 3074, que les opérations du réseau vont transformer. Les valeurs réelles de cette ligne dépendent du checkpoint : nous n'en inventons pas les coordonnées ici.
 
 <figure>
   <pre>
@@ -113,15 +113,15 @@ Unités → identifiants (les désigner)
 
 Les exemples qui suivent utilisent des mots entiers pour faciliter la lecture. En pratique, les unités manipulées par le modèle sont celles produites par le tokenizer : elles peuvent correspondre à un mot, à un fragment de mot, à un caractère ou à un signe de ponctuation.
 
-Revenons à la formulation d'Otis : « bonne situation », puis « bonne ou mauvaise situation ». Le même nom apparaît dans des contextes qui l'évaluent différemment. Le modèle ne reçoit pas une règle écrite lui disant ce qu'est une « bonne situation » ; pendant l'entraînement, il rencontre de très nombreux usages de ces mots et de leurs combinaisons. Ces contextes fournissent des indices statistiques que ses représentations apprises peuvent rendre exploitables.
+Revenons à la tirade d'Otis : dans « C'est une bonne situation, ça, scribe ? », *situation* désigne un poste ou une profession ; dans « de bonne ou de mauvaise situation », le mot renvoie aux circonstances ou aux conditions. Le même mot visible intervient donc dans deux contextes et deux emplois différents. Le modèle ne reçoit pas une règle écrite lui donnant ces deux définitions : pendant l'entraînement, il rencontre de très nombreux usages des mots et de leurs combinaisons. Ces contextes fournissent des indices statistiques que ses représentations apprises peuvent rendre exploitables.
 
-Ce petit exemple ne suffit évidemment pas à apprendre le sens du mot. Il sert à visualiser le principe : les régularités viennent des usages rencontrés à grande échelle, et non d'une étiquette numérique isolée.
+Cette courte tirade ne suffit évidemment pas à apprendre le sens du mot. Elle rend visible le problème : les régularités linguistiques viennent des usages rencontrés à grande échelle, et non d'une étiquette numérique isolée.
 
 C'est une intuition centrale de la **modélisation distributionnelle** : les usages et les contextes fournissent des indices sur les relations entre les unités linguistiques. Dans un modèle de langage, ces indices sont notamment exploités au travers de l'objectif de prédiction du prochain token. Pour prédire correctement, le réseau a intérêt à construire des représentations qui conservent et combinent les informations utiles présentes dans le contexte.
 
 Il faut néanmoins éviter une interprétation trop forte :
 
-- le modèle n'apprend pas nécessairement une relation explicite « chat = félin » ;
+- le modèle ne reçoit pas nécessairement une étiquette explicite « situation = poste » ou « situation = circonstances » ;
 - deux mots proches dans certains contextes ne sont pas interchangeables dans toutes les phrases ;
 - une proximité entre vecteurs dépend de la représentation et de la mesure choisies ;
 - les coordonnées ne correspondent généralement pas à des propriétés sémantiques lisibles une par une.
@@ -132,9 +132,9 @@ Il faut néanmoins éviter une interprétation trop forte :
 
 Le lookup initial dépend de l'ID, pas de la phrase dans laquelle le token apparaît. Deux occurrences d'un même ID sélectionnent donc le même vecteur initial à paramètres fixés.
 
-Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. Reprenons `situation` : dans « C'est une bonne situation, ça, scribe ? », le mot s'inscrit dans une appréciation ; dans « La situation est urgente », il participe à la description d'un état de fait. **Si le tokenizer attribue le même ID aux deux occurrences**, le lookup sélectionne le même vecteur initial. Le contexte différent n'est pas inscrit dans cette ligne de la table : il sera pris en compte par les calculs du Transformer.
+Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. Reprenons les deux emplois d'Otis : dans « une bonne situation », le mot désigne un poste ; dans « de bonne ou de mauvaise situation », il désigne les circonstances. **Si le tokenizer attribue le même ID à ces deux occurrences**, le lookup sélectionne le même vecteur initial. Le fait que le premier emploi renvoie à une profession et le second aux circonstances n'est pas inscrit dans la ligne de la matrice : cette différence peut être prise en compte par les calculs du Transformer.
 
-Cette comparaison est conceptuelle ; elle ne prétend pas fixer le découpage exact que produirait un tokenizer donné sur ces deux phrases.
+La condition sur l'ID est importante : un mot visible n'est pas nécessairement un token unique, et le découpage dépend du tokenizer. Nous isolons ici le principe de contextualisation, comme dans la page dédiée, sans prétendre déduire les IDs de la continuation à partir du seul préfixe.
 
 Les couches du Transformer construisent des **représentations contextualisées** en transformant les vecteurs initiaux à partir des autres positions accessibles. Dans un modèle causal, une position ne peut utiliser que le préfixe qui la précède et elle-même. C'est cette transformation qui permet à l'état associé à une occurrence de dépendre de son contexte.
 
