@@ -129,7 +129,7 @@ Follow the final position of the prefix. Its input state supplies the query for 
 
 <script src="../scripts/attention-intervention.js" defer></script>
 
-## Provenance and purpose
+## Provenance and purpose {#provenance-and-purpose}
 
 The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.
 
