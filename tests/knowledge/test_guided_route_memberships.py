@@ -144,7 +144,7 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
             "fr",
             [
                 "Vue d\u2019ensemble",
-                "Tokeniser",
+                "Encoder",
                 "Représenter",
                 "Contextualiser",
                 "Prédire",
@@ -159,7 +159,7 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
             "en",
             [
                 "Overview",
-                "Tokenize",
+                "Encode",
                 "Represent",
                 "Contextualize",
                 "Predict",

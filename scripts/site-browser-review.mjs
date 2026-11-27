@@ -874,7 +874,7 @@ async function runCase(testCase, caseIndex) {
       };
     });
     const expectedCoreNavigation = {
-      "text-data.html": { previous: "llm-overview.html", next: "embedding-space.html" },
+      "text-data.html": { previous: "language-representation.html", next: "embedding-space.html" },
       "embedding-space.html": { previous: "text-data.html", next: "positional-encoding.html" },
       "generation.html": { previous: "entropy.html", next: "in-context-learning.html" },
     }[pagePath];
