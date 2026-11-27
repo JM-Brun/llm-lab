@@ -93,6 +93,14 @@ P_\theta(\text{« Vous savez , »}\mid c)
 =0{,}6\times0{,}5\times0{,}8=0{,}24.
 $$
 
+<figure id="fig-likelihood-scoring-trace">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/likelihood-fr-mobile.svg">
+    <img src="../images/likelihood-fr.svg" alt="Trois tokens observés sont évalués sous des préfixes successifs qui s’allongent. Les probabilités conditionnelles 0,6, 0,5 et 0,8 se multiplient pour donner une vraisemblance de 0,24 ; leurs logarithmes s’additionnent. Les paramètres restent fixes." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Chaque probabilité porte sur un préfixe de référence différent : la continuation est scorée par produit des probabilités conditionnelles, ou par somme des log-probabilités. Il ne s’agit ni d’une hypothèse d’indépendance ni d’une génération.</figcaption>
+</figure>
+
 ## De la vraisemblance à la perte
 
 La log-vraisemblance négative $\operatorname{NLL}$ est :
