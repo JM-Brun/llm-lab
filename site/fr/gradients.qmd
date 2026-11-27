@@ -172,7 +172,7 @@ g_i^{\mathrm{num}}=
 {2\epsilon}.
 $$
 
-Comparer ce résultat au gradient analytique avec des tolérances absolue et relative. La vérification doit être faite en précision suffisante, sur une fonction déterministe et avec un $\epsilon$ adapté à l'échelle des paramètres. Trop petit, il amplifie les erreurs d'arrondi ; trop grand, il approxime mal la dérivée locale.
+Comparer ce résultat au gradient analytique avec des tolérances absolue et relative. La vérification doit être faite en précision suffisante, sur une fonction déterministe et avec un $\epsilon$ adapté à l'échelle des paramètres. Trop petit, il amplifie les erreurs d'arrondi ; trop grand, il approxime mal la dérivée locale. PyTorch indique que les réglages par défaut de `gradcheck` sont conçus pour des entrées en double précision ; une précision inférieure peut provoquer un échec. Le contrôle peut aussi échouer aux points non différentiables ou avec des tenseurs dont plusieurs indices partagent la même mémoire. Un échec doit donc être interprété à la lumière de ces conditions, et non comme une preuve immédiate que la dérivée analytique est fausse.
 :::
 
 ::: {.callout-warning title="Idées reçues"}
