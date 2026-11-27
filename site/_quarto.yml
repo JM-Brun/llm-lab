@@ -37,6 +37,20 @@ project:
     - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
+    - images/positional-entry-points-en-mobile.svg
+    - images/positional-entry-points-fr-mobile.svg
+    - images/attention-calculation-flow-en-mobile.svg
+    - images/attention-calculation-flow-fr-mobile.svg
+    - images/causal-attention-mask-mobile.svg
+    - images/causal-attention-mask-fr-mobile.svg
+    - images/embedding-lookup-en-mobile.svg
+    - images/embedding-lookup-fr-mobile.svg
+    - images/contextualized-embeddings-en-mobile.svg
+    - images/contextualized-embeddings-fr-mobile.svg
+    - images/gpt-data-flow-en-mobile.svg
+    - images/gpt-data-flow-fr-mobile.svg
+    - images/transformer-stack-en-mobile.svg
+    - images/transformer-stack-fr-mobile.svg
     - images/advent-zipf-rank-frequency.svg
     - images/likelihood-fr-mobile.svg
     - images/likelihood-en-mobile.svg
@@ -46,14 +60,6 @@ project:
     - images/gradients-en-mobile.svg
     - images/context-engineering-fr-mobile.svg
     - images/context-engineering-en-mobile.svg
-    - images/embedding-lookup-en-mobile.svg
-    - images/embedding-lookup-fr-mobile.svg
-    - images/contextualized-embeddings-en-mobile.svg
-    - images/contextualized-embeddings-fr-mobile.svg
-    - images/gpt-data-flow-en-mobile.svg
-    - images/gpt-data-flow-fr-mobile.svg
-    - images/transformer-stack-en-mobile.svg
-    - images/transformer-stack-fr-mobile.svg
   render:
     - index.qmd
     - fr/scientific-calendar.qmd

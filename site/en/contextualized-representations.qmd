@@ -18,12 +18,12 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/embedding-space", "en/positional-encoding", "en/queries-keys-values", "en/transformer", "en/contextualized-representations-exercises"]
+related: ["en/embedding-space", "en/positional-encoding", "en/transformer", "en/queries-keys-values", "en/contextualized-representations-advanced", "en/contextualized-representations-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap, representation table, and controlled past/future comparison distinguish lookup, position, and accessible context; sub-layer details and SAE investigation remain in the deep dive."
+      note: "The one-minute recap distinguishes lookup, position, and accessible context; the Practice page adds four recall cards and a controlled past/future comparison. Sublayer details, empirical findings, and the SAE investigation remain in the deep dive."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
@@ -158,6 +158,10 @@ Comparing these objects prepares you to read the Transformer. In the computation
 
 ::: {.callout-note title="Another pedagogical perspective"}
 For a complementary overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+:::
+
+::: {.callout-note title="Where do Q/K/V fit?"}
+Q, K, and V are not a stage that comes after contextualized representations. They are projections computed **inside the self-attention sublayer** of each Transformer block; the repeated blocks progressively build contextualized states. See the dedicated [Q/K/V page](queries-keys-values.qmd).
 :::
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.

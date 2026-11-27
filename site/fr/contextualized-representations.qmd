@@ -18,12 +18,12 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/embedding-space", "fr/positional-encoding", "fr/queries-keys-values", "fr/transformer", "fr/contextualized-representations-exercises"]
+related: ["fr/embedding-space", "fr/positional-encoding", "fr/transformer", "fr/queries-keys-values", "fr/contextualized-representations-advanced", "fr/contextualized-representations-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel, le tableau des représentations et la comparaison contrôlée passé/futur distinguent lookup, position et contexte accessible ; les détails des sous-couches et l’enquête SAE restent dans l’approfondissement."
+      note: "La synthèse en une minute distingue lookup, position et contexte accessible ; la page Practice ajoute quatre cartes de rappel et une comparaison contrôlée passé/futur. Les détails des sous-couches, les résultats empiriques et l'enquête SAE restent dans l'approfondissement."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -170,6 +170,10 @@ Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcu
 
 ::: {.callout-note title="Autre présentation pédagogique"}
 Pour une présentation complémentaire du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+:::
+
+::: {.callout-note title="Où se situent Q/K/V ?"}
+Q, K et V ne constituent pas une étape qui vient après les représentations contextualisées. Ce sont des projections calculées **à l'intérieur du sous-bloc d'auto-attention** de chaque couche Transformer ; les blocs répétés construisent progressivement les états contextualisés. Voir la page dédiée à [Q/K/V](queries-keys-values.qmd).
 :::
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.

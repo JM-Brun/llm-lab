@@ -38,7 +38,37 @@ Puis observez « moi je ne crois pas… » : à qui renvoient *moi* et *je* ? Po
 
 Vous avez compris cette étape si vous distinguez **identité du vecteur initial**, **information contextuelle construite par le Transformer** et **interprétation référentielle**. Le même ID initial ne garantit pas des états cachés identiques ; inversement, ce seul exemple ne prouve pas qu'une tête d'attention résout à elle seule la coréférence.
 
+## Cartes de révision
 
+Essayez de répondre avant d'ouvrir chaque carte. Elles consolident les distinctions nécessaires avant les exercices de transfert.
+
+<details>
+<summary>Carte 1 — Que garantit un ID identique ?</summary>
+
+Avec la même matrice, il sélectionne la même ligne et donc le même vecteur de lookup initial.
+
+</details>
+
+<details>
+<summary>Carte 2 — Pourquoi les états cachés peuvent-ils différer ?</summary>
+
+Les blocs transforment les états selon la position et le contexte accessible à chaque occurrence.
+
+</details>
+
+<details>
+<summary>Carte 3 — Que peut consulter la position i dans un GPT causal ?</summary>
+
+Les positions jusqu'à i, y compris i ; aucune position strictement future.
+
+</details>
+
+<details>
+<summary>Carte 4 — Pourquoi la perte peut-elle changer sans changer la distribution ?</summary>
+
+Le futur peut changer la cible observée, pas la distribution calculée à partir du même préfixe causal.
+
+</details>
 
 ## Quel changement peut atteindre l'état courant ? {#ex-contextualization-causal-boundary}
 
