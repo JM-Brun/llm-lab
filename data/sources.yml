@@ -8274,3 +8274,45 @@ sources:
       pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: []
       audit_records: [docs/source-syntheses/transformer-block-walkthrough-source-audit-2026-11.md]
+
+  - id: lin-2026-six-llm-misconceptions
+    title: "Six misconceptions about large language models: A minimal model and diagnostic taxonomy"
+    creators: ["Zhicheng Lin"]
+    source_type: paper
+    identifiers: {doi: "10.1093/pnasnexus/pgag236"}
+    canonical_url: "https://doi.org/10.1093/pnasnexus/pgag236"
+    publisher: "PNAS Nexus / Oxford University Press"
+    publication_date: "2026-07-08"
+    updated_date: null
+    language: en
+    version: "Published version; corrected and typeset 2026-07-17"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training, inference-efficiency, scale-research]
+      tags: [topic:llm-misconceptions, topic:system-model, method:diagnostic-taxonomy, topic:memory-layers, topic:capability-evaluation]
+      concept_ids: [next-token-prediction, training-objective, decoding-policy, persistent-memory, context-injection, retrieval-augmented-generation, operational-competence, held-out-evaluation]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, pedagogy]
+      audiences: [learner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: not-reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Publisher full-text HTML: bibliographic metadata, abstract, Table 1, the minimal working model, Misconceptions 1, 2, 4 and 6, evaluation/deployment implications, conclusion and licence statement"
+          - "Publication metadata: DOI, 8 July 2026 publication date, 17 July 2026 corrected/typeset date, and CC BY 4.0 licence statement"
+        limitations:
+          - "Figure 1 description and caption were read as text, but the actual figure asset was not inspected as image bytes; no visual reuse is proposed."
+          - "The other figures and visual assets were not inspected."
+          - "References and cited empirical examples were not independently checked against their primary sources; do not treat the article's benchmark values as independently verified by this extraction."
+          - "The source's linked policies and external systems were not scanned; the article states that there are no data underlying this work."
+    related:
+      pages: [fr/llm-overview, en/llm-overview, fr/decoding-strategies, en/decoding-strategies, fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/llm-limits, en/llm-limits]
+      concepts: [next-token-prediction, training-objective, decoding-policy, persistent-memory, context-injection, retrieval-augmented-generation, operational-competence, held-out-evaluation]
+      audit_records: [docs/source-reviews/lin-2026-six-llm-misconceptions-source-review.md, docs/misconceptions-and-pedagogical-coverage-audit-2026-11-25.md]
