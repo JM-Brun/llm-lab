@@ -2130,3 +2130,67 @@ A source-grounded page-by-page audit of the bilingual **Positional encoding** an
 This batch confirms that both lessons already have several substantial contributions: positional insertion-point distinctions and the separation of positional information from causal visibility; shared embedding lookup versus context-dependent hidden states, causal dependency boundaries, and limits on semantic interpretation. The source-derived empirical measurements for contextuality remain in Deepen. No new page metadata field, contribution registry, concept node or route step is justified.
 
 The audit is source-only. It does not claim rendered visual, accessibility or learner validation. The next #1739 batch should continue in canonical Understand route order and reuse the existing Q/K/V pilot rather than repeat it.
+
+
+## Issue #1739 — branches génération, scoring et apprentissage (2026-11-27)
+
+Audit source page par page des leçons Understand FR/EN `generation`, `vraisemblance` / `likelihood`, `loss`, `gradients` et `training-loop`. Le pilote cross-entropy #1739 est réutilisé sans duplication. La matrice détaillée et les décisions de conservation sont dans [le dossier des contributions génération/scoring/apprentissage](source-syntheses/understand-generation-scoring-training-contributions-audit-2026-11.md).
+
+### Résultats
+
+- Les trois usages de la distribution prédictive restent distincts : génération libre (token sélectionné puis réinjecté), scoring (token de référence observé) et apprentissage (cible observée, loss, gradient puis mise à jour).
+- La génération distingue forward pass, sélection/décodage et boucle complète ; le choix local change le préfixe et peut changer toute la suite, sans optimiser la vraisemblance globale.
+- Le scoring factorise la probabilité d'une séquence selon les préfixes de référence ; il ne sélectionne pas les tokens. La perplexité dépend du tokenizer, du corpus et de la convention d'agrégation.
+- La loss explicite l'alignement logits-position cible et le risque d'un décalage silencieux. Teacher forcing est un régime de conditionnement, pas une loss ni un optimiseur.
+- Le masque de loss n'est pas un masque d'attention. Une position exclue comme cible peut rester visible en entrée ; sa représentation peut recevoir un gradient indirect via une position supervisée qui l'utilise comme clé ou valeur.
+- Le gradient n'est pas l'update. Seule l'étape de l'optimiseur modifie les paramètres ; la validation mesure le modèle à paramètres fixes.
+
+### Décision
+
+Aucune modification des leçons n'est justifiée par cette inspection : les apports sont déjà présents et les audits Practice/numériques du 25 novembre les ont en partie vérifiés. Aucun nouveau concept, champ de métadonnées ou registre n'est requis. Les distinctions ci-dessus deviennent des invariants de conservation pour les futures refontes.
+
+### Limites et suite
+
+Ce lot est un audit de contenu source, pas une validation de rendu ou d'accessibilité. La vérification Quarto/browser, mobile, navigation, clavier et lecteur d'écran reste à effectuer. Continuer l'inventaire exhaustif à partir des registres canoniques, sans réauditer les pages déjà couvertes par les pilotes et audits datés.
+
+
+## Issue #1739 — apprentissage en contexte et ingénierie du contexte (2026-11-27)
+
+Audit source FR/EN des leçons Understand `in-context-learning` et `context-engineering`, avec leurs exercices Practice dédiés. Voir [le dossier des contributions autour du contexte](source-syntheses/understand-context-use-intellectual-contributions-audit-2026-11.md).
+
+### Résultats
+
+- ICL décrit l'utilisation d'instructions et de démonstrations présentes dans le prompt à paramètres fixes ; context engineering décrit le travail du système pour sélectionner, organiser, actualiser et sécuriser les informations transmises.
+- La leçon ICL distingue zero-shot/one-shot/few-shot, fine-tuning et RAG ; elle explicite que la reproduction d'un format ne prouve pas la généralisation et que les induction heads ne sont qu'une hypothèse mécaniste partielle.
+- Context engineering formalise trois niveaux : contexte disponible dans le système, séquence effectivement transmise dans la fenêtre, positions accessibles à une requête selon le masque et l'architecture.
+- Le contenu stocké ou récupéré n'est pas automatiquement transmis. La page relie cette frontière à la provenance, à la fraîcheur et aux risques d'injection indirecte.
+- Les exercices Practice couvrent généralisation, sélection, transmission, accès causal, provenance, sécurité et évolution du contexte entre appels.
+
+### Décision et limites
+
+Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification de leçon, nouveau concept ou extension des métadonnées n'est justifié. Le lot est source-only : rendu des diagrammes FR/EN, mobile, navigation, clavier et accessibilité manuelle restent à vérifier.
+
+
+## Issue #1739 — panorama et entrée texte (2026-11-27)
+
+Audit source FR/EN des premières leçons Understand `llm-overview` et `text-data`, ainsi que de la page Practice dédiée à `text-data`. Le pilote `embedding-space` est réutilisé sans répétition. Voir [le dossier panorama et entrée texte](source-syntheses/understand-overview-text-input-intellectual-contributions-audit-2026-11.md).
+
+### Résultats
+
+- Le panorama définit une distribution conditionnelle du prochain token et distingue génération, scoring et apprentissage comme trois usages, pas comme étapes d'une seule exécution.
+- Il sépare architecture, apprentissage et utilisation, et distingue LLM (catégorie), Transformer (famille d'architectures) et GPT (famille decoder-only).
+- Il distingue paramètres appris, contexte transmis et informations externes récupérées ; les poids ne sont pas une base documentaire consultable.
+- `text-data` suit une occurrence de texte jusqu'aux tokens, IDs et vecteurs ; les IDs sont locaux à un vocabulaire et ne sont pas des quantités sémantiques.
+- Le tokenizer fait partie du contrat du checkpoint : vocabulaire et conventions doivent rester associés aux poids, qui indexent les embeddings d'entrée et les logits de sortie.
+- Les conséquences du nombre de tokens sur le budget et le coût sont présentées avec des limites explicites ; un découpage plus court ne prouve ni meilleure qualité ni meilleure maîtrise linguistique.
+
+### Décision et limites
+
+Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification, nouveau concept ou extension des métadonnées n'est justifié. Les rendus FR/EN, figures, blocs d'exemple, affichage mobile et accessibilité restent à vérifier.
+
+
+## Issue #1739 — matrice consolidée du parcours Understand (2026-11-27)
+
+La [matrice consolidée des contributions](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md) rassemble une ligne par leçon canonique bilingue de `data/guided-route.yml`, avec les apports distinctifs à préserver et les dossiers/pilotes qui constituent les preuves détaillées.
+
+Elle confirme la couverture source de toutes les leçons Understand du parcours principal. Elle ne certifie pas leur rendu visuel ni leur accessibilité. Le contrat de modélisation retient les structures existantes — catalogue/extractions, dossiers de synthèse, concepts, graphe computationnel, parcours et page-map — sans ajouter de champ `intellectual_contributions` ou de registre exécutable parallèle. La maintenance doit mettre à jour la matrice et les dossiers de preuve lors de toute refonte.
