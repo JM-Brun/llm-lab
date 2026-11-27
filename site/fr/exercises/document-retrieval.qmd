@@ -1,0 +1,85 @@
+---
+title: "Exercices — Récupération documentaire"
+subtitle: "Rappel des candidats, classement et transmission"
+description-meta: "Quatre exercices de transfert sur Recall@k, le reranking, les métriques de classement et la différence entre récupération et transmission au contexte."
+keywords: ["type:exercise-hub", "destination:practice", "topic:document-retrieval-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/document-retrieval-exercises"
+summary: "Quatre questions de transfert associées à l'approfondissement sur la récupération documentaire."
+scope: "Évalue le rappel des candidats, les limites du reranking, l'interprétation de MRR et la séparation entre récupération et transmission au contexte."
+purpose: "Vérifier que le lecteur peut diagnostiquer à quelle étape un pipeline de recherche ou RAG perd une information pertinente."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/document-retrieval", "fr/rag-memory-boundaries"]
+tags: ["type:exercise-hub", "destination:practice", "topic:document-retrieval-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : Récupération documentaire](../document-retrieval.qmd)
+
+Pour une pratique intégratrice de bout en bout, consultez aussi [RAG, mémoire et frontières de transmission](rag-memory-boundaries.qmd). Les questions ci-dessous isolent la récupération et le classement.
+
+## Vérifier sa compréhension
+
+### 1. Mesurer le rappel des candidats
+
+Un corpus contient 20 documents pertinents pour une requête. Le premier retriever renvoie 100 candidats, dont 8 sont pertinents. Calculez $\mathrm{Recall}@100$. Que mesure cette valeur, et que ne dit-elle pas sur l'ordre des candidats ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+$$
+\mathrm{Recall}@100=\frac{8}{20}=0,4.
+$$
+
+Le retriever a retrouvé 40 % des documents pertinents du corpus dans ses 100 candidats. Cette mesure évalue la couverture de la première étape ; elle ne dit pas si les documents pertinents sont bien placés dans la liste.
+
+</details>
+
+### 2. La limite du reranker
+
+Le premier retriever ne transmet aucun document pertinent à l'étape de reranking. Un cross-encoder très performant peut-il malgré tout faire apparaître un document pertinent dans le top 5 ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Non. Le reranker réordonne les candidats qu'il reçoit ; il ne peut pas récupérer un document absent de sa liste d'entrée. La qualité du classement est donc bornée par la couverture de la génération de candidats.
+
+</details>
+
+### 3. Interpréter MRR@5
+
+Pour une requête, le premier document pertinent apparaît au rang 2 dans la liste rerankée. Quelle est la valeur de $\mathrm{RR}@5$ pour cette requête ? Pourquoi ne faut-il pas la confondre avec Recall@100 ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+$$
+\mathrm{RR}@5=\frac{1}{2}=0,5.
+$$
+
+Le reciprocal rank mesure la position du premier résultat pertinent. Recall@100 mesure la proportion de tous les documents pertinents retrouvés dans les 100 candidats. Ces métriques évaluent deux étapes et deux propriétés différentes.
+
+</details>
+
+### 4. Récupération réussie, transmission échouée
+
+Un passage pertinent est bien retrouvé et classé, mais il est écarté lors de la construction du prompt parce que le budget de contexte est atteint. À quelle étape le pipeline a-t-il échoué ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+La récupération et le classement ont réussi ; la transmission au contexte a échoué. Le modèle ne peut pas exploiter un passage qui n'a pas été inclus dans le contexte effectivement fourni. C'est pourquoi la qualité de récupération ne suffit pas à garantir une réponse fondée sur les sources.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](document-retrieval.qmd) · [English](../../en/exercises/document-retrieval.qmd)
+:::
