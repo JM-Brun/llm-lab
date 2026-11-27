@@ -2536,7 +2536,7 @@ sources:
     version: null
     revision: null
     licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: link-only, code: not-applicable, data: not-applicable}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
