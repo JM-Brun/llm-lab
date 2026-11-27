@@ -141,7 +141,7 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 - **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
 :::
 
-::: {.callout-note collapse="true" title="Diagnostic de pipeline (approfondissement)"}
+::: {.callout-note collapse="true" data-reading-time="exclude" title="Diagnostic de pipeline (approfondissement)"}
 Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
 :::
 
