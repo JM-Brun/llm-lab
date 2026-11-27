@@ -87,7 +87,7 @@ Dans l’exercice suivant sur l’[entrée du premier bloc](exercises/text-data.
 
 L'expression **adresse de ligne** décrit donc l'accès à la table, pas la position géométrique du token. Le vecteur est une liste de coordonnées ; c'est lui que l'on peut représenter comme un point dans un espace de dimension $d$.
 
-## La matrice en une formule
+## La matrice en une formule {#embedding-matrix-lookup} {#embedding-matrix-lookup}
 
 Si le vocabulaire contient $V$ IDs et si chaque vecteur contient $d$ composantes, la matrice a $V$ lignes et $d$ colonnes :
 
@@ -125,7 +125,7 @@ Les numéros d'ID sont des étiquettes, pas des propriétés des vecteurs : renu
 
 Le tokenizer fixe le vocabulaire et l'association entre tokens et IDs ; il ne fournit pas les valeurs de $E$. Ces valeurs sont des **paramètres appris du réseau** : elles sont initialisées, puis ajustées pendant l'entraînement. Lorsqu'un exemple utilise l'ID $i$, le gradient de la perte peut contribuer à l'ajustement de la ligne $E_{i,:}$. Le lookup sélectionne cette ligne ; il ne calcule pas lui-même son contenu.
 
-## Du vecteur initial à la représentation contextualisée
+## Du vecteur initial à la représentation contextualisée {#du-lookup-a-la-representation-contextualisee} {#du-lookup-a-la-representation-contextualisee}
 
 Avec une matrice fixe, deux occurrences du même ID sélectionnent la même ligne et obtiennent donc le même vecteur initial. Le lookup ne lit pas les mots voisins et ne désambiguïse pas le sens d'une phrase.
 
