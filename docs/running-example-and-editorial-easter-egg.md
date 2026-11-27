@@ -27,6 +27,7 @@ Le parcours français et le parcours anglais peuvent employer des références n
 4. **Les variantes sont typées.** Distinguer explicitement : continuation générée (sortie possible), continuation de référence (cible observée), branche contrefactuelle (autre cible possible) et exemple indépendant (illustration locale sans prétention de continuité).
 5. **Les nombres sont cohérents ou leur changement est expliqué.** Une distribution jouet doit garder les mêmes candidats, ordre, probabilités et cible lorsqu'elle est réutilisée pour entropie, surprisal, scoring, cross-entropy et gradient. Une nouvelle distribution après ajout d'un token correspond à un nouveau préfixe et doit être présentée comme telle.
 6. **Les tokens ne sont pas déduits de la typographie.** Toute trace qui dépend du découpage exact doit annoncer le tokenizer et sa configuration, ou déclarer explicitement une convention jouet. Ne pas laisser entendre que « Vous », « savez » ou une ponctuation sont universellement un token chacun.
+11. **Le fil rouge est l'exemple principal de tokenisation.** La leçon part du préfixe canonique de sa langue ; elle ne lui substitue pas un exemple sans lien comme `hello world`. Les mots visibles (« situation », « scribe », « Romans ») servent à observer le découpage réel, mais ne sont jamais déclarés tokens isolés sans vérification. Toute comparaison entre tokenizers réencode le même préfixe, afin de ne faire varier que le tokenizer.
 7. **Les paramètres restent fixes hors entraînement.** Génération, ICL, context engineering et scoring modifient le contexte ou la cible, pas les poids. Seule la branche d'apprentissage applique gradients et optimiseur.
 8. **Le fil rouge reste subordonné à l'objectif de la page.** Une page de théorie peut l'omettre si son ajout n'améliore ni intuition, ni démonstration, ni transfert.
 9. **La traduction n'est pas une substitution mécanique.** Une localisation peut changer les noms et la référence culturelle, mais elle doit préserver les rôles formels, les transitions, les hypothèses, les résultats numériques et les distinctions conceptuelles.
@@ -98,7 +99,7 @@ Pages de référence : [overview EN](../site/en/llm-overview.qmd), [embeddings](
 | Étape Understand (source data/guided-route.yml) | Usage du fil rouge | Décision |
 |---|---|---|
 | Orientation | Accroche et aperçu de deux tours de prédiction. | Conserver ; expliciter préfixe et continuation. |
-| Texte → tokens | Texte source, puis IDs obtenus avec un tokenizer déterminé. | Utiliser si les IDs réels sont calculés ; sinon garder un exemple de segmentation clairement fictif. |
+| Texte → tokens | Préfixe canonique de la langue, fragments et IDs calculés avec un tokenizer déterminé ; comparaison éventuelle sur ce même texte. | Exemple principal = fil rouge ; aucun exemple déconnecté ne le remplace. |
 | Représentations | Lookup, position, contextualisation ; réutiliser une ambiguïté lexicale utile. | Conserver les exemples locaux pertinents ; ne pas répéter la citation entière. |
 | Calcul du Transformer | Suivre une ou deux positions du même préfixe dans un bloc, si les dimensions et valeurs sont effectivement définies. | Optionnel ; priorité à la justesse des tenseurs et des opérations. |
 | États → distribution | Réutiliser les candidats et la distribution jouet canonique de la langue. | Conserver la cohérence logits → softmax. |
@@ -114,6 +115,7 @@ Le fil rouge n'a pas à apparaître dans toutes les pages d'approfondissement, d
 ### P0 — Cohérence des traces FR/EN
 
 - [ ] Faire un tableau de correspondance explicite des préfixes, continuations, candidats, probabilités et cibles entre FR et EN ; confirmer les valeurs dans les pages sources et les calculs, pas uniquement dans les textes d'introduction.
+- [x] Remplacer l'exemple principal `hello world` de la leçon de tokenisation par le préfixe localisé du fil rouge ; réutiliser ce même préfixe pour la comparaison GPT-2 / `cl100k_base` et pour le lookup synthétique de la trace.
 - [ ] Vérifier que les distributions changent uniquement lorsqu'un nouveau préfixe est présenté, ou lorsque l'on introduit explicitement une branche contrefactuelle.
 - [ ] Vérifier les formulations qui présentent une suite de mots comme une suite de tokens ; ajouter une convention jouet ou un tokenizer/configuration quand le découpage exact est important.
 - [ ] Vérifier la cohérence des exemples entre panorama, génération, vraisemblance, loss, gradients et boucle d'entraînement après chaque évolution de contenu.
@@ -161,7 +163,7 @@ Le fil rouge n'a pas à apparaître dans toutes les pages d'approfondissement, d
 
 **Bilan :** le fil rouge est déjà utilisé de façon substantielle dans le parcours Understand, notamment pour relier la distribution prédictive, la génération, le scoring, la loss et les gradients. Sa localisation différente entre les langues est acceptable et même utile, à condition de préserver une chaîne interne stable par langue et la parité des raisonnements.
 
-**Travail immédiat :** consolider les conventions de tokenisation et la correspondance des traces numériques FR/EN ; vérifier les pages publiées après déploiement.
+**Travail immédiat :** vérifier le rendu publié FR/EN après déploiement et poursuivre la consolidation des traces numériques FR/EN. La leçon de tokenisation utilise désormais le préfixe du fil rouge comme matériau principal, avec des IDs calculés par GPT-2 dans la trace reproductible.
 
 **Travail ultérieur :** ajouter une petite expérience de contexte à paramètres fixes pour relier ICL/context engineering au noyau partagé, sans remplacer leurs exemples dédiés.
 
