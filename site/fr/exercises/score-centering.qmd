@@ -1,0 +1,97 @@
+---
+title: "Exercices — Centrage du score"
+subtitle: "Calculer, comparer et délimiter une correction de gradient"
+description-meta: "Quatre questions de transfert sur le centrage du score, le cas on-policy, le centrage des avantages et la composition avec les corrections d'échantillonnage."
+keywords: ["type:exercise-hub", "destination:practice", "topic:score-centering-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/score-centering-exercises"
+summary: "Quatre questions de transfert associées à l'approfondissement sur le centrage du score."
+scope: "Fait calculer une correction sur de nouvelles probabilités, tester le cas on-policy, distinguer trois opérations appelées centrage et interpréter la frontière stat=ratio/stat=tv."
+purpose: "Vérifier le transfert du raisonnement sans répéter la dérivation de Bernoulli travaillée dans la leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/score-centering"]
+tags: ["type:exercise-hub", "destination:practice", "topic:score-centering-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : Centrage du score](../score-centering.qmd)
+
+Essayez de résoudre les questions avant d'ouvrir les corrigés. Les probabilités sont des valeurs jouets choisies pour tester le transfert, pas des mesures expérimentales.
+
+## Vérifier sa compréhension
+
+### 1. Calculer un centrage sur de nouvelles valeurs
+
+Une politique binaire du trainer donne $p_\theta(v=1)=p=0,4$. Le sampler utilise $q(v=1)=r=0,7$. Les scores du trainer sont $s_1=1-p$ et $s_0=-p$.
+
+Calculez l'espérance du score sous le sampler, puis les deux scores centrés. Vérifiez que leur espérance sous $q$ est nulle.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les scores valent $s_1=0,6$ et $s_0=-0,4$. Leur espérance sous le sampler est
+
+$$
+\bar{s}_q=rs_1+(1-r)s_0=0,7\times0,6+0,3\times(-0,4)=0,3=r-p.
+$$
+
+Les scores centrés sont $\widetilde{s}_1=0,6-0,3=0,3$ et $\widetilde{s}_0=-0,4-0,3=-0,7$. Leur espérance vaut
+
+$$
+0,7\times0,3+0,3\times(-0,7)=0.
+$$
+
+</details>
+
+### 2. Retrouver le cas on-policy
+
+Gardez $p=0,4$, mais supposez maintenant que le sampler utilise $r=0,4$. Que devient $\bar{s}_q$ ? Pourquoi la correction est-elle inactive ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Lorsque $q=p_\theta$, on obtient $\bar{s}_q=r-p=0$. Les scores sont déjà d'espérance nulle sous la distribution qui les échantillonne ; soustraire cette espérance ne les modifie pas.
+
+</details>
+
+### 3. Distinguer trois « centrages »
+
+Associez chaque opération à son objet mathématique :
+
+- centrage du score ;
+- centrage des récompenses ou avantages dans GRPO ;
+- traitement des scores d'attention.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+- Le **centrage du score** soustrait, à chaque préfixe, l'espérance sous le sampler du gradient $\nabla_\theta\log p_\theta(v\mid h)$.
+- Le **centrage de groupe** soustrait une statistique de groupe aux récompenses ou avantages des rollouts d'un même prompt.
+- Le **traitement des scores d'attention** agit sur les compatibilités $QK^\top/\sqrt{d_k}$ avant le softmax.
+
+Ces objets n'ont ni la même dimension ni le même rôle ; le vocabulaire commun ne les rend pas interchangeables.
+
+</details>
+
+### 4. Interpréter la frontière stat=ratio / stat=tv
+
+L'implémentation documente une composition du centrage avec les corrections utilisant stat=ratio et rejette explicitement stat=tv. Peut-on en conclure que toute correction fondée sur la distance en variation totale est mathématiquement invalide ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Non. On peut conclure que **cette implémentation** ne prend pas en charge cette composition avec stat=tv et que le résultat documenté porte sur les corrections compatibles fondées sur un ratio. Le rejet dans le code n'est pas une preuve générale d'impossibilité mathématique. Il faut distinguer la portée du résultat théorique, le contrat de l'implémentation et les méthodes qui n'ont pas été étudiées.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](score-centering.qmd) · [English](../../en/exercises/score-centering.qmd)
+:::
