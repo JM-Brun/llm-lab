@@ -102,6 +102,23 @@ Mais ses résultats dépendent fortement :
 - de la proximité entre les exemples et le cas à traiter ;
 - de la capacité du modèle à généraliser au-delà des motifs superficiels.
 
+### Ce qu'une démonstration communique réellement
+
+Une démonstration `(x_i, y_i)` ne transmet pas uniquement une association entre une entrée et sa réponse. Elle peut fournir quatre informations distinctes :
+
+| Dimension | Information apportée |
+|---|---|
+| Distribution des entrées | Le type de textes ou de situations auxquels le modèle doit répondre |
+| Espace des étiquettes | Les classes ou réponses possibles |
+| Correspondance entrée-étiquette | Quelle réponse est associée à chaque entrée |
+| Format | La structure répétée des paires et leur ordre dans le prompt |
+
+Min et al. (2022) étudient ces dimensions séparément sur des tâches de classification et de choix multiple. Dans leurs configurations, remplacer les étiquettes correctes par des étiquettes aléatoires réduit souvent peu la performance agrégée. La distribution des entrées, l'espace des étiquettes et le format continuent toutefois de fournir un signal utile. Ce résultat ne signifie pas que la correspondance correcte est toujours inutile : les auteurs signalent des écarts entre tâches et modèles, et ne testent pas la génération ouverte.
+
+Yoo et al. (2022) réexaminent précisément cette question. Avec d'autres configurations, ils observent des cas où la correction des associations entrée-étiquette a un effet important. Ils proposent notamment de mesurer la sensibilité à la proportion d'étiquettes correctes et la part du gain attribuable aux étiquettes de référence. Leurs analyses montrent que l'effet dépend entre autres du jeu de données, de la méthode d'inférence, de la métrique, du modèle et du niveau de détail du template.
+
+Les deux travaux ne justifient donc pas une règle universelle du type « les labels corrects ne comptent pas ». Ils montrent plutôt que les démonstrations sont multicomposantes et que l'effet mesuré dépend du protocole expérimental. Les méthodes d'inférence, métriques et sous-ensembles de tâches n'étant pas identiques, leurs résultats doivent être comparés avec leurs conditions, pas seulement avec leurs conclusions résumées.
+
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
 
 ::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
