@@ -7408,7 +7408,7 @@ sources:
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, query, key, value, attention-score]
-      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/shaw-et-al-relative-position-representations-2018.yml]
+      audit_records: [docs/source-syntheses/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/shaw-et-al-relative-position-representations-2018.yml]
 
   - id: raffel-et-al-t5-relative-position-bias-2020
     title: "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
@@ -7448,7 +7448,7 @@ sources:
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, attention-score, softmax]
-      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/raffel-et-al-t5-relative-position-bias-2020.yml]
+      audit_records: [docs/source-syntheses/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/raffel-et-al-t5-relative-position-bias-2020.yml]
 
   - id: press-et-al-alibi-2021
     title: "Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation"
@@ -7488,7 +7488,7 @@ sources:
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
-      audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]
+      audit_records: [docs/source-syntheses/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]
   - id: brown-et-al-gpt3-few-shot-2020
     title: "Language Models are Few-Shot Learners"
     creators: ["Tom B. Brown", "Benjamin Mann", "Nick Ryder", "Melanie Subbiah", "Jared Kaplan", "Prafulla Dhariwal", "Arvind Neelakantan", "Pranav Shyam", "Girish Sastry", "Amanda Askell", "Sandhini Agarwal", "Ariel Herbert-Voss", "Gretchen Krueger", "Tom Henighan", "Rewon Child", "Aditya Ramesh", "Daniel M. Ziegler", "Jeffrey Wu", "Clemens Winter", "Christopher Hesse", "Mark Chen", "Eric Sigler", "Mateusz Litwin", "Scott Gray", "Benjamin Chess", "Jack Clark", "Christopher Berner", "Sam McCandlish", "Alec Radford", "Ilya Sutskever", "Dario Amodei"]
