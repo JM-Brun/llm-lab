@@ -135,7 +135,7 @@ Après ce parcours, vous pouvez étudier le [post-entraînement](post-training.q
 
 ### Implémentation
 
-::: {.callout-note collapse="true" title="Afficher le micro-code"}
+::: {.callout-note collapse="true" title="Afficher le micro-code" data-reading-time="exclude"}
 
 <span class="epistemic-badge badge-code">Micro-code exécutable</span> Le code utilise les fonctions maintenues de `llm_lab.foundations.losses` pour la loss et son gradient par rapport aux logits, et n'ajoute que la boucle. Exécutez-le depuis la racine du dépôt après `uv sync`.
 
