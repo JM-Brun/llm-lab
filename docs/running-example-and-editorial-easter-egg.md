@@ -1,7 +1,7 @@
 # Fil rouge narratif et clin d'œil culturel — contrat éditorial et audit
 
-**État :** audit source-level initial, recommandations à appliquer de façon incrémentale  
-**Date :** 2026-11-26  
+**État :** contrat éditorial consolidé ; première intégration du fil rouge dans les leçons de tokenisation FR/EN  
+**Date :** 2026-11-27  
 **Périmètre :** parcours Theory / Understand, cohérence FR/EN, exemples de génération, scoring et apprentissage  
 **Références :** [noyau computationnel canonique](canonical-computational-spine.md), [parcours principal et travail restant](curriculum-main-route-remaining-work.md), [route bilingue](../data/guided-route.yml), [issue #575](https://github.com/JM-Brun/llm-lab/issues/575), [intégration Build différée #924](https://github.com/JM-Brun/llm-lab/issues/924).
 
