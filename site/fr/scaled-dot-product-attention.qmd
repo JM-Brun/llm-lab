@@ -145,7 +145,7 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 </details>
 - **« Le facteur d'échelle est une constante empirique sans justification. »** Non : il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis. La dérivation complète et la simulation numérique sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
 
-### Attention et information mutuelle : une analogie, pas une identité
+### Attention et information mutuelle : une analogie, pas une identité {#attention-information-mutuelle}
 
 L'information mutuelle entre deux variables aléatoires dépend d'une distribution jointe :
 
