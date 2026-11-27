@@ -54,7 +54,7 @@ Ce passage n'est pas un simple changement d'écriture. Il distingue un identifia
 
 Le texte est composé de symboles discrets : caractères, signes, mots ou fragments de mots. Un programme classique peut comparer des chaînes, rechercher des motifs ou appliquer des règles symboliques. Un réseau neuronal de type Transformer suit une autre stratégie : il applique des opérations mathématiques paramétrées à des tableaux de nombres.
 
-Ces opérations — projections, produits matriciels, combinaisons pondérées et transformations non linéaires — permettent au réseau d'ajuster progressivement ses paramètres à partir d'exemples. Pour qu'un modèle neuronal exploite les régularités du langage avec ces opérations, il faut donc convertir les unités discrètes du texte en objets numériques adaptés au calcul.
+Ces opérations — projections, produits matriciels, combinaisons pondérées et transformations non linéaires — permettent au réseau d'ajuster progressivement ses paramètres à partir d'exemples. Pour qu'un modèle neuronal exploite les régularités du langage avec ces opérations, il faut donc convertir les unités discrètes du texte en objets numériques adaptés au calcul. Cela ne signifie pas qu'un ordinateur ne peut pas manipuler des chaînes de caractères : c'est le mode de représentation et de calcul choisi par cette famille d'architectures.
 
 **L'objectif n'est pas de remplacer le langage par une suite de nombres arbitraires.** Il est de construire des représentations apprises sur lesquelles le réseau peut effectuer des transformations utiles à la prédiction.
 
@@ -106,7 +106,7 @@ Tokens → IDs (adresses)
   <figcaption>Vue conceptuelle : chaque étape change la nature de l'objet manipulé. Ce schéma présente les grandes familles de transformations, pas toutes les opérations d'un GPT.</figcaption>
 </figure>
 
-## 4. Pourquoi des vecteurs plutôt que des nombres isolés ?
+## 4. Ce que les vecteurs rendent possible
 
 Un vecteur possède plusieurs composantes. Il peut donc servir d'entrée à des transformations apprises qui combinent de l'information et produisent de nouveaux vecteurs. Dans un Transformer, les projections, l'attention et les réseaux feed-forward transforment ainsi les représentations au fil des couches.
 
