@@ -92,7 +92,7 @@ La fonction de perte fournit ensuite un signal d'apprentissage : par rétropropa
 
 C'est cette possibilité d'apprentissage qui est décisive. Le réseau peut appliquer aux vecteurs des transformations paramétrées, comparer des informations, les mélanger et construire de nouvelles représentations. Les vecteurs ne sont donc pas de simples étiquettes numériques : ils constituent le support sur lequel le calcul neuronal opère.
 
-Pour notre unité fictive `314`, le lookup sélectionne la ligne correspondante : $\\mathbf{e}_{314}=E[314,:]$. Le vecteur obtenu n'est pas une définition de « situation » ; ses composantes sont des paramètres appris. C'est ce vecteur, et non le nombre `314`, que les opérations du réseau vont transformer.
+Pour notre unité fictive `314`, le lookup sélectionne la ligne correspondante : $\mathbf{e}_{314}=E[314,:]$. Le vecteur obtenu n'est pas une définition de « situation » ; ses composantes sont des paramètres appris. C'est ce vecteur, et non le nombre `314`, que les opérations du réseau vont transformer.
 
 <figure>
   <pre>
