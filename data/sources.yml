@@ -3571,6 +3571,16 @@ sources:
         limitations:
           - "Title, creator, publication date, transcript, duration and technical contents remain unverified."
           - "Do not cite or summarize the video until its metadata and content can be inspected."
+      - accessed_at: "2026-11-27"
+        status: inaccessible
+        inspected_scope:
+          - "Direct YouTube watch-page retrieval attempted again."
+          - "Official YouTube oEmbed metadata endpoint queried for the same video ID."
+          - "Exact video-ID web search attempted; no verifiable title or creator metadata was returned."
+        limitations:
+          - "The watch page and official oEmbed endpoint both returned cache misses."
+          - "Title, creator, publication date, duration, transcript and technical contents remain unverified."
+          - "No secondary metadata tool is treated as authoritative evidence; no extraction or claim attribution is justified."
     related:
       pages: []
       concepts: [contextualized-representation]
