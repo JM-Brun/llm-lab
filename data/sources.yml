@@ -7395,3 +7395,278 @@ sources:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
       audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]
+  - id: brown-et-al-gpt3-few-shot-2020
+    title: "Language Models are Few-Shot Learners"
+    creators: ["Tom B. Brown", "Benjamin Mann", "Nick Ryder", "Melanie Subbiah", "Jared Kaplan", "Prafulla Dhariwal", "Arvind Neelakantan", "Pranav Shyam", "Girish Sastry", "Amanda Askell", "Sandhini Agarwal", "Ariel Herbert-Voss", "Gretchen Krueger", "Tom Henighan", "Rewon Child", "Aditya Ramesh", "Daniel M. Ziegler", "Jeffrey Wu", "Clemens Winter", "Christopher Hesse", "Mark Chen", "Eric Sigler", "Mateusz Litwin", "Scott Gray", "Benjamin Chess", "Jack Clark", "Christopher Berner", "Sam McCandlish", "Alec Radford", "Ilya Sutskever", "Dario Amodei"]
+    source_type: paper
+    identifiers: {arxiv: "2005.14165"}
+    canonical_url: "https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html"
+    publisher: "Advances in Neural Information Processing Systems 33 (NeurIPS 2020)"
+    publication_date: "2020"
+    updated_date: null
+    language: en
+    version: "Published NeurIPS 2020 proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:large-language-models, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, autoregressive-generation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [experiment, benchmark, architecture]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "NeurIPS 2020 proceedings metadata and abstract"
+          - "arXiv:2005.14165 bibliographic record and abstract"
+        limitations:
+          - "The full paper, experimental tables and appendices were not re-audited in this ingestion pass."
+          - "The current ICL pages cite the work in their supplementary bibliography; no claim-level integration has been validated."
+          - "No figure, code or data reuse rights were established."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, autoregressive-generation]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]
+
+  - id: olsson-et-al-induction-heads-2022
+    title: "In-context Learning and Induction Heads"
+    creators: ["Catherine Olsson", "Nelson Elhage", "Neel Nanda", "Nicholas Joseph", "Nova DasSarma", "Tom Henighan", "Ben Mann", "Amanda Askell", "Yuntao Bai", "Anna Chen", "Tom Conerly", "Dawn Drain", "Deep Ganguli", "Zac Hatfield-Dodds", "Danny Hernandez", "Scott Johnston", "Andy Jones", "Jackson Kernion", "Liane Lovitt", "Kamal Ndousse", "Dario Amodei", "Tom Brown", "Jack Clark", "Jared Kaplan", "Sam McCandlish", "Chris Olah"]
+    source_type: paper
+    identifiers: {arxiv: "2209.11895"}
+    canonical_url: "https://www.transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html"
+    publisher: "Transformer Circuits Thread"
+    publication_date: "2022-03-08"
+    updated_date: "2023-03-06"
+    language: en
+    version: "Published Transformer Circuits Thread; changelog through 2023-03-06"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:large-language-models, topic:self-attention, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, self-attention, multi-head-attention, causal-mask]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, architecture]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Official Transformer Circuits publication metadata, abstract and stated evidence distinctions"
+          - "arXiv:2209.11895 bibliographic record"
+        limitations:
+          - "The full mechanistic analysis, model sweep, ablations and supporting appendices were not re-audited in this ingestion pass."
+          - "The source's stronger causal evidence for small attention-only models must not be generalized to large models, where the authors describe more indirect evidence."
+          - "At the initial metadata-only pass, no claim-level integration had been validated; a targeted claim-level integration was added in the subsequent review recorded below."
+          - "No figure or asset reuse rights were established."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Official Transformer Circuits Thread: abstract, induction-head circuit description, evidence-strength summary, six arguments, direct ablation discussion and model-scale extrapolation"
+          - "Evidence distinction between small attention-only models, small models with MLPs and full-scale models"
+        limitations:
+          - "The article is long; the review focused on the mechanistic definition and the strength/boundaries of the evidence rather than every appendix, model-analysis row or training detail."
+          - "The authors report no full-scale head ablations; the majority-ICL claim for large models remains mainly correlational and preliminary."
+          - "No figure assets were reused."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, self-attention, multi-head-attention, causal-mask]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/olsson-et-al-induction-heads-2022.yml]
+
+  - id: xie-et-al-implicit-bayesian-icl-2022
+    title: "An Explanation of In-context Learning as Implicit Bayesian Inference"
+    creators: ["Sang Michael Xie", "Aditi Raghunathan", "Percy Liang", "Tengyu Ma"]
+    source_type: paper
+    identifiers: {arxiv: "2111.02080"}
+    canonical_url: "https://openreview.net/forum?id=RdJVFCHjUMI"
+    publisher: "International Conference on Learning Representations (ICLR 2022) / OpenReview"
+    publication_date: "2022"
+    updated_date: null
+    language: en
+    version: "Published ICLR 2022 conference paper"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:large-language-models, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, conditional-distribution]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, experiment]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published ICLR 2022 OpenReview paper metadata and abstract"
+          - "arXiv:2111.02080 bibliographic record and abstract"
+        limitations:
+          - "The full theoretical assumptions, HMM derivations, proofs and experimental details were not re-audited in this ingestion pass."
+          - "The Bayesian-inference account is a theoretical explanation under a specified pretraining distribution, not a universal established mechanism for every LLM."
+          - "No claim-level integration into the current ICL lesson has been validated."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published ICLR 2022 PDF: abstract, introduction, HMM pretraining and prompt setup (§1–§2), assumptions and theoretical results (§2.1–§3.3)"
+          - "GINC simulation design and results, including ablations on latent concepts, example count/length, model scale, ordering and zero-shot/few-shot behavior (§4)"
+          - "Discussion, limitations and conclusion (§5–§6)"
+        limitations:
+          - "The theory is conditional on a mixture-of-HMM pretraining distribution, exact-fit and regularity assumptions, and bounded prompt/pretraining distribution mismatch."
+          - "GINC is synthetic; the experiments do not prove that natural-language LLMs universally implement Bayesian inference."
+          - "The paper's appendices and proofs were inspected selectively, not exhaustively."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, conditional-distribution]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/xie-et-al-implicit-bayesian-icl-2022.yml]
+
+  - id: min-et-al-demonstrations-icl-2022
+    title: "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?"
+    creators: ["Sewon Min", "Xinxi Lyu", "Ari Holtzman", "Mikel Artetxe", "Mike Lewis", "Hannaneh Hajishirzi", "Luke Zettlemoyer"]
+    source_type: paper
+    identifiers: {doi: "10.18653/v1/2022.emnlp-main.759"}
+    canonical_url: "https://aclanthology.org/2022.emnlp-main.759/"
+    publisher: "Proceedings of EMNLP 2022 / Association for Computational Linguistics"
+    publication_date: "2022"
+    updated_date: null
+    language: en
+    version: "Published EMNLP 2022 proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:large-language-models, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, conditional-distribution]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [experiment, benchmark, limitation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology published metadata, abstract and DOI"
+        limitations:
+          - "The full experimental protocol, task configurations, model-specific results and appendices were not re-audited in this ingestion pass."
+          - "The abstract's finding about randomly replaced labels is bounded by the evaluated classification and multiple-choice tasks and 12 models."
+          - "No claim-level integration into the current ICL lesson has been validated."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published EMNLP 2022 PDF: experimental setup (§3), label-correctness results (§4.1–§4.2), demonstration-component ablations (§5.1–§5.4), discussion and limitations (§6)"
+          - "Figures 1–10 and the reported task/model scope relevant to the role of demonstration labels, input distribution, label space and format"
+        limitations:
+          - "The review is targeted to ICL demonstration claims; unrelated paper sections and all appendix-level details were not exhaustively audited."
+          - "The authors' aggregate findings are task- and model-dependent; some task-model pairs show larger label effects."
+          - "The study does not evaluate open-ended generation."
+          - "The first-page PDF spells the second author's name 'Xinyi Lyu', while ACL Anthology metadata lists 'Xinxi Lyu'; the canonical record currently follows ACL metadata and the discrepancy remains unresolved."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, conditional-distribution]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/min-et-al-demonstrations-icl-2022.yml]
+
+  - id: yoo-et-al-ground-truth-labels-icl-2022
+    title: "Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations"
+    creators: ["Kang Min Yoo", "Junyeob Kim", "Hyuhng Joon Kim", "Hyunsoo Cho", "Hwiyeol Jo", "Sang-Woo Lee", "Sang-goo Lee", "Taeuk Kim"]
+    source_type: paper
+    identifiers: {doi: "10.18653/v1/2022.emnlp-main.155"}
+    canonical_url: "https://aclanthology.org/2022.emnlp-main.155/"
+    publisher: "Proceedings of EMNLP 2022 / Association for Computational Linguistics"
+    publication_date: "2022"
+    updated_date: null
+    language: en
+    version: "Published EMNLP 2022 proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:large-language-models, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, conditional-distribution]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [experiment, benchmark, limitation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology published metadata, abstract, DOI and pages 2422–2437"
+        limitations:
+          - "At the initial metadata-only pass, the full protocol and results had not been re-audited; a targeted review of the main sections and figures was added in the subsequent scan-history event."
+          - "The authors report that label correctness effects vary with experimental configuration; the abstract does not support treating labels as universally necessary or irrelevant."
+          - "No claim-level integration into the current ICL lesson has been validated."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published EMNLP 2022 PDF: problem framing and prior-work comparison (§1–§2), sensitivity and GLER definitions (§2.3), experimental analysis (§2.4), inference-method, prompt-template and model-scale studies (§3–§4), conclusion and limitations (§6)"
+          - "Figures 1–10, Equation 1, reported comparisons with Min et al. and the stated limitations"
+        limitations:
+          - "The review is targeted to ICL label-correctness claims; not every appendix table and implementation detail was exhaustively audited."
+          - "The results depend on task, prompt, inference method, metric and model configuration; sensitivity alone can be misleading when a model cannot solve the task."
+          - "The paper notes prompt-choice sensitivity and possible confounding among demonstration components."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, conditional-distribution]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/yoo-et-al-ground-truth-labels-icl-2022.yml]
+
+  - id: xiang-et-al-order-sensitivity-icl-2024
+    title: "Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models"
+    creators: ["Yanzheng Xiang", "Hanqi Yan", "Lin Gui", "Yulan He"]
+    source_type: paper
+    identifiers: {doi: "10.18653/v1/2024.findings-acl.386"}
+    canonical_url: "https://aclanthology.org/2024.findings-acl.386/"
+    publisher: "Findings of ACL 2024 / Association for Computational Linguistics"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published Findings of ACL 2024 proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:large-language-models, topic:causal-masking, topic:autoregressive-generation]
+      concept_ids: [in-context-learning, causal-mask, autoregressive-generation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, architecture]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology published metadata, abstract, DOI and pages 6467–6481"
+        limitations:
+          - "The full experimental protocol, benchmark details, training method and ablations were not re-audited in this ingestion pass."
+          - "The findings compare evaluated causal and prefix language models and should not be generalized to all architectures without checking the experimental scope."
+          - "No claim-level integration into the current ICL lesson has been validated."
+    related:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, causal-mask, autoregressive-generation]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]

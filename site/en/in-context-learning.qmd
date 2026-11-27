@@ -102,12 +102,39 @@ However, results depend strongly on:
 - similarity between examples and the case being solved;
 - the model's ability to generalize beyond superficial patterns.
 
+### What does a demonstration actually communicate?
+
+A demonstration `(x_i, y_i)` conveys more than an association between an input and its answer. It can provide four distinct kinds of information:
+
+| Dimension | Information supplied |
+|---|---|
+| Input distribution | The kinds of texts or situations the model should handle |
+| Label space | The possible classes or answers |
+| Input-label mapping | Which answer is associated with each input |
+| Format | The repeated structure of the pairs and their order in the prompt |
+
+Min et al. (2022) study these dimensions separately on classification and multiple-choice tasks. Under their configurations, replacing correct labels with random labels often causes only a small drop in aggregate performance. The input distribution, label space, and format nevertheless continue to provide useful signal. This does not mean that correct mappings are always irrelevant: the authors report differences across tasks and models, and do not evaluate open-ended generation.
+
+Yoo et al. (2022) revisit this question. Under other configurations, they observe cases where correct input-label mappings have a substantial effect. They propose, among other measures, sensitivity to the proportion of correct labels and the share of the improvement attributable to ground-truth labels. Their analyses show that the effect depends on factors including the dataset, inference method, metric, model, and level of detail in the prompt template.
+
+The two papers therefore do not support a universal rule such as “correct labels do not matter.” Rather, they show that demonstrations are multi-component and that measured effects depend on the experimental protocol. Their inference methods, metrics, and task subsets are not identical, so their findings should be compared together with their conditions, not only through their summarized conclusions.
+
 A model may reproduce a format without identifying the relevant rule. It may also be sensitive to example order, contradictory demonstrations, or irrelevant details. ICL therefore guarantees neither correct generalization nor human-like understanding of the task.
 
 ::: {.callout-note collapse="true" title="Further exploration: mechanistic hypotheses"}
 Computing a continuation conditioned on the examples describes the observable behavior. Research on the mechanisms behind this adaptation examines pattern recognition, inference about the rule that generated the examples, implicit learning of algorithms during pretraining, and attention circuits that facilitate copying or associations between examples.
 
-*Induction heads* are one mechanism studied in some Transformers: attention heads can help detect a previously seen sequence and continue its pattern. They illuminate some copying and continuation behaviors, but are not a universal explanation for every form of ICL.
+*Induction heads* are a mechanism studied in some Transformers: one head can use information written by a previous head to find an earlier occurrence of the current token and retrieve the token that followed it. Olsson et al. (2022) provide strong mechanistic and causal evidence in small *attention-only* Transformers, including direct ablations. For larger models with MLPs, their hypothesis that induction heads explain most ICL relies mainly on indirect and correlational evidence; the authors describe it as preliminary rather than established.
+:::
+
+::: {.callout-note collapse="true" title="Further exploration: a Bayesian-inference explanation"}
+Xie et al. (2022) propose a theoretical framework in which pretraining documents share a **latent concept** $\theta$. Prompt examples share a concept $\theta^*$ as well. The model can then use the prompt by inferring this concept from the examples and computing a predictive distribution that marginalizes over possible concepts.
+
+The result is formalized under explicit assumptions, including a pretraining distribution built as a mixture of hidden Markov models (HMMs), a delimiter structure, and a distinguishability condition between concepts. The authors also show that the length of input examples can provide information beyond the input-output mapping alone.
+
+Their experiments on GINC, a synthetic dataset constructed from mixtures of HMMs, show that Transformers and LSTMs can exhibit ICL in this setting. They do not demonstrate that all LLMs universally learn through Bayesian inference on natural corpora. The explanation remains bounded by the theoretical assumptions and synthetic experiments.
+
+See [Xie et al. (2022), ICLR](https://openreview.net/forum?id=RdJVFCHjUMI).
 :::
 
 ::: {.callout-note collapse="true" title="Further exploration: experimental study of ICL"}
@@ -160,10 +187,15 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ### References
 
-- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
-- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
-- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
-- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
+- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html).
+- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://www.transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html).
+- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://openreview.net/forum?id=RdJVFCHjUMI).
+- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://aclanthology.org/2022.emnlp-main.759/).
+
+### Further reading
+
+- Yoo et al. (2022), [*Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations*](https://aclanthology.org/2022.emnlp-main.155/), which revisits the effect of correct input-label mappings across experimental configurations.
+- Xiang et al. (2024), [*Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models*](https://aclanthology.org/2024.findings-acl.386/), on demonstration-order sensitivity in the evaluated models.
 
 :::
 

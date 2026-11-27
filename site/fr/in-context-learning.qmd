@@ -102,12 +102,39 @@ Mais ses résultats dépendent fortement :
 - de la proximité entre les exemples et le cas à traiter ;
 - de la capacité du modèle à généraliser au-delà des motifs superficiels.
 
+### Ce qu'une démonstration communique réellement
+
+Une démonstration `(x_i, y_i)` ne transmet pas uniquement une association entre une entrée et sa réponse. Elle peut fournir quatre informations distinctes :
+
+| Dimension | Information apportée |
+|---|---|
+| Distribution des entrées | Le type de textes ou de situations auxquels le modèle doit répondre |
+| Espace des étiquettes | Les classes ou réponses possibles |
+| Correspondance entrée-étiquette | Quelle réponse est associée à chaque entrée |
+| Format | La structure répétée des paires et leur ordre dans le prompt |
+
+Min et al. (2022) étudient ces dimensions séparément sur des tâches de classification et de choix multiple. Dans leurs configurations, remplacer les étiquettes correctes par des étiquettes aléatoires réduit souvent peu la performance agrégée. La distribution des entrées, l'espace des étiquettes et le format continuent toutefois de fournir un signal utile. Ce résultat ne signifie pas que la correspondance correcte est toujours inutile : les auteurs signalent des écarts entre tâches et modèles, et ne testent pas la génération ouverte.
+
+Yoo et al. (2022) réexaminent précisément cette question. Avec d'autres configurations, ils observent des cas où la correction des associations entrée-étiquette a un effet important. Ils proposent notamment de mesurer la sensibilité à la proportion d'étiquettes correctes et la part du gain attribuable aux étiquettes de référence. Leurs analyses montrent que l'effet dépend entre autres du jeu de données, de la méthode d'inférence, de la métrique, du modèle et du niveau de détail du template.
+
+Les deux travaux ne justifient donc pas une règle universelle du type « les labels corrects ne comptent pas ». Ils montrent plutôt que les démonstrations sont multicomposantes et que l'effet mesuré dépend du protocole expérimental. Les méthodes d'inférence, métriques et sous-ensembles de tâches n'étant pas identiques, leurs résultats doivent être comparés avec leurs conditions, pas seulement avec leurs conclusions résumées.
+
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
 
 ::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
 Le calcul conditionné par les exemples décrit le comportement observable. Les recherches sur les mécanismes de cette adaptation examinent la reconnaissance de motifs, l'inférence sur la règle qui a généré les exemples, l'apprentissage implicite d'algorithmes pendant le préentraînement et les circuits d'attention qui facilitent la copie ou l'association entre exemples.
 
-Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+Les *induction heads* sont un mécanisme étudié dans certains Transformers : une tête peut exploiter l'information écrite par une tête précédente pour retrouver une occurrence antérieure du token courant et reprendre le token qui la suivait. Olsson et al. (2022) apportent des preuves mécanistes et causales fortes dans de petits Transformers *attention-only*, notamment par ablation directe. Pour les modèles plus grands avec MLP, leur hypothèse d'un rôle majoritaire des induction heads repose surtout sur des indices indirects et corrélationnels ; les auteurs la présentent comme préliminaire, pas comme une conclusion établie.
+:::
+
+::: {.callout-note collapse="true" title="Approfondissement : une explication par inférence bayésienne"}
+Xie et al. (2022) proposent un cadre théorique dans lequel les documents de préentraînement partagent un **concept latent** $\theta$. Les exemples du prompt partagent eux aussi un concept $\theta^*$. Le modèle peut alors exploiter le prompt en inférant ce concept à partir des exemples et en calculant une distribution prédictive qui marginalise les concepts possibles.
+
+Le résultat est formalisé sous des hypothèses explicites, notamment une distribution de préentraînement construite comme un mélange de modèles de Markov cachés (HMM), une structure de délimiteurs et une condition de distinguabilité entre concepts. Les auteurs montrent aussi que la longueur des exemples d'entrée peut apporter de l'information, au-delà de la seule correspondance entrée-sortie.
+
+Leurs expériences sur GINC, un jeu de données synthétique construit à partir de mélanges de HMM, montrent que Transformers et LSTMs peuvent manifester de l'ICL dans ce cadre. Elles ne démontrent pas que tous les LLM apprennent universellement par inférence bayésienne sur des corpus naturels. La portée de l'explication reste liée aux hypothèses du modèle théorique et aux expériences synthétiques.
+
+Voir [Xie et al. (2022), ICLR](https://openreview.net/forum?id=RdJVFCHjUMI).
 :::
 
 ::: {.callout-note collapse="true" title="Approfondissement : étudier l'ICL expérimentalement"}
@@ -160,10 +187,15 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ### Références
 
-- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
-- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
-- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
-- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
+- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html).
+- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://www.transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html).
+- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://openreview.net/forum?id=RdJVFCHjUMI).
+- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://aclanthology.org/2022.emnlp-main.759/).
+
+### Pour approfondir
+
+- Yoo et al. (2022), [*Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations*](https://aclanthology.org/2022.emnlp-main.155/), qui réexamine l'effet des associations entrée-étiquette correctes selon les configurations expérimentales.
+- Xiang et al. (2024), [*Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models*](https://aclanthology.org/2024.findings-acl.386/), sur la sensibilité à l'ordre des démonstrations dans les modèles évalués.
 
 :::
 

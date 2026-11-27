@@ -1,0 +1,75 @@
+schema_version: 1
+source_id: olsson-et-al-induction-heads-2022
+items:
+  - id: olsson-et-al-induction-heads-2022:induction-head-circuit
+    kind: mechanism
+    summary: "An induction head implements pattern completion: after a previous-token head writes the preceding token into the residual stream, a later attention head can find earlier occurrences of the current token and attend to the token that followed them."
+    locator:
+      type: section
+      value: "Introduction; induction-head mechanism overview"
+      label: "In-context Learning and Induction Heads"
+    evidence:
+      kind: mechanistic-analysis
+      confidence: well-supported
+      scope: "The authors reverse-engineer the two-attention-head composition in small attention-only Transformers and describe the resulting [A][B] ... [A] → [B] pattern-copying behavior."
+      assumptions:
+        - "The described circuit is a specific mechanism found in the studied Transformer models."
+      limitations:
+        - "The literal pattern-copying definition is narrower than the broader fuzzy or nearest-neighbor behaviors hypothesized for large-model ICL."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      concept_ids: [in-context-learning, self-attention, multi-head-attention, causal-mask]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, self-attention]
+    disposition: integrate
+
+  - id: olsson-et-al-induction-heads-2022:small-model-causal-evidence
+    kind: result
+    summary: "For small attention-only Transformers, mechanistic reverse engineering and direct head ablations provide strong causal evidence that induction heads contribute substantially to in-context learning."
+    locator:
+      type: section
+      value: "Arguments 1–5; direct ablation and mechanistic reverse-engineering sections"
+      label: "Evidence in small attention-only models"
+    evidence:
+      kind: intervention-and-ablation
+      confidence: well-supported
+      scope: "The paper reports phase-change co-occurrence, architectural co-perturbation, direct test-time head ablations, and mechanistic analysis in small attention-only models."
+      assumptions:
+        - "The strength of the ablation evidence is interpreted within the authors' evaluated architectures and their operational measure of in-context learning."
+      limitations:
+        - "The authors note that head ablations can be harder to interpret in models with MLP layers because attention and MLP computations interact."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      concept_ids: [in-context-learning, self-attention, multi-head-attention]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: olsson-et-al-induction-heads-2022:large-model-evidence-boundary
+    kind: limitation
+    summary: "For large Transformers with MLPs, the claim that induction heads explain the majority of ICL relies mainly on indirect and correlational evidence; the authors explicitly describe the case as preliminary and not conclusive."
+    locator:
+      type: section
+      value: "Introduction; evidence-strength summary; Argument 6; Model Analysis Table"
+      label: "Evidence strength and extrapolation from small to large models"
+    evidence:
+      kind: author-stated-evidence-boundary
+      confidence: well-supported
+      scope: "The authors distinguish strong causal evidence in small attention-only models from mainly correlational evidence for the majority-ICL claim in large models; they also state that they do not have full-scale head ablations."
+      assumptions:
+        - "The extrapolation from small models to full-scale models assumes continuity of observed behaviors and mechanisms."
+      limitations:
+        - "Alternative composition mechanisms may also form during the phase change."
+        - "The authors caution that extrapolating from small models to models many orders of magnitude larger requires care."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      concept_ids: [in-context-learning, self-attention, multi-head-attention]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
