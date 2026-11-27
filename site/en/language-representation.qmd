@@ -122,7 +122,7 @@ Vector representations provide the network with a flexible numerical substrate. 
 
 The initial lookup depends on the ID, not on the sentence in which the token appears. Two occurrences of the same ID therefore select the same initial vector when the parameters are fixed.
 
-Yet an occurrence does not always play the same role depending on the words around it. In English, *bank* appears in “river bank” and “bank account”: the visible token may be the same while the relevant context differs. Lookup alone does not make this distinction.
+Yet an occurrence does not always play the same role depending on the words around it. In English, *bank* appears in “river bank” and “bank account”: if the tokenizer assigns the same ID to both occurrences, their initial vector is identical even though the relevant context differs. Lookup alone does not make this distinction.
 
 Transformer layers construct **contextualized representations** by transforming initial vectors using other accessible positions. In a causal model, a position can use only the prefix up to and including itself. This transformation allows the state associated with an occurrence to depend on its context.
 
