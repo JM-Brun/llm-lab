@@ -54,18 +54,16 @@ No. A reranker reorders the candidates it receives; it cannot retrieve a documen
 
 </details>
 
-### 3. Interpret MRR@5
+### 3. Calculate MRR@5
 
-For one query, the first relevant document appears at rank 2 in the reranked list. What is $\mathrm{RR}@5$ for this query? Why should it not be confused with Recall@100?
+Across three queries, the first relevant document appears at ranks 2, 1, and 4 in the reranked lists. Calculate MRR@5. Why should this metric not be confused with Recall@100?
 
 <details>
 <summary>Show the answer</summary>
 
-$$
-\mathrm{RR}@5=\frac{1}{2}=0.5.
-$$
+MRR@5 = (1/2 + 1 + 1/4) / 3 = 7/12 ≈ 0.583.
 
-Reciprocal rank measures the position of the first relevant result. Recall@100 measures the proportion of all relevant documents retrieved among the 100 candidates. They evaluate different stages and properties.
+MRR@5 averages the reciprocal rank of the first relevant result across queries. Recall@100 measures the proportion of all relevant documents retrieved among the 100 candidates. They evaluate different stages and properties.
 
 </details>
 
