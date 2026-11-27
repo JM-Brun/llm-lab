@@ -102,6 +102,23 @@ However, results depend strongly on:
 - similarity between examples and the case being solved;
 - the model's ability to generalize beyond superficial patterns.
 
+### What does a demonstration actually communicate?
+
+A demonstration `(x_i, y_i)` conveys more than an association between an input and its answer. It can provide four distinct kinds of information:
+
+| Dimension | Information supplied |
+|---|---|
+| Input distribution | The kinds of texts or situations the model should handle |
+| Label space | The possible classes or answers |
+| Input-label mapping | Which answer is associated with each input |
+| Format | The repeated structure of the pairs and their order in the prompt |
+
+Min et al. (2022) study these dimensions separately on classification and multiple-choice tasks. Under their configurations, replacing correct labels with random labels often causes only a small drop in aggregate performance. The input distribution, label space, and format nevertheless continue to provide useful signal. This does not mean that correct mappings are always irrelevant: the authors report differences across tasks and models, and do not evaluate open-ended generation.
+
+Yoo et al. (2022) revisit this question. Under other configurations, they observe cases where correct input-label mappings have a substantial effect. They propose, among other measures, sensitivity to the proportion of correct labels and the share of the improvement attributable to ground-truth labels. Their analyses show that the effect depends on factors including the dataset, inference method, metric, model, and level of detail in the prompt template.
+
+The two papers therefore do not support a universal rule such as “correct labels do not matter.” Rather, they show that demonstrations are multi-component and that measured effects depend on the experimental protocol. Their inference methods, metrics, and task subsets are not identical, so their findings should be compared together with their conditions, not only through their summarized conclusions.
+
 A model may reproduce a format without identifying the relevant rule. It may also be sensitive to example order, contradictory demonstrations, or irrelevant details. ICL therefore guarantees neither correct generalization nor human-like understanding of the task.
 
 ::: {.callout-note collapse="true" title="Further exploration: mechanistic hypotheses"}
