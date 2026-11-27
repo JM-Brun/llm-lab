@@ -14,7 +14,7 @@ This document verifies current Quarto source and exact destination anchors. Loca
 - Practice destinations are recorded separately from core lessons. The existence of a worked exercise is not learner-outcome evidence.
 - No page, concept, relation, computational graph, route or visual change is proposed by this audit.
 
-## 1. Panorama — `llm-overview`
+## 1. Panorama — `llm-overview` {#overview}
 
 | Local contribution | Claim to preserve | Source item / provenance | FR destination | EN destination | Presence and decision |
 |---|---|---|---|---|---|
@@ -27,7 +27,7 @@ This document verifies current Quarto source and exact destination anchors. Loca
 
 Practice companion: [FR](../../site/fr/exercises/llm-overview.qmd) / [EN](../../site/en/exercises/llm-overview.qmd). Its self-check marker covers all nine overview anchors; Q5, Q6, Q8 and Q9 are the most relevant transfer checks. The questions have worked answers, but no learner outcome is inferred.
 
-## 2. Text data — `text-data`
+## 2. Text data — `text-data` {#text-data}
 
 | Local contribution | Claim to preserve | Source item / provenance | FR destination | EN destination | Presence and decision |
 |---|---|---|---|---|---|
@@ -40,7 +40,7 @@ Practice companion: [FR](../../site/fr/exercises/llm-overview.qmd) / [EN](../../
 
 Practice destinations: [FR lookup exercise](../../site/fr/exercises/text-data.qmd#ex-text-to-embedding-lookup), [EN lookup exercise](../../site/en/exercises/text-data.qmd#ex-text-to-embedding-lookup), and the longer [FR](../../site/fr/exercises-text-data.qmd#tokenizer-embedding-trace) / [EN](../../site/en/exercises-text-data.qmd#tokenizer-embedding-trace) tokenizer trace. The two exercise surfaces serve different purposes and should not be collapsed.
 
-## 3. Positional encoding — `positional-encoding`
+## 3. Positional encoding — `positional-encoding` {#positional-encoding}
 
 | Local contribution | Claim to preserve | Source item / provenance | FR destination | EN destination | Presence and decision |
 |---|---|---|---|---|---|
@@ -49,7 +49,7 @@ Practice destinations: [FR lookup exercise](../../site/fr/exercises/text-data.qm
 | `position-ic-03-mask-is-not-position` | The causal mask determines which positions are visible; a positional mechanism represents absolute position or relative offset. NoPE may exploit nested causal prefixes as an implicit order signal, but this is not an explicit coordinate or distance. | AIEdge `mask-versus-position` is secondary framing; Raschka positional extraction item `nope` describes the scoped NoPE configuration. Neither is used to claim a universal property of all causal Transformers. | [One-minute summary](../../site/fr/positional-encoding.qmd#revision-summary) | [One-minute summary](../../site/en/positional-encoding.qmd#revision-summary) | Explicit in both languages; preserve the limitation that implicit order does not guarantee long-context generalization. |
 | `position-ic-04-computable-signal-not-generalization` | A positional formula may compute a vector at an unseen index without the trained model generalizing reliably to that context length. | **Project-derived distinction.** Press's `linear-score-bias` item supports the ALiBi mechanism only; it is not evidence for a universal length-extrapolation result. | [One-minute summary](../../site/fr/positional-encoding.qmd#revision-summary); [Practice self-check](../../site/fr/exercises/positional-encoding.qmd#vérifier-sa-compréhension), Q4 | [One-minute summary](../../site/en/positional-encoding.qmd#revision-summary); [Practice self-check](../../site/en/exercises/positional-encoding.qmd#check-your-understanding), Q4 | Explicit in both languages and directly tested by the worked Q4 answer; no new empirical generalization claim is implied. |
 
-## 4. Contextualized representations — `contextualized-representations`
+## 4. Contextualized representations — `contextualized-representations` {#contextualized-representations}
 
 | Local contribution | Claim to preserve | Source item / provenance | FR destination | EN destination | Presence and decision |
 |---|---|---|---|---|---|
