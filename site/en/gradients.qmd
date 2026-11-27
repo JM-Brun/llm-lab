@@ -172,7 +172,7 @@ g_i^{\mathrm{num}}=
 {2\epsilon}.
 $$
 
-Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative.
+Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative. PyTorch notes that `gradcheck` defaults are designed for double-precision inputs; lower precision can cause failures. The check may also fail at non-differentiable points or with tensors whose indices share overlapping memory. A failure must therefore be interpreted in light of these conditions, not as immediate proof that the analytical derivative is wrong.
 :::
 
 ::: {.callout-warning title="Misconceptions"}
