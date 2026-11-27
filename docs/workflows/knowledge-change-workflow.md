@@ -99,7 +99,6 @@ Use the existing canonical ownership model. Do not infer ownership from filename
 | Overall curriculum and Build order/status | `docs/learning-path.md`, `docs/full-curriculum-plan.md` and existing Build lesson/code evidence |
 | Build route and deliverables | Existing Build route definitions and docs |
 | Source-to-project synthesis and provenance | Existing `docs/source-reviews/`, `docs/source-syntheses/`, extraction records and references |
-| Computational graph | `data/computational-graph.yml`, governed by `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md` |
 | Generated knowledge/page/computational graph, map, route and navigation projections | Existing generators; never hand-edit generated outputs |
 
 Keep these structures distinct:
