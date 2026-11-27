@@ -330,3 +330,46 @@ The previous bilingual description of `approximates` referred only to a computab
 The two edges are not `prerequisite` relations and must not influence the guided route. The FR/EN lesson pair and the two exercise pages remain the explanatory resources; no duplicate concept or page relation is introduced.
 
 **Updated inventory:** 122 current edges, all source-semantically reviewed. The remaining gates are rendered graph inspection, touch/keyboard/screen-reader validation, and an independent learner task; this source audit does not close them.
+
+
+## 2026-11-27 tokenizer / text-encoding delta review
+
+The exact-ID reconciliation in [#416](https://github.com/JM-Brun/llm-lab/issues/416) identified 25 current assertions not covered by the earlier semantic audit. I reviewed this bounded set against the current bilingual endpoint definitions and the canonical relation-type contract in `data/concepts.yml`. The 122 previously covered assertions were not re-reviewed.
+
+| Current assertion | Decision | Scope and rationale |
+|---|---|---|
+| `tokenizer → applies-to → tokenization` | Accept | The tokenizer is the mechanism applied to text-tokenization. This does not imply that every tokenizer uses the same pipeline or segmentation algorithm. |
+| `tokenizer-pipeline → part-of → tokenizer` | Accept | The configurable pipeline is a component of the tokenizer system. |
+| `text-normalization → part-of → tokenizer-pipeline` | Accept | Normalization is an optional/configuration-dependent pipeline stage, not a universal operation. |
+| `pre-tokenization → part-of → tokenizer-pipeline` | Accept | Pre-tokenization is a pipeline stage whose presence and behavior depend on the tokenizer configuration. |
+| `subword-tokenization → part-of → tokenization` | Accept, scoped | This expresses family membership: subword tokenization is one family of tokenization methods, not a mandatory sequential stage after tokenization. |
+| `byte-pair-encoding → part-of → subword-tokenization` | Accept, scoped | BPE is one method in the subword-tokenization family; this is a family-membership relation, not a claim that all subword tokenizers use BPE. |
+| `wordpiece → part-of → subword-tokenization` | Accept, scoped | WordPiece is a distinct method in the subword-tokenization family, not a component used by BPE. |
+| `unigram-tokenization → part-of → subword-tokenization` | Accept, scoped | Unigram is a distinct probabilistic method in the family, not a stage that follows BPE or WordPiece. |
+| `token-vocabulary → part-of → tokenizer` | Accept | The vocabulary is a structural component of a tokenizer and associates recognized units with IDs. |
+| `token-vocabulary → produces → token-id` | Accept, scoped | The vocabulary provides the token-to-ID association used by lookup. This is not a claim that the vocabulary alone tokenizes text or emits a complete ID sequence; that sequence is produced by token encoding. |
+| `token → represented-by → token-id` | Accept | A token occurrence/unit is represented in the model input by the ID assigned under the associated vocabulary. The ID is vocabulary-relative, not a universal token identity. |
+| `special-token → part-of → token-vocabulary` | Accept | Special tokens are reserved entries in the vocabulary, with structural/control roles distinct from ordinary text. |
+| `tokenizer-training → contributes-to → token-vocabulary` | Accept | Training/fitting can construct or adjust a vocabulary; the edge does not imply that every tokenizer is trained in the same way or at runtime. |
+| `token-decoding → applies-to → token-id` | Accept | Decoding operates on token IDs (or their corresponding token sequence) under the tokenizer's vocabulary and conventions. |
+| `tokenizer-evaluation → applies-to → tokenizer` | Accept | The evaluation procedure is applied to a tokenizer; it can include intrinsic measures and downstream evaluation, which must remain distinct. |
+| `token-fertility → part-of → tokenizer-evaluation` | Accept, scoped | Fertility is one possible intrinsic measure used within tokenizer evaluation, not a complete definition of tokenizer quality. |
+| `tokenizer-evaluation → applies-to → multilingual-tokenization` | Accept, scoped | Evaluation can be conducted in multilingual-tokenization settings. This is an evaluation context, not a prerequisite or a claim that multilingual tokenization is itself an evaluation method. |
+| `byte-level-encoding → part-of → tokenization` | Accept, scoped | Byte-level encoding is one possible representation path within tokenization. It is not universal to all tokenizers and must not be conflated with byte-pair merge training. |
+| `tokenization → produces → token` | Accept | Tokenization yields a sequence of discrete token units. It does not by itself specify the integer IDs assigned to those units. |
+| `token-encoding → produces → token-id` | Accept | Applying a configured tokenizer/vocabulary to input produces the model-facing ID sequence. This is the runtime encoding output. |
+| `token-post-processing → part-of → tokenizer-pipeline` | Accept | Post-processing is a pipeline component, for example to add sequence markers or apply configured structural conventions. |
+| `token-post-processing → contributes-to → special-token` | Accept, scoped | Post-processing can insert configured special tokens into an encoded sequence. It does not create the special-token definitions or vocabulary entries. |
+| `subword-tokenization → part-of → tokenizer-pipeline` | Accept, scoped | The segmentation method is one possible pipeline component. It is not mandatory for byte-level or other tokenizer designs. |
+| `token-id → prerequisite → token-embedding` | Accept | The ID is required to index/select the corresponding row of the model's token-embedding matrix. This is a legitimate local pedagogical dependency, not a global route order. |
+| `tokenizer-compatibility → prerequisite → token-embedding` | Accept, scoped | Correct lookup requires IDs to use the vocabulary and conventions associated with the model's embedding table. This is a compatibility condition for using the lookup correctly, not an additional computation stage. |
+
+### Delta-review result
+
+- **25/25 previously unaudited current assertions reviewed.**
+- Combined with the exact-ID reconciliation (122 covered assertions), the current registry has **147/147 assertions covered** by the semantic audit.
+- No relation was changed in this pass: the reviewed assertions are consistent with the existing endpoint and relation definitions when read with the scopes above.
+- The scoped interpretations are important for downstream consumers: family membership, optional pipeline stages, intrinsic metrics and tokenizer/model compatibility must not be converted into a global pedagogical sequence or computation DAG.
+- This closes the **source-semantic relation review** for the current 147 assertions. It does not close consumer-consistency checks, real touch-device testing, manual screen-reader review or independent learner validation. Those remain with their existing owners (#416, #584, #988 and #447 respectively).
+
+The source and implementation limitations recorded in the tokenization source reviews remain in force; this relation review does not upgrade partial source scans or claim independent reproduction of experiments.
