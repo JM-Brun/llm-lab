@@ -114,6 +114,8 @@ Pendant la génération, le token suivant dépend des tokens déjà produits : l
 - **Entraînement :** `t₁ t₂ t₃ t₄` → une passe masquée ; les positions sont calculées en parallèle.
 - **Génération :** `t₁` → `t₂` → `t₃` → … chaque étape dépend du token précédent.
 
+<span id="transformer-depth-width"></span>
+
 ### Profondeur et largeur : deux dimensions de l'architecture
 
 - **Profondeur (depth) :** nombre de blocs Transformer empilés.
