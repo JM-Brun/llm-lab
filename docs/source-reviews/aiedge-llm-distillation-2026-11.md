@@ -11,7 +11,7 @@ The canonical URL was opened directly on 2026-11-06 and again on 2026-11-27; bot
 
 This review deliberately does **not** attribute claims from other articles or papers to the AiEdge article. No article-specific extraction file is created until its text can be inspected. The source remains `inaccessible`, not `partially-scanned` or `scanned`; its integration status is now `deferred` because the audit has made an explicit no-integration decision pending readable source text.
 
-Unresolved: article text and structure, byline, publication/update date, figures, linked sources, code/data, comments and reuse rights.
+Unresolved: article text and structure, update date, figures, linked sources, code/data, comments and reuse rights. The byline and publication date are now verified from the newsletter listing.
 
 ## 2. Preliminary LLM Lab coverage check
 
