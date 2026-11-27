@@ -215,8 +215,7 @@ token_ids = encoding.encode(prefix)
 token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
 
 assert encoding.decode(token_ids) == prefix
-assert len(token_ids) == 15
-assert token_ids[-1] == 5633
+assert token_ids == [34, 6, 395, 17809, 5351, 710, 3074, 11, 6184, 100, 64, 11, 629, 4892, 5633]
 assert token_bytes[-1] == b" ?"
 
 print("Préfixe français — fragments exacts et IDs GPT-2 :")
