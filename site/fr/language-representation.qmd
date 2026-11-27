@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "La synthèse distingue le rôle de l’ID, du vecteur appris et de l’état contextualisé, et rappelle pourquoi le réseau a besoin d’objets numériques."
+      note: "La synthèse explique pourquoi le réseau a besoin de représentations numériques apprenables pour exploiter des régularités linguistiques, puis distingue l’ID, le vecteur initial et l’état contextualisé."
 tags:
   - "type:concept-bridge"
   - "destination:understand"
