@@ -5872,7 +5872,7 @@
     {
       "id": "contextualized-representation",
       "label": "Représentation contextualisée",
-      "definition": "État vectoriel dont la valeur dépend du token, de son contexte et des calculs du réseau.",
+      "definition": "État vectoriel associé à une occurrence de token, calculé à partir de sa représentation initiale, de l'information positionnelle et du contexte accessible selon l'architecture du modèle.",
       "importance": "core",
       "domains": [
         "architectures-mechanisms",
@@ -5883,6 +5883,11 @@
           "id": "fr/contextualized-representations",
           "title": "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?",
           "href": "contextualized-representations.html"
+        },
+        {
+          "id": "fr/contextualized-representations-advanced",
+          "title": "Représentations contextualisées : dépendances entre positions et couches",
+          "href": "contextualized-representations-advanced.html"
         }
       ],
       "code_resources": [
