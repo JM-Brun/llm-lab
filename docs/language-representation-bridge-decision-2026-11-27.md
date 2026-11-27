@@ -1,7 +1,7 @@
 # Decision record — add a motivation page before text-data
 
 **Date:** 2026-11-27  
-**Status:** bilingual lesson drafted and added to the Understand route; awaiting CI and rendered-page review  
+**Status:** bilingual bridge implemented and merged via PR #1754; its pedagogical framing is being refined in PR #1762, with current-head CI and rendered-site review pending
 **Scope:** Understand route, bilingual page architecture, page metadata, concept graph, guided-route projection, and the boundary with the existing `text-data` lesson.
 
 ## 1. Decision to evaluate
@@ -292,12 +292,10 @@ This distinction is intentional and important:
 
 The new page is therefore part of the core route without being promoted into an artificial hard dependency for the mechanics page. The separate bilingual recall sheets satisfy the existing synthesis contract without putting exercises into the main explanation.
 
-### Remaining validation before merge
+### Follow-up after implementation
 
-- Confirm the page metadata validator accepts both new records and the shared topic.
-- Run the guided-route and learning-map generators; confirm the new focus references resolve to concepts whose resource lists include the bridge pages.
-- Render both languages and inspect mathematical notation, the flow sketch, links, mobile layout, and Quarto previous/next navigation.
-- Confirm the generated learning-map JSON and graph projections are reproducible; do not hand-edit generated artifacts.
-- Check that the page remains an overview and does not duplicate the technical explanation in `text-data`, `embedding-space`, or `contextualized-representations`.
+The structural implementation was merged in [PR #1754](https://github.com/JM-Brun/llm-lab/pull/1754). A subsequent content refinement is under review in [PR #1762](https://github.com/JM-Brun/llm-lab/pull/1762): it recentres the lesson on why mathematical representations let a network learn and exploit linguistic regularities.
 
-No CI success is claimed until those checks have actually run.
+The outstanding validation and editorial alignment tasks are maintained in [Language-representation bridge — remaining work](language-representation-follow-up-2026-11-27.md). In particular, results from the earlier browser audit do not validate the revised content in PR #1762.
+
+No claim of completion should be made until the current PR head passes CI and the rendered bilingual pages have been inspected.
