@@ -33,7 +33,7 @@ This page is an **advanced deep dive** into [scaled dot-product attention](scale
 
 Under the simplifying assumption that all query and key components are independent, zero-mean, and unit-variance, their dot product has variance $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$ and standard deviation $\sqrt{d_k}$: for $d_k=64$, it is 8. Large differences between scores in a row can concentrate softmax and reduce its gradients. Dividing by $\sqrt{d_k}$ reduces this risk in the simplified model; neither saturation nor its absence is guaranteed for learned projections.
 
-### Derive the variance, one step at a time
+### Derive the variance, one step at a time {#derive-variance}
 
 Write the dot product as
 $$
