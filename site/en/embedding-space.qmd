@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
 summary: "Follows an ID sequence to the initial vectors selected from the embedding matrix, preserving their order and repeated IDs."
 scope: "Traces an ID sequence through lookup: sequence position, ID, selected row, and resulting initial vector. Distinguishes this result from positional processing and contextualized states."
-purpose: "Given an ID sequence, retrieve the selected rows and vectors in order, explain why repeated IDs share the same vector with a fixed table, and predict the effect of coordinated renumbering."
+purpose: "Given an ID sequence, retrieve the selected rows and vectors in order, explain why repeated IDs share the same vector with a fixed table, and place lookup before positional processing and contextualization."
 suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"
