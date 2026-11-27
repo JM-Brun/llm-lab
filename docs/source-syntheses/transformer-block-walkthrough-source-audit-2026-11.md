@@ -62,7 +62,7 @@ Both FR and EN pages expose the same eight external references in the same order
 
 Internal links to implementation, primitive, tests, project status and roadmap are internal implementation evidence, not external sources.
 
-The five current related.pages associations are a discovery set, not the direct bibliography. They must be inspected individually before retaining or removing them. They do not replace the eight explicit source-page relations.
+The current main initially exposed seven non-bibliographic `related.pages` associations, not five. After checking each against the actual page scope, five are retained as discovery links and two FlashAttention-only associations are removed; the eight direct bibliography relations are recorded separately.
 
 ## 4. Preliminary contribution map
 
@@ -117,19 +117,19 @@ No aggregate diversity score is warranted. The useful diagnostic is whether each
 
 ### P0 — provenance and primary-source review
 
-- [ ] Reuse the existing canonical IDs for Vaswani and Raschka; do not duplicate either.
-- [ ] Add canonical source records for Xiong, Shazeer, Ainslie, DeepSeek-V2, Mistral 7B and Longformer after verifying creators, publication/version, URL, licence and taxonomy values.
-- [ ] Inspect only the paper sections used by the page; record precise section/equation/table locators and limitations.
-- [ ] Add one bounded extraction file per newly registered paper; extract only page-relevant definitions, mechanisms, assumptions, results and limitations.
-- [ ] Add focused reviews or extend existing reviews where appropriate; do not create a review file per source by default.
+- [x] Reuse the existing canonical IDs for Vaswani and Raschka; do not duplicate either.
+- [x] Add canonical source records for Xiong, Shazeer, Ainslie, DeepSeek-V2, Mistral 7B and Longformer after verifying creators, publication/version, URL, licence and taxonomy values.
+- [x] Inspect only the paper sections used by the page; record precise section/equation/table locators and limitations.
+- [x] Add one bounded extraction file per newly registered paper; extract only page-relevant definitions, mechanisms, assumptions, results and limitations.
+- [x] Add focused reviews or extend existing reviews where appropriate; do not create a review file per source by default.
 
 ### P1 — page and code reconciliation
 
-- [ ] Compare exact FR/EN external URLs, order and surrounding claims at the final branch head.
-- [ ] Resolve the five related.pages associations by canonical source ID and purpose; add the eight explicit page relationships only after IDs are confirmed.
-- [ ] Pin code links to a commit or line anchors and record the reviewed commit SHA.
-- [ ] Check that every variant paragraph states whether it is implemented, tested, compared or optional context.
-- [ ] Add tests only where an implemented behavior is part of the teaching contract.
+- [x] Compare exact FR/EN external URLs, order and surrounding claims at the final branch head.
+- [x] Resolve the five related.pages associations by canonical source ID and purpose; add the eight explicit page relationships only after IDs are confirmed.
+- [x] Pin code links to a commit or line anchors and record the reviewed commit SHA.
+- [x] Check that every variant paragraph states whether it is implemented, tested, compared or optional context.
+- [x] Add tests only where an implemented behavior is part of the teaching contract.
 
 ### P2 — validation
 
@@ -139,10 +139,59 @@ No aggregate diversity score is warranted. The useful diagnostic is whether each
 - [ ] Inspect mobile layout, interactive diagram keyboard behavior and accessibility.
 - [ ] Keep scientific review, code/test validation, visual inspection, accessibility and learner transfer as separate gates.
 
-## 9. Initial conclusion
+## 9. Conclusion after the source-to-code reconciliation
 
-The page has a useful source-to-code teaching contract, but its documentary graph is incomplete: six of eight visible external references have no canonical source record, while the five related.pages associations are not the same set as the visible bibliography. The implementation and tests provide a second evidence stream that papers cannot replace.
+The page now has canonical records and bounded extractions for all eight visible external papers. Its documentary graph distinguishes direct bibliography from discovery associations. The implementation and tests remain a separate evidence stream: papers cannot prove what this code executes, and tests cannot establish the research claims in those papers.
 
 The main intellectual risk is collapsing four orthogonal design axes—normalization placement, K/V-head sharing, latent KV compression and position sparsity—into one list of competing attention variants. Teach these axes separately and use Mistral as an example of combination, not interchangeability.
 
 **Status:** recognition/source-to-code audit documented; six-source ingestion, relation reconciliation and final validation remain open. No claim is made that the six papers have been fully inspected or that the public page has changed.
+
+
+## 10. Phase A ingestion and relation reconciliation — 2026-11-27
+
+### Direct bibliography: eight source-page relations
+
+The FR and EN pages expose the same eight external papers, in the same order. The two existing canonical records were reused; six records and six extraction files were added. Every new source remains `partially-scanned`: the exact sections used by the page were inspected, but this pass does not claim a full-paper, supplementary-material, code or data audit.
+
+| Page claim | Canonical source | Precise inspected locator | Evidence boundary |
+|---|---|---|---|
+| Pre-LN/Post-LN placement and optimization rationale | Xiong et al. (2020) | §3.3, Theorem 1; §4.2, Figures 4–5 | Theoretical result depends on the paper's simplified initialization assumptions; experiments are configuration-specific |
+| MHA definition and learned projections | Vaswani et al. (2017) | §3.2.2–3.2.3 | Primary architecture definition; page's NumPy implementation is a teaching implementation, not a reproduction of the full paper |
+| MQA shared K/V heads | Shazeer (2019) | §3; §3.1; §§4.2–4.3 | Primary MQA definition; speed and quality trade-offs are hardware/model-specific |
+| GQA grouping and MHA→GQA uptraining | Ainslie et al. (2023) | §§2.1–2.2, Figure 2; §§3.2–3.3 | Primary GQA definition; 5% uptraining and quality/speed claims are T5-experiment-specific |
+| MLA low-rank joint K/V compression | DeepSeek-AI (2024) | §2.1.2, equations 9–11 and Figure 3; §2.1.4, Table 1 | Primary MLA equations; reported cache savings are DeepSeek-V2-specific |
+| GQA + sliding-window configuration | Jiang et al. (2023), Mistral 7B | §2, Table 1, Figure 1 | Concrete model case; GQA definition remains sourced to Ainslie |
+| Local, dilated and global sparse attention | Beltagy et al. (2020), Longformer | §3.1–3.2, Figure 2 | Linear scaling assumes fixed local window and a small number of global positions |
+| Visual cross-variant comparison | Raschka (2026) | Article introduction, GQA/sparse-attention sections and conclusion (existing partial scan) | Pedagogical comparison only; not primary evidence for the research claims |
+
+### Canonical records and extractions
+
+- Existing records reused and related to both walkthrough pages: `vaswani-et-al-attention-is-all-you-need-2017`, `raschka-visual-attention-variants`.
+- New source records: `xiong-et-al-layer-normalization-transformer-2020`, `shazeer-fast-transformer-decoding-mqa-2019`, `ainslie-et-al-gqa-2023`, `deepseek-ai-deepseek-v2-2024`, `jiang-et-al-mistral-7b-2023`, `beltagy-et-al-longformer-2020`.
+- Each new paper has one `data/extractions/<source-id>.yml` with atomic items, exact locators, assumptions, limitations, candidate destinations and a bounded `integrate-by-reference` disposition.
+- No new concept ID, concept page, source collection or page was created. Only existing canonical concept IDs are referenced where justified.
+
+### Discovery associations: five retained, two removed
+
+The seven non-bibliographic associations found on the current main branch were:
+- Retain Nishanthan K (Q/K/V pedagogical explanation), Zsombor Veres Lakos (attention implementation), Jay Alammar (Transformer overview), PyTorch SDPA API (implementation/API reference) and Jose Parreño García (Q/K/V and attention explanation) as discovery resources.
+- Remove Dao et al. FlashAttention and The AI Edge FlashAttention guide from the Transformer Block Walkthrough relation. The page does not teach IO-aware/FlashAttention kernels; those sources remain associated with the scaled-dot-product-attention and attention-score-scaling pages where their scope belongs.
+
+The eight direct citations are now linked through canonical source records; the five retained discovery associations remain explicitly distinct from the bibliography.
+
+### Implementation and test boundary
+
+The current page states that its NumPy block is a pedagogical MHA example: (H_{KV}=H_q), separate K/V projections per head and dense causal attention. It does **not** implement MQA/GQA sharing, an inference KV cache, MLA compression or sparse attention. Those variants are research-grounded comparisons, not code features.
+
+Code references now use line anchors:
+- `transformer_block.py#L50-L186`: pre-LN block, attention and MLP branches, residual forward pass.
+- `attention.py#L9-L128`: causal mask and single-head scaled-dot-product primitive.
+- `test_attention.py#L13-L34` and `#L229-L270`: mask structure, shape/invariant and causal-invariance tests.
+- `test_transformer_block.py#L23-L85`: shape/finite-output, input validation, initialization and residual-stream behavior.
+
+Reviewed against main commit `edaef38438baeac46cb807a926fcdda8512da1b2`. These tests establish the implemented primitive/block contract only; they do not validate the research variants as implementations.
+
+### Remaining validation gates
+
+Source records and extraction files are ready for the source-catalogue validator and focused/full test runs in the PR. Rendered-page inspection, manual figure review, accessibility and learner transfer remain separate gates. The page has no interactive attention diagram requiring a new keyboard interaction contract; do not create one just to satisfy this audit.
