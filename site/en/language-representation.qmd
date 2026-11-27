@@ -42,7 +42,7 @@ A word is not naturally a number. Assigning it an integer makes it possible to r
 
 The idea is to associate text units with vectors whose values are learned from language use and a training objective. The network's operations can then exploit statistical regularities — and thereby model aspects of semantics — without being given an explicit definition of every word.
 
-We will follow one example throughout this page: Otis's line about a “good or bad situation”. For now, treat it as an ordinary character string. We will track what changes — and what does not — as the model turns it into numerical objects.
+We will follow the same running example used throughout the learning path: Otis's question, “C'est une bonne situation, ça, scribe ?”, followed by the beginning of his reply: “Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation…”. We will treat these as character strings first, then track what changes — and what does not — as the model turns them into numerical objects.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="What you should understand"}
@@ -78,7 +78,7 @@ A direct calculation on these identifiers — for example, a distance between 17
 
 An identifier is still useful: it is a stable label for a vocabulary unit. But a richer numerical representation is needed if the network's computations are to learn regularities.
 
-In our example, a given tokenizer assigns an ID to each token in the line. Imagine that the unit corresponding to `situation` receives the fictional ID `314`. This number retrieves a vocabulary entry; it does not tell us whether the situation is good, bad, professional, or absurd. `314` is an illustrative value, not the actual ID assigned by a particular tokenizer.
+In Otis's prompt, the GPT-2 tokenizer discussed on the next page produces the token `" situation"` (including its leading space) and assigns it ID `3074`. This integer retrieves a vocabulary entry; it does not tell us whether the situation refers to a job, a profession, or a set of circumstances. It is a table address, not a linguistic property. This ID belongs to GPT-2 and this exact fragment; it must not be generalized to another tokenizer or segmentation.
 
 ## 3. Why represent units with vectors?
 
@@ -92,7 +92,7 @@ The loss function then provides a learning signal: through backpropagation, grad
 
 This ability to learn is what matters. The network can apply parameterized transformations to vectors, compare information, combine it, and construct new representations. Vectors are therefore not merely numerical labels: they provide the substrate on which neural computation operates.
 
-For our fictional unit `314`, lookup selects the corresponding row: $\mathbf{e}_{314}=E[314,:]$. The resulting vector is not a definition of “situation”; its components are learned parameters. This vector, rather than the number `314`, is what the network's operations transform.
+For the GPT-2 token `" situation"`, lookup selects row 3074 of the matrix: $\mathbf{e}_{3074}=E[3074,:]$. The resulting vector is not a definition of “situation”; its components are learned parameters. This vector, rather than the integer 3074, is what the network's operations transform. The actual values in this row depend on the checkpoint; we do not invent its coordinates here.
 
 <figure>
   <pre>
@@ -113,15 +113,15 @@ Units → identifiers (to name them)
 
 The examples below use whole words for readability. In practice, the units processed by a model are those produced by its tokenizer: they may be whole words, word fragments, characters, or punctuation marks.
 
-Return to Otis's wording: “good situation”, followed by “good or bad situation”. The same noun appears in contexts that evaluate it differently. The model is not given a written rule defining a “good situation”; during training, it encounters many uses of these words and their combinations. Those contexts provide statistical evidence that learned representations can make usable.
+Return to Otis's line: in “C'est une bonne situation, ça, scribe ?”, *situation* refers to a job or profession; in “de bonne ou de mauvaise situation”, it refers to circumstances or conditions. The same visible word therefore appears in two contexts and two different uses. The model is not given a written rule defining these two senses; during training, it encounters many uses of words and their combinations. Those contexts provide statistical evidence that learned representations can make usable.
 
-This small example is obviously not enough to learn the meaning of the word. It illustrates the principle: regularities come from large-scale usage, not from an isolated numerical label.
+This short line is obviously not enough to learn the meaning of the word. It makes the problem visible: linguistic regularities come from large-scale usage, not from an isolated numerical label.
 
 This is a central intuition of **distributional modelling**: usage and context provide evidence about relationships between linguistic units. In a language model, this evidence is exploited in part through the next-token prediction objective. To predict well, the network benefits from representations that preserve and combine information useful in the context.
 
 However, this should not be interpreted too strongly:
 
-- the model does not necessarily learn an explicit relation “cat = feline”;
+- the model is not necessarily given an explicit label such as “situation = job” or “situation = circumstances”;
 - two words that are close in some contexts are not interchangeable in every sentence;
 - vector proximity depends on the representation and the chosen measure;
 - coordinates do not generally correspond one by one to readable semantic properties.
@@ -132,9 +132,9 @@ However, this should not be interpreted too strongly:
 
 The initial lookup depends on the ID, not on the sentence in which the token appears. Two occurrences of the same ID therefore select the same initial vector when the parameters are fixed.
 
-Yet an occurrence does not always play the same role depending on the words around it. Return to `situation`: in “a good situation”, the word appears in an evaluation; in “the situation is urgent”, it describes a state of affairs. **If the tokenizer assigns the same ID to both occurrences**, lookup selects the same initial vector. The different context is not stored in that table row; it is taken into account by the Transformer's computations.
+Yet an occurrence does not always play the same role depending on the words around it. Return to Otis's two uses: in “une bonne situation”, the word refers to a job; in “de bonne ou de mauvaise situation”, it refers to circumstances. **If the tokenizer assigns the same ID to both occurrences**, lookup selects the same initial vector. The distinction between a profession and a set of circumstances is not stored in that matrix row; it can be taken into account by the Transformer's computations.
 
-This is a conceptual comparison; it does not claim a particular tokenizer would produce a specific segmentation for the two sentences.
+The condition on the ID matters: a visible word is not necessarily one token, and segmentation depends on the tokenizer. We isolate the contextualization principle here, as in the dedicated lesson, without claiming to infer the continuation's IDs from the prompt alone.
 
 Transformer layers construct **contextualized representations** by transforming initial vectors using other accessible positions. In a causal model, a position can use only the prefix up to and including itself. This transformation allows the state associated with an occurrence to depend on its context.
 
