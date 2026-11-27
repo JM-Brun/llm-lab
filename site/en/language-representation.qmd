@@ -54,7 +54,7 @@ By the end of this page, you should be able to:
 
 Text consists of discrete symbols: characters, punctuation marks, words, or word fragments. A conventional program can compare strings, search for patterns, or apply symbolic rules. A Transformer-style neural network follows a different strategy: it applies parameterized mathematical operations to arrays of numbers.
 
-These operations — projections, matrix products, weighted combinations, and nonlinear transformations — allow the network to adjust its parameters from examples. For a neural model to use patterns in language through these operations, discrete text units must therefore be converted into numerical objects suited to computation.
+These operations — projections, matrix products, weighted combinations, and nonlinear transformations — allow the network to adjust its parameters from examples. For a neural model to use patterns in language through these operations, discrete text units must therefore be converted into numerical objects suited to computation. This does not mean that computers cannot manipulate character strings; it is the representation and computational approach chosen by this family of architectures.
 
 **The goal is not to replace language with an arbitrary sequence of numbers.** It is to construct learned representations on which the network can perform transformations useful for prediction.
 
@@ -106,7 +106,7 @@ Tokens → IDs (addresses)
   <figcaption>Conceptual view: each step changes the kind of object being handled. This shows broad classes of transformations, not every operation in a GPT.</figcaption>
 </figure>
 
-## 4. Why vectors rather than isolated numbers?
+## 4. What vector representations make possible
 
 A vector has multiple components. It can therefore serve as the input to learned transformations that combine information and produce new vectors. In a Transformer, projections, attention, and feed-forward networks transform representations across layers.
 
