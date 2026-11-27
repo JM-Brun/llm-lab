@@ -14,6 +14,12 @@ from dataclasses import dataclass
 FRONT_MATTER = re.compile(r"\A---\s*\n.*?\n---\s*\n", re.DOTALL)
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 INCLUDE_LINE = re.compile(r"^\s*\{\{<\s*include\b.*?>\}\}\s*$", re.MULTILINE)
+FENCED_DIV_OPEN = re.compile(r"^\s*(?P<fence>:{3,})\s+(?P<attrs>\{.*\})\s*$")
+FENCED_DIV_CLOSE = re.compile(r"^\s*(?P<fence>:{3,})\s*$")
+COLLAPSE_TRUE = re.compile(
+    r"""(?:^|\s)collapse\s*=\s*(?:"true"|'true'|true)(?=\s|$)""",
+    re.IGNORECASE,
+)
 END_OF_CORE = re.compile(
     r"^##\s+(?:exercices|exercises|approfondir|deep(?:en|er)|"
     r"références|references|pour aller plus loin|further reading)\b.*$",
@@ -59,12 +65,57 @@ class LessonDuration:
     diagrams: int
 
 
+def _remove_collapsed_callouts(markdown: str) -> str:
+    """Remove collapsed Quarto fenced divs, including nested callouts.
+
+    The duration estimate describes the main reading path. A collapsed
+    optional callout is available to interested readers, but should not be
+    counted as required reading. Track fenced-div depth so an outer collapsed
+    callout can safely contain other callouts.
+    """
+    output: list[str] = []
+    # Each entry stores the opening fence length and whether its contents
+    # should be omitted (inherited from a collapsed parent or local to it).
+    stack: list[tuple[int, bool]] = []
+
+    for line in markdown.splitlines(keepends=True):
+        line_without_newline = line.rstrip("\r\n")
+        opening = FENCED_DIV_OPEN.match(line_without_newline)
+        closing = FENCED_DIV_CLOSE.match(line_without_newline)
+
+        if opening:
+            fence_length = len(opening.group("fence"))
+            attributes = opening.group("attrs")
+            parent_is_collapsed = stack[-1][1] if stack else False
+            is_collapsed = parent_is_collapsed or bool(
+                COLLAPSE_TRUE.search(attributes[1:-1])
+            )
+            stack.append((fence_length, is_collapsed))
+            if not is_collapsed:
+                output.append(line)
+            continue
+
+        if closing and stack and len(closing.group("fence")) >= stack[-1][0]:
+            _, is_collapsed = stack.pop()
+            parent_is_collapsed = stack[-1][1] if stack else False
+            if not (is_collapsed or parent_is_collapsed):
+                output.append(line)
+            continue
+
+        if stack and stack[-1][1]:
+            continue
+        output.append(line)
+
+    return "".join(output)
+
+
 def _main_lesson(markdown: str) -> str:
     """Remove metadata and content explicitly outside the main learning lesson."""
     text = FRONT_MATTER.sub("", markdown, count=1)
     text = HTML_COMMENT.sub("", text)
     text = INCLUDE_LINE.sub("", text)
     text = END_OF_CORE.split(text, maxsplit=1)[0]
+    text = _remove_collapsed_callouts(text)
     return text
 
 
