@@ -154,7 +154,7 @@ Studies of contextualized representations provide complementary evidence, but th
 
 Peters et al. (2018) introduce ELMo (*Embeddings from Language Models*), whose word representations are learned functions of the internal states of a bidirectional LSTM language model. This work establishes the value of context-sensitive representations before Transformers became the dominant architecture. It does not describe GPT self-attention.
 
-### Measuring contextuality and its geometric limits
+### Measuring contextuality and its geometric limits {#measuring-contextuality-geometric-limits}
 
 Ethayarajh (2019) studies ELMo, BERT, and GPT-2. After adjusting for anisotropy, representations of the same word in different contexts remain more similar to one another on average than representations of different words, but this self-similarity decreases in upper layers.
 
