@@ -59,7 +59,7 @@ In high-dimensional spaces, some points can become nearest neighbours of a large
 
 Two texts can be lexically or topically close while expressing opposite facts (“the treatment works” / “the treatment does not work”). Conversely, very different formulations can answer the same question. Representation similarity is therefore not automatically equivalent to logical equivalence, document relevance, or usefulness in RAG.
 
-### The metric depends on the model and its training objective
+### The metric depends on the model and its training objective {#metric-model-objective}
 
 Sentence Transformers models do not all target the same scoring function: some are trained or recommended for dot product, others for cosine. Sentence Transformers documentation explains that dot product between normalized vectors is equivalent to cosine, while dot product on unnormalized vectors retains magnitude information. Respect the assumptions of the chosen model instead of replacing its default metric without evaluation.
 
