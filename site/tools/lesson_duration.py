@@ -16,8 +16,8 @@ HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 INCLUDE_LINE = re.compile(r"^\s*\{\{<\s*include\b.*?>\}\}\s*$", re.MULTILINE)
 FENCED_DIV_OPEN = re.compile(r"^\s*(?P<fence>:{3,})\s+(?P<attrs>\{.*\})\s*$")
 FENCED_DIV_CLOSE = re.compile(r"^\s*(?P<fence>:{3,})\s*$")
-COLLAPSE_TRUE = re.compile(
-    r"""(?:^|\s)collapse\s*=\s*(?:"true"|'true'|true)(?=\s|$)""",
+EXCLUDE_FROM_READING_TIME = re.compile(
+    r"""(?:^|\s)data-reading-time\s*=\s*(?:"exclude"|'exclude'|exclude)(?=\s|$)""",
     re.IGNORECASE,
 )
 END_OF_CORE = re.compile(
@@ -65,12 +65,12 @@ class LessonDuration:
     diagrams: int
 
 
-def _remove_collapsed_callouts(markdown: str) -> str:
-    """Remove collapsed Quarto fenced divs, including nested callouts.
+def _remove_excluded_fenced_divs(markdown: str) -> str:
+    """Remove Quarto fenced divs explicitly excluded from reading time.
 
-    The duration estimate describes the main reading path. A collapsed
-    optional callout is available to interested readers, but should not be
-    counted as required reading. Track fenced-div depth so an outer collapsed
+    The duration estimate describes the main reading path. An optional callout can be available to interested readers without being
+    part of the required reading path. The explicit data attribute is the
+    semantic contract; collapse alone does not imply optionality. Track fenced-div depth so an outer collapsed
     callout can safely contain other callouts.
     """
     output: list[str] = []
@@ -86,9 +86,9 @@ def _remove_collapsed_callouts(markdown: str) -> str:
         if opening:
             fence_length = len(opening.group("fence"))
             attributes = opening.group("attrs")
-            parent_is_collapsed = stack[-1][1] if stack else False
-            is_collapsed = parent_is_collapsed or bool(
-                COLLAPSE_TRUE.search(attributes[1:-1])
+            parent_is_excluded = stack[-1][1] if stack else False
+            is_excluded = parent_is_collapsed or bool(
+                EXCLUDE_FROM_READING_TIME.search(attributes[1:-1])
             )
             stack.append((fence_length, is_collapsed))
             if not is_collapsed:
