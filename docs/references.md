@@ -381,3 +381,11 @@ These resources are curated for teaching design and guided experimentation. Incl
 - **Jakub Pachocki / OpenAI — Perplexity and Intelligence** (22 November 2026): https://openai.com/index/perplexity-and-intelligence/
   - **Use for:** the primary explanation of OpenAI's reported held-out base-model perplexity measurements, the relation between log-perplexity and cross-entropy, and the limitations of perplexity as a cross-lab or downstream-capability metric.
   - **Qualification:** reported measurements concern a fixed internal code dataset; the underlying dataset and evaluation pipeline are not public in the article. The chart is linked, not reproduced.
+
+
+## Misconceptions and deployed-system models
+
+- **Zhicheng Lin — [Six misconceptions about large language models: A minimal model and diagnostic taxonomy](https://doi.org/10.1093/pnasnexus/pgag236)**, *PNAS Nexus*, 5(7), pgag236, 8 July 2026 (corrected and typeset 17 July 2026).
+  - **Use for:** the distinction between the pretraining objective and deployed-system capability; learned distributions and sampled outputs; parametric, contextual and external memory; and task competence versus agency.
+  - **Qualification:** this is a Perspective proposing a diagnostic framework, not a consensus taxonomy. Its empirical examples and cited primary studies were not independently verified in this source pass. The article is open access under CC BY 4.0; no figures are reused.
+  - **Review and extraction:** [source review](source-reviews/lin-2026-six-llm-misconceptions-source-review.md) and [structured extraction](../data/extractions/lin-2026-six-llm-misconceptions.yml).
