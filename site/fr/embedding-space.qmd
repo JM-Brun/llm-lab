@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
 summary: "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions."
 scope: "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés."
-purpose: "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée."
+purpose: "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée, et situer le lookup avant le traitement positionnel et la contextualisation."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"
