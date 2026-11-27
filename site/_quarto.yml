@@ -43,6 +43,14 @@ project:
     - images/attention-calculation-flow-fr-mobile.svg
     - images/causal-attention-mask-mobile.svg
     - images/causal-attention-mask-fr-mobile.svg
+    - images/embedding-lookup-en-mobile.svg
+    - images/embedding-lookup-fr-mobile.svg
+    - images/contextualized-embeddings-en-mobile.svg
+    - images/contextualized-embeddings-fr-mobile.svg
+    - images/gpt-data-flow-en-mobile.svg
+    - images/gpt-data-flow-fr-mobile.svg
+    - images/transformer-stack-en-mobile.svg
+    - images/transformer-stack-fr-mobile.svg
     - images/llm-generation-process-en-mobile.svg
     - images/llm-generation-process-fr-mobile.svg
     - images/logits-common-shift-en-mobile.svg

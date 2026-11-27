@@ -8,9 +8,9 @@
 
 ## Applied audit records
 
+  - [Third Understand visual audit pilot (2026-11-26)](visual-audit-third-pilot-2026-11-26.md): embedding lookup, contextualized representations and Transformer architecture, including mobile variants and removal of a redundant hidden pipeline figure.
   - [Understand route visual audit status (2026-11-26)](understand-route-visual-audit-status-2026-11-26.md): consolidated 20-page coverage matrix, applied PRs and closure criteria.
   - [Fourth Understand visual audit pilot (2026-11-26)](visual-audit-fourth-pilot-2026-11-26.md): logits, probabilities, entropy, generation and in-context learning.
-
 
   - [Second Understand visual audit pilot (2026-11-26)](visual-audit-second-pilot-2026-11-26.md): decisions and changes for tokenization, positional encoding, scaled dot-product attention and causal masking.
   - [Four-page Understand visual audit pilot (2026-11-26)](visual-audit-priority-pages-2026-11-26.md): concrete design decisions, placement, captions, caveats and remaining validation for likelihood, loss, gradients and context engineering.

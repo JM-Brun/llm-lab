@@ -435,6 +435,21 @@ The positional-encoding desktop diagram was moved from a collapsed callout into 
 All seven new files include SVG `title` and `desc` elements. These are source-level checks only: XML conformance, Quarto rendering, responsive legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain unverified. The existing provenance/licence constraints in #156 and #163 continue to apply. No existing asset was removed or replaced.
 
 
+## Understand route visual pilot — embeddings and Transformer architecture — 2026-11-26
+
+The third source-level pilot reviews embedding lookup, contextualized representations and Transformer architecture in EN/FR. It adds eight responsive mobile SVGs and removes one redundant image embed without deleting the asset. See [the third visual audit](visual-audit-third-pilot-2026-11-26.md) for decisions, rationale and outstanding checks.
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `embedding-lookup-en-mobile.svg`, `embedding-lookup-fr-mobile.svg` | EN/FR `embedding-space.qmd` | Original mobile compositions of the existing ID → matrix row → vector → point explanation. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `contextualized-embeddings-en-mobile.svg`, `contextualized-embeddings-fr-mobile.svg` | EN/FR `contextualized-representations.qmd` | Original mobile compositions of the same-lookup/different-accessible-context comparison. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `gpt-data-flow-en-mobile.svg`, `gpt-data-flow-fr-mobile.svg` | EN/FR `transformer.qmd` | Original mobile compositions of the autoregressive GPT path from supplied context through token selection and feedback. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `transformer-stack-en-mobile.svg`, `transformer-stack-fr-mobile.svg` | EN/FR `transformer.qmd` | Original mobile compositions of the decoder-only GPT architecture and one common pre-LN block, with residual additions labelled explicitly. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The existing `contextualization-pipeline-en.svg` and `contextualization-pipeline-fr.svg` are no longer embedded in the core contextualized-representations lesson because that collapsed figure repeated the route's existing text/ID/embedding/Transformer progression. Both assets are retained; no file was deleted. The external complementary article link remains in the page as text.
+
+The GPT-flow and Transformer-stack diagrams now label the stage as “initial representations” and state separately that positional handling depends on the architecture, avoiding the implication that every model adds a position vector at the input. All eight new mobile files have SVG `title` and `desc` elements, with no embedded raster, script, foreignObject or external href. The pre-sync full-site browser audit (run [45962930428](https://github.com/JM-Brun/llm-lab/actions/runs/45962930428)) rendered the EN/FR embedding-space pages at desktop and mobile widths and the EN/FR contextualized-representations pages at desktop width. The contextualized-representations mobile variants were not included in that run. This automated evidence does not replace manual visual or accessibility-tree review. Owner provenance confirmation and asset-level licensing remain pending.
+
 ## Understand route visual pilot — prediction and inference — 2026-11-26
 
 The fourth source-level pilot reviews logits, probabilities, entropy, generation and in-context learning in EN/FR. It adds four mobile SVGs; the other pages retain their existing table/flow, generation timeline and Mermaid diagram. Full decisions are recorded in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).

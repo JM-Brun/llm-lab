@@ -63,7 +63,7 @@
 - `entropy-distributions-en-mobile.svg`
 - `entropy-distributions-fr-mobile.svg`
 
-All four SVGs were authored for this contribution and include SVG `title` and `desc` elements. They contain no embedded raster, script, foreignObject or external href. These source checks do not establish XML conformance, rendered accessibility, owner provenance confirmation or a licence. Owner provenance and asset-level licensing remain pending under #156/#163.
+All eight SVGs were authored for this contribution and include SVG `title` and `desc` elements. They contain no embedded raster, script, foreignObject or external href. These source checks do not establish XML conformance, rendered accessibility, owner provenance confirmation or a licence. Owner provenance and asset-level licensing remain pending under #156/#163.
 
 ## Source-level validation completed
 
