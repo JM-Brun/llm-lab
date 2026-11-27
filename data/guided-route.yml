@@ -487,9 +487,12 @@ transitions:
 lesson_contracts:
   llm-overview:
     synthesis: revision-llm-overview
+  language-representation:
+    synthesis: revision-language-representation
+    requires: [llm-overview]
   text-data:
     synthesis: revision-text-data
-    requires: [llm-overview]
+    requires: [language-representation]
   embedding-space:
     synthesis: revision-embedding-space
     requires: [text-data]
