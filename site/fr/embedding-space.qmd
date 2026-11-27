@@ -121,6 +121,12 @@ $T$ est le nombre de positions de la séquence et $d$ la dimension de chaque vec
 
 La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
+### Les numéros d'ID sont des étiquettes, pas des propriétés du vecteur
+
+On peut renuméroter le vocabulaire sans changer le résultat du lookup, à condition de déplacer les lignes de la matrice de façon cohérente. Si une permutation \(\pi\) remplace l'ID \(i\) par \(\pi(i)\), on construit la nouvelle table \(E'\) telle que \(E'_{\pi(i),:}=E_{i,:}\). Le vecteur récupéré reste alors identique : seul le numéro qui sert d'adresse a changé. En revanche, renuméroter les IDs sans permuter les lignes modifie les vecteurs sélectionnés.
+
+Cette invariance concerne le lookup. Dans un modèle complet, toute autre structure indexée par le vocabulaire — notamment la projection de sortie et les biais éventuels — doit également être permutée de façon cohérente pour préserver le comportement global.
+
 Le tokenizer fixe le vocabulaire et l'association entre tokens et IDs ; il ne fournit pas les valeurs de $E$. Ces valeurs sont des **paramètres appris du réseau** : elles sont initialisées, puis ajustées pendant l'entraînement. Lorsqu'un exemple utilise l'ID $i$, le gradient de la perte peut contribuer à l'ajustement de la ligne $E_{i,:}$. Le lookup sélectionne cette ligne ; il ne calcule pas lui-même son contenu.
 
 ## Du vecteur initial à la représentation contextualisée
