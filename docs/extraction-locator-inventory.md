@@ -164,7 +164,7 @@ Do not turn this observational inventory into a new hard validation gate. Do not
 
 ### Verified current snapshot — 2026-11-27
 
-The opt-in inventory completed successfully on commit `d9281aae7ebe5ad86cf97f10d2038d3f1e15de6a`, Actions run [`46071071663`](https://github.com/JM-Brun/llm-lab/actions/runs/46071071663), attempt 1. The raw artifact is `extraction-locator-inventory-d9281aae7ebe5ad86cf97f10d2038d3f1e15de6a` (90-day retention; archive SHA-256 `5b17fad9f0d3ca801d0e80289ba5556f30c6cbd33c21bbfb0f4adc977f491503`). The run took 3 seconds on Linux x64, CPython 3.12.16, PyYAML 6.0.3 and uv 0.13.7.
+The opt-in inventory was rerun successfully after the two source dispositions on commit `0e80d5317b7a72430c775d3dede2d4e3a8878ac2`, Actions run [`46071776232`](https://github.com/JM-Brun/llm-lab/actions/runs/46071776232), attempt 1. The raw artifact is `extraction-locator-inventory-0e80d5317b7a72430c775d3dede2d4e3a8878ac2` (90-day retention; archive SHA-256 `109c592782cefdd2f0fb8b1860336dcf980a2d8e2c768951b163bbcccad88d46`). The run took 3 seconds on Linux x64, CPython 3.12.16, PyYAML 6.0.3 and uv 0.13.7.
 
 **Corrected corpus grain:** `data/extractions/` contains 136 `.yml` extraction records plus `README.md` (137 directory entries), not 137 extraction YAML files.
 
