@@ -54,7 +54,7 @@ To connect this formula to training, also inspect how [input-target examples](tr
 
 In the running example, the target token is the next token actually present in the reference continuation. Cross-entropy penalizes the model when it assigns that token a low probability; it does not directly compare whole sentences as indivisible objects.
 
-## Objective for one token {#objective-for-one-token} {#objective-for-one-token}
+## Objective for one token {#objective-for-one-token}
 
 Here, $t$ indexes the **target token**: the logits are aligned with $x_t$ and represent $p_\theta(x_t\mid x_{<t})$. Some implementations instead index logits by the input position; then the row at input position $t$ predicts $x_{t+1}$. These conventions are equivalent only when the logits and labels are shifted consistently. For a one-hot target, the loss is:
 
@@ -88,7 +88,7 @@ Keep the same prefix and probabilities. Greedy decoding selects “They” ($0.6
 
 After the first token, generation continues with “They” in its prefix. Scoring continues with “Aqueducts” in its prefix. [Compare the two prefixes in a two-token trace](exercises/likelihood.qmd#ex-generation-versus-scoring).
 
-## Visual intuition: the loss measures the surprise of the observed token {#visual-intuition} {#visual-intuition}
+## Visual intuition: the loss measures the surprise of the observed token {#visual-intuition}
 
 <figure id="fig-cross-entropy-target-probability">
   <picture>
@@ -106,7 +106,7 @@ This figure illustrates the loss for one token with a one-hot target. It does no
 
 The derivative of one-hot cross-entropy with respect to the logits is $p_i-\mathbb{1}[i=y]$. Its interpretation and role in backpropagation are developed in the [Gradients](gradients.qmd) lesson.
 
-## Multiple positions: causal shift and masks {#multiple-positions} {#multiple-positions}
+## Multiple positions: causal shift and masks {#multiple-positions}
 
 In an autoregressive model, the representation at position $t$ is used to predict the next token. Depending on the code convention, logits and labels must therefore be shifted consistently: the model must not receive the target token as unmasked context when predicting that same token.
 
@@ -122,7 +122,7 @@ For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before 
 
 For one-hot targets, mean cross-entropy computed over the same valid positions with the same reduction convention coincides with mean NLL. The definition and interpretation of perplexity, and the conditions required to compare scores, are consolidated in the [Likelihood](likelihood.qmd) lesson.
 
-## Misconceptions {#misconceptions} {#misconceptions}
+## Misconceptions {#misconceptions}
 
 - **“Cross-entropy is between 0 and 1.”** False: it can grow without bound when the model assigns probability close to zero to the target.
 
@@ -135,7 +135,7 @@ For one-hot targets, mean cross-entropy computed over the same valid positions w
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
 
-## Soft targets and KL divergence {#soft-targets-kl} {#soft-targets-kl}
+## Soft targets and KL divergence {#soft-targets-kl}
 
 The one-hot case is sufficient to compute the penalty for an observed token. For a target that distributes its mass across several tokens, the identity $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$, its assumptions and its boundary cases are developed in the Deepen resource [The mathematics of language modeling](language-modeling-math.qmd). This derivation is not required to compute the NLL of one observed token.
 
