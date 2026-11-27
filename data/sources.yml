@@ -3592,6 +3592,7 @@ sources:
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-10"
         status: partially-scanned
@@ -6687,6 +6688,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned

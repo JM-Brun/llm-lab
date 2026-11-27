@@ -7,6 +7,8 @@
 
 > **Reading rule:** source coverage records what was visible in the scanned material, not what the full article/course might contain. All four sources remain partially scanned; consult their individual reviews for retrieval and media limitations.
 
+> **Scope boundary (2026-11-27):** this remains a four-resource *pedagogical* comparison matrix. It is not the complete Q/K/V page bibliography or a primary-evidence matrix. Jose Parreño Garcia and Vaswani et al. are mapped separately in the [page-level claim-to-source traceability audit](../source-reviews/qkv-source-collection.md#128-claim-to-source-traceability-page-level-not-a-bibliography-count).
+
 ## 1. Learner-question coverage
 
 | Learner question / difficulty | Nishanthan (DEV) | Neha KK (Medium) | Codefinity | Existing LLM Lab coverage | Decision |
