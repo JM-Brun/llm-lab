@@ -1,0 +1,50 @@
+schema_version: 1
+source_id: deepseek-ai-deepseek-v2-2024
+items:
+  - id: deepseek-ai-deepseek-v2-2024:mla-joint-kv-compression
+    kind: architecture
+    summary: "Multi-head Latent Attention jointly compresses each token's key/value state into a lower-dimensional latent vector and reconstructs the key and value representations from that latent state for attention."
+    locator: {type: section, value: "2.1.2, Equations 9–11", label: "Low-Rank Key-Value Joint Compression; Figure 3"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper defines the compressed latent c_t^KV, the down-projection and the up-projections for keys and values; during inference it caches the compressed latent representation."
+      assumptions:
+        - "The equations describe the MLA architecture used by DeepSeek-V2."
+      limitations:
+        - "MLA is not simply GQA with fewer groups: it changes the cached representation through low-rank joint compression."
+        - "The page's reference implementation does not implement MLA; this source supports the architectural comparison only."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-head-latent-attention, topic:kv-cache, method:low-rank-compression]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Grounds the MLA comparison with the primary architectural equations while keeping it distinct from the current single-head NumPy implementation."
+
+  - id: deepseek-ai-deepseek-v2-2024:mla-cache-comparison
+    kind: result
+    summary: "The paper compares KV-cache elements per token across MHA, GQA, MQA and MLA, and reports a model-specific cache footprint for MLA comparable to GQA with 2.25 groups."
+    locator: {type: section, value: "2.1.4, Table 1", label: "Comparison of Key-Value Cache"}
+    evidence:
+      kind: empirical-result
+      confidence: context-dependent
+      scope: "Table 1 compares the cache representation sizes and the paper's reported capability levels for the evaluated DeepSeek-V2 configuration."
+      assumptions:
+        - "The comparison uses the dimensions and configuration defined for DeepSeek-V2."
+      limitations:
+        - "The abstract's 93.3% KV-cache reduction is relative to DeepSeek 67B and must not be generalized to all MHA/GQA/MLA implementations."
+        - "The table's qualitative capability labels are the paper authors' comparison, not a universal ranking."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:multi-head-latent-attention, topic:kv-cache, method:low-rank-compression]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds a precise locator for the cache-size comparison while preserving the model-specific scope of the reported result."
