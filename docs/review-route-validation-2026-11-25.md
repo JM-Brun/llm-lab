@@ -293,3 +293,19 @@ The final focused FR/EN review covered **LLM overview**, **Language representati
 The FR/EN explanations are materially aligned across this group. The scientific-caveat review has now covered all 20 core lesson pairs in focused groups. This is a completed **targeted page-level caveat audit**, not a line-by-line verification of every equation, cited paper or source claim; those deeper checks remain source- and claim-specific work rather than an implied guarantee.
 
 **Separate editorial follow-up, not a scientific defect:** the French running example used by LLM overview and Language representation appears to be a recognizable cultural quotation, whereas the English continuation is explicitly described as original LLM Lab text. Verify provenance and attribution before expanding or reusing the French wording. No example, image or source was removed or silently rewritten during this audit.
+
+
+### Reading-time audit — 2026-11-27
+
+The duration estimate is a balance signal, not a content quota. The current policy is:
+
+- **10–15 minutes:** editorial target for a core lesson, not a minimum to be reached by padding.
+- **25 minutes:** hard ceiling; exceeding it requires a split/refocus or a documented pedagogical exception.
+- The estimator measures the required reading path, not every optional implementation/deepening detail. Optional blocks are excluded only when explicitly marked `data-reading-time="exclude"`; `collapse="true"` alone is a presentation choice and does not imply optionality.
+- Quarto fenced-div delimiters are markup, not prose. Code blocks remain available to the estimator's separate code-line component; div-like syntax inside fenced code is not parsed as a real callout.
+
+[PR #1781](https://github.com/JM-Brun/llm-lab/pull/1781) implements and tests this measurement contract. Its CI test suite passed (845 passed, 1 skipped).
+
+After correcting the estimator and marking clearly optional callouts, the two pages above the 10–15 minute target are **FR Generation (15.5 min)** and **FR Training loop (15.5 min)**. Neither exceeds the 25-minute ceiling. Their extra half-minute retains central integration distinctions; shortening them solely to hit 15 minutes would remove useful content. The remaining warnings are focused lessons below 10 minutes. They should remain concise where their scope and outcome are genuinely narrow rather than being expanded to satisfy a numerical floor.
+
+This duration audit does not replace the content and scientific-caveat review above. It is a measurement of the required reading path under the explicit optional-content contract.
