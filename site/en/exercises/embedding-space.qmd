@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Check your understanding
 
-Hands-on exercises are grouped in the [Text data collection](../exercises-text-data.qmd#text-data), under **Practice**. This page belongs to that section and keeps the self-check questions below; it is not part of the main learning path.
+This page collects the questions, exercises, and experiments specific to the Embedding space lesson. For cross-cutting exercises on text data, see the [Text data collection](../exercises-text-data.qmd#text-data) under **Practice**. This page belongs to that section and is not part of the main learning path.
 
 1. An embedding matrix has $V$ rows and vectors of dimension $d$. How many parameters does it contain, and what does ID $i$ select?
 
