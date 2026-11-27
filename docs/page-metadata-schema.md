@@ -75,7 +75,7 @@ These fields must not be conflated:
 
 | Field | Meaning | Constraint |
 |---|---|---|
-| `summary` | A compact reader-facing representation of the page content | One or two sentences; describe what the reader will find, not what they will achieve |
+| `summary` | An optional compact reader-facing representation of the page content | If present, a non-empty string of one or two sentences; describe what the reader will find, not what they will achieve. Omission is valid and falls back to `purpose` in discovery UI. |
 | `scope` | The boundary of the page: what it covers and what it does not own | One concise statement; avoid generic descriptions |
 | `purpose` | The learning job the page performs | State what the reader should understand or be able to connect |
 | `suggested_route.previous` | A useful page to read immediately before this one on the suggested route | A recommendation, not a hard prerequisite |
