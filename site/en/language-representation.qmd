@@ -1,0 +1,29 @@
+---
+title: "Why represent language numerically?"
+subtitle: "From readable symbols to representations a network can transform"
+description-meta: "Explains why a neural model needs learned numerical representations, distinguishing token IDs, initial vectors, and contextualized representations."
+keywords: ["type:concept-lesson", "destination:understand", "topic:language-representation", "level:overview", "language:en", "status:planned"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/language-representation"
+summary: "Explains the problem addressed by numerical representations of language, before studying tokenization and embedding lookup mechanisms."
+scope: "Conceptual motivation: why a neural network operates on numerical objects, why IDs are not semantic coordinates, and what learned vectors and contextualization make possible. Tokenization procedures, detailed lookup, and Transformer mechanisms remain in their dedicated lessons."
+purpose: "Connect symbolic language to the numerical objects manipulated by a neural network, and explain why IDs act as addresses while learned vector representations can be transformed according to context."
+suggested_route:
+  previous: "en/llm-overview"
+  next: "en/text-data"
+hierarchy:
+  parents: []
+  children: []
+related: ["en/text-data", "en/embedding-space", "en/contextualized-representations"]
+tags:
+  - "type:concept-lesson"
+  - "destination:understand"
+  - "topic:language-representation"
+  - "level:overview"
+  - "language:en"
+  - "status:planned"
+-->
