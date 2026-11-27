@@ -39,11 +39,56 @@ Xie et al. (2022) fournit une explication théorique par inférence bayésienne 
 
 Xiang et al. (2024) reste une ressource d'approfondissement sur l'ordre des démonstrations. Son résumé rapporte une sensibilité différente entre les modèles causaux et prefix-LM évalués ; les limites de cette comparaison devront être reprises à partir du protocole complet avant toute généralisation.
 
+## Revue ciblée des articles Min et Yoo
+
+Une lecture ciblée des sections principales et figures pertinentes des deux PDF publiés a été effectuée le 2026-11-27. Les extractions atomiques correspondantes sont :
+
+- `data/extractions/min-et-al-demonstrations-icl-2022.yml`
+- `data/extractions/yoo-et-al-ground-truth-labels-icl-2022.yml`
+
+### Min et al. (2022) — quatre composantes des démonstrations
+
+Le protocole couvre des tâches de classification et de choix multiple sur 26 jeux de données, avec 12 modèles ; le nombre de tâches varie selon les modèles, les modèles les plus grands étant évalués sur un sous-ensemble plus réduit. Le réglage par défaut utilise 16 démonstrations et plusieurs graines d'échantillonnage.
+
+Les auteurs distinguent quatre composantes :
+1. la distribution des textes d'entrée ;
+2. l'espace des étiquettes ;
+3. la correspondance entrée-étiquette ;
+4. le format des paires entrée-étiquette.
+
+Dans les configurations testées, le remplacement des étiquettes correctes par des étiquettes aléatoires réduit souvent peu la performance agrégée. Les ablations indiquent cependant que la distribution des entrées, l'espace des étiquettes et le format apportent eux aussi du signal. Les modèles MetaICL, entraînés explicitement avec un objectif d'ICL, accentuent encore certains de ces effets.
+
+**Limites déterminantes :** les résultats sont agrégés sur des benchmarks de classification et de choix multiple, ne couvrent pas la génération ouverte et masquent des différences entre couples tâche-modèle. Les auteurs signalent eux-mêmes des cas avec un écart plus marqué entre étiquettes correctes et aléatoires.
+
+### Yoo et al. (2022) — sensibilité à la correction des étiquettes
+
+Yoo et al. réexaminent les conclusions de Min et al. avec d'autres configurations. Ils montrent que des variations raisonnables de méthode d'inférence, de métrique et de sous-ensemble de jeux de données peuvent modifier fortement l'effet mesuré. Leur comparaison initiale oppose notamment une configuration Noisy Channel / macro-F1 / sous-ensemble de classification à une configuration Direct / accuracy / ensemble plus large.
+
+Ils proposent deux mesures :
+- **Label-Correctness Sensitivity** : pente de la régression linéaire de la performance sur la proportion d'étiquettes correctes ;
+- **Ground-Truth Label Effect Ratio (GLER)** : rapport entre le gain des étiquettes correctes sur les étiquettes aléatoires et le gain des étiquettes correctes sur le baseline sans démonstration, borné dans l'intervalle [0, 1].
+
+Leurs analyses montrent que la correction des associations entrée-étiquette peut avoir un effet important dans certains cas. Cet effet varie avec le jeu de données, la méthode d'inférence, la métrique, la taille du modèle et la formulation du template. Un template plus détaillé peut réduire la sensibilité aux labels tout en préservant la performance. La sensibilité seule peut cependant être trompeuse sur une tâche que le modèle ne sait pas résoudre.
+
+**Limites déterminantes :** les résultats restent sensibles au choix du prompt ; les composantes d'une démonstration sont difficiles à isoler ; la distribution des labels peut introduire des effets confondants.
+
+### Synthèse et intégration dans les pages
+
+Ces articles ne doivent pas être résumés par deux slogans opposés. Min et al. montrent que, dans leurs tâches et configurations, une partie importante du signal des démonstrations vient de la distribution des entrées, de l'espace des labels et du format. Yoo et al. montrent que la correspondance correcte reste déterminante dans certaines configurations et que l'effet dépend du protocole.
+
+La synthèse pédagogique retenue est donc : **une démonstration est multicomposante ; l'effet de la correction des labels est conditionnel au modèle, à la tâche et au protocole.** Les deux pages FR/EN présentent maintenant les quatre composantes dans un tableau et explicitent les conditions de comparaison. La formulation évite de conclure que les labels corrects sont toujours inutiles ou toujours indispensables.
+
+Les notices Min et Yoo passent à `integration_status: partially-integrated`. Les sources restent `scan_status: partially-scanned`, car cette lecture ciblée n'est pas une revue exhaustive de toutes les sections, annexes et détails d'implémentation. Les extractions conservent les localisateurs, niveaux de confiance et limites.
+
+### Anomalie bibliographique à conserver visible
+
+La première page du PDF Min et al. écrit le nom du deuxième auteur « Xinyi Lyu », tandis que la notice ACL Anthology, sa page auteur et le dépôt de code indiquent « Xinxi Lyu ». La notice canonique conserve provisoirement la forme de l'ACL Anthology, sans masquer cette divergence. Une correction définitive nécessite une confirmation bibliographique indépendante.
+
 ## Limites de cette passe d'ingestion
 
-Cette passe vérifie les métadonnées bibliographiques, les identifiants, les abstracts et les résumés officiels. Elle ne constitue pas une revue complète des six publications. Aucun PDF n'a été relu intégralement ici ; aucun résultat expérimental n'a été reproduit ; aucune extraction atomique claim/evidence n'a été créée.
+Cette passe combine la vérification bibliographique des six notices et une lecture ciblée des sections pertinentes des PDF Min et Yoo. Deux extractions atomiques evidence-linked ont été créées. Aucun résultat expérimental n'a été reproduit ; les annexes et détails d'implémentation n'ont pas été audités exhaustivement.
 
-Les notices restent donc différées. La prochaine étape d'ingestion est une lecture ciblée des articles Min et Yoo en priorité, puis Olsson et Xie pour stabiliser les niveaux de preuve et les limites de portée. Xiang reste une ressource facultative d'approfondissement.
+Min et Yoo sont partiellement intégrés aux pages FR/EN. Les lectures ciblées d'Olsson et Xie restent à effectuer pour stabiliser les niveaux de preuve mécaniste et théorique. Xiang reste une ressource facultative d'approfondissement et son protocole complet doit encore être étudié.
 
 ## Sources de vérification
 
