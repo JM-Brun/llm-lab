@@ -56,6 +56,7 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 3. **The toy state is not a full GPT block.** The source maps the attention branch's $\Delta X$ to a residual-stream update, but does not trace the MLP branch and its residual update (pp. 8–10). Its shorthand about each attention block adding $\Delta X$ must not replace the complete block computation.
 4. **$W_O$ is not the vocabulary output projection.** Here it is the attention sublayer's output projection back into the residual-stream dimension (p. 8), not the final language-model head mapping hidden states to vocabulary logits.
 5. **The clean needs/offers features are hand-designed.** The article itself cautions that real model features are rarely as clean as “need adjective” and are distributed over many dimensions (p. 11).
+6. **The second-meeting behavior is a toy-model feedback effect.** After Cara's needs become negative, the same W_Q/W_K would give Bob's zero key a higher score than Alice's or Cara's key, so Cara would mostly attend to the participant with least to offer (pp. 9–10). This follows from the unbounded additive update and hand-designed features; it is not a general Transformer behavior.
 6. **The linguistic examples are illustrative.** “Bank”, “Peter … he” and “quick brown fox” motivate contextual information flow (pp. 11–12); they do not establish that a specific attention head performs word-sense disambiguation, coreference or adjective composition.
 
 ### Unsupported or out of scope
