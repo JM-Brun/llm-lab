@@ -339,6 +339,8 @@ project:
     - en/review-path.qmd
     - fr/revision-llm-overview.qmd
     - en/revision-llm-overview.qmd
+    - fr/revision-language-representation.qmd
+    - en/revision-language-representation.qmd
     - fr/revision-text-data.qmd
     - en/revision-text-data.qmd
     - fr/revision-embedding-space.qmd
