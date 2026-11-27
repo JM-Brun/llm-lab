@@ -106,7 +106,7 @@ items:
       novelty: {level: moderate, rationale: "The canonical page defines cross-entropy but the explicit decomposition into target entropy and KL is not yet a central worked derivation."}
       complementarity: {level: high, rationale: "It links the existing token-level loss treatment to the broader distribution-matching interpretation."}
       pedagogical_value: {level: high, rationale: "A numerical decomposition can make clear what part of the objective depends on the model."}
-      applicability: {level: high, rationale: "The derivation belongs directly in the existing cross-entropy lesson."}
+      applicability: {level: high, rationale: "The full soft-target derivation belongs in the advanced language-modeling mathematics pages; the core cross-entropy lesson links to that treatment."}
       redundancy: {level: low, rationale: "The decomposition is not a duplicate of the current token-alignment and masking explanation."}
       evidence_quality: {level: high, rationale: "The identity follows directly from the definitions, subject to support and fixed-target assumptions."}
     locator: {type: section, value: "Why LLMs Use Cross-Entropy Loss", label: "Why LLMs Use Cross-Entropy Loss"}
@@ -121,10 +121,10 @@ items:
       tags: [topic:information-theory]
       concept_ids: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     candidate_destinations:
-      pages: [fr/cross-entropy, en/cross-entropy]
+      pages: [fr/language-modeling-math, en/language-modeling-math]
       concepts: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     disposition: integrate
-    disposition_rationale: "Add the identity and assumptions to the existing bilingual cross-entropy lesson, with consistent log units and a worked numerical example."
+    disposition_rationale: "Integrate the soft-target cross-entropy/KL identity and its assumptions in the bilingual advanced language-modeling mathematics pages; the core cross-entropy lesson links to this destination rather than duplicating the derivation."
 
   - id: wayland-zhang-information-theory-llm-2026:attention-mutual-information
     kind: misconception

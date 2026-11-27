@@ -12,7 +12,7 @@ Le texte de l'article a été inspecté intégralement. Le notebook anglais a é
 | Partie | Valeur pédagogique | Vérification / limite | Décision LLM Lab |
 |---|---|---|---|
 | Information et entropie | Relie rareté, surprise et incertitude moyenne | Définitions standard ; préciser le contexte en prédiction autorégressive | Déjà couvert |
-| Cross-entropy | Relie entraînement et théorie de l'information | (H(P,Q)=H(P)+D_{KL}(P\|Q)) est exact avec conventions cohérentes | Référencer la leçon existante |
+| Cross-entropy | Relie entraînement et théorie de l'information | L'identité et ses conditions sont développées dans la page avancée de mathématiques du langage ; la leçon fondamentale y renvoie sans dupliquer la dérivation | Référencer l'approfondissement depuis la leçon fondamentale |
 | Attention et information mutuelle | Introduit les dépendances contextuelles | L'attention ne calcule pas la MI ; ses poids ne sont pas des bits ni une estimation de MI | Ajouter un garde-fou |
 | Borne thermodynamique | Invite à réfléchir aux limites physiques | Landauer concerne l'effacement irréversible, pas une limite générale d'apprentissage | Corriger l'inférence |
 | Compression et intelligence | Met en lumière le lien prédiction / longueur de code | L'efficacité de codage ne définit pas à elle seule l'intelligence | Qualifier le slogan |

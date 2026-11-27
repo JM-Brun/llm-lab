@@ -4078,7 +4078,7 @@ sources:
           - "The paper's experiments do not directly validate LLM attention or language-model interpretability."
           - "The synthetic example is an explanatory calculation, not a PAC-bound demonstration."
     related:
-      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/llm-limits, en/llm-limits]
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/language-modeling-math, en/language-modeling-math, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/llm-limits, en/llm-limits]
       concepts: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention, v-information]
       audit_records:
         - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md

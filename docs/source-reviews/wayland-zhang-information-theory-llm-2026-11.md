@@ -33,7 +33,7 @@ Its linked repository provides English and Chinese notebooks. The notebook is a 
 | Topic | Assessment | Integration decision |
 |---|---|---|
 | Self-information (I(x)=-log_2p(x)) and entropy (H(X)=mathbb E[I(X)]) | Established definitions; in autoregressive modelling the conditioning context must be explicit | Already covered in the bilingual entropy lesson |
-| Cross-entropy (H(P,Q)=H(P)+D_{KL}(P|Q)) | Correct when target (P), model (Q), support and logarithm base are consistently defined; minimizing over (Q) minimizes KL for fixed (P) | Link from entropy to the existing cross-entropy lesson; do not duplicate |
+| Cross-entropy (H(P,Q)=H(P)+D_{KL}(P|Q)) | Correct when target (P), model (Q), support and logarithm base are consistently defined; minimizing over (Q) minimizes KL for fixed (P) | The full identity and assumptions are in the advanced language-modeling mathematics page; the core cross-entropy lesson links there rather than duplicating the derivation |
 | Attention as mutual information | The article explicitly says the analogy is not strict MI. Attention weights are learned, input-dependent aggregation coefficients, not (I(X;Y)) | Add a concise misconception guard to the attention lesson |
 | Landauer bound | The article's inference from erasure energy to a universal learning-information ceiling does not follow | Correct the claim in this review; defer a full thermodynamics lesson |
 | Compression and intelligence | Predictive modelling and coding efficiency are formally connected, but compression is not a sufficient definition of intelligence | Keep the distinction in the compression synthesis and revision sheet |
@@ -86,7 +86,7 @@ For a fixed source and coding protocol, a better predictive distribution can red
 ## 5. Project integration
 
 - **Entropy:** existing French and English pages already explain entropy, surprisal and conditional prediction. Keep them canonical.
-- **Cross-entropy:** existing pages already derive the loss and its relationship to KL. Link rather than copy.
+- **Cross-entropy:** the core page derives the one-hot token penalty and links to the advanced language-modeling mathematics page for the soft-target KL identity and its assumptions. Link rather than copy.
 - **Attention:** add one explicit note that attention weights are not mutual information.
 - **Compression:** connect the article's slogan to the existing distinction between predictive compression, model compression and runtime memory.
 - **V-information:** link the primary paper as optional advanced reading only.
