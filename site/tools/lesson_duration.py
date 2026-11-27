@@ -111,6 +111,7 @@ def _main_lesson(markdown: str) -> str:
     text = HTML_COMMENT.sub("", text)
     text = INCLUDE_LINE.sub("", text)
     text = END_OF_CORE.split(text, maxsplit=1)[0]
+    text = FENCED_BLOCK.sub("", text)
     text = _remove_excluded_fenced_divs(text)
     return text
 
