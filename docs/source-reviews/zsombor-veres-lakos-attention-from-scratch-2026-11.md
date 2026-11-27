@@ -47,6 +47,7 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 - $PV$ is the weighted aggregation of Value vectors (p. 8).
 - $W_O$ maps the aggregate back to the toy state coordinates; $\Delta X=(PV)W_O$ and $X_{new}=X+\Delta X$ (pp. 8–9).
 - The mapping from the toy competence matrix to the GPT residual stream is a useful conceptual bridge (p. 10).
+- The GPT-2 Small example uses a 768-dimensional embedding space; the author notes that tokens are subwords but treats them as whole words for the analogy (p. 10).
 - The article explicitly acknowledges that its attention figure omits GPT's causal restriction and that masking and multi-head attention are outside its scope (pp. 11–12).
 
 ### Claims and formulations requiring qualification
@@ -137,7 +138,7 @@ The canonical pages already provide stronger mathematical precision, tensor-shap
 | pp. 5–6 | Attention-score and softmax-weight tables | Inspected in PDF | Article attribution; reuse permission unknown | Cite/link only |
 | pp. 7–9 | W_V/V, context, W_O, Delta X and X_new tables | Inspected in PDF | Article attribution; reuse permission unknown | Cite/link only |
 | p. 10 | Token-embedding table | Inspected in PDF | Article attribution; reuse permission unknown | Cite/link only |
-| p. 11 | Attention matrix with highlighted second-token row | Inspected in PDF; caption credits Sebastian Raschka, Figure 3.11, *Build a Large Language Model (From Scratch)* | Underlying asset and reuse rights not independently checked | Preserve credit; do not reproduce |
+| p. 11 | Attention matrix with highlighted second-token row | Inspected in PDF; caption credits Sebastian Raschka, Figure 3.11, *Build a Large Language Model (From Scratch)*; displayed values are truncated to two decimals and intended row sums are 1 | Underlying asset and reuse rights not independently checked | Preserve credit; do not reproduce |
 
 ## 9. Validation evidence
 
