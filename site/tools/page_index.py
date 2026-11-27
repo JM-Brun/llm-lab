@@ -21,6 +21,15 @@ _COMMENT = re.compile(r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->", re.DOTALL)
 _FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 
 
+def validate_optional_summary(metadata: Mapping[str, Any], source: str) -> None:
+    """Validate the optional human-readable page summary without coercion."""
+    if "summary" not in metadata:
+        return
+    summary = metadata["summary"]
+    if not isinstance(summary, str) or not summary.strip():
+        raise ValueError(f"{source}.summary: expected a non-empty string when provided")
+
+
 def group_bilingual_topics(
     tags_by_page: Mapping[str, Mapping[str, str]],
 ) -> dict[str, dict[str, list[str]]]:
@@ -72,6 +81,7 @@ def load_published_pages(site: Path) -> list[PublishedPage]:
             raise ValueError(f"{relative}: invalid page metadata YAML: {exc}") from exc
         if not isinstance(front, dict) or not isinstance(metadata, dict):
             raise ValueError(f"{relative}: front matter and page metadata must be mappings")
+        validate_optional_summary(metadata, relative.as_posix())
         raw_tags = metadata.get("tags")
         if not isinstance(raw_tags, list) or not all(isinstance(tag, str) for tag in raw_tags):
             raise ValueError(f"{relative}: page-map tags must be a list of strings")

@@ -346,7 +346,7 @@ def load_pages() -> list[dict[str, Any]]:
                 "topic": tags.get("topic", "misc"),
                 "domain": metadata.get("domain"),
                 "scope": str(metadata.get("scope", "")),
-                "summary": str(metadata.get("summary", "")),
+                "summary": metadata.get("summary", ""),
                 "purpose": str(metadata.get("purpose", "")),
                 **(
                     {"revision_of": metadata.get("revision_of", [])}

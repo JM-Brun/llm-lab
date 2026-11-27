@@ -89,7 +89,7 @@ Le stockage de la durée dans PAGE-MAP et son affichage sont deux décisions dif
 
 Le point d'injection exact dans le rendu Quarto reste à décider après inspection des mécanismes communs de mise en page. Il ne faut pas détourner le panneau de détails de la learning map pour en faire le mécanisme d'affichage des leçons.
 
-## 7. Tests à ajouter au moment de l'implémentation
+## 7. Tests de validation
 
 ### Validation PAGE-MAP
 
@@ -109,6 +109,18 @@ Le point d'injection exact dans le rendu Quarto reste à décider après inspect
 - les pages d'exercices et d'approfondissement ne récupèrent pas par erreur la durée du tronc principal ;
 - les artefacts générés restent déterministes et à jour.
 
+## Follow-up implementation — PR #1759
+
+The validation gap identified above is addressed in the follow-up implementation:
+
+- `summary` remains optional; absence is accepted.
+- When present, it must be a non-empty string. Null, booleans, numbers, collections, empty strings and whitespace-only strings are rejected.
+- The shared published-page index and the full PAGE-MAP validator use the same validation helper.
+- The learning-map projection no longer coerces the value with `str()`.
+- Tests cover absent, valid and invalid values through both consumers.
+
+The implementation preserves PAGE-MAP v1 and the existing `summary || purpose` discovery fallback. PR #1759 carries the code, tests and schema wording. Its test suite, Python quality/domain checks, and full Quarto render with browser audit have passed.
+
 ## 8. Conclusion et travail restant
 
 **Choix technique validé : extension additive facultative de PAGE-MAP v1, sans changement de marqueur.**
@@ -117,9 +129,9 @@ Cette décision autorise le futur champ `estimated_reading_minutes`, mais n'auto
 
 Ordre de suite :
 
-1. ajouter le contrôle de type de `summary` et les tests de non-régression ;
+1. terminer la revue et la validation CI de PR #1759, qui implémente le contrôle de type de `summary` et ses tests ;
 2. ajouter la validation facultative de `estimated_reading_minutes` et ses tests, lorsque l'estimateur sera prêt ;
 3. inspecter les conventions de rendu Quarto et choisir le point d'injection commun ;
 4. construire le rapport et calibrer l'estimateur avant toute population des pages.
 
-Aucune page de leçon, durée, source, relation, route ou workflow CI n'est modifié par cet audit.
+L'audit initial ne modifiait aucune page de leçon, durée, source, relation, route ou workflow CI. Le suivi PR #1759 ajoute uniquement la validation de type de `summary`, ses tests et la documentation du contrat.

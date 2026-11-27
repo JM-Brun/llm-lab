@@ -22,6 +22,81 @@ def _write_page(
     )
 
 
+def _write_page_with_summary(site: Path, summary_yaml: str) -> Path:
+    path = site / "fr" / "example.qmd"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "---\ntitle: Example\nlang: fr\n---\n\n"
+        "<!--\nLLM-LAB-PAGE-MAP v1\n"
+        "id: fr/example\n"
+        f"summary: {summary_yaml}\n"
+        "tags: ['language:fr', 'status:published']\n-->\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def _write_contract_page(site: Path, summary_line: str = "") -> Path:
+    path = site / "fr" / "example.qmd"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tags = (
+        "['type:concept-lesson', 'destination:understand', 'topic:example', "
+        "'level:core', 'language:fr', 'status:published']"
+    )
+    summary = f"summary: {summary_line}\n" if summary_line else ""
+    path.write_text(
+        "---\ntitle: Example\nlang: fr\nkeywords: "
+        + tags
+        + "\n---\n\n<!--\nLLM-LAB-PAGE-MAP v1\n"
+        + "id: fr/example\nscope: A bounded example.\npurpose: Explain the contract.\n"
+        + summary
+        + "suggested_route: {previous: null, next: null}\n"
+        + "hierarchy: {parents: [], children: []}\nrelated: []\ntags: "
+        + tags
+        + "\n-->\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+@pytest.mark.parametrize("summary_yaml", ["1", "true", "null", "[]", "''", "'   '"])
+def test_page_index_rejects_invalid_optional_summary(tmp_path: Path, summary_yaml: str) -> None:
+    _write_page_with_summary(tmp_path, summary_yaml)
+
+    with pytest.raises(ValueError, match=r"fr/example\.qmd\.summary: expected a non-empty string"):
+        load_published_pages(tmp_path)
+
+
+def test_page_index_accepts_absent_and_valid_summary(tmp_path: Path) -> None:
+    _write_page(tmp_path, "fr/without-summary.qmd", "fr/without-summary", "fr")
+    _write_page_with_summary(tmp_path, "'A concise page summary.'")
+
+    pages = load_published_pages(tmp_path)
+    assert {page.page_id for page in pages} == {"fr/without-summary", "fr/example"}
+
+
+def test_page_metadata_validator_rejects_invalid_optional_summary(tmp_path: Path) -> None:
+    import check_page_metadata
+
+    path = _write_contract_page(tmp_path, "[]")
+    errors: list[str] = []
+
+    check_page_metadata._load_page(path, tmp_path, errors)
+
+    assert errors == ["fr/example.qmd.summary: expected a non-empty string when provided"]
+
+
+def test_page_metadata_validator_accepts_absent_and_valid_summary(tmp_path: Path) -> None:
+    import check_page_metadata
+
+    for summary_line in ("", "'A concise page summary.'"):
+        path = _write_contract_page(tmp_path, summary_line)
+        errors: list[str] = []
+        page = check_page_metadata._load_page(path, tmp_path, errors)
+        assert page is not None
+        assert not any(".summary:" in error for error in errors)
+
+
 def test_index_includes_root_and_shared_pages(tmp_path: Path) -> None:
     _write_page(tmp_path, "index.qmd", "fr/index", "fr")
     _write_page(tmp_path, "en/index.qmd", "en/index", "en", content_language="en")
