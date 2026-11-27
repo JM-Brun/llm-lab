@@ -44,10 +44,26 @@ def assigned_string(tree: ast.AST, name: str) -> str | None:
 
 
 class NormalizeLiteralValues(ast.NodeTransformer):
-    """Preserve code structure while allowing localized inputs and expected values."""
+    """Preserve trace logic while allowing localized inputs and token-ID sequences."""
 
     def visit_Constant(self, node: ast.Constant) -> ast.Constant:
         return ast.copy_location(ast.Constant(value=type(node.value).__name__), node)
+
+    def visit_Compare(self, node: ast.Compare) -> ast.Compare:
+        self.generic_visit(node)
+        if (
+            isinstance(node.left, ast.Name)
+            and node.left.id == "token_ids"
+            and len(node.comparators) == 1
+            and isinstance(node.comparators[0], ast.List)
+        ):
+            # The localized prompts have different token counts, so their
+            # expected ID lists differ in length while the assertion is the same.
+            node.comparators[0] = ast.copy_location(
+                ast.List(elts=[ast.Constant(value="token-id-sequence")], ctx=ast.Load()),
+                node.comparators[0],
+            )
+        return node
 
 
 def main() -> None:
