@@ -66,6 +66,8 @@ This preserves the current 20 canonical lesson identities as the starting invent
 
 ### Lesson time is measured, not guessed from word count
 
+The repository's deterministic duration estimator is a **screening estimate**, not a substitute for reading the rendered page. It counts required prose, code, equations and visual elements from the source. A Quarto callout is excluded only when it is explicitly marked `data-reading-time="exclude"`; `collapse="true"` controls presentation and does not by itself make content optional. Keep this marker paired in FR/EN and use it only for material genuinely outside the required learning path. After the estimate, review the rendered lesson and the cognitive work required by its figures, notation and worked example before deciding to split, move or retain content.
+
 The 10–15 minutes cover the required lesson path: prose, diagrams, notation, one worked example and the short synthesis/transition. Dedicated exercises, optional Deepen resources and Build walkthroughs are outside that estimate. Estimate time from the actual rendered FR and EN pages, including time to inspect figures and work through equations; do not use raw word count as the sole proxy.
 
 Each lesson must state: one guiding question, one observable outcome, prerequisites actually needed, the minimum explanation, one worked example or diagram, a concise synthesis, a transition explaining why the next lesson follows, and links to its review and Practice companions.
