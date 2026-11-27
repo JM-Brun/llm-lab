@@ -93,7 +93,7 @@ items:
       primary_theme: architectures-mechanisms
       secondary_themes: [inference-efficiency]
       tags: [topic:attention, topic:flashattention, ecosystem:pytorch]
-      concept_ids: [scaled-dot-product-attention, attention-output]
+      concept_ids: [scaled-dot-product-attention]
     candidate_destinations:
       pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
     disposition: integrate-by-reference
