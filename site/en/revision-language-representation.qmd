@@ -28,7 +28,7 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-language-r
 
 - A neural network learns by adjusting parameters through mathematical operations on numerical arrays. Learnable representations let it exploit regularities in language for its prediction task.
 - A **token ID** is an address in a vocabulary. Its value measures neither a linguistic quantity nor semantic proximity.
-- An **initial embedding** is a learned vector selected by the ID. This vector, not the ID number, enters the network's transformations.
+- An **initial embedding** is a parameter vector selected by the ID. Gradients from the loss can update its values through backpropagation; the ID remains a discrete index and is not learned.
 - Transformer layers construct **contextualized states** from initial vectors and accessible context.
 - Proximity in vector space may reflect statistical regularities, but it is not by itself a definition of meaning or evidence of understanding.
 
