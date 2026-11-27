@@ -118,10 +118,7 @@ Dans un réseau profond, la rétropropagation applique efficacement cette règle
 
 Le gradient décrit la sensibilité locale de la loss ; il ne définit pas à lui seul la règle de mise à jour. L'optimiseur transforme le gradient en mise à jour et le taux d'apprentissage en règle la taille. La règle SGD et les choix d'optimiseur sont traités dans la [boucle d'entraînement](training-loop.qmd).
 
-Un pas numérique de SGD permet de distinguer le calcul du gradient de la mise à jour effective des poids. Le cas chiffré correspondant est regroupé sur la page Practice dédiée.
-
-</details>
-:::
+Un pas numérique de SGD permet de distinguer le calcul du gradient de la mise à jour effective des poids. Traitez l'[exercice de mise à jour SGD](exercises/gradients.qmd#ex-sgd-output-projection) sur la page Practice dédiée.
 
 Deux distributions peuvent attribuer la même probabilité à la cible et donc produire la même loss, tout en donnant des gradients différents sur les autres logits.
 
