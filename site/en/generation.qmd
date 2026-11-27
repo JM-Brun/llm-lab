@@ -192,7 +192,7 @@ The project's reference program applies this loop without a KV cache; the [guide
   <figcaption>Prefill processes the known prompt; incremental decode extends it one selected token at a time. The KV cache is an optional efficiency optimization, not a requirement for correct generation. The example probabilities are illustrative.</figcaption>
 </figure>
 
-::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true"}
+::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true" data-reading-time="exclude"}
 
 ### Why can inference feel slow?
 
