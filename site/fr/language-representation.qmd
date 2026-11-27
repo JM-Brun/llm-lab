@@ -122,7 +122,7 @@ La représentation vectorielle fournit au réseau un support numérique flexible
 
 Le lookup initial dépend de l'ID, pas de la phrase dans laquelle le token apparaît. Deux occurrences d'un même ID sélectionnent donc le même vecteur initial à paramètres fixés.
 
-Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. En anglais, *bank* apparaît dans « river bank » ou « bank account » : le token visible peut être identique, alors que le contexte pertinent diffère. Le lookup seul ne réalise pas cette distinction.
+Pourtant, une occurrence ne joue pas toujours le même rôle selon les mots qui l'entourent. En anglais, *bank* apparaît dans « river bank » ou « bank account » : si le tokenizer attribue le même ID aux deux occurrences, le vecteur initial est identique alors que le contexte pertinent diffère. Le lookup seul ne réalise pas cette distinction.
 
 Les couches du Transformer construisent des **représentations contextualisées** en transformant les vecteurs initiaux à partir des autres positions accessibles. Dans un modèle causal, une position ne peut utiliser que le préfixe qui la précède et elle-même. C'est cette transformation qui permet à l'état associé à une occurrence de dépendre de son contexte.
 
