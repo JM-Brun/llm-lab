@@ -13,7 +13,7 @@ summary: "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, 
 scope: "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée."
 purpose: "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat."
 suggested_route:
-  previous: "fr/llm-overview"
+  previous: "fr/language-representation"
   next: "fr/embedding-space"
 hierarchy:
   parents: []
