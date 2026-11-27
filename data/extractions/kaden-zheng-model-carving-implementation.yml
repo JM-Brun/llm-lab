@@ -1,0 +1,30 @@
+schema_version: 1
+source_id: kaden-zheng-model-carving-implementation
+items:
+  - id: kaden-zheng-model-carving-implementation:training-entry-and-configs
+    kind: implementation-pattern
+    summary: "The official repository implements Model Carving in JAX/Flax/Optax, exposes the same training entry point for dense and carved runs via a --carving flag, and includes standard configurations from 140M to 2.7B plus looped configurations from 140M to 1.3B."
+    locator: {type: file, value: "README.md, Setup/Training/Code", label: "Training entry point and configurations"}
+    evidence: {kind: implementation-documentation, confidence: well-supported, scope: "Repository README and declared dependency versions.", assumptions: [], limitations: ["No installation or training run was performed; the README does not by itself establish reproducibility."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [ecosystem:jax, method:architecture-optimization], concept_ids: [model-compression, pruning]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: cite
+    disposition_rationale: "Useful reproducibility and implementation reference; cite as the official code release."
+  - id: kaden-zheng-model-carving-implementation:pressure-budget-code
+    kind: implementation-pattern
+    summary: "The Carver implementation computes per-sublayer FLOP shares, estimates the value of saved compute using the remaining-token fraction and fitted end-of-run learning rate, and applies the logarithmic gate pressure before scheduling removal from the computation graph."
+    locator: {type: file, value: "carving/carver.py, _pressure/_gate_step/_remove; carving/budget.py; carving/rate.py", label: "Pressure, FLOP budget and learning-rate forecast"}
+    evidence: {kind: code-inspection, confidence: well-supported, scope: "Direct inspection of the pressure, budget, learning-rate fit and removal code.", assumptions: ["The inspected main-branch code corresponds to the paper's v1 method."], limitations: ["No numerical equivalence test against paper equations or training logs was performed."]}
+    classification: {primary_theme: probabilistic-foundations-training, secondary_themes: [architectures-mechanisms], tags: [method:compute-aware-optimization, ecosystem:jax], concept_ids: [model-compression]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Provides a concrete code path for a future mathematical walkthrough of the pressure derivation."
+  - id: kaden-zheng-model-carving-implementation:gate-update-and-removal
+    kind: mechanism
+    summary: "The gate implementation uses Adam moments and a logarithmic pressure slope with ln(20), clips gates at zero, and schedules graph removal after a configurable lead interval. Pending removals can be cancelled if a gate reopens before the scheduled removal; the final topology is frozen for cooldown."
+    locator: {type: file, value: "carving/gates.py, Gates.step; carving/carver.py, _gate_step/_remove", label: "Gate update and scheduled structural removal"}
+    evidence: {kind: code-inspection, confidence: well-supported, scope: "Direct inspection of gate updates and removal lifecycle.", assumptions: [], limitations: ["The repository implementation exposes scheduling and reopening details that should be described alongside the paper's simplified explanation; no execution test was performed."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [method:structured-pruning, method:learned-gating, ecosystem:jax], concept_ids: [pruning, model-compression]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Useful implementation detail: zero gate triggers a pending removal, not necessarily immediate graph deletion."

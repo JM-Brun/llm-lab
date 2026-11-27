@@ -1,0 +1,30 @@
+schema_version: 1
+source_id: clare-nie-memonce-implementation
+items:
+  - id: clare-nie-memonce-implementation:released-post-training-checkpoint
+    kind: implementation-pattern
+    summary: "The repository provides a released post-training checkpoint containing approximately 71M trained parameters (memory-write LoRA adapters, KV readout projections and mem_to_emb) to be loaded alongside the Qwen3.5-4B base model."
+    locator: {type: file, value: "README.md, Download Checkpoint; eval/post-training/inference.py", label: "Released checkpoint and inference loading"}
+    evidence: {kind: implementation-documentation, confidence: well-supported, scope: "Repository instructions and checkpoint-loading code.", assumptions: ["The released checkpoint and README refer to the same repository revision inspected."], limitations: ["The checkpoint was not downloaded or loaded in this audit; the base-model licence and availability are separate matters."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:long-context, method:post-training-adaptation, ecosystem:pytorch], concept_ids: [persistent-memory, kv-cache]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: cite
+    disposition_rationale: "Useful reproducibility reference; clearly distinguish repository licence from checkpoint/base-model/dataset rights."
+  - id: clare-nie-memonce-implementation:write-retrieve-inference-loop
+    kind: implementation-pattern
+    summary: "The released Qwen3.5 inference path segments history into chunks of at most 4096 tokens, writes one 64-token memory block per segment, keeps a 1024-token short-state FIFO, computes retrieval keys for stored blocks, and retrieves up to 64 long-term blocks for each question before constructing layer-specific memory KV caches."
+    locator: {type: file, value: "eval/post-training/inference.py, MemOnceChat.write and MemOnceChat.answer; post-training/model.py", label: "Post-training memory session"}
+    evidence: {kind: code-inspection, confidence: well-supported, scope: "Direct inspection of the session write and answer methods and model configuration.", assumptions: ["The default configuration is used unless overridden."], limitations: ["The inspected implementation is a specific post-training Qwen3.5 path; it should not be assumed identical to every pretraining configuration or future revision."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:kv-cache, topic:persistent-memory, method:top-k-retrieval], concept_ids: [kv-cache, persistent-memory, inference-time-compute]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Concrete implementation example for explaining write-once/read-many, short/long memory and on-demand KV reconstruction."
+  - id: clare-nie-memonce-implementation:memory-accounting
+    kind: result
+    summary: "The repository README reports at 1M context for Qwen3.5-4B: 32.05 GB active GPU cache for full-context Qwen3.5 versus 25.0 MB active GPU cache and a 640.0 MB offloaded pool for MemOnce. It reports 41.36 s prefill and 29.3 tokens/s decoding for MemOnce."
+    locator: {type: section, value: "README.md, Inference Efficiency and Scalability table", label: "Active GPU cache and offloaded pool"}
+    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Repository-reported 1M-context post-training inference table.", assumptions: ["The README's benchmark setup and measurement definitions apply."], limitations: ["Not independently reproduced; active GPU cache and offloaded pool are separate quantities; do not compare this row directly with the paper's 144 GB standard-Transformer chart without reconciling configurations."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:benchmark, topic:memory-complexity], concept_ids: [kv-cache, persistent-memory]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: cite
+    disposition_rationale: "Use only with separate active GPU cache and offloaded storage columns and exact benchmark setup."
