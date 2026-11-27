@@ -145,7 +145,7 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 </details>
 - **“The scale factor is an empirical constant with no rationale.”** No: it follows from reasoning about dot-product scale; the assumptions are simplified, but the factor addresses a specific numerical issue. The full derivation and numerical simulation are developed in [Why scale attention scores?](attention-score-scaling.qmd).
 
-### Attention and mutual information: an analogy, not an identity
+### Attention and mutual information: an analogy, not an identity {#attention-mutual-information}
 
 Mutual information between two random variables depends on a joint distribution:
 
