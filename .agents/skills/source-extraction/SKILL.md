@@ -11,7 +11,7 @@ Produce a durable, machine-readable record of what a source actually contains an
 
 A scanned source may yield many independent items—or none worth integrating. Extraction is not endorsement or publication.
 
-Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) as the quality gate for Phase A. In particular, keep source inspection and extraction completeness independent; record partial access explicitly; and do not let a useful extracted item upgrade the source-level scan status.
+Follow the Phase A requirements in the normative [source-to-learning system integration workflow](../../../docs/workflows/source-to-learning-system-integration.md), and use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) as the quality gate for Phase A. In particular, keep source inspection and extraction completeness independent; record partial access explicitly; and do not let a useful extracted item upgrade the source-level scan status.
 
 ## Inspect repository conventions
 
