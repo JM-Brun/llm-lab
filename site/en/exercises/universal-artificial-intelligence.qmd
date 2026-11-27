@@ -1,0 +1,108 @@
+---
+title: "Exercises — Universal Artificial Intelligence"
+subtitle: "Algorithmic complexity, Solomonoff induction, and AIXI decision-making"
+description-meta: "Seven comprehension questions and worked answers on Kolmogorov complexity, algorithmic probability, Solomonoff induction, and AIXI."
+keywords: ["type:exercise-hub", "destination:practice", "topic:universal-artificial-intelligence-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/universal-artificial-intelligence-exercises"
+summary: "Seven comprehension questions associated with the Universal Artificial Intelligence deep dive."
+scope: "Checks the distinctions between Kolmogorov complexity, the universal mixture, Solomonoff induction, ideal AIXI and computable AIXI(t,l), including computational limits and theoretical remedies."
+purpose: "Check that readers can state the definitions and limits without conflating a computable upper bound, an ideal object, and a computable approximation."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/universal-artificial-intelligence"]
+tags: ["type:exercise-hub", "destination:practice", "topic:universal-artificial-intelligence-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: Universal Artificial Intelligence](../universal-artificial-intelligence.qmd)
+
+## Check your understanding
+
+### 1. Kolmogorov complexity and computable bounds
+
+Why does enumerating candidate programs give an upper bound on $K(x)$ but not an exact algorithm for $K(x)$?
+
+<details>
+<summary>Show the answer</summary>
+
+Every found program is a candidate description, but we cannot know that a shorter one will never halt later.
+
+</details>
+
+### 2. Complexity and the universal mixture
+
+What is the difference between $K(x)$ and the universal mixture $M(x)$?
+
+<details>
+<summary>Show the answer</summary>
+
+$K$ keeps the shortest description; $M$ sums the weights of minimal programs generating the prefix.
+
+</details>
+
+### 3. From prediction to decision
+
+What does AIXI add to Solomonoff induction?
+
+<details>
+<summary>Show the answer</summary>
+
+Actions, rewards and sequential planning.
+
+</details>
+
+### 4. The two bounds in AIXI(t,l)
+
+In AIXI(t,l), what do $t$ and $l$ bound?
+
+<details>
+<summary>Show the answer</summary>
+
+Candidate-policy runtime per cycle and candidate-program length—not merely the environment's space and time.
+
+</details>
+
+### 5. Ideal object and computable approximation
+
+Why does a computable AIXI(t,l) not make the ideal AIXI computable?
+
+<details>
+<summary>Show the answer</summary>
+
+It solves a restricted bounded problem with a different guarantee.
+
+</details>
+
+### 6. Growth of the search cost
+
+What does the exponential $2^l$ factor imply for practical use?
+
+<details>
+<summary>Show the answer</summary>
+
+Increasing the program-length bound rapidly makes exhaustive candidate search infeasible.
+
+</details>
+
+### 7. Two computational obstacles
+
+What are the two obstacles behind AIXI's non-limit-computability result, and how do the two remedies address them?
+
+<details>
+<summary>Show the answer</summary>
+
+Exact ties between action values and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/universal-artificial-intelligence.qmd) · [English](universal-artificial-intelligence.qmd)
+:::
