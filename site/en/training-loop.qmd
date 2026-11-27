@@ -73,7 +73,7 @@ Steps 1–3 only read the parameters. Step 4 is the single place where they chan
 
 ### Replay one step on the first token {#replay-one-step-on-the-first-token}
 
-For the first step of the Romans example, if the current distribution is $(0.6,0.2,0.1,0.1)$ and the target is “They”, its local loss is $-\log(0.6)\approx0.511$ nats and its logit gradient is $(-0.4,0.2,0.1,0.1)$. Backpropagation carries this signal to the projection and earlier layers; the optimizer then updates parameters. The next forward pass must recompute logits and probabilities from the updated parameters—the old distribution is not reused. [Recompute the distribution after one SGD step](gradients.qmd#running-example-sgd) using the same output matrix as in the logits lesson.
+For the first step of the Romans example, if the current distribution is $(0.6,0.2,0.1,0.1)$ and the target is “They”, its local loss is $-\log(0.6)\approx0.511$ nats and its logit gradient is $(-0.4,0.2,0.1,0.1)$. Backpropagation carries this signal to the projection and earlier layers; the optimizer then updates parameters. The next forward pass must recompute logits and probabilities from the updated parameters—the old distribution is not reused. [Recompute the distribution after one SGD step](exercises/gradients.qmd#ex-sgd-output-projection) using the same output matrix as in the logits lesson.
 
 ### From one target to a batch
 
