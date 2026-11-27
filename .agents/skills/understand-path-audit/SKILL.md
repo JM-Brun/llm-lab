@@ -185,7 +185,7 @@ Never standardize away a useful page-specific explanatory form just to make outl
 
 ### 6. Audit visual explanations as designed teaching material
 
-Use the canonical [Pedagogical visual design and review process](../../docs/pedagogical-visual-design-process.md) for every substantive figure decision. Do not merely count images or check whether a page contains an SVG.
+Use the canonical [Pedagogical visual design and review process](../../../docs/pedagogical-visual-design-process.md) for every substantive figure decision. Do not merely count images or check whether a page contains an SVG.
 
 For each page, inventory existing figures and candidate gaps. For every core visual, assess its learner question, explanatory contribution, scientific fidelity, visual form, placement, caption, alternative text, FR/EN parity, responsive behavior and asset provenance. Search the page, neighbouring lessons and asset register before proposing a new figure. Where a gap is found, explicitly decide add, reuse, revise, keep prose/math/table, or defer.
 
