@@ -20,7 +20,8 @@ This is an **orchestration skill**, not a replacement for specialist work. Its n
 | Create a new reader-facing page | `new-learning-page` | `knowledge-and-learning-integration` for concept/source/graph updates |
 | Improve one existing page | `page-content-audit` | `scientific-content-audit` if technical correctness is central |
 | Create, extend, audit or reorganize a series / coherent multi-page group; resolve overlap | `page-group-audit` and/or `editorial-boundary-audit` | `new-learning-page` for genuinely new page owners; `knowledge-and-learning-integration` for source/concept changes; `knowledge-architecture-audit` for canonical graph or route changes |
-| Add concepts, typed relations, domains or graph projections | `knowledge-architecture-audit` | `knowledge-and-learning-integration` for the learning-content decision |
+| Add concepts, typed relations, domains or knowledge-graph projections | `knowledge-architecture-audit` | `knowledge-and-learning-integration` for the learning-content decision |
+| Model or revise computational nodes, operations, dataflow edges, operational branches or graph views | `knowledge-architecture-audit` | `scientific-content-audit` when computational correctness is disputed; `knowledge-and-learning-integration` when source-backed learning content also changes |
 | Validate the rendered learning experience | `rendered-site-audit` | Page/group skill for pedagogical implications |
 
 Use `audit-skill-routing` for audit requests that do not fit a direct addition/integration task. Select the smallest sufficient skill set.
@@ -41,9 +42,10 @@ Use `audit-skill-routing` for audit requests that do not fit a direct addition/i
 ## Hard constraints
 
 - No second source catalogue, concept registry, domain taxonomy, resource registry, knowledge graph or page metadata model.
-- No parallel or implied Understand curriculum: `data/guided-route.yml` remains its sole sequence source.
+- No parallel Understand route: `data/guided-route.yml` remains the sole machine-readable source for its nine reader-facing stages. `docs/learning-path.md` remains the overall curriculum narrative and owner of module order, prerequisites, evidence and Build status. Do not confuse the Understand route with the entire curriculum.
 - No new page solely because a source or concept is new.
 - No concept node solely because a term appears in a heading or extraction.
+- No conversion of computational graph edges into concept relations, page-navigation relations or pedagogical prerequisites; use `data/computational-graph.yml` only for computation/dataflow semantics.
 - No generic `related-to` relation in place of a typed semantic decision.
 - No silent deletion, shortening or relocation of useful content.
 - No generated output hand-edits.

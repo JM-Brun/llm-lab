@@ -9,7 +9,7 @@ description: Design and create a new bilingual LLM Lab learning page only when a
 
 Create a page that earns its place in the existing LLM Lab learning system. The goal is not to publish every interesting topic or source as a page; it is to give a distinct learner question a clear, durable owner at the right depth.
 
-Use the normative [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md), the canonical [page-template guide](../../../docs/page-template-guide.md), and its [pre-draft learning-page blueprint](../../../docs/page-template-system.md#4-design-before-drafting-the-learning-page-blueprint). This skill owns the page-creation decision and page contract; it does not replace source extraction, concept-graph governance, technical review or rendered-site validation.
+Use the normative [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md), the canonical [page-template guide](../../../docs/page-template-guide.md), and its [pre-draft learning-page blueprint](../../../docs/page-template-system.md#4-design-before-drafting-the-learning-page-blueprint). When invoked by `knowledge-change-workflow` or source integration, execute the page-necessity gate and page contract, then return the decision; do not route the same request back to the dispatcher. This skill owns the page-creation decision and page contract; it does not replace source extraction, concept-graph governance, technical review or rendered-site validation.
 
 ## When to use
 

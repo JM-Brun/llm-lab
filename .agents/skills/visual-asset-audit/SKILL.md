@@ -20,7 +20,7 @@ Use when:
 - a full source scan has already identified an asset-specific question that needs a separate rights or reuse decision;
 - a proposed crop, adaptation, recreation, local copy, redistribution or replacement needs review.
 
-Use `rendered-site-audit` for how an asset appears and behaves in the rendered site. Use `scientific-content-audit` to verify the technical claims represented by a diagram. Use `page-content-audit` or `page-group-audit` for its teaching role.
+Use `rendered-site-audit` for how an asset appears and behaves in the rendered site. Use `scientific-content-audit` to verify the technical claims represented by a diagram. Use `page-content-audit` or `page-group-audit` for its teaching role. When invoked by `source-extraction` for an asset-specific rights/provenance question, complete that asset-level scope and return the decision; do not restart the broader source scan.
 
 ## Required project guidance
 

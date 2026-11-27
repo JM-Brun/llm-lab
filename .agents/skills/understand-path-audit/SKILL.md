@@ -43,6 +43,7 @@ Read the relevant current versions before auditing; do not reproduce their rules
 - `docs/reader-experience-and-editorial-method.md`: progressive disclosure, page roles, meaningful links, editorial economy and self-checks.
 - `docs/pedagogical-breadcrumb-and-page-navigation-contract.md`: breadcrumb and navigation behavior.
 - `docs/roadmap.md` and `docs/project-status.md`: planned versus implemented content.
+- `docs/workflows/understand-lesson-audit.md`: normative page-by-page review procedure for the guided Understand lessons; apply it when the scope is lesson-by-lesson, then synthesize route-level findings with this skill.
 
 If a referenced document has moved, locate its current canonical owner. Do not silently invent a replacement contract.
 
@@ -51,7 +52,7 @@ If a referenced document has moved, locate its current canonical owner. Do not s
 - Theory / Understand and Build are **distinct pathways**. Do not turn Understand into a prerequisite chain for Build, or Build milestones into theory chapters.
 - Understand is a conceptual progression, not a rigid linear textbook. Respect the canonical route while allowing meaningful non-linear entry points and optional depth.
 - The stages in `data/guided-route.yml` are authoritative. Do not add, remove, reorder, or rename stages merely to make a local sequence look neater. Propose a curriculum change separately and justify it with learner evidence.
-- Keep page navigation, conceptual hierarchy, semantic concept relations, curriculum prerequisites and implementation dependencies distinct. A suggested next page is not automatically a prerequisite or a parent-child relation.
+- Keep page navigation, conceptual hierarchy, semantic concept relations, computational dataflow, curriculum prerequisites and implementation dependencies distinct. A suggested next page is not automatically a prerequisite or a parent-child relation; a computational edge is not automatically a learning dependency. When the correctness of a computational relation is disputed, use `scientific-content-audit`; structural changes to the canonical computation model belong to `knowledge-architecture-audit`.
 - Each concept has a canonical explanatory home. A reminder or overview may repeat a small amount of context; do not duplicate the full explanation or worked example without a distinct learning objective.
 - A page must remain self-contained for its LLM-specific learning objective. A link cannot replace a definition, assumption or derivation needed to follow the argument.
 - Templates are soft targets. Harmonization means a recognizably shared reader experience, not identical headings, length, section count or visual density.
@@ -185,7 +186,7 @@ Never standardize away a useful page-specific explanatory form just to make outl
 
 ### 6. Audit visual explanations as designed teaching material
 
-Use the canonical [Pedagogical visual design and review process](../../docs/pedagogical-visual-design-process.md) for every substantive figure decision. Do not merely count images or check whether a page contains an SVG.
+Use the canonical [Pedagogical visual design and review process](../../../docs/pedagogical-visual-design-process.md) for every substantive figure decision. Do not merely count images or check whether a page contains an SVG.
 
 For each page, inventory existing figures and candidate gaps. For every core visual, assess its learner question, explanatory contribution, scientific fidelity, visual form, placement, caption, alternative text, FR/EN parity, responsive behavior and asset provenance. Search the page, neighbouring lessons and asset register before proposing a new figure. Where a gap is found, explicitly decide add, reuse, revise, keep prose/math/table, or defer.
 

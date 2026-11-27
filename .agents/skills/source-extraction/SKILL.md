@@ -7,15 +7,15 @@ description: Inspect external articles, papers, documentation, repositories, dat
 
 ## Mission and phase boundary
 
-Produce a durable, machine-readable record of what a source actually contains and what may be useful to LLM Lab. This is **Phase A: extraction only**. Do not edit published pages, create pages, mutate `data/concepts.yml`, change graph relations, or regenerate graph projections. Candidate concepts and destinations are proposals for Phase B.
+Produce a durable, machine-readable record of what a source actually contains and what may be useful to LLM Lab. This is **Phase A: extraction only**. Do not edit published pages, create pages, mutate `data/concepts.yml` or `data/computational-graph.yml`, change canonical graph relations, or regenerate graph projections. Candidate concepts, computational nodes/edges and destinations are source-local proposals for Phase B; do not write them into canonical registries during extraction.
 
 A scanned source may yield many independent items—or none worth integrating. Extraction is not endorsement or publication.
 
-Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) as the quality gate for Phase A. In particular, keep source inspection and extraction completeness independent; record partial access explicitly; and do not let a useful extracted item upgrade the source-level scan status.
+Follow the Phase A requirements in the normative [source-to-learning system integration workflow](../../../docs/workflows/source-to-learning-system-integration.md), and use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) as the quality gate for Phase A. In particular, keep source inspection and extraction completeness independent; record partial access explicitly; and do not let a useful extracted item upgrade the source-level scan status.
 
 ## Inspect repository conventions
 
-Read the current graph standards and implementation audit, `docs/source-catalogue-schema.md`, `data/source-taxonomy.yml`, `data/domains.yml`, `data/sources.yml`, source/reference inventories, the pedagogical resource library, visual-asset register, existing source audits, validators and related skills. Use `data/sources.yml` as the canonical source catalogue and `data/extractions/<source-id>.yml` for atomic extraction records. Do not create a parallel catalogue, overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
+Read the current graph standards and implementation audit, `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md` when the source contains computational/dataflow material, `docs/source-catalogue-schema.md`, `data/source-taxonomy.yml`, `data/domains.yml`, `data/sources.yml`, source/reference inventories, the pedagogical resource library, visual-asset register, existing source audits, validators and related skills. Use `data/sources.yml` as the canonical source catalogue and `data/extractions/<source-id>.yml` for atomic extraction records. Do not create a parallel catalogue, overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
 
 ## 1. Identify and register each source
 ### Classification contract: themes, tags and metadata

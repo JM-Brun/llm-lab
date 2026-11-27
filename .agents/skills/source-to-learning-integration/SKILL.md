@@ -9,21 +9,28 @@ description: Orchestrate the two-phase workflow that turns external sources into
 
 Coordinate two distinct phases with an explicit, persistent hand-off:
 
-1. **Extraction** — inspect external sources and record their useful content as structured, evidence-linked data. Do not edit pedagogical pages or mutate the canonical knowledge graph.
+1. **Extraction** — inspect external sources and record their useful content as structured, evidence-linked data. Do not edit pedagogical pages or mutate canonical knowledge or computational graphs.
 2. **Integration** — review validated extraction records, decide what belongs in the knowledge graph and learning experience, then update canonical data, pages, assets, experiments, references, and navigation as justified.
 
-The phases may run in separate sessions and PRs. Extraction is a durable research result, not a promise that every item will be published. Integration is a deliberate graph/editorial decision, not a mechanical copy of extraction notes.\n\nFor cross-cutting requests that combine source intake, new knowledge, page creation and graph connections, use the [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) to coordinate scope and ownership. This skill remains the specialist orchestrator for the two source-specific phases; it does not replace the [new-learning-page](../new-learning-page/SKILL.md) page-necessity procedure.
+The phases may run in separate sessions and PRs. Extraction is a durable research result, not a promise that every item will be published. Integration is a deliberate graph/editorial decision, not a mechanical copy of extraction notes.
+
+For cross-cutting requests that combine source intake, new knowledge, page creation and graph connections, use the [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) to coordinate scope and ownership. **Dispatch return rule:** when this skill has already been invoked by `knowledge-change-workflow`, or by `project-learning-resource-audit` for constituent sources, do not route the same work back to that caller; complete the assigned source phases and return the evidence/decisions. Do not restart a project audit when handling source components delegated by that audit. This skill remains the specialist orchestrator for the two source-specific phases; it does not replace the [new-learning-page](../new-learning-page/SKILL.md) page-necessity procedure.
 
 ## Specialist skills
 
 - `source-extraction`: provenance, access and scan scope, structured claims/ideas/artifacts, confidence, source catalogue, extraction records and hand-off.
-- `knowledge-and-learning-integration`: graph impact, concept/relation decisions, page mapping, content/assets/experiments, bilingual parity and validation.
+- `knowledge-and-learning-integration`: source-backed concept/relation/resource decisions, page mapping, content/assets/experiments, bilingual parity and validation.
+- `knowledge-architecture-audit`: canonical computational-graph changes when accepted source evidence warrants a change to computation/dataflow semantics; use `scientific-content-audit` for disputed technical semantics.
 
 Use this skill to orchestrate both. Run extraction first unless a complete, trustworthy record already exists. Run integration only against persistent, reviewable records. Do not repeat scans unnecessarily.
 
-Apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
+Follow the normative [source-to-learning system integration workflow](../../../docs/workflows/source-to-learning-system-integration.md) for the two-phase procedure, and apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
 
-## Project-level audit routing\n\nIf the request concerns an entire external learning project or coherent resource family, invoke `project-learning-resource-audit` first to reconcile the existing project owner and reconstruct the project model. Then use Phase A below for any constituent sources not already inspected and Phase B for accepted integration decisions. Do not rescan source materials already represented by trustworthy records. For a single article or a multi-source topic collection, stay with this skill's ordinary phases and the existing source/topic comparison templates.\n\n## Phase A — extraction
+## Project-level audit routing
+
+If the request concerns an entire external learning project or coherent resource family, invoke `project-learning-resource-audit` first to reconcile the existing project owner and reconstruct the project model. Then use Phase A below for any constituent sources not already inspected and Phase B for accepted integration decisions. Do not rescan source materials already represented by trustworthy records. For a single article or a multi-source topic collection, stay with this skill's ordinary phases and the existing source/topic comparison templates.
+
+## Phase A — extraction
 
 Input: URLs, documents, repositories, named sources, or a source set.
 
@@ -45,7 +52,7 @@ Input: reviewed extraction records and current repository state.
 
 Output:
 - accepted/deferred/rejected dispositions with rationale;
-- canonical graph changes, or an explicit no-change decision;
+- canonical concept/resource graph changes, or an explicit no-change decision; computational-graph changes are separately owned and validated through `knowledge-architecture-audit`;
 - updates to existing pages or justified new pages;
 - asset, experiment, implementation, reference, route and bilingual updates as needed;
 - a differential comparison of source graph/route versus the canonical LLM Lab graph, guided route, page routes and Build route;

@@ -7,11 +7,13 @@ description: Integrate validated source-extraction records into the LLM Lab know
 
 ## Mission and phase boundary
 
-This is **Phase B: integration**. Consume persistent, reviewable records produced by `source-extraction`. Decide which items genuinely improve LLM Lab, then integrate them into the canonical knowledge graph and/or learning experience.
+This is **Phase B: integration**. Consume persistent, reviewable records produced by `source-extraction`. Decide which items genuinely improve LLM Lab, then integrate them into the canonical knowledge graph and/or learning experience. This skill owns source-backed concept, resource and learning-content integration; when an accepted item requires a change to the canonical computational/dataflow graph, coordinate with `knowledge-architecture-audit` rather than editing that model as a side effect.
 
 Do not rescan by default. If an extraction is incomplete, stale or tied to a different version, request targeted re-extraction. An extracted item is not automatically accepted. A fully catalogued source can produce no graph or page change.
 
-Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) for the integration gates and final report. Assess complementarity independently of novelty, test a plausible bounded integration before a pedagogical no-op, and keep technical review, rendered/accessibility review and learner evidence distinct.\n\nFor a cross-cutting request to add knowledge or connect topics, use the [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) as the entry protocol. If a new reader-facing page is proposed, apply [new-learning-page](../new-learning-page/SKILL.md) for the page-necessity gate and page contract; this skill remains the owner of accepted source/concept integration. Do not duplicate those workflows or bypass their specialist checks.
+Follow the Phase B requirements in the normative [source-to-learning system integration workflow](../../../docs/workflows/source-to-learning-system-integration.md), and use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) for the integration gates and final report. Assess complementarity independently of novelty, test a plausible bounded integration before a pedagogical no-op, and keep technical review, rendered/accessibility review and learner evidence distinct.
+
+For a cross-cutting request to add knowledge or connect topics, use the [knowledge-change workflow](../../../docs/workflows/knowledge-change-workflow.md) as the entry protocol. **Dispatch return rule:** when this skill is invoked by `source-to-learning-integration` or `knowledge-change-workflow` for Phase B, execute the assigned integration scope and return the result; do not delegate the same request back to the coordinator. If a new reader-facing page is proposed, apply [new-learning-page](../new-learning-page/SKILL.md) for the page-necessity gate and page contract; this skill remains the owner of accepted source/concept integration. Do not duplicate those workflows or bypass their specialist checks.
 
 ## 1. Inspect the current architecture
 
@@ -19,7 +21,7 @@ Before changing anything, inspect:
 - `docs/knowledge-graph-standards.md` and `docs/knowledge-graph-implementation-audit.md`;
 - `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`;
 - `site/tools/export_knowledge_graph.py`, schemas, graph validators and tests;
-- `docs/learning-path.md`, `docs/content-section-mapping.md`, page inventory and templates;
+- `docs/learning-path.md`, `docs/content-section-mapping.md`, `docs/computational-graph-schema.md`, `docs/canonical-computational-spine.md`, page inventory and templates;
 - editorial principles, reader-experience guidance and page metadata schema;
 - relevant pages in both `site/fr/` and `site/en/`, including prerequisites and downstream pages;
 - source catalogue, references, resource library, asset register, experiments and open issues/PRs.

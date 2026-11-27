@@ -200,7 +200,7 @@ the relevant parts of:
 - `docs/information-architecture.md`
 - `docs/reader-experience-and-editorial-method.md`
 - `docs/page-template-system.md` and `docs/page-template-guide.md`
-- `docs/annotated-references.md` and the relevant source audits
+- `docs/references.md` and the relevant source audits
 - `docs/roadmap.md` and `docs/project-status.md`
 
 If a path has moved, find its current canonical owner. Do not create a parallel

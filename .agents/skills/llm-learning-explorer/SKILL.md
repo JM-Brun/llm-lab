@@ -49,6 +49,7 @@ Read the current versions relevant to the requested scope. Locate the canonical 
 - `data/guided-route.yml`: canonical Understand route; do not create or reorder stages casually.
 - `docs/content-section-mapping.md`: ownership boundaries for Understand, Build, Deepen and Practice & experiment.
 - `docs/information-architecture.md`: canonical ownership of pages, concepts, sources, resources and graph projections.
+- `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md`: canonical computation/dataflow model, distinct from concept relations and learning routes.
 - `docs/design-system.md`: visual language, accessibility and interaction conventions.
 - `docs/reader-experience-and-editorial-method.md`: progressive disclosure, editorial economy and reader experience.
 - `docs/source-catalogue-schema.md`, `data/sources.yml`, `data/source-taxonomy.yml`: source identity, provenance, facets and status.

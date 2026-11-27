@@ -28,8 +28,9 @@ Never collapse these structures into one graph or one sequence:
 4. **Source-local pedagogical route:** the source's order, motivations, prerequisites and learning outcomes.
 5. **Canonical project knowledge graph:** stable concepts and typed semantic relations shared across LLM Lab.
 6. **Canonical learning routes and site navigation:** intended learner progression, page ownership, optional depth and implementation route.
+7. **Canonical computational graph:** LLM Lab's own computation/dataflow model in `data/computational-graph.yml`. It may be informed by validated source items, but is not the source-local process graph, concept graph, teaching route or page-navigation graph.
 
-A seventh cross-cutting record tracks visual assets and reuse rights. The source's teaching order is not automatically a prerequisite graph; a semantic relation is not automatically a pedagogical dependency.
+A seventh cross-cutting record tracks visual assets and reuse rights. The source's teaching order is not automatically a prerequisite graph; a semantic relation is not automatically a pedagogical dependency. A source-local computational/process relation is not automatically an edge in LLM Lab's canonical computational graph: verify operation identity, direction, abstraction level, architecture assumptions and evidence before proposing a change to `data/computational-graph.yml`.
 
 ## 3. Workflow stages and gates
 
