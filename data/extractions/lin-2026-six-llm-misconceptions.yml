@@ -1,0 +1,351 @@
+schema_version: 1
+source_id: lin-2026-six-llm-misconceptions
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Table 1: diagnostic matrix linking each misconception to its kernel truth, conflated distinction, downstream mistake, diagnostic question and practical fix."
+      - "Sections: folk theories; minimal working model; misconceptions 1, 2, 4 and 6; implications for evaluation and deployment."
+    inferred_elements:
+      - "The progression from slogans to distinctions and diagnostic questions is reconstructed as a source-local learning route; the paper does not declare a formal curriculum."
+      - "Learner outcomes are inferred from the diagnostic questions and practical fixes."
+  source_graph:
+    nodes:
+      - id: src-training-objective
+        kind: training-objective
+        description: "Offline pretraining objective that shapes the model's parameters."
+        locator: "Section: A minimal working model of LLM-based systems"
+        inferred: false
+      - id: src-deployed-system
+        kind: deployed-system
+        description: "Product or workflow that wraps the model with prompts, decoding, tools, retrieval, memory and orchestration."
+        locator: "Sections: A minimal working model; Misconception 1"
+        inferred: false
+      - id: src-learned-distribution
+        kind: learned-distribution
+        description: "Conditional distribution learned by the model."
+        locator: "Sections: A minimal working model; Misconception 2"
+        inferred: false
+      - id: src-sampled-output
+        kind: sampled-output
+        description: "Particular output sequence selected under a decoding and prompting regime."
+        locator: "Section: Misconception 2"
+        inferred: false
+      - id: src-parametric-memory
+        kind: parametric-memory
+        description: "Information encoded in model weights."
+        locator: "Section: Misconception 4"
+        inferred: false
+      - id: src-contextual-memory
+        kind: contextual-memory
+        description: "Conversation history and retrieved content supplied within the active context window."
+        locator: "Section: Misconception 4"
+        inferred: false
+      - id: src-external-memory
+        kind: external-memory
+        description: "Product-level logs, profiles, documents and retrieval indices outside the model."
+        locator: "Section: Misconception 4"
+        inferred: false
+      - id: src-task-competence
+        kind: task-competence
+        description: "Observable functional performance on specified tasks."
+        locator: "Section: Misconception 6"
+        inferred: false
+      - id: src-agency
+        kind: agency
+        description: "Claims about beliefs, intentions, experience or human-like understanding."
+        locator: "Section: Misconception 6"
+        inferred: false
+    edges:
+      - from: src-training-objective
+        type: distinguished-from
+        to: src-deployed-system
+        inferred: false
+      - from: src-learned-distribution
+        type: distinguished-from
+        to: src-sampled-output
+        inferred: false
+      - from: src-parametric-memory
+        type: distinguished-from
+        to: src-contextual-memory
+        inferred: false
+      - from: src-contextual-memory
+        type: distinguished-from
+        to: src-external-memory
+        inferred: false
+      - from: src-task-competence
+        type: distinguished-from
+        to: src-agency
+        inferred: false
+    interpretation: "Editorial reconstruction of the paper's diagnostic distinctions. This is not an author-provided formal ontology, a computational graph or a canonical LLM Lab relation model."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Diagnose when a claim about an LLM conflates the training objective with the deployed system, a learned distribution with a sampled output, or task competence with agency."
+      basis: "Inferred from Table 1 diagnostic questions and the four distinctions in the minimal working model."
+    - status: inferred
+      outcome: "Locate information in parametric, contextual or external memory before making claims about what a system remembers or learns from chats."
+      basis: "Inferred from the three memory layers and the diagnostic question in Misconception 4."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic distinction between pretraining, inference, model parameters and a deployed application."
+      basis: "The paper uses these notions throughout without presenting a beginner-level introduction."
+  teaching_route:
+    - order: 1
+      section: "Folk theories of large language models"
+      function: motivation
+      moves: ["Expose familiar slogans and explain how a partial truth becomes misleading when generalized."]
+    - order: 2
+      section: "A minimal working model of LLM-based systems"
+      function: conceptual-framework
+      moves: ["Introduce four distinctions that organize the subsequent diagnosis."]
+    - order: 3
+      section: "Table 1: diagnostic matrix"
+      function: diagnostic-framework
+      moves: ["Connect kernel truth, conflated distinction, downstream mistake, diagnostic question and practical fix."]
+    - order: 4
+      section: "Six misconceptions"
+      function: application
+      moves: ["Apply the distinctions to claims about generation, memory, alignment and cognitive status."]
+    - order: 5
+      section: "Implications for evaluation, deployment, and governance"
+      function: transfer
+      moves: ["Translate the conceptual distinctions into evaluation and system-design questions."]
+    - order: 6
+      section: "Publisher AI policies as governance case studies"
+      function: case-study
+      moves: ["Apply the diagnostic matrix to institutional policy language."]
+    - order: 7
+      section: "Conclusion"
+      function: synthesis
+      moves: ["Return to the three diagnostic questions: level of description, conflated distinction and downstream consequence."]
+  pedagogical_strengths:
+    - "The diagnostic matrix makes the reasoning pattern explicit rather than offering only corrected slogans."
+    - "The four distinctions connect model mechanics, deployed systems, memory and capability evaluation."
+    - "The article preserves a kernel of truth for each misconception and asks what evidence would discriminate competing interpretations."
+  pedagogical_limits:
+    - "This is a Perspective article, not a beginner course; prerequisites and learner outcomes are inferred."
+    - "The six-item taxonomy is an author's proposed framework, not an exhaustive or universally accepted taxonomy."
+    - "The article does not provide a detailed failure taxonomy for RAG retrieval, transmission or answer faithfulness."
+    - "Cited empirical examples and references were not independently verified in this extraction."
+  comparison:
+    dossier: "docs/source-reviews/lin-2026-six-llm-misconceptions-source-review.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["data/guided-route.yml"]
+    decision: "Phase A extraction only. Candidate destinations are proposals; no page, concept, relation, computational-graph or route change is authorized by this record."
+    structures_kept_separate:
+      - "Source-local diagnostic model and section order"
+      - "Canonical concept graph"
+      - "Canonical computational graph"
+      - "Canonical learner routes and page navigation"
+
+items:
+  - id: lin-2026-six-llm-misconceptions:minimal-system-model
+    kind: mental-model
+    summary: "Proposes a minimal working model of LLM-based systems organized around four distinctions: pretraining versus deployed system; learned distribution versus particular sample; parametric, contextual and external memory; task competence versus agency."
+    locator:
+      type: section
+      value: "Table 1 and section 'A minimal working model of LLM-based systems'; Figure 1 caption"
+      label: "Four distinctions and diagnostic matrix"
+    evidence:
+      kind: direct-statement
+      confidence: context-dependent
+      scope: "Author-proposed conceptual framework for diagnosing claims about current LLM-based systems."
+      assumptions: ["The deployed system is the unit of analysis when prompts, tools, retrieval, memory and orchestration affect behavior."]
+      limitations: ["The taxonomy is a Perspective framework, not an empirically validated exhaustive classification or a consensus standard."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The framework was read directly; independent verification of its cited technical and empirical references remains open."
+    pedagogical_assessment:
+      learner_question: "Which level of description and which distinction does a claim about an LLM actually concern?"
+      explanatory_lens: "A compact diagnostic matrix that separates four commonly conflated pairs or layers."
+      teaching_form: ["mental model", "diagnostic table", "worked policy cases"]
+      novelty: {level: moderate, rationale: "The individual distinctions already appear in LLM Lab, but the source combines them into a single diagnostic framework."}
+      complementarity: {level: high, rationale: "It offers a reusable way to diagnose overgeneralized claims across several existing lessons."}
+      pedagogical_value: {level: high, rationale: "The learner can ask what is being described before judging a claim."}
+      applicability: {level: high, rationale: "The framework can inform the six-item misconception pilot without creating a second concept ontology."}
+      redundancy: {level: moderate, rationale: "The concepts overlap existing lessons, while the diagnostic matrix is a distinct teaching lens."}
+      evidence_quality: {level: moderate, rationale: "The framework is explicit in the paper, but its scope and status as a Perspective must remain visible."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:system-model, method:diagnostic-taxonomy]
+      concept_ids: [next-token-prediction, training-objective, decoding-policy, persistent-memory, operational-competence]
+    candidate_destinations:
+      pages: [fr/llm-overview, en/llm-overview, fr/llm-limits, en/llm-limits]
+      concepts: [next-token-prediction, training-objective, decoding-policy, persistent-memory, operational-competence]
+      route_ids: []
+
+  - id: lin-2026-six-llm-misconceptions:objective-versus-deployed-system
+    kind: misconception
+    summary: "Next-token prediction accurately describes the base model's training objective, but it is not a complete account of a deployed system whose behavior also depends on prompts, decoding, tools, retrieval and closed-loop orchestration."
+    locator:
+      type: section
+      value: "Misconception 1: 'LLMs are just next-token predictors' or 'stochastic parrots'; evaluation and capability modeling"
+      label: "Training objective versus deployed-system competence"
+    evidence:
+      kind: direct-statement
+      confidence: context-dependent
+      scope: "The distinction between the model's prediction mechanism and the behavior of a system built around it."
+      assumptions: ["The wrapper, tools and workflow can materially affect task performance."]
+      limitations: ["The GeneGPT benchmark comparison is cited by the article and was not independently reproduced in this extraction."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "Mechanistic distinction captured; cited empirical examples require independent source verification."
+    pedagogical_assessment:
+      learner_question: "Does identifying the model's prediction objective fully explain what an assistant can do?"
+      explanatory_lens: "Hold the predictor conceptually fixed while changing the system wrapper and feedback loop."
+      teaching_form: ["misconception", "system-level contrast", "empirical example"]
+      novelty: {level: low, rationale: "The panorama already distinguishes a model from a conversational system."}
+      complementarity: {level: moderate, rationale: "The source adds a diagnostic question and a concrete system-level comparison."}
+      pedagogical_value: {level: high, rationale: "It prevents the learner from confusing a training objective with a complete capability account."}
+      applicability: {level: high, rationale: "It maps directly to the existing LLM overview and limits lessons."}
+      redundancy: {level: moderate, rationale: "The core distinction is present; only the diagnostic framing may add value."}
+      evidence_quality: {level: moderate, rationale: "The conceptual argument is explicit; its cited benchmark example has not been independently checked."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:llm-misconceptions, topic:system-model]
+      concept_ids: [next-token-prediction, training-objective, autoregressive-generation]
+    candidate_destinations:
+      pages: [fr/llm-overview, en/llm-overview, fr/llm-limits, en/llm-limits]
+      concepts: [next-token-prediction, training-objective, autoregressive-generation]
+      route_ids: []
+
+  - id: lin-2026-six-llm-misconceptions:distribution-versus-sample
+    kind: mechanism
+    summary: "The learned conditional distribution and a particular generated sequence are distinct; prompting and decoding policies such as temperature influence which samples are observed without updating the frozen model weights during ordinary inference."
+    locator:
+      type: section
+      value: "Minimal working model; Misconception 2: 'LLMs are the average of the internet' or 'regress to the mean'"
+      label: "Learned distribution versus sampled output"
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      scope: "Inference-time decoding and the distinction between the model's learned distribution and output samples."
+      assumptions: ["The model weights are fixed during ordinary inference."]
+      limitations: ["The paper's discussion is broader than temperature alone; it does not replace the exact mathematical treatment of temperature and sampling."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The distinction is explicit; the extraction does not independently reproduce cited empirical examples about output diversity."
+    pedagogical_assessment:
+      learner_question: "Does changing the decoding temperature change the learned parameters or the sample distribution?"
+      explanatory_lens: "Separate the learned conditional distribution from the particular output sampled under a decoding policy."
+      teaching_form: ["distinction", "decoding example", "diagnostic question"]
+      novelty: {level: low, rationale: "The decoding lesson already explains temperature and its effect on distribution concentration."}
+      complementarity: {level: moderate, rationale: "The source places temperature inside a broader distribution-versus-sample distinction."}
+      pedagogical_value: {level: moderate, rationale: "The distinction helps prevent parameter-update and knowledge-change misconceptions."}
+      applicability: {level: high, rationale: "It maps to the existing decoding lesson and its temperature exercise."}
+      redundancy: {level: moderate, rationale: "The mathematical mechanism is already covered; a short diagnostic framing may be complementary."}
+      evidence_quality: {level: moderate, rationale: "The basic distinction is explicit, but the source's broader empirical claims were not independently checked."}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:llm-misconceptions, method:diagnostic-taxonomy]
+      concept_ids: [decoding-policy, training-objective]
+    candidate_destinations:
+      pages: [fr/decoding-strategies, en/decoding-strategies]
+      concepts: [decoding-policy, training-objective]
+      route_ids: []
+
+  - id: lin-2026-six-llm-misconceptions:memory-layers-and-chat-learning
+    kind: misconception
+    summary: "Claims that a model either learns from every chat or remembers nothing conflate frozen parametric weights, bounded conversational context and external product memory such as logs, profiles, documents and retrieval indices; external records may be reused for later training under product policy."
+    locator:
+      type: section
+      value: "Misconception 4: 'LLMs learn from my chats and remember me' versus 'LLMs are stateless and remember nothing'"
+      label: "Three memory layers"
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      scope: "Ordinary inference with fixed model weights and separate context and product-level storage."
+      assumptions: ["The product's actual retention, logging and training-reuse policies are implementation-specific."]
+      limitations: ["The paper does not establish the retention or training policy of any particular product."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The three-layer distinction is explicit; no product-specific policy was independently audited."
+    pedagogical_assessment:
+      learner_question: "Where is conversational information stored, for how long, and how can it affect a later answer?"
+      explanatory_lens: "Separate model parameters, active context and external product memory."
+      teaching_form: ["misconception", "three-layer model", "diagnostic question"]
+      novelty: {level: moderate, rationale: "The source gives a compact diagnostic framing for distinctions already distributed across LLM Lab."}
+      complementarity: {level: high, rationale: "It connects memory mechanics to privacy, retention and future training policies."}
+      pedagogical_value: {level: high, rationale: "It prevents both false assumptions of automatic online learning and false assumptions of zero product state."}
+      applicability: {level: high, rationale: "It maps to the overview, RAG/memory and training lessons."}
+      redundancy: {level: moderate, rationale: "The underlying layers exist in canonical pages, but the diagnostic framing may improve transfer."}
+      evidence_quality: {level: moderate, rationale: "The conceptual distinction is clear; actual product retention policies are outside the paper's general claim."}
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:memory-layers, topic:llm-misconceptions]
+      concept_ids: [persistent-memory, context-injection, retrieval-augmented-generation, training-objective]
+    candidate_destinations:
+      pages: [fr/llm-overview, en/llm-overview, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [persistent-memory, context-injection, retrieval-augmented-generation, training-objective]
+      route_ids: []
+
+  - id: lin-2026-six-llm-misconceptions:competence-versus-agency
+    kind: misconception
+    summary: "The paper distinguishes observable task competence from claims about human-like, embodied or experiential understanding and agency; it rejects both anthropomorphic inference from fluent performance and blanket dismissal based only on the next-token objective."
+    locator:
+      type: section
+      value: "Misconception 6: 'LLMs think like humans' versus 'LLMs do not understand anything'"
+      label: "Task competence versus agency"
+    evidence:
+      kind: direct-statement
+      confidence: context-dependent
+      scope: "Conceptual distinction for evaluating claims about task performance and cognitive status."
+      assumptions: ["Competence claims are tied to specified tasks and documented evaluation conditions."]
+      limitations: ["The article is a Perspective and does not settle philosophical or empirical questions about understanding, consciousness or agency."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The distinction is extracted as the author's framework; broader debates and cited empirical work were not independently reviewed."
+    pedagogical_assessment:
+      learner_question: "What does a benchmark result establish, and what stronger claims does it leave open?"
+      explanatory_lens: "Separate functional competence on bounded tasks from human-like understanding and agency."
+      teaching_form: ["misconception", "benchmark interpretation", "diagnostic question"]
+      novelty: {level: moderate, rationale: "The canonical limits lesson already distinguishes operational competence from human-like understanding."}
+      complementarity: {level: high, rationale: "The source frames the distinction as a diagnostic against both over- and under-attribution."}
+      pedagogical_value: {level: high, rationale: "It encourages bounded capability claims tied to tasks and protocols."}
+      applicability: {level: high, rationale: "It maps directly to the existing LLM limits lesson and its benchmark exercise."}
+      redundancy: {level: moderate, rationale: "The concept is present, while the paired anthropomorphic/deflationary diagnosis adds framing."}
+      evidence_quality: {level: moderate, rationale: "The framework is explicit but the article is not a definitive resolution of the cognitive-status debate."}
+    classification:
+      primary_theme: scale-research
+      tags: [topic:capability-evaluation, method:diagnostic-taxonomy]
+      concept_ids: [operational-competence, held-out-evaluation]
+    candidate_destinations:
+      pages: [fr/llm-limits, en/llm-limits]
+      concepts: [operational-competence, held-out-evaluation]
+      route_ids: []
+
+  - id: lin-2026-six-llm-misconceptions:deployed-configuration-evaluation
+    kind: claim
+    summary: "Capability evaluation should specify the deployed configuration, including prompts, decoding, retrieval, tools, memory and workflow, rather than treating a base model or one default chat sample as the complete unit of analysis."
+    locator:
+      type: section
+      value: "Implications for evaluation, deployment, and governance; Evaluation and capability modeling"
+      label: "Evaluate the deployed configuration"
+    evidence:
+      kind: direct-statement
+      confidence: context-dependent
+      scope: "Evaluation of system capabilities under a documented deployment configuration."
+      assumptions: ["The deployed configuration is the object whose performance or risk is being claimed."]
+      limitations: ["The paper's cited workflow comparisons were not independently reproduced; exact evaluation methods remain task-specific."]
+    technical_assessment:
+      status: not-reviewed
+      rationale: "The recommendation is extracted from the Perspective; cited studies and benchmark values require separate primary-source review."
+    pedagogical_assessment:
+      learner_question: "Which configuration details must be held fixed or reported before comparing two capability claims?"
+      explanatory_lens: "Treat prompts, decoding, retrieval, tools, memory and workflow as part of the evaluated system."
+      teaching_form: ["evaluation checklist", "system comparison", "case study"]
+      novelty: {level: moderate, rationale: "The project already teaches experimental controls, but the article provides a concise configuration checklist."}
+      complementarity: {level: high, rationale: "It connects model mechanics to realistic system-level evaluation."}
+      pedagogical_value: {level: high, rationale: "It prevents unsupported generalization from a single model name or default sample."}
+      applicability: {level: high, rationale: "It can inform the existing experimental-evaluation lesson without creating a new page."}
+      redundancy: {level: moderate, rationale: "Several components are covered elsewhere; the checklist may still improve cross-page coherence."}
+      evidence_quality: {level: moderate, rationale: "The recommendation is explicit, while cited empirical examples are not independently verified."}
+    classification:
+      primary_theme: scale-research
+      tags: [topic:capability-evaluation, method:diagnostic-taxonomy]
+      concept_ids: [held-out-evaluation, operational-competence]
+    candidate_destinations:
+      pages: [fr/evaluation-experimentale, en/experimental-evaluation, fr/llm-limits, en/llm-limits]
+      concepts: [held-out-evaluation, operational-competence]
+      route_ids: []
