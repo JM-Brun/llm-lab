@@ -64,6 +64,36 @@ Neither should this.
     assert estimate.minutes == 0.5
 
 
+def test_estimator_excludes_collapsed_optional_callouts_with_nested_divs() -> None:
+    sample = """## Main idea
+
+Visible content remains in the estimate.
+
+::::: {.callout-note collapse="true" title="Optional deep dive"}
+This outer content is optional.
+
+::: {.callout-tip}
+Nested content is optional too.
+:::
+:::::
+
+More visible content remains in the estimate.
+"""
+    estimate = estimate_lesson_duration(sample)
+    assert estimate.prose_words == 15
+
+
+def test_estimator_counts_expanded_callouts() -> None:
+    sample = """## Main idea
+
+::: {.callout-note}
+This expanded content is part of the reading path.
+:::
+"""
+    estimate = estimate_lesson_duration(sample)
+    assert estimate.prose_words == 11
+
+
 def test_core_route_lessons_stay_within_the_editorial_duration_budget(
     core_lessons: list[tuple[str, str, str]],
 ) -> None:
