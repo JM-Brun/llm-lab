@@ -61,15 +61,7 @@ flowchart TB
 
 Input and target have equal lengths. The target is shifted one position in the source stream: each position predicts the following token. The final input token provides context; it is not its own target.
 
-**Try before reading on:** for stream `[8, 3, 3, 9, 2, 7]` with length 3, write the first two input-target pairs. Check that each target is exactly the next token in the stream.
-
-<details>
-<summary>Solution and alignment check</summary>
-
-- Example 1: input `[8, 3, 3]`, target `[3, 3, 9]`.
-- Example 2, with stride 1: input `[3, 3, 9]`, target `[3, 9, 2]`.
-
-At position 0 of the first example, the model receives token `8` and must predict `3`; at position 2, it receives context `[8, 3, 3]` and predicts `9`. An ID can repeat: alignment depends on position in the stream, not on the uniqueness of token values.
+To verify this alignment on a concrete stream and explicit stride, the dedicated exercise asks you to construct two successive input-target windows.
 
 </details>
 
@@ -224,20 +216,7 @@ flowchart LR
 
 The model produces logits at each position, not one prediction for the entire sequence. Flattening and reduction must preserve alignment among logits, targets, and masks.
 
-## 6. Debugging checklist
-
-When loss is unexpectedly low, high, or unstable, check:
-
-1. Is every target the next token in the source stream?
-2. Are input and target lengths compatible?
-3. Is the final token without a successor handled explicitly?
-4. Are padding positions excluded from loss as intended?
-5. Do causal, padding, and loss masks have distinct roles?
-6. Are cross-document transitions intentional?
-7. Do axes `B`, `L`, and `V` match the loss function’s expectations?
-8. Can a future target be accessed by the context used to predict it?
-
-
+Debugging an unstable or implausible training loss requires checking alignment, lengths, final-token handling, masks, document boundaries and tensor dimensions. The operational checklist is collected on the Practice page.
 
 ::: {.callout-tip #revision-summary title="Revision sheet — constructing autoregressive examples"}
 - **Alignment:** for input $x=[t_0,\ldots,t_{L-1}]$, the target is shifted by one token, $y=[t_1,\ldots,t_L]$. Each position predicts its successor.
