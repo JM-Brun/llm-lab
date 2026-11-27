@@ -1,0 +1,77 @@
+---
+title: "Exercises — Tensor Shapes in a Transformer"
+subtitle: "Lookup, heads, axes, and parameter cost"
+description-meta: "Four transfer exercises on tensor shapes, multi-head reshaping, softmax axes, and the parameter cost of embedding and output matrices."
+keywords: ["type:exercise-hub", "destination:practice", "topic:tensors-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/tensors-exercises"
+summary: "Four transfer exercises associated with the reference on tensor shapes and axes in a Transformer."
+scope: "Tests the shapes produced by lookup and projection, multi-head reshaping, softmax-axis semantics, and the parameter cost of embedding and output matrices."
+purpose: "Check that readers can track dimensions in a new calculation without confusing shape compatibility with semantic correctness."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/tensors"]
+tags: ["type:exercise-hub", "destination:practice", "topic:tensors-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: Tensor Shapes in a Transformer](../tensors.qmd)
+
+The numerical values are chosen for these exercises; they do not describe a particular model configuration. Try each question before opening its answer.
+
+## Check your understanding
+
+### 1. Lookup and output projection
+
+A batch contains $B=2$ sequences of $T=3$ token IDs. The embedding table has shape $E\in\mathbb{R}^{32,000\times1,024}$. What is the shape after lookup? What is the shape of the logits if the output projection produces one score for every vocabulary ID?
+
+<details>
+<summary>Show the answer</summary>
+
+The IDs have shape $(2,3)$. Lookup selects one row of $E$ at each position, so the hidden states have shape $(2,3,1,024)$. The output projection produces one logit per vocabulary ID, giving logits of shape $(2,3,32,000)$.
+
+</details>
+
+### 2. Splitting into heads
+
+A hidden-state tensor has shape $(B,T,D)=(2,5,768)$. We want to split it across $H=12$ heads. What is the per-head dimension $d_h$? Give the shape after reshaping to $(B,T,H,d_h)$ and after permuting the axes to $(B,H,T,d_h)$.
+
+<details>
+<summary>Show the answer</summary>
+
+$d_h=D/H=768/12=64$. Reshaping gives $(2,5,12,64)$. Permuting the position and head axes gives $(2,12,5,64)$. The total number of elements is unchanged; only their organization changes.
+
+</details>
+
+### 3. Softmax over the wrong axis
+
+The logits have shape $(B,T,V)=(2,3,4)$. We apply softmax over axis 1. Which axis is normalized? Why does the result not represent a vocabulary distribution at each position? Which axis should be normalized to obtain that distribution?
+
+<details>
+<summary>Show the answer</summary>
+
+Axis 1 is the position axis $T$. For each example and vocabulary ID, values then sum to 1 across the three positions. A next-token distribution must instead sum to 1 over the $V=4$ vocabulary IDs separately at each position. Normalize over the last axis.
+
+</details>
+
+### 4. Embedding cost and tied weights
+
+Choose $N_{\mathrm{vocab}}=32,000$ and $d=1,024$. How many parameters are in the embedding table? How many are in the table and an equally sized output projection if their weights are not tied? How much memory do both matrices occupy in FP16, excluding biases and optimizer states?
+
+<details>
+<summary>Show the answer</summary>
+
+One matrix contains $32,000\times1,024=32,768,000$ parameters. Without weight tying, the two matrices contain $65,536,000$ parameters. At two bytes per FP16 parameter, they occupy $131,072,000$ bytes, about 131.1 decimal MB or 125 MiB. With weight tying, only one matrix is stored, so its parameters must not be counted twice.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/tensors.qmd) · [English](tensors.qmd)
+:::
