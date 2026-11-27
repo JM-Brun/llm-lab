@@ -213,7 +213,7 @@ The same CI run's `report_source_coverage.py` output adds context that the locat
 | Sources without a page destination | 8 |
 | Concepts without a source | 12 |
 | Concepts with exactly one source | 26 |
-| Publication dates unknown | 47 |
+| Publication dates unknown | 46 |
 | Licence status unknown | 155 |
 | Extraction source references unknown | 0 |
 | Concept references unknown | 0 |
@@ -221,8 +221,15 @@ The same CI run's `report_source_coverage.py` output adds context that the locat
 
 Source status distribution: scan `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`; integration `deferred=10`, `integrated=54`, `not-reviewed=2`, `partially-integrated=79`, `rejected=1`, `reviewed=31`. These are canonical metadata counts, not a judgment that 171 sources need full rescanning. Do not promote scan status without component-level evidence.
 
-The 41 sources without extraction have this integration-status distribution: `integrated=18`, `reviewed=6`, `deferred=8`, `partially-integrated=7`, `not-reviewed=2`. Each has at least one `related.audit_records` reference (1–4 per source). This proves an audit reference exists, not that the rationale is complete or current. Prioritize the two `not-reviewed` sources and seven `partially-integrated` sources for a targeted decision check; retain the 18 integrated cases only when their no-extraction rationale is explicit.
+The 41 sources without extraction have this integration-status distribution after the two targeted decisions below: `integrated=18`, `reviewed=6`, `deferred=10`, `partially-integrated=7`, `not-reviewed=0`. Each has at least one `related.audit_records` reference (1–4 per source). This proves an audit reference exists, not that the rationale is complete or current. Prioritize the seven `partially-integrated` sources for a targeted decision check; retain the 18 integrated cases only when their no-extraction rationale is explicit.
 
 Collection coverage in the same report is **69 explicit decisions**, **14 explicitly unassigned**, **108 without a decision**, and **55 total memberships**. This is included only as a cross-report diagnostic; collection identity and membership decisions remain exclusively owned by #1306. Do not reconcile or copy those decisions in this issue.
 
 The 7 source/concept-link gaps, 8 page-destination gaps, 12 concepts without sources and 26 single-source concepts are graph-coverage review queues, not locator-shape errors. Coordinate their semantics with #416/#512; do not silently create links to improve counts. The 47 unknown publication dates and 155 unknown licence statuses remain unknown unless publisher/author/repository evidence supports a value.
+
+
+The two former `not-reviewed` records were explicitly dispositioned without creating extractions:
+- `aiedge-how-llm-distillation-trains-smaller-models`: `inaccessible / deferred`. The newsletter listing now verifies Damien Benveniste and 2026-11-06, but the canonical article body still returns a cache miss; the teaser is not evidence for article-specific claims.
+- `zipf-human-behavior-least-effort-1949`: `discovered / deferred`. The book's bibliographic/table-of-contents metadata is available, but its argument and relevant chapter text remain uninspected; targeted reading is deferred until a claim requires it.
+
+After these decisions, the global integration status distribution is `deferred=12`, `integrated=54`, `partially-integrated=79`, `rejected=1`, `reviewed=31`, with no `not-reviewed` sources. Scan status is unchanged: `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`.
