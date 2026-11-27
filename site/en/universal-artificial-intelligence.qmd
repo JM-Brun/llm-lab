@@ -19,13 +19,15 @@ suggested_route:
 hierarchy:
   parents: ["en/compression-revision"]
   children: []
-related: ["en/entropy", "en/cross-entropy", "en/llm-computational-complexity"]
+related: ["en/entropy", "en/cross-entropy", "en/llm-computational-complexity", "en/universal-artificial-intelligence-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:aixi", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 **The central question:** if the simplest program explaining an observation is a powerful guide to prediction, can we build an agent that uses this principle to act optimally in an unknown world? AIXI is a formal answer under ideal assumptions. Its obstacle is not merely slow computation: the ideal agent is uncomputable.
 :::
+
+**Questions and exercises:** use the [dedicated practice page](exercises/universal-artificial-intelligence.qmd) to check the distinctions between Kolmogorov complexity, Solomonoff induction, and AIXI decision-making.
 
 ## 1. Kolmogorov complexity: the shortest program
 
@@ -221,26 +223,6 @@ The connection to language models is real but indirect:
 - AIXI(t,l) studies a computable, resource-bounded universal-agent construction.
 
 A Transformer trained with cross-entropy does **not** implement Solomonoff induction or AIXI just because prediction and compression are mathematically related. Its finite architecture, training distribution, objective and inference procedure define a different system.
-
-## Self-check
-
-1. Why does enumerating candidate programs give an upper bound on $K(x)$ but not an exact algorithm for $K(x)$?
-2. What is the difference between $K(x)$ and the universal mixture $M(x)$?
-3. What does AIXI add to Solomonoff induction?
-4. In AIXI(t,l), what do $t$ and $l$ bound?
-5. Why does a computable AIXI(t,l) not make the ideal AIXI computable?
-6. What does the exponential $2^l$ factor imply for practical use?
-7. What are the two obstacles behind AIXI's non-limit-computability result, and how do the two remedies address them?
-
-::: {.callout-tip title="Expected reasoning"}
-1. Every found program is a candidate description, but we cannot know that a shorter one will never halt later.
-2. $K$ keeps the shortest description; $M$ sums the weights of minimal programs generating the prefix.
-3. Actions, rewards and sequential planning.
-4. Candidate-policy runtime per cycle and candidate-program length—not merely the environment's space and time.
-5. It solves a restricted bounded problem with a different guarantee.
-6. Increasing the program-length bound rapidly makes exhaustive candidate search infeasible.
-7. Exact ties between actions and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
-:::
 
 ## Go deeper
 

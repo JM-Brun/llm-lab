@@ -19,13 +19,15 @@ suggested_route:
 hierarchy:
   parents: ["fr/compression-revision"]
   children: []
-related: ["fr/entropy", "fr/cross-entropy", "fr/llm-computational-complexity"]
+related: ["fr/entropy", "fr/cross-entropy", "fr/llm-computational-complexity", "fr/universal-artificial-intelligence-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:aixi", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 **La question centrale :** si le programme le plus court qui explique une observation constitue un guide puissant pour prédire, peut-on construire un agent qui utilise ce principe pour agir de façon optimale dans un monde inconnu ? AIXI est une réponse formelle sous des hypothèses idéales. Son obstacle n'est pas seulement la lenteur : l'agent idéal est incalculable.
 :::
+
+**Questions et exercices :** [ouvrir la page dédiée](exercises/universal-artificial-intelligence.qmd) pour vérifier les distinctions entre complexité de Kolmogorov, induction de Solomonoff et décision AIXI.
 
 ## 1. Complexité de Kolmogorov : le programme le plus court
 
@@ -219,26 +221,6 @@ Le lien avec les modèles de langage est réel, mais indirect :
 - AIXI(t,l) étudie une construction d'agent universel calculable sous des bornes de ressources.
 
 Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de Solomonoff ou AIXI simplement parce que prédiction et compression sont mathématiquement liées. Son architecture finie, sa distribution d'entraînement, son objectif et sa procédure d'inférence définissent un système différent.
-
-## Auto-évaluation
-
-1. Pourquoi l'énumération de programmes fournit-elle une borne supérieure de $K(x)$, mais pas un algorithme exact pour $K(x)$ ?
-2. Quelle différence entre $K(x)$ et le mélange universel $M(x)$ ?
-3. Qu'ajoute AIXI à l'induction de Solomonoff ?
-4. Dans AIXI(t,l), que bornent $t$ et $l$ ?
-5. Pourquoi un AIXI(t,l) calculable ne rend-il pas AIXI idéal calculable ?
-6. Que signifie le facteur exponentiel $2^l$ pour une utilisation pratique ?
-7. Quels sont les deux obstacles à la calculabilité à la limite d'AIXI, et comment les deux remèdes les traitent-ils ?
-
-::: {.callout-tip title="Raisonnement attendu"}
-1. Chaque programme trouvé est une description candidate, mais on ne peut pas savoir qu'un programme plus court ne terminera jamais plus tard.
-2. $K$ retient la description la plus courte ; $M$ somme les poids des programmes minimaux qui génèrent le préfixe.
-3. Les actions, les récompenses et la planification séquentielle.
-4. Le temps d'exécution par cycle des politiques candidates et la longueur de leurs programmes — pas seulement le temps et l'espace de l'environnement.
-5. Il résout un problème restreint et borné avec une garantie différente.
-6. Augmenter la longueur maximale des programmes rend rapidement la recherche exhaustive impraticable.
-7. Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
-:::
 
 ## Pour approfondir
 

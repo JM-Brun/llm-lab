@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/gradients", "fr/llm-evolution"]
+related: ["fr/gradients", "fr/llm-evolution", "fr/score-centering-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -29,6 +29,8 @@ Le **centrage du score** est une correction additive des mises à jour par gradi
 ::: {.callout-note}
 **Périmètre des sources.** Cette leçon synthétise l'article de Marek et Ryabinin et son implémentation officielle. Les références incluent un exposé complémentaire de Cameron R. Wolfe.
 :::
+
+**Questions et exercices :** [ouvrir la page dédiée](exercises/score-centering.qmd) pour calculer un centrage sur de nouvelles valeurs et distinguer les trois opérations appelées « centrage ».
 
 ## 1. Le décalage : qui échantillonne, qui apprend ?
 

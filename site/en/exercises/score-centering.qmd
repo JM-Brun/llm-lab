@@ -1,0 +1,97 @@
+---
+title: "Exercises — Score Centering"
+subtitle: "Calculate, compare, and bound a gradient correction"
+description-meta: "Four transfer questions on score centering, the on-policy case, group-advantage centering, and composition with sampling corrections."
+keywords: ["type:exercise-hub", "destination:practice", "topic:score-centering-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/score-centering-exercises"
+summary: "Four transfer questions associated with the Score Centering deep dive."
+scope: "Calculates a correction for new probabilities, tests the on-policy case, distinguishes three operations called centering, and interprets the stat=ratio/stat=tv boundary."
+purpose: "Checks transfer without repeating the Bernoulli derivation already worked through in the lesson."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/score-centering"]
+tags: ["type:exercise-hub", "destination:practice", "topic:score-centering-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: Score Centering](../score-centering.qmd)
+
+Try each question before opening its answer. The probabilities are toy values chosen to test transfer, not experimental measurements.
+
+## Check your understanding
+
+### 1. Calculate centering for new values
+
+A trainer's binary policy has $p_\theta(v=1)=p=0.4$. The sampler uses $q(v=1)=r=0.7$. The trainer scores are $s_1=1-p$ and $s_0=-p$.
+
+Calculate the expected score under the sampler, then the two centered scores. Verify that their expectation under $q$ is zero.
+
+<details>
+<summary>Show the answer</summary>
+
+The scores are $s_1=0.6$ and $s_0=-0.4$. Their expectation under the sampler is
+
+$$
+\bar{s}_q=rs_1+(1-r)s_0=0.7\times0.6+0.3\times(-0.4)=0.3=r-p.
+$$
+
+The centered scores are $\widetilde{s}_1=0.6-0.3=0.3$ and $\widetilde{s}_0=-0.4-0.3=-0.7$. Their expectation is
+
+$$
+0.7\times0.3+0.3\times(-0.7)=0.
+$$
+
+</details>
+
+### 2. Recover the on-policy case
+
+Keep $p=0.4$, but now assume the sampler uses $r=0.4$. What happens to $\bar{s}_q$? Why is the correction inactive?
+
+<details>
+<summary>Show the answer</summary>
+
+When $q=p_\theta$, $\bar{s}_q=r-p=0$. The scores already have zero expectation under the distribution that samples them, so subtracting that expectation does not change them.
+
+</details>
+
+### 3. Distinguish three kinds of “centering”
+
+Match each operation to its mathematical object:
+
+- score centering;
+- reward or advantage centering in GRPO;
+- attention-score processing.
+
+<details>
+<summary>Show the answer</summary>
+
+- **Score centering** subtracts, at each prefix, the sampler expectation of the gradient $\nabla_\theta\log p_\theta(v\mid h)$.
+- **Group centering** subtracts a group statistic from the rewards or advantages of rollouts for the same prompt.
+- **Attention-score processing** acts on compatibility scores $QK^\top/\sqrt{d_k}$ before softmax.
+
+These objects have different dimensions and roles; sharing a word does not make them interchangeable.
+
+</details>
+
+### 4. Interpret the stat=ratio / stat=tv boundary
+
+The implementation documents composition of score centering with corrections using stat=ratio and explicitly rejects stat=tv. Can we conclude that every correction based on total variation distance is mathematically invalid?
+
+<details>
+<summary>Show the answer</summary>
+
+No. We can conclude that **this implementation** does not support this composition with stat=tv, and that the documented result covers compatible ratio-based corrections. A rejection in code is not a general proof of mathematical impossibility. Keep the scope of the theoretical result, the implementation contract, and methods that have not been studied separate.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/score-centering.qmd) · [English](score-centering.qmd)
+:::

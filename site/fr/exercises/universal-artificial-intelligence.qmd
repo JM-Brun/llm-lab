@@ -1,0 +1,108 @@
+---
+title: "Exercices — Intelligence artificielle universelle"
+subtitle: "Complexité algorithmique, induction de Solomonoff et décision AIXI"
+description-meta: "Sept questions de compréhension et leurs corrigés sur la complexité de Kolmogorov, la probabilité algorithmique, Solomonoff et AIXI."
+keywords: ["type:exercise-hub", "destination:practice", "topic:universal-artificial-intelligence-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/universal-artificial-intelligence-exercises"
+summary: "Sept questions de compréhension associées à l'approfondissement sur l'intelligence artificielle universelle."
+scope: "Vérifie les distinctions entre complexité de Kolmogorov, mélange universel, induction de Solomonoff, AIXI idéal et AIXI(t,l), ainsi que les limites de calcul et les remèdes théoriques."
+purpose: "Vérifier que le lecteur peut restituer les définitions et les limites sans confondre borne calculable, objet idéal et approximation calculable."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/universal-artificial-intelligence"]
+tags: ["type:exercise-hub", "destination:practice", "topic:universal-artificial-intelligence-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : Intelligence artificielle universelle](../universal-artificial-intelligence.qmd)
+
+## Vérifier sa compréhension
+
+### 1. Complexité de Kolmogorov et borne calculable
+
+Pourquoi l'énumération de programmes fournit-elle une borne supérieure de $K(x)$, mais pas un algorithme exact pour $K(x)$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Chaque programme trouvé est une description candidate, mais on ne peut pas savoir qu'un programme plus court ne terminera jamais plus tard.
+
+</details>
+
+### 2. Complexité et mélange universel
+
+Quelle différence entre $K(x)$ et le mélange universel $M(x)$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+$K$ retient la description la plus courte ; $M$ somme les poids des programmes minimaux qui génèrent le préfixe.
+
+</details>
+
+### 3. De la prédiction à la décision
+
+Qu'ajoute AIXI à l'induction de Solomonoff ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les actions, les récompenses et la planification séquentielle.
+
+</details>
+
+### 4. Les deux bornes de AIXI(t,l)
+
+Dans AIXI(t,l), que bornent $t$ et $l$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le temps d'exécution par cycle des politiques candidates et la longueur de leurs programmes — pas seulement le temps et l'espace de l'environnement.
+
+</details>
+
+### 5. Idéal et approximation calculable
+
+Pourquoi un AIXI(t,l) calculable ne rend-il pas AIXI idéal calculable ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Il résout un problème restreint et borné avec une garantie différente.
+
+</details>
+
+### 6. Croissance du coût de recherche
+
+Que signifie le facteur exponentiel $2^l$ pour une utilisation pratique ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Augmenter la longueur maximale des programmes rend rapidement la recherche exhaustive impraticable.
+
+</details>
+
+### 7. Deux obstacles de calcul
+
+Quels sont les deux obstacles à la calculabilité à la limite d'AIXI, et comment les deux remèdes les traitent-ils ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; l'ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](universal-artificial-intelligence.qmd) · [English](../../en/exercises/universal-artificial-intelligence.qmd)
+:::

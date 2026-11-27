@@ -1,0 +1,77 @@
+---
+title: "Exercices — Formes des tenseurs dans un Transformer"
+subtitle: "Lookup, têtes, axes et coût en paramètres"
+description-meta: "Quatre exercices de transfert sur les formes de tenseurs, le découpage multi-tête, les axes de softmax et le coût de la table d'embeddings."
+keywords: ["type:exercise-hub", "destination:practice", "topic:tensors-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/tensors-exercises"
+summary: "Quatre exercices de transfert associés à la référence sur les formes et axes des tenseurs dans un Transformer."
+scope: "Évalue les formes produites par un lookup et une projection, le découpage en têtes, la sémantique de l'axe de softmax et le coût en paramètres des matrices d'embeddings et de sortie."
+purpose: "Vérifier que le lecteur peut suivre les dimensions d'un calcul nouveau sans confondre compatibilité de forme et correction sémantique."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/tensors"]
+tags: ["type:exercise-hub", "destination:practice", "topic:tensors-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : Tenseurs dans un Transformer](../tensors.qmd)
+
+Les valeurs numériques sont choisies pour les exercices ; elles ne décrivent pas la configuration d'un modèle particulier. Essayez chaque question avant d'ouvrir son corrigé.
+
+## Vérifier sa compréhension
+
+### 1. Lookup et projection de sortie
+
+Un batch contient $B=2$ séquences de $T=3$ IDs. La table d'embeddings a la forme $E\in\mathbb{R}^{32\,000\times1\,024}$. Quelle est la forme du tenseur après lookup ? Quelle est la forme des logits si la projection de sortie produit un score pour chacun des IDs du vocabulaire ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les IDs ont la forme $(2,3)$. Le lookup indexe une ligne de $E$ pour chaque position : les états ont donc la forme $(2,3,1\,024)$. La projection de sortie produit un logit par ID du vocabulaire, donc les logits ont la forme $(2,3,32\,000)$.
+
+</details>
+
+### 2. Découpage en têtes
+
+Un tenseur d'états cachés a la forme $(B,T,D)=(2,5,768)$. On veut le répartir sur $H=12$ têtes. Quelle est la dimension $d_h$ par tête ? Donnez la forme après reshape en $(B,T,H,d_h)$, puis après permutation des axes en $(B,H,T,d_h)$.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+$d_h=D/H=768/12=64$. Le reshape donne $(2,5,12,64)$. Une permutation des axes positions et têtes donne $(2,12,5,64)$. Le nombre total d'éléments est conservé : seule leur organisation change.
+
+</details>
+
+### 3. Softmax sur le mauvais axe
+
+Les logits ont la forme $(B,T,V)=(2,3,4)$. On applique softmax sur l'axe 1. Quel axe est normalisé ? Pourquoi le résultat ne représente-t-il pas une distribution sur le vocabulaire à chaque position ? Quel axe faut-il normaliser pour obtenir cette distribution ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+L'axe 1 correspond aux positions $T$. Pour chaque exemple et chaque ID du vocabulaire, les valeurs somment alors à 1 sur les trois positions. Or une distribution du prochain token doit sommer à 1 sur les $V=4$ IDs, séparément pour chaque position. Il faut donc normaliser sur le dernier axe.
+
+</details>
+
+### 4. Coût des embeddings et poids liés
+
+On choisit $N_{\mathrm{vocab}}=32\,000$ et $d=1\,024$. Combien de paramètres contient la table d'embeddings ? Combien en contiennent la table et une projection de sortie de même taille si leurs poids ne sont pas partagés ? Quelle mémoire occupent les deux matrices en FP16, hors biais et états d'optimiseur ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Une matrice contient $32\,000\times1\,024=32\,768\,000$ paramètres. Sans partage des poids, les deux matrices contiennent $65\,536\,000$ paramètres. En FP16, à deux octets par paramètre, cela représente $131\,072\,000$ octets, soit environ $131,1$ MB décimaux ou $125$ MiB. Avec *weight tying*, une seule matrice est stockée ; il ne faut donc pas compter deux fois ses paramètres.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](tensors.qmd) · [English](../../en/exercises/tensors.qmd)
+:::

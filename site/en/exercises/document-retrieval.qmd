@@ -1,0 +1,83 @@
+---
+title: "Exercises — Document Retrieval"
+subtitle: "Candidate recall, ranking, and context handoff"
+description-meta: "Four transfer exercises on Recall@k, reranking limits, ranking metrics, and the difference between retrieval and context handoff."
+keywords: ["type:exercise-hub", "destination:practice", "topic:document-retrieval-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/document-retrieval-exercises"
+summary: "Four transfer questions associated with the Document Retrieval deep dive."
+scope: "Tests candidate recall, reranking limits, MRR interpretation, and the separation between retrieval and context handoff."
+purpose: "Check that readers can diagnose which stage of a search or RAG pipeline loses relevant information."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/document-retrieval", "en/rag-memory-boundaries"]
+tags: ["type:exercise-hub", "destination:practice", "topic:document-retrieval-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: Document Retrieval](../document-retrieval.qmd)
+
+For end-to-end practice, also use [RAG, memory, and context boundaries](rag-memory-boundaries.qmd). The questions below isolate retrieval and ranking.
+
+## Check your understanding
+
+### 1. Measure candidate recall
+
+A corpus contains 20 documents relevant to a query. The first-stage retriever returns 100 candidates, 8 of which are relevant. Calculate $\mathrm{Recall}@100$. What does this value measure, and what does it not tell you about candidate ordering?
+
+<details>
+<summary>Show the answer</summary>
+
+$$
+\mathrm{Recall}@100=\frac{8}{20}=0.4.
+$$
+
+The retriever found 40% of the relevant documents in the corpus among its 100 candidates. This measures first-stage coverage; it does not tell us whether relevant documents are placed near the top of the list.
+
+</details>
+
+### 2. The reranker's limit
+
+The first-stage retriever sends no relevant document to the reranking stage. Can a highly capable cross-encoder still place a relevant document in the top 5?
+
+<details>
+<summary>Show the answer</summary>
+
+No. A reranker reorders the candidates it receives; it cannot retrieve a document that is absent from its input list. Ranking quality is therefore bounded by candidate-generation coverage.
+
+</details>
+
+### 3. Calculate MRR@5
+
+Across three queries, the first relevant document appears at ranks 2, 1, and 4 in the reranked lists. Calculate MRR@5. Why should this metric not be confused with Recall@100?
+
+<details>
+<summary>Show the answer</summary>
+
+MRR@5 = (1/2 + 1 + 1/4) / 3 = 7/12 ≈ 0.583.
+
+MRR@5 averages the reciprocal rank of the first relevant result across queries. Recall@100 measures the proportion of all relevant documents retrieved among the 100 candidates. They evaluate different stages and properties.
+
+</details>
+
+### 4. Retrieval succeeds, handoff fails
+
+A relevant passage is retrieved and ranked correctly, but it is dropped while building the prompt because the context budget is exhausted. At which stage did the pipeline fail?
+
+<details>
+<summary>Show the answer</summary>
+
+Retrieval and ranking succeeded; context handoff failed. The model cannot use a passage that was not included in the context it actually received. Retrieval quality alone therefore does not guarantee a source-grounded answer.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/document-retrieval.qmd) · [English](document-retrieval.qmd)
+:::

@@ -24,7 +24,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 48 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 52 pages d’exercices par leçon"}
 
 ### Comprendre
 
@@ -106,6 +106,12 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 #### Outils mathématiques et géométrie
 
 - [Approfondissement sur les embeddings](exercises/embeddings-deep-dive.qmd)
+- [Tenseurs dans un Transformer](exercises/tensors.qmd)
+- [Intelligence artificielle universelle](exercises/universal-artificial-intelligence.qmd)
+
+#### Formalisation probabiliste et chaîne de l’entraînement
+
+- [Centrage du score](exercises/score-centering.qmd)
 
 #### Inférence et efficacité
 
@@ -113,6 +119,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 - [Complexité de calcul des LLM](exercises/llm-computational-complexity.qmd)
 - [Compression et LLM](exercises/compression-revision.qmd)
 - [RAG, mémoire et transmission au contexte](exercises/rag-memory-boundaries.qmd)
+- [Récupération documentaire](exercises/document-retrieval.qmd)
 
 #### Échelle et recherche
 

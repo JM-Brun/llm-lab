@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 48 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 52 per-lesson practice pages"}
 
 ### Understand
 
@@ -106,6 +106,12 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 #### Mathematical tools and geometry
 
 - [Embedding deep dive](exercises/embeddings-deep-dive.qmd)
+- [Tensor shapes in a Transformer](exercises/tensors.qmd)
+- [Universal artificial intelligence](exercises/universal-artificial-intelligence.qmd)
+
+#### Probabilistic formalization and the training chain
+
+- [Score centering](exercises/score-centering.qmd)
 
 #### Inference and efficiency
 
@@ -113,6 +119,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 - [LLM computational complexity](exercises/llm-computational-complexity.qmd)
 - [Compression and LLMs](exercises/compression-revision.qmd)
 - [RAG, memory, and context transmission](exercises/rag-memory-boundaries.qmd)
+- [Document retrieval](exercises/document-retrieval.qmd)
 
 #### Scale and research
 
