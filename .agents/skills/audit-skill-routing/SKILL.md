@@ -48,7 +48,7 @@ If one essential boundary is missing, ask one concise question. Otherwise declar
 
 ### 2. Select one primary skill
 
-Choose the skill whose responsibility matches the user's main decision. Add a secondary skill only for a distinct question that the primary skill explicitly does not own.
+Choose the skill whose responsibility matches the user's main decision. Add a secondary skill only for a distinct question that the primary skill explicitly does not own. **Dispatch return rule:** a selected specialist performs only its assigned scope and returns findings to this router; it must not restart the same routing decision or delegate the same question back to the router. Add another specialist only for a distinct uncovered question.
 
 Prefer this sequence for multi-dimension work:
 1. establish the relevant canonical architecture and scope;
