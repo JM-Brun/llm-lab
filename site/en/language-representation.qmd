@@ -81,11 +81,11 @@ The model associates each ID with a row in a parameter matrix called the **embed
 E in mathbb{R}^{V 	imes d}.
 ]
 
-For an ID (i_t), lookup selects the vector:
+For an ID $i_t$, lookup selects the vector:
 
-[
-x_t = E[i_t] in mathbb{R}^{d}.
-]
+\[
+x_t = E[i_t] \in \mathbb{R}^{d}.
+\]
 
 The ID tells the model which row to read; the vector contains the numerical values used by subsequent operations. The vector components are parameters learned during training, not numbers manually assigned to each word from a dictionary definition.
 

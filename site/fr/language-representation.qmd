@@ -81,11 +81,11 @@ Le modèle associe à chaque ID une ligne d'une matrice de paramètres appelée 
 E in mathbb{R}^{V 	imes d}.
 ]
 
-Pour un ID (i_t), le lookup sélectionne le vecteur :
+Pour un ID $i_t$, le lookup sélectionne le vecteur :
 
-[
-x_t = E[i_t] in mathbb{R}^{d}.
-]
+\[
+x_t = E[i_t] \in \mathbb{R}^{d}.
+\]
 
 L'ID indique quelle ligne lire ; le vecteur contient les valeurs numériques utilisées par les opérations suivantes. Les composantes de ces vecteurs sont des paramètres appris pendant l'entraînement, pas des nombres attribués manuellement à chaque mot selon une définition de dictionnaire.
 

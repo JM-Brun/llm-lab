@@ -2081,7 +2081,7 @@ async function runCase(testCase, caseIndex) {
     const unrenderedMath = mathSummary.mathSpans - mathSummary.mathSpansRendered;
     // Entropy is an equation-heavy lesson. Zero parsed math spans means the
     // source delimiters were stripped as Markdown escapes, not that math passed.
-    const equationBearingPages = new Set(["entropy.html", "scaled-dot-product-attention.html"]);
+    const equationBearingPages = new Set(["entropy.html", "scaled-dot-product-attention.html", "language-representation.html"]);
     if (equationBearingPages.has(pagePath) && mathSummary.mathSpans === 0) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: expected lesson equations, but Quarto produced no math spans`);
     }
