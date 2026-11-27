@@ -1,6 +1,6 @@
 # Text-data lesson — implementation follow-up and remaining work
 
-**Date:** 2026-11-26  
+**Date:** 2026-11-27 — suivi mis à jour après l'intégration du fil rouge  
 **Scope:** `site/{fr,en}/text-data.qmd`, its revision sheets, Practice links, generated learning-map artifacts, and the tokenization/embedding source corpus.  
 **Related:** [PR #1713](https://github.com/JM-Brun/llm-lab/pull/1713), [issue #1492](https://github.com/JM-Brun/llm-lab/issues/1492), [issue #1319](https://github.com/JM-Brun/llm-lab/issues/1319), [issue #584](https://github.com/JM-Brun/llm-lab/issues/584).
 
@@ -95,12 +95,25 @@ A green CI is necessary for the repository changes, but it does not demonstrate 
 Start with PR #1713 and its latest checks. Do not repeat source ingestion or rebuild the tokenization hub. After merge, continue with the P1 learner pilot and the targeted provenance/concept audit under #1319. Treat the broader corpus backlog as separate from closing the lesson PR.
 
 
+## 8. Follow-up — running example as the tokenization input (2026-11-27)
+
+The tokenization lesson and its bilingual practical trace now use the localized running-example prefix as their primary input:
+
+- French: `C'est une bonne situation, ça, scribe ?` (GPT-2: 15 tokens; final token `b" ?"`, ID `5633`).
+- English: `What have the Romans ever done for us?` (GPT-2: 9 tokens; final token `b"?"`, ID `30`).
+
+The trace displays the full ordered token-byte fragments and IDs, so the learner can inspect how words such as `situation`, `scribe` or `Romans` are actually segmented. It compares GPT-2 and `cl100k_base` on the exact same local prefix, then uses the GPT-2 IDs to index a synthetic embedding table. The vectors remain explicitly illustrative; no pretrained GPT-2 weights are claimed.
+
+The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context.
+
+This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy exercises where they serve a distinct comparison purpose.
+
 ## 7. Reconciliation with issue #1492
 
 The following checks were made against the issue's detailed acceptance list:
 
 **Already present and retained**
-- The GPT-2 running examples and tokenizer-specific IDs remain in the main lessons; the fixed `2 + 2 = 4` comparison remains reproducible.
+- The main tokenization example now uses each language's canonical running-example prefix. The exercise trace prints its exact GPT-2 fragments and IDs, compares `gpt2` and `cl100k_base` on that same input, and reuses its GPT-2 IDs for the synthetic lookup. The unrelated `hello world` and `2 + 2 = 4` examples have been removed from this primary trace.
 - The exercise collection contains the Python tokenizer/embedding trace and the lookup exercise. Two Practice destinations coexist: the page-specific exercise hub is `exercises/text-data.qmd`; the extended collection is `exercises-text-data.qmd`. Use the hub for general Practice navigation and the collection for its trace and lookup anchors.
 - The `data/guided-route.yml` outcome for `text-data` already matches the bilingual objective: follow text to IDs and explain what can vary between tokenizers.
 - The lesson's `revision_support` evidence anchor `revision-summary` is explicitly present in both lesson sources.
