@@ -7395,7 +7395,7 @@ sources:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
       audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]
-- id: brown-et-al-gpt3-few-shot-2020
+  - id: brown-et-al-gpt3-few-shot-2020
     title: "Language Models are Few-Shot Learners"
     creators: ["Tom B. Brown", "Benjamin Mann", "Nick Ryder", "Melanie Subbiah", "Jared Kaplan", "Prafulla Dhariwal", "Arvind Neelakantan", "Pranav Shyam", "Girish Sastry", "Amanda Askell", "Sandhini Agarwal", "Ariel Herbert-Voss", "Gretchen Krueger", "Tom Henighan", "Rewon Child", "Aditya Ramesh", "Daniel M. Ziegler", "Jeffrey Wu", "Clemens Winter", "Christopher Hesse", "Mark Chen", "Eric Sigler", "Mateusz Litwin", "Scott Gray", "Benjamin Chess", "Jack Clark", "Christopher Berner", "Sam McCandlish", "Alec Radford", "Ilya Sutskever", "Dario Amodei"]
     source_type: paper
