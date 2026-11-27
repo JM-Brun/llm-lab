@@ -376,7 +376,7 @@ Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are in
 
 ## Practice
 
-To check the distinction between local transformations and sequence search, start with the [dedicated decoding-strategies comprehension question](exercises/decoding-strategies.qmd). To calculate temperature effects and compare top-k with top-p on a concrete distribution, also use the Generation exercises on [temperature](exercises-generation.qmd#ge-f-temperature-and-concentration) and [top-k/top-p](exercises-generation.qmd#ge-g-top-k-and-top-p). These activities are optional and include worked solutions; they do not replace evaluating output quality on real tasks.
+To calculate temperature effects and compare top-k with top-p on a concrete distribution, also use the Generation exercises on [temperature](exercises-generation.qmd#ge-f-temperature-and-concentration) and [top-k/top-p](exercises-generation.qmd#ge-g-top-k-and-top-p). These activities are optional and include worked solutions; they do not replace evaluating output quality on real tasks.
 
 ## Research references
 
