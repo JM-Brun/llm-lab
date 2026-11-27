@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/deepen"]
   children: []
-related: ["en/rag-memory-boundaries", "en/context-engineering", "en/in-context-learning"]
+related: ["en/rag-memory-boundaries", "en/context-engineering", "en/in-context-learning", "en/document-retrieval-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -124,7 +124,7 @@ The bi-encoder / cross-encoder pattern gives a concrete example of two-stage ran
 
 ## Practice
 
-Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memory-boundaries.qmd) restent une pratique intégratrice de bout en bout : ils aident à relier la qualité de la recherche à la transmission et à l'exploitation des résultats. Ils ne constituent pas un atelier spécialisé de classement documentaire.
+The focused questions for this lesson are on the [Document retrieval exercises](exercises/document-retrieval.qmd) companion page. For end-to-end practice, use [RAG, memory, and context boundaries](exercises/rag-memory-boundaries.qmd), which connects retrieval quality with handoff and downstream use.
 
 For the full information lifecycle, see [RAG, memory, and context transmission](rag-memory-boundaries.qmd).
 
