@@ -51,8 +51,12 @@ stages:
         en: 'The network operates on numerical objects: the tokenizer supplies IDs, which act as addresses before learned-vector lookup.'
       signature: 's \xrightarrow{\mathrm{tok}} (i_1,\ldots,i_T), \qquad i_t \in \mathcal{I}_{\mathrm{tok}}'
       criterion:
-        fr: 'La longueur $T$ dépend du texte $s$ et du tokenizer choisi. $\mathcal{I}_{\mathrm{tok}}$ est l’ensemble des IDs valides ; leurs valeurs ne mesurent pas une distance sémantique.'
-        en: 'The length $T$ depends on text $s$ and the tokenizer. $\mathcal{I}_{\mathrm{tok}}$ is the set of valid IDs; their values do not measure semantic distance.'
+        fr: >-
+          La longueur $T$ dépend du texte $s$ et du tokenizer choisi. Les IDs appartiennent au vocabulaire de ce tokenizer :
+          leurs valeurs servent d'adresses et ne mesurent ni une quantité linguistique ni une distance sémantique.
+        en: >-
+          Sequence length $T$ depends on text $s$ and the tokenizer. IDs belong to that tokenizer's vocabulary:
+          their values act as addresses and measure neither a linguistic quantity nor semantic distance.
     pages:
       fr: [fr/language-representation, fr/text-data]
       en: [en/language-representation, en/text-data]
