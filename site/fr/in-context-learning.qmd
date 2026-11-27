@@ -128,7 +128,7 @@ Les *induction heads* sont un mécanisme étudié dans certains Transformers : u
 :::
 
 ::: {.callout-note collapse="true" title="Approfondissement : une explication par inférence bayésienne"}
-Xie et al. (2022) proposent un cadre théorique dans lequel les documents de préentraînement partagent un **concept latent** \(\theta\). Les exemples du prompt partagent eux aussi un concept \(\theta^*\). Le modèle peut alors exploiter le prompt en inférant ce concept à partir des exemples et en calculant une distribution prédictive qui marginalise les concepts possibles.
+Xie et al. (2022) proposent un cadre théorique dans lequel les documents de préentraînement partagent un **concept latent** $\theta$. Les exemples du prompt partagent eux aussi un concept $\theta^*$. Le modèle peut alors exploiter le prompt en inférant ce concept à partir des exemples et en calculant une distribution prédictive qui marginalise les concepts possibles.
 
 Le résultat est formalisé sous des hypothèses explicites, notamment une distribution de préentraînement construite comme un mélange de modèles de Markov cachés (HMM), une structure de délimiteurs et une condition de distinguabilité entre concepts. Les auteurs montrent aussi que la longueur des exemples d'entrée peut apporter de l'information, au-delà de la seule correspondance entrée-sortie.
 
