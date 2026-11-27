@@ -92,7 +92,7 @@ The loss function then provides a learning signal: through backpropagation, grad
 
 This ability to learn is what matters. The network can apply parameterized transformations to vectors, compare information, combine it, and construct new representations. Vectors are therefore not merely numerical labels: they provide the substrate on which neural computation operates.
 
-For our fictional unit `314`, lookup selects the corresponding row: $\\mathbf{e}_{314}=E[314,:]$. The resulting vector is not a definition of “situation”; its components are learned parameters. This vector, rather than the number `314`, is what the network's operations transform.
+For our fictional unit `314`, lookup selects the corresponding row: $\mathbf{e}_{314}=E[314,:]$. The resulting vector is not a definition of “situation”; its components are learned parameters. This vector, rather than the number `314`, is what the network's operations transform.
 
 <figure>
   <pre>
