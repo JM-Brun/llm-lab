@@ -48,7 +48,7 @@ The implementation mapping must be supported separately by Dao et al. (2022), Fl
 
 ## Integration decision
 
-Add the §3.2.1 extraction item and update the existing source catalogue classification so the paper is associated with the attention concepts and bilingual attention pages, while retaining its positional-encoding associations. Keep scan status `partially-scanned`: this focused pass does not claim a full-paper re-audit.
+Retain the §3.2.1 scaled-attention extraction and the §3.2.2 learned-projection extraction; the source catalogue associates the paper with the attention concepts and bilingual pages while preserving its positional-encoding associations. Keep scan status `partially-scanned`: these focused passes do not claim a full-paper re-audit.
 
 No new canonical concept, graph, or relation type is needed.
 
