@@ -237,21 +237,21 @@ items:
       teaching_form: [geometric-property, equation]
       abstraction_level: intermediate
       prerequisites: [softmax, convex-combination]
-      distinctive_value: "Connects row-wise normalization to a geometric property of the weighted output and is now available as optional learner-facing depth."
+      distinctive_value: "Connects row-wise normalization to a geometric property of the weighted output; this remains a candidate for optional depth, not current page content."
       limitations: ["The property applies to the value vectors used in that particular attention row."]
     pedagogical_assessment:
       novelty: {level: moderate, rationale: "The geometric property is not a core concept currently foregrounded in the Q/K/V lesson."}
       complementarity: {level: moderate, rationale: "It gives a precise geometric consequence of the weighted-sum formula."}
-      pedagogical_value: {level: moderate, rationale: "The bounded property is now integrated as optional depth in the bilingual scaled-attention lessons; learner benefit still requires pilot evidence."}
-      applicability: {level: high, rationale: "Integrated as an optional bilingual note beside weighted aggregation, with the pre-projection and accessible-row scope stated explicitly."}
+      pedagogical_value: {level: moderate, rationale: "The mathematical property is valid, but it is absent from the current bilingual scaled-attention lessons; learner benefit from adding it remains untested."}
+      applicability: {level: moderate, rationale: "Could be an optional geometric note beside weighted aggregation, but no current page integration or learner need has been established."}
       redundancy: {level: low, rationale: "The specific convex-hull consequence is not the same as the existing weighted-sum explanation."}
       evidence_quality: {level: high, rationale: "Follows directly from nonnegative normalized weights."}
     classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value]}
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [attention-weight]
-    disposition: integrate
-    disposition_rationale: "Integrated as a bounded optional note in both bilingual scaled-attention lessons; the statement is restricted to the pre-output-projection weighted sum and rows with at least one accessible key."
+    disposition: defer
+    disposition_rationale: "Direct inspection on 2026-11-27 found no convex-hull statement in either current scaled-attention page. Keep the mathematically valid item available as a candidate; do not claim integration or add it to the core lesson without learner evidence."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:routing-versus-payload
     kind: claim
@@ -282,7 +282,7 @@ items:
       pages: [en/queries-keys-values, fr/queries-keys-values]
       concepts: [key, value]
     disposition: integrate
-    disposition_rationale: "Added as a short, source-attributed, collapsible note in both language versions, explicitly marking the linguistic illustration as hypothetical."
+    disposition_rationale: "The routing-versus-payload distinction is present in the main explanatory prose of both core Q/K/V pages. It is not a separate source-attributed collapsible note, and the hypothetical linguistic-specialization example is not currently present; the earlier rationale overstated the form of integration."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:message-passing
     kind: analogy
@@ -305,15 +305,15 @@ items:
       novelty: {level: moderate, rationale: "The project explains weighted aggregation but does not explicitly frame it as message passing."}
       complementarity: {level: high, rationale: "This lens connects the existing formula to information-flow and graph perspectives."}
       pedagogical_value: {level: moderate, rationale: "May support transfer to graph neural networks and contextual information flow."}
-      applicability: {level: high, rationale: "Fits as an optional note next to the weighted-sum equation."}
+      applicability: {level: moderate, rationale: "Could fit as an optional analogy next to the weighted-sum equation, but it is absent from both current scaled-attention pages and has not been justified by learner evidence."}
       redundancy: {level: low, rationale: "It adds an interpretation rather than another computation."}
       evidence_quality: {level: high, rationale: "The analogy is directly described in the source and maps cleanly to the attention computation."}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention, topic:information-flow], concept_ids: [self-attention, attention-weight, value]}
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [self-attention, attention-weight]
-    disposition: integrate
-    disposition_rationale: "Added as an optional, explicitly analogical note in both scaled-attention pages."
+    disposition: defer
+    disposition_rationale: "Direct inspection on 2026-11-27 found no message-passing analogy in either current scaled-attention page. Keep this as a possible explanatory lens; defer page integration until a learner need is demonstrated."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:scope-claims
     kind: limitation
