@@ -249,7 +249,7 @@ Do not use “the page's sources” as if it denoted one unambiguous set.
 |---|---|---|
 | Page-visible citations | External URLs explicitly cited in the published page body | Four URLs, identical in FR and EN: Neha KK, Jose Parreño Garcia, Vaswani et al., Nishanthan K |
 | Construction/comparison corpus | Sources whose contributions were inspected and compared while shaping the explanation | Four tutorial sources in the historical matrix: Nishanthan, Neha, Codefinity and Brenndoerfer; Jose was reviewed later and should be reconciled with that matrix |
-| Canonical primary/technical evidence | Sources used to support specific technical claims, equations or implementation behavior | Vaswani et al. is the primary formulation anchor; its focused review currently covers §3.2.1, not a complete paper review |
+| Canonical primary/technical evidence | Sources used to support specific technical claims, equations or implementation behavior | Vaswani et al. is the primary formulation anchor; its focused review now covers §§3.2.1–3.2.3 for attention computation, learned per-head projections and self-attention data flow; this is not a complete paper review |
 | Thematic associations | Sources linked to a page through the source catalogue's related-page associations | A broader discovery set; association alone does not prove page use, citation or claim support |
 
 The Hugging Face KV-cache documentation belongs primarily to the generation/inference topic. It is not an additional Q/K/V explanatory tutorial and must not inflate the Q/K/V diversity count.
@@ -274,7 +274,7 @@ Codefinity's parent course is labelled Advanced, but the inspected lesson is int
 | Source | Page role | Metadata/evidence boundary | Audit decision |
 |---|---|---|---|
 | Jose Parreño Garcia, *Understanding Transformers (Part 4)* | Complementary intuition linked from the Q/K/V page | English introductory blog; visible article body reviewed; figures not inspected; no code/experiment executed; licence unknown; no explicit qkv-attention collection membership | Add to the page-level comparison, but do not silently rewrite historical collection membership. Decide whether the collection is a tutorial comparison set or a complete topic source family before changing membership. |
-| Vaswani et al., *Attention Is All You Need* | Primary formulation cited for learned Q/K/V projections | English advanced research paper; partially scanned; focused review exists for §3.2.1 scaled dot-product attention | Retain as primary anchor. Verify the exact §3.2.2 locator for the projection claim before treating the citation as fully claim-traced. |
+| Vaswani et al., *Attention Is All You Need* | Primary formulation cited for learned Q/K/V projections | English advanced research paper; partially scanned; focused review exists for §3.2.1 scaled dot-product attention | Retain as primary anchor. The exact projection claim is now traced to §3.2.2, with §3.2.3 supporting the shared input stream in self-attention; the page's XW_Q notation is identified as a compact specialization. |
 
 The page-visible citation inventory is four URLs in both languages:
 - Neha KK (example adapted from the article);
@@ -319,7 +319,7 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 
 1. **No additional generic Q/K/V tutorial is justified now.** The current page and its adjacent pages already cover the relevant pedagogical functions; a fifth tutorial would likely repeat the same role definitions.
 2. **The page has meaningful source diversity, but not uniform evidence diversity.** The construction corpus includes distinct formats, levels and explanatory lenses; it remains English-only and secondary. The primary paper is cited separately.
-3. **The primary citation needs claim-level precision.** The existing Vaswani review covers §3.2.1. Check §3.2.2 for the projection parameterization claim and add an exact locator to the existing review/extraction if warranted.
+3. **The primary citation needs claim-level precision.** The focused Vaswani review now covers §§3.2.1–3.2.3. The projection claim is supported by §3.2.2; §3.2.3 establishes the common previous-layer source in self-attention. The page's XW_Q notation is explicitly distinguished from the paper's per-head multi-head notation.
 4. **Jose Parreño Garcia must be reconciled with the historical matrix.** Its source review and page citation post-date the four-source comparison. Update the comparison rather than treating the old matrix as a complete current inventory.
 5. **Do not infer collection membership.** Decide whether `qkv-attention` represents the four-source pedagogical comparison set or the broader set of all page-relevant sources before adding Jose or Vaswani to its membership.
 6. **Keep related-page associations separate from evidence usage.** A source associated through `related.pages` is a candidate for review, not automatically a source used by the page.
@@ -334,7 +334,7 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 - [x] Identify Jose Parreño Garcia as a later page-cited source absent from the historical four-source matrix.
 - [x] Identify Vaswani as the primary source and preserve the focused/partial scan boundary.
 - [x] Record that `related.pages` does not establish source usage or claim support.
-- [ ] Verify Vaswani §3.2.2 for the projection claim and update its existing review/extraction with an exact locator.
+- [x] Verify Vaswani §3.2.2 for the learned projection claim and §3.2.3 for the shared source in self-attention; update the existing review, extraction and source scan history with exact locators.
 - [ ] Decide and document the intended scope of the qkv-attention collection before changing source memberships.
 - [ ] Update the four-source comparison to include Jose or explicitly state why it remains a bounded four-tutorial subset.
 - [ ] Re-run the page citation/FR-EN parity check after the dossier update.
