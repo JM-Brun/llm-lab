@@ -87,7 +87,7 @@ x_t = E[i_t] in mathbb{R}^{d}.
 
 L'ID indique quelle ligne lire ; le vecteur contient les valeurs numériques utilisées par les opérations suivantes. Les composantes de ces vecteurs sont des paramètres appris pendant l'entraînement, pas des nombres attribués manuellement à chaque mot selon une définition de dictionnaire.
 
-Cette distinction rend possible une propriété essentielle : les vecteurs peuvent être transformés et combinés par les couches du réseau. L'entraînement ajuste les paramètres — notamment les embeddings sélectionnés et les transformations ultérieures — pour améliorer les prédictions sur les exemples. Les IDs restent des indices discrets ; on ne les apprend pas en les déplaçant continûment sur une droite numérique.
+Cette distinction rend possible une propriété essentielle : les vecteurs peuvent être transformés et combinés par les couches du réseau. L'entraînement ajuste les paramètres — notamment les embeddings sélectionnés et les transformations ultérieures — pour améliorer les prédictions sur les exemples. Les opérations différentiables permettent de calculer des gradients par rapport à ces paramètres. Le gradient peut modifier la ligne sélectionnée et les couches suivantes, mais il ne déplace pas l'ID entier : celui-ci reste un indice discret.
 
 <figure>
   <pre>
