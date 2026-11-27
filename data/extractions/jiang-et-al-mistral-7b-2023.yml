@@ -1,0 +1,51 @@
+schema_version: 1
+source_id: jiang-et-al-mistral-7b-2023
+items:
+  - id: jiang-et-al-mistral-7b-2023:gqa-swa-model-configuration
+    kind: architecture
+    summary: "Mistral 7B combines grouped-query attention with sliding-window attention; its reported configuration uses 32 query heads, 8 key/value heads and a window size of 4096."
+    locator: {type: table, value: "Table 1", label: "Model architecture"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The abstract and section 2 identify GQA and SWA; Table 1 reports n_heads=32, n_kv_heads=8, window_size=4096 and context_len=8192."
+      assumptions:
+        - "These values describe Mistral 7B v0.1, not a universal Transformer configuration."
+      limitations:
+        - "The paper cites Ainslie et al. for the GQA mechanism; Ainslie remains the primary source for the GQA definition."
+        - "The configured context length and the theoretical receptive-field calculation are different quantities."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grouped-query-attention, topic:sliding-window-attention, topic:kv-cache, application:long-context]
+      concept_ids: [multi-head-attention, kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [multi-head-attention, kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides a concrete model configuration showing GQA and local-window attention as combined architectural choices."
+
+  - id: jiang-et-al-mistral-7b-2023:swa-receptive-field-and-cache
+    kind: mechanism
+    summary: "With a fixed window W, each layer attends to a local range; stacking k layers lets information propagate up to approximately k×W positions, while a rolling buffer bounds the retained K/V cache."
+    locator: {type: section, value: "2", label: "Architectural details; Figure 1 and Rolling Buffer Cache"}
+    evidence:
+      kind: mathematical-claim
+      confidence: context-dependent
+      scope: "The paper explains the layer-wise receptive field, gives a theoretical span of about 131K for W=4096 across 32 layers, and describes a rolling buffer cache of fixed window size."
+      assumptions:
+        - "The receptive-field estimate assumes the paper's stacked-layer and window configuration."
+      limitations:
+        - "A multi-layer receptive field is not equivalent to dense all-to-all attention in one layer."
+        - "The theoretical span is not a claim that the model was trained or evaluated with a 131K context; Table 1 lists context_len=8192."
+        - "No Mistral code or model weights were executed."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sliding-window-attention, topic:kv-cache, application:long-context]
+      concept_ids: [kv-cache]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [kv-cache]
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the distinction between local per-layer attention, multi-layer receptive field and bounded cache."
