@@ -218,3 +218,19 @@ The order deliberately places semantic equivalence before content additions: oth
 - No claim that `integrated_sufficient`, a passing test, or a rendered diagram proves learning effectiveness.
 - No current-phase browser, responsive/mobile or accessibility remediation against the pre-redesign interface.
 - No new GitHub Actions workflow where the existing browser/CI tooling can be extended.
+
+
+### Targeted scientific-caveat audit — output and scoring branch (2026-11-27)
+
+A focused FR/EN review covered the four connected lessons **Logits**, **Output probabilities**, **Entropy** and **Likelihood**. This is a targeted claim-level check, not a completed scientific re-review of all 20 core lessons.
+
+- **Logits:** the pages distinguish raw scores from probabilities, absolute confidence and factual truth. They explain that a common additive shift leaves softmax unchanged, while positive scaling can change distribution concentration without changing ranking.
+- **Output probabilities:** both languages state that softmax gives a normalized conditional distribution, not calibration or factual truth. They also locate probabilities on tokenized units rather than words or semantic propositions, and distinguish temperature from candidate filtering.
+- **Entropy:** both languages describe entropy as dispersion of the next-token distribution, dependent on context, model/tokenizer and temperature. They explicitly reject interpreting low entropy as truth or calibrated uncertainty.
+- **Likelihood and perplexity:** both languages qualify comparisons by corpus, tokenizer, evaluated positions and reduction convention. They state that likelihood is fit to selected observations, not proof of truth, and perplexity is not general answer quality.
+
+The bilingual caveats are materially aligned. Different running examples are acceptable because the mathematical conditions and conclusions are preserved.
+
+**Correction found:** the English Likelihood page had a double-escaped bit-scale formula, `2^{\\bar{\\ell}}`, while the French page correctly used a single LaTeX command. [PR #1782](https://github.com/JM-Brun/llm-lab/pull/1782) changes it to `2^{\bar{\ell}}`. This is a rendering-level source correction, not a change to the mathematical claim.
+
+**Remaining scope:** continue the same targeted method on the loss/cross-entropy and training-loop group, then the Transformer/attention group. Do not infer that the full 20-lesson scientific caveat audit is complete from this slice. Keep findings in this validation document; do not create another claim or lesson registry.
