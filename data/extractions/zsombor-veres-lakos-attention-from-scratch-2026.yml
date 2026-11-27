@@ -178,3 +178,14 @@ items:
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [query, key, value, self-attention], route_ids: []}
     disposition: integrate-by-reference
     disposition_rationale: "Preserve the complete numerical trace in the source note and cite the article from the Q/K/V lesson; do not create a second canonical numerical workbench."
+
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:negative-needs-feedback
+    kind: counterexample
+    summary: "After X_new, Cara has negative needs; if the same W_Q/W_K are reused for a second meeting, her negative query scores Bob's zero key above Alice's and her own keys, so she would mostly attend to the participant with least to offer."
+    locator: {type: page, value: "9–10", label: "Second-meeting consequence"}
+    evidence: {kind: direct-statement, confidence: context-dependent, scope: "The author's qualitative interpretation of a hypothetical second meeting using the updated state.", assumptions: ["The same W_Q and W_K are reused.", "The displayed rounded X_new is treated as the next state."], limitations: ["This is a behavior of the unconstrained toy update, not a general property of trained Transformers.", "No numerical second-round softmax is displayed."]}
+    technical_assessment: {status: toy-model-consequence, rationale: "Negative needs and unbounded additive state updates can invert the matching preference; the example exposes a limitation of the analogy's state dynamics.", corroborating_sources: []}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention, topic:residual-stream], concept_ids: [query, key, self-attention]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: cite
+    disposition_rationale: "Retain as a source-specific consequence and caveat; it does not justify a canonical Transformer lesson."
