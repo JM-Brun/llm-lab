@@ -1,6 +1,6 @@
 # Text-data lesson — implementation follow-up and remaining work
 
-**Date:** 2026-11-27 — suivi mis à jour après l'intégration du fil rouge  
+**Date:** 2026-11-27 — updated after running-example integration  
 **Scope:** `site/{fr,en}/text-data.qmd`, its revision sheets, Practice links, generated learning-map artifacts, and the tokenization/embedding source corpus.  
 **Related:** [PR #1713](https://github.com/JM-Brun/llm-lab/pull/1713), [issue #1492](https://github.com/JM-Brun/llm-lab/issues/1492), [issue #1319](https://github.com/JM-Brun/llm-lab/issues/1319), [issue #584](https://github.com/JM-Brun/llm-lab/issues/584).
 
