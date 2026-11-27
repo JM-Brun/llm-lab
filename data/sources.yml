@@ -1295,7 +1295,122 @@ sources:
       concepts: [token-embedding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/pytorch-embedding-api-2026-11-19.md]
 
-  - id: su-roformer-rope-2021
+  - id: pytorch-cross-entropy-loss-api
+    title: "torch.nn.CrossEntropyLoss"
+    creators: ["PyTorch contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"
+    publisher: "PyTorch"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "PyTorch 2.15 stable documentation; checked 2026-11-27"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [ecosystem:pytorch]
+      concept_ids: [logits, cross-entropy]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Official CrossEntropyLoss API contract: unnormalized-logit input, target representations, input shapes, ignore_index and reduction semantics"
+        limitations:
+          - "This is a bounded API review for the logits and cross-entropy lessons, not an exhaustive review of all loss options or numerical kernels."
+          - "No PyTorch implementation or runtime behavior was independently executed."
+    related:
+      pages: [en/logits, fr/logits, en/cross-entropy, fr/cross-entropy]
+      concepts: [logits, cross-entropy]
+      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-cross-entropy-loss-api.yml]
+
+  - id: pytorch-autograd-mechanics
+    title: "Autograd mechanics"
+    creators: ["PyTorch contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://docs.pytorch.org/docs/stable/notes/autograd.html"
+    publisher: "PyTorch"
+    publication_date: null
+    updated_date: "2026-11-11"
+    language: en
+    version: "PyTorch 2.15 stable documentation; checked 2026-11-27"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [ecosystem:pytorch]
+      concept_ids: [gradient, optimizer, parameter-update]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Reverse-mode automatic differentiation, dynamic computation graph construction and chain-rule traversal"
+          - "Graph recreation per iteration and distinction between grad mode, no-grad mode and inference mode"
+        limitations:
+          - "The documentation is a living API reference; no immutable source revision was pinned."
+          - "The review was limited to the concepts used by the gradients lesson, not all autograd internals, hooks or custom Functions."
+          - "No PyTorch code was executed."
+    related:
+      pages: [en/gradients, fr/gradients]
+      concepts: [gradient, optimizer, parameter-update]
+      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-autograd-mechanics.yml]
+
+  - id: pytorch-gradcheck-api
+    title: "torch.autograd.gradcheck"
+    creators: ["PyTorch contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://docs.pytorch.org/docs/stable/generated/torch.autograd.gradcheck.gradcheck.html"
+    publisher: "PyTorch"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Stable documentation URL; redirects to the PyTorch 2.14 gradcheck API page as checked 2026-11-27"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [ecosystem:pytorch]
+      concept_ids: [gradient]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Official gradcheck API: comparison of analytical gradients with finite-difference estimates, tolerances, double-precision defaults and documented failure conditions"
+        limitations:
+          - "This review covers first-order gradcheck only, not gradgradcheck or every forward-mode and batched option."
+          - "No PyTorch code was executed."
+    related:
+      pages: [en/gradients, fr/gradients]
+      concepts: [gradient]
+      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-gradcheck-api.yml]
+- id: su-roformer-rope-2021
     title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
     creators: ["Jianlin Su et al."]
     source_type: paper
@@ -7279,119 +7394,3 @@ sources:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
       concepts: [positional-encoding, self-attention, query, key, attention-score, causal-mask]
       audit_records: [docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md, data/extractions/press-et-al-alibi-2021.yml]
-
-  - id: pytorch-cross-entropy-loss-api
-    title: "torch.nn.CrossEntropyLoss"
-    creators: ["PyTorch contributors"]
-    source_type: documentation
-    identifiers: {}
-    canonical_url: "https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"
-    publisher: "PyTorch"
-    publication_date: null
-    updated_date: null
-    language: en
-    version: "PyTorch 2.15 stable documentation; checked 2026-11-27"
-    revision: null
-    licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
-    classification:
-      primary_theme: probabilistic-foundations-training
-      secondary_themes: [mathematical-tools-geometry]
-      tags: [ecosystem:pytorch]
-      concept_ids: [logits, cross-entropy]
-    metadata:
-      technical_level: intermediate
-      contribution_types: [implementation]
-      audiences: [learner, practitioner, educator]
-    scan_status: partially-scanned
-    integration_status: partially-integrated
-    scan_history:
-      - accessed_at: "2026-11-27"
-        status: partially-scanned
-        inspected_scope:
-          - "Official CrossEntropyLoss API contract: unnormalized-logit input, target representations, input shapes, ignore_index and reduction semantics"
-        limitations:
-          - "This is a bounded API review for the logits and cross-entropy lessons, not an exhaustive review of all loss options or numerical kernels."
-          - "No PyTorch implementation or runtime behavior was independently executed."
-    related:
-      pages: [en/logits, fr/logits, en/cross-entropy, fr/cross-entropy]
-      concepts: [logits, cross-entropy]
-      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-cross-entropy-loss-api.yml]
-
-  - id: pytorch-autograd-mechanics
-    title: "Autograd mechanics"
-    creators: ["PyTorch contributors"]
-    source_type: documentation
-    identifiers: {}
-    canonical_url: "https://docs.pytorch.org/docs/stable/notes/autograd.html"
-    publisher: "PyTorch"
-    publication_date: null
-    updated_date: "2026-11-11"
-    language: en
-    version: "PyTorch 2.15 stable documentation; checked 2026-11-27"
-    revision: null
-    licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
-    classification:
-      primary_theme: mathematical-tools-geometry
-      secondary_themes: [probabilistic-foundations-training]
-      tags: [ecosystem:pytorch]
-      concept_ids: [gradient, optimizer, parameter-update]
-    metadata:
-      technical_level: intermediate
-      contribution_types: [implementation]
-      audiences: [learner, practitioner, educator]
-    scan_status: partially-scanned
-    integration_status: partially-integrated
-    scan_history:
-      - accessed_at: "2026-11-27"
-        status: partially-scanned
-        inspected_scope:
-          - "Reverse-mode automatic differentiation, dynamic computation graph construction and chain-rule traversal"
-          - "Graph recreation per iteration and distinction between grad mode, no-grad mode and inference mode"
-        limitations:
-          - "The documentation is a living API reference; no immutable source revision was pinned."
-          - "The review was limited to the concepts used by the gradients lesson, not all autograd internals, hooks or custom Functions."
-          - "No PyTorch code was executed."
-    related:
-      pages: [en/gradients, fr/gradients]
-      concepts: [gradient, optimizer, parameter-update]
-      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-autograd-mechanics.yml]
-
-  - id: pytorch-gradcheck-api
-    title: "torch.autograd.gradcheck"
-    creators: ["PyTorch contributors"]
-    source_type: documentation
-    identifiers: {}
-    canonical_url: "https://docs.pytorch.org/docs/stable/generated/torch.autograd.gradcheck.gradcheck.html"
-    publisher: "PyTorch"
-    publication_date: null
-    updated_date: null
-    language: en
-    version: "Stable documentation URL; redirects to the PyTorch 2.14 gradcheck API page as checked 2026-11-27"
-    revision: null
-    licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
-    classification:
-      primary_theme: mathematical-tools-geometry
-      secondary_themes: [probabilistic-foundations-training]
-      tags: [ecosystem:pytorch]
-      concept_ids: [gradient]
-    metadata:
-      technical_level: intermediate
-      contribution_types: [implementation]
-      audiences: [learner, practitioner, educator]
-    scan_status: partially-scanned
-    integration_status: partially-integrated
-    scan_history:
-      - accessed_at: "2026-11-27"
-        status: partially-scanned
-        inspected_scope:
-          - "Official gradcheck API: comparison of analytical gradients with finite-difference estimates, tolerances, double-precision defaults and documented failure conditions"
-        limitations:
-          - "This review covers first-order gradcheck only, not gradgradcheck or every forward-mode and batched option."
-          - "No PyTorch code was executed."
-    related:
-      pages: [en/gradients, fr/gradients]
-      concepts: [gradient]
-      audit_records: [docs/source-reviews/logits-gradients-pytorch-docs-2026-11-27.md, data/extractions/pytorch-gradcheck-api.yml]
