@@ -1,7 +1,7 @@
 ---
-title: "Des identifiants aux vecteurs : les embeddings"
-subtitle: "Comment une séquence d’IDs sélectionne des lignes apprises, dans l’ordre"
-description-meta: "Suit une séquence d’IDs jusqu’aux lignes ordonnées de la matrice de plongements, distingue position, identifiant et vecteur, puis situe le lookup avant le traitement positionnel et la contextualisation."
+title: "Donner une forme mathématique au langage : les embeddings"
+subtitle: "Pourquoi représenter les mots par des vecteurs pour que le réseau puisse apprendre à traiter leurs relations"
+description-meta: "Explique pourquoi un modèle doit transformer le langage en objets mathématiques manipulables, puis comment les embeddings associent des vecteurs appris aux tokens."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
-summary: "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions."
-scope: "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés."
-purpose: "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée."
+summary: "Explique pourquoi le langage doit être représenté par des vecteurs pour permettre au réseau d’apprendre des relations entre unités linguistiques, puis suit le passage des IDs aux vecteurs initiaux."
+scope: "Part de la nécessité de rendre le langage calculable pour un réseau de neurones, introduit les vecteurs comme représentations numériques apprises, puis explique le lookup d’une séquence d’IDs et le distingue du traitement positionnel et des états contextualisés."
+purpose: "Comprendre pourquoi des nombres isolés ne portent pas à eux seuls la sémantique du langage, pourquoi des vecteurs permettent d’apprendre des régularités et relations à partir des usages, puis suivre concrètement comment un ID sélectionne un vecteur appris."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"
@@ -30,16 +30,36 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-fr-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-Après la tokenisation, le modèle reçoit une séquence ordonnée d’**IDs entiers**. Chaque ID sélectionne une ligne de la **matrice de plongements** (*embedding matrix*) et le vecteur appris qui y est stocké : c’est le **lookup**. Les valeurs de cette matrice sont des paramètres du modèle, ajustés pendant l’entraînement ; le tokenizer fournit les IDs, mais ne calcule pas ces vecteurs.
-:::
+Un ordinateur sait manipuler des nombres : les additionner, les comparer, les transformer et les combiner. Mais une phrase comme « le chat dort sur le canapé » n’est pas, en elle-même, un objet sur lequel un réseau de neurones peut effectuer ces opérations. Comment rendre le langage calculable sans réduire les mots à de simples numéros arbitraires ?
+
+L’idée centrale est de **représenter les unités du langage par des vecteurs de nombres**, puis d’apprendre ces vecteurs et les transformations qui les relient à partir des usages du langage. Le réseau peut alors ajuster ses calculs pour exploiter des régularités — par exemple les contextes dans lesquels des mots apparaissent, les substitutions possibles ou certaines relations entre expressions. C’est une manière mathématique de modéliser des aspects de la sémantique, pas une traduction directe du sens humain en coordonnées.
+::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
 
-- expliquer comment un Token ID sélectionne une ligne de la matrice de plongements ;
-- distinguer la position dans la séquence, l’ID et le vecteur sélectionné ;
-- retrouver dans l’ordre les vecteurs d’une séquence d’IDs et justifier pourquoi les occurrences d’un même ID partagent le même vecteur initial à table fixée.
+- expliquer pourquoi un réseau de neurones a besoin d’une représentation numérique du langage pour pouvoir apprendre et effectuer des calculs sur ses unités ;
+- expliquer en quoi des vecteurs appris peuvent rendre certaines régularités et relations linguistiques accessibles aux calculs du modèle, sans confondre géométrie et sens humain ;
+- suivre une séquence d’IDs jusqu’aux vecteurs sélectionnés et distinguer l’identifiant, la position et le vecteur obtenu.
 :::
+
+## Pourquoi donner une forme mathématique au langage ? {#pourquoi-une-representation-mathematique}
+
+Considérons deux phrases :
+
+> « Le chat dort sur le canapé. »
+>
+> « Le félin se repose sur le sofa. »
+
+Un lecteur humain reconnaît une proximité de sens, malgré les différences de mots. Un ordinateur, lui, ne dispose pas spontanément de cette compréhension. Il voit d’abord des caractères, puis des unités discrètes produites par un tokenizer. Attribuer un numéro à chaque unité permet de les identifier et de les retrouver dans une table, mais les numéros eux-mêmes ne disent rien de leur proximité de sens : l’ID 120 n’est pas « plus proche » de l’ID 121 que de l’ID 8.
+
+Pour effectuer des calculs qui puissent exploiter des régularités du langage, le modèle a besoin d’objets numériques sur lesquels ces calculs ont un sens mathématique. On associe donc à chaque token un **vecteur** : une liste de nombres réels. Ces vecteurs vivent dans un espace vectoriel. Ils ne sont pas des définitions de dictionnaire ni des coordonnées sémantiques fixées à la main. Leurs valeurs sont apprises à partir des données et de l’objectif d’entraînement.
+
+Pourquoi cela peut-il aider ? Parce que l’apprentissage ajuste simultanément les vecteurs et les transformations du réseau afin que les calculs internes deviennent utiles à la tâche — notamment prévoir les tokens qui suivent. Les contextes d’emploi fournissent indirectement des contraintes : des unités employées dans des contextes similaires peuvent acquérir des représentations présentant certaines proximités ou régularités. Le modèle peut ainsi exploiter des aspects de la sémantique sans qu’on lui fournisse une règle explicite du type « chat = félin ».
+
+Cette idée doit être formulée avec précision : **un embedding n’est pas le sens d’un mot encodé dans un vecteur lisible**. C’est une représentation numérique apprise, dont l’utilité apparaît dans les calculs auxquels elle participe. La géométrie peut révéler certaines relations, mais elle ne garantit ni une équivalence parfaite entre mots ni une compréhension humaine.
+
+La suite de la leçon rend cette idée concrète : le tokenizer fournit un ID qui sert d’adresse dans une table ; la ligne correspondante contient le vecteur appris que le réseau pourra ensuite transformer.
 
 ## Le point de départ : le préfixe fourni au modèle
 
@@ -47,7 +67,7 @@ Le texte déjà présent dans le contexte est :
 
 > **Préfixe / prompt :** « C'est une bonne situation, ça, scribe ? »
 
-La [tokenisation du préfixe](text-data.qmd#tokenizer-output) donne à son dernier token l’ID GPT-2 `5633`. Dans la table associée à GPT-2, cet ID indique quelle ligne lire. La position indique le rang du token dans la séquence. Le découpage dépend du tokenizer, y compris à la fin de la question.
+La [tokenisation du préfixe](text-data.qmd#tokenizer-output) donne à son dernier token l’ID GPT-2 `5633`. Cet entier sert à sélectionner une ligne dans la table associée à GPT-2. Il ne constitue pas encore la représentation vectorielle : il indique simplement où lire le vecteur appris. La position indique, séparément, le rang du token dans la séquence.
 
 <details>
 <summary>Contexte du fil rouge</summary>
