@@ -68,14 +68,14 @@ class LessonDuration:
 def _remove_excluded_fenced_divs(markdown: str) -> str:
     """Remove Quarto fenced divs explicitly excluded from reading time.
 
-    The duration estimate describes the main reading path. An optional callout can be available to interested readers without being
-    part of the required reading path. The explicit data attribute is the
-    semantic contract; collapse alone does not imply optionality. Track fenced-div depth so an outer collapsed
-    callout can safely contain other callouts.
+    Optional callouts can remain available to interested readers without
+    being part of the required reading path. The data attribute is the
+    semantic contract; collapsed presentation alone does not imply
+    optionality. Track fenced-div depth to support nested callouts.
     """
     output: list[str] = []
     # Each entry stores the opening fence length and whether its contents
-    # should be omitted (inherited from a collapsed parent or local to it).
+    # should be omitted (inherited from an excluded parent or local to it).
     stack: list[tuple[int, bool]] = []
 
     for line in markdown.splitlines(keepends=True):
@@ -87,18 +87,18 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
             fence_length = len(opening.group("fence"))
             attributes = opening.group("attrs")
             parent_is_excluded = stack[-1][1] if stack else False
-            is_excluded = parent_is_collapsed or bool(
+            is_excluded = parent_is_excluded or bool(
                 EXCLUDE_FROM_READING_TIME.search(attributes[1:-1])
             )
-            stack.append((fence_length, is_collapsed))
-            if not is_collapsed:
+            stack.append((fence_length, is_excluded))
+            if not is_excluded:
                 output.append(line)
             continue
 
         if closing and stack and len(closing.group("fence")) >= stack[-1][0]:
-            _, is_collapsed = stack.pop()
-            parent_is_collapsed = stack[-1][1] if stack else False
-            if not (is_collapsed or parent_is_collapsed):
+            _, is_excluded = stack.pop()
+            parent_is_excluded = stack[-1][1] if stack else False
+            if not (is_excluded or parent_is_excluded):
                 output.append(line)
             continue
 
@@ -109,13 +109,14 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
     return "".join(output)
 
 
+
 def _main_lesson(markdown: str) -> str:
     """Remove metadata and content explicitly outside the main learning lesson."""
     text = FRONT_MATTER.sub("", markdown, count=1)
     text = HTML_COMMENT.sub("", text)
     text = INCLUDE_LINE.sub("", text)
     text = END_OF_CORE.split(text, maxsplit=1)[0]
-    text = _remove_collapsed_callouts(text)
+    text = _remove_excluded_fenced_divs(text)
     return text
 
 
