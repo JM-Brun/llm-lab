@@ -1,0 +1,123 @@
+schema_version: 1
+source_id: pytorch-scaled-dot-product-attention-api
+items:
+  - id: pytorch-scaled-dot-product-attention-api:operator-and-default-scale
+    kind: implementation-pattern
+    summary: "The PyTorch SDPA API computes query-key compatibility, applies a scale (by default the inverse square root of the query head dimension), adds an optional attention bias or mask, normalizes over the key axis, applies the requested dropout, and aggregates values."
+    locator: {type: section, value: "torch.nn.functional.scaled_dot_product_attention reference pseudocode"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The documented function signature and reference pseudocode specify the default scale, score matrix product, softmax axis and value aggregation."
+      assumptions: ["The documented API contract is interpreted for the PyTorch 2.15 documentation snapshot."]
+      limitations:
+        - "The pseudocode describes the mathematical reference path, not necessarily the fused kernel selected at runtime."
+        - "The API contract does not replace the primary mathematical definition in Vaswani et al."
+    technical_assessment:
+      status: reviewed
+      rationale: "Directly inspected the official API reference and reconciled its documented pseudocode with the standard attention operator."
+      corroborating_sources: [vaswani-et-al-attention-is-all-you-need-2017]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, method:scaled-dot-product-attention, ecosystem:pytorch]
+      concept_ids: [query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as the official framework/API contract for the implementation bridge; keep the canonical mathematical derivation anchored to Vaswani and the Understand lesson."
+
+  - id: pytorch-scaled-dot-product-attention-api:boolean-mask-semantics
+    kind: limitation
+    summary: "For the SDPA API, a boolean attention mask value of True means that the position participates in attention; this is the inverse of the boolean key_padding_mask convention in MultiheadAttention."
+    locator: {type: section, value: "attn_mask parameter and boolean-mask note"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The API reference explicitly defines True as participating and warns that the MultiheadAttention key_padding_mask convention is inverse."
+      assumptions: ["The mask is passed to torch.nn.functional.scaled_dot_product_attention."]
+      limitations: ["Do not transfer this boolean convention to another API without checking its own contract."]
+    technical_assessment:
+      status: reviewed
+      rationale: "The polarity is stated explicitly in the API reference."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:causal-masking, ecosystem:pytorch]
+      concept_ids: [causal-mask, scaled-dot-product-attention]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: integrate-by-reference
+    disposition_rationale: "Important implementation guardrail for Build; not needed in the core mathematical Understand lesson."
+
+  - id: pytorch-scaled-dot-product-attention-api:dropout-evaluation-contract
+    kind: limitation
+    summary: "The SDPA function applies dropout whenever dropout_p is greater than zero; callers must explicitly pass zero during evaluation rather than expecting the function to infer module training mode."
+    locator: {type: section, value: "dropout warning and example"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The documentation warns that dropout follows the supplied dropout_p and shows a caller-side training/evaluation conditional."
+      assumptions: ["The caller uses the functional SDPA API."]
+      limitations: ["This is specific to the functional API contract and should not be generalized to nn.Module dropout behavior."]
+    technical_assessment:
+      status: reviewed
+      rationale: "The API warning and example directly state the behavior."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, ecosystem:pytorch]
+      concept_ids: [scaled-dot-product-attention]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: defer
+    disposition_rationale: "Record for implementation review; outside the core lesson's mathematical learning contract."
+
+  - id: pytorch-scaled-dot-product-attention-api:backend-dispatch-and-numerical-variation
+    kind: implementation-pattern
+    summary: "PyTorch SDPA can dispatch among eligible fused and math implementations; backend eligibility depends on inputs, and floating-point operation fusion can produce numerically different outputs across backends."
+    locator: {type: section, value: "supported implementations and backend selection notes"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The documentation describes automatic backend selection, implementation constraints and possible floating-point differences."
+      assumptions: ["The documented PyTorch 2.15 API and backend set are in scope."]
+      limitations:
+        - "The API documentation does not establish which backend ran in a particular experiment."
+        - "The list and constraints are version-dependent."
+        - "No runtime backend selection or numerical comparison was performed in this audit."
+    technical_assessment:
+      status: reviewed
+      rationale: "The documented backend selection and numerical caveat were inspected; no runtime claim is made."
+      corroborating_sources: [dao-et-al-flashattention-2022]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:attention, topic:flashattention, ecosystem:pytorch]
+      concept_ids: [scaled-dot-product-attention, attention-output]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: integrate-by-reference
+    disposition_rationale: "Use the official API docs for the framework dispatch contract and Dao et al. for the FlashAttention algorithm; do not infer actual backend execution from an API call."
+
+  - id: pytorch-scaled-dot-product-attention-api:gqa-support-boundary
+    kind: limitation
+    summary: "The PyTorch 2.15 SDPA reference documents Grouped Query Attention as experimental and lists head-count compatibility constraints and backend-specific support."
+    locator: {type: section, value: "Grouped Query Attention note"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The versioned API reference identifies GQA as experimental and lists supported backends and head-count constraints."
+      assumptions: ["This statement is specific to the inspected PyTorch 2.15 documentation."]
+      limitations: ["Do not generalize the support matrix to other versions, devices or backends."]
+    technical_assessment:
+      status: reviewed
+      rationale: "The documented note was inspected; no runtime support was tested."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:grouped-query-attention, ecosystem:pytorch]
+      concept_ids: [scaled-dot-product-attention]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: defer
+    disposition_rationale: "Keep as a versioned Build/Deepen reference; it is not part of the current scaled-attention lesson's core mathematical scope."
