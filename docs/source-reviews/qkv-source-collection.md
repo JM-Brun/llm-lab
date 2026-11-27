@@ -336,7 +336,7 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 - [x] Record that `related.pages` does not establish source usage or claim support.
 - [x] Verify Vaswani §3.2.2 for the learned projection claim and §3.2.3 for the shared source in self-attention; update the existing review, extraction and source scan history with exact locators.
 - [ ] Decide and document the intended scope of the qkv-attention collection before changing source memberships.
-- [ ] Update the four-source comparison to include Jose or explicitly state why it remains a bounded four-tutorial subset.
+- [x] Explicitly bound the historical comparison to its four-resource pedagogical subset; Jose and Vaswani remain separately characterized in the page-level audit.
 - [ ] Re-run the page citation/FR-EN parity check after the dossier update.
 
 **Pilot conclusion:** the Q/K/V corpus is not merely homogeneous: its four-source construction set has useful pedagogical diversity, while its page-visible references include both a primary paper and a later complementary blog. The main weakness is not a shortage of resources but a stale boundary between the historical comparison matrix, the live page citations and the source catalogue's topical associations. Fix provenance and claim mapping before expanding the source set.
