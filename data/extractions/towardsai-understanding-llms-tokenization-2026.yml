@@ -108,7 +108,7 @@ pedagogical_model:
     - "Several claims are overgeneralized or insufficiently sourced, especially the alleged abandonment of WordPiece for compute reasons, the illustrative q/u scoring comparison without frequencies, fixed Unigram pruning percentages, the simplified Unigram sentence-probability account, unconditional SentencePiece round-tripping and the numerical English/Arabic cost example."
     - "SentencePiece is presented too narrowly as a wrapper; it is itself a tokenizer library that trains and applies BPE or Unigram directly to raw text. Its whitespace marker preserves whitespace in the normalized representation, but default normalization can collapse repeated spaces and strip leading/trailing spaces."
     - "The article associates GPT-family byte-level BPE with OpenAI's tiktoken and separately names Llama 3. It does not identify Llama 3's concrete tokenizer implementation; readers must not infer that Llama 3 uses OpenAI's tiktoken package or vocabulary."
-    - "The tiktoken code was not executed; in the retrieved text, the closing print statement and `if __name__ == "__main__":` appear concatenated, making the displayed snippet syntactically invalid if copied literally."
+    - "The tiktoken code was not executed; in the retrieved text, the closing print statement and `if __name__ == '__main__':` appear concatenated, making the displayed snippet syntactically invalid if copied literally."
     - "The article's embedded visual assets and their rights could not be inspected."
   comparison:
     dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
@@ -301,7 +301,7 @@ items:
       confidence: context-dependent
       scope: "The displayed cl100k_base example and output in the indexed article text."
       assumptions: []
-      limitations: ["The snippet was not executed; behavior is specific to the named encoding and tiktoken API version. The retrieved text concatenates the final bytes-print statement and the `if __name__ == "__main__":` guard, so the snippet is syntactically invalid if copied literally."]
+      limitations: ["The snippet was not executed; behavior is specific to the named encoding and tiktoken API version. The retrieved text concatenates the final bytes-print statement and the `if __name__ == '__main__':` guard, so the snippet is syntactically invalid if copied literally."]
     technical_assessment:
       status: qualified
       rationale: "The allowlist and byte-inspection ideas are consistent with tiktoken's API, but the displayed code needs formatting repair and independent execution before it can be used as a teaching example."
