@@ -15,7 +15,7 @@ Les points vérifiés sont cohérents :
 - La projection de sortie transforme l'état final en un vecteur de (V) scores, un par identifiant du vocabulaire.
 - La forme ((B,T,V)) distingue correctement batch, positions et vocabulaire.
 - L'exemple numérique utilise (h=(1,-1)) et quatre lignes de projection donnant ((ln 6,ln 2,0,0)). La softmax donne bien ((0.6,0.2,0.1,0.1)).
-- L'invariance de la softmax à l'ajout d'une constante commune est correctement expliquée ; les écarts déterminent les rapports de probabilités.
+- L'invariance de la softmax à l'ajout d'une constante commune est correctement expliquée ; la relation \(\log(p_i/p_j)=z_i-z_j\) rend maintenant explicite que l'écart entre deux logits est le log-rapport des probabilités correspondantes.
 - La multiplication de tous les logits par un facteur positif conserve le classement mais modifie la concentration de la distribution.
 - La distinction entre score, probabilité, confiance et vérité est explicite.
 
