@@ -246,7 +246,6 @@ A second focused FR/EN review covered **Cross-entropy**, **Loss** and **Training
 **Bilingual corrections in [PR #1784](https://github.com/JM-Brun/llm-lab/pull/1784):**
 - Add the missing French counterpart of the English caveat that a one-token alignment error can yield a finite, decreasing loss while training the wrong task.
 - Make the simplified-token assumption explicit in the English three-token loss calculation, matching the French caveat that the displayed units are not a measured tokenizer segmentation.
-- Align the headings for the running-example calculations in the English Cross-entropy and Loss pages with their French counterparts.
 
 The examples use different language-specific tokens, but the probability values, reductions and conclusions are equivalent. No objective, prerequisite or route membership is changed.
 
