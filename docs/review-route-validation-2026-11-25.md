@@ -218,3 +218,21 @@ The order deliberately places semantic equivalence before content additions: oth
 - No claim that `integrated_sufficient`, a passing test, or a rendered diagram proves learning effectiveness.
 - No current-phase browser, responsive/mobile or accessibility remediation against the pre-redesign interface.
 - No new GitHub Actions workflow where the existing browser/CI tooling can be extended.
+
+
+### Targeted scientific-caveat audit — loss and optimization branch (2026-11-27)
+
+A second focused FR/EN review covered **Cross-entropy**, **Loss** and **Training loop**. It follows the output/scoring audit above and remains a targeted slice, not a completed scientific re-review of all 20 core lessons.
+
+- **Cross-entropy:** both languages distinguish predictive entropy from scoring an observed target, one-token loss from sequence/batch reduction, causal target shift from masking, and data loss from the full training objective. They state that ignored positions must be excluded from both numerator and denominator, that reduction conventions change scale, and that tokenizer/corpus/position conventions constrain comparisons. The reference NumPy implementation's narrow contract is explicitly separated from a complete sequence-level LLM loss.
+- **Loss:** both languages distinguish the loss mask from the attention mask. Excluding a target from the objective does not prevent its content from influencing other positions; visibility is controlled by attention masking. Both explain teacher forcing as reference-prefix conditioning and distinguish it from prefill. Perplexity assumptions (log base, tokenizer, corpus and reduction) and the limits of interpreting a falling training curve are stated.
+- **Training loop:** both languages distinguish forward pass, loss, gradient and parameter update; stochastic mini-batch fluctuations; training/validation/test roles; validation-selection bias; overfitting; and the limited scope of the tiny numerical experiment. They also distinguish Adam's second moment from a Hessian and state why the toy experiment is not a general proof.
+
+**Bilingual corrections in [PR #1784](https://github.com/JM-Brun/llm-lab/pull/1784):**
+- Add the missing French counterpart of the English caveat that a one-token alignment error can yield a finite, decreasing loss while training the wrong task.
+- Make the simplified-token assumption explicit in the English three-token loss calculation, matching the French caveat that the displayed units are not a measured tokenizer segmentation.
+- Align the headings for the running-example calculations in the English Cross-entropy and Loss pages with their French counterparts.
+
+The examples use different language-specific tokens, but the probability values, reductions and conclusions are equivalent. No objective, prerequisite or route membership is changed.
+
+**Remaining scope:** continue with the Transformer/attention group. Do not treat these two targeted groups as completion of the 20-lesson scientific-caveat audit.
