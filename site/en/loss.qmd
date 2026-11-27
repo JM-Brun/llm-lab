@@ -83,7 +83,7 @@ For the illustrative continuation “They built roads”, the three local penalt
 
 The mean summarizes all three penalties. To see how one target contributes to the gradient, [isolate the first one, “They”](gradients.qmd#numerical-example-from-loss-to-output-weights), and trace its loss back to the logits.
 
-::: {.callout-note collapse="true" title="Other reductions and weighting"}
+::: {.callout-note collapse="true" data-reading-time="exclude" title="Other reductions and weighting"}
 A sum and a per-sequence mean are also possible. A weighted mean defines another convention: for example, with nonnegative weights $w_{b,t}$ on valid positions, one may compute $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, provided the denominator is nonzero. The denominator is then the sum of weights, not the number of valid positions. Some APIs use this rule for class weights; other weighting conventions, especially per-sequence weighting, may use a different denominator. These choices change the objective, gradient scale, or relative weight of sequences, so they must be documented.
 :::
 
