@@ -124,7 +124,7 @@ A model may reproduce a format without identifying the relevant rule. It may als
 ::: {.callout-note collapse="true" title="Further exploration: mechanistic hypotheses"}
 Computing a continuation conditioned on the examples describes the observable behavior. Research on the mechanisms behind this adaptation examines pattern recognition, inference about the rule that generated the examples, implicit learning of algorithms during pretraining, and attention circuits that facilitate copying or associations between examples.
 
-*Induction heads* are one mechanism studied in some Transformers: attention heads can help detect a previously seen sequence and continue its pattern. They illuminate some copying and continuation behaviors, but are not a universal explanation for every form of ICL.
+*Induction heads* are a mechanism studied in some Transformers: one head can use information written by a previous head to find an earlier occurrence of the current token and retrieve the token that followed it. Olsson et al. (2022) provide strong mechanistic and causal evidence in small *attention-only* Transformers, including direct ablations. For larger models with MLPs, their hypothesis that induction heads explain most ICL relies mainly on indirect and correlational evidence; the authors describe it as preliminary rather than established.
 :::
 
 ::: {.callout-note collapse="true" title="Further exploration: a Bayesian-inference explanation"}
