@@ -7341,7 +7341,7 @@ sources:
       concept_ids: [in-context-learning, self-attention, multi-head-attention, causal-mask]
     metadata:
       technical_level: advanced
-      contribution_types: [mechanistic-analysis, experiment, theory]
+      contribution_types: [theory, experiment, architecture]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: deferred
