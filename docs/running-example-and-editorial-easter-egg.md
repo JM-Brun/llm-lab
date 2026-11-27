@@ -115,7 +115,7 @@ Le fil rouge n'a pas à apparaître dans toutes les pages d'approfondissement, d
 ### P0 — Cohérence des traces FR/EN
 
 - [ ] Faire un tableau de correspondance explicite des préfixes, continuations, candidats, probabilités et cibles entre FR et EN ; confirmer les valeurs dans les pages sources et les calculs, pas uniquement dans les textes d'introduction.
-- [x] Remplacer l'exemple principal `hello world` de la leçon de tokenisation par le préfixe localisé du fil rouge ; réutiliser ce même préfixe pour la comparaison GPT-2 / `cl100k_base` et pour le lookup synthétique de la trace.
+- [x] Remplacer l'exemple principal `hello world` de la leçon de tokenisation par le préfixe localisé du fil rouge ; réutiliser ce même préfixe pour la comparaison GPT-2 / `cl100k_base` et pour le lookup synthétique de la trace. Le contraste d'espace initial de la page Deepen réutilise aussi `situation` / ` situation`.
 - [ ] Vérifier que les distributions changent uniquement lorsqu'un nouveau préfixe est présenté, ou lorsque l'on introduit explicitement une branche contrefactuelle.
 - [ ] Vérifier les formulations qui présentent une suite de mots comme une suite de tokens ; ajouter une convention jouet ou un tokenizer/configuration quand le découpage exact est important.
 - [ ] Vérifier la cohérence des exemples entre panorama, génération, vraisemblance, loss, gradients et boucle d'entraînement après chaque évolution de contenu.
