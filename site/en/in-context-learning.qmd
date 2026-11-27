@@ -165,6 +165,11 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
 - Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
 
+### Further reading
+
+- Yoo et al. (2022), [*Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations*](https://aclanthology.org/2022.emnlp-main.155/), which revisits the effect of correct input-label mappings across experimental configurations.
+- Xiang et al. (2024), [*Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models*](https://aclanthology.org/2024.findings-acl.386/), on demonstration-order sensitivity in the evaluated models.
+
 :::
 
 </details>
