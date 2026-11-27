@@ -183,6 +183,8 @@ To compare architectures that change the number of K/V heads, compress the cache
 
 To follow this distinction through the actual operations, continue to [scaled dot-product attention](scaled-dot-product-attention.qmd), then to the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd) to trace both paths in code.
 
+For an alternative worked intuition, [Zsombor Veres-Lakos's *Attention from scratch*](https://zsomborvereslakos.substack.com/p/attention-from-scratch) follows a meeting analogy from Q/K/V projections through the context vector, W_O and a residual-stream update. Treat it as complementary reading rather than a reference derivation: its factor of 10 is pedagogical, and causal masking and multi-head attention are explicitly omitted.
+
 :::
 
 </details>
