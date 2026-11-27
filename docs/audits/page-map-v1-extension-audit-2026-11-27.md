@@ -119,7 +119,7 @@ The validation gap identified above is addressed in the follow-up implementation
 - The learning-map projection no longer coerces the value with `str()`.
 - Tests cover absent, valid and invalid values through both consumers.
 
-The implementation preserves PAGE-MAP v1 and the existing `summary || purpose` discovery fallback. PR #1759 carries the code, tests and schema wording; CI is in progress at the time of this update.
+The implementation preserves PAGE-MAP v1 and the existing `summary || purpose` discovery fallback. PR #1759 carries the code, tests and schema wording. Its test suite, Python quality/domain checks, and full Quarto render with browser audit have passed.
 
 ## 8. Conclusion et travail restant
 
