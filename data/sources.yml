@@ -8039,7 +8039,7 @@ sources:
       contribution_types: [theory, mathematical-derivation, architecture, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
@@ -8079,7 +8079,7 @@ sources:
       contribution_types: [architecture, mathematical-derivation, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
@@ -8119,7 +8119,7 @@ sources:
       contribution_types: [architecture, mathematical-derivation, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
@@ -8159,7 +8159,7 @@ sources:
       contribution_types: [architecture, mathematical-derivation, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
@@ -8199,7 +8199,7 @@ sources:
       contribution_types: [architecture, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
@@ -8239,7 +8239,7 @@ sources:
       contribution_types: [architecture, mathematical-derivation, experiment, implementation]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: []
     scan_history:
       - accessed_at: "2026-11-27"
