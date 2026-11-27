@@ -59,9 +59,9 @@ Le gradient décrit une variation locale. Un pas trop grand peut dépasser la r�
 
 On fixe le préfixe et le token observé $A$. Dans ce modèle jouet, les logits sont $z=u+b$, où $u$ est fixe et seul le biais de sortie $b$ est entraînable. Deux réglages de $b$ donnent les distributions suivantes sur $(A,B,C)$.
 
-$$
+$
 p=(1/2,\;1/4,\;1/4),\qquad q=(1/2,\;3/8,\;1/8).
-$$
+$
 
 1. Calculez la log-vraisemblance de $A$ et la [perte pour cette cible](../cross-entropy.qmd) dans les deux cas. C’est la seule cible prise en compte.
 2. Avec la cible one-hot $y=(1,0,0)$, calculez le gradient de la perte par rapport au biais. L’addition $z=u+b$ transmet chaque dérivée par logit au biais correspondant.
@@ -79,6 +79,24 @@ $$
 </details>
 
 {{< include ../../includes/generated-exercise-review-fr-gradients-exercises-ex-score-to-parameter-update.qmd >}}
+
+## Un pas de SGD sur la projection de sortie {#ex-sgd-output-projection}
+
+Reprenez la [matrice de sortie de l'exemple des logits](../logits.qmd#running-example-output-projection) et son état $h=(1;-1)^\top$. Sur cette seule cible « Vous », appliquez un pas de SGD de taux $\eta=0{,}1$ aux poids $W$ de cette tête sans biais. Le préfixe, $h$ et les autres paramètres restent fixes. Quel nouveau score obtient « Vous » ? Quelle est sa nouvelle probabilité après normalisation sur les quatre candidats ?
+
+<details>
+<summary>Afficher le calcul et le raisonnement</summary>
+
+Le gradient des poids est le produit extérieur $g_z h^\top$. Les nouveaux poids valent $W'=W-\eta g_z h^\top$. Pour le même état, le nouveau vecteur de scores est :
+
+$
+z'=W'h=z-\eta\lVert h\rVert^2 g_z
+=(\ln 6+0{,}08;\ \ln 2-0{,}04;\ -0{,}02;\ -0{,}02).
+$
+
+Le score de « Vous » augmente de $0{,}08$. Une nouvelle softmax donne $p'(\text{Vous})\approx0{,}626$, contre $0{,}600$ avant la mise à jour. Ce calcul montre l’effet sur **la cible utilisée pour ce pas**.
+
+</details>
 
 **Retour :** [Vue d'ensemble](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
 
