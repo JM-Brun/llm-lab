@@ -1,6 +1,6 @@
 # External-source to learning-system integration workflow
 
-**Status:** normative project workflow · **Version:** 1.2 · **Last reviewed:** 2026-11-05  
+**Status:** normative project workflow · **Version:** 1.3 · **Last reviewed:** 2026-11-27  
 **Related collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)  
 **Validation protocol:** [Source-to-knowledge validation](source-to-knowledge-validation.md)
 
@@ -198,6 +198,8 @@ Implement the smallest coherent set of changes:
 - keep optional perspectives visibly optional;
 - update exercises, visual asset records, references and navigation only when warranted;
 - keep Build work separate from conceptual explanation unless the user explicitly wants implementation.
+
+For every contribution accepted as integrated or already covered, verify its current destination in each language and record the exact page section/anchor and inspection evidence in the synthesis dossier, following the [destination-verification contract](../source-synthesis-method.md#vérifier-la-destination-réelle-des-contributions). Distinguish a source used to construct the lesson, a source evidencing a specific claim, and a resource recommended to readers. A bibliography entry, `related.pages` association, historical PR or item disposition is not proof that the contribution remains in the published page. Use `not-verified` or `historical-only` when direct current-page evidence is unavailable.
 
 Never remove existing knowledge during restructuring without a traceable migration. Avoid speculative numerical claims and unsupported empirical language.
 
