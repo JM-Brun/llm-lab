@@ -194,7 +194,7 @@ Le programme de référence du projet applique cette boucle sans cache KV ; la [
   <figcaption>Le prefill traite le prompt connu ; le decode incrémental l’allonge avec un token sélectionné à chaque étape. Le cache KV est une optimisation facultative, pas une condition de validité de la génération. Les probabilités de l’exemple sont illustratives.</figcaption>
 </figure>
 
-::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true"}
+::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true" data-reading-time="exclude"}
 
 ### Pourquoi l'inférence semble-t-elle parfois lente ?
 
