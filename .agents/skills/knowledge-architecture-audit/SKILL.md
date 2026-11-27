@@ -151,6 +151,6 @@ State confidence and distinguish evidence from inference. Update only the affect
 - Use `page-content-audit` for internal pedagogy of an individual page.
 - Use `rendered-site-audit` for actual rendered route, layout, keyboard, responsive and accessibility behavior.
 - Use `visual-asset-audit` for asset provenance, licence and permitted reuse.
-- Use `audit-skill-routing` when a request spans multiple audit dimensions.
+- Use `audit-skill-routing` when a request spans multiple audit dimensions. When invoked by that router, complete the assigned architecture scope and return findings; do not route the same audit back to the router.
 
 A valid schema, graph edge or passing validator proves structural conformance only; it does not prove a concept definition, scientific statement, external visual licence, rendered usability or learner outcome.
