@@ -12,7 +12,7 @@ collections:
     status: active
   - id: positional-encoding
     title: "Positional encoding and relative-position mechanisms"
-    dossier_path: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    dossier_path: docs/source-syntheses/positional-encoding-source-synthesis-2026-11-26.md
     status: active
   - id: visual-learning-tools
     title: "Visual learning tools: Embedding Atlas and Neuronpedia"
