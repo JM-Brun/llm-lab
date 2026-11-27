@@ -118,10 +118,7 @@ In a deep network, backpropagation applies this chain rule efficiently through t
 
 The gradient describes local loss sensitivity; it does not specify the update rule on its own. The optimizer turns it into a parameter update, and the learning rate sets its scale. The SGD rule and optimizer choices are covered in the [training loop](training-loop.qmd).
 
-A numerical SGD step makes the distinction between computing the gradient and actually updating weights explicit. The worked case is collected on the dedicated Practice page.
-
-</details>
-:::
+A numerical SGD step makes the distinction between computing the gradient and actually updating weights explicit. Work through the [SGD update exercise](exercises/gradients.qmd#ex-sgd-output-projection) on the dedicated Practice page.
 
 Two distributions can assign the same probability to the target, and therefore have the same loss, while producing different gradients for the other logits.
 
