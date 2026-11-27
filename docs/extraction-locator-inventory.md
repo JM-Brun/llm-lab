@@ -233,3 +233,8 @@ The two former `not-reviewed` records were explicitly dispositioned without crea
 - `zipf-human-behavior-least-effort-1949`: `discovered / deferred`. The book's bibliographic/table-of-contents metadata is available, but its argument and relevant chapter text remain uninspected; targeted reading is deferred until a claim requires it.
 
 After these decisions, the global integration status distribution is `deferred=12`, `integrated=54`, `partially-integrated=79`, `rejected=1`, `reviewed=31`, with no `not-reviewed` sources. Scan status is unchanged: `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`.
+
+
+#### Empty relation arrays — direct source-catalogue count
+
+A direct count of the current 177 source records finds **8 empty `related.pages` arrays** and **6 empty `related.concepts` arrays**. These are not malformed references and should not be auto-filled. Review each against the source's role and evidence: some records are discovery-only, inaccessible, bibliography-only or intentionally not integrated; others may expose a genuine missing relation. The exact source IDs are visible in the canonical catalogue. This field-level count is distinct from the report's 7 sources without a concept link and 8 without a page destination.
