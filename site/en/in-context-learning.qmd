@@ -128,7 +128,7 @@ Computing a continuation conditioned on the examples describes the observable be
 :::
 
 ::: {.callout-note collapse="true" title="Further exploration: a Bayesian-inference explanation"}
-Xie et al. (2022) propose a theoretical framework in which pretraining documents share a **latent concept** \(\theta\). Prompt examples share a concept \(\theta^*\) as well. The model can then use the prompt by inferring this concept from the examples and computing a predictive distribution that marginalizes over possible concepts.
+Xie et al. (2022) propose a theoretical framework in which pretraining documents share a **latent concept** $\theta$. Prompt examples share a concept $\theta^*$ as well. The model can then use the prompt by inferring this concept from the examples and computing a predictive distribution that marginalizes over possible concepts.
 
 The result is formalized under explicit assumptions, including a pretraining distribution built as a mixture of hidden Markov models (HMMs), a delimiter structure, and a distinguishability condition between concepts. The authors also show that the length of input examples can provide information beyond the input-output mapping alone.
 
