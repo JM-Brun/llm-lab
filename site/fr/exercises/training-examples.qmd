@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-examples-exercises"
-summary: "Six exercices progressifs sur l'alignement, le teacher forcing, les masques, le packing, le padding et les dimensions des logits."
-scope: "Regroupe six questions et scénarios de transfert sans dupliquer l’explication conceptuelle de la leçon."
+summary: "Six exercices progressifs et une checklist de débogage sur l'alignement, le teacher forcing, les masques, le packing, le padding et les dimensions des logits."
+scope: "Regroupe six exercices, des scénarios de transfert et une checklist de débogage sans dupliquer l’explication conceptuelle de la leçon."
 purpose: "Vérifier l'alignement des tokens, la causalité, les rôles des masques, les frontières de documents, la réduction de perte et les dimensions des logits."
 suggested_route:
   previous: null
@@ -30,6 +30,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:training-examples-exe
 
 Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
 
+Prolongement : pour le flux avec les identifiants [8, 3, 3, 9, 2, 7], une longueur de 3 et un stride de 1, écrivez les deux premières paires entrée-cible.
+
 <details>
 <summary>Indice</summary>
 
@@ -41,6 +43,11 @@ Chaque cible est le token situé immédiatement après le token d'entrée à la 
 <summary>Afficher la réponse</summary>
 
 Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Les deux séquences ont la même longueur ; la cible est décalée d'un indice dans le flux source.
+
+Pour le second flux, les deux fenêtres sont :
+
+- Entrée [8, 3, 3], cible [3, 3, 9].
+- Entrée [3, 3, 9], cible [3, 9, 2].
 
 </details>
 
@@ -184,6 +191,19 @@ La moyenne naïve inclut aussi les deux pertes PAD de A :
 Elle optimise un objectif différent, qui dépend ici des pertes attribuées aux positions de padding. Le masque d'attention indique quelles positions peuvent être consultées ; il ne retire pas automatiquement les labels PAD de la fonction de perte. Il faut construire un masque de perte cohérent ou utiliser une convention explicite d'ignorance des labels, puis réduire sur le nombre de cibles valides.
 
 </details>
+
+## Checklist de débogage {#debugging-checklist}
+
+Quand la perte est anormalement basse, élevée ou instable, vérifier :
+
+1. Chaque cible est-elle le token immédiatement suivant dans le flux source ?
+2. Entrée et cible ont-elles des longueurs compatibles ?
+3. Le dernier token sans successeur est-il traité selon une convention explicite ?
+4. Les positions de padding sont-elles exclues de la perte comme prévu ?
+5. Masques causal, de padding et de perte ont-ils des rôles distincts ?
+6. Les transitions entre documents sont-elles intentionnelles ?
+7. Les axes B, L et V correspondent-ils à ceux attendus par la fonction de perte ?
+8. Une cible future est-elle accessible au contexte qui sert à la prédire ?
 
 ::: {.callout-note}
 **Limite de ces exercices.** Les scénarios sont conceptuels et illustrent des politiques possibles. Ils ne prescrivent pas un format de packing, un masque inter-documents ou une convention de réduction universels ; ces choix doivent être définis par le pipeline et l'objectif d'entraînement.
