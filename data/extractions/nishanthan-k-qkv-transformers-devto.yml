@@ -258,7 +258,7 @@ items:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: [contextualized-representation]
     disposition: reject
-    disposition_rationale: "No distinct Nishanthan-specific page integration is verified in the current bilingual files. The bank/river example is present in the advanced Q/K/V deep dive through the Codefinity synthesis; the core Q/K/V pronoun example is explicitly adapted from Neha KK. The earlier plan to add an animal/it subsection to contextualized-representations is not the current page state. Keep Nishanthan as a reader-facing visual reference, but do not attribute these current examples to this source or add duplicate content."}
+    disposition_rationale: "No distinct Nishanthan-specific page integration is verified in the current bilingual files. The bank/river example is present in the advanced Q/K/V deep dive through the Codefinity synthesis; the core Q/K/V pronoun example is explicitly adapted from Neha KK. The earlier plan to add an animal/it subsection to contextualized-representations is not the current page state. Keep Nishanthan as a reader-facing visual reference, but do not attribute these current examples to this source or add duplicate content."
 
   - id: nishanthan-k-qkv-transformers-devto:reader-comment-kv-cache
     kind: open-question
