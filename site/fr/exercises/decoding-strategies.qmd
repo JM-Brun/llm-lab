@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-e
 
 ## Questions de compréhension
 
-Pouvez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+1. Pouvez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 
 <details>
 <summary>Afficher le corrigé</summary>
