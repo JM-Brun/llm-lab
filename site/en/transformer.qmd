@@ -114,6 +114,8 @@ During generation, the next token depends on tokens already produced, so decodin
 - **Training:** `t₁ t₂ t₃ t₄` → one masked pass; positions are computed in parallel.
 - **Generation:** `t₁` → `t₂` → `t₃` → … each step depends on the previous token.
 
+<span id="transformer-depth-width"></span>
+
 ### Depth and width: two architectural dimensions
 
 - **Depth:** the number of Transformer blocks stacked in the network.
