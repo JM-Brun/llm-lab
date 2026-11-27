@@ -126,7 +126,7 @@ The tokenization lesson and its bilingual practical trace now use the localized 
 
 The trace displays the full ordered token-byte fragments and IDs, so the learner can inspect how words such as `situation`, `scribe` or `Romans` are actually segmented. It compares GPT-2 and `cl100k_base` on the exact same local prefix, then uses the GPT-2 IDs to index a synthetic embedding table. The vectors remain explicitly illustrative; no pretrained GPT-2 weights are claimed.
 
-The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context.
+The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context. The existing CI checker now validates the localized prefix and expected GPT-2 boundary for each language, compares normalized executable structure rather than requiring identical text literals, and executes both snippets with the pinned tokenizer.
 
 This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy exercises where they serve a distinct comparison purpose.
 
