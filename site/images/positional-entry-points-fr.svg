@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
-<title id="title">Trois endroits où injecter l'information positionnelle</title><desc id="desc">Même séquence de tokens · mécanismes distincts. Three lanes compare absolute position addition, RoPE on queries and keys, and a relative bias added to attention scores.</desc>
+<title id="title">Trois endroits où injecter l'information positionnelle</title><desc id="desc">Même séquence de tokens · mécanismes distincts. Trois voies comparent l’ajout absolu d’une position, RoPE sur les requêtes et les clés, et un biais relatif ajouté aux scores d’attention.</desc>
 <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
 <rect x="0" y="0" width="1200" height="690" rx="22" fill="#ffffff"/>
 <text x="48" y="58" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#172033">Trois endroits où injecter l'information positionnelle</text>

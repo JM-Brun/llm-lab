@@ -8,6 +8,8 @@
 
 ## Applied audit records
 
+
+  - [Second Understand visual audit pilot (2026-11-26)](visual-audit-second-pilot-2026-11-26.md): decisions and changes for tokenization, positional encoding, scaled dot-product attention and causal masking.
   - [Four-page Understand visual audit pilot (2026-11-26)](visual-audit-priority-pages-2026-11-26.md): concrete design decisions, placement, captions, caveats and remaining validation for likelihood, loss, gradients and context engineering.
 
 ## 1. Purpose and governing rule
