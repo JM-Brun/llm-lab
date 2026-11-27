@@ -2523,6 +2523,54 @@ sources:
         - docs/source-reviews/qkv-source-collection.md
         - docs/source-syntheses/qkv-incremental-source-pilot-2026-11-05.md
 
+  - id: zsombor-veres-lakos-attention-from-scratch-2026
+    title: "Attention from scratch"
+    creators: ["Zsombor Veres-Lakos"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://zsomborvereslakos.substack.com/p/attention-from-scratch"
+    publisher: "Substack"
+    publication_date: "2026-11-16"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:qkv, topic:self-attention, topic:residual-stream, topic:attention, method:scaled-dot-product-attention]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, architecture, visualization]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    collections: [qkv-attention]
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete 12-page user-provided PDF export, including all author-authored text, equations, numerical tables and embedded figures."
+          - "Numerical path from competence matrix X through W_Q/W_K/W_V, scores, row-wise softmax, context P V, W_O, Delta X and X_new."
+          - "GPT terminology mapping, token-level examples and explicit masking/multi-head scope limitations."
+        limitations:
+          - "Live Substack page, comments, linked posts and any post-export edits were not inspected."
+          - "The PDF states the author wrote the post with LLM-assisted review and editing."
+          - "The page-11 attention matrix is credited to Sebastian Raschka, Figure 3.11; original asset and reuse rights were not independently checked."
+          - "No executable code is supplied; no code was run."
+          - "No text or figure reuse licence was established; retain link-only."
+          - "PDF SHA-256: 3945aa733c4d9c635bb6c721fa8bab922bc85f2d5218e9c891206bf311681b98."
+    related:
+      pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-block-walkthrough, fr/transformer-block-walkthrough]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, contextualized-representation]
+      audit_records:
+        - data/extractions/zsombor-veres-lakos-attention-from-scratch-2026.yml
+        - docs/source-reviews/zsombor-veres-lakos-attention-from-scratch-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
+
   - id: aiedge-how-llm-distillation-trains-smaller-models
     title: "How LLM Distillation Trains Smaller Models"
     creators: []

@@ -1,0 +1,191 @@
+schema_version: 1
+source_id: zsombor-veres-lakos-attention-from-scratch-2026
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "Complete 12-page user-provided PDF inspected on 2026-11-27, including text, equations, tables and embedded figures."
+      - "The numerical example was traced across pages 2–9; the GPT mapping and explicit scope limits were inspected on pages 10–12."
+      - "Page 1 identifies title, author, publication date and the author's LLM-assisted review/editing disclosure."
+    limitations:
+      - "Complete only for the supplied PDF export; live-page edits, comments and linked resources were not inspected."
+      - "No executable code or dataset appears in the PDF."
+      - "The page-11 matrix is credited as Figure 3.11 from Sebastian Raschka's Build a Large Language Model (From Scratch); original asset and reuse rights were not inspected."
+      - "No licence or reproduction permission was established; retain link-only."
+  source_graph:
+    nodes:
+      - {id: src-state, kind: input-matrix, description: "X records known and needed Python/design competencies for each participant.", locator: "pp. 1–2"}
+      - {id: src-wq, kind: projection-matrix, description: "W_Q selects the competencies each participant needs.", locator: "pp. 2–3"}
+      - {id: src-wk, kind: projection-matrix, description: "W_K selects the competencies each participant can offer.", locator: "pp. 3–4"}
+      - {id: src-wv, kind: projection-matrix, description: "W_V maps offered knowledge to transmissible information, with toy absorption rates.", locator: "pp. 6–7"}
+      - {id: src-q, kind: representation, description: "Q = X W_Q represents what each participant seeks.", locator: "p. 3"}
+      - {id: src-k, kind: representation, description: "K = X W_K represents what each participant offers.", locator: "p. 4"}
+      - {id: src-v, kind: representation, description: "V = X W_V represents information each participant can transmit.", locator: "p. 7"}
+      - {id: src-scores, kind: intermediate, description: "S = 10 Q K^T; rows are attention payers/queries and columns are recipients/keys.", locator: "pp. 4–5"}
+      - {id: src-weights, kind: intermediate, description: "P = row-wise softmax(S); each row sums to one, including a uniform row for equal zero logits.", locator: "pp. 5–6"}
+      - {id: src-context, kind: intermediate, description: "P V aggregates value vectors according to attention weights.", locator: "p. 8"}
+      - {id: src-wo, kind: projection-matrix, description: "W_O maps context from the value-feature space back to the four-dimensional toy state space.", locator: "p. 8"}
+      - {id: src-delta, kind: state-update, description: "Delta X = (P V) W_O is added to X to form X_new.", locator: "pp. 8–9"}
+      - {id: src-residual-stream, kind: representation, description: "The toy state is mapped to GPT's residual stream: token-position states in the model embedding space; GPT-2 Small is given as a 768-dimensional example, and the author notes that actual tokens are subwords but uses whole-word examples for simplicity.", locator: "p. 10"}
+      - {id: src-causal-mask, kind: constraint, description: "The article says its attention illustration omits GPT's restriction to the current and earlier tokens.", locator: "p. 11"}
+      - {id: src-mha, kind: architecture, description: "Multi-head attention is explicitly left outside the article's scope.", locator: "p. 12"}
+    edges:
+      - {from: src-state, type: projected-by, to: src-wq}
+      - {from: src-state, type: projected-by, to: src-wk}
+      - {from: src-state, type: projected-by, to: src-wv}
+      - {from: src-wq, type: produces, to: src-q}
+      - {from: src-wk, type: produces, to: src-k}
+      - {from: src-wv, type: produces, to: src-v}
+      - {from: src-q, type: contributes-to, to: src-scores}
+      - {from: src-k, type: contributes-to, to: src-scores}
+      - {from: src-scores, type: normalized-by, to: src-weights}
+      - {from: src-weights, type: weights, to: src-v}
+      - {from: src-weights, type: contributes-to, to: src-context}
+      - {from: src-v, type: aggregated-into, to: src-context}
+      - {from: src-context, type: projected-by, to: src-wo}
+      - {from: src-wo, type: produces, to: src-delta}
+      - {from: src-delta, type: added-to, to: src-state}
+    interpretation: "Editorial reconstruction of the meeting analogy and its GPT mapping, not a graph authored by the source. The toy example uses one head and omits causal masking and multi-head composition."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain Q/K as matching needs against offers.", basis: "W_Q and W_K are constructed from the competence matrix on pp. 2–4."}
+    - {status: inferred, outcome: "Trace X through Q, K, scores, softmax, V, context and W_O to Delta X.", basis: "Worked matrices span pp. 2–9."}
+    - {status: inferred, outcome: "Explain how the attention output is mapped back to the state space before the residual update.", basis: "W_O and X_new are introduced on pp. 8–9."}
+    - {status: inferred, outcome: "Map the toy model to GPT terminology and identify its omissions.", basis: "Pages 10–12."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Matrix multiplication and dot products", basis: "Used throughout without a formal prerequisite section."}
+    - {status: inferred, topic: "Vectors, matrices and softmax", basis: "Used without first-principles derivation."}
+  teaching_route:
+    - {order: 1, section: "Meeting problem and competence matrix", function: motivation, moves: ["Represent needs and offers in X.", "Select Alice, Bob and Cara as the worked participants."]}
+    - {order: 2, section: "W_Q and Q", function: projection-intuition, moves: ["Build selectors for Python/design needs.", "Compute Q = X W_Q."]}
+    - {order: 3, section: "W_K and K", function: projection-intuition, moves: ["Build selectors for known Python/design.", "Compute K = X W_K."]}
+    - {order: 4, section: "Attention scores", function: compatibility, moves: ["Compute Q K^T.", "Apply a pedagogical scalar 10 and preserve the participant axis."]}
+    - {order: 5, section: "Softmax and attention weights", function: normalization, moves: ["Adopt the row-as-query convention.", "Explain the uniform all-zero row."]}
+    - {order: 6, section: "W_V and V", function: payload, moves: ["Separate matching from transmitted content.", "Introduce distinct toy absorption rates."]}
+    - {order: 7, section: "Context and W_O", function: aggregation-and-mapping, moves: ["Compute P V.", "Map context back to the competence coordinates with W_O."]}
+    - {order: 8, section: "Delta X and X_new", function: residual-update, moves: ["Compute the state change.", "Add it to X and inspect the resulting matrix."]}
+    - {order: 9, section: "Attention in GPT", function: architecture-mapping, moves: ["Map the toy matrix to the residual stream.", "Describe normalized states and learned projections."]}
+    - {order: 10, section: "Token examples and scope", function: contextual-intuition-and-boundaries, moves: ["Use pronoun, bank and adjective examples.", "State that causal masking and MHA are omitted."]}
+  pedagogical_strengths:
+    - "One analogy is carried through all single-head operations and the residual update."
+    - "W_K (matching) and W_V (transmitted content) have distinct roles."
+    - "W_O connects weighted aggregation to a state-space update."
+    - "Intermediate matrices make the calculation auditable by hand."
+    - "The source explicitly names its masking and multi-head omissions."
+  pedagogical_limits:
+    - "Hand-designed needs/offers dimensions look more human-readable than distributed learned features; the article itself cautions about this."
+    - "The multiplier 10 is a pedagogical logit-sharpness choice, not the standard 1/sqrt(d_k) factor."
+    - "Without a mask, equal zero logits produce uniform attention, including to self."
+    - "The example is single-head and non-causal, not a faithful GPT forward pass."
+    - "The GPT mapping omits the MLP residual branch and does not describe the complete Transformer block."
+    - "Bank, pronoun and adjective examples are intuitions, not measured head-level evidence."
+    - "The toy state is unconstrained: negative needs are allowed, and a hypothetical second meeting can produce a counterintuitive preference for the participant with no offer."
+  comparison:
+    dossier: "docs/source-reviews/qkv-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: []
+    decision: "No new canonical Q/K/V or attention concept. Register the source and link it as optional further reading on bilingual Q/K/V pages. Keep the residual-stream/W_O mapping source-local and cross-reference the Transformer-block walkthrough."
+    structures_kept_separate: ["Source-local meeting graph", "Canonical concept graph", "Project learner route", "GPT reference implementation"]
+items:
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:meeting-analogy
+    kind: analogy
+    summary: "Attention is modelled as a meeting: participants spend an hour with others, seek missing competencies and transmit competencies they possess."
+    locator: {type: page, value: "1–2", label: "The problem"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "Author's analogy in the PDF.", assumptions: ["The meeting is a didactic model."], limitations: ["Not a literal account of neural attention."]}
+    technical_assessment: {status: analogy-only, rationale: "Useful mental model, not a claim about learned feature semantics.", corroborating_sources: []}
+    pedagogical_assessment: {learner_question: "What do Q, K and V do?", explanatory_lens: "Needs, offers and information transfer.", teaching_form: [analogy, worked-example], novelty: {level: high, rationale: "The analogy carries one numerical example through the state update."}, complementarity: {level: high, rationale: "Different from the project's search/index-card analogy."}, pedagogical_value: {level: high, rationale: "Gives a consistent interpretation to each matrix operation."}, applicability: {level: high, rationale: "Useful optional reading and experiment seed."}, redundancy: {level: moderate, rationale: "Role definitions overlap with canonical Q/K/V."}, evidence_quality: {level: high, rationale: "Directly visible in the supplied PDF."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, topic:attention], concept_ids: [query, key, value, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Link the full worked analogy; do not copy it into the canonical lesson or add a competing role analogy."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:query-key-projections
+    kind: mechanism
+    summary: "W_Q selects needs and W_K selects offers, mapping the same competence state into query and key spaces."
+    locator: {type: page, value: "2–4", label: "W_Q, Q, W_K and K"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "Hand-designed projections and displayed Q/K matrices.", assumptions: ["Four toy features are manually designed."], limitations: ["Real learned features are not clean one-coordinate selectors."]}
+    technical_assessment: {status: consistent-with-standard-projection, rationale: "A hand-built linear projection illustrates the role of Q and K.", corroborating_sources: ["Vaswani et al. (2017), https://arxiv.org/abs/1706.03762"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention], concept_ids: [query, key]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "Canonical pages already define the learned projections; the unique value is the worked analogy."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:score-softmax
+    kind: derivation
+    summary: "The toy score matrix is S = 10 Q K^T; row-wise softmax produces weights, with an all-zero score row becoming uniform."
+    locator: {type: page, value: "4–6", label: "Scores and attention weights"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "Displayed score and probability matrices.", assumptions: ["A separate scalar 10 is manually chosen.", "No causal mask is applied."], limitations: ["10 is not the standard 1/sqrt(d_k) scaling factor."]}
+    technical_assessment: {status: correct-with-qualification, rationale: "Matrix orientation and row-wise softmax are valid; the multiplier is pedagogical.", corroborating_sources: ["Vaswani et al. (2017), https://arxiv.org/abs/1706.03762"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention, method:scaled-dot-product-attention], concept_ids: [attention-score, attention-weight, softmax]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-score, attention-weight, softmax], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Use the all-zero row as a caveat about unmasked toy attention; do not duplicate the canonical score/softmax derivation."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:values-context-output
+    kind: mechanism
+    summary: "W_V maps offered knowledge to transmitted content; P V aggregates it, and W_O maps the context back to the toy state space."
+    locator: {type: page, value: "6–8", label: "W_V, V, context and W_O"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "Displayed W_V, V, P V and W_O matrices.", assumptions: ["Python/design absorption rates are invented for the example.", "The example uses one head."], limitations: ["W_O is the attention output projection, not the final vocabulary projection."]}
+    technical_assessment: {status: consistent-with-standard-projection, rationale: "The separate V and output projections illustrate content aggregation and remapping.", corroborating_sources: ["Vaswani et al. (2017), https://arxiv.org/abs/1706.03762"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, topic:transformer-block], concept_ids: [value, attention-weight, self-attention]}
+    candidate_destinations: {pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [value, self-attention], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Link the article's end-to-end example to the Build walkthrough; canonical attention lesson already owns P V."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:residual-update
+    kind: mechanism
+    summary: "The source defines Delta X = (P V) W_O and X_new = X + Delta X, then maps the toy competence matrix to GPT's residual stream."
+    locator: {type: page, value: "8–10", label: "State update and GPT mapping"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "W_O, Delta X, X_new and terminology bullets.", assumptions: ["Attention branch only; single-head toy example."], limitations: ["The MLP residual branch is not included; W_O is not the vocabulary output head."]}
+    technical_assessment: {status: correct-with-qualification, rationale: "The attention residual update is a useful abstraction but not a full Transformer block.", corroborating_sources: ["Radford et al. (2019), https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:residual-stream, topic:transformer-block], concept_ids: [self-attention, contextualized-representation]}
+    candidate_destinations: {pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [self-attention, contextualized-representation], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Cross-reference the existing block walkthrough; do not create a residual-stream concept from one tutorial without the wider architecture audit."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:causal-and-mha-omissions
+    kind: limitation
+    summary: "The article explicitly omits causal masking and multi-head attention; its attention illustration therefore shows future-token access that GPT causal attention would mask."
+    locator: {type: page, value: "11–12", label: "Explicit scope limitations"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "The author's caveats and final paragraph.", assumptions: [], limitations: ["No derivation or implementation of either mechanism is supplied."]}
+    technical_assessment: {status: correct, rationale: "The stated scope boundary is consistent with causal GPT attention.", corroborating_sources: ["Radford et al. (2019), https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:causal-masking, topic:multi-head-attention], concept_ids: [self-attention]}
+    candidate_destinations: {pages: [fr/causal-masking, en/causal-masking, fr/transformer, en/transformer], concepts: [self-attention], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "Both topics have dedicated project coverage; retain omissions as scope notes."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:linguistic-examples
+    kind: mental-model
+    summary: "The source uses Peter/he, river bank/financial bank and quick brown fox to illustrate contextual dependencies and composition."
+    locator: {type: page, value: "11–12", label: "Token-level examples"}
+    evidence: {kind: direct-statement, confidence: context-dependent, scope: "Illustrative examples.", assumptions: ["Contextual attention contributes to state updates."], limitations: ["No empirical head-level trace or causal test is supplied."]}
+    technical_assessment: {status: illustrative-not-empirical, rationale: "These examples motivate context use but do not establish what a particular head computes.", corroborating_sources: []}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:contextualized-representation, topic:self-attention], concept_ids: [contextualized-representation, self-attention]}
+    candidate_destinations: {pages: [fr/contextualized-representations, en/contextualized-representations], concepts: [contextualized-representation, self-attention], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "The canonical pages already use coreference and lexical polysemy; avoid accumulating examples."
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:figures
+    kind: figure
+    summary: "Pages 2–9 show the state, W_Q/Q, W_K/K, scores, softmax weights, W_V/V, context, W_O, Delta X and X_new; page 11 shows an attention matrix credited to Raschka Figure 3.11."
+    locator: {type: page, value: "2–11", label: "Worked-example tables and attention matrix"}
+    evidence: {kind: direct-figure, confidence: well-supported, scope: "Embedded figures inspected in the PDF.", assumptions: [], limitations: ["Original image assets and reuse rights were not checked; page-11 caption credits Raschka Figure 3.11."]}
+    technical_assessment: {status: visually-inspected-in-pdf, rationale: "The rendered PDF figures were inspected; no image files were extracted or reused.", corroborating_sources: ["Sebastian Raschka, Build a Large Language Model (From Scratch), Figure 3.11"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, topic:attention], concept_ids: [query, key, value, attention-score, attention-weight]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value], route_ids: []}
+    disposition: cite
+    disposition_rationale: "Keep source and figure credit as links only; do not reproduce the article's or book's visuals."
+
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:worked-numeric-trace
+    kind: derivation
+    summary: "The three-participant example traces X (3x4) through Q/K/V (3x2), scores S = 10 Q K^T (3x3), row-wise weights P, context C = P V (3x2), W_O (2x4), Delta X (3x4) and X_new (3x4); the displayed matrices are rounded to two decimals where applicable."
+    locator: {type: page, value: "2–9", label: "Complete numerical meeting example"}
+    evidence: {kind: direct-equation, confidence: well-supported, scope: "All intermediate projection and output tables in the supplied PDF.", assumptions: ["The participant features and projection matrices are hand-designed.", "The scalar 10 is manually chosen.", "No causal mask is applied."], limitations: ["The example is single-head and non-causal.", "Values in the final matrices are rounded."]}
+    technical_assessment: {status: algebraically-checked, rationale: "The matrix products, row-wise softmax and residual update are consistent with the displayed inputs and stated conventions.", corroborating_sources: ["Vaswani et al. (2017), https://arxiv.org/abs/1706.03762"]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, topic:residual-stream], concept_ids: [query, key, value, attention-score, attention-weight, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [query, key, value, self-attention], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the complete numerical trace in the source note and cite the article from the Q/K/V lesson; do not create a second canonical numerical workbench."
+
+  - id: zsombor-veres-lakos-attention-from-scratch-2026:negative-needs-feedback
+    kind: counterexample
+    summary: "After X_new, Cara has negative needs; if the same W_Q/W_K are reused for a second meeting, her negative query scores Bob's zero key above Alice's and her own keys, so she would mostly attend to the participant with least to offer."
+    locator: {type: page, value: "9–10", label: "Second-meeting consequence"}
+    evidence: {kind: direct-statement, confidence: context-dependent, scope: "The author's qualitative interpretation of a hypothetical second meeting using the updated state.", assumptions: ["The same W_Q and W_K are reused.", "The displayed rounded X_new is treated as the next state."], limitations: ["This is a behavior of the unconstrained toy update, not a general property of trained Transformers.", "No numerical second-round softmax is displayed."]}
+    technical_assessment: {status: toy-model-consequence, rationale: "Negative needs and unbounded additive state updates can invert the matching preference; the example exposes a limitation of the analogy's state dynamics.", corroborating_sources: []}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention, topic:residual-stream], concept_ids: [query, key, self-attention]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: cite
+    disposition_rationale: "Retain as a source-specific consequence and caveat; it does not justify a canonical Transformer lesson."

@@ -1,11 +1,11 @@
 # Q/K/V — pedagogical coverage matrix
 
 **Status:** living decision artifact  
-**Review date:** 2026-11-05  
-**Scope:** four tutorial sources — Nishanthan K (DEV), Neha KK (Medium), Codefinity and Michael Brenndoerfer — plus the current LLM Lab learning system.  
+**Review date:** 2026-11-27  
+**Scope:** five tutorial sources — Nishanthan K (DEV), Neha KK (Medium), Codefinity, Michael Brenndoerfer and Zsombor Veres-Lakos — plus the current LLM Lab learning system. The original four-source comparison remains the baseline; the fifth source is recorded in the addendum below.  
 **Purpose:** decide which source contributions improve learner understanding, where they belong, and what remains genuinely uncovered. This is a coverage and integration tool, not a vote on technical truth.
 
-> **Reading rule:** source coverage records what was visible in the scanned material, not what the full article/course might contain. All four sources remain partially scanned; consult their individual reviews for retrieval and media limitations.
+> **Reading rule:** source coverage records what was visible in the scanned material, not what the full article/course might contain. All five tutorial sources remain partially scanned; consult their individual reviews for retrieval and media limitations.
 
 > **Scope boundary (2026-11-27):** this remains a four-resource *pedagogical* comparison matrix. It is not the complete Q/K/V page bibliography or a primary-evidence matrix. Jose Parreño Garcia and Vaswani et al. are mapped separately in the [page-level claim-to-source traceability audit](../source-reviews/qkv-source-collection.md#128-claim-to-source-traceability-page-level-not-a-bibliography-count).
 
@@ -159,3 +159,30 @@ The canonical Q/K/V learning contract is expressed as five operations: recognize
 These operations are now documented in both canonical Q/K/V pages and represented by tasks in both language versions of the Attention exercise hub. The exercise map reuses the existing projection/shape task and role self-check, adds a gradient-learning explanation task, a W_Q/W_K/W_V counterfactual task, and a cross-attention transfer task. The weighted-sum calculation remains in its existing ownership location.
 
 This is a coverage claim about authored content and exercises, not evidence that learners have demonstrated mastery. Browser rendering and the #447 learner pilot remain separate validation gates.
+
+
+## 9. Fifth-source addendum — Veres-Lakos, *Attention from scratch* (2026-11-27)
+
+The supplied 12-page PDF was inspected in full. This addendum extends the pedagogical comparison without rewriting the original four-source matrix.
+
+| Learner question / difficulty | Veres-Lakos treatment | Existing LLM Lab coverage | Decision |
+|---|---|---|---|
+| Can one analogy explain Q, K and V without stopping at role definitions? | Meeting participants seek missing competencies (Q), offer what they know (K), and transmit information (V) | Canonical index-card/search analogy and explicit projection roles | Distinct teaching lens; expose as optional external reading, do not add another analogy to the main page |
+| Can the learner follow every matrix operation in one scenario? | Full worked trace X → Q/K/V → scores → softmax → V aggregation → W_O → Delta X → X_new | Q/K/V and scaled-attention lessons plus a numerical workbench; Build walkthrough covers the residual path | Complementary narrative continuity, but mathematical content is already owned; integrate by reference |
+| Why are W_K and W_V different? | W_K controls matching; W_V controls the information transmitted and its toy absorption rate | Canonical lesson explicitly separates compatibility from payload | Reinforcement, not a new concept |
+| How does attention output affect the residual stream? | W_O remaps the context vector and Delta X is added to X | Transformer-block walkthrough traces the attention branch and residual connection | Useful bridge; link to existing Build page and keep MLP omission explicit |
+| What happens for a zero query? | All logits are zero, so unmasked softmax is uniform | Attention page explains row-wise normalization; causal-mask page restricts accessible positions | Useful boundary example: uniformity is for the unmasked toy setup, not an unconditional GPT rule |
+| What happens if the toy state is updated and attention is run again? | Cara's negative needs produce a negative query; she would mostly attend to Bob, whose key is zero and who has least to offer | No equivalent behavior is claimed for real Transformers; the project distinguishes residual updates from hand-designed semantic features | Preserve as a limitation/counterexample of the unconstrained toy dynamics, not as a Transformer property |
+| Does the article cover production GPT attention? | No: it explicitly omits causal masking and multi-head attention | Both topics are covered in dedicated project material | Preserve as source limitation; do not infer missing content |
+| Do token examples establish what an attention head computes? | Bank, Peter/he and quick-brown-fox examples are intuitive illustrations | Project already labels linguistic examples as illustrative, not empirical head evidence | Keep epistemic caveat; do not add another example |
+| Are the article's figures reusable? | PDF tables and attention matrix inspected; p. 11 credits Raschka Figure 3.11 | Project has original bilingual diagrams and source provenance controls | Link only; no copying or redrawing without asset-level rights verification |
+
+### Technical qualifications to preserve
+
+- The article multiplies QKᵀ by a separate scalar 10. This is a pedagogical sharpness choice, not the standard 1/√dₖ factor.
+- The all-zero row becomes uniform because the example applies softmax without a causal mask.
+- W_O is the attention sublayer output projection back to the state dimension; it is not the final vocabulary/logit projection.
+- The residual update illustrates the attention branch only and omits the MLP residual branch.
+- The hand-designed needs/offers dimensions must not be presented as clean semantic features learned by real models.
+
+**Disposition:** source registered and linked as optional further reading; no canonical concept, duplicate derivation, new exercise hub or image asset is added.
