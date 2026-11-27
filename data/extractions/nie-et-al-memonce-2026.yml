@@ -1,0 +1,66 @@
+schema_version: 1
+source_id: nie-et-al-memonce-2026
+items:
+  - id: nie-et-al-memonce-2026:memory-state-formulation
+    kind: definition
+    summary: "The paper formalizes continual generation as conditioning on an active memory state M_t derived from the current input and historical context, rather than directly conditioning on the full raw history."
+    locator: {type: section, value: "2, Eq. 1", label: "Unified Perspective: Memory State Learning"}
+    evidence: {kind: formal-definition, confidence: well-supported, scope: "The paper's proposed formulation.", assumptions: ["The memory mapping is instantiated by the architecture."], limitations: ["This is a unifying formulation, not proof that all memory systems use the same mechanism."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:continual-inference, topic:persistent-memory], concept_ids: [persistent-memory, inference-time-compute]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Compare with existing persistent-memory and context-engineering concepts before revising canonical definitions."
+  - id: nie-et-al-memonce-2026:memory-encoder-decoder
+    kind: architecture
+    summary: "The encoder stores only the trailing 1/r fraction of final-layer hidden states from each processed segment in one global memory bank. Layer-specific lightweight MLP projections later decode retrieved states into K and V tensors for each attention layer."
+    locator: {type: section, value: "3.1, Eqs. 6–7; Figure 2", label: "Memory Encoder-Decoder"}
+    evidence: {kind: architecture-description, confidence: well-supported, scope: "The proposed write and read path, including example ratio r=8.", assumptions: ["Trailing final-layer states summarize earlier positions within each segment."], limitations: ["This is lossy compression, not token-exact history storage."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:kv-cache, topic:persistent-memory, method:memory-encoding], concept_ids: [kv-cache, persistent-memory, contextualized-representation]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Compare with YOCO, LastKV and cross-layer cache sharing before proposing a distinct concept."
+  - id: nie-et-al-memonce-2026:memory-sparse-attention
+    kind: mechanism
+    summary: "For each continual input, a learned projection of the final-layer query representation is L2-normalized and compared by cosine similarity with long-term memory entries. Top-K entries are selected once, concatenated with the recent short-term window, and reused across attention layers and subsequent decoding steps."
+    locator: {type: section, value: "3.2, Eqs. 8–10", label: "Memory Sparse Attention"}
+    evidence: {kind: algorithm-description, confidence: well-supported, scope: "Indexing, short-term/long-term partition and reuse.", assumptions: ["The selected subset is adequate for the current task."], limitations: ["A retrieval error is shared across layers because routing is performed once."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [method:sparse-attention, method:top-k-retrieval, topic:long-context], concept_ids: [kv-cache, persistent-memory, self-attention, document-retrieval]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Compare with per-layer retrieval, token-wise sparse attention and RAG."
+  - id: nie-et-al-memonce-2026:active-versus-persistent-memory
+    kind: limitation
+    summary: "The active memory subset is bounded by a fixed budget C, giving O(CD) active state independent of history length and layer count, while the persistent memory bank remains expandable and may be offloaded to CPU or SSD."
+    locator: {type: section, value: "3.2, paragraph following Eq. 10", label: "Sparse Attention and On-Demand Loading"}
+    evidence: {kind: complexity-analysis, confidence: well-supported, scope: "Distinction between active decoded state and persistent historical memory.", assumptions: ["The active subset size C is fixed."], limitations: ["Constant active GPU state does not imply constant total storage or constant retrieval cost."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [mathematical-tools-geometry], tags: [topic:memory-complexity, topic:long-context], concept_ids: [persistent-memory, kv-cache, inference-time-compute]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate
+    disposition_rationale: "Preserve this distinction whenever describing the 1,313× headline result."
+  - id: nie-et-al-memonce-2026:post-training-adaptation
+    kind: method
+    summary: "For post-training adaptation of a pretrained model, the authors freeze the backbone and optimize the memory indexing and decoding projections plus LoRA adapters used during memory encoding."
+    locator: {type: section, value: "3.3, Optimization", label: "Optimization"}
+    evidence: {kind: method-description, confidence: well-supported, scope: "The paper's stated post-training adaptation procedure.", assumptions: [], limitations: ["No universal guarantee of unchanged capabilities under arbitrary deployment conditions."]}
+    classification: {primary_theme: probabilistic-foundations-training, secondary_themes: [inference-efficiency], tags: [method:post-training-adaptation, method:lora], concept_ids: [inference-time-compute]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Cross-link to fine-tuning/LoRA only if the recipe adds pedagogical value."
+  - id: nie-et-al-memonce-2026:reported-1m-results
+    kind: result
+    summary: "For the adapted Qwen3.5-4B setup at one-million-token context, the paper reports 25 MB memory-state cache in Figure 1 versus 144 GB for the standard Transformer, 6.9× lower prefill latency, 3.5× throughput and 60.07% overall memory-benchmark performance versus 54.30% for the full-context baseline."
+    locator: {type: figure, value: "Figure 1; Figure 4; Section 4", label: "Headline memory and inference comparisons"}
+    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Authors' Qwen3.5-4B adaptation and selected memory benchmark aggregation.", assumptions: ["The paper's model, hardware, context and benchmark setup apply."], limitations: ["Not independently reproduced; memory-state cache is not total persistent storage or total system memory."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:long-context, topic:kv-cache, topic:benchmark], concept_ids: [kv-cache, persistent-memory]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: cite
+    disposition_rationale: "Cite only with model, context length, metric definition and paper-specific qualification."
+  - id: nie-et-al-memonce-2026:representation-transfer
+    kind: result
+    summary: "The authors report zero-shot transfer of learned 1024-dimensional memory representations to retrieval and reranking benchmarks, with overall Recall@10 69.21 and NDCG@10 53.06 across eight datasets."
+    locator: {type: table, value: "Table 5, Section 4.4", label: "Retrieval and reranking results"}
+    evidence: {kind: benchmark-result, confidence: context-dependent, scope: "Eight retrieval and reranking datasets evaluated in the paper.", assumptions: [], limitations: ["Not independently reproduced and not generalizable to every retrieval task."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [inference-efficiency], tags: [topic:representation-learning, application:information-retrieval], concept_ids: [contextualized-representation, document-retrieval]}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: defer
+    disposition_rationale: "Secondary contribution; consider if a comparative lesson on retrieval representations is developed."
