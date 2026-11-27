@@ -231,6 +231,6 @@ A focused FR/EN review covered the four connected lessons **Logits**, **Output p
 
 The bilingual caveats are materially aligned. Different running examples are acceptable because the mathematical conditions and conclusions are preserved.
 
-**Correction found:** the English Likelihood page had a double-escaped bit-scale formula, `2^{\\bar{\\ell}}`, while the French page correctly used a single LaTeX command. [PR #1782](https://github.com/JM-Brun/llm-lab/pull/1782) changes it to `2^{\bar{\ell}}`. This is a rendering-level source correction, not a change to the mathematical claim.
+**Correction found:** the English Likelihood page had a double-escaped bit-scale formula, `2^{\\bar{\\ell}}`, while the French page correctly used a single LaTeX command. [PR #1783](https://github.com/JM-Brun/llm-lab/pull/1783) changes it to `2^{\bar{\ell}}`. This is a rendering-level source correction, not a change to the mathematical claim.
 
 **Remaining scope:** continue the same targeted method on the loss/cross-entropy and training-loop group, then the Transformer/attention group. Do not infer that the full 20-lesson scientific caveat audit is complete from this slice. Keep findings in this validation document; do not create another claim or lesson registry.
