@@ -109,7 +109,6 @@ def _remove_excluded_fenced_divs(markdown: str) -> str:
     return "".join(output)
 
 
-
 def _main_lesson(markdown: str) -> str:
     """Remove metadata and content explicitly outside the main learning lesson."""
     text = FRONT_MATTER.sub("", markdown, count=1)
