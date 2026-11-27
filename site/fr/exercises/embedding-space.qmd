@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Vérifier sa compréhension
 
-Les exercices d'application sont regroupés dans la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et conserve les questions de vérification ci-dessous ; elle ne fait pas partie du parcours principal.
+Cette page regroupe les questions, exercices et expériences propres à la leçon Espace des embeddings. Pour les exercices transversaux sur les données textuelles, consultez la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et ne fait pas partie du parcours principal.
 
 1. Une matrice contient $V$ lignes et des vecteurs de dimension $d$. Combien de paramètres contient-elle, et que sélectionne l'ID $i$ ?
 
