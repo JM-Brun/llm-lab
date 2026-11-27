@@ -240,8 +240,8 @@ items:
       novelty: {level: low, rationale: "Lexical ambiguity and pronoun reference are established motivation examples."}
       complementarity: {level: high, rationale: "The pronoun example adds a distinct cross-position dependency to the page's existing lexical-ambiguity example."}
       pedagogical_value: {level: high, rationale: "The paired examples distinguish lexical sense selection from using context across token positions."}
-      applicability: {level: high, rationale: "A concise bilingual subsection fits directly after the existing bank example on the contextualized-representations page."}
-      redundancy: {level: low, rationale: "The current page has a lexical ambiguity example but no pronoun-reference example; the new item adds a distinct relation without repeating the mechanism explanation."}
+      applicability: {level: moderate, rationale: "The bank/river example is present in the advanced Q/K/V deep dive, while the current core pronoun example is attributed to Neha KK; no separate Nishanthan-specific subsection is warranted."}
+      redundancy: {level: high, rationale: "The two teaching functions are already represented in current destinations, but the pronoun example is attributed to Neha KK and the bank example is retained through the Codefinity synthesis; no distinct Nishanthan-specific page contribution is verified."}
       evidence_quality: {level: moderate, rationale: "Illustrative examples motivate the need for context but do not prove that one attention layer resolves ambiguity or coreference."}
     locator: {type: section, value: "2", label: "Why Do We Need Q, K, and V?"}
     evidence:
@@ -257,8 +257,8 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: [contextualized-representation]
-    disposition: integrate
-    disposition_rationale: "The bilingual contextualized-representations lesson already uses lexical ambiguity (bank) but did not illustrate a cross-position pronoun dependency. Add the animal/it example as a short complementary subsection, explicitly framing it as motivation rather than evidence that one attention head resolves coreference. This preserves the source's useful second viewpoint without duplicating the QKV mechanism explanation."
+    disposition: reject
+    disposition_rationale: "No distinct Nishanthan-specific page integration is verified in the current bilingual files. The bank/river example is present in the advanced Q/K/V deep dive through the Codefinity synthesis; the core Q/K/V pronoun example is explicitly adapted from Neha KK. The earlier plan to add an animal/it subsection to contextualized-representations is not the current page state. Keep Nishanthan as a reader-facing visual reference, but do not attribute these current examples to this source or add duplicate content."}
 
   - id: nishanthan-k-qkv-transformers-devto:reader-comment-kv-cache
     kind: open-question
