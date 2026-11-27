@@ -2130,3 +2130,25 @@ A source-grounded page-by-page audit of the bilingual **Positional encoding** an
 This batch confirms that both lessons already have several substantial contributions: positional insertion-point distinctions and the separation of positional information from causal visibility; shared embedding lookup versus context-dependent hidden states, causal dependency boundaries, and limits on semantic interpretation. The source-derived empirical measurements for contextuality remain in Deepen. No new page metadata field, contribution registry, concept node or route step is justified.
 
 The audit is source-only. It does not claim rendered visual, accessibility or learner validation. The next #1739 batch should continue in canonical Understand route order and reuse the existing Q/K/V pilot rather than repeat it.
+
+
+## Issue #1739 — branches génération, scoring et apprentissage (2026-11-27)
+
+Audit source page par page des leçons Understand FR/EN `generation`, `vraisemblance` / `likelihood`, `loss`, `gradients` et `training-loop`. Le pilote cross-entropy #1739 est réutilisé sans duplication. La matrice détaillée et les décisions de conservation sont dans [le dossier des contributions génération/scoring/apprentissage](source-syntheses/understand-generation-scoring-training-contributions-audit-2026-11.md).
+
+### Résultats
+
+- Les trois usages de la distribution prédictive restent distincts : génération libre (token sélectionné puis réinjecté), scoring (token de référence observé) et apprentissage (cible observée, loss, gradient puis mise à jour).
+- La génération distingue forward pass, sélection/décodage et boucle complète ; le choix local change le préfixe et peut changer toute la suite, sans optimiser la vraisemblance globale.
+- Le scoring factorise la probabilité d'une séquence selon les préfixes de référence ; il ne sélectionne pas les tokens. La perplexité dépend du tokenizer, du corpus et de la convention d'agrégation.
+- La loss explicite l'alignement logits-position cible et le risque d'un décalage silencieux. Teacher forcing est un régime de conditionnement, pas une loss ni un optimiseur.
+- Le masque de loss n'est pas un masque d'attention. Une position exclue comme cible peut rester visible en entrée ; sa représentation peut recevoir un gradient indirect via une position supervisée qui l'utilise comme clé ou valeur.
+- Le gradient n'est pas l'update. Seule l'étape de l'optimiseur modifie les paramètres ; la validation mesure le modèle à paramètres fixes.
+
+### Décision
+
+Aucune modification des leçons n'est justifiée par cette inspection : les apports sont déjà présents et les audits Practice/numériques du 25 novembre les ont en partie vérifiés. Aucun nouveau concept, champ de métadonnées ou registre n'est requis. Les distinctions ci-dessus deviennent des invariants de conservation pour les futures refontes.
+
+### Limites et suite
+
+Ce lot est un audit de contenu source, pas une validation de rendu ou d'accessibilité. La vérification Quarto/browser, mobile, navigation, clavier et lecteur d'écran reste à effectuer. Continuer l'inventaire exhaustif à partir des registres canoniques, sans réauditer les pages déjà couvertes par les pilotes et audits datés.
