@@ -52,7 +52,7 @@ Le dossier est un index de synthèse éditoriale, pas un remplacement des enregi
 Une décision éditoriale et une présence publiée sont deux faits différents. Pour chaque contribution retenue ou déclarée déjà couverte, documenter dans le dossier de synthèse une destination vérifiable :
 
 - identifiant local de contribution dans ce dossier ;
-- item(s) d'extraction source qui l'étayent, avec liens vers les fichiers canoniques ;
+- item(s) d'extraction source qui l'étayent, avec liens vers les fichiers canoniques, **ou une provenance explicitement marquée `project-derived`** lorsqu'il s'agit d'une conséquence construite par LLM Lab ;
 - question ou affirmation pédagogique précise que la contribution informe ;
 - page cible et langue ;
 - section ou ancre exacte, avec lien vers la page source Quarto lorsque possible ;
