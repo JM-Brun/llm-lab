@@ -62,7 +62,7 @@ A neural network such as a Transformer follows a different strategy. It learns f
 
 ## 2. Why is an integer label not enough?
 
-Imagine a dictionary that assigns an integer to every word:
+For simplicity, imagine a vocabulary that assigns an ID to three units — whole words in this example:
 
 | Word | Integer |
 |---|---:|
@@ -70,7 +70,7 @@ Imagine a dictionary that assigns an integer to every word:
 | dog | 42 |
 | car | 8 |
 
-These integers let us retrieve the words. But they describe no linguistic property. The fact that 17 and 42 are closer than 17 and 8 has no meaning: we could permute the integers without changing the language or the learning task.
+In a real tokenizer, units are not necessarily whole words: they may be word fragments, punctuation marks, or other tokens. These IDs let us retrieve vocabulary entries, but they describe no linguistic property. The fact that 17 and 42 are closer than 17 and 8 has no meaning: we could permute the integers without changing the language or the learning task.
 
 A direct calculation on these identifiers — for example, a distance between 17 and 42 — would exploit an accidental property of the numbering. The network would learn from an arbitrary convention, not from a relationship between words.
 
