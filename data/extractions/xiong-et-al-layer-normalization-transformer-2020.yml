@@ -1,0 +1,52 @@
+schema_version: 1
+source_id: xiong-et-al-layer-normalization-transformer-2020
+items:
+  - id: xiong-et-al-layer-normalization-transformer-2020:pre-ln-post-ln-gradient-scale
+    kind: result
+    summary: "Under the paper's initialization assumptions, the expected gradient norm at the last FFN sub-layer scales differently for Post-LN and Pre-LN: the Post-LN bound is independent of depth, while the Pre-LN bound decreases with depth."
+    locator: {type: section, value: "3.3, Theorem 1", label: "Understanding the Transformer at initialization"}
+    evidence:
+      kind: mathematical-claim
+      confidence: well-supported
+      scope: "Theorem 1 bounds the last-layer FFN gradient norm: Post-LN O(d sqrt(ln d)); Pre-LN O(d sqrt(ln d / L)). The surrounding discussion links the difference to the placement of layer normalization."
+      assumptions:
+        - "The theoretical setting simplifies to single-head attention and d-by-d parameter matrices."
+        - "The self-attention Q and K projections are initialized to zero, yielding uniform attention at initialization."
+        - "Input vectors follow the paper's Gaussian assumptions and derivatives are bounded."
+      limitations:
+        - "The result is a statement about initialization under the paper's assumptions, not a universal proof that Pre-LN is always superior."
+        - "The bound concerns the final FFN sub-layer; it does not directly validate the project's implementation or every training regime."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:transformer, topic:layer-normalization, method:pre-layer-normalization]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Grounds the page's Pre-LN/Post-LN design rationale in a precise theoretical result; it does not replace implementation tests or require a new concept page."
+
+  - id: xiong-et-al-layer-normalization-transformer-2020:pre-ln-warmup-experiments
+    kind: result
+    summary: "The paper's translation and BERT experiments show that Pre-LN can be trained without the warm-up schedule used for Post-LN and can reach comparable task performance in the tested settings."
+    locator: {type: section, value: "4.2", label: "Experiment Results; Figures 4–5"}
+    evidence:
+      kind: empirical-result
+      confidence: context-dependent
+      scope: "The paper compares validation loss, BLEU and downstream BERT results for Post-LN and Pre-LN configurations, including experiments without warm-up."
+      assumptions:
+        - "The result is tied to the reported architectures, initialization, optimizers, learning-rate settings and datasets."
+      limitations:
+        - "Do not turn this result into the rule that all Pre-LN models need no warm-up or that warm-up is never useful."
+        - "No experiment was reproduced in the project environment."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:transformer, topic:layer-normalization, method:pre-layer-normalization]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports a qualified explanation of the Pre-LN choice while preserving the distinction between theoretical motivation and the project's own tests."
