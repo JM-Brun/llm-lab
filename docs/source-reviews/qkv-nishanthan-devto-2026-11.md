@@ -35,7 +35,7 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 | Shared input X and learned projections | Low | Low | Reject as a new page edit; the canonical lesson already has equations, dimensions and self-/cross-attention caveats |
 | Score → scale → softmax → aggregation | Low | Low | Reject as a new page edit; retain the full computation in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
 | Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Reject as a new page edit; the Transformer overview and block walkthrough already serve both levels |
-| bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
+| bank ambiguity → pronoun it | Low | High as two distinct context-dependent teaching examples, but their current destinations and provenance differ | No separate Nishanthan-specific page integration is verified: the bank/river example is in the advanced Q/K/V deep dive; the core page's pronoun example is explicitly adapted from Neha KK. Do not attribute the latter to Nishanthan or add a duplicate subsection to contextualized-representations |
 | Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Reject as a new page edit; the Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
 | Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Reject as a new page edit; the attention lesson's equation and numerical example already show weighted Value aggregation |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
@@ -52,7 +52,7 @@ The article's central equations and role distinctions are sound at the introduct
 
 ## 5. Integration decision
 
-**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing is rejected as a new page edit because the current lesson already explains it more precisely; the source is now linked as an optional external visual reference.
+**The historical integration rationale is not supported by the current page files.** The core Q/K/V page contains a pronoun example explicitly adapted from Neha KK; the advanced Q/K/V deep dive contains the bank/river lexical-ambiguity example. The current contextualized-representations pages do not contain the claimed paired examples. No separate Nishanthan-specific page integration is therefore verified. Keep the DEV article as an optional reader-facing visual reference; do not attribute the current Neha example to Nishanthan or add duplicate content.
 
 The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material is rejected as new page content because the project already provides more complete treatments at the appropriate locations.
 
@@ -62,9 +62,7 @@ This is the intended workflow outcome: preserve plausible complementary value du
 
 ## 6. Integration update
 
-The targeted comparison found a real complementarity: the canonical page used lexical ambiguity (bank) but not cross-position pronoun reference. Both language versions now include the it → the animal example. The wording treats it as an illustration of contextual dependency, not evidence that a particular attention head performs coreference resolution. The extraction disposition is updated to integrate.
-
-The article is cited as the pedagogical origin of the example, not as a primary scientific source. The source catalogue records the integration as partial because only the pronoun-reference contribution was integrated; other items were deferred or rejected. The source remains partially scanned because linked materials, embedded assets, publication metadata and reuse rights remain unverified.
+Current destination check (2026-11-27): the article's combined bank/pronoun item is not integrated as a distinct Nishanthan-specific page contribution. The bank example is in the advanced Q/K/V deep dive; the core page's pronoun example is explicitly adapted from Neha KK. The earlier plan to place a Nishanthan pronoun subsection on contextualized-representations is not reflected in the current files. The item disposition is corrected to reject as a new page edit. The article remains a reader-facing visual reference; its other role, projection and computation items are rejected as redundant or retained only as source-level comparisons. The source remains partially scanned because linked materials, embedded assets, publication metadata and reuse rights remain unverified.
 
 ## 7. Follow-up scan reconciliation
 
@@ -74,7 +72,7 @@ The KV-cache suggestion is a comment by Jessica Williams, not article-author con
 
 The technical interpretation is precise: during incremental causal decoding at position `t`, the current position produces `q_t`, `k_t` and `v_t`; `q_t` attends over the cached past keys/values together with the current `k_t`/`v_t`; then the current key and value are appended to the per-layer cache. Thus, “only a fresh Query” describes which query is needed for the incremental attention calculation; it does **not** mean that the current token's K and V are skipped. The cache reduces recomputation but consumes memory proportional to the retained K/V states; exact usage depends on model dimensions and cache strategy. This verification is grounded in the independent Hugging Face documentation, not in the QKV article or the commenter.
 
-The source catalogue preserves earlier scan events and adds this recheck with its actual access limitations. The QKV article remains `partially-scanned`; its integration remains `partially-integrated`. The separate Hugging Face documentation source is also partial because the mutable `main` revision was not pinned and implementation variants were not exhaustively audited.
+The source catalogue preserves earlier scan events and adds this recheck with its actual access limitations. The QKV article remains `partially-scanned`; its integration status is `reviewed`: no author-authored contribution is integrated as distinct page content, and the article remains a reader-facing visual reference. The separate Hugging Face documentation source is also partial because the mutable `main` revision was not pinned and implementation variants were not exhaustively audited.
 
 ## 8. Visual asset follow-up
 
@@ -90,18 +88,18 @@ The extraction workflow now has explicit procedures for a retrieval ladder (cano
 
 The article's local concept/process graph and its implied learning route have now been reconstructed and compared with the canonical LLM Lab graph and route in [QKV source learning graph and route comparison](qkv-learning-graph-comparison-2026-11.md).
 
-The comparison found no reason to copy the article's section order into the project: the current route already places contextualized representations and the Transformer overview before Q/K/V, then separates scaled attention and causal masking. The article's examples are already integrated in the contextualization lesson. Its compact multi-head overview is already served by the Transformer overview, with implementation depth in the block walkthrough.
+The comparison found no reason to copy the article's section order into the project: the current route already places contextualized representations and the Transformer overview before Q/K/V, then separates scaled attention and causal masking. The bank/river example is present in the advanced Q/K/V deep dive; the core page's pronoun example is explicitly adapted from Neha KK. No distinct Nishanthan-specific example integration is verified. Its compact multi-head overview is already served by the Transformer overview, with implementation depth in the block walkthrough.
 
 It did reveal a representational gap in the canonical concept graph. Four stable concepts are now registered: `attention-score`, `attention-weight`, `scaled-dot-product-attention`, and `multi-head-attention`. Their bilingual definitions, canonical page mappings and typed relations make explicit distinctions that the existing lessons already teach. The QKV source record and relevant extraction items now reference these canonical IDs.
 
 No new page or route edge was added. The graph change is a refinement of the project's existing conceptual model, not a new content requirement generated by the article.
 
 
-## 10. Integration closure
+## 10. Disposition closure
 
-**The article's pedagogical integration is complete; its source scan is not.** These are separate lifecycle dimensions and must remain separate in the catalogue.
+**The article's item-level pedagogical review is complete; no author-authored contribution is integrated as distinct page content.** The source remains useful as a reader-facing visual reference, but this role is separate from content integration and from scan completeness.
 
-The article's author-authored contributions have now all received a final disposition (11 atomic items: one integrated and ten rejected as unnecessary new edits):
+The article's author-authored contributions have now all received a final disposition (11 atomic items: zero integrated and eleven rejected as unnecessary new page edits):
 
 | Extracted contribution | Final disposition | Integration outcome |
 |---|---|---|
@@ -110,7 +108,7 @@ The article's author-authored contributions have now all received a final dispos
 | Scaled dot-product computation | Rejected as a new edit | Dedicated attention lesson provides fuller derivation and numerical treatment |
 | Multi-head attention overview | Rejected as a new edit | Transformer overview and implementation walkthrough cover the conceptual and implementation levels |
 | Search/document analogy | Rejected | Explanatory mapping duplicates the existing index-card analogy |
-| Lexical ambiguity and pronoun reference | Integrated | The complementary pronoun-reference example is present in both contextualized-representations lessons |
+| Lexical ambiguity and pronoun reference | Rejected as a new page edit | The bank/river example is in the advanced Q/K/V deep dive; the core page's pronoun example is attributed to Neha KK. No distinct Nishanthan-specific page contribution is verified |
 | Attention score is not semantic similarity | Rejected as a new edit | Existing bilingual misconception guardrails are more precise |
 | Weighted aggregation is not argmax | Rejected as a new edit | Existing equation and numerical example already demonstrate weighted aggregation |
 | Q/K/V projections learned by backpropagation | Rejected as a new edit | Existing Q/K/V page identifies learned parameters; the gradients lesson owns optimization |
@@ -121,7 +119,7 @@ The reader-comment KV-cache lead remains **deferred** as a separately attributed
 
 The canonical graph refinement is complete: the four stable concepts and their typed relations are registered, linked to existing bilingual resources, and covered by the source-graph comparison dossier. The article's six-section teaching sequence was compared with the canonical guided route, page routes and Build route; no route or navigation change was justified. No new page, local visual asset or experiment is added merely to mirror the source; the external source link is an optional visual detour.
 
-Accordingly, the parent article's `integration_status` is **integrated**: every author-authored contribution has been integrated or explicitly rejected as redundant. The separate KV-cache reader comment remains deferred. The article's `scan_status` remains **partially-scanned** because the embedded image has not been visually inspected, linked materials and publication metadata remain unverified, and reuse rights are unknown. This does not block the completed pedagogical integration, but it does block claiming a complete source audit or any figure reuse.
+Accordingly, the parent article's `integration_status` is **reviewed**: its author-authored contributions have been evaluated and rejected as new page edits; the source remains available as a reader-facing visual reference. The separate KV-cache reader comment remains deferred. The article's `scan_status` remains **partially-scanned** because linked materials, publication metadata and some comment history remain unverified, and reuse rights are unknown. The illustration itself was retrieved and visually inspected on 2026-11-12, as documented in section 13; it remains link-only because no reuse permission has been established.
 
 No source content has been deleted from the extraction record; rejected items remain available as provenance-backed corroborating evidence.
 
