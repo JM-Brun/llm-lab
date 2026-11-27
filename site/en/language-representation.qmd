@@ -33,6 +33,8 @@ tags:
   - "status:published"
 -->
 
+{{< include ../includes/generated-guided-context-en-language-representation.qmd >}}
+
 ::: {.chapter-lead}
 A language model learns to produce sequences of tokens. But a neural network does not compute directly on words as we read them: its operations act on **numbers arranged in tensors**. We therefore need a bridge between language symbols and the numerical objects the network can transform.
 
