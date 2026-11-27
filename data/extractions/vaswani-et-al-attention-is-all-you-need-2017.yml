@@ -63,3 +63,26 @@ items:
       concepts: [query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
     disposition: integrate
     disposition_rationale: "Add the primary mathematical definition as a source-backed extraction item so the existing canonical concepts and computational attention nodes can be traversed to the exact paper section and equation without duplicating the concept graph."
+
+  - id: vaswani-et-al-attention-is-all-you-need-2017:learned-qkv-projections
+    kind: architecture
+    summary: "The Transformer forms each attention head by applying distinct learned linear projections to queries, keys and values, producing per-head key/query and value dimensions; the head outputs are concatenated and projected again."
+    locator: {type: section, value: "3.2.2", label: "Multi-Head Attention"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "Section 3.2.2 explicitly states that queries, keys and values are linearly projected h times with different learned matrices, gives the head_i equation and specifies the projection-matrix dimensions."
+      assumptions:
+        - "This is the paper's multi-head formulation; section 3.2.3 states that Q, K and V share the previous-layer source in self-attention."
+      limitations:
+        - "The page's XW_Q, XW_K, XW_V notation is a compact single-head specialization, not the exact multi-head equation as printed."
+        - "The original paper's encoder-decoder and self-attention data flows should not be generalized to every modern architecture without checking its design."
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:qkv, topic:self-attention, topic:multi-head-attention]
+      concept_ids: [query, key, value, multi-head-attention]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value, multi-head-attention]
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides an exact primary-source locator for the existing learned-projection explanation; no new page or concept is required."
