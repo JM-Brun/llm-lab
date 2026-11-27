@@ -127,6 +127,16 @@ Computing a continuation conditioned on the examples describes the observable be
 *Induction heads* are one mechanism studied in some Transformers: attention heads can help detect a previously seen sequence and continue its pattern. They illuminate some copying and continuation behaviors, but are not a universal explanation for every form of ICL.
 :::
 
+::: {.callout-note collapse="true" title="Further exploration: a Bayesian-inference explanation"}
+Xie et al. (2022) propose a theoretical framework in which pretraining documents share a **latent concept** \\(\\theta\\). Prompt examples share a concept \\(\\theta^*\\) as well. The model can then use the prompt by inferring this concept from the examples and computing a predictive distribution that marginalizes over possible concepts.
+
+The result is formalized under explicit assumptions, including a pretraining distribution built as a mixture of hidden Markov models (HMMs), a delimiter structure, and a distinguishability condition between concepts. The authors also show that the length of input examples can provide information beyond the input-output mapping alone.
+
+Their experiments on GINC, a synthetic dataset constructed from mixtures of HMMs, show that Transformers and LSTMs can exhibit ICL in this setting. They do not demonstrate that all LLMs universally learn through Bayesian inference on natural corpora. The explanation remains bounded by the theoretical assumptions and synthetic experiments.
+
+See [Xie et al. (2022), ICLR](https://openreview.net/forum?id=RdJVFCHjUMI).
+:::
+
 ::: {.callout-note collapse="true" title="Further exploration: experimental study of ICL"}
 
 To distinguish rule learning from simple imitation:
