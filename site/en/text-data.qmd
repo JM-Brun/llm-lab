@@ -53,7 +53,14 @@ A different tokenizer can give the same text different tokens and IDs. Even when
 
 <span id="comparison-of-two-tokenizers"></span>
 
-To compare two tokenizers without changing the pedagogical material, the trace encodes **the same running-example prefix** with `gpt2` and `cl100k_base`. For each tokenizer it prints the exact fragments, IDs, token count, and reconstructed text. Boundaries and IDs may differ, but both sequences must decode to the same prefix. IDs are local to their vocabulary, so their numeric values are not comparable across tokenizers. This comparison is reproducible with `tiktoken==0.14.0` in the [Python trace](exercises-text-data.qmd#tokenizer-embedding-trace).
+Now compare the two encodings of **the exact same prefix** with `tiktoken==0.14.0`:
+
+| Running-example prefix | Encoding | Token count |
+|---|---|---:|
+| `What have the Romans ever done for us?` | `gpt2` | **9** |
+| Same prefix | `cl100k_base` | **9** |
+
+For this English example, both tokenizers produce nine tokens. This does not mean they use the same boundaries or IDs: the vocabularies are different. Token counts depend on the input language and domain, so this single result is not a general ranking of tokenizer quality. IDs are local to each vocabulary and are not numerically comparable. The [reproducible Python trace](exercises-text-data.qmd#tokenizer-embedding-trace) checks both counts and prints the fragments, IDs, and reconstructed text.
 
 ### Why do two tokenizers produce different sequences?
 

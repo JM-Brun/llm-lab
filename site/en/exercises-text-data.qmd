@@ -224,11 +224,13 @@ for fragment, token_id in zip(token_bytes, token_ids):
     print(f"  {fragment!r} -> {token_id}")
 
 # Controlled comparison: same text, two different vocabularies.
-for name in ("gpt2", "cl100k_base"):
+expected_counts = {"gpt2": 9, "cl100k_base": 9}
+for name, expected_count in expected_counts.items():
     tokenizer = tiktoken.get_encoding(name)
     ids = tokenizer.encode(prefix)
     fragments = [tokenizer.decode_single_token_bytes(i) for i in ids]
     assert tokenizer.decode(ids) == prefix
+    assert len(ids) == expected_count
     print(f"\n{name}: {len(ids)} tokens")
     for fragment, token_id in zip(fragments, ids):
         print(f"  {fragment!r} -> {token_id}")
