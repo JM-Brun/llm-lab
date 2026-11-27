@@ -6,6 +6,12 @@
 **Architectural reference:** [#575 — Provide one persistent computational spine across inference, scoring and learning](https://github.com/JM-Brun/llm-lab/issues/575).  
 **Status:** process contract. The route audit below is a source-level baseline, not a claim that every figure has passed browser inspection.
 
+## Applied audit records
+
+
+  - [Third Understand visual audit pilot (2026-11-26)](visual-audit-third-pilot-2026-11-26.md): embedding lookup, contextualized representations and Transformer architecture, including mobile variants and removal of a redundant hidden pipeline figure.
+  - [Four-page Understand visual audit pilot (2026-11-26)](visual-audit-priority-pages-2026-11-26.md): concrete design decisions, placement, captions, caveats and remaining validation for likelihood, loss, gradients and context engineering.
+
 ## 1. Purpose and governing rule
 
 A visual is part of the explanation, not decoration added after the prose. It should make a concept, relationship, transformation, constraint, comparison, geometry or empirical result easier to understand, inspect or remember.
@@ -379,7 +385,3 @@ A route-wide audit is complete only when:
 - residual work is recorded with priorities and canonical owners.
 
 The route does not pass merely because every page contains an image. It passes when each visual earns its place and the visual language helps the learner build one coherent, scientifically correct mental model.
-
-## Applied audit records
-
-- [Third Understand visual audit pilot (2026-11-26)](visual-audit-third-pilot-2026-11-26.md): embedding lookup, contextualized representations and Transformer architecture, including mobile variants and removal of a redundant hidden pipeline figure.
