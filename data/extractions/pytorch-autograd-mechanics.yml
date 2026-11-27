@@ -1,0 +1,26 @@
+schema_version: 1
+source_id: pytorch-autograd-mechanics
+items:
+  - id: pytorch-autograd-mechanics:reverse-mode-graph
+    kind: definition
+    summary: "PyTorch autograd uses reverse-mode automatic differentiation: operations executed in the forward pass are recorded in a directed computation graph, then the backward pass traverses that graph to apply the chain rule."
+    locator:
+      type: section
+      value: "How autograd encodes the history"
+      label: "Autograd mechanics"
+    evidence:
+      kind: api-contract
+      confidence: well-supported
+      scope: "The official documentation describes graph recording during the forward pass and gradient computation by traversing the graph from outputs back to inputs."
+      assumptions:
+        - "The statement concerns PyTorch's default grad mode and reverse-mode differentiation."
+      limitations:
+        - "The graph is dynamically rebuilt on each iteration; this is an implementation model, not a claim that every autodiff system uses the same execution strategy."
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training]
+      concept_ids: [gradient, optimizer, parameter-update]
+    candidate_destinations:
+      pages: [en/gradients, fr/gradients]
+      concepts: [gradient]
+    disposition: integrate

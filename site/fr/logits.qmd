@@ -117,6 +117,14 @@ Pour relier l’axe des positions à l’axe du vocabulaire, [comparez deux cibl
 
 Considérez deux vecteurs : $z=(2,1)$ et $z'=(102,101)$. Leurs scores sont très différents en valeur absolue, mais le second s'obtient en ajoutant 100 à chaque composante. La softmax donne exactement la même distribution pour les deux vecteurs : le décalage commun s'annule entre le numérateur et le dénominateur. **Ce sont les écarts entre logits qui déterminent les rapports de probabilités, pas leur niveau absolu.**
 
+Plus généralement, si $p=\operatorname{softmax}(z)$, alors $\log p_i=z_i-\log\sum_j e^{z_j}$ et donc :
+
+$$
+\log\frac{p_i}{p_j}=z_i-z_j.
+$$
+
+L'écart entre deux logits est exactement le log-rapport des probabilités correspondantes.
+
 En revanche, multiplier tous les logits par un facteur positif peut modifier la concentration de la distribution, même si le classement des candidats reste identique. La température exploite précisément cette propriété ; la page [Probabilités de sortie](probabilites.qmd) en détaille l'effet.
 
 La conversion en distribution de probabilité est une opération distincte. Elle est traitée dans [Probabilités de sortie](probabilites.qmd), page de référence pour la softmax, la température et l'interprétation de la distribution.

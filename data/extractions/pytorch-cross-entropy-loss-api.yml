@@ -1,0 +1,25 @@
+schema_version: 1
+source_id: pytorch-cross-entropy-loss-api
+items:
+  - id: pytorch-cross-entropy-loss-api:logits-input
+    kind: definition
+    summary: "torch.nn.CrossEntropyLoss expects unnormalized logits as input; callers should not apply a separate softmax before passing the scores to this criterion."
+    locator:
+      type: section
+      value: "API description and input"
+      label: "CrossEntropyLoss"
+    evidence:
+      kind: api-contract
+      confidence: well-supported
+      scope: "The official API documentation explicitly specifies unnormalized class logits and describes the supported input shapes."
+      assumptions: []
+      limitations:
+        - "The API supports additional target forms, weighting, label smoothing, ignore_index and multiple reductions; the lesson's p-y derivative covers only the unweighted one-hot case."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [logits, cross-entropy]
+    candidate_destinations:
+      pages: [en/logits, fr/logits, en/cross-entropy, fr/cross-entropy]
+      concepts: [logits, cross-entropy]
+    disposition: integrate

@@ -55,7 +55,7 @@ For each target token in the continuation, first compute how the local loss vari
 
 ## Gradient with respect to logits
 
-For a one-hot target $y$ and cross-entropy computed from softmax:
+For a one-hot target $y$, let $p=\operatorname{softmax}(z)$. For the unweighted cross-entropy computed from this distribution:
 
 $$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
@@ -75,7 +75,7 @@ $$
 
 ::: {.callout-note collapse="true" title="Gradient of the mean over valid positions"}
 
-This formula gives the derivative of the loss **at one position**. For the unweighted mean over the valid target-position set $\mathcal{M}$ defined in [Loss](loss.qmd), the gradient with respect to each logit is:
+At each position, $p_{b,t}=\operatorname{softmax}(z_{b,t})$. This formula gives the derivative of the loss **at one position**. For the unweighted mean over the valid target-position set $\mathcal{M}$ defined in [Loss](loss.qmd), the gradient with respect to each logit is:
 
 $$
 \frac{\partial\mathcal{L}}{\partial z_{b,t,i}}=
@@ -172,7 +172,7 @@ g_i^{\mathrm{num}}=
 {2\epsilon}.
 $$
 
-Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative.
+Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative. PyTorch notes that `gradcheck` defaults are designed for double-precision inputs; lower precision can cause failures. The check may also fail at non-differentiable points or with tensors whose indices share overlapping memory. A failure must therefore be interpreted in light of these conditions, not as immediate proof that the analytical derivative is wrong.
 :::
 
 ::: {.callout-warning title="Misconceptions"}
