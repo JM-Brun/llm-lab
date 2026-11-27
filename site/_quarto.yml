@@ -287,6 +287,10 @@ project:
     - fr/exercises/emergence.qmd
     - fr/exercises/llm-evolution.qmd
     - fr/exercises/jepa-platonic-representation.qmd
+    - fr/exercises/universal-artificial-intelligence.qmd
+    - fr/exercises/tensors.qmd
+    - fr/exercises/score-centering.qmd
+    - fr/exercises/document-retrieval.qmd
     - en/exercises/llm-overview.qmd
     - en/exercises/generation.qmd
     - en/exercises/text-data.qmd
@@ -333,6 +337,10 @@ project:
     - en/exercises/emergence.qmd
     - en/exercises/llm-evolution.qmd
     - en/exercises/jepa-platonic-representation.qmd
+    - en/exercises/universal-artificial-intelligence.qmd
+    - en/exercises/tensors.qmd
+    - en/exercises/score-centering.qmd
+    - en/exercises/document-retrieval.qmd
     - fr/evaluation-experimentale.qmd
     - en/experimental-evaluation.qmd
     - fr/review-path.qmd
@@ -594,12 +602,19 @@ website:
                 - section: "Outils mathématiques et géométrie"
                   contents:
                     - fr/exercises/embeddings-deep-dive.qmd
+                    - fr/exercises/tensors.qmd
+                    - fr/exercises/universal-artificial-intelligence.qmd
+
+                - section: "Formalisation probabiliste et chaîne de l’entraînement"
+                  contents:
+                    - fr/exercises/score-centering.qmd
                 - section: "Inférence et efficacité"
                   contents:
                     - fr/exercises/decoding-strategies.qmd
                     - fr/exercises/llm-computational-complexity.qmd
                     - fr/exercises/compression-revision.qmd
                     - fr/exercises/rag-memory-boundaries.qmd
+                    - fr/exercises/document-retrieval.qmd
                 - section: "Échelle et recherche"
                   contents:
                     - fr/exercises/emergence.qmd
@@ -863,12 +878,19 @@ website:
                 - section: "Mathematical tools and geometry"
                   contents:
                     - en/exercises/embeddings-deep-dive.qmd
+                    - en/exercises/tensors.qmd
+                    - en/exercises/universal-artificial-intelligence.qmd
+
+                - section: "Probabilistic formalization and the training chain"
+                  contents:
+                    - en/exercises/score-centering.qmd
                 - section: "Inference and efficiency"
                   contents:
                     - en/exercises/decoding-strategies.qmd
                     - en/exercises/llm-computational-complexity.qmd
                     - en/exercises/compression-revision.qmd
                     - en/exercises/rag-memory-boundaries.qmd
+                    - en/exercises/document-retrieval.qmd
                 - section: "Scale and research"
                   contents:
                     - en/exercises/emergence.qmd
