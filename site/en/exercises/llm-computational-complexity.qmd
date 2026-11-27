@@ -27,10 +27,45 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-com
 ## Check your understanding
 
 1. **Dense attention is quadratic: why can it still be computed in parallel?** Interactions between positions are parallelizable matrix operations; total work and sequential depth are different.
+
+   <details>
+   <summary>Worked answer</summary>
+
+   Scores for all pairs of positions can be computed as the matrix operation $QK^\top$, and the resulting weights multiply $V$. Positions therefore need not be processed one after another within the layer. Total work remains quadratic in sequence length, but hardware parallelism reduces the sequential depth of the computation.
+
+   </details>
 2. **Why is standard generation still sequential?** The next token depends on the token just selected.
+
+   <details>
+   <summary>Worked answer</summary>
+
+   Autoregressive generation must wait for the token selected at the previous step: that token becomes part of the context that determines the next distribution. The initial prompt can be processed in parallel during prefill; decode steps for one sequence, however, depend on one another.
+
+   </details>
 3. **Does FlashAttention make attention linear?** No: it retains quadratic work while reducing memory movement and intermediates.
+
+   <details>
+   <summary>Worked answer</summary>
+
+   FlashAttention does not remove interactions between token pairs: dense attention still has quadratic work in sequence length. Its contribution is algorithmic and hardware-aware: tiled computation reduces memory traffic and avoids materializing the full attention matrix in GPU high-bandwidth memory.
+
+   </details>
 4. **Is a recurrent model with linear work in $T$ fully parallel?** No: a naïve recurrence depends on the previous state, although some structures enable parallel scans.
+
+   <details>
+   <summary>Worked answer</summary>
+
+   A general recurrence imposes the dependency $h_t=f(h_{t-1},x_t)$: state $t$ must wait for state $t-1$. Work can be linear in $T$ while sequential depth is also linear. Parallel scans are available for associative operations or specially structured recurrences; this does not make every arbitrary recurrence parallelizable.
+
+   </details>
 5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
+
+   <details>
+   <summary>Worked answer</summary>
+
+   Sparse routing limits the computation for one token to its $k$ selected experts, reducing active parameters and FLOPs per token. But the weights of all experts remain model parameters: they must be stored in memory or made accessible, possibly through distribution or offloading. Active parameters and total storage capacity are different quantities.
+
+   </details>
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)

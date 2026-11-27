@@ -3,6 +3,7 @@ title: "The training objective: guarantees and limits"
 subtitle: "Reading an LLM's performance without over-interpreting the training objective"
 keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 lang: en
+sidebar: llm-limits-en
 ---
 
 <!--

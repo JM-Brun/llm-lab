@@ -22,6 +22,7 @@ const visualCases = [
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
 const representationResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
+const movedModuleResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
 // Review bilingual exercise collections at desktop and mobile sizes.
 // Exercise IDs are semantic, language-neutral anchors rather than opaque codes.
@@ -53,6 +54,12 @@ const cases = [
       ...testCase, page: `exercises-${collection}.html`, kind: "exercise-collection",
     }))
   ),
+  // #1208: keep the moved module Practice companions in the bilingual browser baseline.
+  ...exerciseHubCases.flatMap(testCase =>
+    ["exercises/context-engineering.html", "exercises/document-retrieval.html", "exercises/generation.html", "exercises/gradients.html", "exercises/llm-computational-complexity.html", "exercises/loss.html", "exercises/training-loop.html"].map(page => ({
+      ...testCase, page, kind: "practice-companion",
+    }))
+  ),
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
@@ -65,6 +72,18 @@ const cases = [
   ...routeContextCases.flatMap(testCase =>
     ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
+    }))
+  ),
+  // #1208: the extracted RAG, retrieval and context-engineering modules need the same desktop route-context checks.
+  ...routeContextCases.flatMap(testCase =>
+    ["rag-memory-boundaries.html", "context-engineering.html", "document-retrieval.html"].map(page => ({
+      ...testCase, page, kind: "route-context",
+    }))
+  ),
+  // #1208: review the moved modules at narrow width in both languages as well.
+  ...movedModuleResponsiveCases.flatMap(testCase =>
+    ["rag-memory-boundaries.html", "context-engineering.html", "document-retrieval.html"].map(page => ({
+      ...testCase, page, kind: "moved-module-mobile",
     }))
   ),
   // #320: inspect the complete text → representations entry chain on mobile
@@ -163,7 +182,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "logits.html", "probabilities.html", "probabilites.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html", "queries-keys-values.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "logits.html", "probabilities.html", "probabilites.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html", "queries-keys-values.html", "llm-limits.html", "llm-computational-complexity.html", "rag-memory-boundaries.html", "context-engineering.html", "document-retrieval.html", "exercises/context-engineering.html", "exercises/document-retrieval.html", "exercises/generation.html", "exercises/gradients.html", "exercises/llm-computational-complexity.html", "exercises/loss.html", "exercises/training-loop.html"]);
     const sidebarPilotPages = new Set(["text-data.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "queries-keys-values.html"]);
     // A Quarto sidebar change must inspect the linked section entry and its children.
     // they share page-navigation, responsive, and rendered-math assertions.
@@ -1595,11 +1614,14 @@ async function runCase(testCase, caseIndex) {
             "scaling-laws.html": "guided-stage-training",
             "transformer-architectures.html": "guided-stage-orientation",
             "llm-limits.html": "guided-stage-orientation",
+            "context-engineering.html": "guided-stage-context-use",
+            "rag-memory-boundaries.html": "guided-stage-context-use",
+            "document-retrieval.html": "guided-stage-context-use",
           }[pagePath];
           const optionalPages = new Set([
             "unicode-text.html", "tokenization-strategies.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
             "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
-            "transformer-architectures.html", "llm-limits.html",
+            "transformer-architectures.html", "llm-limits.html", "rag-memory-boundaries.html", "document-retrieval.html",
           ]);
           const optionalRole = context.locator(".guided-page-context__role");
           const optionalRoleText = await optionalRole.innerText().catch(() => "");

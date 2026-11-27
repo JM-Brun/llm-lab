@@ -964,6 +964,24 @@ website:
           contents:
             - en/glossary.qmd
             - en/transformer-history.qmd
+    # Isolated sidebar contexts give optional companion pages native breadcrumbs
+    # without adding them to the flat Understand curriculum or its page sequence.
+    - id: llm-limits-fr
+      title: "Complément au panorama LLM"
+      style: "floating"
+      contents:
+        - section: "Panorama LLM"
+          href: fr/llm-overview.qmd
+          contents:
+            - fr/llm-limits.qmd
+    - id: llm-limits-en
+      title: "LLM overview companion"
+      style: "floating"
+      contents:
+        - section: "LLM overview"
+          href: en/llm-overview.qmd
+          contents:
+            - en/llm-limits.qmd
   page-footer:
     left: "LLM Lab"
     right:

@@ -27,10 +27,45 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-com
 ## Vérifier sa compréhension
 
 1. **L'attention dense est quadratique : pourquoi peut-elle être calculée en parallèle ?** Les interactions entre positions sont des opérations matricielles parallélisables ; travail total et profondeur séquentielle sont différents.
+
+   <details>
+   <summary>Corrigé raisonné</summary>
+
+   Les scores de toutes les paires de positions peuvent être calculés comme une opération matricielle $QK^\top$, puis les poids obtenus multiplient $V$. Les positions ne sont donc pas traitées l'une après l'autre à l'intérieur de cette couche. Le coût total reste quadratique en longueur de séquence, mais le parallélisme matériel réduit la profondeur séquentielle du calcul.
+
+   </details>
 2. **Pourquoi la génération standard reste-t-elle séquentielle ?** Le token suivant dépend du token qui vient d'être sélectionné.
+
+   <details>
+   <summary>Corrigé raisonné</summary>
+
+   La génération autorégressive doit attendre le token choisi à l'étape précédente : ce token devient une partie du contexte qui détermine la distribution suivante. Le prompt initial peut être traité en parallèle pendant le prefill ; en revanche, les étapes de decode d'une séquence dépendent les unes des autres.
+
+   </details>
 3. **FlashAttention rend-elle l'attention linéaire ?** Non : elle conserve le travail quadratique mais réduit les mouvements mémoire et les intermédiaires.
+
+   <details>
+   <summary>Corrigé raisonné</summary>
+
+   FlashAttention ne supprime pas les interactions entre paires de tokens : le calcul dense conserve un coût quadratique en longueur de séquence. Son apport est algorithmique et matériel : le calcul par blocs réduit les transferts mémoire et évite de matérialiser toute la matrice d'attention en mémoire principale du GPU.
+
+   </details>
 4. **Un modèle récurrent à travail linéaire en $T$ est-il entièrement parallèle ?** Non : une récurrence naïve dépend de l'état précédent, même si certaines structures permettent un scan parallèle.
+
+   <details>
+   <summary>Corrigé raisonné</summary>
+
+   Une récurrence générale impose une dépendance $h_t=f(h_{t-1},x_t)$ : l'état au temps $t$ attend celui de $t-1$. Le travail peut être linéaire en $T$ tout en ayant une profondeur séquentielle linéaire. Des scans parallèles existent pour des opérations associatives ou des récurrences de structure particulière ; cela ne rend pas toute récurrence arbitraire parallélisable.
+
+   </details>
 5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
+
+   <details>
+   <summary>Corrigé raisonné</summary>
+
+   Le routage clairsemé limite le calcul effectué pour un token aux $k$ experts sélectionnés, ce qui réduit le nombre de paramètres actifs et les FLOPs par token. Mais les poids de l'ensemble des experts restent des paramètres du modèle : ils doivent être stockés en mémoire ou rendus accessibles, éventuellement par distribution ou offload. Paramètres actifs et capacité totale de stockage sont deux quantités différentes.
+
+   </details>
 
 ::: {.language-switch}
 **Langue :** [Français](llm-computational-complexity.qmd) · [English](../../en/exercises/llm-computational-complexity.qmd)
