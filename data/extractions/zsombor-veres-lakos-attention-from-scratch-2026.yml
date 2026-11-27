@@ -82,7 +82,7 @@ pedagogical_model:
   comparison:
     dossier: "docs/source-reviews/qkv-source-collection.md"
     canonical_graph: "data/concepts.yml"
-    canonical_routes: ["understand-transformer-attention"]
+    canonical_routes: []
     decision: "No new canonical Q/K/V or attention concept. Register the source and link it as optional further reading on bilingual Q/K/V pages. Keep the residual-stream/W_O mapping source-local and cross-reference the Transformer-block walkthrough."
     structures_kept_separate: ["Source-local meeting graph", "Canonical concept graph", "Project learner route", "GPT reference implementation"]
 items:
