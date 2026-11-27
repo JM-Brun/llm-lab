@@ -2,7 +2,7 @@
 title: "Pourquoi représenter le langage numériquement ?"
 subtitle: "Des symboles lisibles aux objets sur lesquels le réseau peut calculer"
 description-meta: "Explique pourquoi un réseau neuronal traite le langage au moyen de représentations numériques apprises, et distingue identifiants, vecteurs initiaux et états contextualisés."
-keywords: ["type:concept-lesson", "destination:understand", "topic:language-representation", "level:overview", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:understand", "topic:language-representation", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -25,7 +25,7 @@ revision_support:
     - anchor: revision-summary
       note: "La synthèse distingue le rôle de l’ID, du vecteur appris et de l’état contextualisé, et rappelle pourquoi le réseau a besoin d’objets numériques."
 tags:
-  - "type:concept-lesson"
+  - "type:concept-bridge"
   - "destination:understand"
   - "topic:language-representation"
   - "level:overview"
