@@ -33,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 La page précédente, [Le Transformer dans un GPT : architecture et calcul](transformer.qmd), a montré que l'auto-attention est une sous-couche du bloc répété. Partons maintenant d'une difficulté simple : comment une position peut-elle exploiter le contexte fourni par les autres tokens ?
 :::
 
-## Le problème : utiliser le contexte
+## Le problème : utiliser le contexte {#probleme-utiliser-contexte}
 
 Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **il** peut renvoyer au chat ou au chien. Un modèle ne peut donc pas toujours interpréter un token à partir de sa seule représentation locale : il doit pouvoir exploiter l'information portée par d'autres positions de la séquence.
 
@@ -77,7 +77,7 @@ Q et K déterminent les poids ; V fournit le contenu à mélanger
 :::
 ::::
 
-## Trois rôles complémentaires
+## Trois rôles complémentaires {#trois-roles-complementaires}
 
 On peut distinguer les trois projections en suivant le trajet de l'information :
 
