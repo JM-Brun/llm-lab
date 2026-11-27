@@ -143,7 +143,7 @@ Le cas one-hot suffit pour calculer la pénalité d'un token observé. Pour une 
 
 ## Implémentations — NumPy, PyTorch et stabilité numérique
 
-::::: {.callout-note collapse="true" title="Afficher les exemples de code"}
+::::: {.callout-note collapse="true" title="Afficher les exemples de code" data-reading-time="exclude"}
 
 ::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
 L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) couvrent volontairement un cas restreint : des logits de forme $(B,C)$, une cible entière par ligne et la **moyenne non pondérée sur les lignes**. La perte utilise le logarithme naturel et s'exprime donc en nats. La fonction de gradient renvoie la dérivée de cette même perte moyenne par rapport aux logits, et non par rapport aux paramètres d'un modèle.
