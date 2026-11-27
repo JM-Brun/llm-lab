@@ -9,7 +9,7 @@ pedagogical_model:
       - "Direct canonical and Freedium retrieval attempts returned cache misses."
     inferred_elements:
       - "The teaching route is reconstructed from the article's section order."
-      - "The article's four visual placements are not reconstructed because image bytes and reliable captions were unavailable."
+      - "Embedded image assets are not reconstructed because image bytes, reliable captions and asset-level provenance were unavailable."
   source_graph:
     nodes:
       - id: src-tokenization-problem
@@ -105,11 +105,11 @@ pedagogical_model:
     - "The tiktoken snippet connects tokenization to inspectable IDs and token bytes."
   pedagogical_limits:
     - "The article compresses several distinct layers—algorithm, tokenizer library, normalization, pre-tokenization and byte fallback—into a short overview."
-    - "Several claims are overgeneralized or insufficiently sourced, especially the alleged abandonment of WordPiece for compute reasons, fixed Unigram pruning percentages, lossless SentencePiece decoding and the numerical English/Arabic cost example."
-    - "SentencePiece is presented too narrowly as a wrapper; it provides tokenizer training and encoding implementations for models such as BPE and Unigram."
-    - "The Llama 3 byte-level BPE description should not be conflated with use of OpenAI's tiktoken library."
-    - "The tiktoken code was not executed, and the retrieved code formatting around the main guard is ambiguous."
-    - "The article's visual assets and their rights could not be inspected."
+    - "Several claims are overgeneralized or insufficiently sourced, especially the alleged abandonment of WordPiece for compute reasons, the illustrative q/u scoring comparison without frequencies, fixed Unigram pruning percentages, the simplified Unigram sentence-probability account, unconditional SentencePiece round-tripping and the numerical English/Arabic cost example."
+    - "SentencePiece is presented too narrowly as a wrapper; it is itself a tokenizer library that trains and applies BPE or Unigram directly to raw text. Its whitespace marker preserves whitespace in the normalized representation, but default normalization can collapse repeated spaces and strip leading/trailing spaces."
+    - "The article associates GPT-family byte-level BPE with OpenAI's tiktoken and separately names Llama 3. It does not identify Llama 3's concrete tokenizer implementation; readers must not infer that Llama 3 uses OpenAI's tiktoken package or vocabulary."
+    - "The tiktoken code was not executed; in the retrieved text, the closing print statement and `if __name__ == "__main__":` appear concatenated, making the displayed snippet syntactically invalid if copied literally."
+    - "The article's embedded visual assets and their rights could not be inspected."
   comparison:
     dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
     canonical_graph: "data/concepts.yml"
@@ -159,17 +159,17 @@ items:
 
   - id: towardsai-understanding-llms-tokenization-2026:wordpiece-compute-claim
     kind: claim
-    summary: "The article attributes the decline of WordPiece in modern LLMs to the compute cost of repeatedly evaluating a pair-cohesion score."
+    summary: "The article attributes the decline of WordPiece in modern LLMs to the compute cost of repeatedly evaluating a pair-cohesion score, and illustrates the score with a q/u versus e/s comparison."
     locator: {type: section, value: "II.1.1 WordPiece", label: "WordPiece and computational cost"}
     evidence:
       kind: author-assertion
       confidence: unverified
       scope: "A broad historical and computational explanation without cited measurements or comparative evidence in the retrieved article."
       assumptions: []
-      limitations: ["The article does not establish that modern LLMs generally abandoned WordPiece or that this score was the decisive reason."]
+      limitations: ["The article does not establish that modern LLMs generally abandoned WordPiece or that this score was the decisive reason. Its q/u example supplies no corpus frequencies, so it illustrates a possible intuition rather than demonstrating which pair the score would select."]
     technical_assessment:
       status: qualified
-      rationale: "The score is a known WordPiece-style heuristic, but the sweeping adoption-history and compute-causality claim is unsupported. Do not repeat it as fact."
+      rationale: "The score is a documented WordPiece-style heuristic, but the q/u comparison is not quantitatively demonstrated and the sweeping adoption-history and compute-causality claim is unsupported. Do not repeat either as established fact."
       corroborating_sources: []
     classification:
       primary_theme: text-tokenization
@@ -184,17 +184,17 @@ items:
 
   - id: towardsai-understanding-llms-tokenization-2026:unigram-pruning
     kind: mechanism
-    summary: "The article describes Unigram as starting from a large candidate vocabulary and pruning tokens according to their effect on corpus likelihood."
+    summary: "The article describes Unigram as starting from a large candidate vocabulary and pruning tokens according to their effect on corpus likelihood, then approximates a sentence probability as the product of the selected subword probabilities."
     locator: {type: section, value: "II.1.2 Unigram", label: "Probabilistic pruning"}
     evidence:
       kind: author-explanation
       confidence: context-dependent
       scope: "High-level description of Unigram vocabulary reduction."
       assumptions: []
-      limitations: ["The stated 10–20% pruning rate per iteration is not established as a general property; the example is illustrative, not a reproduced calculation."]
+      limitations: ["The stated 10–20% pruning rate per iteration is not established as a general property; the example is illustrative, not a reproduced calculation. The product of token probabilities describes one segmentation path; the model's sentence probability accounts for possible segmentations rather than simply being that one product."]
     technical_assessment:
       status: qualified
-      rationale: "The top-down pruning intuition is broadly appropriate, but the article presents implementation-dependent details as fixed behavior."
+      rationale: "The top-down pruning intuition is broadly appropriate, but the article presents implementation-dependent details as fixed behavior and simplifies the probabilistic treatment of alternative segmentations."
       corroborating_sources: []
     classification:
       primary_theme: text-tokenization
@@ -209,17 +209,17 @@ items:
 
   - id: towardsai-understanding-llms-tokenization-2026:sentencepiece-description
     kind: claim
-    summary: "The article describes SentencePiece as a wrapper around BPE or Unigram that replaces spaces with a visible marker and guarantees lossless reconstruction."
+    summary: "The article describes SentencePiece as a wrapper around BPE or Unigram that replaces spaces with a visible marker and guarantees exact reconstruction, including repeated spaces."
     locator: {type: section, value: "II.1.3 SentencePiece", label: "SentencePiece"}
     evidence:
       kind: author-explanation
       confidence: context-dependent
       scope: "The article's simplified description of SentencePiece's whitespace and model behavior."
       assumptions: []
-      limitations: ["The description omits SentencePiece's own training and encoding implementation and overstates losslessness independently of normalization and configuration."]
+      limitations: ["SentencePiece does provide its own training and encoding implementation for BPE and Unigram. The whitespace marker preserves spaces in the normalized text, but default NMT normalization collapses repeated spaces and strips leading/trailing spaces; exact recovery of arbitrary raw input is therefore configuration-dependent."]
     technical_assessment:
       status: qualified
-      rationale: "Whitespace escaping is a useful part of SentencePiece's design, but calling the library merely a wrapper and promising unconditional lossless recovery are misleading."
+      rationale: "Whitespace escaping is a useful part of SentencePiece's design, but calling the library merely a wrapper is misleading. Lossless detokenization applies to the normalized representation; it does not guarantee byte-for-byte recovery of arbitrary input after normalization."
       corroborating_sources: []
     classification:
       primary_theme: text-tokenization
@@ -301,10 +301,10 @@ items:
       confidence: context-dependent
       scope: "The displayed cl100k_base example and output in the indexed article text."
       assumptions: []
-      limitations: ["The snippet was not executed; behavior is specific to the named encoding and tiktoken API version. The retrieved formatting around the main guard is ambiguous."]
+      limitations: ["The snippet was not executed; behavior is specific to the named encoding and tiktoken API version. The retrieved text concatenates the final bytes-print statement and the `if __name__ == "__main__":` guard, so the snippet is syntactically invalid if copied literally."]
     technical_assessment:
       status: qualified
-      rationale: "The allowlist and byte-inspection ideas are consistent with tiktoken's API, but the article's code is not independently validated."
+      rationale: "The allowlist and byte-inspection ideas are consistent with tiktoken's API, but the displayed code needs formatting repair and independent execution before it can be used as a teaching example."
       corroborating_sources: []
     classification:
       primary_theme: text-tokenization
@@ -316,6 +316,42 @@ items:
       route_ids: []
     disposition: already-covered
     disposition_rationale: "The current lesson already explains implementation-specific special-token policies and links the tiktoken API. A second unexecuted snippet is unnecessary."
+
+
+  - id: towardsai-understanding-llms-tokenization-2026:bpe-low-lowest-example
+    kind: worked-example
+    summary: "The article walks through BPE merges on the toy corpus containing low and lowest, illustrating repeated adjacent-pair merges and a shared low prefix."
+    locator: {type: section, value: "II.2 BPE", label: "low / lowest merge walkthrough"}
+    evidence:
+      kind: author-worked-example
+      confidence: established
+      scope: "A hand-worked two-word toy corpus and a sequence of adjacent-pair merges."
+      assumptions: ["The example uses a simplified character-level initialization and end-of-word marker."]
+      limitations: ["The final vocabulary listing omits intermediate merge pieces and the example does not model modern pre-tokenization or byte-level input handling."]
+    technical_assessment:
+      status: qualified
+      rationale: "The iterative most-frequent-adjacent-pair mechanism is broadly illustrated correctly, but the final vocabulary is schematic rather than a complete inventory of all learned pieces."
+      corroborating_sources: ["https://huggingface.co/docs/transformers/en/tokenizer_summary"]
+    pedagogical_assessment:
+      learner_question: "How do repeated pair merges turn character sequences into reusable subword units?"
+      explanatory_lens: "Trace the sequence state after each selected adjacent-pair merge."
+      teaching_form: [worked-example, step-by-step]
+      novelty: {level: low, rationale: "LLM Lab already explains BPE and has inspectable step-by-step BPE resources."}
+      complementarity: {level: low, rationale: "The two-word example is a familiar illustration and adds no new mechanism."}
+      pedagogical_value: {level: moderate, rationale: "The compact example can be useful as a quick mental model, although it is less inspectable than the project's existing practical resources."}
+      applicability: {level: low, rationale: "No change to the current BPE lesson is justified."}
+      redundancy: {level: high, rationale: "The project already has stronger BPE explanations and practical walkthroughs."}
+      evidence_quality: {level: high, rationale: "The merge sequence is directly visible in the article and can be checked manually."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:byte-pair-encoding, modality:worked-example]
+      concept_ids: [byte-pair-encoding]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already has more detailed BPE walkthroughs; retain this as a source-local example, not a new lesson or copied asset."
 
 canonical_mapping:
   proposed_concepts: []
