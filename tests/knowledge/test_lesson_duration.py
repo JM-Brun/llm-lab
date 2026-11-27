@@ -142,11 +142,11 @@ def test_estimator_does_not_parse_fenced_div_syntax_inside_code() -> None:
 
 Visible content remains in the estimate.
 
-\`\`\`markdown
+```markdown
 ::: {.callout-note data-reading-time="exclude"}
 This is an example, not a real callout.
 :::
-\`\`\`
+```
 
 More visible content remains in the estimate.
 """
