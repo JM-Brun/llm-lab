@@ -29,7 +29,7 @@ Not inspected: manual interaction with the atlas, the repository notebooks/sourc
 | Word2Vec static vectors versus Transformer contextual states | Existing embedding-space lesson includes a historical Word2Vec contrast | Keep the source as an optional complementary explanation |
 | TF-IDF and count-based vectorization | Not part of the current core embedding-lookup lesson | Defer; verify the linked notebook before any worked example |
 | Embedding dimension as a design trade-off | Current lesson focuses on lookup semantics, not model-dimension selection | Potential concise clarification or later model-comparison exercise |
-| Real-model input embedding extraction and cosine neighbours | Current lesson uses a synthetic NumPy matrix and does not show a real model atlas | Strong optional external visual companion; link only unless rights are clarified |
+| Real-model input embedding extraction and cosine neighbours | The core lesson uses a synthetic NumPy matrix; the bilingual embeddings Deepen dossier links to the original Hugging Face Space and to Embedding Atlas | External visual companion in the advanced destination; link only, without copying assets or claiming checkpoint-level reproduction |
 | Token-neighbour graph and spelling/subword variants | Related to the cosine-similarity lesson, but no equivalent interactive graph is embedded | Potential optional case study with explicit limitations |
 
 ## Technical review and corrections
@@ -76,7 +76,7 @@ However:
 ## Integration decision
 
 1. **No duplicate core lesson.** The existing bilingual embedding-space lesson already explains the central lookup and contextualization mechanism.
-2. **Optional visual link.** Consider adding the Space as a “real-model exploration” link after checking the live atlas in desktop and mobile browsers. Keep the link external; do not copy its figures or code.
+2. **Optional visual destination.** The bilingual embeddings Deepen dossier now links to the original Space and to the Embedding Atlas tool. Keep both external; do not copy figures or code. The live atlas interaction, responsive behavior and model-specific outputs remain unverified.
 3. **No unverified technical claims.** Do not reuse the dimensionality or TF-IDF claims without checking the author's notebook and adding the missing mathematical qualifications.
 4. **Possible future exercise.** A small reproducible exercise could load a public checkpoint's input embedding matrix, inspect tokenization variants, compute cosine neighbours, and compare raw neighbours with a task-specific evaluation. This requires a model/runtime budget and a documented checkpoint/revision; it is not part of this ingestion.
 5. **Rights.** Text, figures, code and model-derived assets remain link-only/unknown until the applicable licences and reuse terms are checked.
@@ -171,7 +171,7 @@ After the activity, learners should be able to:
 
 ### Scope decision
 
-The autonomous dossier is implemented at `site/fr/embeddings-deep-dive.qmd` and `site/en/embeddings-deep-dive.qmd`, registered in the Deepen sidebar, bilingual map lists and language switch. Intentional overlap with the core embedding lessons is accepted because the page has a different purpose: a self-contained, broad survey and a hub toward further specialist topics. No new canonical concept, prerequisite edge, process breadcrumb or mandatory learning route is introduced. The small fixture-based Practice activity remains attached to the existing lessons.
+The autonomous dossier is implemented at `site/fr/embeddings-deep-dive.qmd` and `site/en/embeddings-deep-dive.qmd`, registered in the Deepen sidebar, bilingual map lists and language switch. It is the canonical destination for the source's broader visual progression and the external atlas link; the core embedding-space lesson remains focused on lookup and the learned input table. Intentional overlap with the core embedding lessons is accepted because the page has a different purpose: a self-contained, broad survey and a hub toward further specialist topics. No new canonical concept, prerequisite edge, process breadcrumb or mandatory learning route is introduced. The small fixture-based Practice activity remains attached to the existing lessons.
 
 ## 10. Reproducible project-side inspection exercise
 
@@ -183,7 +183,7 @@ A small NumPy-only implementation now exists in `src/llm_lab/foundations/embeddi
 - Both helpers validate matrix shape, real finite values, integer IDs and row bounds. They are NumPy-only; no model, tokenizer, PyTorch or network dependency is introduced.
 - The existing bilingual embedding-space exercise hubs now include the same executable example and explicitly state that input-table neighbours are not contextualized states or sentence-level retrieval evidence.
 
-This is a tested reference-scale pedagogical implementation, not a reproduction of the external Space's checkpoint, extraction pipeline, interactive atlas or graph layout. The bilingual autonomous Deepen dossier now covers the broader embedding landscape, learning objectives, geometry, evaluation and non-LLM applications. The source atlas remains an external exploration link; live-atlas inspection and checkpoint-level reproduction remain open validation tasks.
+This is a tested reference-scale pedagogical implementation, not a reproduction of the external Space's checkpoint, extraction pipeline, interactive atlas or graph layout. The bilingual autonomous Deepen dossier now covers the broader embedding landscape, learning objectives, geometry, evaluation and non-LLM applications. The source Space and Embedding Atlas remain external exploration links; live interaction and checkpoint-level reproduction remain open validation tasks.
 
 ### Visual reuse and attribution
 
