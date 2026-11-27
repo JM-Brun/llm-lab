@@ -121,6 +121,8 @@ Le *teacher forcing* ne doit pas être confondu avec le *prefill*. Le prefill tr
 
 Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
 
+Une erreur d'alignement d'un seul token peut produire une loss finie et décroissante tout en entraînant la mauvaise tâche.
+
 [Exercice corrigé sur le décalage, la visibilité et le dénominateur de la perte](exercises/loss.qmd#ex-visible-token-masked-target).
 
 ## Loss d'entraînement et métriques
