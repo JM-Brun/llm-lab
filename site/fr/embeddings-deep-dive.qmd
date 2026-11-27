@@ -236,7 +236,7 @@ Le projet reprend cette progression comme **étude de cas**, mais qualifie plusi
 LLM Lab propose un outil NumPy sans téléchargement de modèle : [inspecter une petite table d'embeddings dans l'exercice bilingue](exercises/embedding-space.qmd). Il permet de retrouver des lignes directement par ID et de calculer un top-k cosinus déterministe. Il ne prétend pas reproduire le checkpoint ni l'atlas interactif de la source.
 
 
-### Explorer un jeu d'embeddings avec Embedding Atlas
+### Explorer un jeu d'embeddings avec Embedding Atlas {#explorer-embedding-atlas}
 
 [Embedding Atlas](https://apple.github.io/embedding-atlas/) permet d'explorer des projections de grands jeux de vecteurs, de rechercher des voisins, d'inspecter des regroupements et de relier la vue géométrique à des métadonnées par filtrage croisé. L'outil peut aussi servir de tableau de bord tabulaire ; il ne crée pas à lui seul la pertinence sémantique des vecteurs.
 
