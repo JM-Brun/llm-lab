@@ -220,3 +220,10 @@ Why this matters for this dossier: the spectral mechanism used by the 2026 Plato
 Provenance: the arXiv HTML v3 was retrieved in full and read selectively (abstract, Theorem 1, Figure 1, Sections 3.1-3.3 and the global/local correspondence passages); the licence is CC BY 4.0 as declared on the paper. The paper was not read line by line, its theorems' proofs and experiments were not audited, and no code was executed. The extraction is recorded in `data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml`.
 
 Page impact: both deep-dive pages gain a short lineage paragraph at the end of the spectral-mechanism section and a source entry; the `laplacian-eigenmaps` concept is registered in the canonical concept graph, related to `positive-pair-distribution` and `joint-embedding-predictive-architecture`.
+
+
+## 15. YouTube resource revalidation — 2026-11-27
+
+The direct watch-page URL was retried and the official YouTube oEmbed endpoint was queried for video ID `j0O8Aq6ducw`; both returned cache misses. An exact-ID web search did not surface verifiable title/creator metadata. Third-party metadata tools are not used as authoritative substitutes.
+
+The source remains `scan_status: inaccessible`, `integration_status: deferred`. Title, creator, date, duration, transcript and content remain unknown. No extraction, summary or claim attribution is warranted until the video or a reliable transcript is available.
