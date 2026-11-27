@@ -121,3 +121,26 @@ items:
       pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
     disposition: defer
     disposition_rationale: "Keep as a versioned Build/Deepen reference; it is not part of the current scaled-attention lesson's core mathematical scope."
+
+  - id: pytorch-scaled-dot-product-attention-api:causal-mask-argument-contract
+    kind: limitation
+    summary: "The functional SDPA API offers an is_causal flag for causal masking and rejects passing both is_causal=True and attn_mask; non-square causal alignment follows the documented upper-left causal-bias convention."
+    locator: {type: section, value: "is_causal parameter"}
+    evidence:
+      kind: official-api-reference
+      confidence: established
+      scope: "The PyTorch 2.15 API reference documents the mutually exclusive arguments and the causal-bias alignment for non-square query/key lengths."
+      assumptions: ["The documented PyTorch 2.15 functional API is used."]
+      limitations: ["Do not generalize this argument contract or non-square alignment to another API or PyTorch version without checking its documentation."]
+    technical_assessment:
+      status: reviewed
+      rationale: "The function signature and is_causal parameter documentation state the constraint."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:causal-masking, ecosystem:pytorch]
+      concept_ids: [causal-mask, scaled-dot-product-attention]
+    candidate_destinations:
+      pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: integrate-by-reference
+    disposition_rationale: "Record as an implementation contract for Build; the causal-masking lesson remains the conceptual owner."
