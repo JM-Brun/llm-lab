@@ -70,8 +70,6 @@ $$
 
 The cost increases when the model assigns low probability to the observed token. A wrong but highly confident prediction is therefore strongly penalized.
 
-### Running-example calculation
-
 For the Romans example, let $p=(0.6,0.2,0.1,0.1)$ for “They”, “Aqueducts”, “Nothing”, and “Well”, and let the one-hot target be $q=(1,0,0,0)$ because “They” is the observed next token. Then:
 
 $$
