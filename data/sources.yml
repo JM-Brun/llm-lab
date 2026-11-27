@@ -7934,3 +7934,43 @@ sources:
       pages: []
       concepts: [kv-cache, persistent-memory, self-attention, inference-time-compute, contextualized-representation]
       audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
+
+  - id: clare-nie-memonce-implementation
+    title: "MemOnce — official implementation"
+    creators: ["Chang Nie and MemOnce authors"]
+    source_type: repository
+    identifiers: {repository: "Clare-Nie/MemOnce"}
+    canonical_url: "https://github.com/Clare-Nie/MemOnce"
+    publisher: "GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Default branch inspected 2026-11-27"
+    revision: null
+    licence: {identifier: "Apache-2.0", url: "https://github.com/Clare-Nie/MemOnce/blob/main/LICENSE", status: declared}
+    reuse: {text: link-only, figures: link-only, code: licensed, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:kv-cache, topic:persistent-memory, method:memory-retrieval, ecosystem:pytorch]
+      concept_ids: [kv-cache, persistent-memory, inference-time-compute]
+    metadata:
+      technical_level: advanced
+      contribution_types: [implementation, architecture]
+      audiences: [practitioner, researcher, maintainer]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository README, Apache-2.0 LICENSE, post-training model definition, training recipe, inference session implementation and pretraining implementation"
+        limitations:
+          - "No environment installation, checkpoint download, inference run, benchmark execution or security audit was performed."
+          - "The README reports an available checkpoint and benchmark results; they were not independently reproduced."
+          - "The repository's Apache-2.0 licence does not establish licences for the base Qwen model, datasets, benchmark assets or third-party dependencies."
+    related:
+      pages: []
+      concepts: [kv-cache, persistent-memory, inference-time-compute]
+      audit_records: [docs/source-reviews/stateai-memonce-model-carving-2026-11.md]
