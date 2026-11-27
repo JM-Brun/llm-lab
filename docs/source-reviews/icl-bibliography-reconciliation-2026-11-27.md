@@ -25,7 +25,7 @@ Les métadonnées ont été recoupées avec les pages de publication officielles
 - Identifiants pérennes : arXiv pour les prépublications concernées, DOI pour les actes ACL.
 - `related.pages` associe les six sources aux deux pages ICL ; `related.concepts` réutilise les concepts déjà existants.
 - Aucun nouveau concept canonique n'est créé pour les induction heads, la correction des labels ou l'ordre des démonstrations.
-- Les statuts sont `scan_status: partially-scanned` et `integration_status: deferred`. La vérification de métadonnées et d'abstract ne constitue ni une lecture complète ni une intégration claim-level.
+- Les six sources restent `scan_status: partially-scanned`. Min, Yoo, Olsson et Xie sont `integration_status: partially-integrated` après revue ciblée et ajout de contenu FR/EN ; Brown reste différé au-delà de sa référence bibliographique et Xiang reste une ressource d'approfondissement.
 - Les licences restent inconnues et les contenus/figures sont link-only tant que les droits ne sont pas vérifiés.
 - Aucun statut `integrated` n'est attribué sur la seule base d'une citation dans une bibliographie.
 
@@ -110,9 +110,9 @@ Les notices Olsson et Xie passent à `integration_status: partially-integrated`.
 
 ## Limites de cette passe d'ingestion
 
-Cette passe combine la vérification bibliographique des six notices et une lecture ciblée des sections pertinentes des PDF Min et Yoo. Deux extractions atomiques evidence-linked ont été créées. Aucun résultat expérimental n'a été reproduit ; les annexes et détails d'implémentation n'ont pas été audités exhaustivement.
+Cette passe combine la vérification bibliographique des six notices et une lecture ciblée des sections pertinentes des publications Min, Yoo, Olsson et Xie. Quatre extractions atomiques evidence-linked ont été créées. Aucun résultat expérimental n'a été reproduit ; les annexes et détails d'implémentation n'ont pas été audités exhaustivement.
 
-Min et Yoo sont partiellement intégrés aux pages FR/EN. Les lectures ciblées d'Olsson et Xie ont été effectuées et leurs limites de preuve sont maintenant explicitées dans les pages. Xiang reste une ressource facultative d'approfondissement ; son protocole complet doit encore être étudié.
+Min, Yoo, Olsson et Xie sont partiellement intégrés aux pages FR/EN. Xiang reste une ressource facultative d'approfondissement ; son protocole complet doit encore être étudié.
 
 ## Sources de vérification
 
