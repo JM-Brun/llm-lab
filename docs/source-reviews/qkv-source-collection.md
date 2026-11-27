@@ -233,3 +233,110 @@ The current bilingual lesson and exercise hub have been audited to distinguish e
 The fourth Q/K/V tutorial was processed without a new registry, concept, page or route edge. The source-local model reconstructs the 11-section route. Six selected items have explicit dispositions. The candidate scaling derivation was tested against the canonical lesson and retained as a reference rather than copied into the page.
 
 The pilot identifies two operational improvements only: record text reconstruction completeness separately from whole-source inspection, and record effort by workflow phase. No new skill, taxonomy or composite score is justified. See the pilot report for coverage, effort and remaining validation gates.
+
+
+## 12. Page-level diversity and coverage audit — 2026-11-27
+
+**Audit owner:** issue [#1741 — page-level source diversity, complementarity and blind-spot audit](https://github.com/JM-Brun/llm-lab/issues/1741).  
+**Pilot pages:** [Q/K/V FR](../../site/fr/queries-keys-values.qmd) · [Q/K/V EN](../../site/en/queries-keys-values.qmd).  
+**Method:** reconcile page-visible citations, source catalogue associations, the four-resource pedagogical comparison corpus, source-specific reviews and claim-level primary-source reviews. This is a review of repository artefacts; it does not repeat external scans, inspect unavailable image bytes, execute code or validate learner outcomes.
+
+### 12.1 Four distinct source sets
+
+Do not use “the page's sources” as if it denoted one unambiguous set.
+
+| Set | Definition | Q/K/V pilot result |
+|---|---|---|
+| Page-visible citations | External URLs explicitly cited in the published page body | Four URLs, identical in FR and EN: Neha KK, Jose Parreño Garcia, Vaswani et al., Nishanthan K |
+| Construction/comparison corpus | Sources whose contributions were inspected and compared while shaping the explanation | Four tutorial sources in the historical matrix: Nishanthan, Neha, Codefinity and Brenndoerfer; Jose was reviewed later and should be reconciled with that matrix |
+| Canonical primary/technical evidence | Sources used to support specific technical claims, equations or implementation behavior | Vaswani et al. is the primary formulation anchor; its focused review now covers §§3.2.1–3.2.3 for attention computation, learned per-head projections and self-attention data flow; this is not a complete paper review |
+| Thematic associations | Sources linked to a page through the source catalogue's related-page associations | A broader discovery set; association alone does not prove page use, citation or claim support |
+
+The Hugging Face KV-cache documentation belongs primarily to the generation/inference topic. It is not an additional Q/K/V explanatory tutorial and must not inflate the Q/K/V diversity count.
+
+The catalogue's `related.pages` field is a topic/page association, not a typed claim that the source was cited, inspected for this page, used during construction or recommended to the learner. The audit must preserve this distinction rather than infer use from association.
+
+### 12.2 Sources compared for construction
+
+| Source | Type / origin | Language | Recorded level | Distinct function | Scan / integration |
+|---|---|---|---|---|---|
+| Nishanthan K, DEV | Blog / DEV Community | English | Introductory | Functional walkthrough, visual/pipeline framing, misconception warnings | Partially scanned / integrated |
+| Neha KK, Medium | Blog / Medium | English | Introductory | Design rationale for separate projections; contextual/coreference example | Partially scanned / integrated |
+| Codefinity | Course / Codefinity | English | Mixed | Concise role explanation, geometric alignment lens, formative-check patterns | Partially scanned / integrated |
+| Michael Brenndoerfer | Tutorial / Language AI Handbook | English | Intermediate | Variance derivation, tensor shapes, numerical trace, aggregation geometry and implementation perspective | Partially scanned / reviewed |
+
+The four records have distinct creators/platforms and distinct teaching contributions. The metadata shows a genuine variety of source types (two blogs, one course, one tutorial), but all four are English-language secondary teaching resources. Their intellectual independence is **unknown**: different authors and platforms do not establish independent derivation or corroboration.
+
+Codefinity's parent course is labelled Advanced, but the inspected lesson is introductory in style. The catalogue's mixed classification avoids incorrectly assigning the whole course's label to the specific lesson. Keep that distinction.
+
+### 12.3 Additional sources actually cited by the page
+
+| Source | Page role | Metadata/evidence boundary | Audit decision |
+|---|---|---|---|
+| Jose Parreño Garcia, *Understanding Transformers (Part 4)* | Complementary intuition linked from the Q/K/V page | English introductory blog; visible article body reviewed; figures not inspected; no code/experiment executed; licence unknown; no explicit qkv-attention collection membership | Add to the page-level comparison, but do not silently rewrite historical collection membership. Decide whether the collection is a tutorial comparison set or a complete topic source family before changing membership. |
+| Vaswani et al., *Attention Is All You Need* | Primary formulation cited for learned Q/K/V projections | English advanced research paper; partially scanned; focused review now covers §§3.2.1–3.2.3 for scaled attention, learned projections and self-attention data flow | Retain as primary anchor. The exact projection claim is now traced to §3.2.2, with §3.2.3 supporting the shared input stream in self-attention; the page's XW_Q notation is identified as a compact specialization. |
+
+The page-visible citation inventory is four URLs in both languages:
+- Neha KK (example adapted from the article);
+- Jose Parreño Garcia (complementary recommendation/routing intuition);
+- Vaswani et al. (primary architecture formulation);
+- Nishanthan K (complementary visual explanation).
+
+Codefinity and Brenndoerfer are legitimate construction/comparison inputs, but are not direct citations in the current Q/K/V page body. This is not a defect; the public page need not list every source considered during editorial synthesis.
+
+### 12.4 Diversity profile and interpretation
+
+| Dimension | Observed distribution | Interpretation |
+|---|---|---|
+| Construction corpus type | 2 blog, 1 course, 1 tutorial | Useful format diversity; still mostly secondary pedagogy |
+| Construction corpus language | 4/4 English | Complete language concentration; monitor as a selection bias, not an automatic publication defect |
+| Construction corpus technical level | 2 introductory, 1 mixed, 1 intermediate | A useful progression from orientation to mathematical/implementation depth |
+| Construction corpus origin | 4 distinct creators/platforms | No single-author/platform concentration in this small sample |
+| Page-visible sources | 2 blogs, 1 research paper, 1 blog on Substack (three blog posts plus one paper) | The public citation set includes a primary research anchor, but the explanatory citations remain secondary |
+| Inspection completeness | All four pedagogical-resource records and both additional cited sources remain partially scanned | Do not present any of them as exhaustively audited |
+| Independent corroboration | Not established | Repeated tutorial descriptions are pedagogical convergence, not independent experimental evidence |
+
+No entropy score is calculated for this four-source pilot. With four deliberately selected, non-representative resources, a numerical diversity score would add false precision. The counts above are descriptive only; they are not targets or quality grades.
+
+### 12.5 Coverage against the Q/K/V page contract
+
+The page's stated purpose is to explain why the attention sublayer projects its input state into Q, K and V, distinguish compatibility (Q/K) from aggregated content (V), and let the learner reason about changing one projection in isolation.
+
+| Learner need / claim family | Existing support | Assessment |
+|---|---|---|
+| Motivation for contextual information | Page narrative and Neha's coreference example; contextualized-representations is the upstream page | Covered; keep the example explicitly illustrative, not empirical evidence of head-level coreference |
+| Functional roles of Q, K and V | Canonical page explanation, Nishanthan and Codefinity | Covered; repeated definitions do not require more sources |
+| Why three learned projections? | Neha's design rationale and canonical page's joint learned-projection explanation | Covered |
+| Shared input and projection equations | Canonical equations and Vaswani primary paper | Covered; §3.2.2 supports the learned per-head projections and §3.2.3 supports the shared previous-layer input in self-attention |
+| Routing/compatibility versus payload/content | Brenndoerfer's comparative treatment and canonical page | Covered; preserve the distinction as a functional explanation, not a claim that dimensions are human-readable semantic features |
+| Geometric intuition | Codefinity and Brenndoerfer; canonical optional note | Covered at the intended depth; avoid equating dot product with cosine similarity |
+| Scores, scaling, softmax and weighted aggregation | Dedicated scaled-dot-product-attention page and Vaswani §3.2.1 | Deliberately delegated to the next page; do not duplicate the full derivation here |
+| Causal masking and accessible positions | Dedicated causal-masking page | Correctly outside this page's main scope |
+| Implementation and tensor-level behavior | Transformer-block walkthrough and Build resources | Covered by a neighboring implementation destination; not a missing source requirement for this Understand page |
+| Independent empirical claims about learned head behavior | No measured head-level experiment in the tutorial corpus | Not an objective of this page; keep illustrative examples clearly labelled and avoid stronger empirical claims |
+
+### 12.6 Findings and decisions
+
+1. **No additional generic Q/K/V tutorial is justified now.** The current page and its adjacent pages already cover the relevant pedagogical functions; a fifth tutorial would likely repeat the same role definitions.
+2. **The page has meaningful source diversity, but not uniform evidence diversity.** The construction corpus includes distinct formats, levels and explanatory lenses; it remains English-only and secondary. The primary paper is cited separately.
+3. **The primary citation needs claim-level precision.** The focused Vaswani review now covers §§3.2.1–3.2.3. The projection claim is supported by §3.2.2; §3.2.3 establishes the common previous-layer source in self-attention. The page's XW_Q notation is explicitly distinguished from the paper's per-head multi-head notation.
+4. **Jose Parreño Garcia must be reconciled with the historical matrix.** Its source review and page citation post-date the four-source comparison. Update the comparison rather than treating the old matrix as a complete current inventory.
+5. **Do not infer collection membership.** Decide whether `qkv-attention` represents the four-source pedagogical comparison set or the broader set of all page-relevant sources before adding Jose or Vaswani to its membership.
+6. **Keep related-page associations separate from evidence usage.** A source associated through `related.pages` is a candidate for review, not automatically a source used by the page.
+7. **No language quota.** The English-only resource set is a documented bias. Search for French material only if it serves a concrete learner need and adds a distinct contribution; do not add a weak source to improve a count.
+8. **No public lesson change is justified by this audit alone.** The page's current content is already sufficiently complementary for its stated Understand role. Remaining work is source-matrix freshness and claim-level primary provenance.
+
+### 12.7 Follow-up checklist
+
+- [x] Compare external citations in Q/K/V FR and EN; confirm the same four URLs.
+- [x] Separate the four-source construction/comparison corpus from the four page-visible citations.
+- [x] Classify the four pedagogical resources by type, origin, language, level, function, scan and integration status.
+- [x] Identify Jose Parreño Garcia as a later page-cited source absent from the historical four-source matrix.
+- [x] Identify Vaswani as the primary source and preserve the focused/partial scan boundary.
+- [x] Record that `related.pages` does not establish source usage or claim support.
+- [x] Verify Vaswani §3.2.2 for the learned projection claim and §3.2.3 for the shared source in self-attention; update the existing review, extraction and source scan history with exact locators.
+- [ ] Decide and document the intended scope of the qkv-attention collection before changing source memberships.
+- [x] Explicitly bound the historical comparison to its four-resource pedagogical subset; Jose and Vaswani remain separately characterized in the page-level audit.
+- [ ] Re-run the page citation/FR-EN parity check after the dossier update.
+
+**Pilot conclusion:** the Q/K/V corpus is not merely homogeneous: its four-source construction set has useful pedagogical diversity, while its page-visible references include both a primary paper and a later complementary blog. The main weakness is not a shortage of resources but a stale boundary between the historical comparison matrix, the live page citations and the source catalogue's topical associations. Fix provenance and claim mapping before expanding the source set.

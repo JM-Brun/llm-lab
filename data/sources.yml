@@ -3609,6 +3609,15 @@ sources:
           - "This pass audits the attention definition only; it is not a complete re-audit of the paper."
           - "Equation (1) does not itself define mutual information, attention entropy, semantic relevance, or compression."
           - "No paper figure, text passage, code, or dataset was copied."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, section 3.2.2, Multi-Head Attention: distinct learned linear projections of queries, keys and values, per-head dimensions, concatenation and output projection"
+          - "Section 3.2.3, Applications of Attention in our Model: Q, K and V come from the same previous-layer representation in self-attention; encoder-decoder attention uses decoder queries and encoder memory keys and values"
+        limitations:
+          - "Focused verification of projection and source-stream claims only; this is not a full-paper re-audit."
+          - "The paper's per-head multi-head notation is not identical to the page's compact single-head XW_Q, XW_K, XW_V notation; the page uses a simplified specialization."
+          - "No paper figure, text, code or dataset was copied; reuse rights were not assessed."
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/queries-keys-values, en/queries-keys-values]
       concepts: [positional-encoding, query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]

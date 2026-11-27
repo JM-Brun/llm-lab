@@ -1,9 +1,9 @@
-# Source review — Vaswani et al.: scaled dot-product attention
+# Source review — Vaswani et al.: attention formulation and learned Q/K/V projections
 
 **Review date:** 2026-11-18  
-**Source:** Vaswani et al., *Attention Is All You Need* (2017), arXiv:1706.03762, §3.2.1, Equation (1), Figure 2.  
+**Source:** Vaswani et al., *Attention Is All You Need* (2017), arXiv:1706.03762, §§3.2.1–3.2.3, Equation (1), Figure 2 and the multi-head projection equations.  
 **Canonical source ID:** `vaswani-et-al-attention-is-all-you-need-2017`  
-**Extraction item:** `vaswani-et-al-attention-is-all-you-need-2017:scaled-dot-product-attention`  
+**Extraction items:** `vaswani-et-al-attention-is-all-you-need-2017:scaled-dot-product-attention` · `vaswani-et-al-attention-is-all-you-need-2017:learned-qkv-projections`  
 **Status:** focused primary-source review; not a full-paper re-audit.
 
 ## Claim supported by the primary source
@@ -48,6 +48,23 @@ The implementation mapping must be supported separately by Dao et al. (2022), Fl
 
 ## Integration decision
 
-Add the §3.2.1 extraction item and update the existing source catalogue classification so the paper is associated with the attention concepts and bilingual attention pages, while retaining its positional-encoding associations. Keep scan status `partially-scanned`: this focused pass does not claim a full-paper re-audit.
+Retain the §3.2.1 scaled-attention extraction and the §3.2.2 learned-projection extraction; the source catalogue associates the paper with the attention concepts and bilingual pages while preserving its positional-encoding associations. Keep scan status `partially-scanned`: these focused passes do not claim a full-paper re-audit.
 
 No new canonical concept, graph, or relation type is needed.
+
+## Focused follow-up — learned Q/K/V projections (2026-11-27)
+
+The primary PDF was checked for the exact projection claim used by the bilingual Q/K/V pages.
+
+- **§3.2.2, Multi-Head Attention (PDF pp. 3–4):** the paper states that queries, keys and values are linearly projected h times using different learned projections, gives the head equation
+  `head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)`,
+  and specifies the dimensions of the Q, K, V and output projection matrices.
+- **§3.2.3, Applications of Attention in our Model (PDF p. 4):** the paper states that in self-attention, queries, keys and values all come from the same place — the output of the previous layer. It contrasts this with encoder–decoder attention, where queries come from the decoder and keys/values from encoder memory.
+
+Together, these sections support the page's claim that, in self-attention, the same incoming representation stream is transformed into Q, K and V by distinct learned projections.
+
+**Notation boundary:** the page's compact single-head equations (Q=XW_Q, K=XW_K, V=XW_V) are a specialization/rewriting of the paper's per-head multi-head formulation, not a verbatim equation from the paper. The source record must preserve this distinction. The original paper's encoder–decoder case must not be conflated with self-attention.
+
+**Primary locators:** §3.2.2 for learned per-head projections and dimensions; §3.2.3 for the shared previous-layer source in self-attention. The focused extraction item is recorded as `learned-qkv-projections`.
+
+This is a targeted inspection only. The paper remains `partially-scanned`; no full-paper review, reproduction, implementation test or asset-rights review is claimed.
