@@ -51,6 +51,14 @@ project:
     - images/gpt-data-flow-fr-mobile.svg
     - images/transformer-stack-en-mobile.svg
     - images/transformer-stack-fr-mobile.svg
+    - images/llm-generation-process-en-mobile.svg
+    - images/llm-generation-process-fr-mobile.svg
+    - images/logits-common-shift-en-mobile.svg
+    - images/logits-common-shift-fr-mobile.svg
+    - images/cross-entropy-target-probability-mobile.svg
+    - images/cross-entropy-target-probability-fr-mobile.svg
+    - images/entropy-distributions-en-mobile.svg
+    - images/entropy-distributions-fr-mobile.svg
     - images/advent-zipf-rank-frequency.svg
     - images/likelihood-fr-mobile.svg
     - images/likelihood-en-mobile.svg

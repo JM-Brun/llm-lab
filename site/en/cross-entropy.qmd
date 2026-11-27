@@ -90,7 +90,13 @@ After the first token, generation continues with “They” in its prefix. Scori
 
 ## Visual intuition: the loss measures the surprise of the observed token
 
-![For the same target token, predicted probability 0.9 gives loss 0.105 nats, while probability 0.1 gives loss 2.303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." width=100%}
+<figure id="fig-cross-entropy-target-probability">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/cross-entropy-target-probability-mobile.svg">
+    <img src="../images/cross-entropy-target-probability.svg" alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Probability and loss each use their own scale, shared across the two cases. Loss rises sharply when the probability assigned to the target falls.</figcaption>
+</figure>
 
 Both cases concern **the same target token**: only the probability assigned to it changes. When $p(y)=0.9$, the loss is about $0.105$ nats; when $p(y)=0.1$, it is about $2.303$ nats. The second loss is nearly 22 times larger. The function $-\log p(y)$ makes confident errors costly, but it does not tell us whether the observed token is true or useful in a broader sense.
 

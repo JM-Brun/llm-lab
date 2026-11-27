@@ -448,4 +448,36 @@ The third source-level pilot reviews embedding lookup, contextualized representa
 
 The existing `contextualization-pipeline-en.svg` and `contextualization-pipeline-fr.svg` are no longer embedded in the core contextualized-representations lesson because that collapsed figure repeated the route's existing text/ID/embedding/Transformer progression. Both assets are retained; no file was deleted. The external complementary article link remains in the page as text.
 
-The GPT-flow and Transformer-stack diagrams now label the stage as “initial representations” and state separately that positional handling depends on the architecture, avoiding the implication that every model adds a position vector at the input. All eight new mobile files have SVG `title` and `desc` elements, with no embedded raster, script, foreignObject or external href. These are source-level checks only; Quarto rendering, browser legibility, accessibility-tree behavior, owner provenance confirmation and asset-level licensing remain outstanding.
+The GPT-flow and Transformer-stack diagrams now label the stage as “initial representations” and state separately that positional handling depends on the architecture, avoiding the implication that every model adds a position vector at the input. All eight new mobile files have SVG `title` and `desc` elements, with no embedded raster, script, foreignObject or external href. The pre-sync full-site browser audit (run [45962930428](https://github.com/JM-Brun/llm-lab/actions/runs/45962930428)) rendered the EN/FR embedding-space pages at desktop and mobile widths and the EN/FR contextualized-representations pages at desktop width. The contextualized-representations mobile variants were not included in that run. This automated evidence does not replace manual visual or accessibility-tree review. Owner provenance confirmation and asset-level licensing remain pending.
+
+## Understand route visual pilot — prediction and inference — 2026-11-26
+
+The fourth source-level pilot reviews logits, probabilities, entropy, generation and in-context learning in EN/FR. It adds four mobile SVGs; the other pages retain their existing table/flow, generation timeline and Mermaid diagram. Full decisions are recorded in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `logits-common-shift-en-mobile.svg`, `logits-common-shift-fr-mobile.svg` | EN/FR `logits.qmd` | Original mobile composition showing equal logit gaps and identical softmax distributions after a common offset. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `entropy-distributions-en-mobile.svg`, `entropy-distributions-fr-mobile.svg` | EN/FR `entropy.qmd` | Original mobile composition comparing concentrated, example and uniform distributions with their entropy values. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+All four new files include SVG `title` and `desc` elements and contain no embedded raster, script, foreignObject or external href. The logits and entropy pages now use responsive `picture` embeds with page-level alt text and captions. Automated rendered validation was completed on the pre-sync head `84fed3f` in run [45962930428](https://github.com/JM-Brun/llm-lab/actions/runs/45962930428): the full Quarto site rendered and the browser audit completed 42 cases (22 desktop, 20 mobile) across 22 EN/FR page-language pairs, with zero audit failures, zero horizontal overflow and zero axe violations in 22 desktop scans. Mobile coverage is selective, not a full mobile review of all 20 core pages, and no manual accessibility-tree review has been completed. The report also records 14 MathJax 4 TypeError page errors on the EN `embedding-space` desktop case during keyboard focus traversal of mathematical content; there were no console errors. This is outside the pages changed in this pilot and remains a separate investigation. The branch has since been synchronized with `main`; the same checks are being rerun on the synced head. Owner provenance confirmation and asset-level licensing remain pending.
+
+
+The same audit was extended to the adjacent core visual sequence:
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `llm-generation-process-en-mobile.svg`, `llm-generation-process-fr-mobile.svg` | EN/FR `llm-overview.qmd` | Original mobile compositions of the six-stage autoregressive generation overview. They return the feedback loop to the initial-representation stage and state that positional handling is architecture-dependent. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The overview's second figure (one predictive computation, three uses) already has responsive EN/FR variants. The Q/K/V lesson's computational-path and S/A/O matrix diagrams also already have responsive EN/FR variants. The training-loop and optional optimizer-comparison figures likewise already have responsive EN/FR variants. They were reviewed and retained; no duplicate assets were created. The detailed decisions are included in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
+
+
+The cross-entropy page was also included in the responsive pass:
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `cross-entropy-target-probability-mobile.svg`, `cross-entropy-target-probability-fr-mobile.svg` | EN/FR `cross-entropy.qmd` | Original mobile compositions of the existing one-hot target probability/loss comparison. Probability bars share a 0–1 scale; loss bars share a separate 0–2.303 nats scale. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+The page now embeds these through responsive `picture` elements with page-level alt text and captions. The mobile variants do not claim to show the full vocabulary distribution or the average over valid positions; the page retains that explicit caveat.
+
+
+For the complete route-level coverage matrix and outstanding render/accessibility/licensing gates, see the [Understand route visual audit status](understand-route-visual-audit-status-2026-11-26.md).

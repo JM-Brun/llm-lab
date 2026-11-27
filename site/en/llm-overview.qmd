@@ -95,7 +95,13 @@ The new prefix ends in “Aqueducts.” The model recomputes the distribution fr
 
 ### A preview of computation inside a GPT
 
-![Six-stage reference diagram: input text, tokenization, numeric representations, computation in Transformer blocks, next-token distribution, and selection in the generation loop.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="An autoregressive GPT processes the prefix: text, tokens and IDs, embeddings and positional information, repeated Transformer blocks, logits converted into probabilities, then selection of a token appended to the prefix. Computation repeats with the extended context. Probabilities are illustrative."}
+<figure id="fig-gpt-generation-process">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/llm-generation-process-en-mobile.svg">
+    <img src="../images/llm-generation-process-en.svg" alt="An autoregressive GPT processes the prefix in six stages: text, tokens and IDs, initial representations with architecture-dependent positional handling, repeated Transformer blocks, the next-token distribution, then selection and appending a token to the context. Computation resumes with the extended sequence. Probabilities are illustrative." style="width:100%;height:auto">
+  </picture>
+  <figcaption>The selected token is appended to the sequence; computation resumes with the extended context. The displayed probabilities are illustrative, not measurements from a real model.</figcaption>
+</figure>
 
 An autoregressive GPT turns text into tokens, their IDs into numeric representations, and processes those representations through Transformer blocks. The output head produces logits, which are converted into probabilities; a decoding rule then selects a token, appends it to the context, and starts the next computation. Selection happens after the Transformer has computed the distribution.
 
