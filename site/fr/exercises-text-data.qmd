@@ -200,7 +200,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 #### Trace pratique facultative — du texte aux vecteurs {#tokenizer-embedding-trace}
 
-Cette trace complète l'exercice sur le lookup avec le préfixe français du fil rouge, un tokenizer réel et une table d'embeddings synthétique. Elle affiche le découpage de la phrase entière — notamment les fragments autour de « situation » et « scribe » — puis compare deux tokenizers sur exactement le même texte. Elle suit les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
+Cette trace complète l'exercice sur le lookup avec le préfixe français du fil rouge, un tokenizer réel et une table d'embeddings synthétique. Elle affiche le découpage de la phrase entière — notamment les fragments autour de « situation » et « scribe » — puis compare deux tokenizers sur exactement le même texte. Elle suit les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
 
 Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
 
@@ -274,7 +274,7 @@ from transformers import AutoTokenizer
 model_id = "gpt2"
 revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
 tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
-text = " Hello world — café"
+text = "C'est une bonne situation, ça, scribe ?"
 
 ids = tokenizer.encode(text, add_special_tokens=False)
 tokens = tokenizer.convert_ids_to_tokens(ids)
