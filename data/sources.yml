@@ -7425,7 +7425,7 @@ sources:
       contribution_types: [experiment, benchmark, limitation]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-27"
         status: partially-scanned
@@ -7435,10 +7435,20 @@ sources:
           - "The full experimental protocol, task configurations, model-specific results and appendices were not re-audited in this ingestion pass."
           - "The abstract's finding about randomly replaced labels is bounded by the evaluated classification and multiple-choice tasks and 12 models."
           - "No claim-level integration into the current ICL lesson has been validated."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published EMNLP 2022 PDF: experimental setup (§3), label-correctness results (§4.1–§4.2), demonstration-component ablations (§5.1–§5.4), discussion and limitations (§6)"
+          - "Figures 1–10 and the reported task/model scope relevant to the role of demonstration labels, input distribution, label space and format"
+        limitations:
+          - "The review is targeted to ICL demonstration claims; unrelated paper sections and all appendix-level details were not exhaustively audited."
+          - "The authors' aggregate findings are task- and model-dependent; some task-model pairs show larger label effects."
+          - "The study does not evaluate open-ended generation."
+          - "The first-page PDF spells the second author's name 'Xinyi Lyu', while ACL Anthology metadata lists 'Xinxi Lyu'; the canonical record currently follows ACL metadata and the discrepancy remains unresolved."
     related:
       pages: [en/in-context-learning, fr/in-context-learning]
       concepts: [in-context-learning, conditional-distribution]
-      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/min-et-al-demonstrations-icl-2022.yml]
 
   - id: yoo-et-al-ground-truth-labels-icl-2022
     title: "Ground-Truth Labels Matter: A Deeper Look into Input-Label Demonstrations"
@@ -7464,7 +7474,7 @@ sources:
       contribution_types: [experiment, benchmark, limitation]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-27"
         status: partially-scanned
@@ -7474,10 +7484,19 @@ sources:
           - "The full experimental protocol, metrics, prompt-template ablations, model-specific results and appendices were not re-audited in this ingestion pass."
           - "The authors report that label correctness effects vary with experimental configuration; the abstract does not support treating labels as universally necessary or irrelevant."
           - "No claim-level integration into the current ICL lesson has been validated."
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Published EMNLP 2022 PDF: problem framing and prior-work comparison (§1–§2), sensitivity and GLER definitions (§2.3), experimental analysis (§2.4), inference-method, prompt-template and model-scale studies (§3–§4), conclusion and limitations (§6)"
+          - "Figures 1–10, Equation 1, reported comparisons with Min et al. and the stated limitations"
+        limitations:
+          - "The review is targeted to ICL label-correctness claims; not every appendix table and implementation detail was exhaustively audited."
+          - "The results depend on task, prompt, inference method, metric and model configuration; sensitivity alone can be misleading when a model cannot solve the task."
+          - "The paper notes prompt-choice sensitivity and possible confounding among demonstration components."
     related:
       pages: [en/in-context-learning, fr/in-context-learning]
       concepts: [in-context-learning, conditional-distribution]
-      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]
+      audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md, data/extractions/yoo-et-al-ground-truth-labels-icl-2022.yml]
 
   - id: xiang-et-al-order-sensitivity-icl-2024
     title: "Addressing Order Sensitivity of In-Context Demonstration Examples in Causal Language Models"
