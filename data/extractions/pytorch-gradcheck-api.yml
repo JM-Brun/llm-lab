@@ -1,0 +1,28 @@
+schema_version: 1
+source_id: pytorch-gradcheck-api
+items:
+  - id: pytorch-gradcheck-api:finite-difference-check
+    kind: method
+    summary: "torch.autograd.gradcheck compares analytical gradients with numerical finite-difference estimates and checks agreement using absolute and relative tolerances."
+    locator:
+      type: section
+      value: "API description and Notes"
+      label: "torch.autograd.gradcheck"
+    evidence:
+      kind: api-contract
+      confidence: well-supported
+      scope: "The API documentation specifies finite-difference checking, default tolerances and the supported input tensor types."
+      assumptions:
+        - "The check is performed on floating-point or complex tensors with requires_grad enabled."
+      limitations:
+        - "Defaults are designed for double precision; lower precision can fail."
+        - "Non-differentiable points and overlapping-memory inputs can cause failures unrelated to an incorrect analytical derivative."
+        - "A passing check covers the tested function and inputs, not an entire model's backward implementation."
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training]
+      concept_ids: [gradient]
+    candidate_destinations:
+      pages: [en/gradients, fr/gradients]
+      concepts: [gradient]
+    disposition: integrate
