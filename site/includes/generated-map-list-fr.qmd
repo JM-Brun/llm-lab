@@ -23,8 +23,6 @@
   - [Du token à la perte du lot](loss.html)
   - [Gradients : relier la perte aux paramètres](gradients.html)
   - [La boucle d'entraînement : des gradients au modèle entraîné](training-loop.html)
-- **Compléments facultatifs**
-  - [Objectif d'entraînement : garanties et limites](llm-limits.html)
 - **Réviser**
   - [Plan du parcours et fiches de révision](review-path.html)
   - [Révision — Fonctionnement d’un LLM](revision-llm-overview.html)
