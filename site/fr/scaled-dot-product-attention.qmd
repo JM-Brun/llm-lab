@@ -129,7 +129,7 @@ Suivez la dernière position du préfixe. Son état d'entrée fournit la requêt
 
 <script src="../scripts/attention-intervention.js" defer></script>
 
-## Origine et rôle
+## Origine et rôle {#origine-et-role}
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
 
