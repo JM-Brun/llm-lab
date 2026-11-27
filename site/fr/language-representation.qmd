@@ -62,7 +62,7 @@ Un réseau neuronal comme un Transformer suit toutefois une autre stratégie. Il
 
 ## 2. Pourquoi un numéro ne suffit-il pas ?
 
-Imaginons qu'un dictionnaire associe un numéro à chaque mot :
+Pour simplifier, imaginons qu'un vocabulaire associe un ID à trois unités — ici, des mots entiers :
 
 | Mot | Numéro |
 |---|---:|
@@ -70,7 +70,7 @@ Imaginons qu'un dictionnaire associe un numéro à chaque mot :
 | chien | 42 |
 | voiture | 8 |
 
-Ces numéros permettent de retrouver les mots. Mais ils ne décrivent aucune propriété linguistique. Le fait que 17 et 42 soient plus proches que 17 et 8 n'a aucune signification : on aurait pu permuter les numéros sans modifier le langage ni la tâche à apprendre.
+Dans un vrai tokenizer, les unités ne sont pas nécessairement des mots entiers : elles peuvent être des fragments de mots, des signes de ponctuation ou d'autres tokens. Ces IDs permettent de retrouver les entrées du vocabulaire, mais ils ne décrivent aucune propriété linguistique. Le fait que 17 et 42 soient plus proches que 17 et 8 n'a aucune signification : on aurait pu permuter les numéros sans modifier le langage ni la tâche à apprendre.
 
 Un calcul direct sur ces identifiants — par exemple une distance entre 17 et 42 — exploiterait donc une propriété accidentelle de la numérotation. Le réseau apprendrait à partir d'une convention arbitraire, pas d'une relation entre les mots.
 
