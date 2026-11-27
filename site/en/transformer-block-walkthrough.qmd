@@ -26,7 +26,7 @@ tags: ["type:guided-build", "destination:build", "topic:reference-transformer-bl
 -->
 
 ::: {.chapter-lead}
-This page is the third stop (3 of 5) of the guided tour. The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+This page is the third stop (3 of 5) of the guided tour. The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py#L50-L186).
 :::
 ::: {.callout-tip title="The Transformer block in one minute" #revision-summary}
 The reference block follows a pre-LN order: normalize, compute multi-head self-attention, add the residual path, then normalize, apply the MLP, and add its residual. Q/K/V/O projections and tensor shapes make the computation traceable; MQA/GQA, MLA and local attention are compared as architectural variants, not claimed as implemented in this code.
@@ -175,9 +175,9 @@ The NumPy primitive is called separately for each `(b, h)` pair. Its contract is
 
 **An edge case that must not be interpreted as a distribution:** if a row is fully masked, the primitive deliberately returns zero weights and a zero output. Rows with at least one accessible key are normalized over those keys only. This convention belongs to the reference implementation; do not generalize it to every attention API.
 
-The [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) suite checks, among other things, shapes and normalization invariants, a hand-computable weighted sum, finite additive biases, rejection of invalid masks, the fully masked-row case, causal-mask polarity, and prefix invariance under changes to future tokens. It also checks that a wrong softmax axis violates the expected per-query normalization.
+The [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py#L229-L270#L13-L34) suite checks, among other things, shapes and normalization invariants, a hand-computable weighted sum, finite additive biases, rejection of invalid masks, the fully masked-row case, causal-mask polarity, and prefix invariance under changes to future tokens. It also checks that a wrong softmax axis violates the expected per-query normalization.
 
-Maintained sources: [NumPy primitive](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py) · [primitive and causal-mask tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
+Maintained sources: [NumPy primitive](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py#L9-L128) · [primitive and causal-mask tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
 
 - [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
@@ -240,7 +240,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 ## What the tests verify
 
-[`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py): `forward` preserves the shape and stays finite; a non-3D input is rejected; a head count inconsistent with the width is rejected.
+[`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py#L23-L85): `forward` preserves the shape and stays finite; a non-3D input is rejected; a head count inconsistent with the width is rejected.
 
 ## Exercises
 
@@ -271,7 +271,7 @@ The questions for this tour and their worked answers are collected on its [dedic
 
 - **Concept pages**: [GPT and Transformer overview](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
-- **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+- **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py#L50-L186) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py#L23-L85).
 
 
 
