@@ -373,3 +373,34 @@ The exact-ID reconciliation in [#416](https://github.com/JM-Brun/llm-lab/issues/
 - This closes the **source-semantic relation review** for the current 147 assertions. It does not close consumer-consistency checks, real touch-device testing, manual screen-reader review or independent learner validation. Those remain with their existing owners (#416, #584, #988 and #447 respectively).
 
 The source and implementation limitations recorded in the tokenization source reviews remain in force; this relation review does not upgrade partial source scans or claim independent reproduction of experiments.
+
+
+## 2026-11-27 relation-consumer consistency audit
+
+The current consumers were inspected against the canonical `relation_types` metadata and the separation between the concept graph, the guided route, and the page map.
+
+| Consumer | Observed contract | Assessment |
+|---|---|---|
+| `site/tools/check_concept_registry.py` | Validates every relation type against the supported set; validates bilingual labels/descriptions and direction/family/transitivity/acyclicity metadata. Any type marked `learning_dependency: true` must be directed, acyclic and pedagogical, and each edge of that type must have a bilingual rationale. | Consistent with the canonical relation contract. The only current type marked as a learning dependency is `prerequisite`. |
+| `site/tools/build_learning_map.py` | Projects all concept edges and their canonical type metadata (direction, family, transitivity, acyclicity, learning-dependency flag, localized label/description) into the bilingual map payload. | Preserves relation semantics rather than treating every edge as a prerequisite. |
+| `site/tools/learning_map_renderers.py` | Uses the projected family, direction, label and description for relation filters, legend and concept details. It traverses relations only to display neighbours and does not build a learning sequence from them. | Consistent. The graph remains an exploratory semantic map. |
+| `assign_route_rank` in `site/tools/build_learning_map.py` | Orders page-map presentation from authored `suggested_route.next` and page `hierarchy.children` metadata. It does not read concept relations. | Consistent. This rank is a display heuristic, not a prerequisite order. |
+| Guided route and lesson contracts in `data/guided-route.yml` / `build_learning_map.py` | Resolve explicit stages, page memberships and `lesson_contracts.requires` against the authored route sequence. They do not derive route stages or lesson requirements from the concept graph. | Consistent. The pedagogical route remains an independently authored projection. |
+| `site/tools/export_knowledge_graph.py` | Exports every relation as a typed predicate. `generalizes` maps to `skos:narrower`; other relation types retain their project-specific `llmlab:* ` predicate. | Semantics are not collapsed into a hierarchy or prerequisite graph. The export currently exposes predicate identity, not the full bilingual relation-type metadata. |
+| Tests | `tests/knowledge/test_concept_registry.py` covers the learning-dependency invariants and bilingual rationales; `test_learning_map.py` covers relation metadata projection and page-route ranking; `test_knowledge_graph_export.py` covers non-taxonomic predicate mapping and representative typed edges. | Existing coverage supports the separation. There is no single end-to-end assertion enumerating all 147 predicates across every projection. |
+
+### Interoperability boundary
+
+The JSON-LD export's lack of a published, resolvable vocabulary definition for each `llmlab:*` predicate is a known interoperability limitation, not evidence that the internal graph is using the wrong relation semantics. The prior decision in #416 to defer a public relation-type vocabulary remains appropriate until a concrete external consumer requires it. Do not introduce a second vocabulary registry for the current internal map.
+
+The supported relation-type allowlists in the validator and JSON-LD exporter are explicit code-level guards. They must be updated alongside any future canonical relation-type addition; they are not alternative sources for edge meanings.
+
+### Consumer-audit result
+
+- The current consumers preserve the distinction between semantic relations, pedagogical prerequisites, page-map hierarchy and the authored guided route.
+- Only the canonical `prerequisite` type is currently eligible to declare a learning dependency; the validator enforces the required metadata invariants.
+- No consumer was found deriving the guided route from all concept edges.
+- No production code change is justified by this audit. In particular, do not convert `part-of`, `contributes-to`, `applies-to`, or computation edges into learning prerequisites.
+- Remaining #416 work is limited to real touch-device validation of graph selection/navigation. Manual screen-reader and cross-page navigation checks remain with #584/#988; independent learner comprehension remains with #447.
+
+The tests cited above were inspected as source. This documentation pass did not execute them and does not claim a new CI run.
