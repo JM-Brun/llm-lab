@@ -1,7 +1,7 @@
 # Visual audit pilot — prediction and inference (2026-11-26)
 
 **Scope:** EN/FR Understand lessons for logits, probabilities, entropy, generation and in-context learning, plus adjacent core visuals for the LLM overview, Q/K/V, cross-entropy and the training loop.  
-**Status:** source-level audit and responsive changes completed; Quarto build and browser rendering remain unverified.
+**Status:** source-level audit and responsive changes completed. The pre-sync candidate `84fed3f` passed the full Quarto render and automated browser review in run [45962930428](https://github.com/JM-Brun/llm-lab/actions/runs/45962930428); equivalent checks are rerunning after synchronization with `main` on head `fb75013`. Manual mobile review, the ICL Mermaid mobile check, accessibility-tree review, the MathJax page-error investigation, owner provenance confirmation and asset-level licensing remain outstanding.
 
 ## Decisions
 
@@ -76,15 +76,16 @@ All four SVGs were authored for this contribution and include SVG `title` and `d
 - The probability-page no-new-figure decision is explicit and grounded in its table/flow plus the entropy comparison.
 - Existing generation responsive figures and ICL Mermaid flow are retained.
 
-## Not yet validated
+## Remaining validation
 
-1. Run the normal Quarto build and resolve any source, HTML or asset-path failures.
-2. Inspect the LLM overview mobile diagram at a narrow viewport; confirm the six cards, feedback loop and illustrative distribution remain legible.
-2. Inspect the logits, entropy and cross-entropy figures at desktop and narrow mobile widths; check labels, bars, wrapping, vertical length and caption placement.
-3. Inspect the Mermaid ICL diagram on mobile and confirm the two subgraphs remain readable without horizontal overflow.
-4. Verify the accessibility tree: page-level alt text, SVG title/description and captions should not be announced redundantly.
-5. Confirm owner provenance for the four new SVGs and record the separate asset-level licence decision.
-6. Revisit the probability page after rendered inspection only if learners cannot follow the table-to-distribution transition; do not add a duplicate bar chart pre-emptively.
+1. Confirm the Quarto and CI reruns pass on the synchronized head `fb75013`; resolve any source, HTML, asset-path or test failures.
+2. Manually inspect the LLM overview mobile diagram; confirm the six stages, feedback loop and illustrative distribution remain legible.
+3. Inspect the logits, entropy and cross-entropy figures at desktop and narrow mobile widths; check labels, bars, wrapping, vertical length and caption placement.
+4. Inspect the Mermaid ICL diagram on mobile and confirm the two subgraphs remain readable without horizontal overflow; this page was not part of the 42-case browser report.
+5. Verify the accessibility tree: page-level alt text, SVG title/description and captions should not be announced redundantly. Axe's zero-violation result is not a substitute for this review.
+6. Investigate the 14 MathJax 4 TypeError page errors recorded on EN `embedding-space` during keyboard focus traversal; determine whether this is an upstream MathJax issue or a site configuration issue, then document the outcome.
+7. Confirm owner provenance for the four new SVGs and record the separate asset-level licence decision under #156/#163.
+8. Revisit the probability page after rendered inspection only if learners cannot follow the table-to-distribution transition; do not add a duplicate bar chart pre-emptively.
 
 ## Remaining route-wide work
 

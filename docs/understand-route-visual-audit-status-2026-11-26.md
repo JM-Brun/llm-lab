@@ -10,10 +10,10 @@
 | Figure purpose, redundancy and placement decisions | Recorded in the pilot audit documents |
 | EN/FR source pairing and image references | Checked for the pages changed in the pilots |
 | Mobile source compositions | Added where wide existing diagrams needed them; existing responsive visuals retained where already adequate |
-| Quarto build | **Not verified** — the Quarto workflow on the current draft PR was skipped |
-| Rendered browser inspection | **Not done** |
-| Mobile viewport inspection | **Not done** |
-| Accessibility-tree inspection | **Not done** |
+| Quarto build | **Passed on pre-sync head** `84fed3f`; full-site render succeeded in run [45962930428](https://github.com/JM-Brun/llm-lab/actions/runs/45962930428). Rerun on synced head `fb75013` is pending. |
+| Rendered browser inspection | **Automated review passed on pre-sync head**: 42 cases, zero audit failures. Rerun on synced head is pending. |
+| Mobile viewport inspection | **Partial**: 20 cases at 390 px across selected pages; not all 20 core pages have mobile evidence. No tablet-wide review is claimed. |
+| Accessibility-tree inspection | **Not completed**. Axe reported zero violations in 22 desktop page-language scans. The report also recorded 14 MathJax 4 page errors on EN `embedding-space` during keyboard focus traversal; investigate separately. |
 | New-asset owner provenance confirmation | **Pending** |
 | New-asset licence decision | **Pending** under #156/#163 |
 
@@ -52,7 +52,7 @@ Source-level review is not equivalent to rendered validation. No claim is made t
 - [PR #1737](https://github.com/JM-Brun/llm-lab/pull/1737) — overview, logits, cross-entropy, entropy, and adjacent prediction/inference visuals.
 - [PR #1730](https://github.com/JM-Brun/llm-lab/pull/1730) — original design/review process documentation.
 
-These PRs are drafts. PR #1737 is mergeable at the branch level, but Quarto and CI workflows were skipped. No PR is represented here as built, browser-validated or ready to merge.
+The listed PRs are applied change sets; their current review and merge state must be checked on GitHub. PR #1737 remains open and unmerged. It is synchronized with `main` and currently mergeable at the branch level. Its pre-sync head passed CI, the full Quarto render and the automated browser review; the same workflows are rerunning after synchronization. This does not constitute complete manual desktop/mobile inspection, accessibility-tree review or rights clearance, and it does not close #1729.
 
 ## Remaining work — required before closure
 
@@ -115,4 +115,4 @@ The issue can be closed only when:
 5. the visual register matches the actual site;
 6. remaining issues are either fixed or explicitly deferred with a reason.
 
-Until then, the audit status remains **source-reviewed, not render-validated**.
+Until then, the audit status remains **source-reviewed and partially render-validated; not fully route-validated**.
