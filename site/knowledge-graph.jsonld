@@ -5038,6 +5038,33 @@
       "schema:name": "The mathematics of language modeling"
     },
     {
+      "@id": "https://jm-brun.github.io/llm-lab/en/language-representation.html",
+      "@type": [
+        "schema:WebPage",
+        "schema:LearningResource"
+      ],
+      "schema:name": "Why represent language numerically?",
+      "schema:inLanguage": "en",
+      "schema:description": "Explains why neural networks use numerical objects to process language, what learned vectors make computable, and why representations are subsequently context-dependent. Concrete tokenization, detailed lookup, vector geometry, and Transformer mechanisms remain in their dedicated lessons.",
+      "schema:abstract": "Explain why an integer identifier is not enough to represent a token for neural computation, distinguish a lookup address from a learned vector, and connect initial representations to contextualized states.",
+      "schema:learningResourceType": "concept-bridge",
+      "llmlab:editorialLevel": "overview",
+      "schema:about": [
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/contextualized-representation"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token-embedding"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token-id"
+        }
+      ]
+    },
+    {
       "@id": "https://jm-brun.github.io/llm-lab/en/likelihood.html",
       "@type": [
         "schema:WebPage",
@@ -6384,6 +6411,33 @@
       "schema:inLanguage": "fr",
       "schema:learningResourceType": "deep-dive",
       "schema:name": "Formaliser mathématiquement la modélisation du langage"
+    },
+    {
+      "@id": "https://jm-brun.github.io/llm-lab/fr/language-representation.html",
+      "@type": [
+        "schema:WebPage",
+        "schema:LearningResource"
+      ],
+      "schema:name": "Pourquoi représenter le langage numériquement ?",
+      "schema:inLanguage": "fr",
+      "schema:description": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
+      "schema:abstract": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
+      "schema:learningResourceType": "concept-bridge",
+      "llmlab:editorialLevel": "overview",
+      "schema:about": [
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/contextualized-representation"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token-embedding"
+        },
+        {
+          "@id": "https://jm-brun.github.io/llm-lab/id/concept/token-id"
+        }
+      ]
     },
     {
       "@id": "https://jm-brun.github.io/llm-lab/fr/llm-computational-complexity.html",
