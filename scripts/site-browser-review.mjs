@@ -1614,11 +1614,14 @@ async function runCase(testCase, caseIndex) {
             "scaling-laws.html": "guided-stage-training",
             "transformer-architectures.html": "guided-stage-orientation",
             "llm-limits.html": "guided-stage-orientation",
+            "context-engineering.html": "guided-stage-context-use",
+            "rag-memory-boundaries.html": "guided-stage-context-use",
+            "document-retrieval.html": "guided-stage-context-use",
           }[pagePath];
           const optionalPages = new Set([
             "unicode-text.html", "tokenization-strategies.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
             "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
-            "transformer-architectures.html", "llm-limits.html",
+            "transformer-architectures.html", "llm-limits.html", "rag-memory-boundaries.html", "document-retrieval.html",
           ]);
           const optionalRole = context.locator(".guided-page-context__role");
           const optionalRoleText = await optionalRole.innerText().catch(() => "");
