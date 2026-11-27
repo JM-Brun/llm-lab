@@ -75,11 +75,11 @@ An ID therefore retrieves an entry; it is not, by itself, a semantic coordinate.
 
 ## 3. The learned vector: an object the network can compute with
 
-The model associates each ID with a row in a parameter matrix called the **embedding matrix**. If the vocabulary contains (V) tokens and each vector has (d) components, this matrix can be written as:
+The model associates each ID with a row in a parameter matrix called the **embedding matrix**. If the vocabulary contains $V$ tokens and each vector has $d$ components, this matrix can be written as:
 
-[
-E in mathbb{R}^{V 	imes d}.
-]
+\[
+E \in \mathbb{R}^{V \times d}.
+\]
 
 For an ID $i_t$, lookup selects the vector:
 

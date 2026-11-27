@@ -75,11 +75,11 @@ Un ID permet donc de retrouver une entrée ; il ne constitue pas, à lui seul, u
 
 ## 3. Le vecteur appris : un objet sur lequel le réseau peut calculer
 
-Le modèle associe à chaque ID une ligne d'une matrice de paramètres appelée **matrice d'embeddings**. Si le vocabulaire contient (V) tokens et que chaque vecteur a (d) composantes, cette matrice peut s'écrire :
+Le modèle associe à chaque ID une ligne d'une matrice de paramètres appelée **matrice d'embeddings**. Si le vocabulaire contient $V$ tokens et que chaque vecteur a $d$ composantes, cette matrice peut s'écrire :
 
-[
-E in mathbb{R}^{V 	imes d}.
-]
+\[
+E \in \mathbb{R}^{V \times d}.
+\]
 
 Pour un ID $i_t$, le lookup sélectionne le vecteur :
 
