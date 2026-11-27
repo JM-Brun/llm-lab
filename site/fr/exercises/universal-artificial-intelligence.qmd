@@ -99,7 +99,7 @@ Quels sont les deux obstacles à la calculabilité à la limite d'AIXI, et comme
 <details>
 <summary>Afficher le corrigé</summary>
 
-Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; l'ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
+Les égalités exactes entre valeurs d'actions et la définition récursive de la valeur à horizon infini actualisé ; l'ε-optimalité évite de devoir départager exactement les égalités, tandis qu'une fonction de valeur récursive traite le problème de l'horizon infini.
 
 </details>
 
