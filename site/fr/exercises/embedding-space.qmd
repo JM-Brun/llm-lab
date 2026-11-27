@@ -112,7 +112,7 @@ Une proximité selon un modèle, des vecteurs, une normalisation et une métriqu
 
 </details>
 
-## Inspecter une petite matrice d'embeddings d'entrée
+## Inspecter une petite matrice d'embeddings d'entrée {#inspecter-matrice-embeddings}
 
 Cette expérience indépendante d'un modèle utilise une toute petite matrice NumPy. Elle ne nécessite ni tokenizer, ni téléchargement de checkpoint, ni GPU. Les fonctions opèrent sur les **lignes d'une table d'embeddings d'entrée**, pas sur des états cachés contextualisés.
 
