@@ -26,7 +26,7 @@ pedagogical_model:
       - {id: src-context, kind: intermediate, description: "P V aggregates value vectors according to attention weights.", locator: "p. 8"}
       - {id: src-wo, kind: learned-projection, description: "W_O maps context from the value-feature space back to the four-dimensional toy state space.", locator: "p. 8"}
       - {id: src-delta, kind: state-update, description: "Delta X = (P V) W_O is added to X to form X_new.", locator: "pp. 8–9"}
-      - {id: src-residual-stream, kind: representation, description: "The toy state is mapped to GPT's residual stream: token-position states in the model embedding space.", locator: "p. 10"}
+      - {id: src-residual-stream, kind: representation, description: "The toy state is mapped to GPT's residual stream: token-position states in the model embedding space; GPT-2 Small is given as a 768-dimensional example, and the author notes that actual tokens are subwords but uses whole-word examples for simplicity.", locator: "p. 10"}
       - {id: src-causal-mask, kind: constraint, description: "The article says its attention illustration omits GPT's restriction to the current and earlier tokens.", locator: "p. 11"}
       - {id: src-mha, kind: architecture, description: "Multi-head attention is explicitly left outside the article's scope.", locator: "p. 12"}
     edges:
