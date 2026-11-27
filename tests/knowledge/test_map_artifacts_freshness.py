@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import runpy
 from pathlib import Path
 from typing import Any
@@ -49,6 +50,15 @@ def test_tracked_interactive_map_matches_renderer(language: str) -> None:
         actual = fragment.read_text(encoding="utf-8")
         expected = artifacts[fragment]
         if actual != expected:
+            # Temporary CI-assisted regeneration diagnostic; remove after the
+            # canonical expected artifact has been committed.
+            encoded = base64.b64encode(expected.encode("utf-8")).decode("ascii")
+            for chunk_index, offset in enumerate(range(0, len(encoded), 7000)):
+                print(
+                    f"MAP_EXPECTED_BASE64_{language}_{chunk_index:03d}="
+                    f"{encoded[offset : offset + 7000]}",
+                    flush=True,
+                )
             mismatch = next(
                 (
                     index
