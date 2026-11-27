@@ -87,7 +87,7 @@ x_t = E[i_t] in mathbb{R}^{d}.
 
 The ID tells the model which row to read; the vector contains the numerical values used by subsequent operations. The vector components are parameters learned during training, not numbers manually assigned to each word from a dictionary definition.
 
-This distinction makes an essential property possible: vectors can be transformed and combined by the network's layers. Training adjusts parameters — including selected embeddings and later transformations — to improve predictions on examples. IDs remain discrete indices; they are not learned by moving them continuously along a numerical line.
+This distinction makes an essential property possible: vectors can be transformed and combined by the network's layers. Training adjusts parameters — including selected embeddings and later transformations — to improve predictions on examples. Differentiable operations make it possible to compute gradients with respect to these parameters. Gradients can update the selected row and later layers, but they do not move the integer ID itself: it remains a discrete index.
 
 <figure>
   <pre>
