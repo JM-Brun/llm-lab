@@ -354,3 +354,25 @@ This is a bounded operational refresh, not a new roadmap or a claim that every o
 ### Audit limits
 
 The period-partitioned search establishes the 103-issue open inventory at the time of this review, but it does not constitute a semantic re-read of all 103 issue bodies, all comments, all milestones or all assignees. The owner/boundary table above covers the principal overlapping workstreams examined in detail. Remaining older and specialist issues still require targeted review before declaring the entire backlog fully reconciled.
+
+
+### Priority reconciliation — 2026-11-27
+
+A direct review of all 20 open P1 issues led to five justified P1 → P2 changes:
+
+- #1579: explicitly deferred until the main learning-path redesign is complete; implementation is split into #1580–#1583.
+- #1233: the first read/query slice exists, but the remaining cross-domain contract is broad and evidence-dependent; keep specialist evidence owners (#1211, #512, #416, #1237) authoritative.
+- #1257: concept-registry and topology benchmark slices are merged; broader end-to-end capacity work should follow a measured workload.
+- #156: the remaining asset-rights audit is important but bounded follow-up (four provenance confirmations and rendered-DOM inventory), not a current release blocker.
+- #163: code/prose licensing is complete; remaining non-text asset rights and contributor-permission review depends on #156 and explicit owner decisions.
+
+The stale [P1] prefixes were removed from #1233 and #1257 titles. The P2 changes do not mean these issues are unimportant or closed; they mean they are not the next execution slice.
+
+The P1 review also found:
+- #1208's statement that its referenced PR was still a draft was stale; PR #1213 was merged on 2026-11-18. Remaining Quarto/browser verification is now stated as the closure gate.
+- #1492's statement that PR #1489 was open was stale; it was merged on 2026-11-21. The issue now distinguishes the merged handoff from remaining lesson verification.
+- #1741 and #1211 are classified as audits rather than generic research tasks.
+
+The remaining P1 set is not a promise that all items should be executed concurrently. Several are conditional/gated: #78/#656 (private prerequisite review before G8 implementation), #220 (independent subject-matter review before learner pilot), #1513 (pilot evidence before scaling the calendar), and #1541/#988 (manual rendered/accessibility evidence before closure).
+
+No milestones or assignees were added: the repository's available milestone taxonomy and project-owner assignment policy were not sufficiently established by this review. Do not invent milestones or assign the user automatically.
