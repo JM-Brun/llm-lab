@@ -144,27 +144,79 @@ A separate relative-bias deep dive (Shaw → T5 → ALiBi) is a **future candida
 
 ## 7. Remaining work and validation gates
 
-The original integration checklist is retained here as a set of follow-up gates, not as a claim that every item is currently blocking the source record.
+**Status snapshot: 27 November 2026.** This section distinguishes completed ingestion work, genuinely open work, and conditional follow-ups. A source being partially scanned does not automatically mean that the whole topic synthesis is incomplete.
 
-### Open source-inspection task
+### 7.1 Completed and already represented in the repository
 
-1. **AiEdge full-text audit — blocked by source access.** If the complete article becomes directly accessible, inspect its full section sequence, equations, diagrams, worked examples, exercises, implementation details and outbound references. Update the structured extraction and this dossier only with evidence actually inspected.
-2. **Complete route crosswalk — dependent on item 1.** Compare the article section by section with the corresponding LLM Lab lesson route and the wider project learning route. Record ordering, prerequisites, teaching moves, practice and conclusion separately. Until then, the current crosswalk remains explicitly partial; do not infer that unobserved elements are absent.
+- The AiEdge article has one canonical source record. The Substack inbox URL is an alias for that same article, not a second source.
+- The AiEdge indexed snapshot has been extracted and reviewed within its actual evidence boundary. The source remains `partially-scanned`; the full article, figures, examples, implementation, comments and conclusion have not been inspected.
+- Primary source records and structured extractions already exist for Shaw et al. (relative key/value representations), Raffel et al. (T5 bucketed score bias) and Press et al. (ALiBi). Their extractions intentionally have narrower scopes than full-paper reconstructions.
+- The synthesis already distinguishes absolute input additions, RoPE's Q/K rotations, Shaw's relative key/value paths, T5's bucketed scalar bias, ALiBi's head-specific linear bias, causal visibility and NoPE.
+- The canonical concept graph, computational graph, bilingual learning route and core positional-encoding page do not require new nodes or stages on the evidence currently available.
+- Source-specific reviews and topic-level syntheses now have separate canonical destinations. The source catalogue and source-local extraction records must link to this dossier at `docs/source-syntheses/positional-encoding-source-synthesis-2026-11-26.md`.
 
-### Revalidation triggers for future content changes
+These completed items should not be reopened merely to increase the number of sources, concepts or pages.
 
-3. After any future source-catalogue or collection-membership edit, run the source-catalogue, collection and extraction-locator validators.
-4. After any future bilingual lesson, synthesis or Practice edit, run metadata, revision-coverage and learning-map freshness checks; regenerate map artifacts with `site/tools/build_learning_map.py` where required.
-5. After any Quarto content or link change, render the site and check links, anchors and mathematical rendering. For UI changes, inspect FR/EN pages at desktop and mobile widths and verify keyboard operation of answer disclosures.
+### 7.2 Open work — blocked by AiEdge source access
 
-The AiEdge ingestion PR #1765 passed Python quality, tests, Quarto/browser audit and secret scanning; its full-corpus extraction-locator inventory also passed. The opt-in concept-registry scale benchmark was skipped. These automated checks do not replace the manual responsive/accessibility checks above or a learner-outcome evaluation.
+**A. Complete the AiEdge source inspection only if the full article becomes accessible.**
 
-### Deferred, evidence-triggered work
+1. Capture the exact accessible version and publication/update metadata; retain the current indexed snapshot as provenance rather than silently replacing it.
+2. Inspect the complete author text and section order, including equations, technical claims, examples, caveats and conclusion.
+3. Inspect figures and diagrams as assets, not only their captions; record provenance and accessibility. Inspect code, experiments, comments and outbound links only where they are actually present and accessible.
+4. Update the source record's scan history and the structured extraction's evidence locators, scan coverage and confidence. Preserve unknown or unavailable fields explicitly.
+5. Reconstruct the article's source-local conceptual graph and teaching route only to the extent supported by the article. Mark inferred structure as inferred; do not present it as an author-supplied graph.
+6. Complete the route crosswalk against both (a) the canonical bilingual positional-encoding lesson and (b) the wider LLM Lab learning route. Compare motivation, prerequisites, section order, mathematical steps, examples, practice, implementation and conclusion separately.
+7. Reassess the integration decision. Add or change canonical material only if the full source supplies a demonstrably useful distinction, explanation or evidence that is not already covered.
 
-6. Revisit the visual design only if an original three-way insertion-point diagram (input addition / QK rotation / score bias) materially improves comprehension. Do not copy third-party figures; the current lesson already has a relevant comparison.
-7. Consider a separate Shaw/T5/ALiBi deep dive only when concrete implementation or mathematical material outgrows the concise core comparison and existing deep dives.
+**Completion condition:** either the full inspection and crosswalk are evidenced in the source record, extraction and review, or the task remains explicitly blocked with the partial-scan status intact. A cache miss or an indexed outline is not sufficient to close it.
 
-No learner outcome, independent benchmark reproduction or long-context performance claim is made by this source compilation.
+**B. Reuse and rights checks are conditional.**
+
+- The current AiEdge record is link-only for text and figures; code and data reuse status remain unknown. No source figure, code or prose has been copied.
+- If a source asset is proposed for reuse, inspect the exact asset, identify its provenance and verify applicable permission/licence before reuse. Unknown rights are not permission. If no reuse is proposed, retain the link-only disposition; obtaining rights is not a prerequisite for keeping a bibliographic source record.
+
+### 7.3 Conditional technical and pedagogical validation
+
+These are not blockers for the current comparative synthesis. Trigger them only when the project makes claims or changes that require them.
+
+| Trigger | Follow-up | Evidence required to close |
+|---|---|---|
+| A Build lesson or implementation guide is added for Shaw, T5 or ALiBi | Validate tensor operations, insertion points, masking order, shapes and parameter sharing against the paper and implementation | Tested code, tests and source-linked explanation |
+| A performance, extrapolation or efficiency claim is added | Reproduce or independently verify the relevant experiment under a stated model, dataset, context length, hardware and evaluation protocol | Reproducible configuration, measurements and limitations |
+| A relative-bias deep dive is proposed | First establish that equations, implementation or architecture variants exceed the capacity of the existing core lesson and RoPE page | A concrete scope and learner question not already served by current pages |
+| The bilingual lesson or Practice companions are substantively changed | Check FR/EN parity, mathematical rendering, links, keyboard access and responsive layout | Rendered-page review at desktop and mobile widths |
+| Pedagogical effectiveness is explicitly being evaluated | Run a small learner evaluation of the intended distinctions, not merely a content-count audit | Defined learning questions, observed learner results and limitations |
+
+The existing primary-source records are deliberately partial in scope: Shaw's five-page paper was inspected for its relative-position mechanism and reported WMT experiments, but no experiment was reproduced; T5 §2.1 was inspected for the relative-bias mechanism, but no model was executed; the ALiBi paper's relevant mechanism and experiments were inspected, but no independent training or benchmark reproduction was performed. Do not describe these as reproduced results.
+
+### 7.4 Revalidation triggers for repository changes
+
+- After changing source records, collection membership or source identities, run the source-catalogue and collection validators.
+- After changing structured extractions or their links, run the extraction-locator inventory and check that every dossier/extraction back-reference resolves.
+- After editing bilingual lessons, synthesis sheets or Practice companions, run metadata, revision-coverage and learning-map freshness checks; regenerate map artifacts with `site/tools/build_learning_map.py` where required.
+- After Quarto content or link changes, render the site and check links, anchors and mathematical rendering. Run responsive and keyboard checks when learner-facing UI or content is affected.
+
+Automated CI verifies repository contracts; it does not establish scientific correctness, learner outcomes, rights clearance or experimental reproducibility.
+
+### 7.5 Deferred, evidence-triggered work
+
+- Revisit the visual design only if learner testing or a concrete explanation gap shows that the existing insertion-point comparison (input addition / QK rotation / score bias) is insufficient. Prefer an original project diagram; do not copy third-party figures without verified rights.
+- Consider a separate Shaw → T5 → ALiBi deep dive only when a specific implementation or mathematical learning objective cannot be served by the current core lesson and RoPE page.
+- Consider independent experiment reproduction only when a published LLM Lab explanation relies on the corresponding empirical claim.
+
+### 7.6 Exit criteria for this topic dossier
+
+The dossier is maintained, rather than considered permanently finished, when:
+
+1. every included source has one canonical identity, an explicit scan boundary and a linked structured extraction/review where applicable;
+2. comparisons distinguish source-local graphs/routes from canonical concepts, computational structure and learner routes;
+3. convergences, complementary explanations, disagreements and evidence independence are not conflated;
+4. every integration, defer or rejection decision has a destination and rationale;
+5. open tasks have an explicit trigger and closure condition; and
+6. repository validators pass after each affected change.
+
+No learner outcome, independent benchmark reproduction or universal long-context performance claim is made by this source compilation.
 
 ### Additional source access note (2026-11-27)
 
