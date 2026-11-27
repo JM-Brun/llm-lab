@@ -135,3 +135,20 @@ This expanded content is part of the reading path.
 """
     estimate = estimate_lesson_duration(sample)
     assert estimate.prose_words == 11
+
+
+def test_estimator_does_not_parse_fenced_div_syntax_inside_code() -> None:
+    sample = """## Main idea
+
+Visible content remains in the estimate.
+
+\`\`\`markdown
+::: {.callout-note data-reading-time="exclude"}
+This is an example, not a real callout.
+:::
+\`\`\`
+
+More visible content remains in the estimate.
+"""
+    estimate = estimate_lesson_duration(sample)
+    assert estimate.prose_words == 15
