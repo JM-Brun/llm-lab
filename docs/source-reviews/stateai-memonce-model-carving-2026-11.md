@@ -143,3 +143,19 @@ This clarifies the operational meaning of the headline: **1,313× is the active 
 The repository's Apache-2.0 licence applies to the repository code. It does not automatically grant rights to the Qwen base model, downloaded checkpoint, datasets, benchmark assets or third-party dependencies. No checkpoint was downloaded, no environment installed, and no inference or benchmark was run; implementation inspection is not independent reproduction.
 
 The implementation source and its extraction are registered separately as `clare-nie-memonce-implementation` and `data/extractions/clare-nie-memonce-implementation.yml`.
+
+
+## 7. Official Model Carving implementation inspection
+
+The authors' [official GitHub repository](https://github.com/KadenZheng/model-carving) was inspected. Its README specifies Python 3.11 with JAX 0.9.0.1, Flax 0.12.2 and Optax 0.2.7; the repository declares an MIT licence (including attribution to the MIT-licensed Theseus portions). It provides standard and looped configurations matching the paper's stated scale ranges and uses one training entry point with a dense baseline mode and a --carving mode.
+
+Implementation details inspected:
+- carving/carver.py computes each sublayer's FLOP share, estimates pressure from the remaining token budget and fitted end-of-run learning rate, applies gate updates, and schedules graph removal;
+- carving/gates.py implements Adam gate moments, the logarithmic pressure slope using ln(20), and clipping at zero;
+- carving/budget.py accounts for attention, MLP, readout and learned-connection FLOPs;
+- carving/residual.py implements gated residual writes and learned cross-layer/loop connections;
+- carving/rate.py implements the learning-rate snapshots and power-law fit.
+
+A useful nuance from the code: a gate reaching zero schedules removal; the graph is changed at the scheduled removal point. A pending removal can be cancelled if the gate reopens before that point. The topology is frozen for cooldown. This is more precise than describing every zero crossing as immediate permanent deletion.
+
+No environment was installed and no training or benchmark was run. The code inspection therefore supports implementation traceability, not independent reproduction. The repository and extraction are registered as `kaden-zheng-model-carving-implementation` and `data/extractions/kaden-zheng-model-carving-implementation.yml`.
