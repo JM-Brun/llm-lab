@@ -2187,3 +2187,10 @@ Audit source FR/EN des premières leçons Understand `llm-overview` et `text-dat
 ### Décision et limites
 
 Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification, nouveau concept ou extension des métadonnées n'est justifié. Les rendus FR/EN, figures, blocs d'exemple, affichage mobile et accessibilité restent à vérifier.
+
+
+## Issue #1739 — matrice consolidée du parcours Understand (2026-11-27)
+
+La [matrice consolidée des contributions](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md) rassemble une ligne par leçon canonique bilingue de `data/guided-route.yml`, avec les apports distinctifs à préserver et les dossiers/pilotes qui constituent les preuves détaillées.
+
+Elle confirme la couverture source de toutes les leçons Understand du parcours principal. Elle ne certifie pas leur rendu visuel ni leur accessibilité. Le contrat de modélisation retient les structures existantes — catalogue/extractions, dossiers de synthèse, concepts, graphe computationnel, parcours et page-map — sans ajouter de champ `intellectual_contributions` ou de registre exécutable parallèle. La maintenance doit mettre à jour la matrice et les dossiers de preuve lors de toute refonte.
