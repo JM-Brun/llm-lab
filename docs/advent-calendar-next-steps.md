@@ -1,5 +1,41 @@
 # Advent calendar — remaining work and session handoff
 
+## Current operational snapshot — 2026-11-27 (supersedes earlier status paragraphs)
+
+The 24-story calendar remains **implemented but not collection-validated or learner-validated**. Do not infer acceptance from merged implementation PRs, a published page, or green CI.
+
+### Confirmed changes since the previous snapshot
+
+- [PR #1695](https://github.com/JM-Brun/llm-lab/pull/1695) is merged: the first three stories were redistributed around the 15-minute editorial target. The Day 01 Zipf deep dive, Day 02 quantitative surprisal narrative, and Day 03 tokenizer trade-off narrative now have their intended ownership boundaries; exercises and guided experiments remain in Practice.
+- [PR #1703](https://github.com/JM-Brun/llm-lab/pull/1703) is merged: Day 01's title/description and LLM caveats were aligned with its actual scope, all 24 bilingual door titles match the canonical manifest, and Practice ownership is explicit on the landing pages.
+- [PR #1709](https://github.com/JM-Brun/llm-lab/pull/1709) is merged: the tokenizer story now distinguishes prompt/KV-cache cost, output-projection cost, and downstream quality; its numerical ratios are explicitly scoped to the constructed example.
+- [PR #1663](https://github.com/JM-Brun/llm-lab/pull/1663) is merged: the text → position → contextualized-representation cluster and its synthesis sheets were refined. This is a prerequisite/context change for Day 05, not evidence that Day 05's reuse audit or learner review is complete.
+- [PR #1691](https://github.com/JM-Brun/llm-lab/pull/1691) and the Day 01/03 editorial corrections #1692/#1693 are merged. The first-three-days pedagogical model exists; it does not replace the current rendered-page and learner checks.
+- The 24 manifest entries have individual tracking issues (#1653 and #1666–#1689). Their ownership is deliberate: collection coherence stays here; page-level scientific and editorial changes stay with the day issues.
+
+### Current page-level acceptance state
+
+- **Day 01 — Zipf:** public FR/EN reading version; not accepted. The non-specialist timed read-through, comprehension evidence, and explicit accept/revise decision are still missing. #1653 also tracks source-by-source provenance follow-up and a decision on whether Heaps/hapax or lexical-diversity measures add value to the existing deep dive.
+- **Day 02 — surprisal:** story implemented, but not accepted. Verify the final calculations and distinctions (observed surprisal vs predictive entropy; bits/nats; conditional vs marginal probability; sequence sum vs average), then perform the rendered and novice review in #1666.
+- **Day 03 — tokenizer:** the narrative and cost boundaries are implemented, but the reuse/acceptance audit remains open. #1667 still requires current FR/EN desktop/mobile inspection, anchor/link and rights checks, reproducibility of the multilingual comparison protocol, and an independent novice reading focused on why shorter tokenization is not by itself better.
+- **Days 04–05:** both remain reuse-audit, not accepted. #1668 must test whether the canonical linearity/embedding page supports the XOR-led story without overclaiming probing or feature use. #1669 must test the same-token/different-context contrast against the revised contextualized-representation page, distinguishing contextual change from complete disambiguation and probing from causal evidence.
+- **Day 06:** the bilingual source draft/template/dossier exist, but the manifest remains in-progress; it is not an accepted or published story. The current issue #1671 still requires a complete bilingual draft, worked frequency/phase example, explicit distinction from learned/relative/RoPE methods, and scientific/render/learner validation.
+- **Days 07–08:** reuse audits remain open. Day 07 must preserve the limits of the Q/K/V retrieval analogy; Day 08 must audit the variance derivation's assumptions rather than generalize from a Gaussian simulation.
+- **Days 09–24:** each has an individual P2 issue and an explicit reuse/create decision. A manifest value create is a proposal, not proof that a page exists or is validated. Do not mass-create these pages. In particular, Day 09 (#1674) and Day 21 (#1686) are candidates for the deliberately varied content pilots, but require distinct-scope/source decisions and controlled examples before implementation.
+
+### Execution order for the next session
+
+1. Finish the **first-five cross-day quality review** in #1664 using the ten shared criteria, with a per-story pass / revise / not-applicable record and exact page evidence. Do not duplicate page-level edits already owned by #1653 and #1666–#1669.
+2. Close the highest-value page-level evidence gaps in chronological order: Day 01 non-specialist read; Day 02 final scientific/render review; Day 03 reproducibility and mobile/novice review; then the explicit reuse decisions for Days 04–05.
+3. Continue the varied scientific pilots only after the relevant page owner has established a distinct learner outcome and source basis. Day 03 is part of the existing tokenizer story; Day 09 and Day 21 remain candidates, not approved parallel production tracks.
+4. Complete the collection crosswalk against canonical concepts and computational nodes. Preserve the three distinct uses of the conditional distribution (generation, observed-target scoring/evaluation, training); Q/K/V remains inside Transformer blocks. Do not infer prerequisites from calendar order.
+5. Inspect the published archive/navigation, FR/EN responsive output, keyboard/screen-reader behavior, reduced motion, colour contrast, figure alternatives, source provenance and evergreen access. Record automated checks, manual rendered review, scientific review and learner evidence separately.
+
+### Release gate
+
+The collection cannot be called learner-validated or release-ready until (a) all 24 manifest references resolve to the intended canonical resources or an explicitly approved new story, (b) the first-five shared editorial bar and varied pilots have evidence, (c) the scientific crosswalk and boundaries are checked, (d) rendered accessibility/navigation is reviewed, and (e) actual novice observations are recorded for the stories claimed as learner-tested. One reader's evidence must not be generalized to all 24 stories.
+
+
 > **Mise à jour de migration — 24 novembre 2026.** La PR [#1574](https://github.com/JM-Brun/llm-lab/pull/1574) est fusionnée et le rendu complet ainsi que le déploiement GitHub Pages post-fusion ont réussi. Les pages principales FR/EN pointent maintenant vers le calendrier scientifique. La PR de nettoyage remplace les huit anciennes pages du prototype par des redirections vers la nouvelle collection, retire leurs mini-leçons du graphe pédagogique et supprime le CSS spécifique devenu inutilisé. Les histoires indépendantes `advent-calendar-story-day-01` et `day-06` sont conservées. Cette mise à jour supersède les consignes de transition antérieures qui demandaient d'attendre le déploiement.
 
 **Last updated:** 2026-11-26  
