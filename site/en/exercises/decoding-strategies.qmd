@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-e
 
 ## Comprehension questions
 
-Can you distinguish transforming a distribution at one position from searching over multiple sequences?
+1. Can you distinguish transforming a distribution at one position from searching over multiple sequences?
 
 <details>
 <summary>Show the worked answer</summary>
