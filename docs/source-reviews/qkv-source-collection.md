@@ -312,7 +312,8 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 | Why three learned projections? | Neha's design rationale and canonical page's joint learned-projection explanation | Covered |
 | Shared input and projection equations | Canonical equations and Vaswani primary paper | Covered; §3.2.2 supports the learned per-head projections and §3.2.3 supports the shared previous-layer input in self-attention |
 | Routing/compatibility versus payload/content | Brenndoerfer's comparative treatment and canonical page | Covered; preserve the distinction as a functional explanation, not a claim that dimensions are human-readable semantic features |
-| Geometric intuition | Codefinity and Brenndoerfer; canonical optional note | Covered at the intended depth; avoid equating dot product with cosine similarity |
+| Geometric intuition | Codefinity and Brenndoer; canonical advanced Q/K/V deep dive | Covered at the deeper destination through the Q–K compatibility geometry section; the core lesson links onward rather than duplicating the derivation. Avoid equating dot product with cosine similarity |
+| Convex-hull consequence / message-passing analogy | Brenndoerfer | Not present in the current scaled-attention pages; keep both deferred until a concrete learner task justifies the added geometric or graph-oriented interpretation |
 | Scores, scaling, softmax and weighted aggregation | Dedicated scaled-dot-product-attention page and Vaswani §3.2.1 | Deliberately delegated to the next page; do not duplicate the full derivation here |
 | Causal masking and accessible positions | Dedicated causal-masking page | Correctly outside this page's main scope |
 | Implementation and tensor-level behavior | Transformer-block walkthrough and Build resources | Covered by a neighboring implementation destination; not a missing source requirement for this Understand page |
