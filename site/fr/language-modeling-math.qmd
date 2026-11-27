@@ -86,7 +86,7 @@ Le maximum de vraisemblance cherche à augmenter la log-vraisemblance des séque
 
 **Notation.** Les pages probabilistes utilisent souvent $P$ pour une probabilité d'événement ou une distribution conditionnelle. Les pages de calcul utilisent $p_{b,t,v}$ pour la composante $v$ du vecteur de probabilités à l'exemple $b$ et la position $t$. L'ID cible $y_{b,t}$ sélectionne la composante $p_{b,t,y_{b,t}}$. Il s'agit de deux notations pour des niveaux de description compatibles, pas de deux objets probabilistes différents.
 
-## 3. Cibles souples et divergence KL {#soft-targets-kl-derivation}
+## 3. Cibles souples et divergence KL {#soft-targets-kl-derivation} {#soft-targets-kl-derivation}
 
 Les cibles *one-hot* placent toute la masse sur une seule catégorie. Certaines méthodes utilisent plutôt une distribution cible $q$ — par exemple pour le lissage des étiquettes ou une cible fournie par un modèle enseignant — sur les $V$ tokens.
 
@@ -141,7 +141,7 @@ On retrouve $0{,}837\approx0{,}693+0{,}144$. Avec un logarithme en base 2, les m
 
 La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
 
-## 4. Pourquoi le logarithme ? Une justification sous hypothèses explicites {#why-logarithm-explicit-assumptions}
+## 4. Pourquoi le logarithme ? Une justification sous hypothèses explicites {#why-logarithm-explicit-assumptions} {#why-logarithm-explicit-assumptions}
 
 La perte $-\log p(y)$ n'est pas choisie seulement parce qu'elle pénalise fortement les faibles probabilités. On peut retrouver sa forme en demandant une propriété plus exigeante : **la perte moyenne doit être minimisée lorsque la distribution prédite correspond à la distribution des données**.
 
@@ -168,7 +168,7 @@ $$
 
 **Portée de l'argument.** Ce résultat suppose une perte additive et séparable par événement, une distribution normalisée, une différentiabilité et l'exigence que la distribution de données soit le minimiseur pour toute distribution intérieure. Il ne démontre pas que la log-loss est l'unique objectif utile pour toutes les tâches de machine learning : des objectifs différents peuvent viser d'autres propriétés (calibration, robustesse, décision sous coûts asymétriques, etc.). La vidéo présente cette justification comme un approfondissement par multiplicateurs de Lagrange, pas comme un théorème universel sur toutes les pertes.
 
-## 5. Du code probabiliste à la distillation {#probabilistic-coding-distillation}
+## 5. Du code probabiliste à la distillation {#probabilistic-coding-distillation} {#probabilistic-coding-distillation}
 
 La cross-entropy a une interprétation opérationnelle : **les données suivent $q$, mais le codeur utilise les longueurs idéales dérivées de $p$**. Chaque événement $i$ coûte alors $-\log_2 p_i$ bits idéaux, et son poids dans la moyenne est sa fréquence sous $q$ :
 
@@ -187,7 +187,7 @@ L'entropie de la nouvelle source vaut $H(q)=1.75$ bits ; l'excès de coût est d
 
 **Attention aux lettres.** Dans la vidéo, $P$ désigne la distribution réellement observée et $Q$ le modèle qui a servi à construire le code ; la somme est donc pondérée par $P$ et contient $-\log Q$. Dans cette page, nous utilisons la convention du projet : $q$ désigne la cible / les données et $p$ la distribution prédite. La quantité est la même, mais les lettres sont inversées par rapport à celles de la vidéo. Toujours lire le rôle des distributions, pas seulement leur nom.
 
-### De la cible observée à la cible enseignante {#observed-target-teacher-distribution}
+### De la cible observée à la cible enseignante {#observed-target-teacher-distribution} {#observed-target-teacher-distribution}
 
 En pré-entraînement standard, chaque position fournit un token observé : la cible est one-hot et la cross-entropy se réduit à la NLL de ce token. En *knowledge distillation*, un modèle enseignant fournit plutôt une distribution cible $q_{T}(\cdot\mid x_{<t})$ sur le vocabulaire ; le modèle étudiant produit $p_{S}(\cdot\mid x_{<t})$. La perte peut alors comparer les deux distributions :
 
