@@ -3,6 +3,7 @@ title: "Objectif d'entraînement : garanties et limites"
 subtitle: "Lire les performances d’un LLM sans surinterpréter l’objectif d’entraînement"
 keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 lang: fr
+sidebar: llm-limits-fr
 ---
 
 <!--
