@@ -183,6 +183,8 @@ Pour comparer les architectures qui modifient le nombre de têtes K/V, compresse
 
 Pour suivre cette distinction dans les opérations, passez ensuite à [l'attention à produit scalaire](scaled-dot-product-attention.qmd), puis à la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) pour retrouver les deux chemins dans le code.
 
+Pour une autre construction intuitive, [Attention from scratch de Zsombor Veres-Lakos](https://zsomborvereslakos.substack.com/p/attention-from-scratch) suit une analogie de réunion depuis les projections Q/K/V jusqu'au vecteur de contexte, à la projection W_O et à la mise à jour du flux résiduel. C'est une lecture complémentaire, pas une dérivation de référence : le facteur 10 est pédagogique, et le masquage causal ainsi que l'attention multi-tête sont explicitement omis.
+
 :::
 
 </details>
