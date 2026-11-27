@@ -92,7 +92,7 @@ Use the existing canonical ownership model. Do not infer ownership from filename
 | Atomic source evidence and item dispositions | `data/extractions/<source-id>.yml`, controlled by `data/source-taxonomy.yml` |
 | Stable concepts and typed semantic relations | `data/concepts.yml` |
 | Controlled knowledge domains | `data/domains.yml` |
-| Computational graph | `data/computational-graph.yml`, governed by `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md` | Computational nodes, operations, dataflow edges, operational branches and named graph views | The concept graph, pedagogical route, Build dependencies or page navigation |
+| Computational graph | `data/computational-graph.yml`, governed by `docs/computational-graph-schema.md` and `docs/canonical-computational-spine.md`; validate with `site/tools/check_computational_graph.py` and `tests/site/test_computational_graph.py` |
 | Non-page implementation resources | `data/resources.yml` |
 | Page identity, editorial role, destination, tags, hierarchy, related and suggested navigation | `LLM-LAB-PAGE-MAP` metadata in page source |
 | Reader-facing nine-stage Understand route | `data/guided-route.yml` (machine-readable stages); `docs/learning-path.md` explains the route |
