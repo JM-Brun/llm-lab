@@ -56,6 +56,14 @@ The browser audit from PR #1754 must not be treated as final validation for PR #
 - [ ] Verify the generated map projections match the page metadata and route sources. Do not hand-edit generated files to make a test pass.
 - [ ] Confirm the current page's math-rendering expectations. The revised explanation no longer visibly depends on the earlier matrix/lookup equations; decide whether that is the right level for an overview. Do not add equations merely to satisfy a numeric span count.
 
+**Known CI defect to resolve:** on head \`9bc83e5\`, \`tests/knowledge/test_map_artifacts_freshness.py\` failed for both \`fr\` and \`en\`. The tracked \`site/includes/generated-map-data-{fr,en}.qmd\` artifacts still contained the old section-heading inventory while the renderer expected the revised headings. The test output explicitly recommends regenerating with:
+
+\`\`\`bash
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+\`\`\`
+
+Regenerate from the canonical sources, inspect the resulting diff, and commit the artifacts. Do not repair the JSON/QMD by hand. The current documentation commit has restarted CI; verify that this failure is gone on its head.
+
 **Acceptance:** current PR head has successful CI and Quarto/browser checks, with any remaining warnings identified and judged. A successful render alone is not a substitute for inspecting the page in the browser.
 
 ### P1 — Align the learning contract with the revised explanation
