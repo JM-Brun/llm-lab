@@ -1,0 +1,56 @@
+---
+title: "Review — Why represent language numerically?"
+description-meta: "Why symbols are converted into numerical objects, and how IDs, learned vectors, and contextualized states differ."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-language-representation", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-language-representation"
+scope: "A recall sheet on the motivation for numerical language representations and the roles of IDs, initial embeddings, and contextualized states."
+purpose: "Reconstruct why a network needs numerical representations and distinguish the three objects handled at the beginning of the learning path."
+revision_role: synthesis
+revision_of: ["en/language-representation"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/revision-text-data", "en/revision-embedding-space"]
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-language-representation", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](language-representation.qmd) · [Next lesson: text and tokens](text-data.qmd) · [Learning path plan](review-path.qmd#text-input)
+
+## What to remember {#revision-essentials}
+
+- A neural network performs mathematical operations on numerical tensors; discrete text units therefore need representations suited to those operations.
+- A **token ID** is an address in a vocabulary. Its value measures neither a linguistic quantity nor semantic proximity.
+- An **initial embedding** is a learned vector selected by the ID. This vector, not the ID number, enters the network's transformations.
+- Transformer layers construct **contextualized states** from initial vectors and accessible context.
+- Proximity in vector space may reflect statistical regularities, but it is not by itself a definition of meaning or evidence of understanding.
+
+## Recall from memory {#revision-check}
+
+Why can't we subtract the IDs of two tokens to measure their semantic proximity? Which numerical object does the model transform next, and why must that object still be contextualized?
+
+<details>
+<summary>Show the answer</summary>
+
+IDs are arbitrary indices local to a vocabulary; their difference depends on the numbering and carries no linguistic meaning. Lookup uses an ID to select a learned vector from the embedding matrix. Network layers then transform that vector using other accessible positions, so the state associated with an occurrence depends on its context.
+
+</details>
+
+## Connect the three representations
+
+| Object | Question to ask |
+|---|---|
+| Token ID | Which vocabulary entry does it identify? |
+| Initial embedding | Which learned vector is selected? |
+| Contextualized state | What does the network compute for this occurrence in this context? |
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-language-representation.qmd) · [English](../en/revision-language-representation.qmd)
+:::
