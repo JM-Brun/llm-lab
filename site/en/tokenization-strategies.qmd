@@ -248,7 +248,7 @@ The [overview page](text-data.qmd) illustrates Unicode normalization with precom
 
 | Input | Question to ask | Naive-approach risk |
 |---|---|---|
-| `Hello world` and ` Hello world` | Does a leading space change segmentation? | Space handling may be part of pre-tokenization or token spelling |
+| `situation` and ` situation` | Does a leading space change segmentation of a running-example word? | Space handling may be part of pre-tokenization or token spelling |
 | `ChatGPT`, `chatgpt`, `CHATGPT` | Is casing normalized or preserved? | Case handling depends on tokenizer configuration |
 | `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
 | `café` and `cafe\u0301` | Which Unicode normalization is applied? | Same appearance, different code-point sequences |
@@ -284,11 +284,11 @@ Vocabulary size, training budgets, and comparative tokenizer evaluation raise qu
 :::
 
 
-<!-- Legacy anchor: the controlled 2 + 2 = 4 comparison now lives in Understand. -->
+<!-- Legacy anchor: the canonical tokenizer comparison now lives in Understand. -->
 <span id="comparison-of-two-tokenizers"></span>
 
 ::: {.callout-note title="Canonical comparison"}
-The controlled comparison on the fixed text 2 + 2 = 4, including fragments, IDs, and decoding, is presented in [From text to tokens](text-data.qmd#comparison-of-two-tokenizers). This page deepens the mechanisms that explain why boundaries and lengths can differ.
+The tokenizer comparison on the localized running-example prefix, including fragments, IDs, and decoding, is presented in [From text to tokens](text-data.qmd#comparison-of-two-tokenizers). This page deepens the mechanisms that explain why boundaries and lengths can differ.
 :::
 
 ## 6. Counterexamples
