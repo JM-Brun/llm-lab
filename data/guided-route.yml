@@ -492,7 +492,7 @@ lesson_contracts:
     requires: [llm-overview]
   text-data:
     synthesis: revision-text-data
-    requires: [language-representation]
+    requires: [llm-overview]
   embedding-space:
     synthesis: revision-embedding-space
     requires: [text-data]
