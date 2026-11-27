@@ -18,6 +18,7 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 - [Compression et intelligence — synthèse transversale](compression-intelligence-cross-source-2026-11.md) — comparaison des sources sur compression prédictive, MDL, représentations, généralisation, adaptation et action ; distingue résultats établis, hypothèses et décisions pédagogiques.
 - [Complexité de Kolmogorov, prédiction universelle et AIXI](kolmogorov-aixi-computability-2026-11.md) — distinction entre K, semi-mesure de Solomonoff, décision active, limites de calculabilité d'AIXI et construction AIXI(t,l), à partir des sources primaires.
 - [Pilote pédagogique — attention à produit scalaire](scaled-dot-product-attention-learning-page-pilot-2026-11.md) — deuxième test du workflow de production sur une page mathématique et computationnelle, avec distinction des axes, des intermédiaires et des ressources Practice.
+- [Pilote source-to-code — Transformer Block Walkthrough](transformer-block-walkthrough-source-audit-2026-11.md) — troisième archétype, centré sur la traçabilité entre publications, implémentation NumPy et tests ; reconnaissance initiale, ingestion des six sources encore ouverte.
 
 ## Structure suggérée
 
