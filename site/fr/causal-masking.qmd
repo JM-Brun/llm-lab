@@ -65,6 +65,8 @@ Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les position
 
 Pour « C'est une bonne situation, ça, scribe ? », la dernière position du préfixe peut consulter toute la question, y compris son propre token. Si la question et sa continuation sont présentes ensemble pendant l'entraînement, le masque empêche cette position de consulter « Vous » et la suite. En génération, la continuation sera ajoutée après la prédiction.
 
+<span id="causal-mask-definition"></span>
+
 ## Définition
 
 Pour une séquence de longueur $T$, la position $i$ peut accéder aux positions $j\leq i$. On peut représenter cette relation par deux conventions booléennes complémentaires : $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (clé autorisée) et $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (clé interdite). On peut aussi utiliser le masque additif $M$ :
@@ -99,6 +101,8 @@ Dans la convention d'entraînement courante, la sortie calculée à la position 
 
 [Reprenez l’exemple d’un ID identique en deuxième position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). Une modification passée peut atteindre l’état courant. Une modification future peut changer la cible observée à cette position.
 
+<span id="causal-vs-other-masks"></span>
+
 ## Masque causal et autres masques : des rôles distincts
 
 - **Masque causal (attention)** : interdit à une requête de lire une clé située dans le futur ; il impose la contrainte autorégressive.
@@ -119,6 +123,8 @@ P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
 $$
 
 Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre à prédire le prochain token tout en calculant en parallèle les positions d'un batch d'entraînement. Le papier [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) décrit le masquage de l'attention du décodeur.
+
+<span id="causal-masking-counterexamples"></span>
 
 ## Idées reçues et contre-exemples
 

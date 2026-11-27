@@ -52,6 +52,8 @@ A decoder-only GPT is a Transformer network made of repeated blocks. Within each
 
 The diagram below offers two levels of view: the complete GPT, to locate the data flow, and an enlarged block, to understand the repeated operations. We will then follow this flow from the network input to the logits, without retelling tokenization or the generation loop.
 
+<span id="transformer-network-overview"></span>
+
 ## The Transformer: the network at the heart of a GPT
 
 <figure id="fig-transformer-stack">
@@ -90,6 +92,8 @@ token IDs → initial representations → first-block input
 
 The prefix “It is a good situation, scribe?” then passes through the block stack before the model produces the next-token logits. The continuation is built through the generation loop; it is not written in advance in the prompt.
 
+<span id="transformer-block-anatomy"></span>
+
 ## 2. Transformer blocks
 
 The stack consists of blocks of the same general type, repeated in depth. Each block transforms the sequence of representations while preserving its length and width: it combines two complementary sublayers.
@@ -98,6 +102,8 @@ The stack consists of blocks of the same general type, repeated in depth. Each b
 - **MLP (feed-forward network):** transforms each position independently, using parameters shared across positions. It provides a local nonlinear transformation without directly mixing positions.
 
 Each sublayer is integrated into the **residual stream**: its correction is added to the flowing representation, and normalization accompanies the transformations. The exact order varies across architectures (pre-LN, post-LN, RMSNorm, and others). This lesson introduces their role; the [deep dive on contextualized representations](contextualized-representations-advanced.qmd) explains the sublayers, residual connections, and normalization in detail. The [block walkthrough](transformer-block-walkthrough.qmd), by contrast, focuses on the Python implementation.
+
+<span id="transformer-training-generation"></span>
 
 ### Parallel training, sequential generation
 
@@ -108,12 +114,16 @@ During generation, the next token depends on tokens already produced, so decodin
 - **Training:** `t₁ t₂ t₃ t₄` → one masked pass; positions are computed in parallel.
 - **Generation:** `t₁` → `t₂` → `t₃` → … each step depends on the previous token.
 
+<span id="transformer-depth-width"></span>
+
 ### Depth and width: two architectural dimensions
 
 - **Depth:** the number of Transformer blocks stacked in the network.
 - **Width:** the dimension \(d_{\mathrm{model}}\) of the representations flowing through the residual stream.
 
 These two dimensions describe the overall structure but are not sufficient to predict performance. Internal dimensions \(d_{\mathrm{head}}\) and \(d_{\mathrm{ff}}\), tensor shapes, and GPT-2 reference values are gathered in the [Tensors](tensors.qmd) page; the [GPT configuration walkthrough](gpt-config-walkthrough.qmd) shows how they are used in the project's model.
+
+<span id="transformer-three-levels"></span>
 
 ### Three levels that should not be conflated
 
@@ -122,6 +132,8 @@ These two dimensions describe the overall structure but are not sufficient to pr
 3. **The complete GPT** assembles input representations, a stack of blocks, then a final normalization and output head.
 
 Attention is part of a block; the block is the repeated unit; the Transformer alone is not the complete GPT.
+
+<span id="transformer-to-logits"></span>
 
 ## 3. From representations to logits
 

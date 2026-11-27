@@ -52,6 +52,8 @@ Un GPT décodeur seul est un réseau Transformer composé de blocs répétés. D
 
 Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour situer le flux des données, puis un bloc agrandi, pour comprendre les opérations répétées. Nous suivrons ensuite ce flux de l'entrée du réseau jusqu'aux logits, sans refaire la tokenisation ni la boucle de génération.
 
+<span id="transformer-network-overview"></span>
+
 ## Le Transformer : le réseau au cœur d'un GPT
 
 <figure id="fig-transformer-stack">
@@ -90,6 +92,8 @@ identifiants → représentations initiales → entrée du premier bloc
 
 Le préfixe « C'est une bonne situation, ça, scribe ? » traverse ensuite la pile de blocs avant que le modèle ne produise les logits du prochain token. La continuation se construit au fil de la boucle de génération ; elle n'est pas écrite à l'avance dans le prompt.
 
+<span id="transformer-block-anatomy"></span>
+
 ## 2. Les blocs Transformer
 
 La pile est composée de blocs de même type, répétés en profondeur. Chaque bloc transforme la séquence de représentations en conservant sa longueur et sa largeur : il associe deux sous-couches complémentaires.
@@ -98,6 +102,8 @@ La pile est composée de blocs de même type, répétés en profondeur. Chaque b
 - **MLP (feed-forward network) :** transforme chaque position séparément, avec des paramètres partagés entre positions. Il apporte une transformation non linéaire locale, sans mélanger directement les positions.
 
 Chaque sous-couche s'insère dans le **flux résiduel** : sa correction est ajoutée à la représentation qui circule, et une normalisation accompagne les transformations. L'ordre précis varie selon les architectures (pré-LN, post-LN, RMSNorm, etc.). Cette leçon en donne le rôle ; la page d'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd) explique le détail des sous-couches, des connexions résiduelles et de la normalisation. La [visite guidée du bloc](transformer-block-walkthrough.qmd) reste, elle, consacrée à l'implémentation Python.
+
+<span id="transformer-training-generation"></span>
 
 ### Parallélisme à l'entraînement, génération séquentielle
 
@@ -108,12 +114,16 @@ Pendant la génération, le token suivant dépend des tokens déjà produits : l
 - **Entraînement :** `t₁ t₂ t₃ t₄` → une passe masquée ; les positions sont calculées en parallèle.
 - **Génération :** `t₁` → `t₂` → `t₃` → … chaque étape dépend du token précédent.
 
+<span id="transformer-depth-width"></span>
+
 ### Profondeur et largeur : deux dimensions de l'architecture
 
 - **Profondeur (depth) :** nombre de blocs Transformer empilés.
 - **Largeur (width) :** dimension \(d_{\mathrm{model}}\) des représentations qui circulent dans le flux résiduel.
 
 Ces deux dimensions décrivent la structure générale, mais ne suffisent pas à prédire les performances. Les dimensions internes \(d_{\mathrm{head}}\) et \(d_{\mathrm{ff}}\), les formes des tenseurs et les valeurs de référence de GPT-2 sont regroupées dans la page [Tenseurs](tensors.qmd) ; la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd) montre leur emploi dans le modèle du projet.
+
+<span id="transformer-three-levels"></span>
 
 ### Trois niveaux à ne pas confondre
 
@@ -122,6 +132,8 @@ Ces deux dimensions décrivent la structure générale, mais ne suffisent pas à
 3. **Le GPT complet** assemble les représentations d'entrée, une pile de blocs, puis une normalisation finale et une tête de sortie.
 
 L'attention est une partie du bloc ; le bloc est l'unité répétée ; le Transformer ne désigne pas à lui seul le GPT complet.
+
+<span id="transformer-to-logits"></span>
 
 ## 3. Des représentations aux logits
 

@@ -65,6 +65,8 @@ When training a model to predict the next token, all positions in a sequence can
 
 For “What have the Romans ever done for us?”, the final position of the prefix can attend to the whole question, including its own token. If the question and continuation are present together during training, the mask prevents this position from attending to “They” and the rest of the continuation. During generation, the continuation is appended after prediction.
 
+<span id="causal-mask-definition"></span>
+
 ## Definition
 
 For a sequence of length $T$, position $i$ can access positions $j\leq i$. Two complementary boolean conventions express this relation: $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (key allowed) and $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (key blocked). One can also use an additive mask $M$:
@@ -99,6 +101,8 @@ In a common training convention, the output computed at position $i$ is compared
 
 [Return to the example with the same ID in the second position](exercises/contextualized-representations.qmd#ex-contextualization-causal-boundary). A change in the past can reach the current state. A change in the future can change the observed target at that position.
 
+<span id="causal-vs-other-masks"></span>
+
 ## Causal masking and other masks have different roles
 
 - **Causal attention mask:** prevents a query from reading a future key; it enforces the autoregressive constraint.
@@ -119,6 +123,8 @@ P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
 $$
 
 Decoder-only Transformers such as GPT use this constraint to learn next-token prediction while computing positions in a training batch in parallel. [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) describes masking decoder attention.
+
+<span id="causal-masking-counterexamples"></span>
 
 ## Misconceptions and counterexamples
 
