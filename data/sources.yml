@@ -7670,3 +7670,49 @@ sources:
       pages: [en/in-context-learning, fr/in-context-learning]
       concepts: [in-context-learning, causal-mask, autoregressive-generation]
       audit_records: [docs/source-reviews/icl-bibliography-reconciliation-2026-11-27.md]
+
+  - id: towardsai-understanding-llms-tokenization-2026
+    title: "Understanding LLMs from Scratch — Part 1: How LLMs Process Human Language (Tokenization)"
+    creators: ["Madjid Korrabi"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://pub.towardsai.net/understanding-llms-from-scratch-part-1-how-llms-process-human-language-tokenization-115b52c5f1d0"
+    publisher: "Towards AI"
+    publication_date: "2026-11-03"
+    updated_date: null
+    language: en
+    version: "Indexed author-authored article text, retrieved 2026-11-27"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, topic:tokenizer-pipeline, topic:multilingual-tokenization, method:bpe]
+      concept_ids: [token, tokenizer, tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, byte-level-encoding, special-token, multilingual-tokenization]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, implementation]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: []
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed author-authored article text: introduction, word- and character-level approaches, subword methods, WordPiece, Unigram, SentencePiece, BPE, byte-level BPE, special tokens, multilingual token costs, Python/tiktoken example and conclusion."
+          - "Compared the article's topic coverage and examples with the current bilingual text-data, Unicode, tokenization-strategies, tokenizer-design-evaluation and tokenizer-multilingual-evaluation lessons, plus the existing tokenization source corpus."
+        limitations:
+          - "Direct retrieval of the canonical Towards AI URL and the supplied Freedium mirror returned cache misses; the article body was inspected through the indexed search result."
+          - "The indexed text is a complete snapshot of the author-authored body returned by search, but completeness against the live article DOM was not independently verified."
+          - "Embedded figures were not retrieved as image bytes or visually inspected; figure placement, creators and asset-level reuse rights remain unknown."
+          - "The Python example was inspected as published in the indexed text, not executed."
+          - "No linked primary references, comments, reader discussion or author profile were independently inspected."
+          - "No licence or permission for text, figures or code reuse was established."
+    related:
+      pages: [fr/text-data, en/text-data, fr/unicode-text, en/unicode-text, fr/tokenization-strategies, en/tokenization-strategies, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation, fr/tokenizer-multilingual-evaluation, en/tokenizer-multilingual-evaluation]
+      concepts: [token, tokenizer, tokenization, subword-tokenization, byte-pair-encoding, wordpiece, unigram-tokenization, byte-level-encoding, special-token, multilingual-tokenization]
+      audit_records:
+        - docs/source-reviews/towardsai-tokenization-2026-11.md
+        - data/extractions/towardsai-understanding-llms-tokenization-2026.yml
