@@ -53,6 +53,14 @@ Injecting the entire repository and conversation history without selection is ra
 | **Input sequence and context window** | The model processes the supplied sequence, which may include structured multimodal elements. Active-context length counts the tokens actually present. The context window sets the maximum token budget, with input and output counting conventions that depend on the model and API. In autoregressive generation, generated tokens are appended to the sequence. |
 | **Context accessible at a position** | The architecture, mask, and available window determine which positions a query can attend to. In a causal decoder, attention at position $t$ excludes future positions even if their tokens occur in the input sequence. |
 
+<figure id="fig-context-engineering-levels">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/context-engineering-en-mobile.svg">
+    <img src="../images/context-engineering-en.svg" alt="The application has multiple sources, selects some of them and organizes them into the sequence supplied to the model. At position t in a causal decoder, only positions in the prefix up to t are accessible; future positions are masked." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Three levels follow without being conflated: information available to the system, the sequence actually supplied (within the context-window budget), and the positions accessible to a particular query. Not everything stored is necessarily sent, and not everything sent is visible from every position.</figcaption>
+</figure>
+
 [Contextualized representations](contextualized-representations.qmd) are the hidden vector states the Transformer computes from the tokens accessible at each position. These states are outputs of computation on the sequence, distinct from information the system supplies or stores.
 
 ## Why the context window is not enough

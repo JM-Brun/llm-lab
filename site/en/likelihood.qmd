@@ -92,6 +92,14 @@ $$
 P(\text{continuation})=0.6\times0.5\times0.8=0.24.
 $$
 
+<figure id="fig-likelihood-scoring-trace">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/likelihood-en-mobile.svg">
+    <img src="../images/likelihood-en.svg" alt="Three observed tokens are evaluated under successively longer prefixes. Conditional probabilities 0.6, 0.5 and 0.8 multiply to a likelihood of 0.24; their logarithms add. Parameters remain fixed." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Each probability is conditioned on a different reference prefix: the continuation is scored by multiplying conditional probabilities, or adding log-probabilities. This is neither an independence assumption nor generation.</figcaption>
+</figure>
+
 ## From likelihood to loss
 
 Negative log-likelihood $\operatorname{NLL}$ is:

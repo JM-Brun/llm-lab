@@ -105,6 +105,14 @@ La somme et la moyenne par séquence sont également possibles. Une moyenne pond
 
 Dans un modèle de langage causal, la convention d'indexation doit être explicite. Avec l'indexation par la cible utilisée ici, les logits associés au préfixe $x_{<t}$ prédisent $x_t$. Avec une indexation par la position d'entrée, les logits à la position $t$ prédisent généralement $x_{t+1}$. La loss doit aligner les logits et les labels selon une seule convention, sans comparer les logits à la mauvaise cible. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides. Le masque de perte détermine uniquement quelles cibles contribuent à l'objectif ; il ne détermine pas quels tokens peuvent influencer les représentations utilisées pour prédire ces cibles. Cette visibilité relève du masque d'attention (masque causal, de padding ou de frontière documentaire, selon le cas). Exclure une cible de la loss ne suffit donc pas, à lui seul, à empêcher son information d'entrer dans le contexte. Voir aussi [les exemples d'entraînement](training-examples.qmd) et [le masquage causal](causal-masking.qmd).
 
+<figure id="fig-loss-and-attention-masks">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/loss-fr-mobile.svg">
+    <img src="../images/loss-fr.svg" alt="Deux masques distincts : le masque causal indique, dans une matrice lignes = requêtes et colonnes = clés, quelles positions sont visibles ; le masque de perte inclut les trois cibles valides et ignore PAD. La moyenne est calculée sur les trois pertes valides." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le masque d’attention contrôle la visibilité pendant le calcul ; le masque de perte contrôle les cibles comptabilisées. Une position ignorée est exclue du numérateur et du dénominateur de la moyenne, mais ce masque ne détermine pas à lui seul si son contenu peut influencer d’autres positions.</figcaption>
+</figure>
+
 ### Préfixe observé et teacher forcing
 
 Avec l'indexation par la cible adoptée ici, pendant un passage avant avec *teacher forcing*, le contexte fourni à la position $t$ est le préfixe de référence $x_{<t}$ et la cible évaluée est le token $x_t$. Le modèle ne reçoit donc pas sa propre prédiction précédente comme entrée à chaque position : les tokens de référence servent de contexte, tandis que les prédictions sont comparées aux cibles correspondantes. Le masque causal interdit à chaque position de consulter les tokens de référence futurs. Cette convention de conditionnement est distincte du calcul de la loss et de la mise à jour des paramètres : le *teacher forcing* définit le contexte, la loss mesure l'écart aux cibles, puis les gradients et l'optimiseur déterminent si et comment les paramètres changent.
