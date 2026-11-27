@@ -86,7 +86,7 @@ Maximum likelihood seeks to increase the log-likelihood of observed sequences; i
 
 **Notation bridge.** Probabilistic lessons often use $P$ for an event probability or conditional distribution. Computational lessons use $p_{b,t,v}$ for component $v$ of the probability vector at example $b$ and position $t$. The target ID $y_{b,t}$ selects $p_{b,t,y_{b,t}}$. These are compatible levels of description, not different probabilistic objects.
 
-## 3. Soft targets and KL divergence {#soft-targets-kl-derivation}
+## 3. Soft targets and KL divergence {#soft-targets-kl-derivation} {#soft-targets-kl-derivation}
 
 One-hot targets place all mass on a single category. Some methods instead use a target distribution $q$—for example, label smoothing or a distribution supplied by a teacher model—over the $V$ tokens.
 
@@ -141,7 +141,7 @@ Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities are 
 
 The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
 
-## 4. Why the logarithm? A justification under explicit assumptions {#why-logarithm-explicit-assumptions}
+## 4. Why the logarithm? A justification under explicit assumptions {#why-logarithm-explicit-assumptions} {#why-logarithm-explicit-assumptions}
 
 The loss $-\log p(y)$ is not chosen only because it strongly penalizes low probabilities. Its form can be recovered by requiring a stronger property: **the average loss should be minimized when the predicted distribution matches the data distribution**.
 
@@ -168,7 +168,7 @@ $$
 
 **Scope of the argument.** This result assumes an additive, event-separable loss, a normalized distribution, differentiability, and the requirement that the data distribution be the minimizer for every interior distribution. It does not prove that log loss is the only useful objective for every machine-learning task: other objectives may target other properties (calibration, robustness, decisions under asymmetric costs, and so on). The video presents this as an optional Lagrange-multiplier derivation, not as a universal theorem about all losses.
 
-## 5. From probabilistic coding to distillation {#probabilistic-coding-distillation}
+## 5. From probabilistic coding to distillation {#probabilistic-coding-distillation} {#probabilistic-coding-distillation}
 
 Cross-entropy has an operational interpretation: **data follow $q$, but the coder uses ideal lengths derived from $p$**. Each event $i$ then costs $-\log_2 p_i$ ideal bits, and its weight in the average is its frequency under $q$:
 
@@ -187,7 +187,7 @@ The new source entropy is $H(q)=1.75$ bits, so the excess cost is $D_{\mathrm{KL
 
 **Notation warning.** In the video, $P$ denotes the distribution actually observed and $Q$ the model used to build the code; the sum is therefore weighted by $P$ and contains $-\log Q$. This project uses the convention $q$ for the target/data distribution and $p$ for the predicted distribution. The quantity is the same, but the letters are reversed relative to the video. Always identify the roles of the distributions rather than relying on their labels.
 
-### From an observed target to a teacher distribution {#observed-target-teacher-distribution}
+### From an observed target to a teacher distribution {#observed-target-teacher-distribution} {#observed-target-teacher-distribution}
 
 In standard pretraining, each position supplies one observed token: the target is one-hot and cross-entropy reduces to that token's NLL. In *knowledge distillation*, a teacher model instead supplies a target distribution $q_T(\cdot\mid x_{<t})$ over the vocabulary; the student model produces $p_S(\cdot\mid x_{<t})$. The loss can compare these two distributions:
 
