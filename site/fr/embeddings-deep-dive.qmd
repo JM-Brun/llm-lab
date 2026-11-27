@@ -57,7 +57,7 @@ Cette chaîne met en évidence une distinction essentielle : **l'encodeur constr
 
 Une représentation peut conserver certaines informations et en négliger d'autres. Un embedding entraîné pour retrouver des documents pertinents peut privilégier les indices utiles à la recherche, pas toutes les nuances linguistiques. Un embedding d'image entraîné pour distinguer des catégories visuelles n'est pas nécessairement adapté à la recherche de similarité esthétique. Un vecteur est toujours le résultat d'un choix de représentation et d'un objectif.
 
-## 2. Les grandes familles : une carte plutôt qu'une succession de remplacements
+## 2. Les grandes familles : une carte plutôt qu'une succession de remplacements {#familles-embeddings}
 
 Les familles ci-dessous se recouvrent parfois. Elles ne forment pas une chronologie où chaque méthode rendrait la précédente obsolète.
 
