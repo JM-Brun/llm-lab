@@ -200,3 +200,29 @@ The destination inventory reports field presence, not field requiredness. For ex
 The same CI run validated **6 domains, 125 concepts and 147 relations**. This establishes structural/reference integrity under current validators, not external locator resolution, source inspection completeness, claim support, scientific correctness or independent corroboration.
 
 **Next actions:** review the 41 no-extraction audit decisions (especially the 18 integrated sources); inspect the semantic use of `section` and `page` before defining any grammar; keep the observed empty `route_ids` field report-only; do not add empty extraction files or promote locator presence into evidence of source inspection.
+
+
+#### Cross-check against the canonical source-coverage report
+
+The same CI run's `report_source_coverage.py` output adds context that the locator-shape report alone cannot provide:
+
+| Measure | Count |
+|---|---:|
+| Canonical concepts | 125 |
+| Sources without a concept link | 7 |
+| Sources without a page destination | 8 |
+| Concepts without a source | 12 |
+| Concepts with exactly one source | 26 |
+| Publication dates unknown | 47 |
+| Licence status unknown | 155 |
+| Extraction source references unknown | 0 |
+| Concept references unknown | 0 |
+| Scan-history/status mismatches | 0 |
+
+Source status distribution: scan `discovered=1`, `inaccessible=2`, `partially-scanned=171`, `scanned=3`; integration `deferred=10`, `integrated=54`, `not-reviewed=2`, `partially-integrated=79`, `rejected=1`, `reviewed=31`. These are canonical metadata counts, not a judgment that 171 sources need full rescanning. Do not promote scan status without component-level evidence.
+
+The 41 sources without extraction have this integration-status distribution: `integrated=18`, `reviewed=6`, `deferred=8`, `partially-integrated=7`, `not-reviewed=2`. Each has at least one `related.audit_records` reference (1–4 per source). This proves an audit reference exists, not that the rationale is complete or current. Prioritize the two `not-reviewed` sources and seven `partially-integrated` sources for a targeted decision check; retain the 18 integrated cases only when their no-extraction rationale is explicit.
+
+Collection coverage in the same report is **69 explicit decisions**, **14 explicitly unassigned**, **108 without a decision**, and **55 total memberships**. This is included only as a cross-report diagnostic; collection identity and membership decisions remain exclusively owned by #1306. Do not reconcile or copy those decisions in this issue.
+
+The 7 source/concept-link gaps, 8 page-destination gaps, 12 concepts without sources and 26 single-source concepts are graph-coverage review queues, not locator-shape errors. Coordinate their semantics with #416/#512; do not silently create links to improve counts. The 47 unknown publication dates and 155 unknown licence statuses remain unknown unless publisher/author/repository evidence supports a value.
