@@ -45,7 +45,7 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 - The toy construction uses a shared state matrix $X$ and three distinct projections: $Q=XW_Q$, $K=XW_K$, $V=XW_V$ (pp. 2–7).
 - Under the stated row convention, $QK^\top$ produces one score row per query. Row-wise softmax yields attention weights (pp. 4–6).
 - $PV$ is the weighted aggregation of Value vectors (p. 8).
-- $W_O$ maps the aggregate back to the toy state coordinates; (Delta X=$PV$W_O) and $X_{new}=X+\Delta X$ (pp. 8–9).
+- $W_O$ maps the aggregate back to the toy state coordinates; $\Delta X=(PV)W_O$ and $X_{new}=X+\Delta X$ (pp. 8–9).
 - The mapping from the toy competence matrix to the GPT residual stream is a useful conceptual bridge (p. 10).
 - The article explicitly acknowledges that its attention figure omits GPT's causal restriction and that masking and multi-head attention are outside its scope (pp. 11–12).
 
