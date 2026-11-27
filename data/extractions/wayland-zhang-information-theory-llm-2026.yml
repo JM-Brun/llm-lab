@@ -106,7 +106,7 @@ items:
       novelty: {level: moderate, rationale: "The canonical page defines cross-entropy but the explicit decomposition into target entropy and KL is not yet a central worked derivation."}
       complementarity: {level: high, rationale: "It links the existing token-level loss treatment to the broader distribution-matching interpretation."}
       pedagogical_value: {level: high, rationale: "A numerical decomposition can make clear what part of the objective depends on the model."}
-      applicability: {level: high, rationale: "The derivation belongs directly in the existing cross-entropy lesson."}
+      applicability: {level: high, rationale: "The full soft-target derivation belongs in the advanced language-modeling mathematics pages; the core cross-entropy lesson links to that treatment."}
       redundancy: {level: low, rationale: "The decomposition is not a duplicate of the current token-alignment and masking explanation."}
       evidence_quality: {level: high, rationale: "The identity follows directly from the definitions, subject to support and fixed-target assumptions."}
     locator: {type: section, value: "Why LLMs Use Cross-Entropy Loss", label: "Why LLMs Use Cross-Entropy Loss"}
