@@ -118,3 +118,28 @@ Do not merge these under a generic pruning/compression concept. Their optimizati
 ## Evidence boundary
 
 Primary evidence: arXiv v1 PDFs, inspected 2026-11-27. Newsletter: indexed search extract; canonical page inaccessible to direct retrieval. No code was run and no experimental result independently reproduced. Figures are described, not copied. Reuse rights remain unknown.
+
+
+## 6. Official MemOnce implementation inspection
+
+The authors' [official GitHub repository](https://github.com/Clare-Nie/MemOnce) was inspected after the paper audit. It declares Apache-2.0 for the repository code and provides pretraining and post-training implementations, evaluation scripts, a released checkpoint, and a Qwen3.5 inference path.
+
+The post-training inference implementation makes the write/read cycle concrete:
+
+- Historical turns are tokenized and split into segments of at most 4,096 tokens.
+- The default post-training configuration writes one 64-token memory block per segment.
+- A FIFO short state holds up to 1,024 tokens (16 blocks at 64 tokens each).
+- Retrieval keys are computed for memory blocks; the answer path retrieves up to 64 long-term blocks and combines them with the short state.
+- The retrieved representation is decoded into memory KV caches before generation.
+- The released checkpoint README describes approximately 71M trained parameters (LoRA write adapter, KV readout projections and mem_to_emb), loaded alongside the Qwen3.5-4B base model.
+
+The repository README's own 1M-context table reports:
+- Qwen3.5-4B full-context baseline: 32.05 GB active GPU cache;
+- MemOnce: 25.0 MB active GPU cache plus a 640.0 MB offloaded pool;
+- MemOnce prefill: 41.36 seconds; decoding: 29.3 tokens/second.
+
+This clarifies the operational meaning of the headline: **1,313× is the active GPU cache reduction against the 32.05 GB Qwen3.5-4B baseline, while the 640 MB offloaded pool remains part of memory accounting.** The 144 GB standard-Transformer point shown in the paper's architecture comparison is a separate baseline/measurement and should not be substituted into this ratio.
+
+The repository's Apache-2.0 licence applies to the repository code. It does not automatically grant rights to the Qwen base model, downloaded checkpoint, datasets, benchmark assets or third-party dependencies. No checkpoint was downloaded, no environment installed, and no inference or benchmark was run; implementation inspection is not independent reproduction.
+
+The implementation source and its extraction are registered separately as `clare-nie-memonce-implementation` and `data/extractions/clare-nie-memonce-implementation.yml`.
