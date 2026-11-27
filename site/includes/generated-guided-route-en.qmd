@@ -52,7 +52,7 @@ Understand why the network needs numerical representations, then distinguish tex
 **Core pages**
 
 - [Why represent language numerically?](language-representation.html)
-- [From language to tokens: representing language](text-data.html)
+- [From text to tokens: representing language](text-data.html)
 
 **Optional resources**
 

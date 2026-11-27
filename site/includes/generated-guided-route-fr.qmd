@@ -52,7 +52,7 @@ Comprendre pourquoi le réseau a besoin de représentations numériques, puis di
 **Pages centrales**
 
 - [Pourquoi représenter le langage numériquement ?](language-representation.html)
-- [Du langage aux tokens : représenter le langage](text-data.html)
+- [Du texte aux tokens : représenter le langage](text-data.html)
 
 **Ressources facultatives**
 

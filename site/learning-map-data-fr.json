@@ -75,7 +75,7 @@
       ],
       "route": {
         "previous": "fr/index",
-        "next": "fr/text-data"
+        "next": "fr/language-representation"
       },
       "parents": [
         "fr/index"
@@ -192,42 +192,37 @@
       "rank": 4
     },
     {
-      "id": "fr/text-data",
-      "title": "Du texte aux tokens : représenter le langage",
-      "href": "text-data.html",
+      "id": "fr/language-representation",
+      "title": "Pourquoi représenter le langage numériquement ?",
+      "href": "language-representation.html",
       "language": "fr",
       "destination": "understand",
-      "level": "core",
-      "type": "concept-lesson",
-      "topic": "text-data",
+      "level": "overview",
+      "type": "concept-bridge",
+      "topic": "language-representation",
       "domain": null,
-      "scope": "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée.",
-      "summary": "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, compare deux tokenizers sur une même entrée et explique pourquoi le tokenizer doit rester associé aux poids.",
-      "purpose": "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat.",
+      "scope": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
+      "summary": "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés.",
+      "purpose": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
       "covered_stages": [],
       "section_headings": [
-        "Du préfixe aux identifiants",
-        "Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?",
-        "Une expérience mentale : que reçoit réellement le modèle ?",
-        "Le tokenizer fait partie du contrat du modèle",
-        "Pourquoi le découpage compte",
-        "Exercices"
+        "1. Le problème : passer des symboles au calcul",
+        "2. Un identifiant n'est pas une représentation du sens",
+        "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
+        "4. Ce que les vecteurs rendent possible",
+        "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
+        "6. La suite du parcours"
       ],
       "route": {
         "previous": "fr/llm-overview",
-        "next": "fr/embedding-space"
+        "next": "fr/text-data"
       },
       "parents": [],
       "children": [],
       "related": [
-        "fr/generation",
-        "fr/context-engineering",
-        "fr/transformer",
+        "fr/text-data",
         "fr/embedding-space",
-        "fr/text-data-exercises",
-        "fr/deepen",
-        "fr/tokenization-and-tokenizers",
-        "fr/tokenization-strategies"
+        "fr/contextualized-representations"
       ],
       "rank": 9
     },
@@ -367,7 +362,7 @@
       "domain": null,
       "scope": "Distingue les trois projections apprises d’un état de bloc et leur rôle dans une tête d’auto-attention.",
       "summary": "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé.",
-      "purpose": "Prédire ce qu’un changement des valeurs peut modifier dans une tête d’attention lorsque requêtes, clés et masque restent fixes.",
+      "purpose": "Expliquer pourquoi l’auto-attention projette l’état d’entrée du bloc en Q, K et V, distinguer la compatibilité (Q/K) du contenu agrégé (V), et prévoir les effets d’une modification isolée de projection.",
       "covered_stages": [],
       "section_headings": [
         "Le problème : utiliser le contexte",
@@ -408,7 +403,7 @@
       "domain": null,
       "scope": "Suit le calcul d’une ligne d’attention, de la comparaison Q–K aux valeurs pondérées.",
       "summary": "Déroule le calcul d’attention de bout en bout : compatibilité entre Q et K, mise à l’échelle, normalisation des scores et agrégation pondérée de V.",
-      "purpose": "Calculer une sortie d’attention sur un petit exemple et expliquer l’effet de la mise à l’échelle avant le softmax.",
+      "purpose": "Expliquer et reconstruire le calcul d’une ligne d’attention — scores, mise à l’échelle, masque, softmax et agrégation — et justifier les dimensions et la normalisation des intermédiaires.",
       "covered_stages": [],
       "section_headings": [
         "Le calcul d'un seul regard",
@@ -475,42 +470,42 @@
       "rank": 24
     },
     {
-      "id": "fr/embedding-space",
-      "title": "Des identifiants aux vecteurs : les embeddings",
-      "href": "embedding-space.html",
+      "id": "fr/text-data",
+      "title": "Du texte aux tokens : représenter le langage",
+      "href": "text-data.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "embedding-space",
+      "topic": "text-data",
       "domain": null,
-      "scope": "Montre comment un ID indexe une ligne apprise de la matrice de plongements.",
-      "summary": "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs.",
-      "purpose": "Pour un ID donné, retrouver la ligne du plongement initial et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs.",
+      "scope": "Couvre le passage du texte aux tokens, des tokens aux IDs et des IDs au lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus ; les algorithmes de segmentation sont étudiés dans la page dédiée.",
+      "summary": "Suit une occurrence du texte jusqu’à son ID et au vecteur initial, compare deux tokenizers sur une même entrée et explique pourquoi le tokenizer doit rester associé aux poids.",
+      "purpose": "Expliquer la chaîne texte → tokens → IDs → vecteurs initiaux, comparer deux tokenizers sur une même entrée, distinguer ID et quantité numérique, et comprendre pourquoi tokenizer et poids forment un contrat.",
       "covered_stages": [],
       "section_headings": [
-        "Le point de départ : le préfixe fourni au modèle",
-        "Le lookup : sélectionner une ligne, pas une coordonnée",
-        "La matrice en une formule",
-        "Du vecteur initial à la représentation contextualisée",
-        "Exercices",
-        "Approfondir"
+        "Du préfixe aux identifiants",
+        "Pourquoi deux tokenizers ne donnent-ils pas la même séquence ?",
+        "Une expérience mentale : que reçoit réellement le modèle ?",
+        "Le tokenizer fait partie du contrat du modèle",
+        "Pourquoi le découpage compte",
+        "Exercices"
       ],
       "route": {
-        "previous": "fr/text-data",
-        "next": "fr/positional-encoding"
+        "previous": "fr/language-representation",
+        "next": "fr/embedding-space"
       },
       "parents": [],
-      "children": [
-        "fr/cosine-similarity",
-        "fr/linearite-embeddings"
-      ],
+      "children": [],
       "related": [
-        "fr/text-data",
-        "fr/positional-encoding",
-        "fr/contextualized-representations",
-        "fr/embedding-space-exercises",
-        "fr/gpt-model-walkthrough"
+        "fr/generation",
+        "fr/context-engineering",
+        "fr/transformer",
+        "fr/embedding-space",
+        "fr/text-data-exercises",
+        "fr/deepen",
+        "fr/tokenization-and-tokenizers",
+        "fr/tokenization-strategies"
       ],
       "rank": 31
     },
@@ -628,41 +623,42 @@
       "rank": 40
     },
     {
-      "id": "fr/positional-encoding",
-      "title": "Encodage positionnel : donner un ordre aux tokens",
-      "href": "positional-encoding.html",
+      "id": "fr/embedding-space",
+      "title": "Des identifiants aux vecteurs : les embeddings",
+      "href": "embedding-space.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "positional-encoding",
+      "topic": "embedding-space",
       "domain": null,
-      "scope": "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements.",
-      "summary": "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale.",
-      "purpose": "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale.",
+      "scope": "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés.",
+      "summary": "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions.",
+      "purpose": "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée.",
       "covered_stages": [],
       "section_headings": [
-        "Pourquoi ajouter une information de position ?",
-        "Deux familles et plusieurs mécanismes",
-        "Une permutation suffit à révéler le problème",
-        "Idées reçues",
-        "Où se situe cette étape dans le parcours ?",
-        "Exercices"
+        "Le point de départ : le préfixe fourni au modèle",
+        "Le lookup : sélectionner une ligne, pas une coordonnée",
+        "La matrice en une formule",
+        "Du vecteur initial à la représentation contextualisée",
+        "Exercices",
+        "Approfondir"
       ],
       "route": {
-        "previous": "fr/embedding-space",
-        "next": "fr/contextualized-representations"
+        "previous": "fr/text-data",
+        "next": "fr/positional-encoding"
       },
       "parents": [],
       "children": [
-        "fr/rope",
-        "fr/sinusoidal-positional-encoding"
+        "fr/cosine-similarity",
+        "fr/linearite-embeddings"
       ],
       "related": [
-        "fr/embedding-space",
+        "fr/text-data",
+        "fr/positional-encoding",
         "fr/contextualized-representations",
-        "fr/transformer",
-        "fr/positional-encoding-exercises"
+        "fr/embedding-space-exercises",
+        "fr/gpt-model-walkthrough"
       ],
       "rank": 41
     },
@@ -704,7 +700,7 @@
         "fr/rag-memory-boundaries",
         "fr/document-retrieval"
       ],
-      "rank": 44
+      "rank": 42
     },
     {
       "id": "fr/entropy",
@@ -744,43 +740,46 @@
         "fr/compression-revision",
         "fr/experience-information-theory"
       ],
-      "rank": 45
+      "rank": 44
     },
     {
-      "id": "fr/contextualized-representations",
-      "title": "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?",
-      "href": "contextualized-representations.html",
+      "id": "fr/positional-encoding",
+      "title": "Encodage positionnel : donner un ordre aux tokens",
+      "href": "positional-encoding.html",
       "language": "fr",
       "destination": "understand",
       "level": "core",
       "type": "concept-lesson",
-      "topic": "contextualized-representations",
+      "topic": "positional-encoding",
       "domain": null,
-      "scope": "Compare le lookup initial et les états cachés par position, puis explique leur dépendance au contexte accessible dans un GPT causal. La formalisation des sous-couches et l’analyse de dépendances linguistiques particulières sont réservées à l’approfondissement.",
-      "summary": "Distingue le vecteur initial sélectionné par l’ID de l’état caché construit pour chaque occurrence à partir de sa position et du contexte accessible.",
-      "purpose": "Prédire ce qui peut modifier l’état d’une occurrence, en séparant l’ID, la position, le préfixe accessible et les transformations du réseau.",
+      "scope": "Présente pourquoi l’ordre doit être représenté et compare les points d’injection des encodages absolus, des représentations relatives, des biais de score et de RoPE. Distingue ces signaux de la visibilité causale et situe NoPE comme omission d’un mécanisme positionnel explicite. Les dérivations restent dans les approfondissements.",
+      "summary": "Montre pourquoi le contenu des tokens ne suffit pas à représenter leur ordre, puis distingue le signal positionnel de la contrainte de visibilité causale.",
+      "purpose": "Expliquer pourquoi le contenu seul ne suffit pas, comparer où les mécanismes positionnels agissent dans le calcul et distinguer information explicite, ordre implicite et visibilité causale.",
       "covered_stages": [],
       "section_headings": [
-        "Ce qui reste identique",
-        "Ce qui change avec la position et le contexte",
-        "Distinguer les étapes et les représentations",
-        "Une expérience contrôlée : modifier le passé ou le futur",
-        "Où se situe cette étape dans le modèle ?"
+        "Pourquoi ajouter une information de position ?",
+        "Deux familles et plusieurs mécanismes",
+        "Une permutation suffit à révéler le problème",
+        "Idées reçues",
+        "Où se situe cette étape dans le parcours ?",
+        "Exercices"
       ],
       "route": {
-        "previous": "fr/positional-encoding",
-        "next": "fr/transformer"
+        "previous": "fr/embedding-space",
+        "next": "fr/contextualized-representations"
       },
       "parents": [],
-      "children": [],
+      "children": [
+        "fr/rope",
+        "fr/sinusoidal-positional-encoding"
+      ],
       "related": [
         "fr/embedding-space",
-        "fr/positional-encoding",
-        "fr/queries-keys-values",
+        "fr/contextualized-representations",
         "fr/transformer",
-        "fr/contextualized-representations-exercises"
+        "fr/positional-encoding-exercises"
       ],
-      "rank": 46
+      "rank": 45
     },
     {
       "id": "fr/vraisemblance",
@@ -816,7 +815,7 @@
         "fr/cross-entropy",
         "fr/vraisemblance-exercises"
       ],
-      "rank": 49
+      "rank": 47
     },
     {
       "id": "fr/cross-entropy",
@@ -854,7 +853,44 @@
         "fr/language-modeling-math",
         "fr/cross-entropy-exercises"
       ],
-      "rank": 50
+      "rank": 48
+    },
+    {
+      "id": "fr/contextualized-representations",
+      "title": "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?",
+      "href": "contextualized-representations.html",
+      "language": "fr",
+      "destination": "understand",
+      "level": "core",
+      "type": "concept-lesson",
+      "topic": "contextualized-representations",
+      "domain": null,
+      "scope": "Compare le lookup initial et les états cachés par position, puis explique leur dépendance au contexte accessible dans un GPT causal. La formalisation des sous-couches et l’analyse de dépendances linguistiques particulières sont réservées à l’approfondissement.",
+      "summary": "Distingue le vecteur initial sélectionné par l’ID de l’état caché construit pour chaque occurrence à partir de sa position et du contexte accessible.",
+      "purpose": "Prédire ce qui peut modifier l’état d’une occurrence, en séparant l’ID, la position, le préfixe accessible et les transformations du réseau.",
+      "covered_stages": [],
+      "section_headings": [
+        "Ce qui reste identique",
+        "Ce qui change avec la position et le contexte",
+        "Distinguer les étapes et les représentations",
+        "Une expérience contrôlée : modifier le passé ou le futur",
+        "Où se situe cette étape dans le modèle ?"
+      ],
+      "route": {
+        "previous": "fr/positional-encoding",
+        "next": "fr/transformer"
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/embedding-space",
+        "fr/positional-encoding",
+        "fr/transformer",
+        "fr/queries-keys-values",
+        "fr/contextualized-representations-advanced",
+        "fr/contextualized-representations-exercises"
+      ],
+      "rank": 49
     },
     {
       "id": "fr/loss",
@@ -890,7 +926,7 @@
         "fr/training-loop",
         "fr/loss-exercises"
       ],
-      "rank": 51
+      "rank": 52
     },
     {
       "id": "fr/gradients",
@@ -925,7 +961,7 @@
         "fr/training-loop",
         "fr/gradients-exercises"
       ],
-      "rank": 52
+      "rank": 53
     },
     {
       "id": "fr/training-loop",
@@ -964,7 +1000,7 @@
         "fr/build-path",
         "fr/evaluation-experimentale"
       ],
-      "rank": 53
+      "rank": 54
     },
     {
       "id": "fr/post-training",
@@ -1006,7 +1042,7 @@
         "fr/glossary",
         "fr/llm-limits"
       ],
-      "rank": 54
+      "rank": 55
     },
     {
       "id": "fr/review-path",
@@ -1030,7 +1066,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 117
+      "rank": 105
     },
     {
       "id": "fr/build-path",
@@ -1638,7 +1674,7 @@
       "related": [
         "fr/exercises-foundations"
       ],
-      "rank": 42
+      "rank": 43
     },
     {
       "id": "fr/linearite-embeddings",
@@ -1673,7 +1709,7 @@
       "related": [
         "fr/exercises-foundations"
       ],
-      "rank": 43
+      "rank": 46
     },
     {
       "id": "fr/rope",
@@ -1710,7 +1746,7 @@
         "fr/scaled-dot-product-attention",
         "fr/causal-masking"
       ],
-      "rank": 47
+      "rank": 50
     },
     {
       "id": "fr/sinusoidal-positional-encoding",
@@ -1747,7 +1783,7 @@
         "fr/queries-keys-values",
         "fr/scaled-dot-product-attention"
       ],
-      "rank": 48
+      "rank": 51
     },
     {
       "id": "fr/advent-calendar-story-day-01",
@@ -1758,7 +1794,7 @@
       "level": "overview",
       "type": "deep-dive",
       "topic": "zipfs-law",
-      "domain": "probabilistic-foundations-training",
+      "domain": "text-tokenization",
       "scope": "Introduit les unités de comptage, construit une distribution rang-fréquence, interprète la loi de Zipf et ses limites ; renvoie les variantes, données comparatives, histoire et applications détaillées vers un approfondissement.",
       "summary": "Construit un petit corpus, étudie les fréquences lexicales et découvre la loi de Zipf, ses usages et ses limites.",
       "purpose": "Construire un petit corpus, distinguer types et occurrences, lire une relation rang-fréquence et éviter les interprétations abusives.",
@@ -1786,7 +1822,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 56
+      "rank": 57
     },
     {
       "id": "fr/compression-revision",
@@ -1825,7 +1861,7 @@
         "fr/llm-evolution",
         "fr/llm-computational-complexity"
       ],
-      "rank": 57
+      "rank": 59
     },
     {
       "id": "fr/contextualized-representations-advanced",
@@ -1837,9 +1873,9 @@
       "type": "deep-dive",
       "topic": "contextualized-representations-advanced",
       "domain": "architectures-mechanisms",
-      "scope": "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel et normalisation.",
-      "summary": "Formalise les dépendances contextuelles et approfondit le fonctionnement interne des blocs Transformer : auto-attention, MLP, connexions résiduelles et normalisation.",
-      "purpose": "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, puis expliquer les sous-couches, les connexions résiduelles et les variantes de normalisation d'un bloc.",
+      "scope": "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer, rôles du MLP et de l'auto-attention, flux résiduel, normalisation, études empiriques de contextualité et probing des couches.",
+      "summary": "Formalise les dépendances contextuelles, approfondit les blocs Transformer et confronte les intuitions aux résultats empiriques sur les représentations et les couches.",
+      "purpose": "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, expliquer les sous-couches et interpréter avec prudence les résultats empiriques sur la contextualité, la géométrie et les informations décodables entre couches.",
       "covered_stages": [],
       "section_headings": [
         "1. De l'embedding initial à l'entrée du réseau",
@@ -1858,11 +1894,12 @@
       ],
       "children": [],
       "related": [
+        "fr/contextualized-representations",
         "fr/queries-keys-values-advanced",
         "fr/rope",
         "fr/transformer"
       ],
-      "rank": 58
+      "rank": 62
     },
     {
       "id": "fr/decoding-strategies",
@@ -1900,7 +1937,7 @@
         "fr/exercises-generation",
         "fr/decoding-strategies-exercises"
       ],
-      "rank": 59
+      "rank": 67
     },
     {
       "id": "fr/deepen",
@@ -1918,11 +1955,11 @@
       "covered_stages": [],
       "section_headings": [
         "Choisir par question",
+        "Modélisation du langage",
         "Attention, position et architectures",
-        "Ressources dédiées aux encodages sinusoïdaux",
-        "Ressources complémentaires pour comprendre le Transformer",
-        "Texte et tokenisation",
-        "Statistiques du langage"
+        "Texte, corpus et tokenisation",
+        "Statistiques du langage",
+        "Tokenisation et évaluation"
       ],
       "route": {
         "previous": null,
@@ -1940,7 +1977,7 @@
         "fr/tokenization-and-tokenizers"
       ],
       "related": [],
-      "rank": 60
+      "rank": 69
     },
     {
       "id": "fr/document-retrieval",
@@ -1977,7 +2014,7 @@
         "fr/context-engineering",
         "fr/in-context-learning"
       ],
-      "rank": 61
+      "rank": 70
     },
     {
       "id": "fr/embeddings-deep-dive",
@@ -2016,7 +2053,7 @@
         "fr/linearite-embeddings",
         "fr/tokenizer-design-evaluation"
       ],
-      "rank": 62
+      "rank": 72
     },
     {
       "id": "fr/emergence",
@@ -2052,7 +2089,7 @@
         "fr/evaluation-experimentale",
         "fr/emergence-exercises"
       ],
-      "rank": 63
+      "rank": 74
     },
     {
       "id": "fr/hybrid-llm-architectures",
@@ -2089,7 +2126,7 @@
         "fr/scaling-laws",
         "fr/hybrid-llm-architectures-exercises"
       ],
-      "rank": 111
+      "rank": 84
     },
     {
       "id": "fr/jepa-platonic-representation",
@@ -2126,7 +2163,7 @@
         "fr/llm-limits",
         "fr/jepa-platonic-representation-exercises"
       ],
-      "rank": 112
+      "rank": 87
     },
     {
       "id": "fr/llm-evolution",
@@ -2171,7 +2208,7 @@
         "fr/evaluation-experimentale",
         "fr/llm-evolution-exercises"
       ],
-      "rank": 113
+      "rank": 90
     },
     {
       "id": "fr/multimodal-architectures",
@@ -2208,7 +2245,7 @@
         "fr/transformer-architectures",
         "fr/llm-evolution"
       ],
-      "rank": 114
+      "rank": 96
     },
     {
       "id": "fr/next-concept-modeling",
@@ -2246,7 +2283,7 @@
         "fr/llm-computational-complexity",
         "fr/transformer-architectures"
       ],
-      "rank": 115
+      "rank": 98
     },
     {
       "id": "fr/rag-memory-boundaries",
@@ -2286,7 +2323,7 @@
         "fr/post-training",
         "fr/document-retrieval"
       ],
-      "rank": 116
+      "rank": 103
     },
     {
       "id": "fr/scaling-laws",
@@ -2317,7 +2354,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 139
+      "rank": 130
     },
     {
       "id": "fr/score-centering",
@@ -2351,7 +2388,7 @@
         "fr/gradients",
         "fr/llm-evolution"
       ],
-      "rank": 140
+      "rank": 131
     },
     {
       "id": "fr/surprisal-information-content",
@@ -2390,7 +2427,7 @@
         "fr/language-modeling-math",
         "fr/experience-information-theory"
       ],
-      "rank": 141
+      "rank": 133
     },
     {
       "id": "fr/tokenization-and-tokenizers",
@@ -2431,7 +2468,7 @@
         "fr/exercises-text-data",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 143
+      "rank": 136
     },
     {
       "id": "fr/tokenization-strategies",
@@ -2471,7 +2508,7 @@
         "fr/training-examples",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 144
+      "rank": 137
     },
     {
       "id": "fr/tokenizer-design-evaluation",
@@ -2511,7 +2548,7 @@
         "fr/unicode-text",
         "fr/exercises-text-data"
       ],
-      "rank": 145
+      "rank": 139
     },
     {
       "id": "fr/tokenizer-multilingual-evaluation",
@@ -2547,7 +2584,7 @@
         "fr/text-data",
         "fr/scaling-laws"
       ],
-      "rank": 146
+      "rank": 140
     },
     {
       "id": "fr/unicode-text",
@@ -2581,7 +2618,7 @@
       "related": [
         "fr/text-data"
       ],
-      "rank": 147
+      "rank": 146
     },
     {
       "id": "fr/universal-artificial-intelligence",
@@ -2629,7 +2666,7 @@
       "level": "advanced",
       "type": "deep-dive",
       "topic": "zipf-law-deep-dive",
-      "domain": "probabilistic-foundations-training",
+      "domain": "text-tokenization",
       "scope": "Rassemble les extensions mathématiques, résultats empiriques comparatifs, repères historiques et usages en analyse de corpus, recherche d'information et étude des modèles.",
       "summary": "Approfondit la loi de Zipf : variante de Mandelbrot, données multilingues, histoire, applications et limites.",
       "purpose": "Interpréter les résultats empiriques sans généralisation abusive et relier la statistique rang-fréquence aux usages concrets.",
@@ -2655,7 +2692,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 149
+      "rank": 150
     },
     {
       "id": "fr/exercises",
@@ -3092,7 +3129,7 @@
         "fr/training-loop",
         "fr/llm-limits"
       ],
-      "rank": 55
+      "rank": 56
     },
     {
       "id": "fr/causal-masking-exercises",
@@ -3121,7 +3158,7 @@
       "related": [
         "fr/causal-masking"
       ],
-      "rank": 64
+      "rank": 58
     },
     {
       "id": "fr/compression-revision-exercises",
@@ -3150,7 +3187,7 @@
       "related": [
         "fr/compression-revision"
       ],
-      "rank": 65
+      "rank": 60
     },
     {
       "id": "fr/context-engineering-exercises",
@@ -3183,7 +3220,7 @@
         "fr/context-engineering",
         "fr/in-context-learning"
       ],
-      "rank": 66
+      "rank": 61
     },
     {
       "id": "fr/contextualized-representations-exercises",
@@ -3201,6 +3238,7 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
+        "Cartes de révision",
         "Quel changement peut atteindre l'état courant ?",
         "Enquête guidée — une feature SAE dans Neuronpedia"
       ],
@@ -3213,7 +3251,7 @@
       "related": [
         "fr/contextualized-representations"
       ],
-      "rank": 67
+      "rank": 63
     },
     {
       "id": "fr/corpus-preparation-exercises",
@@ -3241,7 +3279,7 @@
       "related": [
         "fr/corpus-preparation"
       ],
-      "rank": 68
+      "rank": 64
     },
     {
       "id": "fr/cross-attention-exercises",
@@ -3269,7 +3307,7 @@
       "related": [
         "fr/cross-attention"
       ],
-      "rank": 69
+      "rank": 65
     },
     {
       "id": "fr/cross-entropy-exercises",
@@ -3297,7 +3335,7 @@
       "related": [
         "fr/cross-entropy"
       ],
-      "rank": 70
+      "rank": 66
     },
     {
       "id": "fr/decoding-strategies-exercises",
@@ -3325,7 +3363,7 @@
       "related": [
         "fr/decoding-strategies"
       ],
-      "rank": 71
+      "rank": 68
     },
     {
       "id": "fr/embedding-space-exercises",
@@ -3343,6 +3381,7 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
+        "Cartes de révision",
         "Inspecter une petite matrice d'embeddings d'entrée",
         "Exploration guidée — Embedding Atlas"
       ],
@@ -3355,7 +3394,7 @@
       "related": [
         "fr/embedding-space"
       ],
-      "rank": 72
+      "rank": 71
     },
     {
       "id": "fr/embeddings-deep-dive-exercises",
@@ -3409,7 +3448,7 @@
       "related": [
         "fr/emergence"
       ],
-      "rank": 74
+      "rank": 75
     },
     {
       "id": "fr/entropy-exercises",
@@ -3439,1005 +3478,7 @@
       "related": [
         "fr/entropy"
       ],
-      "rank": 75
-    },
-    {
-      "id": "fr/generation-exercises",
-      "title": "Exercices — Génération autorégressive",
-      "href": "exercises/generation.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "inference-generation-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Génération autorégressive.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Entraînement approfondi"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/generation",
-        "fr/exercises-generation"
-      ],
       "rank": 76
-    },
-    {
-      "id": "fr/gpt-config-walkthrough-exercises",
-      "title": "Exercices — Configuration du GPT",
-      "href": "exercises/gpt-config-walkthrough.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-config-exercises",
-      "domain": null,
-      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
-      "summary": "Exercices associés à la visite guidée Configuration du GPT.",
-      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gpt-config-walkthrough"
-      ],
-      "rank": 77
-    },
-    {
-      "id": "fr/gpt-generation-walkthrough-exercises",
-      "title": "Exercices — Génération du GPT",
-      "href": "exercises/gpt-generation-walkthrough.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-generation-exercises",
-      "domain": null,
-      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
-      "summary": "Exercices associés à la visite guidée Génération du GPT.",
-      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
-      "covered_stages": [],
-      "section_headings": [
-        "Exercices"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gpt-generation-walkthrough"
-      ],
-      "rank": 78
-    },
-    {
-      "id": "fr/gpt-model-walkthrough-exercises",
-      "title": "Exercices — Modèle GPT complet",
-      "href": "exercises/gpt-model-walkthrough.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-model-exercises",
-      "domain": null,
-      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
-      "summary": "Exercices associés à la visite guidée Modèle GPT complet.",
-      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gpt-model-walkthrough"
-      ],
-      "rank": 79
-    },
-    {
-      "id": "fr/gpt-ops-walkthrough-exercises",
-      "title": "Exercices — Opérations numériques du GPT",
-      "href": "exercises/gpt-ops-walkthrough.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-gpt-ops-exercises",
-      "domain": null,
-      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
-      "summary": "Exercices associés à la visite guidée Opérations numériques du GPT.",
-      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gpt-ops-walkthrough"
-      ],
-      "rank": 80
-    },
-    {
-      "id": "fr/gradients-exercises",
-      "title": "Exercices — Gradients et rétropropagation",
-      "href": "exercises/gradients.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "gradients-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Gradients et rétropropagation.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Même perte, quelles mises à jour ?"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gradients",
-        "fr/cross-entropy"
-      ],
-      "rank": 81
-    },
-    {
-      "id": "fr/hybrid-llm-architectures-exercises",
-      "title": "Exercices — Architectures hybrides de LLM",
-      "href": "exercises/hybrid-llm-architectures.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "hybrid-llm-architectures-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés sur les architectures hybrides, le routage top-k et les compromis de capacité des experts.",
-      "summary": "Questions de vérification et exercices associés à la leçon Architectures hybrides de LLM.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Exercice : routage top-k déterministe"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/hybrid-llm-architectures"
-      ],
-      "rank": 82
-    },
-    {
-      "id": "fr/in-context-learning-exercises",
-      "title": "Exercices — Apprentissage en contexte",
-      "href": "exercises/in-context-learning.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "in-context-learning-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Apprentissage en contexte.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/in-context-learning"
-      ],
-      "rank": 83
-    },
-    {
-      "id": "fr/jepa-platonic-representation-exercises",
-      "title": "Exercices — JEPA et représentation platonique",
-      "href": "exercises/jepa-platonic-representation.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "jepa-platonic-representation-exercises",
-      "domain": null,
-      "scope": "Évalue la distinction entre bonnes et mauvaises vues, les hypothèses du théorème, l'interprétation des comparaisons d'échantillons et le statut de l'analogie avec la prédiction du prochain token.",
-      "summary": "Questions de vérification associées à l'approfondissement sur les JEPA et l'hypothèse de représentation platonique.",
-      "purpose": "Vérifier que le lecteur peut restituer les conditions d'un résultat théorique et ne pas surinterpréter les résultats empiriques.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "1. Bonnes vues et mauvaises vues",
-        "2. Hypothèses du théorème",
-        "3. Échantillons et calcul",
-        "4. Analogie et statut théorique"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/jepa-platonic-representation"
-      ],
-      "rank": 84
-    },
-    {
-      "id": "fr/llm-computational-complexity-exercises",
-      "title": "Exercices — Complexité de calcul des LLM",
-      "href": "exercises/llm-computational-complexity.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-computational-complexity-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Complexité de calcul des LLM.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/llm-computational-complexity"
-      ],
-      "rank": 85
-    },
-    {
-      "id": "fr/llm-evolution-exercises",
-      "title": "Exercices — Évolution des modèles de langage",
-      "href": "exercises/llm-evolution.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-evolution-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/llm-evolution"
-      ],
-      "rank": 86
-    },
-    {
-      "id": "fr/llm-limits-exercises",
-      "title": "Exercices — Limites des LLM",
-      "href": "exercises/llm-limits.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-limits-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions de compréhension de la leçon sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification associées à la leçon Limites des LLM.",
-      "purpose": "Vérifier la compréhension et distinguer les idées centrales de la leçon par des questions ciblées.",
-      "covered_stages": [],
-      "section_headings": [],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/llm-limits"
-      ],
-      "rank": 87
-    },
-    {
-      "id": "fr/llm-overview-exercises",
-      "title": "Exercices — Panorama des modèles de langage",
-      "href": "exercises/llm-overview.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "llm-overview-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions de compréhension du panorama sans dupliquer la présentation générale des familles de modèles.",
-      "summary": "Questions de compréhension associées au panorama des modèles de langage.",
-      "purpose": "Distinguer architecture, adaptation, récupération d'information, rôles du format de message et demandes d'outil produites par le modèle de leur exécution côté application.",
-      "covered_stages": [],
-      "section_headings": [],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/llm-overview"
-      ],
-      "rank": 88
-    },
-    {
-      "id": "fr/logits-exercises",
-      "title": "Exercices — Logits",
-      "href": "exercises/logits.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "logits-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Logits.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Des états finaux à la distribution du prochain token",
-        "Deux softmax, deux axes"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/logits",
-        "fr/transformer",
-        "fr/scaled-dot-product-attention"
-      ],
-      "rank": 89
-    },
-    {
-      "id": "fr/loss-exercises",
-      "title": "Exercices — Loss : fonction objectif et masquage",
-      "href": "exercises/loss.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "loss-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Loss : fonction objectif et masquage.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Un token visible en entrée et ignoré comme cible",
-        "Comparer deux checkpoints par la loss de validation"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/loss"
-      ],
-      "rank": 90
-    },
-    {
-      "id": "fr/multimodal-architectures-exercises",
-      "title": "Questions — Analyse d'une architecture multimodale",
-      "href": "exercises/multimodal-architectures.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "multimodal-architectures-exercises",
-      "domain": null,
-      "scope": "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives.",
-      "summary": "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives.",
-      "purpose": "Analyser une architecture multimodale sans confondre compréhension, génération, composants et preuves de performance.",
-      "covered_stages": [],
-      "section_headings": [
-        "Questions à poser devant une architecture"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/multimodal-architectures"
-      ],
-      "rank": 91
-    },
-    {
-      "id": "fr/next-concept-modeling-exercises",
-      "title": "Exercices — Next-Concept Modeling",
-      "href": "exercises/next-concept-modeling.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "next-concept-modeling-exercises",
-      "domain": null,
-      "scope": "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku.",
-      "summary": "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku.",
-      "purpose": "Distinguer génération séquentielle des niveaux de codes et prédiction parallèle des positions d'un même niveau, puis limiter la portée d'un résultat expérimental.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier le mécanisme et la portée des résultats"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/next-concept-modeling"
-      ],
-      "rank": 92
-    },
-    {
-      "id": "fr/positional-encoding-exercises",
-      "title": "Exercices — Position et encodage positionnel",
-      "href": "exercises/positional-encoding.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "positional-encoding-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, cinq cartes de rappel et exercices corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification, cinq cartes de rappel et exercices associés à la leçon Position et encodage positionnel.",
-      "purpose": "Restituer les distinctions essentielles, vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Comparer deux préfixes visibles",
-        "Cartes de rappel"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/positional-encoding"
-      ],
-      "rank": 93
-    },
-    {
-      "id": "fr/probabilites-exercises",
-      "title": "Exercices — Probabilités et softmax",
-      "href": "exercises/probabilites.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "probabilites-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Probabilités et softmax.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier l’idée essentielle"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/probabilites",
-        "fr/exercises-foundations",
-        "fr/exercises-generation",
-        "fr/decoding-strategies"
-      ],
-      "rank": 94
-    },
-    {
-      "id": "fr/queries-keys-values-exercises",
-      "title": "Exercices — Requêtes, clés et valeurs (Q, K, V)",
-      "href": "exercises/queries-keys-values.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "queries-keys-values-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Requêtes, clés et valeurs (Q, K, V).",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier l'idée essentielle"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/queries-keys-values",
-        "fr/exercises-attention"
-      ],
-      "rank": 95
-    },
-    {
-      "id": "fr/rag-memory-boundaries-exercises",
-      "title": "Exercices — RAG, mémoire et récupération documentaire",
-      "href": "exercises/rag-memory-boundaries.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "rag-memory-exercises",
-      "domain": null,
-      "scope": "Propose des scénarios de diagnostic et un protocole d'expérience contrôlée sur les frontières entre récupération documentaire, mémoire, RAG et ICL.",
-      "summary": "Exercices pour distinguer stockage, recherche, transmission au modèle et exploitation.",
-      "purpose": "Savoir identifier ce qui est effectivement visible par le modèle, localiser les défaillances et construire une évaluation séparant récupération et génération.",
-      "covered_stages": [],
-      "section_headings": [
-        "1. Identifier la frontière de transmission",
-        "2. Diagnostiquer un RAG qui échoue",
-        "3. Distinguer RAG, mémoire et ICL",
-        "4. Concevoir une expérience contrôlée",
-        "5. Séparer qualité de récupération et qualité d'exploitation",
-        "6. Gouverner une mémoire"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/rag-memory-boundaries",
-        "fr/context-engineering",
-        "fr/in-context-learning"
-      ],
-      "rank": 96
-    },
-    {
-      "id": "fr/rope-exercises",
-      "title": "Exercices — RoPE",
-      "href": "exercises/rope.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "rope-exercises",
-      "domain": null,
-      "scope": "Questions et raisonnement associés à l'encodage positionnel rotatif (RoPE).",
-      "summary": "Questions et raisonnement associés à l'encodage positionnel rotatif (RoPE).",
-      "purpose": "Vérifier la compréhension des rotations Q/K, du décalage relatif et des limites de l'invariance par translation.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/rope"
-      ],
-      "rank": 97
-    },
-    {
-      "id": "fr/scaled-dot-product-attention-exercises",
-      "title": "Exercices — Attention à produit scalaire mise à l’échelle",
-      "href": "exercises/scaled-dot-product-attention.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "scaled-dot-product-attention-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Attention à produit scalaire mise à l’échelle.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Mélange pondéré ou sélection ?"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/scaled-dot-product-attention"
-      ],
-      "rank": 98
-    },
-    {
-      "id": "fr/sinusoidal-positional-encoding-exercises",
-      "title": "Exercices — Encodage positionnel sinusoïdal",
-      "href": "exercises/sinusoidal-positional-encoding.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "sinusoidal-positional-encoding-exercises",
-      "domain": null,
-      "scope": "Questions et éléments de réponse associés à l'encodage positionnel sinusoïdal.",
-      "summary": "Questions et éléments de réponse associés à l'encodage positionnel sinusoïdal.",
-      "purpose": "Appliquer les relations entre dimension, fréquences, décalages, similarité positionnelle et extrapolation.",
-      "covered_stages": [],
-      "section_headings": [
-        "8. Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/sinusoidal-positional-encoding"
-      ],
-      "rank": 99
-    },
-    {
-      "id": "fr/text-data-exercises",
-      "title": "Exercices — Texte et données",
-      "href": "exercises/text-data.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "text-data-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Texte et données.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Encoder le préfixe et la continuation",
-        "Du texte aux lignes de la table de plongements",
-        "Du plongement à l’entrée du premier bloc"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/text-data",
-        "fr/embedding-space"
-      ],
-      "rank": 100
-    },
-    {
-      "id": "fr/tokenization-strategies-exercises",
-      "title": "Exercices — Stratégies de tokenisation",
-      "href": "exercises/tokenization-strategies.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "tokenization-strategies-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Stratégies de tokenisation.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Expérimenter : comparer plusieurs tokenizers"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/tokenization-strategies"
-      ],
-      "rank": 101
-    },
-    {
-      "id": "fr/training-examples-exercises",
-      "title": "Exercices — Exemples d'entraînement",
-      "href": "exercises/training-examples.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "training-examples-exercises",
-      "domain": null,
-      "scope": "Regroupe six questions et scénarios de transfert sans dupliquer l’explication conceptuelle de la leçon.",
-      "summary": "Six exercices progressifs sur l'alignement, le teacher forcing, les masques, le packing, le padding et les dimensions des logits.",
-      "purpose": "Vérifier l'alignement des tokens, la causalité, les rôles des masques, les frontières de documents, la réduction de perte et les dimensions des logits.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "1. Décalage entrée-cible",
-        "2. Teacher forcing et causalité",
-        "3. Masque d'attention et masque de perte",
-        "4. Axes des logits",
-        "Appliquer les mécanismes"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/training-examples"
-      ],
-      "rank": 102
-    },
-    {
-      "id": "fr/training-loop-exercises",
-      "title": "Exercices — Boucle d'entraînement",
-      "href": "exercises/training-loop.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "training-loop-exercises",
-      "domain": null,
-      "scope": "Questions, calculs et exercice intégrateur associés à la boucle d'entraînement.",
-      "summary": "Questions, calculs et exercice intégrateur associés à la boucle d'entraînement.",
-      "purpose": "Relier la passe avant, la loss, les gradients, la mise à jour des paramètres et l'évaluation sur des données réservées.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Exercice de fin de parcours"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/training-loop"
-      ],
-      "rank": 103
-    },
-    {
-      "id": "fr/transformer-architectures-exercises",
-      "title": "Exercices — Architectures Transformer",
-      "href": "exercises/transformer-architectures.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "transformer-architectures-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions de compréhension de la leçon sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification associées à la leçon Architectures Transformer.",
-      "purpose": "Vérifier la compréhension et distinguer les idées centrales de la leçon par des questions ciblées.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/transformer-architectures"
-      ],
-      "rank": 104
-    },
-    {
-      "id": "fr/transformer-block-walkthrough-exercises",
-      "title": "Exercices — Bloc Transformer",
-      "href": "exercises/transformer-block-walkthrough.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "reference-transformer-block-exercises",
-      "domain": null,
-      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
-      "summary": "Exercices associés à la visite guidée Bloc Transformer.",
-      "purpose": "Vérifier les invariants, les formes et les choix d'implémentation du bloc, ainsi que la comparaison des variantes d'attention.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/transformer-block-walkthrough"
-      ],
-      "rank": 105
-    },
-    {
-      "id": "fr/transformer-exercises",
-      "title": "Exercices — GPT et Transformer : architecture et flux des données",
-      "href": "exercises/transformer.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "transformer-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon GPT et Transformer : architecture et flux des données.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier l’idée essentielle",
-        "Pistes de réponse",
-        "Lire le schéma fondateur de 2017"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/transformer",
-        "fr/transformer-history"
-      ],
-      "rank": 106
-    },
-    {
-      "id": "fr/unicode-text-exercises",
-      "title": "Exercices — Unicode, UTF-8 et normalisation",
-      "href": "exercises/unicode-text.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "unicode-text-exercises",
-      "domain": null,
-      "scope": "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8.",
-      "summary": "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8.",
-      "purpose": "Distinguer caractère abstrait, point de code Unicode et octet UTF-8, sans les confondre avec les tokens et IDs d'un tokenizer.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier les distinctions"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/unicode-text"
-      ],
-      "rank": 107
-    },
-    {
-      "id": "fr/vraisemblance-exercises",
-      "title": "Exercices — Vraisemblance et log-vraisemblance",
-      "href": "exercises/vraisemblance.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "vraisemblance-exercises",
-      "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Vraisemblance et log-vraisemblance.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier sa compréhension",
-        "Calculer la vraisemblance du fil rouge",
-        "Générer ou scorer à partir du même préfixe"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/vraisemblance",
-        "fr/generation"
-      ],
-      "rank": 108
-    },
-    {
-      "id": "fr/zipf-law-exercises",
-      "title": "Exercices — Loi de Zipf",
-      "href": "exercises/zipf-law.html",
-      "language": "fr",
-      "destination": "practice",
-      "level": "applied",
-      "type": "exercise-hub",
-      "topic": "zipf-law-exercises",
-      "domain": null,
-      "scope": "Vérifie la relation rang-fréquence, l'interprétation des graphiques log-log et la distinction entre fréquences lexicales et fréquences de tokens ; oriente vers la collection d'exercices approfondie.",
-      "summary": "Courtes questions d'auto-vérification associées à la leçon sur la loi de Zipf.",
-      "purpose": "Vérifier l'idée essentielle avant de passer aux calculs et questions de transfert plus développés.",
-      "covered_stages": [],
-      "section_headings": [
-        "Vérifier l’idée essentielle",
-        "Entraînement approfondi"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/advent-calendar-story-day-01",
-        "fr/exercises-zipf-law",
-        "fr/text-data",
-        "fr/tokenization-strategies"
-      ],
-      "rank": 109
     },
     {
       "id": "fr/experience-information-theory",
@@ -4473,7 +3514,619 @@
         "fr/revision-information-theory",
         "fr/surprisal-information-content"
       ],
-      "rank": 110
+      "rank": 77
+    },
+    {
+      "id": "fr/generation-exercises",
+      "title": "Exercices — Génération autorégressive",
+      "href": "exercises/generation.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "inference-generation-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Génération autorégressive.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Entraînement approfondi"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/generation",
+        "fr/exercises-generation"
+      ],
+      "rank": 78
+    },
+    {
+      "id": "fr/gpt-config-walkthrough-exercises",
+      "title": "Exercices — Configuration du GPT",
+      "href": "exercises/gpt-config-walkthrough.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-config-exercises",
+      "domain": null,
+      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
+      "summary": "Exercices associés à la visite guidée Configuration du GPT.",
+      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gpt-config-walkthrough"
+      ],
+      "rank": 79
+    },
+    {
+      "id": "fr/gpt-generation-walkthrough-exercises",
+      "title": "Exercices — Génération du GPT",
+      "href": "exercises/gpt-generation-walkthrough.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-generation-exercises",
+      "domain": null,
+      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
+      "summary": "Exercices associés à la visite guidée Génération du GPT.",
+      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
+      "covered_stages": [],
+      "section_headings": [
+        "Exercices"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gpt-generation-walkthrough"
+      ],
+      "rank": 80
+    },
+    {
+      "id": "fr/gpt-model-walkthrough-exercises",
+      "title": "Exercices — Modèle GPT complet",
+      "href": "exercises/gpt-model-walkthrough.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-model-exercises",
+      "domain": null,
+      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
+      "summary": "Exercices associés à la visite guidée Modèle GPT complet.",
+      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gpt-model-walkthrough"
+      ],
+      "rank": 81
+    },
+    {
+      "id": "fr/gpt-ops-walkthrough-exercises",
+      "title": "Exercices — Opérations numériques du GPT",
+      "href": "exercises/gpt-ops-walkthrough.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-gpt-ops-exercises",
+      "domain": null,
+      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
+      "summary": "Exercices associés à la visite guidée Opérations numériques du GPT.",
+      "purpose": "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gpt-ops-walkthrough"
+      ],
+      "rank": 82
+    },
+    {
+      "id": "fr/gradients-exercises",
+      "title": "Exercices — Gradients et rétropropagation",
+      "href": "exercises/gradients.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "gradients-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Gradients et rétropropagation.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Même perte, quelles mises à jour ?"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gradients",
+        "fr/cross-entropy"
+      ],
+      "rank": 83
+    },
+    {
+      "id": "fr/hybrid-llm-architectures-exercises",
+      "title": "Exercices — Architectures hybrides de LLM",
+      "href": "exercises/hybrid-llm-architectures.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "hybrid-llm-architectures-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés sur les architectures hybrides, le routage top-k et les compromis de capacité des experts.",
+      "summary": "Questions de vérification et exercices associés à la leçon Architectures hybrides de LLM.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Exercice : routage top-k déterministe"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/hybrid-llm-architectures"
+      ],
+      "rank": 85
+    },
+    {
+      "id": "fr/in-context-learning-exercises",
+      "title": "Exercices — Apprentissage en contexte",
+      "href": "exercises/in-context-learning.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "in-context-learning-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Apprentissage en contexte.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/in-context-learning"
+      ],
+      "rank": 86
+    },
+    {
+      "id": "fr/jepa-platonic-representation-exercises",
+      "title": "Exercices — JEPA et représentation platonique",
+      "href": "exercises/jepa-platonic-representation.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "jepa-platonic-representation-exercises",
+      "domain": null,
+      "scope": "Évalue la distinction entre bonnes et mauvaises vues, les hypothèses du théorème, l'interprétation des comparaisons d'échantillons et le statut de l'analogie avec la prédiction du prochain token.",
+      "summary": "Questions de vérification associées à l'approfondissement sur les JEPA et l'hypothèse de représentation platonique.",
+      "purpose": "Vérifier que le lecteur peut restituer les conditions d'un résultat théorique et ne pas surinterpréter les résultats empiriques.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Bonnes vues et mauvaises vues",
+        "2. Hypothèses du théorème",
+        "3. Échantillons et calcul",
+        "4. Analogie et statut théorique"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/jepa-platonic-representation"
+      ],
+      "rank": 88
+    },
+    {
+      "id": "fr/llm-computational-complexity-exercises",
+      "title": "Exercices — Complexité de calcul des LLM",
+      "href": "exercises/llm-computational-complexity.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-computational-complexity-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Complexité de calcul des LLM.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/llm-computational-complexity"
+      ],
+      "rank": 89
+    },
+    {
+      "id": "fr/llm-evolution-exercises",
+      "title": "Exercices — Évolution des modèles de langage",
+      "href": "exercises/llm-evolution.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-evolution-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/llm-evolution"
+      ],
+      "rank": 91
+    },
+    {
+      "id": "fr/llm-limits-exercises",
+      "title": "Exercices — Limites des LLM",
+      "href": "exercises/llm-limits.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-limits-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions de compréhension de la leçon sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification associées à la leçon Limites des LLM.",
+      "purpose": "Vérifier la compréhension et distinguer les idées centrales de la leçon par des questions ciblées.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/llm-limits"
+      ],
+      "rank": 92
+    },
+    {
+      "id": "fr/llm-overview-exercises",
+      "title": "Exercices — Panorama des modèles de langage",
+      "href": "exercises/llm-overview.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "llm-overview-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions de compréhension du panorama sans dupliquer la présentation générale des familles de modèles.",
+      "summary": "Questions de compréhension associées au panorama des modèles de langage.",
+      "purpose": "Distinguer architecture, adaptation, récupération d'information, rôles du format de message et demandes d'outil produites par le modèle de leur exécution côté application.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/llm-overview"
+      ],
+      "rank": 93
+    },
+    {
+      "id": "fr/logits-exercises",
+      "title": "Exercices — Logits",
+      "href": "exercises/logits.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "logits-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Logits.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Des états finaux à la distribution du prochain token",
+        "Deux softmax, deux axes"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/logits",
+        "fr/transformer",
+        "fr/scaled-dot-product-attention"
+      ],
+      "rank": 94
+    },
+    {
+      "id": "fr/loss-exercises",
+      "title": "Exercices — Loss : fonction objectif et masquage",
+      "href": "exercises/loss.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "loss-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Loss : fonction objectif et masquage.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Un token visible en entrée et ignoré comme cible",
+        "Comparer deux checkpoints par la loss de validation"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/loss"
+      ],
+      "rank": 95
+    },
+    {
+      "id": "fr/multimodal-architectures-exercises",
+      "title": "Questions — Analyse d'une architecture multimodale",
+      "href": "exercises/multimodal-architectures.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "multimodal-architectures-exercises",
+      "domain": null,
+      "scope": "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives.",
+      "summary": "Grille de questions pour analyser les modalités, les frontières entre composants, les représentations prédites, les mécanismes de sortie et les preuves comparatives.",
+      "purpose": "Analyser une architecture multimodale sans confondre compréhension, génération, composants et preuves de performance.",
+      "covered_stages": [],
+      "section_headings": [
+        "Questions à poser devant une architecture"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/multimodal-architectures"
+      ],
+      "rank": 97
+    },
+    {
+      "id": "fr/next-concept-modeling-exercises",
+      "title": "Exercices — Next-Concept Modeling",
+      "href": "exercises/next-concept-modeling.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "next-concept-modeling-exercises",
+      "domain": null,
+      "scope": "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku.",
+      "summary": "Question de compréhension et raisonnement sur la génération hiérarchique de codes dans Next-Concept Modeling et la portée des résultats Sudoku.",
+      "purpose": "Distinguer génération séquentielle des niveaux de codes et prédiction parallèle des positions d'un même niveau, puis limiter la portée d'un résultat expérimental.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier le mécanisme et la portée des résultats"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/next-concept-modeling"
+      ],
+      "rank": 99
+    },
+    {
+      "id": "fr/positional-encoding-exercises",
+      "title": "Exercices — Position et encodage positionnel",
+      "href": "exercises/positional-encoding.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "positional-encoding-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, cinq cartes de rappel et exercices corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification, cinq cartes de rappel et exercices associés à la leçon Position et encodage positionnel.",
+      "purpose": "Restituer les distinctions essentielles, vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Comparer deux préfixes visibles",
+        "Cartes de rappel"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/positional-encoding"
+      ],
+      "rank": 100
+    },
+    {
+      "id": "fr/probabilites-exercises",
+      "title": "Exercices — Probabilités et softmax",
+      "href": "exercises/probabilites.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "probabilites-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Probabilités et softmax.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier l’idée essentielle"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/probabilites",
+        "fr/exercises-foundations",
+        "fr/exercises-generation",
+        "fr/decoding-strategies"
+      ],
+      "rank": 101
+    },
+    {
+      "id": "fr/queries-keys-values-exercises",
+      "title": "Exercices — Requêtes, clés et valeurs (Q, K, V)",
+      "href": "exercises/queries-keys-values.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "queries-keys-values-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Requêtes, clés et valeurs (Q, K, V).",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier l'idée essentielle"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/queries-keys-values",
+        "fr/exercises-attention"
+      ],
+      "rank": 102
+    },
+    {
+      "id": "fr/rag-memory-boundaries-exercises",
+      "title": "Exercices — RAG, mémoire et récupération documentaire",
+      "href": "exercises/rag-memory-boundaries.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "rag-memory-exercises",
+      "domain": null,
+      "scope": "Propose des scénarios de diagnostic et un protocole d'expérience contrôlée sur les frontières entre récupération documentaire, mémoire, RAG et ICL.",
+      "summary": "Exercices pour distinguer stockage, recherche, transmission au modèle et exploitation.",
+      "purpose": "Savoir identifier ce qui est effectivement visible par le modèle, localiser les défaillances et construire une évaluation séparant récupération et génération.",
+      "covered_stages": [],
+      "section_headings": [
+        "1. Identifier la frontière de transmission",
+        "2. Diagnostiquer un RAG qui échoue",
+        "3. Distinguer RAG, mémoire et ICL",
+        "4. Concevoir une expérience contrôlée",
+        "5. Séparer qualité de récupération et qualité d'exploitation",
+        "6. Gouverner une mémoire"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/rag-memory-boundaries",
+        "fr/context-engineering",
+        "fr/in-context-learning"
+      ],
+      "rank": 104
     },
     {
       "id": "fr/revision-causal-masking",
@@ -4502,7 +4155,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 118
+      "rank": 106
     },
     {
       "id": "fr/revision-context-engineering",
@@ -4531,7 +4184,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 119
+      "rank": 107
     },
     {
       "id": "fr/revision-contextualized-representations",
@@ -4561,7 +4214,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 120
+      "rank": 108
     },
     {
       "id": "fr/revision-cross-entropy",
@@ -4590,7 +4243,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 121
+      "rank": 109
     },
     {
       "id": "fr/revision-embedding-space",
@@ -4610,7 +4263,7 @@
       ],
       "covered_stages": [],
       "section_headings": [
-        "Vérifier de mémoire"
+        "Prédire avant de vérifier"
       ],
       "route": {
         "previous": null,
@@ -4619,7 +4272,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 122
+      "rank": 110
     },
     {
       "id": "fr/revision-entropy",
@@ -4650,7 +4303,7 @@
       "related": [
         "fr/synthese-entropie"
       ],
-      "rank": 123
+      "rank": 111
     },
     {
       "id": "fr/revision-gradients",
@@ -4679,7 +4332,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 124
+      "rank": 112
     },
     {
       "id": "fr/revision-in-context-learning",
@@ -4708,7 +4361,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 125
+      "rank": 113
     },
     {
       "id": "fr/revision-inference-generation",
@@ -4738,7 +4391,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 126
+      "rank": 114
     },
     {
       "id": "fr/revision-information-theory",
@@ -4771,7 +4424,40 @@
       "related": [
         "fr/experience-information-theory"
       ],
-      "rank": 127
+      "rank": 115
+    },
+    {
+      "id": "fr/revision-language-representation",
+      "title": "Révision — Pourquoi représenter le langage numériquement ?",
+      "href": "revision-language-representation.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "core",
+      "type": "concept-bridge",
+      "topic": "revision-language-representation",
+      "domain": null,
+      "scope": "Fiche de rappel sur la motivation de la représentation numérique du langage, le rôle des IDs, des embeddings initiaux et des états contextualisés.",
+      "summary": "",
+      "purpose": "Reconstruire de mémoire pourquoi le réseau a besoin de représentations numériques et distinguer les trois objets manipulés au début du parcours.",
+      "revision_of": [
+        "fr/language-representation"
+      ],
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier de mémoire",
+        "Relier les trois représentations"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/revision-text-data",
+        "fr/revision-embedding-space"
+      ],
+      "rank": 116
     },
     {
       "id": "fr/revision-llm-overview",
@@ -4800,7 +4486,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 128
+      "rank": 117
     },
     {
       "id": "fr/revision-logits",
@@ -4829,7 +4515,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 129
+      "rank": 118
     },
     {
       "id": "fr/revision-loss",
@@ -4858,7 +4544,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 130
+      "rank": 119
     },
     {
       "id": "fr/revision-positional-encoding",
@@ -4870,7 +4556,7 @@
       "type": "concept-bridge",
       "topic": "revision-positional-encoding",
       "domain": null,
-      "scope": "Fiche de rappel sur le rôle de l’ordre, les points d’injection positionnels et leur distinction avec la visibilité causale.",
+      "scope": "Fiche de synthèse sur l’ordre, les points d’injection absolus et relatifs, les biais de score et la distinction entre visibilité causale et ordre implicite dans NoPE.",
       "summary": "",
       "purpose": "Distinguer ce qu’indiquent la position et le masque causal, puis prédire l’effet d’une permutation.",
       "revision_of": [
@@ -4889,7 +4575,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 131
+      "rank": 120
     },
     {
       "id": "fr/revision-probabilites",
@@ -4918,7 +4604,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 132
+      "rank": 121
     },
     {
       "id": "fr/revision-queries-keys-values",
@@ -4948,7 +4634,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 133
+      "rank": 122
     },
     {
       "id": "fr/revision-scaled-dot-product-attention",
@@ -4977,7 +4663,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 134
+      "rank": 123
     },
     {
       "id": "fr/revision-text-data",
@@ -4998,7 +4684,10 @@
       "covered_stages": [],
       "section_headings": [
         "Vérifier de mémoire",
-        "Une deuxième question pour vérifier le modèle mental"
+        "Une deuxième question pour vérifier le modèle mental",
+        "Vérifier le lookup initial",
+        "Distinguer encodage et apprentissage du tokenizer",
+        "Interpréter le nombre de tokens"
       ],
       "route": {
         "previous": null,
@@ -5007,7 +4696,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 135
+      "rank": 124
     },
     {
       "id": "fr/revision-training-loop",
@@ -5036,7 +4725,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 136
+      "rank": 125
     },
     {
       "id": "fr/revision-transformer",
@@ -5065,7 +4754,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 137
+      "rank": 126
     },
     {
       "id": "fr/revision-vraisemblance",
@@ -5094,7 +4783,92 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 138
+      "rank": 127
+    },
+    {
+      "id": "fr/rope-exercises",
+      "title": "Exercices — RoPE",
+      "href": "exercises/rope.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "rope-exercises",
+      "domain": null,
+      "scope": "Questions et raisonnement associés à l'encodage positionnel rotatif (RoPE).",
+      "summary": "Questions et raisonnement associés à l'encodage positionnel rotatif (RoPE).",
+      "purpose": "Vérifier la compréhension des rotations Q/K, du décalage relatif et des limites de l'invariance par translation.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/rope"
+      ],
+      "rank": 128
+    },
+    {
+      "id": "fr/scaled-dot-product-attention-exercises",
+      "title": "Exercices — Attention à produit scalaire mise à l’échelle",
+      "href": "exercises/scaled-dot-product-attention.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "scaled-dot-product-attention-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Attention à produit scalaire mise à l’échelle.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Mélange pondéré ou sélection ?"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/scaled-dot-product-attention"
+      ],
+      "rank": 129
+    },
+    {
+      "id": "fr/sinusoidal-positional-encoding-exercises",
+      "title": "Exercices — Encodage positionnel sinusoïdal",
+      "href": "exercises/sinusoidal-positional-encoding.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "sinusoidal-positional-encoding-exercises",
+      "domain": null,
+      "scope": "Questions et éléments de réponse associés à l'encodage positionnel sinusoïdal.",
+      "summary": "Questions et éléments de réponse associés à l'encodage positionnel sinusoïdal.",
+      "purpose": "Appliquer les relations entre dimension, fréquences, décalages, similarité positionnelle et extrapolation.",
+      "covered_stages": [],
+      "section_headings": [
+        "8. Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/sinusoidal-positional-encoding"
+      ],
+      "rank": 132
     },
     {
       "id": "fr/synthese-entropie",
@@ -5136,7 +4910,308 @@
         "fr/loss",
         "fr/compression-revision"
       ],
+      "rank": 134
+    },
+    {
+      "id": "fr/text-data-exercises",
+      "title": "Exercices — Texte et données",
+      "href": "exercises/text-data.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "text-data-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Texte et données.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Encoder le préfixe et la continuation",
+        "Du texte aux lignes de la table de plongements",
+        "Du plongement à l’entrée du premier bloc"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/text-data",
+        "fr/embedding-space"
+      ],
+      "rank": 135
+    },
+    {
+      "id": "fr/tokenization-strategies-exercises",
+      "title": "Exercices — Stratégies de tokenisation",
+      "href": "exercises/tokenization-strategies.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "tokenization-strategies-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Stratégies de tokenisation.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Expérimenter : comparer plusieurs tokenizers"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/tokenization-strategies"
+      ],
+      "rank": 138
+    },
+    {
+      "id": "fr/training-examples-exercises",
+      "title": "Exercices — Exemples d'entraînement",
+      "href": "exercises/training-examples.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "training-examples-exercises",
+      "domain": null,
+      "scope": "Regroupe six questions et scénarios de transfert sans dupliquer l’explication conceptuelle de la leçon.",
+      "summary": "Six exercices progressifs sur l'alignement, le teacher forcing, les masques, le packing, le padding et les dimensions des logits.",
+      "purpose": "Vérifier l'alignement des tokens, la causalité, les rôles des masques, les frontières de documents, la réduction de perte et les dimensions des logits.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Décalage entrée-cible",
+        "2. Teacher forcing et causalité",
+        "3. Masque d'attention et masque de perte",
+        "4. Axes des logits",
+        "Appliquer les mécanismes"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/training-examples"
+      ],
+      "rank": 141
+    },
+    {
+      "id": "fr/training-loop-exercises",
+      "title": "Exercices — Boucle d'entraînement",
+      "href": "exercises/training-loop.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "training-loop-exercises",
+      "domain": null,
+      "scope": "Questions, calculs et exercice intégrateur associés à la boucle d'entraînement.",
+      "summary": "Questions, calculs et exercice intégrateur associés à la boucle d'entraînement.",
+      "purpose": "Relier la passe avant, la loss, les gradients, la mise à jour des paramètres et l'évaluation sur des données réservées.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Exercice de fin de parcours"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/training-loop"
+      ],
       "rank": 142
+    },
+    {
+      "id": "fr/transformer-architectures-exercises",
+      "title": "Exercices — Architectures Transformer",
+      "href": "exercises/transformer-architectures.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "transformer-architectures-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions de compréhension de la leçon sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification associées à la leçon Architectures Transformer.",
+      "purpose": "Vérifier la compréhension et distinguer les idées centrales de la leçon par des questions ciblées.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/transformer-architectures"
+      ],
+      "rank": 143
+    },
+    {
+      "id": "fr/transformer-block-walkthrough-exercises",
+      "title": "Exercices — Bloc Transformer",
+      "href": "exercises/transformer-block-walkthrough.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "reference-transformer-block-exercises",
+      "domain": null,
+      "scope": "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code.",
+      "summary": "Exercices associés à la visite guidée Bloc Transformer.",
+      "purpose": "Vérifier les invariants, les formes et les choix d'implémentation du bloc, ainsi que la comparaison des variantes d'attention.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/transformer-block-walkthrough"
+      ],
+      "rank": 144
+    },
+    {
+      "id": "fr/transformer-exercises",
+      "title": "Exercices — GPT et Transformer : architecture et flux des données",
+      "href": "exercises/transformer.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "transformer-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon GPT et Transformer : architecture et flux des données.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier l’idée essentielle",
+        "Pistes de réponse",
+        "Lire le schéma fondateur de 2017"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/transformer",
+        "fr/transformer-history"
+      ],
+      "rank": 145
+    },
+    {
+      "id": "fr/unicode-text-exercises",
+      "title": "Exercices — Unicode, UTF-8 et normalisation",
+      "href": "exercises/unicode-text.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "unicode-text-exercises",
+      "domain": null,
+      "scope": "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8.",
+      "summary": "Question de compréhension sur les caractères, les points de code Unicode et les octets UTF-8.",
+      "purpose": "Distinguer caractère abstrait, point de code Unicode et octet UTF-8, sans les confondre avec les tokens et IDs d'un tokenizer.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier les distinctions"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/unicode-text"
+      ],
+      "rank": 147
+    },
+    {
+      "id": "fr/vraisemblance-exercises",
+      "title": "Exercices — Vraisemblance et log-vraisemblance",
+      "href": "exercises/vraisemblance.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "vraisemblance-exercises",
+      "domain": null,
+      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
+      "summary": "Questions de vérification et exercices associés à la leçon Vraisemblance et log-vraisemblance.",
+      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "Calculer la vraisemblance du fil rouge",
+        "Générer ou scorer à partir du même préfixe"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/vraisemblance",
+        "fr/generation"
+      ],
+      "rank": 149
+    },
+    {
+      "id": "fr/zipf-law-exercises",
+      "title": "Exercices — Loi de Zipf",
+      "href": "exercises/zipf-law.html",
+      "language": "fr",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "zipf-law-exercises",
+      "domain": null,
+      "scope": "Vérifie la relation rang-fréquence, l'interprétation des graphiques log-log et la distinction entre fréquences lexicales et fréquences de tokens ; oriente vers la collection d'exercices approfondie.",
+      "summary": "Courtes questions d'auto-vérification associées à la leçon sur la loi de Zipf.",
+      "purpose": "Vérifier l'idée essentielle avant de passer aux calculs et questions de transfert plus développés.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier l’idée essentielle",
+        "Entraînement approfondi"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/advent-calendar-story-day-01",
+        "fr/exercises-zipf-law",
+        "fr/text-data",
+        "fr/tokenization-strategies"
+      ],
+      "rank": 151
     },
     {
       "id": "reference/references",
@@ -5167,7 +5242,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 150
+      "rank": 152
     }
   ],
   "navigation": [
@@ -5176,6 +5251,7 @@
       "title": "Comprendre les LLM",
       "pages": [
         "fr/llm-overview",
+        "fr/language-representation",
         "fr/text-data",
         "fr/embedding-space",
         "fr/positional-encoding",
@@ -5196,7 +5272,14 @@
         "fr/gradients",
         "fr/training-loop"
       ],
-      "sections": []
+      "sections": [
+        {
+          "title": "Architectures et variantes (facultatif)",
+          "pages": [
+            "fr/transformer-architectures"
+          ]
+        }
+      ]
     },
     {
       "id": "reviser",
@@ -5204,6 +5287,7 @@
       "pages": [
         "fr/review-path",
         "fr/revision-llm-overview",
+        "fr/revision-language-representation",
         "fr/revision-text-data",
         "fr/revision-embedding-space",
         "fr/revision-positional-encoding",
@@ -5321,32 +5405,72 @@
       ],
       "sections": [
         {
-          "title": "Attention, position et architectures",
-          "pages": [
-            "fr/attention-score-scaling",
-            "fr/contextualized-representations-advanced",
-            "fr/queries-keys-values-advanced",
-            "fr/cross-attention",
-            "fr/transformer-architectures",
-            "fr/multimodal-architectures",
-            "fr/rope",
-            "fr/sinusoidal-positional-encoding",
-            "fr/hybrid-llm-architectures",
-            "fr/next-concept-modeling"
-          ]
-        },
-        {
-          "title": "Texte et tokenisation",
+          "title": "Modélisation du langage",
           "pages": [],
           "sections": [
             {
-              "title": "Tokenisation et tokenizers",
+              "title": "Attention, position et architectures",
               "pages": [
-                "fr/tokenization-and-tokenizers",
-                "fr/tokenization-strategies",
-                "fr/unicode-text",
-                "fr/tokenizer-design-evaluation",
-                "fr/tokenizer-multilingual-evaluation"
+                "fr/attention-score-scaling",
+                "fr/contextualized-representations-advanced",
+                "fr/queries-keys-values-advanced",
+                "fr/cross-attention",
+                "fr/multimodal-architectures",
+                "fr/rope",
+                "fr/sinusoidal-positional-encoding",
+                "fr/hybrid-llm-architectures",
+                "fr/next-concept-modeling"
+              ]
+            },
+            {
+              "title": "Texte, corpus et tokenisation",
+              "pages": [],
+              "sections": [
+                {
+                  "title": "Tokenisation et tokenizers",
+                  "pages": [
+                    "fr/tokenization-and-tokenizers",
+                    "fr/tokenization-strategies",
+                    "fr/unicode-text",
+                    "fr/tokenizer-design-evaluation",
+                    "fr/tokenizer-multilingual-evaluation"
+                  ]
+                },
+                {
+                  "title": "Statistiques du langage",
+                  "pages": [
+                    "fr/advent-calendar-story-day-01",
+                    "fr/zipf-law-deep-dive"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Formalisation probabiliste et chaîne de l’entraînement",
+              "pages": [
+                "fr/surprisal-information-content",
+                "fr/language-modeling-math",
+                "fr/mathematical-foundations",
+                "fr/score-centering"
+              ]
+            },
+            {
+              "title": "Inférence et efficacité",
+              "pages": [
+                "fr/decoding-strategies",
+                "fr/llm-computational-complexity",
+                "fr/compression-revision",
+                "fr/rag-memory-boundaries",
+                "fr/document-retrieval"
+              ]
+            },
+            {
+              "title": "Échelle et questions de recherche",
+              "pages": [
+                "fr/scaling-laws",
+                "fr/emergence",
+                "fr/llm-evolution",
+                "fr/jepa-platonic-representation"
               ]
             }
           ]
@@ -5357,39 +5481,8 @@
             "fr/embeddings-deep-dive",
             "fr/tensors",
             "fr/cosine-similarity",
-            "fr/linearite-embeddings"
-          ]
-        },
-        {
-          "title": "Formalisation probabiliste et chaîne de l’entraînement",
-          "pages": [
-            "fr/surprisal-information-content",
-            "fr/zipf-law-deep-dive",
-            "fr/language-modeling-math",
-            "fr/mathematical-foundations",
-            "fr/universal-artificial-intelligence",
-            "fr/score-centering",
-            "fr/post-training"
-          ]
-        },
-        {
-          "title": "Inférence et efficacité",
-          "pages": [
-            "fr/decoding-strategies",
-            "fr/llm-computational-complexity",
-            "fr/compression-revision",
-            "fr/rag-memory-boundaries",
-            "fr/document-retrieval"
-          ]
-        },
-        {
-          "title": "Échelle et questions de recherche",
-          "pages": [
-            "fr/scaling-laws",
-            "fr/emergence",
-            "fr/llm-limits",
-            "fr/llm-evolution",
-            "fr/jepa-platonic-representation"
+            "fr/linearite-embeddings",
+            "fr/universal-artificial-intelligence"
           ]
         }
       ]
@@ -5423,6 +5516,11 @@
           "id": "fr/tokenization-strategies",
           "title": "Stratégies de tokenisation : granularité, algorithmes et compromis",
           "href": "tokenization-strategies.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [
@@ -5614,6 +5712,11 @@
           "id": "fr/embedding-space",
           "title": "Des identifiants aux vecteurs : les embeddings",
           "href": "embedding-space.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": []
@@ -5857,6 +5960,11 @@
           "id": "fr/embedding-space",
           "title": "Des identifiants aux vecteurs : les embeddings",
           "href": "embedding-space.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [
@@ -5888,6 +5996,11 @@
           "id": "fr/contextualized-representations-advanced",
           "title": "Représentations contextualisées : dépendances entre positions et couches",
           "href": "contextualized-representations-advanced.html"
+        },
+        {
+          "id": "fr/language-representation",
+          "title": "Pourquoi représenter le langage numériquement ?",
+          "href": "language-representation.html"
         }
       ],
       "code_resources": [
