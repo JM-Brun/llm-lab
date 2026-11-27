@@ -1,5 +1,17 @@
 # Inventaire de conservation — refonte du panorama LLM
 
+> **État courant — 27 novembre 2026 (supersède les statuts historiques ci-dessous).**
+>
+> - La PR de refonte [#1213](https://github.com/JM-Brun/llm-lab/pull/1213) est fusionnée depuis le 18 novembre 2026. Les mentions historiques « PR encore ouverte/en brouillon » dans les sections de réconciliation décrivent l'état antérieur à la fusion et ne constituent plus le statut courant.
+> - HEAD de contrôle : `main` à `26cdd58fbe4684e57b1b03d8cdeb593a31b9d9d4` (27 novembre 2026).
+> - Vérifications source : les trois tableaux structurants du panorama possèdent leur wrapper responsive en FR et EN ; les neuf ancres de section sont alignées ; les pages d'exercices FR/EN contiennent neuf questions chacune et leur marqueur `self-check-coverage: enforced` couvre les neuf ancres du panorama.
+> - CI sur ce HEAD : 845 tests passés, 1 ignoré, couverture 98,27 %. Le rendu Quarto complet et le déploiement GitHub Pages ont réussi sur le même HEAD.
+> - **Non validé ici :** inspection DOM/mobile du site publié, audit navigateur/Axe et navigation clavier sur le HEAD courant, ainsi que tout retour d'apprenant. La récupération directe des pages HTML publiques a renvoyé `Cache miss` dans la session de contrôle ; ce résultat ne démontre pas une indisponibilité du site.
+> - La conservation source et la réussite CI/rendu ne remplacent pas les deux validations restantes : revue navigateur rendue et revue par un apprenant. Aucune conclusion de compréhension ou de durée réellement mesurée n'est déduite des tests automatisés.
+>
+> Les sections datées ci-dessous sont conservées comme historique de décision et de diagnostic. Lorsqu'un statut historique contredit ce bloc, ce bloc décrit l'état courant.
+
+
 > État : inventaire éditorial avant déplacement de contenu. Sources FR/EN consultées sur `main` le 18 novembre 2026. Les lignes sont des repères de lecture, non des ancres stables. Les versions anglaises ont été contrôlées : elles suivent la même architecture, sans imposer un fil narratif identique au français.
 >
 > Règle : aucun bloc n'est supprimé tant que son contenu distinctif, ses figures, références, exercices, liens et réserves n'ont pas un propriétaire vérifié dans les deux langues.
