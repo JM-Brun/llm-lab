@@ -33,6 +33,8 @@ tags:
   - "status:published"
 -->
 
+{{< include ../includes/generated-guided-context-fr-language-representation.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle de langage apprend à produire des suites de tokens. Mais un réseau neuronal ne calcule pas directement sur les mots comme nous les lisons : ses opérations portent sur des **nombres organisés en tenseurs**. Il faut donc établir un passage entre les symboles du langage et les objets numériques que le réseau peut transformer.
 
