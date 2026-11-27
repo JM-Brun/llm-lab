@@ -2152,3 +2152,20 @@ Aucune modification des leçons n'est justifiée par cette inspection : les appo
 ### Limites et suite
 
 Ce lot est un audit de contenu source, pas une validation de rendu ou d'accessibilité. La vérification Quarto/browser, mobile, navigation, clavier et lecteur d'écran reste à effectuer. Continuer l'inventaire exhaustif à partir des registres canoniques, sans réauditer les pages déjà couvertes par les pilotes et audits datés.
+
+
+## Issue #1739 — apprentissage en contexte et ingénierie du contexte (2026-11-27)
+
+Audit source FR/EN des leçons Understand `in-context-learning` et `context-engineering`, avec leurs exercices Practice dédiés. Voir [le dossier des contributions autour du contexte](source-syntheses/understand-context-use-intellectual-contributions-audit-2026-11.md).
+
+### Résultats
+
+- ICL décrit l'utilisation d'instructions et de démonstrations présentes dans le prompt à paramètres fixes ; context engineering décrit le travail du système pour sélectionner, organiser, actualiser et sécuriser les informations transmises.
+- La leçon ICL distingue zero-shot/one-shot/few-shot, fine-tuning et RAG ; elle explicite que la reproduction d'un format ne prouve pas la généralisation et que les induction heads ne sont qu'une hypothèse mécaniste partielle.
+- Context engineering formalise trois niveaux : contexte disponible dans le système, séquence effectivement transmise dans la fenêtre, positions accessibles à une requête selon le masque et l'architecture.
+- Le contenu stocké ou récupéré n'est pas automatiquement transmis. La page relie cette frontière à la provenance, à la fraîcheur et aux risques d'injection indirecte.
+- Les exercices Practice couvrent généralisation, sélection, transmission, accès causal, provenance, sécurité et évolution du contexte entre appels.
+
+### Décision et limites
+
+Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modification de leçon, nouveau concept ou extension des métadonnées n'est justifié. Le lot est source-only : rendu des diagrammes FR/EN, mobile, navigation, clavier et accessibilité manuelle restent à vérifier.
