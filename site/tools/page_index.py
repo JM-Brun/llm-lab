@@ -81,7 +81,7 @@ def load_published_pages(site: Path) -> list[PublishedPage]:
             raise ValueError(f"{relative}: invalid page metadata YAML: {exc}") from exc
         if not isinstance(front, dict) or not isinstance(metadata, dict):
             raise ValueError(f"{relative}: front matter and page metadata must be mappings")
-        validate_optional_summary(metadata, relative)
+        validate_optional_summary(metadata, relative.as_posix())
         raw_tags = metadata.get("tags")
         if not isinstance(raw_tags, list) or not all(isinstance(tag, str) for tag in raw_tags):
             raise ValueError(f"{relative}: page-map tags must be a list of strings")
