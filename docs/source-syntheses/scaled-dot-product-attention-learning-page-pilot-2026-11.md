@@ -115,14 +115,15 @@ The missing provenance has now been added in this branch:
 - `data/extractions/pytorch-scaled-dot-product-attention-api.yml`: atomic API claims;
 - `docs/source-reviews/pytorch-sdpa-api-reference-2026-11.md`: focused review and implementation decision.
 
-The extraction separates five distinct API concerns:
+The extraction separates six distinct API concerns:
 1. reference operator and default scale;
 2. boolean mask polarity (`True` means participate, opposite to `MultiheadAttention.key_padding_mask`);
-3. caller-controlled dropout, including explicit zero during evaluation;
-4. automatic backend dispatch, eligibility constraints and floating-point output differences;
-5. version-specific experimental GQA support.
+3. causal-mask argument contract, including the `attn_mask` / `is_causal` exclusivity and non-square alignment;
+4. caller-controlled dropout, including explicit zero during evaluation;
+5. automatic backend dispatch, eligibility constraints and floating-point output differences;
+6. version-specific experimental GQA support.
 
-The review records a strict boundary: the API reference documents the function contract; it does not establish runtime backend selection, GPU speed, exact numerical parity or a general mathematical proof. The stable alias's redirect is a version/freshness risk and must be rechecked before version-sensitive Build guidance.
+The review records a strict boundary: the API reference documents the function contract; it does not establish runtime backend selection, GPU speed, exact numerical parity or a general mathematical proof. The stable alias's redirect is a version/freshness risk; the inspected PyTorch 2.15 page also labels the function beta and subject to change. Recheck before version-sensitive Build guidance.
 
 ### 7.4 Claim-to-evidence map
 
@@ -153,7 +154,7 @@ The review records a strict boundary: the API reference documents the function c
 - [x] Separate page-visible citations, construction sources, internal project artefacts and thematic associations.
 - [x] Record the visible bibliography's source-type, language and evidence-role profile.
 - [x] Register the PyTorch SDPA API and record the observed 2.15 documentation redirect.
-- [x] Create a source extraction for the PyTorch API's operator, mask, dropout, dispatch and GQA contract.
+- [x] Create a source extraction for the PyTorch API's operator, boolean and causal mask contracts, dropout, dispatch and GQA contract.
 - [x] Create a focused PyTorch API review and distinguish API evidence from mathematical and algorithmic primary sources.
 - [x] Add a claim-to-evidence map for the page's mathematical, masking, FlashAttention and API claims.
 - [ ] Review the 16 `related.pages` associations individually; correct only demonstrably stale or over-broad links.
