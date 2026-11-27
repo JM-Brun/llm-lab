@@ -68,7 +68,7 @@ See the [structured extraction](../../data/extractions/zsombor-veres-lakos-atten
 
 The article's teaching sequence can be reconstructed as:
 
-$
+$$
 X \xrightarrow{W_Q,W_K,W_V} Q,K,V
 \quad ; \quad
 S=10QK^\top
@@ -80,7 +80,7 @@ C=PV
 \Delta X=CW_O
 \quad ; \quad
 X_{new}=X+\Delta X.
-$
+$$
 
 This is an editorial reconstruction, not a graph supplied by the author. The example uses one head, three participants, four toy state coordinates and a manually selected scalar 10.
 
