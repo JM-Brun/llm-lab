@@ -112,7 +112,7 @@ Proximity under a specified model, vectors, normalization, and metric; not synon
 
 </details>
 
-## Inspect a tiny input embedding table
+## Inspect a tiny input embedding table {#inspect-input-embedding-table}
 
 This model-independent exercise uses a deliberately tiny NumPy matrix. It needs no tokenizer, checkpoint download or GPU. The helper functions operate on **input embedding rows**, not contextualized hidden states.
 
