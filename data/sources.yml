@@ -7874,7 +7874,7 @@ sources:
       concept_ids: [model-compression, pruning, inference-time-compute]
     metadata:
       technical_level: advanced
-      contribution_types: [architecture, method, mathematical-derivation, experiment, benchmark]
+      contribution_types: [architecture, mathematical-derivation, experiment, benchmark]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: reviewed
