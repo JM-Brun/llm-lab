@@ -4474,6 +4474,52 @@ sources:
         - docs/source-syntheses/fan-compression-intelligence-2026-11.md
         - data/extractions/fan-compression-intelligence-2026.yml
 
+  - id: aiedge-how-llms-encode-token-position-2026
+    title: "How LLMs Encode Token Position"
+    creators: ["Damien Benveniste"]
+    source_type: tutorial
+    identifiers: {substack_post_id: "225953856"}
+    aliases:
+      - "https://substack.com/inbox/post/225953856"
+    canonical_url: "https://newsletter.theaiedge.io/p/how-llms-encode-token-position"
+    publisher: "The AiEdge Newsletter"
+    publication_date: "2026-11-23"
+    updated_date: null
+    language: en
+    version: "Article published 23 November 2026; indexed text snapshot inspected 27 November 2026"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:learned-absolute-position, method:sinusoidal-position, method:rotary-position-embedding, method:alibi]
+      concept_ids: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, architecture, pedagogy]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    collections: [positional-encoding]
+    scan_history:
+      - accessed_at: "2026-11-27"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed search snapshot: title, author, publication date, introduction, stated four-method outline and explanation distinguishing positional rules from causal visibility"
+          - "Targeted indexed search excerpts on the article's framing of context extension and limits of positional information"
+          - "Compared the available claims with the full positional-encoding collection: Vaswani, Shaw, T5, ALiBi, RoFormer, Raschka, Khan and pedagogical/implementation references"
+          - "User confirmed the Substack inbox URL is the same post; recorded it as an alternate URL for this source identity"
+        limitations:
+          - "Direct article retrieval returned a cache miss; the complete article body, equations, figures, examples and conclusion were not available for inspection."
+          - "The extraction is restricted to the indexed text actually exposed; it is not a complete article reconstruction."
+          - "The user confirmed that the Substack inbox URL with post ID 225953856 is an alternate access URL for this same AiEdge article; it is recorded as an alias, not a second source."
+          - "No figure pixels, code, comments, linked primary papers or reuse permissions were inspected."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope, fr/causal-masking, en/causal-masking]
+      concepts: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+      audit_records: [docs/source-reviews/aiedge-positional-encoding-2026-11.md, data/extractions/aiedge-how-llms-encode-token-position-2026.yml]
+
   - id: sebastian-raschka-understanding-positional-embeddings-2026
     title: "Understanding Positional Embeddings in Modern LLMs"
     creators: ["Sebastian Raschka"]

@@ -2,7 +2,7 @@
 
 **Reviewed:** 2026-11-26  
 **Collection:** positional-encoding  
-**Status:** source corpus consolidated; core FR/EN lesson, synthesis and Practice companions updated; deep dives retained as the canonical destinations for derivations.
+**Status:** source corpus consolidated; core FR/EN lesson, synthesis and Practice companions updated; deep dives retained as the canonical destinations for derivations. AiEdge is recorded as a supplementary partial scan after meta-comparison; its two supplied URLs resolve to one source identity.
 
 ## 1. Editorial question
 
@@ -33,6 +33,8 @@ The collection deliberately distinguishes primary technical sources from pedagog
 | Raffel et al. (2020), [T5](https://arxiv.org/abs/1910.10683), §2.1 | Primary paper section defining the T5 positional mechanism | A learned scalar indexed by a logarithmically bucketed query–key offset is added to each pre-softmax attention logit; parameters are shared across layers and distinct per head | Primary source for bucketed relative score bias; the 32 buckets and 128-token cap are T5 configuration choices |
 | Press et al. (2022), [ALiBi](https://arxiv.org/abs/2108.12409) | Primary paper abstract and §§2–4 | A fixed, head-specific linear distance penalty is added to attention scores before softmax; no positional vector is added at the input | Primary source for ALiBi and its reported length-extrapolation experiments; results are protocol-specific |
 | Su et al. (2021), [RoFormer](https://arxiv.org/abs/2104.09864) | RoPE formulation, derivation and relevant experiments; see the existing source review | Position-dependent rotations of paired query/key coordinates produce a relative-offset contribution to their dot product | Primary source for the RoPE deep dive |
+| Damien Benveniste (2026), [How LLMs Encode Token Position](https://newsletter.theaiedge.io/p/how-llms-encode-token-position) | Indexed snapshot: title, author, date, introduction, four-method outline and causal-mask distinction; full article body unavailable | Clear four-way framing of learned absolute vectors, sinusoids, RoPE and ALiBi; explicitly separates positional information from causal visibility and cautions that position alone does not determine attention/retrieval | Independent introductory cross-check for the core comparison; no new concept or page justified by the available snapshot |
+| Damien Benveniste (2026), [How LLMs Encode Token Position](https://newsletter.theaiedge.io/p/how-llms-encode-token-position) (same post as [Substack inbox URL](https://substack.com/inbox/post/225953856)) | Indexed snapshot: title, author, subtitle, introduction, four-method outline and causal-visibility distinction; full body and figures unavailable | Short-form insertion-point framing from token indices to scores; explicit position-versus-mask contrast | Supplementary cross-check only; no new mechanism, page, concept, diagram or route justified by available evidence |
 | Sebastian Raschka (2026), [Understanding Positional Embeddings in Modern LLMs](https://magazine.sebastianraschka.com/p/understanding-positional-embeddings) | Full article text, equations, code snippets and 38 figure captions/context; linked Qwen3 notebook statically inspected | Modern architecture comparison: partial RoPE, NoPE, hybrid layers, relative bias, frequency configuration and implementation conventions | Cross-check and implementation comparison; figures were not individually inspected as image files and the notebook was not executed |
 | Khan et al. (2026), [Fractional Rotation, Full Potential?](https://arxiv.org/abs/2603.11611) | arXiv v2: abstract, setup, principal partial-RoPE analysis, conclusion and Appendix C | Experimental study of partial-RoPE fractions and the size of precomputed sine/cosine tables | Qualifies the partial-RoPE discussion; findings are bounded to the studied model sizes, data and training protocol |
 
@@ -43,6 +45,16 @@ The collection deliberately distinguishes primary technical sources from pedagog
 - The Jay Joshi scan remains partial because the live Medium page, original figure bytes and full code cells were unavailable.
 - Raschka's 38 figures received a caption-and-context audit, not a pixel-level inspection. The linked Qwen3 notebook was not executed.
 - No independent training run or long-context benchmark was performed by this source-ingestion pass.
+
+### 2.1 Supplementary short-form cross-check: AiEdge (2026)
+
+Damien Benveniste's *How LLMs Encode Token Position* is registered as one source. The AiEdge publication URL is canonical; the Substack inbox URL with post ID 225953856 is an alias for the same post, as confirmed by the user. It is not a second source record.
+
+The indexed snapshot exposes a framing from token indices to attention scores and names learned vectors, sinusoids, RoPE and ALiBi. It also distinguishes positional information from causal visibility. Direct full-text retrieval returned a cache miss, so this is a partial scan: no equations, full section sequence, examples, diagrams, code or outbound references were inspected.
+
+**Meta-review:** this is a useful compact orientation, but the collection already covers its visible contribution. Raschka offers a deeper explanatory and implementation progression, while Vaswani, Shaw, T5, Press/ALiBi and Su/RoFormer supply the primary technical foundations. The core bilingual lesson already has an insertion-point comparison diagram and an explicit mask-versus-position distinction. No new concept, page, route stage, computational node, diagram or exercise is justified.
+
+The accessible four-method outline is also narrower than the collection: it does not expose Shaw's relative key/value representations, T5's bucketed score bias, NoPE, partial RoPE or hybrid layers. Do not infer that the full article omits these topics until its body is inspected.
 
 ## 3. Cross-source synthesis
 
@@ -123,6 +135,7 @@ A separate relative-bias deep dive (Shaw → T5 → ALiBi) is a **future candida
 
 - Add the explicit source collection positional-encoding and assign membership only to sources reviewed for this topic.
 - Add primary source records for Shaw et al., Raffel et al. (T5) and Press et al. (ALiBi), with partial-scan status and bounded claims.
+- Retain the AiEdge short-form article as a supplementary partial scan, with its Substack inbox URL as an alias for the same source identity; no separate source or page is created.
 - Add structured source-local extractions for all three papers under data/extractions/ and link each extraction from its source-catalogue record.
 - Keep the existing Vaswani, Su, Jay Alammar, Harvard NLP, Stanford EE269, Jay Joshi, Raschka and Khan records; do not duplicate them.
 - Keep the canonical concept ID positional-encoding. No new concept, route stage, computation node or page is introduced.
@@ -139,3 +152,8 @@ A separate relative-bias deep dive (Shaw → T5 → ALiBi) is a **future candida
 6. Consider a separate Shaw/T5/ALiBi deep dive only after a concrete implementation or mathematical need is identified.
 
 No learner outcome, independent benchmark reproduction or long-context performance claim is made by this source compilation.
+
+### Additional source access note (2026-11-27)
+
+- Damien Benveniste's *How LLMs Encode Token Position* is registered and reviewed from the indexed snapshot available on 27 November 2026. Its contribution is complementary but does not justify a new canonical concept, page, computation node or learning-route stage. The complete article remains unverified because direct retrieval returned a cache miss.
+- The accompanying user-supplied URL https://substack.com/inbox/post/225953856 could not be resolved to a public article identity. It is intentionally not matched to another AiEdge post by author or topic. Ingestion of that third reference is pending its public post URL or title.

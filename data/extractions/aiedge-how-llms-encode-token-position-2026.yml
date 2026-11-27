@@ -1,0 +1,160 @@
+schema_version: 1
+source_id: aiedge-how-llms-encode-token-position-2026
+
+pedagogical_model:
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish learned absolute vectors, fixed sinusoidal encodings, RoPE and ALiBi by their stated computational insertion points.", basis: "The indexed article outline names these four mechanisms and frames the explanation from token indices to attention scores."}
+    - {status: inferred, outcome: "Explain why positional information and causal visibility are different mechanisms.", basis: "The indexed introduction explicitly distinguishes positional rules from causal access constraints."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Token embeddings and sequence indices.", basis: "The article's visible framing starts from token indices and positional representations."}
+    - {status: inferred, topic: "Basic self-attention, query/key vectors and attention scores.", basis: "The visible outline locates RoPE and ALiBi in the query-key and score computation."}
+  teaching_route:
+    - {order: 1, section: "Why token position is needed", function: "separate token identity from sequence index", moves: ["Introduce the need to identify where a token occurs", "Frame the explanation from token indices to attention scores"]}
+    - {order: 2, section: "Learned and sinusoidal vectors", function: "compare absolute input representations", moves: ["Locate learned position vectors at the input", "Locate fixed sinusoidal vectors at the input"]}
+    - {order: 3, section: "RoPE and ALiBi", function: "compare attention-level insertion points", moves: ["Locate RoPE on query/key vectors", "Locate ALiBi as a distance-dependent score term"]}
+    - {order: 4, section: "Position versus causal visibility", function: "separate positional signal from access constraint", moves: ["Distinguish positional rules from the causal mask", "Qualify the role of content and available positions"]}
+  pedagogical_strengths:
+    - "The visible framing compares mechanisms by where they enter the computation, which is an efficient organizing question for learners."
+    - "The indexed introduction explicitly distinguishes positional information from causal visibility."
+  pedagogical_limits:
+    - "The article body, diagrams, examples and complete section sequence could not be inspected; no claim is made about their actual explanatory quality."
+    - "The four-method overview is less comprehensive than the existing collection: the accessible outline does not cover Shaw-style relative key/value representations, T5's bucketed scalar bias, NoPE, partial RoPE or hybrid layers."
+    - "The same overview is already developed in greater technical and visual depth by the Raschka source and the primary-source extractions."
+  comparison:
+    dossier: docs/source-reviews/positional-encoding-source-synthesis-2026-11-26.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Keep as a supplementary, short-form cross-check in the source collection. Do not add a page, concept, computational node, route stage or new diagram. Reconsider only if full-text inspection reveals a distinct explanatory sequence or evidence not already covered."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
+  reconstruction:
+    status: partial
+    basis:
+      - "Indexed search snapshot inspected on 2026-11-27: article metadata, introductory framing, four-method outline and causal-mask distinction."
+      - "The source organizes the explanation by where positional information enters the computation."
+    inferred_elements:
+      - "The four-method comparison is reconstructed from the visible outline; the complete section sequence and examples are unavailable."
+    limitations:
+      - "Direct article retrieval returned a cache miss; this is not a full-text or figure-level audit."
+      - "The Substack inbox URL with post ID 225953856 is confirmed by the user to be an alternate URL for this same article; it is not a separate source."
+      - "No formal source-local graph or complete teaching route can be reconstructed from the available snapshot."
+  source_graph:
+    nodes:
+      - {id: src-token-identity, kind: representation, description: "Token identity alone does not specify the occurrence's position in a sequence.", locator: "Introduction"}
+      - {id: src-learned-absolute, kind: mechanism, description: "A learned vector is selected for each sequence slot and added to the token vector.", locator: "Introduction; four-method outline"}
+      - {id: src-sinusoidal, kind: mechanism, description: "A fixed sine/cosine vector is computed for each sequence position and added to the token vector.", locator: "Introduction; four-method outline"}
+      - {id: src-query-key, kind: representation, description: "Projected query and key vectors are compared to form attention scores.", locator: "Introduction; RoPE outline"}
+      - {id: src-rope, kind: mechanism, description: "Position-dependent rotations are applied to query and key vectors, making their dot product depend on relative position.", locator: "Introduction; four-method outline"}
+      - {id: src-alibi, kind: mechanism, description: "A distance-dependent penalty is subtracted from attention scores, with different strengths across heads.", locator: "Introduction; four-method outline"}
+      - {id: src-causal-visibility, kind: constraint, description: "A causal mask determines which positions a token may consult; it is distinct from an explicit positional rule.", locator: "Introduction"}
+      - {id: src-attention-score, kind: intermediate, description: "Content-derived query-key scores are modified by positional terms and visibility constraints.", locator: "Introduction"}
+      - {id: src-attention-weight, kind: result, description: "Softmax-normalized attention weights depend on the resulting scores and the available-token set.", locator: "Introduction"}
+    edges:
+      - {from: src-learned-absolute, type: adds-position-vector-to, to: src-token-identity}
+      - {from: src-sinusoidal, type: adds-position-vector-to, to: src-token-identity}
+      - {from: src-rope, type: applies-to, to: src-query-key}
+      - {from: src-query-key, type: contributes-to, to: src-attention-score}
+      - {from: src-alibi, type: modifies, to: src-attention-score}
+      - {from: src-causal-visibility, type: constrains, to: src-attention-score}
+      - {from: src-attention-score, type: normalized-into, to: src-attention-weight}
+    interpretation: "Compact reconstruction of the indexed introduction and outline only. It is not a complete graph authored by the source; detailed mathematical operations and exact score equations were not available for inspection."
+
+items:
+  - id: aiedge-how-llms-encode-token-position-2026:position-is-not-token-identity
+    kind: definition
+    summary: "A token ID identifies token content but does not by itself identify the occurrence's place in the sequence."
+    locator: {type: section, value: "Introduction"}
+    evidence:
+      kind: conceptual-framing
+      confidence: well-supported
+      scope: "The article's opening explanation of why positional information is needed."
+      assumptions: []
+      limitations: ["The full motivating examples and formal treatment were not available in the indexed snapshot."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:positional-information]
+      concept_ids: [positional-encoding]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding]
+    disposition: already-covered
+    disposition_rationale: "The existing bilingual core lesson already separates token content from position."
+
+  - id: aiedge-how-llms-encode-token-position-2026:four-insertion-families
+    kind: mechanism
+    summary: "The article groups positional methods into learned absolute vectors added to token vectors, fixed sinusoidal vectors added at input, RoPE rotations affecting query-key comparisons, and ALiBi distance penalties applied to attention scores."
+    locator: {type: section, value: "Introduction; four-method outline"}
+    evidence:
+      kind: indexed-method-outline
+      confidence: well-supported
+      scope: "The four families and their stated insertion points are explicit in the retrieved snapshot."
+      assumptions: []
+      limitations: ["Detailed equations, implementation variants and qualifications from the full sections were not inspected."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:learned-absolute-position, method:sinusoidal-position, method:rotary-position-embedding, method:alibi]
+      concept_ids: [positional-encoding, query, key, attention-score]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+    pedagogical_profile:
+      learner_question: "Where does each positional method enter the Transformer computation?"
+      explanatory_lens: computational
+      teaching_form: [mechanism-comparison]
+      abstraction_level: intermediate
+      prerequisites: [token embeddings, self-attention, query/key vectors, attention scores]
+      distinctive_value: "A concise insertion-point taxonomy suitable for a first comparison."
+      limitations: ["The available source snapshot does not support detailed derivations."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The four visible method families and their insertion points are already represented in the positional-encoding collection."}
+      complementarity: {level: moderate, rationale: "It offers an independent short-form framing from token indices to attention scores, but only the indexed outline is available for comparison."}
+      pedagogical_value: {level: moderate, rationale: "The insertion-point framing is useful for orientation; the actual exposition and visuals cannot be assessed without the full article."}
+      applicability: {level: low, rationale: "The bilingual core lesson already has a three-point insertion diagram and a broader comparison; no new project artifact is justified."}
+      redundancy: {level: high, rationale: "Raschka provides a more extensive comparison and the primary-source records establish each mechanism in greater depth."}
+      evidence_quality: {level: moderate, rationale: "The method families and stated framing are visible in indexed text, but equations, examples and full article context were inaccessible."}
+    disposition: already-covered
+    disposition_rationale: "Retain as a supplementary reference; do not reproduce the already-covered comparison in another lesson."
+
+  - id: aiedge-how-llms-encode-token-position-2026:mask-versus-position
+    kind: misconception
+    summary: "A causal mask controls which positions are accessible; a positional rule changes the positional information or score used among the accessible positions. They answer different questions."
+    locator: {type: section, value: "Introduction"}
+    evidence:
+      kind: explicit-conceptual-distinction
+      confidence: established
+      scope: "The article explicitly contrasts causal visibility with positional encoding."
+      assumptions: []
+      limitations: ["This is a conceptual distinction; implementation-specific interactions require the full mechanism."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:positional-information, topic:causal-masking]
+      concept_ids: [positional-encoding, causal-mask, self-attention]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/causal-masking, en/causal-masking]
+    pedagogical_profile:
+      learner_question: "Does the causal mask itself encode token distance?"
+      explanatory_lens: conceptual
+      teaching_form: [contrast, misconception-correction]
+      abstraction_level: introductory
+      prerequisites: [causal mask, positional encoding]
+      distinctive_value: "Prevents the causal visibility constraint from being conflated with an explicit position representation."
+      limitations: ["The article's full NoPE discussion was not available in this scan."]
+    disposition: already-covered
+    disposition_rationale: "The distinction is already explicit in the current synthesis and NoPE treatment."
+
+  - id: aiedge-how-llms-encode-token-position-2026:attention-not-distance-only
+    kind: limitation
+    summary: "A positional coordinate or distance penalty does not by itself determine the final attention weight or guarantee retrieval of a distant fact; content and the available-token set also matter."
+    locator: {type: section, value: "Introduction"}
+    evidence:
+      kind: explicit-qualification
+      confidence: well-supported
+      scope: "The opening passage qualifies the effect of positional rules on attention."
+      assumptions: []
+      limitations: ["No empirical retrieval experiment or quantitative evidence was inspected."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:positional-information, topic:self-attention]
+      concept_ids: [positional-encoding, attention-score, self-attention]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+    disposition: clarify
+    disposition_rationale: "Retain as a concise explanatory guardrail; do not infer a new retrieval concept or benchmark claim."
