@@ -426,8 +426,6 @@ website:
           contents:
             - text: "Panorama LLM"
               href: fr/llm-overview.qmd
-            - text: "Objectif d’entraînement : garanties et limites (facultatif)"
-              href: fr/llm-limits.qmd
             - text: "Pourquoi représenter le langage ?"
               href: fr/language-representation.qmd
             - text: "Texte et tokens"
@@ -472,6 +470,10 @@ website:
               href: fr/gradients.qmd
             - text: "Boucle d’entraînement"
               href: fr/training-loop.qmd
+        - section: "Compléments facultatifs"
+          contents:
+            - text: "Objectif d’entraînement : garanties et limites"
+              href: fr/llm-limits.qmd
         - section: "Réviser"
           contents:
             - fr/review-path.qmd
@@ -704,8 +706,6 @@ website:
           contents:
             - text: "LLM overview"
               href: en/llm-overview.qmd
-            - text: "Training objective: guarantees and limits (optional)"
-              href: en/llm-limits.qmd
             - text: "Why represent language?"
               href: en/language-representation.qmd
             - text: "Text and tokens"
@@ -750,6 +750,10 @@ website:
               href: en/gradients.qmd
             - text: "Training loop"
               href: en/training-loop.qmd
+        - section: "Optional perspectives"
+          contents:
+            - text: "Training objective: guarantees and limits"
+              href: en/llm-limits.qmd
         - section: "Review"
           contents:
             - en/review-path.qmd
