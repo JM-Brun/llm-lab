@@ -466,6 +466,7 @@ website:
           contents:
             - fr/review-path.qmd
             - fr/revision-llm-overview.qmd
+            - fr/revision-language-representation.qmd
             - fr/revision-text-data.qmd
             - fr/revision-embedding-space.qmd
             - fr/revision-positional-encoding.qmd
@@ -734,6 +735,7 @@ website:
           contents:
             - en/review-path.qmd
             - en/revision-llm-overview.qmd
+            - en/revision-language-representation.qmd
             - en/revision-text-data.qmd
             - en/revision-embedding-space.qmd
             - en/revision-positional-encoding.qmd
