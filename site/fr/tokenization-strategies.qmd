@@ -247,7 +247,7 @@ Un exemple de normalisation Unicode est traité dans [la page d'introduction](te
 
 | Entrée | Question à poser | Risque naïf |
 |---|---|---|
-| `Hello world` puis ` Hello world` | Un espace initial change-t-il la segmentation ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
+| `situation` puis ` situation` | L'espace initial change-t-il la segmentation du mot du fil rouge ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
 | `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |
 | `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
 | `café` et `cafe\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
@@ -283,11 +283,11 @@ La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparati
 :::
 
 
-<!-- Ancien ancrage : la comparaison contrôlée 2 + 2 = 4 est désormais dans la leçon Understand. -->
+<!-- Ancien ancrage : la comparaison canonique des tokenizers est dans la leçon Understand. -->
 <span id="comparaison-de-deux-tokenizers"></span>
 
 ::: {.callout-note title="Comparaison de référence"}
-Le contraste contrôlé sur le texte fixe 2 + 2 = 4, avec les fragments, les IDs et le décodage, est présenté dans [Du texte aux tokens](text-data.qmd#comparaison-de-deux-tokenizers). Cette page approfondit les mécanismes qui expliquent pourquoi les frontières et les longueurs peuvent différer.
+La comparaison des tokenizers sur le préfixe localisé du fil rouge, avec les fragments, les IDs et le décodage, est présentée dans [Du texte aux tokens](text-data.qmd#comparaison-de-deux-tokenizers). Cette page approfondit les mécanismes qui expliquent pourquoi les frontières et les longueurs peuvent différer.
 :::
 
 ## 6. Contre-exemples
