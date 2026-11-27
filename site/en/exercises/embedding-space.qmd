@@ -60,6 +60,19 @@ Both architectures share the token embedding table. They therefore read the same
 
 </details>
 
+4. Renumber the IDs in sequence \([17,42,8,17]\) as \([2,0,1,2]\). The new table \(E'\) moves rows so that \(E'_{2,:}=E_{17,:}\), \(E'_{0,:}=E_{42,:}\), and \(E'_{1,:}=E_{8,:}\). Does lookup produce the same vectors? What happens if the IDs are renumbered without moving the rows?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Yes. Lookup returns the same vector sequence: \(E'_{2,:},E'_{0,:},E'_{1,:},E'_{2,:}\) correspond respectively to \(E_{17,:},E_{42,:},E_{8,:},E_{17,:}\). Only the numerical names of the addresses have changed. If the IDs are renumbered without moving the rows, lookup generally retrieves different vectors.
+
+This invariance applies only to the input table. To preserve a complete model's behaviour, all other vocabulary-indexed parameters must also be permuted consistently, including the output projection.
+
+**Success criterion:** explain why the numerical values of IDs are arbitrary while the ID-to-row mapping must remain consistent.
+
+</details>
+
 ## Recall cards
 
 Try to answer before opening each card. These cards rehearse the key distinctions; the exercises and experiment below ask you to apply them.
