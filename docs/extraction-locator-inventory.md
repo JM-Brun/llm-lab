@@ -160,3 +160,43 @@ A new full-corpus run is requested through the existing opt-in CI job. The run m
 - exact commit SHA, workflow run/attempt, command, timestamp, runtime and platform metadata.
 
 Do not turn this observational inventory into a new hard validation gate. Do not infer locator resolution, source inspection, claim support or scientific validity from the presence of a locator. The 2026-11-19 report remains historical until the new artifact is inspected.
+
+
+### Verified current snapshot — 2026-11-27
+
+The opt-in inventory completed successfully on commit `d9281aae7ebe5ad86cf97f10d2038d3f1e15de6a`, Actions run [`46071071663`](https://github.com/JM-Brun/llm-lab/actions/runs/46071071663), attempt 1. The raw artifact is `extraction-locator-inventory-d9281aae7ebe5ad86cf97f10d2038d3f1e15de6a` (90-day retention; archive SHA-256 `5b17fad9f0d3ca801d0e80289ba5556f30c6cbd33c21bbfb0f4adc977f491503`). The run took 3 seconds on Linux x64, CPython 3.12.16, PyYAML 6.0.3 and uv 0.13.7.
+
+**Corrected corpus grain:** `data/extractions/` contains 136 `.yml` extraction records plus `README.md` (137 directory entries), not 137 extraction YAML files.
+
+| Measure | Current value | Interpretation |
+|---|---:|---|
+| Source records | 177 | Canonical source catalogue records |
+| Extraction files | 136 | One extraction record per file |
+| Extraction items | 639 | All have mapping-shaped locators |
+| Sources without extraction | 41 | Review/disposition queue, not automatically an error |
+| Integrated sources without extraction | 18 | Must retain an explicit audit rationale; do not create empty extraction files |
+| Sources without extraction with audit record | 41 | All 41 are represented in the source-coverage audit |
+| Sources without extraction without audit record | 0 | No uncovered filename gap in this snapshot |
+| Unknown extraction source IDs / filename mismatches | 0 / 0 | All extraction identities resolve structurally |
+| Malformed records or items | 0 | Source-coverage validator passed |
+
+**Locator-shape inventory:** 639 items; 0 without locators, scalar locators, unsupported locator shapes, malformed extraction records, missing required locator fields or YAML/record errors. The corpus has 17 observed locator types. Counts include `section` 540, `page` 28, `chapter` 11, `page-section` 8, `heading` 7, `figure` 6, `file` 5, `paragraph` 4, `article` 3, `comment` 3, `abstract` 2, `code` 2, `table` 2, `timestamp` 14, and the single-count types `code-symbol` and `external-code` (the complete exact distribution is in the artifact).
+
+The dominant `section` type is semantically heterogeneous: 454 opaque text values, 45 section-like values, 25 line-reference-like values and 16 page-number-like values. The `page` type also mixes 18 HTTP URLs and 10 page-number-like values. This is the highest-value next semantic review; it is **not** a structural failure and does not justify a type-specific validator yet. Locator mappings contain `label,type,value` in 531 cases and `type,value` in 108 cases; `label` remains optional.
+
+**Destination and field inventory:**
+- `candidate_destinations.pages`: 521 records, 1,114 references, 104 unique page IDs, 0 invalid entries.
+- `candidate_destinations.concepts`: 451 records, 505 references, 79 unique concept IDs, 0 invalid entries.
+- `classification.concept_ids`: 475 records, 924 references, 94 unique concept IDs, 0 invalid entries.
+- `source.related.pages`: 177 records, 750 references, 114 unique page IDs, 0 invalid entries.
+- `source.related.concepts`: 176 records, 688 references; no unknown concept references.
+- `mapped_concepts`: 46 records, 118 references, 26 unique values.
+- `target_resources`: 46 records, 126 references, 26 unique values.
+- Source-local pedagogical models contain 372 teaching-route steps; these are source-local reconstructions, not canonical learning-route memberships.
+- `candidate_destinations.route_ids` is present in 198 mappings but contributes zero references. Treat this as an observed empty field, not a defect, until its intended contract is decided.
+
+The destination inventory reports field presence, not field requiredness. For example, `classification`, `disposition_rationale`, `technical_assessment`, `pedagogical_assessment`, `mapped_concepts` and `target_resources` are not present on every item. Do not call these missing-data defects without checking item-kind and schema-version contracts. Likewise, `candidate_destinations` are editorial proposals, `mapped_concepts` and `target_resources` are legacy/authoring fields, and source-local teaching routes are not canonical route declarations.
+
+The same CI run validated **6 domains, 125 concepts and 147 relations**. This establishes structural/reference integrity under current validators, not external locator resolution, source inspection completeness, claim support, scientific correctness or independent corroboration.
+
+**Next actions:** review the 41 no-extraction audit decisions (especially the 18 integrated sources); inspect the semantic use of `section` and `page` before defining any grammar; keep the observed empty `route_ids` field report-only; do not add empty extraction files or promote locator presence into evidence of source inspection.
