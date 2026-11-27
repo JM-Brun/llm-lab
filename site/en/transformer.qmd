@@ -99,6 +99,8 @@ The stack consists of blocks of the same general type, repeated in depth. Each b
 
 Each sublayer is integrated into the **residual stream**: its correction is added to the flowing representation, and normalization accompanies the transformations. The exact order varies across architectures (pre-LN, post-LN, RMSNorm, and others). This lesson introduces their role; the [deep dive on contextualized representations](contextualized-representations-advanced.qmd) explains the sublayers, residual connections, and normalization in detail. The [block walkthrough](transformer-block-walkthrough.qmd), by contrast, focuses on the Python implementation.
 
+<span id="transformer-training-generation"></span>
+
 ### Parallel training, sequential generation
 
 During training, the tokens in a sequence are known: the network can compute representations for multiple positions in parallel, while the causal mask prevents each position from using future tokens. This removes the position-by-position recurrent dependency found in RNNs.
@@ -115,6 +117,8 @@ During generation, the next token depends on tokens already produced, so decodin
 
 These two dimensions describe the overall structure but are not sufficient to predict performance. Internal dimensions \(d_{\mathrm{head}}\) and \(d_{\mathrm{ff}}\), tensor shapes, and GPT-2 reference values are gathered in the [Tensors](tensors.qmd) page; the [GPT configuration walkthrough](gpt-config-walkthrough.qmd) shows how they are used in the project's model.
 
+<span id="transformer-three-levels"></span>
+
 ### Three levels that should not be conflated
 
 1. **The attention sublayer** exchanges information across permitted positions.
@@ -122,6 +126,8 @@ These two dimensions describe the overall structure but are not sufficient to pr
 3. **The complete GPT** assembles input representations, a stack of blocks, then a final normalization and output head.
 
 Attention is part of a block; the block is the repeated unit; the Transformer alone is not the complete GPT.
+
+<span id="transformer-to-logits"></span>
 
 ## 3. From representations to logits
 
