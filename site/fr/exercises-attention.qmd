@@ -47,7 +47,7 @@ $$
 4. Calculez la combinaison pondérée des valeurs.
 5. Expliquez pourquoi les poids ne mesurent pas une pertinence sémantique absolue.
 
-[Revoir le calcul des scores, des poids et de la sortie](scaled-dot-product-attention.qmd#calcul-en-cinq-étapes).
+[Revoir le calcul des scores, des poids et de la sortie](scaled-dot-product-attention.qmd#calcul-en-cinq-etapes).
 
 <details>
 <summary>Afficher le corrigé raisonné</summary>
