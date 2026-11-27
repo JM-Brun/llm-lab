@@ -9,9 +9,9 @@
 
 ## 1. Audit status and evidence boundary
 
-This is a **recognition and source-to-code contract audit**, not yet a completed six-source ingestion. The two language pages and implementation/test files were inspected directly in the repository. The six missing research references were checked against publisher/arXiv landing pages and available paper excerpts to establish bibliographic identity and broad contribution. Their complete focused reviews, atomic extractions, stable source IDs and source-page relations remain to be done.
+This dossier began as a recognition and source-to-code contract audit. **Phase A ingestion and relation reconciliation are now complete** in merged PR #1777: six canonical source records, six bounded extraction files and eight direct bibliography relations are present. The six source-specific reviews are added in the current follow-up branch. All six sources remain `partially-scanned`; this work does not claim full-paper, supplementary-material, code, dataset or figure-rights audits.
 
-Do not promote any missing source to scanned or partially-scanned merely because an abstract or search excerpt was read. The two existing source records (Vaswani and Raschka) must be reused, not duplicated.
+Do not promote these sources beyond `partially-scanned`: only the page-relevant sections listed in the canonical records and source reviews were inspected. The two existing source records (Vaswani and Raschka) must be reused, not duplicated.
 
 ## 2. Learner contract and implementation boundary
 
@@ -51,13 +51,13 @@ Both FR and EN pages expose the same eight external references in the same order
 
 | Source | Role in the page | Canonical provenance status |
 |---|---|---|
-| Xiong et al. (2020), On Layer Normalization in the Transformer Architecture | Pre-LN/Post-LN placement; initialization-time gradient analysis and warm-up implications | Missing from data/sources.yml |
+| Xiong et al. (2020), On Layer Normalization in the Transformer Architecture | Pre-LN/Post-LN placement; initialization-time gradient analysis and warm-up implications | [`xiong-et-al-layer-normalization-transformer-2020`](../source-reviews/xiong-et-al-layer-normalization-transformer-2020.md) |
 | Vaswani et al. (2017), Attention Is All You Need | Original multi-head attention and Transformer architecture | Existing canonical record; reuse |
-| Shazeer (2019), Fast Transformer Decoding: One Write-Head is All You Need | MQA: shared K/V heads and incremental-decoding bandwidth motivation | Missing |
-| Ainslie et al. (2023), GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints | GQA and uptraining from MHA checkpoints | Missing |
-| DeepSeek-AI et al. (2024), DeepSeek-V2 | MLA: low-rank joint K/V compression into a cached latent | Missing |
-| Jiang et al. (2023), Mistral 7B | Model case combining GQA and sliding-window attention | Missing |
-| Beltagy et al. (2020), Longformer: The Long-Document Transformer | Local/windowed plus task-motivated global attention | Missing |
+| Shazeer (2019), Fast Transformer Decoding: One Write-Head is All You Need | MQA: shared K/V heads and incremental-decoding bandwidth motivation | [`shazeer-fast-transformer-decoding-mqa-2019`](../source-reviews/shazeer-fast-transformer-decoding-mqa-2019.md) |
+| Ainslie et al. (2023), GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints | GQA and uptraining from MHA checkpoints | [`ainslie-et-al-gqa-2023`](../source-reviews/ainslie-et-al-gqa-2023.md) |
+| DeepSeek-AI et al. (2024), DeepSeek-V2 | MLA: low-rank joint K/V compression into a cached latent | [`deepseek-ai-deepseek-v2-2024`](../source-reviews/deepseek-ai-deepseek-v2-2024.md) |
+| Jiang et al. (2023), Mistral 7B | Model case combining GQA and sliding-window attention | [`jiang-et-al-mistral-7b-2023`](../source-reviews/jiang-et-al-mistral-7b-2023.md) |
+| Beltagy et al. (2020), Longformer: The Long-Document Transformer | Local/windowed plus task-motivated global attention | [`beltagy-et-al-longformer-2020`](../source-reviews/beltagy-et-al-longformer-2020.md) |
 | Sebastian Raschka, A Visual Guide to Attention Variants in Modern LLMs | Secondary pedagogical/visual comparison | Existing canonical record; reuse |
 
 Internal links to implementation, primitive, tests, project status and roadmap are internal implementation evidence, not external sources.
@@ -145,7 +145,7 @@ The page now has canonical records and bounded extractions for all eight visible
 
 The main intellectual risk is collapsing four orthogonal design axes—normalization placement, K/V-head sharing, latent KV compression and position sparsity—into one list of competing attention variants. Teach these axes separately and use Mistral as an example of combination, not interchangeability.
 
-**Status:** recognition/source-to-code audit documented; six-source ingestion, relation reconciliation and final validation remain open. No claim is made that the six papers have been fully inspected or that the public page has changed.
+**Status after Phase A:** six-source registration, bounded extraction, direct relation reconciliation and six source-specific reviews are complete. Remaining work is schema/test validation, bilingual render inspection and any justified source-review refinements. All six sources remain `partially-scanned`; no claim is made that the full papers, supplements, code, datasets or figures have been completely audited.
 
 
 ## 10. Phase A ingestion and relation reconciliation — 2026-11-27
@@ -195,3 +195,17 @@ Reviewed against main commit `edaef38438baeac46cb807a926fcdda8512da1b2`. These t
 ### Remaining validation gates
 
 Source records and extraction files are ready for the source-catalogue validator and focused/full test runs in the PR. Rendered-page inspection, manual figure review, accessibility and learner transfer remain separate gates. The page has no interactive attention diagram requiring a new keyboard interaction contract; do not create one just to satisfy this audit.
+
+
+## 11. Source-specific review records — 2026-11-27
+
+The six source-specific technical/pedagogical reviews now live under `docs/source-reviews/`:
+
+- [Xiong et al. (2020)](../source-reviews/xiong-et-al-layer-normalization-transformer-2020.md)
+- [Shazeer (2019)](../source-reviews/shazeer-fast-transformer-decoding-mqa-2019.md)
+- [Ainslie et al. (2023)](../source-reviews/ainslie-et-al-gqa-2023.md)
+- [DeepSeek-V2 (2024)](../source-reviews/deepseek-ai-deepseek-v2-2024.md)
+- [Mistral 7B (2023)](../source-reviews/jiang-et-al-mistral-7b-2023.md)
+- [Longformer (2020)](../source-reviews/beltagy-et-al-longformer-2020.md)
+
+Each review links to its structured extraction and the shared topic dossier. It records the inspected scope, uninspected components, source-local mechanism reconstruction, bounded comparison with the implementation, rights limitations and next actions. The dossier remains the cross-source synthesis; the six reviews are not pairwise comparison documents.
