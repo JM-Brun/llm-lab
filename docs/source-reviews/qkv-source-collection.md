@@ -256,6 +256,8 @@ The Hugging Face KV-cache documentation belongs primarily to the generation/infe
 
 The catalogue's `related.pages` field is a topic/page association, not a typed claim that the source was cited, inspected for this page, used during construction or recommended to the learner. The audit must preserve this distinction rather than infer use from association.
 
+**Collection contract (resolved 2026-11-27):** `qkv-attention` identifies the curated source set selected to construct or technically ground the Q/K/V lesson; it is not a synonym for every resource whose `related.pages` happens to mention Q/K/V. Membership includes the four bounded pedagogical comparison resources (Nishanthan, Neha, Codefinity, Brenndoerfer), the later cited pedagogical source Jose Parreño Garcia, and the primary technical anchor Vaswani et al. The four-source comparison matrix remains intentionally bounded to its original four pedagogical resources. The broader collection and the comparison subset therefore have different, explicit scopes. The KV-cache documentation and general attention/visualization resources remain related or adjacent resources unless they are deliberately selected for a Q/K/V claim or construction decision.
+
 ### 12.2 Sources compared for construction
 
 | Source | Type / origin | Language | Recorded level | Distinct function | Scan / integration |
@@ -335,8 +337,37 @@ The page's stated purpose is to explain why the attention sublayer projects its 
 - [x] Identify Vaswani as the primary source and preserve the focused/partial scan boundary.
 - [x] Record that `related.pages` does not establish source usage or claim support.
 - [x] Verify Vaswani §3.2.2 for the learned projection claim and §3.2.3 for the shared source in self-attention; update the existing review, extraction and source scan history with exact locators.
-- [ ] Decide and document the intended scope of the qkv-attention collection before changing source memberships.
+- [x] Define `qkv-attention` as the curated set selected for Q/K/V construction or claim grounding; add the cited Jose and Vaswani sources while keeping the four-resource comparison subset bounded.
 - [x] Explicitly bound the historical comparison to its four-resource pedagogical subset; Jose and Vaswani remain separately characterized in the page-level audit.
-- [ ] Re-run the page citation/FR-EN parity check after the dossier update.
+- [x] Re-run the page citation/FR-EN parity check after the dossier update; the four external URLs match in the same order.
 
 **Pilot conclusion:** the Q/K/V corpus is not merely homogeneous: its four-source construction set has useful pedagogical diversity, while its page-visible references include both a primary paper and a later complementary blog. The main weakness is not a shortage of resources but a stale boundary between the historical comparison matrix, the live page citations and the source catalogue's topical associations. Fix provenance and claim mapping before expanding the source set.
+
+
+### 12.8 Claim-to-source traceability (page-level, not a bibliography count)
+
+The table below maps the important claim families in the Q/K/V lesson to the source roles that can actually support them. “Pedagogical explanation” is not treated as primary technical proof, and repeated explanations are not counted as independent corroboration.
+
+| Claim / learner question | Pedagogical or explanatory sources | Technical / primary support | What the evidence does not establish |
+|---|---|---|---|
+| Why context is needed; why a token's interpretation can depend on other positions | Neha KK (coreference illustration); Jose Parreño Garcia (cake/it motivation); Nishanthan K (bank/pronoun examples) | The Transformer attention formulation provides the contextual interaction mechanism, but these examples are teaching motivations | No example proves that a trained individual head reliably resolves coreference or word-sense ambiguity |
+| Functional distinction between Q, K and V | Nishanthan, Neha, Codefinity, Brenndoerfer, Jose | Vaswani et al. §§3.2.1–3.2.2 defines the attention operation and the learned projections used by heads | The analogies do not make Q/K/V human-readable labels or discrete database fields |
+| Why separate learned projections are used | Neha's matching-versus-payload rationale; Jose's recommendation analogy; Brenndoerfer's mathematical/implementation explanation | Vaswani et al. §3.2.2 specifies distinct learned per-head projections; §3.2.3 distinguishes self-attention's shared previous-layer source from encoder–decoder attention's separate streams | The primary paper supports the architecture, not every explanatory analogy or a universal design claim across all modern variants |
+| Same input stream in self-attention; cross-attention contrast | Jose and the canonical page provide explanatory framing | Vaswani et al. §3.2.3 explicitly identifies the common previous-layer source for Q/K/V in self-attention and the decoder-query / encoder-memory K/V split in encoder–decoder attention | Do not generalize the original paper's exact data flow to every architecture without checking its block design |
+| Projection dimensions and output shapes | Brenndoerfer offers an implementation-oriented walkthrough; the canonical page derives the project's row-major shapes | Vaswani §3.2.2 gives per-head projection dimensions; the page specializes this to its compact single-head notation | The paper's multi-head notation is not a verbatim source for the page's compact (Q=XW_Q), (K=XW_K), (V=XW_V) equations |
+| QK compatibility scores, scaling, softmax and weighted V aggregation | Nishanthan, Neha, Codefinity, Brenndoerfer and Jose offer explanatory sequences | Vaswani §3.2.1, Equation (1), is the primary mathematical definition; the dedicated scaled-dot-product-attention lesson owns the full derivation | These operations are deliberately handed off from the Q/K/V lesson; their full mathematical derivation should not be duplicated here |
+| How projection parameters are learned and how gradients flow | Nishanthan mentions gradient-based adjustment; the canonical advanced Q/K/V deep dive owns the detailed explanation | The primary attention paper defines the architecture, not a complete backpropagation derivation for this page's pedagogical question | Do not use a general architecture citation as evidence for the page's detailed gradient-path explanation; use the dedicated training/gradient source chain |
+| Whether learned heads encode interpretable semantic relations | No inspected pedagogical source provides an empirical head-level experiment | No primary evidence in this Q/K/V source set establishes reliable semantic or causal interpretation of individual heads | Explicitly unsupported; retain the page's epistemic caveat |
+
+**Evidence-family interpretation:**
+- Vaswani is one primary research source, not multiple independent sources because it has several sections or extraction items.
+- The five pedagogical explanations are secondary resources with unknown intellectual independence. Their convergence is useful for teaching synthesis, not independent scientific corroboration.
+- Jose's extraction contains claims about scaling, softmax and weighted aggregation, but those claims are not additional primary evidence; where needed, use Vaswani and the dedicated mathematical lesson.
+- The page's equations and explanations are project-authored synthesis. A page citation is not automatically a claim-level citation for every sentence in its section.
+
+### 12.9 Collection membership and bilingual parity closure
+
+- `qkv-attention` now contains the four pedagogical comparison resources plus Jose Parreño Garcia and Vaswani et al., because all six were deliberately selected for the Q/K/V page's construction or technical grounding.
+- The four-source pedagogical matrix remains unchanged in scope; it is not expanded with a primary paper or a later page-cited blog because its comparison question is specifically the original four pedagogical resources.
+- The current Q/K/V FR and EN pages were rechecked after the dossier and registry changes. Each contains the same four external URLs, in the same order: Neha KK, Jose Parreño Garcia, Vaswani et al., and Nishanthan K.
+- No public page edit is required. This audit changes source provenance and traceability, not the learner-facing content.
