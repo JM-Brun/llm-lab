@@ -95,19 +95,6 @@ A green CI is necessary for the repository changes, but it does not demonstrate 
 Start with PR #1713 and its latest checks. Do not repeat source ingestion or rebuild the tokenization hub. After merge, continue with the P1 learner pilot and the targeted provenance/concept audit under #1319. Treat the broader corpus backlog as separate from closing the lesson PR.
 
 
-## 8. Follow-up — running example as the tokenization input (2026-11-27)
-
-The tokenization lesson and its bilingual practical trace now use the localized running-example prefix as their primary input:
-
-- French: `C'est une bonne situation, ça, scribe ?` (GPT-2: 15 tokens; final token `b" ?"`, ID `5633`).
-- English: `What have the Romans ever done for us?` (GPT-2: 9 tokens; final token `b"?"`, ID `30`).
-
-The trace displays the full ordered token-byte fragments and IDs, so the learner can inspect how words such as `situation`, `scribe` or `Romans` are actually segmented. It compares GPT-2 and `cl100k_base` on the exact same local prefix, then uses the GPT-2 IDs to index a synthetic embedding table. The vectors remain explicitly illustrative; no pretrained GPT-2 weights are claimed.
-
-The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context.
-
-This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy exercises where they serve a distinct comparison purpose.
-
 ## 7. Reconciliation with issue #1492
 
 The following checks were made against the issue's detailed acceptance list:
@@ -129,3 +116,17 @@ The following checks were made against the issue's detailed acceptance list:
 - [ ] Preserve the external source-comparison decisions in the existing audit trail (#756) where they are not already recorded.
 
 Issue #1492 remains the canonical tracker for these broader lesson-level and shared-navigation tasks. This follow-up does not close them by implication.
+
+## 8. Follow-up — running example as the tokenization input (2026-11-27)
+
+The tokenization lesson and its bilingual practical trace now use the localized running-example prefix as their primary input:
+
+- French: `C'est une bonne situation, ça, scribe ?` (GPT-2: 15 tokens; final token `b" ?"`, ID `5633`).
+- English: `What have the Romans ever done for us?` (GPT-2: 9 tokens; final token `b"?"`, ID `30`).
+
+The trace displays the full ordered token-byte fragments and IDs, so the learner can inspect how words such as `situation`, `scribe` or `Romans` are actually segmented. It compares GPT-2 and `cl100k_base` on the exact same local prefix, then uses the GPT-2 IDs to index a synthetic embedding table. The vectors remain explicitly illustrative; no pretrained GPT-2 weights are claimed.
+
+The Hugging Face tokenizer probe also uses the local running-example prefix. The continuation is kept separate from the prompt: it is tokenized only when generated and appended to the context.
+
+This change removes the disconnected `hello world` and `2 + 2 = 4` examples from the main tokenization explanation and its primary trace. It does not remove specialist examples from the dedicated tokenizer-strategy exercises where they serve a distinct comparison purpose.
+
