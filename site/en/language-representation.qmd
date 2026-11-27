@@ -19,6 +19,11 @@ hierarchy:
   parents: []
   children: []
 related: ["en/text-data", "en/embedding-space", "en/contextualized-representations"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes the role of an ID, a learned vector, and a contextualized state, and recalls why the network needs numerical objects."
 tags:
   - "type:concept-lesson"
   - "destination:understand"
@@ -126,6 +131,10 @@ Do not confuse these three objects:
 | Token ID | Identifies a vocabulary entry |
 | Initial embedding | Learned vector selected by that ID |
 | Contextualized representation | State computed by the network for that occurrence in context |
+
+::: {.callout-tip title="Key idea" #revision-summary}
+A **token ID** is an address in the vocabulary, not a measure of meaning. **Lookup** selects a learned vector the network can compute with. Model layers then transform these vectors into context-dependent states.
+:::
 
 ## 6. Where the learning path goes next
 
