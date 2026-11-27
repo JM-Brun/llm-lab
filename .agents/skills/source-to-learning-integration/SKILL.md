@@ -24,7 +24,7 @@ For cross-cutting requests that combine source intake, new knowledge, page creat
 
 Use this skill to orchestrate both. Run extraction first unless a complete, trustworthy record already exists. Run integration only against persistent, reviewable records. Do not repeat scans unnecessarily.
 
-Apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
+Follow the normative [source-to-learning system integration workflow](../../../docs/workflows/source-to-learning-system-integration.md) for the two-phase procedure, and apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
 
 ## Project-level audit routing
 
