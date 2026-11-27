@@ -77,7 +77,7 @@ For each input, test the associated question and record the risk of a naive inte
 | `situation` and ` situation` | Does a leading space change segmentation of a running-example word? | Space handling may be part of pre-tokenization or token spelling |
 | `ChatGPT`, `chatgpt`, `CHATGPT` | Is casing normalized or preserved? | Case handling depends on tokenizer configuration |
 | `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
-| `café` and `cafe\\u0301` | Which Unicode normalization is applied? | Same appearance, different code-point sequences |
+| `café` and `cafe\u0301` | Which Unicode normalization is applied? | Same appearance, different code-point sequences |
 | `2026-10-29`, `123456789` | How are digits and separators split? | One token need not be a whole number |
 | `你好` | Does the system depend on spaces between words? | Whitespace splitting may yield no useful boundaries |
 | `def predict_next(x): return x + 1` | How are whitespace, identifiers, and operators handled? | Segmentation can look arbitrary |
