@@ -55,6 +55,19 @@ Apply the following tests consistently:
 6. **Preserve causal continuity:** split only at a genuine change of objective or abstraction level, not to satisfy a duration target.
 7. **Use metadata consistently:** `destination` describes the learning destination; `level` describes depth; `type` describes the page artifact. Do not use one field as a substitute for another.
 
+## 7. First structural inventory of the 40-page core route
+
+The route definition in `data/guided-route.yml` identifies **40 core page instances: 20 French and 20 English**. A first structural pass fetched those pages and inspected their metadata tags, headings, fenced blocks, callouts and links to dedicated exercises.
+
+The first finding is methodological: **a raw code-block count is not a reliable Understand/Build classifier**.
+
+- The Cross-entropy lesson groups its NumPy and PyTorch code examples inside a collapsed implementation callout.
+- The Training-loop lesson keeps its executable micro-code inside a collapsed optional callout.
+- The Generation lesson contains a fenced HTML visualization, not a Python implementation.
+- The ICL lesson uses fenced prompt examples and Mermaid content; these are not implementation code.
+
+These examples do not currently justify moving the lessons out of Understand. Their implementation content is explicitly optional and separated from the main conceptual explanation. The inventory is structural only; it does not replace the page-by-page pedagogical review of all 40 pages.
+
 ## 6. Remaining work
 
 - Run the same boundary audit over the complete set of 40 core pages.
