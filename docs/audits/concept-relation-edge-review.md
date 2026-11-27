@@ -330,3 +330,77 @@ The previous bilingual description of `approximates` referred only to a computab
 The two edges are not `prerequisite` relations and must not influence the guided route. The FR/EN lesson pair and the two exercise pages remain the explanatory resources; no duplicate concept or page relation is introduced.
 
 **Updated inventory:** 122 current edges, all source-semantically reviewed. The remaining gates are rendered graph inspection, touch/keyboard/screen-reader validation, and an independent learner task; this source audit does not close them.
+
+
+## 2026-11-27 tokenizer / text-encoding delta review
+
+The exact-ID reconciliation in [#416](https://github.com/JM-Brun/llm-lab/issues/416) identified 25 current assertions not covered by the earlier semantic audit. I reviewed this bounded set against the current bilingual endpoint definitions and the canonical relation-type contract in `data/concepts.yml`. The 122 previously covered assertions were not re-reviewed.
+
+| Current assertion | Decision | Scope and rationale |
+|---|---|---|
+| `tokenizer → applies-to → tokenization` | Accept | The tokenizer is the mechanism applied to text-tokenization. This does not imply that every tokenizer uses the same pipeline or segmentation algorithm. |
+| `tokenizer-pipeline → part-of → tokenizer` | Accept | The configurable pipeline is a component of the tokenizer system. |
+| `text-normalization → part-of → tokenizer-pipeline` | Accept | Normalization is an optional/configuration-dependent pipeline stage, not a universal operation. |
+| `pre-tokenization → part-of → tokenizer-pipeline` | Accept | Pre-tokenization is a pipeline stage whose presence and behavior depend on the tokenizer configuration. |
+| `subword-tokenization → part-of → tokenization` | Accept, scoped | This expresses family membership: subword tokenization is one family of tokenization methods, not a mandatory sequential stage after tokenization. |
+| `byte-pair-encoding → part-of → subword-tokenization` | Accept, scoped | BPE is one method in the subword-tokenization family; this is a family-membership relation, not a claim that all subword tokenizers use BPE. |
+| `wordpiece → part-of → subword-tokenization` | Accept, scoped | WordPiece is a distinct method in the subword-tokenization family, not a component used by BPE. |
+| `unigram-tokenization → part-of → subword-tokenization` | Accept, scoped | Unigram is a distinct probabilistic method in the family, not a stage that follows BPE or WordPiece. |
+| `token-vocabulary → part-of → tokenizer` | Accept | The vocabulary is a structural component of a tokenizer and associates recognized units with IDs. |
+| `token-vocabulary → produces → token-id` | Accept, scoped | The vocabulary provides the token-to-ID association used by lookup. This is not a claim that the vocabulary alone tokenizes text or emits a complete ID sequence; that sequence is produced by token encoding. |
+| `token → represented-by → token-id` | Accept | A token occurrence/unit is represented in the model input by the ID assigned under the associated vocabulary. The ID is vocabulary-relative, not a universal token identity. |
+| `special-token → part-of → token-vocabulary` | Accept | Special tokens are reserved entries in the vocabulary, with structural/control roles distinct from ordinary text. |
+| `tokenizer-training → contributes-to → token-vocabulary` | Accept | Training/fitting can construct or adjust a vocabulary; the edge does not imply that every tokenizer is trained in the same way or at runtime. |
+| `token-decoding → applies-to → token-id` | Accept | Decoding operates on token IDs (or their corresponding token sequence) under the tokenizer's vocabulary and conventions. |
+| `tokenizer-evaluation → applies-to → tokenizer` | Accept | The evaluation procedure is applied to a tokenizer; it can include intrinsic measures and downstream evaluation, which must remain distinct. |
+| `token-fertility → part-of → tokenizer-evaluation` | Accept, scoped | Fertility is one possible intrinsic measure used within tokenizer evaluation, not a complete definition of tokenizer quality. |
+| `tokenizer-evaluation → applies-to → multilingual-tokenization` | Accept, scoped | Evaluation can be conducted in multilingual-tokenization settings. This is an evaluation context, not a prerequisite or a claim that multilingual tokenization is itself an evaluation method. |
+| `byte-level-encoding → part-of → tokenization` | Accept, scoped | Byte-level encoding is one possible representation path within tokenization. It is not universal to all tokenizers and must not be conflated with byte-pair merge training. |
+| `tokenization → produces → token` | Accept | Tokenization yields a sequence of discrete token units. It does not by itself specify the integer IDs assigned to those units. |
+| `token-encoding → produces → token-id` | Accept | Applying a configured tokenizer/vocabulary to input produces the model-facing ID sequence. This is the runtime encoding output. |
+| `token-post-processing → part-of → tokenizer-pipeline` | Accept | Post-processing is a pipeline component, for example to add sequence markers or apply configured structural conventions. |
+| `token-post-processing → contributes-to → special-token` | Accept, scoped | Post-processing can insert configured special tokens into an encoded sequence. It does not create the special-token definitions or vocabulary entries. |
+| `subword-tokenization → part-of → tokenizer-pipeline` | Accept, scoped | The segmentation method is one possible pipeline component. It is not mandatory for byte-level or other tokenizer designs. |
+| `token-id → prerequisite → token-embedding` | Accept | The ID is required to index/select the corresponding row of the model's token-embedding matrix. This is a legitimate local pedagogical dependency, not a global route order. |
+| `tokenizer-compatibility → prerequisite → token-embedding` | Accept, scoped | Correct lookup requires IDs to use the vocabulary and conventions associated with the model's embedding table. This is a compatibility condition for using the lookup correctly, not an additional computation stage. |
+
+### Delta-review result
+
+- **25/25 previously unaudited current assertions reviewed.**
+- Combined with the exact-ID reconciliation (122 covered assertions), the current registry has **147/147 assertions covered** by the semantic audit.
+- No relation was changed in this pass: the reviewed assertions are consistent with the existing endpoint and relation definitions when read with the scopes above.
+- The scoped interpretations are important for downstream consumers: family membership, optional pipeline stages, intrinsic metrics and tokenizer/model compatibility must not be converted into a global pedagogical sequence or computation DAG.
+- This closes the **source-semantic relation review** for the current 147 assertions. It does not close consumer-consistency checks, real touch-device testing, manual screen-reader review or independent learner validation. Those remain with their existing owners (#416, #584, #988 and #447 respectively).
+
+The source and implementation limitations recorded in the tokenization source reviews remain in force; this relation review does not upgrade partial source scans or claim independent reproduction of experiments.
+
+
+## 2026-11-27 relation-consumer consistency audit
+
+The current consumers were inspected against the canonical `relation_types` metadata and the separation between the concept graph, the guided route, and the page map.
+
+| Consumer | Observed contract | Assessment |
+|---|---|---|
+| `site/tools/check_concept_registry.py` | Validates every relation type against the supported set; validates bilingual labels/descriptions and direction/family/transitivity/acyclicity metadata. Any type marked `learning_dependency: true` must be directed, acyclic and pedagogical, and each edge of that type must have a bilingual rationale. | Consistent with the canonical relation contract. The only current type marked as a learning dependency is `prerequisite`. |
+| `site/tools/build_learning_map.py` | Projects all concept edges and their canonical type metadata (direction, family, transitivity, acyclicity, learning-dependency flag, localized label/description) into the bilingual map payload. | Preserves relation semantics rather than treating every edge as a prerequisite. |
+| `site/tools/learning_map_renderers.py` | Uses the projected family, direction, label and description for relation filters, legend and concept details. It traverses relations only to display neighbours and does not build a learning sequence from them. | Consistent. The graph remains an exploratory semantic map. |
+| `assign_route_rank` in `site/tools/build_learning_map.py` | Orders page-map presentation from authored `suggested_route.next` and page `hierarchy.children` metadata. It does not read concept relations. | Consistent. This rank is a display heuristic, not a prerequisite order. |
+| Guided route and lesson contracts in `data/guided-route.yml` / `build_learning_map.py` | Resolve explicit stages, page memberships and `lesson_contracts.requires` against the authored route sequence. They do not derive route stages or lesson requirements from the concept graph. | Consistent. The pedagogical route remains an independently authored projection. |
+| `site/tools/export_knowledge_graph.py` | Exports every relation as a typed predicate. `generalizes` maps to `skos:narrower`; other relation types retain their project-specific `llmlab:* ` predicate. | Semantics are not collapsed into a hierarchy or prerequisite graph. The export currently exposes predicate identity, not the full bilingual relation-type metadata. |
+| Tests | `tests/knowledge/test_concept_registry.py` covers the learning-dependency invariants and bilingual rationales; `test_learning_map.py` covers relation metadata projection and page-route ranking; `test_knowledge_graph_export.py` covers non-taxonomic predicate mapping and representative typed edges. | Existing coverage supports the separation. There is no single end-to-end assertion enumerating all 147 predicates across every projection. |
+
+### Interoperability boundary
+
+The JSON-LD export's lack of a published, resolvable vocabulary definition for each `llmlab:*` predicate is a known interoperability limitation, not evidence that the internal graph is using the wrong relation semantics. The prior decision in #416 to defer a public relation-type vocabulary remains appropriate until a concrete external consumer requires it. Do not introduce a second vocabulary registry for the current internal map.
+
+The supported relation-type allowlists in the validator and JSON-LD exporter are explicit code-level guards. They must be updated alongside any future canonical relation-type addition; they are not alternative sources for edge meanings.
+
+### Consumer-audit result
+
+- The current consumers preserve the distinction between semantic relations, pedagogical prerequisites, page-map hierarchy and the authored guided route.
+- Only the canonical `prerequisite` type is currently eligible to declare a learning dependency; the validator enforces the required metadata invariants.
+- No consumer was found deriving the guided route from all concept edges.
+- No production code change is justified by this audit. In particular, do not convert `part-of`, `contributes-to`, `applies-to`, or computation edges into learning prerequisites.
+- Remaining #416 work is limited to real touch-device validation of graph selection/navigation. Manual screen-reader and cross-page navigation checks remain with #584/#988; independent learner comprehension remains with #447.
+
+The tests cited above were inspected as source. This documentation pass did not execute them and does not claim a new CI run.
