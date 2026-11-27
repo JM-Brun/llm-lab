@@ -63,8 +63,8 @@ stages:
     compact_title: {fr: "Encoder", en: "Encode"}
     conceptual_focus:
       language-representation:
-        mobilizes: ["concept:token", "concept:token-id"]
-        objects: ["concept:token-embedding", "concept:contextualized-representation"]
+        mobilizes: ["concept:token"]
+        objects: ["concept:token-id", "concept:token-embedding", "concept:contextualized-representation"]
         outcome:
           fr: "Justifier le recours à des représentations numériques et distinguer ID, vecteur initial et état contextualisé."
           en: "Explain why numerical representations are needed and distinguish an ID, an initial vector, and a contextualized state."
