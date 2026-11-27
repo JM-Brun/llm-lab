@@ -228,3 +228,104 @@ This pilot demonstrates the workflow's hand-offs and non-duplication decisions. 
 - [Learning-impact baseline](qkv-learning-impact-baseline-2026-11.md)
 - [Learner pilot protocol #447](https://github.com/JM-Brun/llm-lab/issues/447)
 - [Visual/accessibility review #483](https://github.com/JM-Brun/llm-lab/issues/483)
+
+
+## 11. Issue #1739 pilot — Q/K/V intellectual-contribution inventory
+
+**Pilot unit:** the canonical bilingual Q/K/V lesson pair (French and English), treated as one lesson with two language realizations. This is an audit of the existing synthesis, not a request to rewrite a page that is already substantially developed.
+
+### 11.1 Evidence set and inspection boundary
+
+The pilot reuses the four tutorial sources in the [Q/K/V source collection](../source-reviews/qkv-source-collection.md), adds the separately reviewed Jose Parreño article already cited by the lesson, and uses Vaswani et al. as the primary technical cross-check.
+
+| Source | Relevant contribution records | Inspection boundary |
+|---|---|---|
+| Nishanthan K, DEV | attention-score-not-semantic-similarity; weighted-aggregation-not-argmax; context-examples; projection-learning | Author text and a two-comment thread inspected. Image bytes, linked resources and reuse rights unresolved; the Medium mirror contains an unresolved image placeholder. |
+| Neha KK, Medium | role-decoupling; pronoun-context-example; attention-map-interpretability | Visible author text reconciled against the live page-text view. Figure bytes, linked resources and rights unresolved. |
+| Codefinity | geometric-alignment-framing; bank-polysemy-example; quiz-purpose and related checks | Lesson and parent outline inspected. Full interactive course, assignments and linked resources not inspected; SVG bytes and rights unresolved. |
+| Michael Brenndoerfer | routing-versus-payload; message-passing; convex-hull; scaling-variance | Chapter text inspected and nine visual teaching moves inventoried. Original assets/rights unresolved; code was not executed and quiz interactions were not tested. |
+| Jose Parreño Garcia, *Understanding Transformers (Part 4)* | qkv-role-analogy; learned-qkv-projections; contextual-relationships | Complete visible author-authored article body inspected. Embedded figures were not retrieved; comments, code and numerical examples were not audited. The article remains partially scanned. |
+| Vaswani et al. (2017), *Attention Is All You Need* | Primary formulation cross-check | Reuse the existing [Vaswani attention-formulation review](../source-reviews/vaswani-attention-formulation-2026-11.md); do not create a duplicate source record or extraction. |
+
+The five tutorial/article sources are not independent experimental confirmations of the mechanism. Their role is to expose explanatory choices, examples, caveats and teaching moves. Technical claims are checked against the primary formulation and the project's existing mathematical/implementation treatments. Uninspected media are not treated as absent or assessed.
+
+### 11.2 Aggregated contribution inventory
+
+The IDs below are **stable identifiers local to this synthesis dossier**. They aggregate one or more source-level extraction items into a learner-facing contribution. They are not concept IDs, computational nodes, page tags or a new global registry.
+
+| Local ID | Contribution and learner question | Source evidence | Current canonical treatment | Decision |
+|---|---|---|---|---|
+| qkv-ic-01-routing-payload | **Separate matching from payload.** Why are Q/K used to determine the weighting while V supplies the content being aggregated? | Neha role-decoupling; Brenndoerfer routing-versus-payload; Jose qkv-role-analogy | Main lesson, “Three complementary roles” and “Why three projections from the same input?” The distinction is stated as a functional separation, not as literal retrieval. | **Keep in the core lesson.** This is a central design rationale, not a new concept or a second analogy. |
+| qkv-ic-02-jointly-learned-projections | **Distinct but jointly learned projections.** Why can one shared input produce three different learned views without treating Q, K and V as independently trained modules? | Nishanthan projection-learning; Jose learned-qkv-projections; Neha role-decoupling; Vaswani primary formulation | Main lesson equations and explanation: distinct W_Q, W_K, W_V, learned jointly from the same block input. | **Keep in the core lesson.** Preserve the distinction between separate parameter matrices and joint optimization; do not claim that this parameterization is uniquely optimal. |
+| qkv-ic-03-per-block-provenance | **Where are Q/K/V computed?** They are recomputed inside each attention sublayer from that block's current input states; they do not follow the final contextualized representations. | Project synthesis grounded in the adopted [canonical computational spine](../canonical-computational-spine.md) and issue [#575](https://github.com/JM-Brun/llm-lab/issues/575), rather than attributed to a tutorial | Main lesson, “Why three projections from the same input?”; the text distinguishes first-block input, later contextualized states, positional mechanisms and cross-attention provenance. | **Keep in the core lesson.** This is a project-level architectural clarification. Preserve its provenance as an architectural decision, not as a source quotation or a new graph node. |
+| qkv-ic-04-context-example-boundary | **Use context without overclaiming interpretation.** A pronoun-reference example makes cross-position information flow concrete, while the explicit caveat prevents the example being read as evidence that one head solves coreference. | Neha pronoun-context-example; Nishanthan context-examples; Jose contextual-relationships | Main lesson, “The problem: using context”, in both languages. The example motivates the mechanism and explicitly does not report measured attention weights or head behaviour. | **Keep one concise example and its caveat.** Do not stack multiple near-identical linguistic examples on this page; fuller lexical ambiguity belongs to contextualized representations. |
+| qkv-ic-05-isolated-projection-intervention | **Predict what changes under an intervention.** Changing W_V alone changes the content being aggregated but does not change the Q/K-derived attention weights. | Direct mathematical consequence of the projection and attention equations; reinforced by the existing Q/K/V exercise and attention intervention workbench | Main lesson takeaway plus the dedicated Practice companion; the page purpose explicitly includes predicting isolated-projection effects. | **Keep the consequence visible; rehearse it in Practice.** This is a transfer test, not a claim of novelty in the literature. |
+| qkv-ic-06-recommendation-analogy | **A familiar retrieval analogy.** A recommendation/search scenario separates the request, comparison features and returned content. | Jose qkv-role-analogy | Existing optional recommendation-system callout in the main lesson, with an explicit boundary: learned continuous vectors and weighted aggregation are not a discrete catalogue lookup. | **Retain as an optional alternative lens.** Do not promote the analogy to a definition or add more analogies merely to increase source coverage. |
+| qkv-ic-07-vector-geometry | **What does Q/K alignment mean geometrically?** Dot product depends on both norms and angle; it is not generally cosine similarity. | Codefinity geometric-alignment-framing; four-source synthesis; mathematical identity qᵀk = ||q|| ||k|| cos(theta) | Advanced Q/K/V page, “Géométrie des compatibilités Q–K”; the core lesson links to the advanced treatment. | **Keep in Deepen.** Do not expand the core page with a second geometric derivation. |
+| qkv-ic-08-scaling-variance | **Why divide by sqrt(d_k)?** A probabilistic derivation connects dimension to score variance, with explicit independence and unit-variance assumptions. | Brenndoerfer scaling-variance; Vaswani primary formulation | Dedicated attention-score-scaling deep dive and its simulation. | **Integrate by reference.** Keep assumptions and limitations visible; do not duplicate the derivation in Q/K/V. |
+| qkv-ic-09-message-passing | **View attention as content-dependent message passing.** Positions contribute value vectors according to query-key-derived weights. | Brenndoerfer message-passing | Existing optional explanation in the scaled-attention synthesis/page treatment. | **Keep as a bounded analogy there.** Do not imply a fixed graph or an exact equivalence with graph neural networks. |
+| qkv-ic-10-convex-hull | **A geometric consequence of normalized aggregation.** A row-wise nonnegative weighted sum lies in the convex hull of the accessible value vectors. | Brenndoerfer convex-hull; direct consequence of normalized nonnegative weights | Existing optional note in the scaled-attention lesson, scoped to the weighted sum before output projection, residual addition or later transformations. | **Keep in the scaled-attention depth.** Never generalize the property to the whole Transformer block. |
+| qkv-ic-11-attention-interpretation-limits | **Weights are not causal explanations or universal semantic relevance scores.** | Nishanthan attention-score-not-semantic-similarity; Neha attention-map-interpretability; Jose technical review | Explicit misconception treatment in the scaled-attention lesson and advanced Q/K/V material. | **Preserve the caveat at the point of likely misinterpretation.** No duplicate warning block is needed on every adjacent page. |
+| qkv-ic-12-soft-versus-hard-retrieval | **Attention is a weighted mixture, not an argmax lookup.** | Nishanthan weighted-aggregation-not-argmax; Neha retrieval framing; Jose weighted aggregation | Q/K/V role explanation and the scaled-attention derivation O = AV. | **Already covered.** Use the existing numerical example and Practice material; do not add a second workbench. |
+| qkv-ic-13-assessment-patterns | **Check mechanism purpose, dynamic weighting versus fixed pooling, and contextual aggregation.** | Codefinity quiz-purpose and related question items | Existing self-check and dedicated Q/K/V Practice companion. | **Retain as assessment-design references.** Do not add a generic quiz without learner evidence of a specific gap. |
+
+### 11.3 Page-level judgement
+
+The core Q/K/V lesson already has more than the target two or three substantive contributions:
+
+1. a functional design rationale (matching versus payload);
+2. the architectural placement and provenance of the projections within each block;
+3. a contextual example whose evidential limits are explicit;
+4. a counterfactual that lets the learner predict the effect of changing one projection;
+5. an optional alternative analogy with its limitations stated.
+
+The geometric, probabilistic and convex-geometry contributions are valuable, but their correct destinations are Deepen or the scaled-attention lesson. They should not be pulled into the core lesson to increase its apparent richness.
+
+The French and English page-map contracts have equivalent scope, purpose, route and revision-support semantics. The inspected lesson bodies also preserve the same explanatory structure and caveats. No new concept, computational edge, prerequisite, guided-route step, page, or generic exercise is justified by this corpus.
+
+**Pilot result:** no content rewrite is required for the Q/K/V pair at this stage. The value of the pilot is to make its existing contributions explicit, connect them to their source evidence, and distinguish core contributions from material already routed elsewhere. The existing revision-support field remains a compact statement of revision coverage; it should not be overloaded into a contribution catalogue.
+
+### 11.4 Meta-model fit and preservation decision
+
+The existing model already represents most of the required information:
+
+- Source extraction files store source-scoped atomic items, locators, evidence, confidence, assumptions and limitations.
+- The pedagogical profile stores the learner question, explanatory lens, teaching form, abstraction level, distinctive value and limitations.
+- The pedagogical assessment stores reasoned judgements for novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality.
+- Candidate destinations, disposition and disposition rationale record the proposed project destination and the item-level editorial decision.
+- The existing topic synthesis dossier compares source items and the canonical lesson, and can hold an aggregate contribution ID and exact page-section destination.
+- The concept registry remains the owner of scientific concepts; page-map metadata remains the owner of page scope, purpose, navigation and editorial classification.
+
+**Do not add a new page-metadata field or a new contribution registry in this pilot.** The page schema is not intended to contain a second prose inventory, and source extraction records must remain source-specific. The dossier-local aggregate IDs above are a controlled cross-source synthesis aid, not canonical concept IDs.
+
+A real limitation remains: the extraction contract validates candidate page IDs but does not provide a validated page-anchor relation for every contribution. This pilot records the exact section destinations in the synthesis dossier. Reconsider a minimal, typed anchor reference only if the same traceability gap recurs across a second materially different page type and cannot be maintained reliably in the existing synthesis record. Any such change must update the source schema, validator, fixtures, tests and documentation together.
+
+**Preservation rule calibrated by this pilot:** do not delete an extracted pedagogical item because it is redundant in the current lesson. Keep its source record and disposition. If an integrated contribution is moved or rewritten, update its aggregate dossier entry and destination; preserve the source item, evidence boundary and bilingual counterpart. A change to the concept graph or curriculum is not implied by a change to an explanatory lens.
+
+### 11.5 Reusable workflow for issue #1739
+
+Apply this sequence per canonical lesson (French and English as one audit unit), reusing the source-integration workflow and existing validators:
+
+1. **Resolve the lesson contract.** Read the page-map scope and purpose, locate the lesson in the canonical route, identify its concept/page owners and its adjacent pages. Record the actual learner question before looking for novel material.
+2. **Close the existing corpus first.** Search the source catalogue, source collections, reviews and extraction files using the page topic and canonical concept IDs. Record source IDs, versions, scan status and component-level inspection limits. Do not treat a citation as a scan.
+3. **Extract candidate ideas.** Reuse atomic extraction items and their pedagogical profiles. Add a new extraction only for a genuinely unrecorded source contribution with a precise locator. Separate author claims, community comments, project interpretation and primary technical evidence.
+4. **Compare by learner function.** Group items by the learner question or cognitive obstacle they address, not by similar wording. Identify convergence, complementarity, contradiction, qualification, redundancy and missing coverage. Source frequency is not evidence strength.
+5. **Inspect the canonical page pair.** Locate the exact existing paragraph, figure, equation, callout, exercise or omission in French and English. Distinguish absent, implicit, explicit, and already treated elsewhere. Verify adjacent canonical owners before proposing a new section.
+6. **Make a placement decision.** Use the existing dispositions and select: core lesson, short note/callout, Deepen, Foundations, Build, Practice, integrate by reference, already covered, defer or reject. Record pedagogical value, epistemic status, provenance, page destination and overload risk.
+7. **Aggregate and preserve.** Add or update the topic's existing synthesis dossier. Use a dossier-local aggregate ID only when multiple source items or project-level reasoning form one reusable learner contribution. Do not add a concept node for an explanatory lens.
+8. **Validate proportionately.** Check source-catalogue validation when extraction data changes; check page metadata and concept/curriculum validators only when their owned data changes; render and inspect both languages when page content changes. Report source inspection, technical review, automated tests, browser review, accessibility review and learner evidence as separate evidence classes.
+
+### 11.6 Issue-wide deliverables and task breakdown
+
+| Work package | Concrete tasks | Durable deliverable / completion evidence |
+|---|---|---|
+| A. Meta-model audit | Inspect page metadata, source catalogue, extraction taxonomy, concept registry, page graph, curriculum and source workflows; map ownership and current fields. | A concise model-fit decision: reusable fields, missing relations, non-goals and any justified minimal extension. |
+| B. Page/corpus inventory | Enumerate canonical lessons from the existing route; for each lesson resolve the source corpus and extraction coverage before searching externally. | Page-by-page coverage matrix with French/English IDs, learner purpose, source IDs, scan limits and inspection status. |
+| C. Candidate contribution catalogue | Extract and group pedagogical ideas, perspectives, intuitions, caveats, counterexamples, questions and implications; preserve source locators and epistemic status. | Per-topic synthesis entries with stable local aggregate IDs, source-item references, page anchors, learner value and placement decisions. |
+| D. Targeted external research | Search only for evidenced gaps; prioritize primary sources for technical claims and complementary instructional sources for pedagogy. Record useful non-contributions and rejected overclaims too. | Search log and source-review/extraction records, with no source-count target. |
+| E. Editorial integration | Integrate only high-value contributions; preserve lesson scope and adjacent page ownership; maintain French/English equivalence and existing practice/deep-dive separation. | Small page diffs with before/after mapping, no-loss checks and updated synthesis decisions. |
+| F. Validation and maintenance | Run the owning validators, bilingual render checks, targeted browser/accessibility review and learner checks when gated. Add the audit step to normal page creation/refactor review. | Evidence report with distinct validation classes and a repeatable checklist in the existing contributor workflow. |
+
+**Recommended rollout:** complete A using the existing architecture; use this Q/K/V pilot as the first calibrated case; run a second pilot on a materially different lesson (preferably a probabilistic/mathematical lesson such as logits, likelihood or cross-entropy); only then freeze any additional metadata contract. After that, audit the full canonical Understand route in coherent batches, not by introducing a new automation workflow per concept.
+
+**Explicit non-goals:** no quota of three ideas, no new graph family, no generic contribution taxonomy before a query/use case, no automatic source-to-page promotion, no duplication of existing Deepen/Build/Practice content, and no claim of learner effectiveness without learner evidence.
