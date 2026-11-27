@@ -405,6 +405,20 @@ A direct read of the current `main` sources `site/en/contextualized-representati
 This is source-level evidence only. The site-wide rendered-DOM inventory remains outstanding: includes, generated HTML, CSS backgrounds, responsive `picture`/`srcset` selection, lazy-loaded images and network outcomes must still be checked on published EN/FR pages at desktop and mobile viewports. The current external-embed table should not be treated as complete until that pass is recorded.
 
 
+## Understand route visual pilot — 2026-11-26
+
+The source-level visual audit pilot adds 16 original bilingual responsive SVG assets across four core lessons. Each group has an English and French desktop figure plus a corresponding mobile figure. The detailed design decisions, exact placements, captions, caveats and outstanding validation are recorded in [the four-page visual audit](visual-audit-priority-pages-2026-11-26.md).
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `likelihood-en.svg`, `likelihood-en-mobile.svg`, `likelihood-fr.svg`, `likelihood-fr-mobile.svg` | EN/FR `likelihood.qmd` / `vraisemblance.qmd` | Original project-authored conditional-scoring trace based on the page's existing illustrative probabilities and chain-rule explanation. No external artwork copied. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `loss-en.svg`, `loss-en-mobile.svg`, `loss-fr.svg`, `loss-fr-mobile.svg` | EN/FR `loss.qmd` | Original project-authored comparison of causal visibility and target-loss inclusion masks, using an illustrative ignored PAD target. No external artwork copied. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `gradients-en.svg`, `gradients-en-mobile.svg`, `gradients-fr.svg`, `gradients-fr-mobile.svg` | EN/FR `gradients.qmd` | Original project-authored forward/backward computation and optimizer-separation schematic. No external artwork copied. Owner provenance confirmation remains pending; no asset-level licence declared. |
+| `context-engineering-en.svg`, `context-engineering-en-mobile.svg`, `context-engineering-fr.svg`, `context-engineering-fr-mobile.svg` | EN/FR `context-engineering.qmd` | Original project-authored system-source → selected input → position-access diagram based on the page's three context levels. No external artwork copied. Owner provenance confirmation remains pending; no asset-level licence declared. |
+
+All 16 files were authored in this contribution and include SVG `title` and `desc` elements. The pages provide separate alt text and captions and select mobile variants through responsive `picture` elements. These are source-level checks only: XML conformance, Quarto rendering, browser display, responsive legibility, accessibility-tree behavior, owner confirmation and asset-level licensing remain unverified. Do not count this pilot as completion of the route-wide rendered-DOM inventory or as closure of #156 / #163.
+
+
 ## Understand route visual pilot — prediction and inference — 2026-11-26
 
 The fourth source-level pilot reviews logits, probabilities, entropy, generation and in-context learning in EN/FR. It adds four mobile SVGs; the other pages retain their existing table/flow, generation timeline and Mermaid diagram. Full decisions are recorded in [the fourth visual audit](visual-audit-fourth-pilot-2026-11-26.md).
