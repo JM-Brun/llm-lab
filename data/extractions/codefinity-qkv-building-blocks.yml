@@ -158,7 +158,7 @@ items:
       pages: [fr/queries-keys-values-advanced, en/queries-keys-values-advanced]
       concepts: [query, key, attention-score, attention-weight]
     disposition: integrate
-    disposition_rationale: "Integrated in the dedicated advanced Q/K/V deep dive in both languages, not as a collapsible note on the core lesson. The project-authored explanation bridges qᵀk to vector norms and angle, then to scaling, softmax and weighted V; it warns that dot product is not generally cosine similarity and does not imply hard nearest-neighbour selection. The original Codefinity visual was not copied because it was not inspected and reuse rights are unknown."}
+    disposition_rationale: "Integrated in the dedicated advanced Q/K/V deep dive in both languages, not as a collapsible note on the core lesson. The project-authored explanation bridges qᵀk to vector norms and angle, then to scaling, softmax and weighted V; it warns that dot product is not generally cosine similarity and does not imply hard nearest-neighbour selection. The original Codefinity visual was not copied because it was not inspected and reuse rights are unknown."
 
   - id: codefinity-qkv-building-blocks:bank-polysemy-example
     kind: mental-model
@@ -189,7 +189,7 @@ items:
       pages: [fr/queries-keys-values-advanced, en/queries-keys-values-advanced]
       concepts: [query, key, value, contextualized-representation]
     disposition: integrate-by-reference
-    disposition_rationale: "The bank/river example is present in the advanced Q/K/V deep dive as an illustrative lexical-ambiguity case with explicit interpretation limits. The core Q/K/V page keeps its distinct pronoun-coreference example; the bank example is not owned by the current contextualized-representations pages and is not a compact comparison on the core page."}
+    disposition_rationale: "The bank/river example is present in the advanced Q/K/V deep dive as an illustrative lexical-ambiguity case with explicit interpretation limits. The core Q/K/V page keeps its distinct pronoun-coreference example; the bank example is not owned by the current contextualized-representations pages and is not a compact comparison on the core page."
 
   - id: codefinity-qkv-building-blocks:quiz-purpose
     kind: question
