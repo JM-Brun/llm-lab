@@ -2,7 +2,7 @@
 title: "Why represent language numerically?"
 subtitle: "From readable symbols to objects a network can compute with"
 description-meta: "Explains why a neural network processes language through learned numerical representations, distinguishing identifiers, initial vectors, and contextualized states."
-keywords: ["type:concept-lesson", "destination:understand", "topic:language-representation", "level:overview", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:understand", "topic:language-representation", "level:overview", "language:en", "status:published"]
 lang: en
 ---
 
@@ -25,7 +25,7 @@ revision_support:
     - anchor: revision-summary
       note: "The recap distinguishes the role of an ID, a learned vector, and a contextualized state, and recalls why the network needs numerical objects."
 tags:
-  - "type:concept-lesson"
+  - "type:concept-bridge"
   - "destination:understand"
   - "topic:language-representation"
   - "level:overview"
