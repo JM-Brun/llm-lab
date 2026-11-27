@@ -175,7 +175,7 @@ The NumPy primitive is called separately for each `(b, h)` pair. Its contract is
 
 **An edge case that must not be interpreted as a distribution:** if a row is fully masked, the primitive deliberately returns zero weights and a zero output. Rows with at least one accessible key are normalized over those keys only. This convention belongs to the reference implementation; do not generalize it to every attention API.
 
-The [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py#L229-L270#L13-L34) suite checks, among other things, shapes and normalization invariants, a hand-computable weighted sum, finite additive biases, rejection of invalid masks, the fully masked-row case, causal-mask polarity, and prefix invariance under changes to future tokens. It also checks that a wrong softmax axis violates the expected per-query normalization.
+The [test_attention.py suite](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) checks, among other things, shapes and normalization invariants, a hand-computable weighted sum, finite additive biases, rejection of invalid masks, the fully masked-row case, causal-mask polarity, and prefix invariance under changes to future tokens. In particular, it covers [causal-mask structure](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py#L13-L34) and [shape, normalization, and causal-invariance checks](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py#L229-L270).
 
 Maintained sources: [NumPy primitive](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py#L9-L128) · [primitive and causal-mask tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
 
