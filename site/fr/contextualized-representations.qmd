@@ -65,7 +65,7 @@ Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déd
 
 Une précision : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
 
-## Ce qui change avec la position et le contexte
+## Ce qui change avec la position et le contexte {#effets-position-contexte}
 
 Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
