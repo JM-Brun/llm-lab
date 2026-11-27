@@ -60,7 +60,7 @@ For a batch of $B$ sequences of length $T$, the usual input shape is $X\in\mathb
 
 This is an expansion of the matrix formula, not a different mechanism. Its main use is to make position indexing explicit and avoid confusing sequence length $T$ with representation dimensions.
 
-## Geometry of Q–K compatibility
+## Geometry of Q–K compatibility {#qk-compatibility-geometry}
 
 For a query $q_i$ and key $k_j$, the standard unnormalized score is their dot product:
 
@@ -141,7 +141,7 @@ In standard multi-head attention, each head has sub-projections that produce its
 
 This head sharing must be distinguished from **projection-parameter tying**: tying, for example, key and value projection parameters is a different change to the parameterization. Empirical results depend on architecture and protocol; they do not establish one variant as universally superior. For the distinct provenance of the streams, see the dedicated [cross-attention](cross-attention.qmd) page; for KV-cache memory cost, see [LLM computational complexity and parallelism](llm-computational-complexity.qmd).
 
-## Interpreting representations without over-reading attention weights
+## Interpreting representations without over-reading attention weights {#interpreting-representations-limits}
 
 Context can change a token's lexical interpretation: in “He sat by the bank,” a river context makes *bank* more likely to mean a riverbank rather than a financial institution. This illustrates why contextualized representations matter, but it does not prove that one isolated head performs disambiguation on its own. An attention map alone cannot explain a model decision or establish a causal relationship.
 
