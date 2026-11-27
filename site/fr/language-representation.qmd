@@ -1,0 +1,29 @@
+---
+title: "Pourquoi représenter le langage numériquement ?"
+subtitle: "Du symbole lisible aux représentations qu’un réseau peut transformer"
+description-meta: "Explique pourquoi un modèle neuronal a besoin de représentations numériques apprises, et distingue identifiants, vecteurs initiaux et représentations contextualisées."
+keywords: ["type:concept-lesson", "destination:understand", "topic:language-representation", "level:overview", "language:fr", "status:planned"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/language-representation"
+summary: "Explique le problème auquel répond la représentation numérique du langage, avant d’étudier les mécanismes de tokenisation et de lookup."
+scope: "Motivation conceptuelle : pourquoi un réseau neuronal doit traiter des objets numériques, pourquoi les IDs ne sont pas des coordonnées sémantiques, et ce que permettent les vecteurs appris et leur contextualisation. Les procédures de tokenisation, le lookup détaillé et les mécanismes du Transformer restent dans les leçons dédiées."
+purpose: "Relier le langage symbolique aux objets numériques manipulés par un réseau neuronal, et expliquer pourquoi les IDs servent d’adresses tandis que les représentations vectorielles apprises peuvent être transformées en fonction du contexte."
+suggested_route:
+  previous: "fr/llm-overview"
+  next: "fr/text-data"
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/text-data", "fr/embedding-space", "fr/contextualized-representations"]
+tags:
+  - "type:concept-lesson"
+  - "destination:understand"
+  - "topic:language-representation"
+  - "level:overview"
+  - "language:fr"
+  - "status:planned"
+-->
