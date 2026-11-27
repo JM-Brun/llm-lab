@@ -1,0 +1,126 @@
+schema_version: 1
+source_id: xie-et-al-implicit-bayesian-icl-2022
+items:
+  - id: xie-et-al-implicit-bayesian-icl-2022:latent-concept-posterior-predictive
+    kind: mechanism
+    summary: "The paper models in-context learning as implicit inference of a latent concept shared by prompt examples; the predictive distribution marginalizes over possible concepts conditioned on the prompt."
+    locator:
+      type: section
+      value: "§1, Equations 1–3"
+      label: "Introduction and latent-concept formulation"
+    evidence:
+      kind: theoretical-framework
+      confidence: context-dependent
+      scope: "The pretraining distribution is a mixture over latent concepts, each defining an HMM; prompt examples are generated under a shared prompt concept."
+      assumptions:
+        - "The pretraining documents contain long-range coherence represented by a latent concept."
+        - "The prompt distribution is related to the pretraining distribution through the stated HMM and delimiter assumptions."
+      limitations:
+        - "This is a formal explanatory model, not a universal proof of the mechanism used by every natural-language LLM."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning, conditional-distribution]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning, conditional-distribution]
+    disposition: integrate
+
+  - id: xie-et-al-implicit-bayesian-icl-2022:distinguishability-condition
+    kind: result
+    summary: "Under the paper's regularity assumptions, in-context prediction approaches the prompt-distribution optimum as the number of examples grows when the prompt concept is sufficiently distinguishable from competing latent concepts."
+    locator:
+      type: section
+      value: "§2.1–§3.3, Condition 1 and Theorem 1"
+      label: "Assumptions and formal theoretical results"
+    evidence:
+      kind: theoretical-result
+      confidence: well-supported
+      scope: "The theorem is proved for a mixture-of-HMM pretraining distribution and a prompt distribution with bounded mismatch terms; distinguishability is expressed through KL-divergence signal exceeding delimiter and start-distribution errors."
+      assumptions:
+        - "The model fits the pretraining distribution exactly in the theoretical analysis."
+        - "The prompt concept belongs to the assumed concept family."
+        - "Delimiter and prompt-start distribution assumptions hold."
+      limitations:
+        - "The asymptotic theorem is conditional on the formal assumptions and does not directly establish the same result for arbitrary natural-language pretraining corpora."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [in-context-learning, conditional-distribution]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: xie-et-al-implicit-bayesian-icl-2022:example-length-information
+    kind: claim
+    summary: "The theoretical analysis shows that information in the input tokens, not only the input-output mapping, can help identify the shared latent concept; longer examples can improve distinguishability under the stated conditions."
+    locator:
+      type: section
+      value: "§1, §3.3 and Figure 2"
+      label: "Information in examples and distinguishability"
+    evidence:
+      kind: theoretical-result
+      confidence: context-dependent
+      scope: "The signal term in the distinguishability condition accumulates over token positions within each example."
+      assumptions:
+        - "The stated HMM, delimiter and regularity assumptions hold."
+      limitations:
+        - "The result concerns the formal latent-concept model and should not be generalized to arbitrary prompt formats without additional evidence."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning, conditional-distribution]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: xie-et-al-implicit-bayesian-icl-2022:ginc-experiments
+    kind: experiment
+    summary: "On the synthetic GINC mixture-of-HMM dataset, Transformers and LSTMs exhibit in-context learning; performance increases with the number and length of examples, while model scale, example order, and zero-shot versus few-shot comparisons reveal additional behaviors."
+    locator:
+      type: section
+      value: "§4, Figures 3–7"
+      label: "GINC simulations and ablations"
+    evidence:
+      kind: empirical-result
+      confidence: context-dependent
+      scope: "The authors generate a controlled synthetic corpus from a mixture of five latent concepts and train GPT-2-based Transformers and LSTMs; they test prompt example count, example length, model size, concept structure, ordering, and zero-shot baselines."
+      assumptions:
+        - "GINC is designed to instantiate the theoretical mixture-of-HMM framework."
+      limitations:
+        - "Synthetic data provides control over latent concepts but does not establish the same causal explanation in natural web-scale corpora."
+        - "The models fail to extrapolate to concepts outside the pretraining family in the reported experiment."
+        - "LSTMs outperform Transformers in the reported GINC setting, and the authors leave architecture and scaling explanations open."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
+
+  - id: xie-et-al-implicit-bayesian-icl-2022:scope-limitations
+    kind: limitation
+    summary: "The explanation depends on a structured synthetic pretraining distribution and explicit assumptions; the authors identify misspecification, extrapolation to unseen concepts, and bridging train/test prompt-distribution differences as open questions."
+    locator:
+      type: section
+      value: "§2.1, §4 and §5–§6"
+      label: "Assumptions, simulations, discussion and conclusion"
+    evidence:
+      kind: author-stated-limitation
+      confidence: well-supported
+      scope: "The paper states assumptions about the HMM mixture, delimiters and prompt-start distribution, and reports failure on prompts from concepts outside the pretraining family."
+      assumptions: []
+      limitations:
+        - "This extraction summarizes the stated boundaries; it does not independently validate the model against natural-language pretraining."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [in-context-learning, conditional-distribution]
+    candidate_destinations:
+      pages: [en/in-context-learning, fr/in-context-learning]
+      concepts: [in-context-learning]
+    disposition: integrate
