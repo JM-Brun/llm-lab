@@ -2217,3 +2217,22 @@ La séquence `logits → probabilités → entropie` est une progression cohére
 Ce lot vérifie les sources Quarto, les localisateurs et la cohérence FR/EN. Il ne certifie pas les ancres automatiques dans le HTML déployé, l'apparence des figures, le rendu responsive, le clavier, le lecteur d'écran ou la compréhension réelle. L'accès aux pages publiques n'a pas été disponible pendant cette revue ; les ancres automatiques sont donc identifiées depuis les titres source et restent à confirmer lors de la revue rendue.
 
 Le prochain lot #1739 doit traiter la destination de `generation` en réutilisant l'audit source du 27 novembre, puis poursuivre dans l'ordre canonique avec le contexte, le scoring et l'apprentissage.
+
+
+## Issue #1739 — génération autorégressive (2026-11-28)
+
+Audit de destination FR/EN de la leçon Understand `generation` et de ses deux compagnons Practice. Le dossier [preuves de destination — lot 5](source-syntheses/understand-destination-evidence-batch-5-2026-11.md) réutilise l'audit scientifique existant du 27 novembre et vérifie les localisateurs bilingues, les relations lesson→companion→collection et les décisions de placement.
+
+### Résultats
+
+- La leçon distingue la passe avant (contexte → distribution), le décodage (sélection) et la génération (boucle complète avec réinjection et arrêt).
+- Le token choisi devient le nouveau contexte ; un autre choix local peut modifier les distributions suivantes. Le greedy ne maximise pas nécessairement la vraisemblance de la séquence complète.
+- Les paramètres restent fixes. EOS, longueur maximale et règles applicatives sont des critères d'arrêt explicites.
+- Prefill, decode incrémental, politique de décodage et teacher forcing sont distingués ; le cache KV reste une optimisation facultative.
+- Les compagnons Practice FR/EN contiennent quatre auto-vérifications équivalentes et renvoient à la collection partagée pour les exercices plus longs.
+
+### Décisions et limites
+
+Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. L'aperçu précoce de la génération et sa reprise détaillée ont des fonctions pédagogiques différentes et doivent rester une seule identité canonique. Le scoring sur préfixe observé et le teacher forcing ne doivent pas être assimilés à la génération libre.
+
+Ce lot est source-only. Le rendu déployé, les figures, l'affichage mobile, le clavier, le lecteur d'écran et la compréhension réelle restent à vérifier séparément.
