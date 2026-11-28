@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 430" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" role="img" aria-labelledby="title desc">
   <title id="title">Same token ID and position, different causal prefixes</title>
-  <desc id="desc">Two rows compare the same bank token at position three. In each row, the token ID and lookup vector are identical, but the accessible prefix differs: The river in context A and The financial in context B. These inputs can produce different contextualized hidden states. This is conceptual, not measured activation data.</desc>
+  <desc id="desc">Two rows compare the same bank token at position three. In each row, the token ID and lookup vector are identical, but the accessible prefix differs: The river in context A and The financial in context B. Both the token representation and accessible context enter the causal block; the resulting hidden states may differ. This is conceptual, not measured activation data.</desc>
   <defs>
     <style>
       .panel{fill:#fbfcfb;stroke:#cbd5ce;stroke-width:2}
       .context{fill:#f4f6f4;stroke:#7b887e;stroke-width:2}
       .token{fill:#e9f4ed;stroke:#247b4b;stroke-width:2}
+      .block{fill:#edf1f8;stroke:#637c9b;stroke-width:2}
       .state{fill:#f1edfa;stroke:#7962a5;stroke-width:2}
       .arrow{stroke:#5a685e;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
       .label{font:20px sans-serif;fill:#25342a}
@@ -16,32 +17,38 @@
       <path d="M0,0 L0,6 L9,3 z" fill="#5a685e"/>
     </marker>
   </defs>
-  <rect x="18" y="18" width="1084" height="394" rx="14" class="panel"/>
+  <rect x="18" y="18" width="1084" height="444" rx="14" class="panel"/>
   <text x="560" y="55" text-anchor="middle" class="label">Same token ID and position · different causal prefixes</text>
 
-  <rect x="52" y="91" width="310" height="96" rx="10" class="context"/>
-  <rect x="405" y="91" width="310" height="96" rx="10" class="token"/>
-  <rect x="758" y="91" width="310" height="96" rx="10" class="state"/>
-  <text x="75" y="121" class="small">Context A</text>
-  <text x="75" y="157" class="label">The river …</text>
-  <text x="560" y="121" text-anchor="middle" class="small">Same token · same position</text>
-  <text x="560" y="157" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
-  <text x="913" y="121" text-anchor="middle" class="small">Contextualized state</text>
-  <text x="913" y="157" text-anchor="middle" class="math">h_A^(ℓ)</text>
-  <path d="M362 112 H738 V124 H758" class="arrow"/>
-  <path d="M715 165 H738 V154 H758" class="arrow"/>
+  <rect x="55" y="91" width="290" height="60" rx="9" class="context"/>
+  <rect x="55" y="169" width="290" height="60" rx="9" class="token"/>
+  <rect x="435" y="130" width="260" height="60" rx="9" class="block"/>
+  <rect x="790" y="130" width="280" height="60" rx="9" class="state"/>
+  <text x="78" y="116" class="small">Context A</text>
+  <text x="78" y="140" class="label">The river …</text>
+  <text x="200" y="194" text-anchor="middle" class="small">Same token · same position</text>
+  <text x="200" y="218" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
+  <text x="565" y="168" text-anchor="middle" class="math">F_ℓ</text>
+  <text x="930" y="153" text-anchor="middle" class="small">Contextualized state</text>
+  <text x="930" y="177" text-anchor="middle" class="math">h_A^(ℓ+1)</text>
+  <path d="M345 121 H390 V145 H435" class="arrow"/>
+  <path d="M345 199 H390 V175 H435" class="arrow"/>
+  <path d="M695 160 H790" class="arrow"/>
 
-  <rect x="52" y="237" width="310" height="96" rx="10" class="context"/>
-  <rect x="405" y="237" width="310" height="96" rx="10" class="token"/>
-  <rect x="758" y="237" width="310" height="96" rx="10" class="state"/>
-  <text x="75" y="267" class="small">Context B</text>
-  <text x="75" y="303" class="label">The financial …</text>
-  <text x="560" y="267" text-anchor="middle" class="small">Same token · same position</text>
-  <text x="560" y="303" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
-  <text x="913" y="267" text-anchor="middle" class="small">Contextualized state</text>
-  <text x="913" y="303" text-anchor="middle" class="math">h_B^(ℓ)</text>
-  <path d="M362 258 H738 V270 H758" class="arrow"/>
-  <path d="M715 311 H738 V300 H758" class="arrow"/>
+  <rect x="55" y="274" width="290" height="60" rx="9" class="context"/>
+  <rect x="55" y="352" width="290" height="60" rx="9" class="token"/>
+  <rect x="435" y="313" width="260" height="60" rx="9" class="block"/>
+  <rect x="790" y="313" width="280" height="60" rx="9" class="state"/>
+  <text x="78" y="299" class="small">Context B</text>
+  <text x="78" y="323" class="label">The financial …</text>
+  <text x="200" y="377" text-anchor="middle" class="small">Same token · same position</text>
+  <text x="200" y="401" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
+  <text x="565" y="351" text-anchor="middle" class="math">F_ℓ</text>
+  <text x="930" y="336" text-anchor="middle" class="small">Contextualized state</text>
+  <text x="930" y="360" text-anchor="middle" class="math">h_B^(ℓ+1)</text>
+  <path d="M345 304 H390 V328 H435" class="arrow"/>
+  <path d="M345 382 H390 V358 H435" class="arrow"/>
+  <path d="M695 343 H790" class="arrow"/>
 
-  <text x="560" y="377" text-anchor="middle" class="small">Conceptual comparison · no real-model activations measured</text>
+  <text x="560" y="442" text-anchor="middle" class="small">Conceptual comparison · no real-model activations measured</text>
 </svg>
