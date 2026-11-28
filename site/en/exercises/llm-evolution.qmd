@@ -1,6 +1,6 @@
 ---
 title: "Exercises — Evolution of language models"
-subtitle: "Self-check questions, exercises, and worked answers"
+subtitle: "Self-check questions and open-ended transfer exercises"
 description-meta: "Self-check questions and exercises associated with the Evolution of language models lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercises", "level:applied", "language:en", "status:published"]
 lang: en
@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-evolution-exercises"
 summary: "Self-check questions and exercises associated with the Evolution of language models lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+scope: "Collects open-ended questions for classifying model changes across independent axes and justifying the distinctions."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
 suggested_route:
   previous: null
@@ -31,6 +31,22 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercis
 3. An API exposes asynchronous tool calling: what remains the application's responsibility?
 4. Is a benchmark improvement enough to demonstrate an architectural change? Why?
 5. Classify MoE, KV cache, RLHF, and inference-time compute by their primary axis.
+
+
+<details>
+<summary>How to assess your reasoning</summary>
+
+Check whether your explanations preserve the distinctions made in the lesson:
+
+- **Question 1:** few-shot examples are supplied in the prompt; in-context learning does not update model parameters for each task. Fine-tuning does update parameters.
+- **Question 2:** pretraining and post-training are different learning procedures. Post-training adapts an already pretrained model; it does not mean merely adding instructions to the context.
+- **Question 3:** distinguish model behavior from application responsibilities. Asynchronous tool calling still requires application-side orchestration, execution, result handling, and control flow.
+- **Question 4:** a benchmark score is an observed outcome, not direct evidence of a particular architectural change. Alternative explanations include data, training, post-training, inference compute, and evaluation protocol.
+- **Question 5:** classify each example by its primary axis, while noting that axes can interact: MoE concerns architecture/routing and efficiency; KV cache concerns inference-time memory and recomputation; RLHF is a post-training approach; inference-time compute is additional computation during use.
+
+A good answer names the relevant axis, explains the mechanism, and avoids treating the six axes as a mandatory chronological sequence. These are assessment criteria, not a claim that every system uses every technique.
+
+</details>
 
 [Exercises and practice](../exercises.qmd).
 
