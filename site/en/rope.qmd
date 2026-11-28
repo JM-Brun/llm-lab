@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/positional-encoding"]
   children: []
-related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking"]
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/rope-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:en", "status:published"]
 -->
 
