@@ -1,5 +1,41 @@
 # Advent calendar — remaining work and session handoff
 
+## Current operational snapshot — 2026-11-28
+
+The calendar remains **implemented but not collection-validated or learner-validated**. Published pages and green CI are not acceptance evidence.
+
+### Changes since 2026-11-27
+
+- [PR #1815](https://github.com/JM-Brun/llm-lab/pull/1815) merged. Day 02's bilingual manifest question now distinguishes observed-token surprisal from predictive uncertainty. All required checks, including Quarto/browser, passed. This is metadata-only; #1666 remains open.
+- The first-five FR/EN source comparison is documented in a new comment on [#1664](https://github.com/JM-Brun/llm-lab/issues/1664). It is explicitly source-level, not a rendered or learner review.
+- [PR #1816](https://github.com/JM-Brun/llm-lab/pull/1816) is merged. The canonical Day 04 FR/EN pages now include the XOR visual and four-case worked calculation. All required checks, including Quarto/browser, passed.
+- [PR #1817](https://github.com/JM-Brun/llm-lab/pull/1817) is merged. It brings the controlled *bank* contrast to the opening of the canonical Day 05 FR/EN pages and adds a conceptual diagram. All required checks, including Quarto/browser, passed.
+- [PR #1819](https://github.com/JM-Brun/llm-lab/pull/1819) is merged (squash commit `a75b1a0f9ba4bf48ddf2c884f54cded4a1432db2`). Day 03 now points to the existing published bilingual `exercises-text-data` collection through `practice_page` and exposes its tokenizer-inspection anchor in a dedicated Practice section; no new exercise page was created. CI, Quarto site and secret scanning all passed.
+- Days 04–05 reuse their canonical Deepen pages. No duplicate calendar pages, concepts, computational nodes, prerequisite edges or per-concept workflows were introduced.
+
+### Updated first-five state
+
+| Day | Current decision | Remaining evidence |
+|---|---|---|
+| 01 — Zipf | Strong source-level story; not accepted | FR 217/125 and EN 196/127 counts, top ranks and hapax counts reproduced from the two language-specific sample passages; obtain non-specialist read in #1653 |
+| 02 — Surprisal | Quantitative core and manifest wording aligned; not accepted | Scientific/rendered/novice review in #1666 |
+| 03 — Tokenizer | Narrative and cost boundaries implemented; reuse audit open | Mobile/browser, anchors, rights, reproducibility and novice review in #1667 |
+| 04 — Geometry | XOR visual and worked calculation merged via #1816 | Mobile/accessibility, sources and novice review in #1668 |
+| 05 — Contextualization | Story-led opening and controlled-context diagram merged via #1817 | Mobile/accessibility, anchor and novice review in #1669 |
+
+Days 01–03 remain complementary statistical perspectives, **not prerequisites**: marginal lexical frequency, conditional surprisal and tokenizer segmentation answer different questions. Days 04–05 need distinct concrete contrasts but must not duplicate canonical explanations.
+
+### Next execution order
+
+1. Manually inspect the merged Day 03–05 FR/EN pages at desktop/mobile widths, including figures, equations, Practice links and accessibility.
+2. Obtain novice evidence for Days 01–05 through the individual page issues; keep observations and accept/revise decisions page-specific, and do not generalize one reader's evidence.
+4. Complete #1664's shared editorial gate after the individual owners record their results.
+5. Continue the 24-day canonical crosswalk in #1513, preserving the distinct uses of the conditional distribution (generation, observed-target scoring/evaluation, training) and keeping Q/K/V inside Transformer blocks.
+
+The manifest's `page_status` values remain editorial workflow states, not proof of learner acceptance. Do not mark the first five doors accepted or the collection release-ready from source review or CI alone.
+
+---
+
 ## Current operational snapshot — 2026-11-27 (supersedes earlier status paragraphs)
 
 The 24-story calendar remains **implemented but not collection-validated or learner-validated**. Do not infer acceptance from merged implementation PRs, a published page, or green CI.
