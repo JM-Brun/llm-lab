@@ -211,8 +211,7 @@
         "3. Pourquoi représenter les unités par des vecteurs ?",
         "4. En quoi cela aide-t-il à modéliser le sens ?",
         "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
-        "6. La suite du parcours",
-        "Exercices"
+        "6. La suite du parcours"
       ],
       "route": {
         "previous": "fr/llm-overview",
