@@ -20,7 +20,7 @@ The calendar remains **implemented but not collection-validated or learner-valid
 | 02 — Surprisal | Quantitative core and manifest wording aligned; not accepted | Scientific/rendered/novice review in #1666 |
 | 03 — Tokenizer | Narrative and cost boundaries implemented; reuse audit open | Mobile/browser, anchors, rights, reproducibility and novice review in #1667 |
 | 04 — Geometry | XOR visual and worked calculation merged via #1816 | Mobile/accessibility, sources and novice review in #1668 |
-| 05 — Contextualization | Story-led opening and controlled-context diagram proposed in #1817 | CI/browser, mobile/accessibility, anchor and novice review in #1669 |
+| 05 — Contextualization | Story-led opening and controlled-context diagram merged via #1817 | Mobile/accessibility, anchor and novice review in #1669 |
 
 Days 01–03 remain complementary statistical perspectives, **not prerequisites**: marginal lexical frequency, conditional surprisal and tokenizer segmentation answer different questions. Days 04–05 need distinct concrete contrasts but must not duplicate canonical explanations.
 
@@ -28,7 +28,8 @@ Days 01–03 remain complementary statistical perspectives, **not prerequisites*
 
 1. Finish CI and browser review for #1816 and #1817; merge only after required checks pass.
 2. Inspect the resulting FR/EN pages at desktop/mobile widths, including figures, equations, links and accessibility.
-3. Obtain novice evidence for Days 01–05 through the individual page issues; do not generalize one reader's evidence.
+3. Finish checks and merge #1819 only when required checks pass; then inspect the Day 03 Practice handoff in the rendered FR/EN calendar and story.
+4. Obtain novice evidence for Days 01–05 through the individual page issues; do not generalize one reader's evidence.
 4. Complete #1664's shared editorial gate after the individual owners record their results.
 5. Continue the 24-day canonical crosswalk in #1513, preserving the distinct uses of the conditional distribution (generation, observed-target scoring/evaluation, training) and keeping Q/K/V inside Transformer blocks.
 
