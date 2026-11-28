@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">Same token, different accessible contexts</title>
+  <desc id="desc">Two sentence contexts contain the same bank token at position three. The token ID and lookup vector are shared, while the causal prefixes differ. After contextual processing, the hidden states at the bank position may differ. This is a conceptual diagram, not measured activations.</desc>
+  <defs>
+    <style>
+      .panel{fill:#fbfcfb;stroke:#cbd5ce;stroke-width:2}
+      .shared{fill:#e9f4ed;stroke:#247b4b;stroke-width:2}
+      .context{fill:#f4f6f4;stroke:#7b887e;stroke-width:2}
+      .token{fill:#dff1e5;stroke:#247b4b;stroke-width:3}
+      .state{fill:#f1edfa;stroke:#7962a5;stroke-width:2}
+      .arrow{stroke:#5a685e;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+      .label{font:20px sans-serif;fill:#25342a}
+      .small{font:16px sans-serif;fill:#536258}
+      .math{font:italic 20px sans-serif;fill:#25342a}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5a685e"/>
+    </marker>
+  </defs>
+  <rect x="18" y="18" width="1084" height="484" rx="14" class="panel"/>
+  <text x="560" y="55" text-anchor="middle" class="label">Same token ID and position · different causal prefixes</text>
+
+  <rect x="52" y="88" width="470" height="86" rx="10" class="context"/>
+  <rect x="598" y="88" width="470" height="86" rx="10" class="context"/>
+  <text x="78" y="121" class="small">Context A</text>
+  <text x="78" y="151" class="label">The river <tspan font-weight="700" fill="#247b4b">bank</tspan> eroded.</text>
+  <text x="624" y="121" class="small">Context B</text>
+  <text x="624" y="151" class="label">The financial <tspan font-weight="700" fill="#247b4b">bank</tspan> collapsed.</text>
+
+  <path d="M287 174 V211 H345 V240" class="arrow"/>
+  <path d="M833 174 V211 H775 V240" class="arrow"/>
+  <rect x="425" y="240" width="270" height="70" rx="10" class="token"/>
+  <text x="560" y="268" text-anchor="middle" class="small">Shared token at position t=3</text>
+  <text x="560" y="294" text-anchor="middle" class="math">ID_bank → E[ID_bank]</text>
+
+  <path d="M560 310 V345 H287 V374" class="arrow"/>
+  <path d="M560 345 H833 V374" class="arrow"/>
+  <rect x="78" y="374" width="418" height="76" rx="10" class="shared"/>
+  <rect x="624" y="374" width="418" height="76" rx="10" class="shared"/>
+  <text x="287" y="404" text-anchor="middle" class="small">Accessible prefix A: “The river”</text>
+  <text x="287" y="433" text-anchor="middle" class="math">h_A^(ℓ)</text>
+  <text x="833" y="404" text-anchor="middle" class="small">Accessible prefix B: “The financial”</text>
+  <text x="833" y="433" text-anchor="middle" class="math">h_B^(ℓ)</text>
+  <text x="560" y="482" text-anchor="middle" class="small">Conceptual dependency · not measured model activations</text>
+</svg>
