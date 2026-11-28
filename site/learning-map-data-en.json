@@ -204,7 +204,7 @@
       "domain": null,
       "scope": "Explains why neural networks use numerical objects to process language, what learned vectors make computable, and why representations are subsequently context-dependent. Concrete tokenization, detailed lookup, vector geometry, and Transformer mechanisms remain in their dedicated lessons.",
       "summary": "Introduces the motivation for numerical language representations and distinguishes identifiers from learned vectors and contextualized states.",
-      "purpose": "Explain why an integer identifier is not enough to represent a token for neural computation, distinguish a lookup address from a learned vector, and connect initial representations to contextualized states.",
+      "purpose": "Explain why language must be represented by mathematical objects a network can manipulate, how learned vectors make linguistic regularities usable by the network, and why context subsequently transforms these representations.",
       "covered_stages": [],
       "section_headings": [
         "1. The problem: moving from symbols to computation",
