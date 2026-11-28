@@ -24,7 +24,11 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-
 
 [← Back to the deep dive: embeddings and representation geometry](../embeddings-deep-dive.qmd)
 
-**Question:** do the neighbourhoods and groups visible in a projection tell the same story as the original vectors and metadata?
+## Check your understanding
+
+**Guiding question:** do the neighbourhoods and groups visible in a projection tell the same story as the original vectors and metadata?
+
+### Experiment protocol
 
 1. Choose a dataset whose objects, metadata, and vectors are documented. Record the embedding model/version, preprocessing, metric, and provenance. Do not mix vectors from different models or layers without saying so.
 2. Before opening the atlas, predict which metadata field should be associated with the expected neighbourhoods or groups; state what could disconfirm the prediction.
@@ -33,6 +37,21 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-
 5. Change one projection or clustering setting and record what changes. Do not tune settings after the fact merely to produce a persuasive picture.
 
 **Debrief:** distinguish (a) distance in the original vector space, (b) visual proximity in the projection, (c) membership in a computed cluster, and (d) a category supplied as metadata. These are not equivalent. A 2D projection can distort distances, densities, and shapes; an automatic label is a descriptive hypothesis, not semantic ground truth. For reproducibility, record the dataset, model, preprocessing, metric, parameters, and random seed when available.
+
+<details>
+<summary>Self-assessment: evidence and reproducibility</summary>
+
+Before accepting your interpretation, check that you have:
+
+- recorded the dataset, embedding model/version, preprocessing, vector source or layer, distance metric, and provenance;
+- stated a prediction before exploring and identified an observation that could disconfirm it;
+- distinguished neighbours in the original vector space from visual neighbours in the 2D projection;
+- treated cluster membership and metadata labels as separate evidence, not as semantic ground truth;
+- recorded projection/clustering settings and a random seed where available, and avoided selecting settings only because they support the expected story.
+
+A strong debrief reports what the experiment supports, what remains uncertain, and which claims cannot be inferred from the projection alone.
+
+</details>
 
 See also the [embedding-space exercises](embedding-space.qmd), [official documentation](https://apple.github.io/embedding-atlas/overview.html), [CLI guide](https://apple.github.io/embedding-atlas/tool.html), and [research paper](https://machinelearning.apple.com/research/embedding-atlas).
 
