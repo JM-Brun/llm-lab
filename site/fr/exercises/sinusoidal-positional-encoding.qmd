@@ -34,13 +34,14 @@ tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional
 5. Le produit scalaire $PE(p)^\top PE(q)$ est-il un score d'attention appris ?
 :::
 
-::: {.callout-note collapse="true" title="Éléments de réponse"}
+<details>
+<summary>Afficher les éléments de réponse</summary>
 1. Le nombre de paires passe de $d_{\text{model}}/2$ à $d_{\text{model}}$.
 2. Elle augmente : $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
 3. Les identités d'addition expriment les sinus et cosinus de $p+k$ comme une combinaison linéaire de ceux de $p$, avec des coefficients qui ne dépendent que de $k$ et de $\omega_i$.
 4. Le premier est une propriété de la formule ; le second dépend du comportement appris du modèle et doit être évalué empiriquement.
 5. Non. C'est une similarité entre vecteurs positionnels fixes ; un score d'attention dépend de projections apprises des représentations.
-:::
+</details>
 
 ::: {.language-switch}
 **Langue:** [Français](../../fr/exercises/sinusoidal-positional-encoding.qmd) · [English](../../en/exercises/sinusoidal-positional-encoding.qmd)
