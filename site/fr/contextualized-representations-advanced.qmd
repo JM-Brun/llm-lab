@@ -26,7 +26,13 @@ tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representat
 {{< include ../includes/generated-guided-context-fr-contextualized-representations-advanced.qmd >}}
 
 
-Cette page prolonge la [présentation introductive des représentations contextualisées](contextualized-representations.qmd). Elle suppose que le lecteur distingue déjà l'ID du token, le vecteur obtenu par lookup et l'état caché produit par le réseau.
+Considérons deux phrases : « The river bank eroded » et « The financial bank collapsed ». Sous l'hypothèse simplificatrice d'un token par mot, `bank` occupe la même position dans les deux phrases et possède le même ID. Le lookup initial est donc identique. Pourtant, dans un décodeur causal, les préfixes accessibles diffèrent.
+
+Comment un même point de départ peut-il conduire à des états contextualisés différents ? Le schéma isole les facteurs maintenus constants et celui qui varie. Il est conceptuel : aucune activation d'un modèle réel n'est mesurée ici.
+
+![Deux phrases contiennent le même token bank à la même position. L'ID et le vecteur de lookup sont partagés ; les préfixes causaux diffèrent et peuvent conduire à des états cachés différents.](../images/contextualized-bank-contrast.svg){#fig-contextualized-bank-contrast fig-alt="Les deux contextes contiennent bank en position trois. L'ID et le lookup E[ID_bank] sont identiques, mais les préfixes accessibles The river et The financial diffèrent ; les états contextualisés à cette position peuvent donc différer." width=100%}
+
+**Prérequis :** distinguer l'ID d'un token, son vecteur de lookup et l'état caché produit par le réseau.
 
 ## 1. De l'embedding initial à l'entrée du réseau
 
