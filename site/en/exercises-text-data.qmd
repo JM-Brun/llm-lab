@@ -265,14 +265,14 @@ Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P
 
 #### Inspect a Hugging Face tokenizer {#tokenizer-huggingface-probe}
 
-The example below inspects a specific Hugging Face tokenizer. The first load may require network access; for a reproducible experiment, record library versions and pin a model revision rather than relying on a moving default branch.
+The example below inspects a specific Hugging Face tokenizer. It pins both the repository and its immutable Git revision; the `transformers` version is also printed so the software environment can be recorded. The first load may require network access.
 
 ```python
 from importlib.metadata import version
 from transformers import AutoTokenizer
 
-model_id = "gpt2"
-revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+model_id = "openai-community/gpt2"
+revision = "607a30d783dfa663caf39e06633721c8d4cfcd7e"
 tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
 text = "What have the Romans ever done for us?"
 
@@ -281,6 +281,7 @@ tokens = tokenizer.convert_ids_to_tokens(ids)
 
 print("transformers:", version("transformers"))
 print("tokenizer:", model_id)
+print("revision:", revision)
 print("tokens:", tokens)
 print("IDs:", ids)
 print("count:", len(ids))
