@@ -1,7 +1,7 @@
 ---
 title: "Exercises — Text and data"
 subtitle: "Self-check questions, exercises, and worked answers"
-description-meta: "Self-check questions and exercises associated with the Text and data lesson."
+description-meta: "Self-check questions and exercises shared by the language-representation bridge and the Text and data lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,22 +9,24 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/text-data-exercises"
-summary: "Self-check questions and exercises associated with the Text and data lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
-purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+summary: "Self-check questions and exercises shared by the language-representation bridge and the Text and data lesson."
+scope: "Collects the shared checks for the conceptual bridge Why represent language numerically? and the Text and data lesson: identifiers, initial vectors, and contextualization. Extended tokenization, lookup, and windowing exercises remain in their dedicated collections."
+purpose: "Check the shared distinctions between symbolic representation, token ID, initial vector, and contextualized state, then apply the concepts specific to turning text into data."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: []
   children: []
-related: ["en/text-data", "en/embedding-space"]
+related: ["en/language-representation", "en/text-data", "en/embedding-space"]
 tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:en", "status:published"]
 -->
 
-[← Back to the lesson: Text and data](../text-data.qmd)
+[← Back to the lessons: Why represent language numerically?](../language-representation.qmd) · [Text and data](../text-data.qmd)
 
 ## Check your understanding
+
+These short checks are shared by the conceptual bridge **Why represent language numerically?** and the **Text and data** lesson: they follow the move from symbols to identifiers, then to initial vectors and contextualized representations. The extended exercises below build on that foundation without repeating the lessons’ explanations.
 
 For integrated practice beyond these short checks, use the [Text data exercise collection](../exercises-text-data.qmd#text-data).
 

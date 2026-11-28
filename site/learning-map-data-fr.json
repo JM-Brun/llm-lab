@@ -203,13 +203,13 @@
       "domain": null,
       "scope": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
       "summary": "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés.",
-      "purpose": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
+      "purpose": "Expliquer pourquoi le langage doit être représenté par des objets mathématiques manipulables, comment des vecteurs appris rendent certaines régularités linguistiques exploitables par le réseau, et pourquoi le contexte transforme ensuite ces représentations.",
       "covered_stages": [],
       "section_headings": [
-        "1. Le problème : passer des symboles au calcul",
-        "2. Un identifiant n'est pas une représentation du sens",
-        "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
-        "4. Ce que les vecteurs rendent possible",
+        "1. Pourquoi rendre le langage calculable ?",
+        "2. Pourquoi un numéro ne suffit-il pas ?",
+        "3. Pourquoi représenter les unités par des vecteurs ?",
+        "4. En quoi cela aide-t-il à modéliser le sens ?",
         "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
         "6. La suite du parcours"
       ],
@@ -222,7 +222,8 @@
       "related": [
         "fr/text-data",
         "fr/embedding-space",
-        "fr/contextualized-representations"
+        "fr/contextualized-representations",
+        "fr/text-data-exercises"
       ],
       "rank": 9
     },
@@ -529,7 +530,7 @@
         "Pourquoi ce n'est pas du fine-tuning",
         "Où se fait l'adaptation ?",
         "Ce que l'ICL permet — et ses limites",
-        "Relation avec l'ingénierie du contexte"
+        "Ce qu'une démonstration communique réellement"
       ],
       "route": {
         "previous": "fr/generation",
@@ -634,7 +635,7 @@
       "domain": null,
       "scope": "Suit le lookup d’une séquence d’IDs : position dans la séquence, identifiant, ligne lue et vecteur initial obtenu. Distingue ce résultat du traitement positionnel et des états contextualisés.",
       "summary": "Suit une séquence d’IDs jusqu’aux vecteurs initiaux sélectionnés dans la matrice de plongements, en conservant leur ordre et les répétitions.",
-      "purpose": "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée et prévoir l’effet d’une renumérotation coordonnée.",
+      "purpose": "Pour une séquence d’IDs, retrouver dans l’ordre les lignes et vecteurs lus, expliquer pourquoi deux occurrences du même ID partagent le même vecteur à table fixée, et situer le lookup avant le traitement positionnel et la contextualisation.",
       "covered_stages": [],
       "section_headings": [
         "Le point de départ : le préfixe fourni au modèle",
@@ -698,7 +699,8 @@
         "fr/llm-evolution",
         "fr/llm-limits",
         "fr/rag-memory-boundaries",
-        "fr/document-retrieval"
+        "fr/document-retrieval",
+        "fr/context-engineering-exercises"
       ],
       "rank": 42
     },
@@ -1066,7 +1068,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 118
+      "rank": 122
     },
     {
       "id": "fr/build-path",
@@ -1532,41 +1534,6 @@
       "rank": 32
     },
     {
-      "id": "fr/tensors",
-      "title": "Tenseurs dans un Transformer : formes et axes",
-      "href": "tensors.html",
-      "language": "fr",
-      "destination": "deepen",
-      "level": "advanced",
-      "type": "deep-dive",
-      "topic": "tensors",
-      "domain": "mathematical-tools-geometry",
-      "scope": "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique. Elle couvre également le coût en paramètres de la table d'embeddings.",
-      "summary": "",
-      "purpose": "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect. Évaluer le nombre de paramètres de la table d'embeddings et de la projection de sortie.",
-      "covered_stages": [],
-      "section_headings": [
-        "Formes courantes dans un LLM",
-        "Coût en paramètres : la table d'embeddings et la projection de sortie",
-        "Lire les dimensions d'une projection",
-        "Dimensions architecturales d'un bloc Transformer",
-        "Les axes ont une signification",
-        "Contre-exemple : softmax sur le mauvais axe"
-      ],
-      "route": {
-        "previous": "fr/mathematical-foundations",
-        "next": "fr/cosine-similarity"
-      },
-      "parents": [
-        "fr/mathematical-foundations"
-      ],
-      "children": [],
-      "related": [
-        "fr/transformer"
-      ],
-      "rank": 35
-    },
-    {
       "id": "fr/queries-keys-values-advanced",
       "title": "Q/K/V : formulation mathématique et variantes",
       "href": "queries-keys-values-advanced.html",
@@ -1980,43 +1947,6 @@
       "rank": 61
     },
     {
-      "id": "fr/document-retrieval",
-      "title": "Récupération documentaire : indexer, retrouver, classer",
-      "href": "document-retrieval.html",
-      "language": "fr",
-      "destination": "deepen",
-      "level": "advanced",
-      "type": "deep-dive",
-      "topic": "document-retrieval",
-      "domain": "inference-efficiency",
-      "scope": "Conçoit et évalue la recherche documentaire, de l'ingestion et l'indexation à la génération de candidats et au classement ; la transmission au modèle et les architectures RAG/mémoire restent dans leur page dédiée.",
-      "summary": "Présente les étapes de recherche documentaire, les principales familles de retrievers, ColPali et les critères d'évaluation du classement.",
-      "purpose": "Le lecteur doit comparer les familles de recherche, distinguer rappel des candidats et qualité du classement, et identifier les compromis entre recherche textuelle, vectorielle, hybride et visuelle.",
-      "covered_stages": [],
-      "section_headings": [
-        "Ce que vous saurez faire",
-        "Récupération documentaire : retrouver n'est pas transmettre",
-        "Familles de retrievers : des alternatives, pas une échelle unique",
-        "Quand le document est visuel : ColPali et la recherche à l'échelle de la page",
-        "Exemple d'implémentation : recherche vectorielle",
-        "Pour approfondir le choix du modèle de classement"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [
-        "fr/deepen"
-      ],
-      "children": [],
-      "related": [
-        "fr/rag-memory-boundaries",
-        "fr/context-engineering",
-        "fr/in-context-learning"
-      ],
-      "rank": 62
-    },
-    {
       "id": "fr/embeddings-deep-dive",
       "title": "Embeddings : des représentations vectorielles aux espaces de recherche",
       "href": "embeddings-deep-dive.html",
@@ -2354,41 +2284,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 141
-    },
-    {
-      "id": "fr/score-centering",
-      "title": "Centrage du score en apprentissage par renforcement hors politique",
-      "href": "score-centering.html",
-      "language": "fr",
-      "destination": "deepen",
-      "level": "advanced",
-      "type": "deep-dive",
-      "topic": "score-centering",
-      "domain": "probabilistic-foundations-training",
-      "scope": "Explique le centrage du score comme correction additive par préfixe de la dérive du gradient de politique sous décalage entraînement-inférence ; le distingue des scores d'attention, du centrage des avantages de groupe et de l'échantillonnage par importance.",
-      "summary": "",
-      "purpose": "Dériver le score de politique centré, expliquer le décalage visé et évaluer la composition avec les corrections par échantillonnage d'importance.",
-      "covered_stages": [],
-      "section_headings": [
-        "1. Le décalage : qui échantillonne, qui apprend ?",
-        "2. L'objet centré est un gradient",
-        "3. Un petit exemple de Bernoulli",
-        "4. Trois opérations différentes appelées « centrage »",
-        "5. Relation avec l'échantillonnage par importance",
-        "6. Estimation efficace : top-k et queue du vocabulaire"
-      ],
-      "route": {
-        "previous": null,
-        "next": null
-      },
-      "parents": [],
-      "children": [],
-      "related": [
-        "fr/gradients",
-        "fr/llm-evolution"
-      ],
-      "rank": 142
+      "rank": 145
     },
     {
       "id": "fr/surprisal-information-content",
@@ -2427,7 +2323,7 @@
         "fr/language-modeling-math",
         "fr/experience-information-theory"
       ],
-      "rank": 143
+      "rank": 147
     },
     {
       "id": "fr/tokenization-and-tokenizers",
@@ -2468,7 +2364,7 @@
         "fr/exercises-text-data",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 145
+      "rank": 149
     },
     {
       "id": "fr/tokenization-strategies",
@@ -2508,7 +2404,7 @@
         "fr/training-examples",
         "fr/tokenization-strategies-exercises"
       ],
-      "rank": 146
+      "rank": 150
     },
     {
       "id": "fr/tokenizer-design-evaluation",
@@ -2548,7 +2444,7 @@
         "fr/unicode-text",
         "fr/exercises-text-data"
       ],
-      "rank": 147
+      "rank": 151
     },
     {
       "id": "fr/tokenizer-multilingual-evaluation",
@@ -2584,7 +2480,7 @@
         "fr/text-data",
         "fr/scaling-laws"
       ],
-      "rank": 148
+      "rank": 152
     },
     {
       "id": "fr/unicode-text",
@@ -2618,44 +2514,7 @@
       "related": [
         "fr/text-data"
       ],
-      "rank": 149
-    },
-    {
-      "id": "fr/universal-artificial-intelligence",
-      "title": "Complexité de Kolmogorov, AIXI et limites du calcul",
-      "href": "universal-artificial-intelligence.html",
-      "language": "fr",
-      "destination": "deepen",
-      "level": "advanced",
-      "type": "deep-dive",
-      "topic": "aixi",
-      "domain": "mathematical-tools-geometry",
-      "scope": "Explique ce qui est incalculable, ce qu'optimise AIXI, ce que bornent t et l et pourquoi AIXI(t,l) reste impraticable.",
-      "summary": "Dérivation avancée de la complexité de Kolmogorov vers la probabilité algorithmique, l'induction de Solomonoff, AIXI et AIXI(t,l) sous contraintes de ressources.",
-      "purpose": "Distinguer complexité descriptive, prédiction universelle et décision active, puis interpréter correctement la borne de calcul.",
-      "covered_stages": [],
-      "section_headings": [
-        "1. Complexité de Kolmogorov : le programme le plus court",
-        "Pourquoi K n'est pas calculable",
-        "2. Des programmes minimaux à la probabilité algorithmique",
-        "3. L'induction de Solomonoff : prédire une source inconnue",
-        "4. AIXI : transformer la prédiction en action",
-        "Pourquoi AIXI est incalculable"
-      ],
-      "route": {
-        "previous": "fr/compression-revision",
-        "next": null
-      },
-      "parents": [
-        "fr/compression-revision"
-      ],
-      "children": [],
-      "related": [
-        "fr/entropy",
-        "fr/cross-entropy",
-        "fr/llm-computational-complexity"
-      ],
-      "rank": 150
+      "rank": 153
     },
     {
       "id": "fr/zipf-law-deep-dive",
@@ -2692,7 +2551,7 @@
         "fr/text-data",
         "fr/tokenization-strategies"
       ],
-      "rank": 151
+      "rank": 155
     },
     {
       "id": "fr/exercises",
@@ -3100,6 +2959,35 @@
       "rank": 33
     },
     {
+      "id": "fr/tensors",
+      "title": "Tenseurs dans un Transformer : formes et axes",
+      "href": "tensors.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": "mathematical-tools-geometry",
+      "scope": "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique. Elle couvre également le coût en paramètres de la table d'embeddings.",
+      "summary": "",
+      "purpose": "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect. Évaluer le nombre de paramètres de la table d'embeddings et de la projection de sortie.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": "fr/mathematical-foundations",
+        "next": "fr/cosine-similarity"
+      },
+      "parents": [
+        "fr/mathematical-foundations"
+      ],
+      "children": [],
+      "related": [
+        "fr/transformer",
+        "fr/tensors-exercises"
+      ],
+      "rank": 35
+    },
+    {
       "id": "fr/post-training-exercises",
       "title": "Exercices — Post-entraînement",
       "href": "exercises/post-training.html",
@@ -3130,6 +3018,37 @@
         "fr/llm-limits"
       ],
       "rank": 56
+    },
+    {
+      "id": "fr/document-retrieval",
+      "title": "Récupération documentaire : indexer, retrouver, classer",
+      "href": "document-retrieval.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": "inference-efficiency",
+      "scope": "Conçoit et évalue la recherche documentaire, de l'ingestion et l'indexation à la génération de candidats et au classement ; la transmission au modèle et les architectures RAG/mémoire restent dans leur page dédiée.",
+      "summary": "Présente les étapes de recherche documentaire, les principales familles de retrievers, ColPali et les critères d'évaluation du classement.",
+      "purpose": "Le lecteur doit comparer les familles de recherche, distinguer rappel des candidats et qualité du classement, et identifier les compromis entre recherche textuelle, vectorielle, hybride et visuelle.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [
+        "fr/deepen"
+      ],
+      "children": [],
+      "related": [
+        "fr/rag-memory-boundaries",
+        "fr/context-engineering",
+        "fr/in-context-learning",
+        "fr/document-retrieval-exercises"
+      ],
+      "rank": 62
     },
     {
       "id": "fr/causal-masking-exercises",
@@ -4187,9 +4106,9 @@
       "type": "exercise-hub",
       "topic": "text-data-exercises",
       "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Texte et données.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "scope": "Regroupe les vérifications communes au pont conceptuel Pourquoi représenter le langage numériquement ? et à la leçon Texte et données : identifiants, vecteurs initiaux et contextualisation. Les exercices étendus de tokenisation, lookup et fenêtres restent dans les collections dédiées.",
+      "summary": "Questions de vérification et exercices partagés par le pont langage-représentations et la leçon Texte et données.",
+      "purpose": "Vérifier les distinctions partagées entre représentation symbolique, identifiant, vecteur initial et état contextualisé, puis appliquer les notions propres au passage du texte aux données.",
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
@@ -4204,6 +4123,7 @@
       "parents": [],
       "children": [],
       "related": [
+        "fr/language-representation",
         "fr/text-data",
         "fr/embedding-space"
       ],
@@ -4515,6 +4435,136 @@
       "rank": 111
     },
     {
+      "id": "fr/document-retrieval-exercises",
+      "title": "Exercices — Récupération documentaire",
+      "href": "exercises/document-retrieval.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": null,
+      "scope": "Évalue le rappel des candidats, les limites du reranking, l'interprétation de MRR et la séparation entre récupération et transmission au contexte.",
+      "summary": "Quatre questions de transfert associées à l'approfondissement sur la récupération documentaire.",
+      "purpose": "Vérifier que le lecteur peut diagnostiquer à quelle étape un pipeline de recherche ou RAG perd une information pertinente.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Mesurer le rappel des candidats",
+        "2. La limite du reranker",
+        "3. Calculer MRR@5",
+        "4. Récupération réussie, transmission échouée"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/document-retrieval",
+        "fr/rag-memory-boundaries"
+      ],
+      "rank": 118
+    },
+    {
+      "id": "fr/score-centering-exercises",
+      "title": "Exercices — Centrage du score",
+      "href": "exercises/score-centering.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": null,
+      "scope": "Fait calculer une correction sur de nouvelles probabilités, tester le cas on-policy, distinguer trois opérations appelées centrage et interpréter la frontière stat=ratio/stat=tv.",
+      "summary": "Quatre questions de transfert associées à l'approfondissement sur le centrage du score.",
+      "purpose": "Vérifier le transfert du raisonnement sans répéter la dérivation de Bernoulli travaillée dans la leçon.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Calculer un centrage sur de nouvelles valeurs",
+        "2. Retrouver le cas on-policy",
+        "3. Distinguer trois « centrages »",
+        "4. Interpréter la frontière stat=ratio / stat=tv"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/score-centering"
+      ],
+      "rank": 119
+    },
+    {
+      "id": "fr/tensors-exercises",
+      "title": "Exercices — Formes des tenseurs dans un Transformer",
+      "href": "exercises/tensors.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": null,
+      "scope": "Évalue les formes produites par un lookup et une projection, le découpage en têtes, la sémantique de l'axe de softmax et le coût en paramètres des matrices d'embeddings et de sortie.",
+      "summary": "Quatre exercices de transfert associés à la référence sur les formes et axes des tenseurs dans un Transformer.",
+      "purpose": "Vérifier que le lecteur peut suivre les dimensions d'un calcul nouveau sans confondre compatibilité de forme et correction sémantique.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Lookup et projection de sortie",
+        "2. Découpage en têtes",
+        "3. Softmax sur le mauvais axe",
+        "4. Coût des embeddings et poids liés"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/tensors"
+      ],
+      "rank": 120
+    },
+    {
+      "id": "fr/universal-artificial-intelligence-exercises",
+      "title": "Exercices — Intelligence artificielle universelle",
+      "href": "exercises/universal-artificial-intelligence.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": null,
+      "scope": "Vérifie les distinctions entre complexité de Kolmogorov, mélange universel, induction de Solomonoff, AIXI idéal et AIXI(t,l), ainsi que les limites de calcul et les remèdes théoriques.",
+      "summary": "Sept questions de compréhension associées à l'approfondissement sur l'intelligence artificielle universelle.",
+      "purpose": "Vérifier que le lecteur peut restituer les définitions et les limites sans confondre borne calculable, objet idéal et approximation calculable.",
+      "covered_stages": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Complexité de Kolmogorov et borne calculable",
+        "2. Complexité et mélange universel",
+        "3. De la prédiction à la décision",
+        "4. Les deux bornes de AIXI(t,l)",
+        "5. Idéal et approximation calculable"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/universal-artificial-intelligence"
+      ],
+      "rank": 121
+    },
+    {
       "id": "fr/revision-causal-masking",
       "title": "Révision — Masque causal",
       "href": "revision-causal-masking.html",
@@ -4541,7 +4591,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 119
+      "rank": 123
     },
     {
       "id": "fr/revision-context-engineering",
@@ -4570,7 +4620,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 120
+      "rank": 124
     },
     {
       "id": "fr/revision-contextualized-representations",
@@ -4600,7 +4650,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 121
+      "rank": 125
     },
     {
       "id": "fr/revision-cross-entropy",
@@ -4629,7 +4679,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 122
+      "rank": 126
     },
     {
       "id": "fr/revision-embedding-space",
@@ -4658,7 +4708,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 123
+      "rank": 127
     },
     {
       "id": "fr/revision-entropy",
@@ -4689,7 +4739,7 @@
       "related": [
         "fr/synthese-entropie"
       ],
-      "rank": 124
+      "rank": 128
     },
     {
       "id": "fr/revision-gradients",
@@ -4718,7 +4768,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 125
+      "rank": 129
     },
     {
       "id": "fr/revision-in-context-learning",
@@ -4747,7 +4797,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 126
+      "rank": 130
     },
     {
       "id": "fr/revision-inference-generation",
@@ -4777,7 +4827,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 127
+      "rank": 131
     },
     {
       "id": "fr/revision-information-theory",
@@ -4810,7 +4860,7 @@
       "related": [
         "fr/experience-information-theory"
       ],
-      "rank": 128
+      "rank": 132
     },
     {
       "id": "fr/revision-language-representation",
@@ -4843,7 +4893,7 @@
         "fr/revision-text-data",
         "fr/revision-embedding-space"
       ],
-      "rank": 129
+      "rank": 133
     },
     {
       "id": "fr/revision-llm-overview",
@@ -4872,7 +4922,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 130
+      "rank": 134
     },
     {
       "id": "fr/revision-logits",
@@ -4901,7 +4951,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 131
+      "rank": 135
     },
     {
       "id": "fr/revision-loss",
@@ -4930,7 +4980,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 132
+      "rank": 136
     },
     {
       "id": "fr/revision-positional-encoding",
@@ -4961,7 +5011,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 133
+      "rank": 137
     },
     {
       "id": "fr/revision-probabilites",
@@ -4990,7 +5040,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 134
+      "rank": 138
     },
     {
       "id": "fr/revision-queries-keys-values",
@@ -5020,7 +5070,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 135
+      "rank": 139
     },
     {
       "id": "fr/revision-scaled-dot-product-attention",
@@ -5049,7 +5099,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 136
+      "rank": 140
     },
     {
       "id": "fr/revision-text-data",
@@ -5082,7 +5132,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 137
+      "rank": 141
     },
     {
       "id": "fr/revision-training-loop",
@@ -5111,7 +5161,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 138
+      "rank": 142
     },
     {
       "id": "fr/revision-transformer",
@@ -5140,7 +5190,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 139
+      "rank": 143
     },
     {
       "id": "fr/revision-vraisemblance",
@@ -5169,7 +5219,35 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 140
+      "rank": 144
+    },
+    {
+      "id": "fr/score-centering",
+      "title": "Centrage du score en apprentissage par renforcement hors politique",
+      "href": "score-centering.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": "probabilistic-foundations-training",
+      "scope": "Explique le centrage du score comme correction additive par préfixe de la dérive du gradient de politique sous décalage entraînement-inférence ; le distingue des scores d'attention, du centrage des avantages de groupe et de l'échantillonnage par importance.",
+      "summary": "",
+      "purpose": "Dériver le score de politique centré, expliquer le décalage visé et évaluer la composition avec les corrections par échantillonnage d'importance.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "fr/gradients",
+        "fr/llm-evolution",
+        "fr/score-centering-exercises"
+      ],
+      "rank": 146
     },
     {
       "id": "fr/synthese-entropie",
@@ -5211,7 +5289,38 @@
         "fr/loss",
         "fr/compression-revision"
       ],
-      "rank": 144
+      "rank": 148
+    },
+    {
+      "id": "fr/universal-artificial-intelligence",
+      "title": "Complexité de Kolmogorov, AIXI et limites du calcul",
+      "href": "universal-artificial-intelligence.html",
+      "language": "fr",
+      "destination": "reference",
+      "level": "reference",
+      "type": "concept-lesson",
+      "topic": "misc",
+      "domain": "mathematical-tools-geometry",
+      "scope": "Explique ce qui est incalculable, ce qu'optimise AIXI, ce que bornent t et l et pourquoi AIXI(t,l) reste impraticable.",
+      "summary": "Dérivation avancée de la complexité de Kolmogorov vers la probabilité algorithmique, l'induction de Solomonoff, AIXI et AIXI(t,l) sous contraintes de ressources.",
+      "purpose": "Distinguer complexité descriptive, prédiction universelle et décision active, puis interpréter correctement la borne de calcul.",
+      "covered_stages": [],
+      "section_headings": [],
+      "route": {
+        "previous": "fr/compression-revision",
+        "next": null
+      },
+      "parents": [
+        "fr/compression-revision"
+      ],
+      "children": [],
+      "related": [
+        "fr/entropy",
+        "fr/cross-entropy",
+        "fr/llm-computational-complexity",
+        "fr/universal-artificial-intelligence-exercises"
+      ],
+      "rank": 154
     },
     {
       "id": "reference/references",
@@ -5242,7 +5351,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 152
+      "rank": 156
     }
   ],
   "navigation": [
