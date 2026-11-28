@@ -531,7 +531,7 @@
         "Why this is not fine-tuning",
         "Where does adaptation happen?",
         "What ICL enables — and its limits",
-        "Key points"
+        "What does a demonstration actually communicate?"
       ],
       "route": {
         "previous": "en/generation",
