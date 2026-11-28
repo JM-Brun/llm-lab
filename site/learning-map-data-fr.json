@@ -4189,9 +4189,9 @@
       "type": "exercise-hub",
       "topic": "text-data-exercises",
       "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Texte et données.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "scope": "Regroupe les vérifications communes au pont conceptuel Pourquoi représenter le langage numériquement ? et à la leçon Texte et données : identifiants, vecteurs initiaux et contextualisation. Les exercices étendus de tokenisation, lookup et fenêtres restent dans les collections dédiées.",
+      "summary": "Questions de vérification et exercices partagés par le pont langage-représentations et la leçon Texte et données.",
+      "purpose": "Vérifier les distinctions partagées entre représentation symbolique, identifiant, vecteur initial et état contextualisé, puis appliquer les notions propres au passage du texte aux données.",
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
