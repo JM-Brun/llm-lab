@@ -42,7 +42,7 @@ A word is not naturally a number. Assigning it an integer makes it possible to r
 
 The idea is to associate text units with vectors whose values are learned from language use and a training objective. The network's operations can then exploit statistical regularities — and thereby model aspects of semantics — without being given an explicit definition of every word.
 
-We will follow the same running example used throughout the learning path: Otis's question, “C'est une bonne situation, ça, scribe ?”, followed by the beginning of his reply: “Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation…”. We will treat these as character strings first, then track what changes — and what does not — as the model turns them into numerical objects.
+For a contrastive example of context-dependent meaning, we will use a short French exchange: Otis asks “C'est une bonne situation, ça, scribe ?” (“Is this a good situation, scribe?”), then begins his reply: “Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation…” (“You know, I don't think there are good or bad situations…”). The English overview and tokenizer lesson use the Romans question as their running prompt; this separate example makes two uses of the same visible word easy to compare. We will treat the phrases as character strings first, then track what changes — and what does not — as the model turns them into numerical objects.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="What you should understand"}
