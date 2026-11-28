@@ -212,7 +212,8 @@
         "3. The learned vector: an object the network can compute with",
         "4. What vector representations make possible",
         "5. Why must context still transform these vectors?",
-        "6. Where the learning path goes next"
+        "6. Where the learning path goes next",
+        "Practice"
       ],
       "route": {
         "previous": "en/llm-overview",
@@ -223,7 +224,8 @@
       "related": [
         "en/text-data",
         "en/embedding-space",
-        "en/contextualized-representations"
+        "en/contextualized-representations",
+        "en/text-data-exercises"
       ],
       "rank": 9
     },
@@ -4275,7 +4277,8 @@
       "children": [],
       "related": [
         "en/text-data",
-        "en/embedding-space"
+        "en/embedding-space",
+        "en/language-representation"
       ],
       "rank": 103
     },
