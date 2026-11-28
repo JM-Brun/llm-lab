@@ -207,10 +207,10 @@
       "purpose": "Explain why language must be represented by mathematical objects a network can manipulate, how learned vectors make linguistic regularities usable by the network, and why context subsequently transforms these representations.",
       "covered_stages": [],
       "section_headings": [
-        "1. The problem: moving from symbols to computation",
-        "2. An identifier is not a representation of meaning",
-        "3. The learned vector: an object the network can compute with",
-        "4. What vector representations make possible",
+        "1. Why make language computable?",
+        "2. Why is an integer label not enough?",
+        "3. Why represent units with vectors?",
+        "4. How does this help model meaning?",
         "5. Why must context still transform these vectors?",
         "6. Where the learning path goes next",
         "Practice"
