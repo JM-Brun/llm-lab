@@ -1066,7 +1066,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 119
+      "rank": 123
     },
     {
       "id": "en/build-path",
@@ -1561,7 +1561,8 @@
       ],
       "children": [],
       "related": [
-        "en/transformer"
+        "en/transformer",
+        "en/tensors-exercises"
       ],
       "rank": 35
     },
@@ -2011,7 +2012,8 @@
       "related": [
         "en/rag-memory-boundaries",
         "en/context-engineering",
-        "en/in-context-learning"
+        "en/in-context-learning",
+        "en/document-retrieval-exercises"
       ],
       "rank": 62
     },
@@ -2322,7 +2324,7 @@
         "en/post-training",
         "en/document-retrieval"
       ],
-      "rank": 118
+      "rank": 122
     },
     {
       "id": "en/scaling-laws",
@@ -2353,7 +2355,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 142
+      "rank": 146
     },
     {
       "id": "en/score-centering",
@@ -2385,9 +2387,10 @@
       "children": [],
       "related": [
         "en/gradients",
-        "en/llm-evolution"
+        "en/llm-evolution",
+        "en/score-centering-exercises"
       ],
-      "rank": 143
+      "rank": 147
     },
     {
       "id": "en/surprisal-information-content",
@@ -2426,7 +2429,7 @@
         "en/language-modeling-math",
         "en/experience-information-theory"
       ],
-      "rank": 144
+      "rank": 148
     },
     {
       "id": "en/tokenization-and-tokenizers",
@@ -2467,7 +2470,7 @@
         "en/exercises-text-data",
         "en/tokenization-strategies-exercises"
       ],
-      "rank": 145
+      "rank": 149
     },
     {
       "id": "en/tokenization-strategies",
@@ -2507,7 +2510,7 @@
         "en/training-examples",
         "en/tokenization-strategies-exercises"
       ],
-      "rank": 146
+      "rank": 150
     },
     {
       "id": "en/tokenizer-design-evaluation",
@@ -2547,7 +2550,7 @@
         "en/unicode-text",
         "en/exercises-text-data"
       ],
-      "rank": 147
+      "rank": 151
     },
     {
       "id": "en/tokenizer-multilingual-evaluation",
@@ -2583,7 +2586,7 @@
         "en/text-data",
         "en/scaling-laws"
       ],
-      "rank": 148
+      "rank": 152
     },
     {
       "id": "en/unicode-text",
@@ -2617,7 +2620,7 @@
       "related": [
         "en/text-data"
       ],
-      "rank": 149
+      "rank": 153
     },
     {
       "id": "en/universal-artificial-intelligence",
@@ -2652,9 +2655,10 @@
       "related": [
         "en/entropy",
         "en/cross-entropy",
-        "en/llm-computational-complexity"
+        "en/llm-computational-complexity",
+        "en/universal-artificial-intelligence-exercises"
       ],
-      "rank": 150
+      "rank": 154
     },
     {
       "id": "en/zipf-law-deep-dive",
@@ -2691,7 +2695,7 @@
         "en/text-data",
         "en/tokenization-strategies"
       ],
-      "rank": 151
+      "rank": 155
     },
     {
       "id": "en/exercises",
@@ -4557,6 +4561,136 @@
       "rank": 112
     },
     {
+      "id": "en/document-retrieval-exercises",
+      "title": "Exercises — Document Retrieval",
+      "href": "exercises/document-retrieval.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "document-retrieval-exercises",
+      "domain": null,
+      "scope": "Tests candidate recall, reranking limits, MRR interpretation, and the separation between retrieval and context handoff.",
+      "summary": "Four transfer questions associated with the Document Retrieval deep dive.",
+      "purpose": "Check that readers can diagnose which stage of a search or RAG pipeline loses relevant information.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Measure candidate recall",
+        "2. The reranker's limit",
+        "3. Calculate MRR@5",
+        "4. Retrieval succeeds, handoff fails"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/document-retrieval",
+        "en/rag-memory-boundaries"
+      ],
+      "rank": 118
+    },
+    {
+      "id": "en/score-centering-exercises",
+      "title": "Exercises — Score Centering",
+      "href": "exercises/score-centering.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "score-centering-exercises",
+      "domain": null,
+      "scope": "Calculates a correction for new probabilities, tests the on-policy case, distinguishes three operations called centering, and interprets the stat=ratio/stat=tv boundary.",
+      "summary": "Four transfer questions associated with the Score Centering deep dive.",
+      "purpose": "Checks transfer without repeating the Bernoulli derivation already worked through in the lesson.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Calculate centering for new values",
+        "2. Recover the on-policy case",
+        "3. Distinguish three kinds of “centering”",
+        "4. Interpret the stat=ratio / stat=tv boundary"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/score-centering"
+      ],
+      "rank": 119
+    },
+    {
+      "id": "en/tensors-exercises",
+      "title": "Exercises — Tensor Shapes in a Transformer",
+      "href": "exercises/tensors.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "tensors-exercises",
+      "domain": null,
+      "scope": "Tests the shapes produced by lookup and projection, multi-head reshaping, softmax-axis semantics, and the parameter cost of embedding and output matrices.",
+      "summary": "Four transfer exercises associated with the reference on tensor shapes and axes in a Transformer.",
+      "purpose": "Check that readers can track dimensions in a new calculation without confusing shape compatibility with semantic correctness.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Lookup and output projection",
+        "2. Splitting into heads",
+        "3. Softmax over the wrong axis",
+        "4. Embedding cost and tied weights"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/tensors"
+      ],
+      "rank": 120
+    },
+    {
+      "id": "en/universal-artificial-intelligence-exercises",
+      "title": "Exercises — Universal Artificial Intelligence",
+      "href": "exercises/universal-artificial-intelligence.html",
+      "language": "en",
+      "destination": "practice",
+      "level": "applied",
+      "type": "exercise-hub",
+      "topic": "universal-artificial-intelligence-exercises",
+      "domain": null,
+      "scope": "Checks the distinctions between Kolmogorov complexity, the universal mixture, Solomonoff induction, ideal AIXI and computable AIXI(t,l), including computational limits and theoretical remedies.",
+      "summary": "Seven comprehension questions associated with the Universal Artificial Intelligence deep dive.",
+      "purpose": "Check that readers can state the definitions and limits without conflating a computable upper bound, an ideal object, and a computable approximation.",
+      "covered_stages": [],
+      "section_headings": [
+        "Check your understanding",
+        "1. Kolmogorov complexity and computable bounds",
+        "2. Complexity and the universal mixture",
+        "3. From prediction to decision",
+        "4. The two bounds in AIXI(t,l)",
+        "5. Ideal object and computable approximation"
+      ],
+      "route": {
+        "previous": null,
+        "next": null
+      },
+      "parents": [],
+      "children": [],
+      "related": [
+        "en/universal-artificial-intelligence"
+      ],
+      "rank": 121
+    },
+    {
       "id": "en/revision-causal-masking",
       "title": "Review — Causal masking",
       "href": "revision-causal-masking.html",
@@ -4584,7 +4718,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 120
+      "rank": 124
     },
     {
       "id": "en/revision-context-engineering",
@@ -4614,7 +4748,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 121
+      "rank": 125
     },
     {
       "id": "en/revision-contextualized-representations",
@@ -4645,7 +4779,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 122
+      "rank": 126
     },
     {
       "id": "en/revision-cross-entropy",
@@ -4675,7 +4809,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 123
+      "rank": 127
     },
     {
       "id": "en/revision-embedding-space",
@@ -4705,7 +4839,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 124
+      "rank": 128
     },
     {
       "id": "en/revision-entropy",
@@ -4737,7 +4871,7 @@
       "related": [
         "en/entropy-synthesis"
       ],
-      "rank": 125
+      "rank": 129
     },
     {
       "id": "en/revision-gradients",
@@ -4767,7 +4901,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 126
+      "rank": 130
     },
     {
       "id": "en/revision-in-context-learning",
@@ -4797,7 +4931,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 127
+      "rank": 131
     },
     {
       "id": "en/revision-inference-generation",
@@ -4828,7 +4962,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 128
+      "rank": 132
     },
     {
       "id": "en/revision-information-theory",
@@ -4861,7 +4995,7 @@
       "related": [
         "en/experience-information-theory"
       ],
-      "rank": 129
+      "rank": 133
     },
     {
       "id": "en/revision-language-representation",
@@ -4895,7 +5029,7 @@
         "en/revision-text-data",
         "en/revision-embedding-space"
       ],
-      "rank": 130
+      "rank": 134
     },
     {
       "id": "en/revision-llm-overview",
@@ -4925,7 +5059,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 131
+      "rank": 135
     },
     {
       "id": "en/revision-logits",
@@ -4955,7 +5089,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 132
+      "rank": 136
     },
     {
       "id": "en/revision-loss",
@@ -4985,7 +5119,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 133
+      "rank": 137
     },
     {
       "id": "en/revision-positional-encoding",
@@ -5017,7 +5151,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 134
+      "rank": 138
     },
     {
       "id": "en/revision-probabilites",
@@ -5047,7 +5181,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 135
+      "rank": 139
     },
     {
       "id": "en/revision-queries-keys-values",
@@ -5078,7 +5212,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 136
+      "rank": 140
     },
     {
       "id": "en/revision-scaled-dot-product-attention",
@@ -5108,7 +5242,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 137
+      "rank": 141
     },
     {
       "id": "en/revision-text-data",
@@ -5142,7 +5276,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 138
+      "rank": 142
     },
     {
       "id": "en/revision-training-loop",
@@ -5172,7 +5306,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 139
+      "rank": 143
     },
     {
       "id": "en/revision-transformer",
@@ -5202,7 +5336,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 140
+      "rank": 144
     },
     {
       "id": "en/revision-vraisemblance",
@@ -5232,7 +5366,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 141
+      "rank": 145
     },
     {
       "id": "reference/references",
@@ -5263,7 +5397,7 @@
       "parents": [],
       "children": [],
       "related": [],
-      "rank": 152
+      "rank": 156
     }
   ],
   "navigation": [
