@@ -289,7 +289,7 @@ For each lesson, the destination record must compare FR and EN, name exact headi
 ### Revised priority order
 
 1. **P0 — #1813 final-head reconciliation:** verify current branch/base, generated map freshness, CI, Quarto and browser artifact; merge only after final-head checks pass.
-2. **P1 — #1739 destination evidence, batch 4:** logits, probabilities, entropy and generation; then finish the remaining six lessons in canonical route order.
+2. **P1 — #1739 destination evidence, batch 4:** logits, probabilities and entropy (documented in this branch); then generation as the next branch-level batch, followed by the remaining context, scoring and training lessons.
 3. **P1 — #1512 full bilingual Practice inventory:** continue after the latest merged moves; preserve worked explanations and only move genuinely learner-directed assessment/experimentation.
 4. **P1 — #1208/#280 lesson migration:** continue conservation and duration evidence in parallel, but do not modify the guided route until the section-level destination map is approved.
 5. **P2 — #584 manual accessibility:** schedule actual FR/EN assistive-technology and touch checks; reuse shared-navigation evidence from #988.
