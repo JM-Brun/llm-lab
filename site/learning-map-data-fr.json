@@ -203,7 +203,7 @@
       "domain": null,
       "scope": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
       "summary": "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés.",
-      "purpose": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
+      "purpose": "Expliquer pourquoi le langage doit être représenté par des objets mathématiques manipulables, comment des vecteurs appris rendent certaines régularités linguistiques exploitables par le réseau, et pourquoi le contexte transforme ensuite ces représentations.",
       "covered_stages": [],
       "section_headings": [
         "1. Le problème : passer des symboles au calcul",
