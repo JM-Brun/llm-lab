@@ -47,7 +47,7 @@ Mais XOR n'est pas « impossible à représenter linéairement » dans l'absolu.
 
 On peut rendre cette transformation explicite. Posons $u=x_1+x_2$ et $v=x_1x_2$. Le score $s=u-2v$ est une combinaison linéaire des caractéristiques transformées. Pour les quatre entrées :
 
-| $(x_1,x_2)$ | $y=x_1\\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
+| $(x_1,x_2)$ | $y=x_1\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
 |---|---:|---:|---:|
 | $(0,0)$ | 0 | $(0,0)$ | 0 |
 | $(0,1)$ | 1 | $(1,0)$ | 1 |
