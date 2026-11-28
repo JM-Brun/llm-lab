@@ -276,7 +276,7 @@ This section supersedes stale snapshots above where their PR states or next acti
 
 ### Completed on this branch — prediction-stage destination evidence
 
-The source-level destination audit for **logits → probabilities → entropy** is recorded in [batch 4](source-syntheses/understand-destination-evidence-batch-4-2026-11.md), with FR/EN destinations, local claims, provenance, Practice ownership and preservation decisions. The consolidated matrix and page-audit inventory are updated to 13/20 destination-evidenced lessons. This remains pending PR integration and rendered-anchor review; it is not learner validation.
+The prediction-stage audit in [batch 4](source-syntheses/understand-destination-evidence-batch-4-2026-11.md) was the first increment of this work. Its interim 13/20 count was superseded by batches 5–7; the consolidated matrix now records 20/20 destination-evidenced lessons on this branch. PR integration, deployed anchor verification and learner validation remain separate.
 
 ### Completed — generation and context-use destination evidence
 
