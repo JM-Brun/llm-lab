@@ -1,5 +1,41 @@
 # Advent calendar — remaining work and session handoff
 
+## Current operational snapshot — 2026-11-28
+
+The calendar remains **implemented but not collection-validated or learner-validated**. Published pages and green CI are not acceptance evidence.
+
+### Changes since 2026-11-27
+
+- [PR #1815](https://github.com/JM-Brun/llm-lab/pull/1815) merged. Day 02's bilingual manifest question now distinguishes observed-token surprisal from predictive uncertainty. All required checks, including Quarto/browser, passed. This is metadata-only; #1666 remains open.
+- The first-five FR/EN source comparison is documented in a new comment on [#1664](https://github.com/JM-Brun/llm-lab/issues/1664). It is explicitly source-level, not a rendered or learner review.
+- [PR #1816](https://github.com/JM-Brun/llm-lab/pull/1816) adds the missing XOR visual and four-case worked calculation to the canonical Day 04 FR/EN pages. Python quality, tests and secret scanning passed at last inspection; Quarto/browser was still running.
+- [PR #1817](https://github.com/JM-Brun/llm-lab/pull/1817) brings the controlled *bank* contrast to the opening of the canonical Day 05 FR/EN pages and adds a conceptual diagram. Checks were running at last inspection except secret scanning, which passed.
+- Days 04–05 reuse their canonical Deepen pages. No duplicate calendar pages, concepts, computational nodes, prerequisite edges or per-concept workflows were introduced.
+
+### Updated first-five state
+
+| Day | Current decision | Remaining evidence |
+|---|---|---|
+| 01 — Zipf | Strong source-level story; not accepted | Verify 217/125 counts and table; obtain non-specialist read in #1653 |
+| 02 — Surprisal | Quantitative core and manifest wording aligned; not accepted | Scientific/rendered/novice review in #1666 |
+| 03 — Tokenizer | Narrative and cost boundaries implemented; reuse audit open | Mobile/browser, anchors, rights, reproducibility and novice review in #1667 |
+| 04 — Geometry | XOR visual and worked calculation proposed in #1816 | CI/browser, mobile/accessibility, sources and novice review in #1668 |
+| 05 — Contextualization | Story-led opening and controlled-context diagram proposed in #1817 | CI/browser, mobile/accessibility, anchor and novice review in #1669 |
+
+Days 01–03 remain complementary statistical perspectives, **not prerequisites**: marginal lexical frequency, conditional surprisal and tokenizer segmentation answer different questions. Days 04–05 need distinct concrete contrasts but must not duplicate canonical explanations.
+
+### Next execution order
+
+1. Finish CI and browser review for #1816 and #1817; merge only after required checks pass.
+2. Inspect the resulting FR/EN pages at desktop/mobile widths, including figures, equations, links and accessibility.
+3. Obtain novice evidence for Days 01–05 through the individual page issues; do not generalize one reader's evidence.
+4. Complete #1664's shared editorial gate after the individual owners record their results.
+5. Continue the 24-day canonical crosswalk in #1513, preserving the distinct uses of the conditional distribution (generation, observed-target scoring/evaluation, training) and keeping Q/K/V inside Transformer blocks.
+
+The manifest's `page_status` values remain editorial workflow states, not proof of learner acceptance. Do not mark the first five doors accepted or the collection release-ready from source review or CI alone.
+
+---
+
 ## Current operational snapshot — 2026-11-27 (supersedes earlier status paragraphs)
 
 The 24-story calendar remains **implemented but not collection-validated or learner-validated**. Do not infer acceptance from merged implementation PRs, a published page, or green CI.
