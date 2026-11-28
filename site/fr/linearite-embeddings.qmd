@@ -45,6 +45,21 @@ Considérons $x_1,x_2\in\{0,1\}$ et $y=x_1\oplus x_2$. Les points de classe posi
 
 Mais XOR n'est pas « impossible à représenter linéairement » dans l'absolu. Avec une transformation de caractéristiques, par exemple $\phi(x_1,x_2)=(x_1,x_2,x_1x_2)$, la séparation devient linéaire dans l'espace transformé. La leçon est que **la séparabilité linéaire dépend de la représentation et des caractéristiques choisies**.
 
+On peut rendre cette transformation explicite. Posons $u=x_1+x_2$ et $v=x_1x_2$. Le score $s=u-2v$ est une combinaison linéaire des caractéristiques transformées. Pour les quatre entrées :
+
+| $(x_1,x_2)$ | $y=x_1\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
+|---|---:|---:|---:|
+| $(0,0)$ | 0 | $(0,0)$ | 0 |
+| $(0,1)$ | 1 | $(1,0)$ | 1 |
+| $(1,0)$ | 1 | $(1,0)$ | 1 |
+| $(1,1)$ | 0 | $(2,1)$ | 0 |
+
+Le seuil $s=0{,}5$ sépare donc les deux classes dans cet espace transformé. La fonction XOR n'a pas changé : c'est la représentation utilisée par le classifieur qui a changé.
+
+![À gauche, les classes XOR alternent aux quatre coins et aucune droite ne les sépare. À droite, après transformation vers $u=x_1+x_2$ et $v=x_1x_2$, les exemples positifs se regroupent et une droite les sépare des exemples négatifs.](../images/advent-xor-linear-separability.svg){#fig-advent-xor-linear-separability fig-alt="Dans l'espace d'entrée, les classes XOR alternent aux quatre coins du carré ; dans l'espace transformé (u,v), les points négatifs (0,0) et (2,1) sont séparés du point positif (1,0) par la droite u moins 2v égale 0,5." width=100%}
+
+*Illustration pédagogique : les deux entrées positives $(0,1)$ et $(1,0)$ se superposent au point $(u,v)=(1,0)$ après transformation.*
+
 C'est pourquoi un échec de probe linéaire ne prouve pas automatiquement l'absence d'information, et une réussite ne suffit pas à prouver un mécanisme interne.
 
 ## 3. Superposition : plus de caractéristiques que de dimensions
