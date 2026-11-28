@@ -159,4 +159,8 @@ Nous pouvons maintenant étudier chaque étape sans confondre sa fonction :
 3. **[L'information de position](positional-encoding.qmd)** — comment le modèle tient compte de l'ordre des tokens.
 4. **[Les représentations contextualisées](contextualized-representations.qmd)** — comment les blocs du Transformer transforment les vecteurs initiaux en états dépendant du contexte.
 
+## Exercices
+
+Les questions de vérification sur les identifiants, les vecteurs initiaux et la contextualisation sont regroupées avec la leçon **Texte et données** sur sa [page d’exercices commune](exercises/text-data.qmd). Ce regroupement évite de dupliquer les mêmes distinctions entre les deux pages de l’étape « Du langage aux tokens » ; les exercices plus développés sur les tokenizers, le lookup et les fenêtres restent dans leurs collections respectives.
+
 **L'idée à retenir :** les IDs rendent les unités du vocabulaire adressables ; les embeddings fournissent des vecteurs appris ; les couches du réseau transforment ces vecteurs pour construire des états adaptés au contexte et à la prédiction. La page suivante commence par le premier passage concret : du texte aux tokens et à leurs identifiants.
