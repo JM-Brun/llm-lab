@@ -24,13 +24,30 @@ tags: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectu
 
 [← Back to the lesson: Multimodal architectures](../multimodal-architectures.qmd)
 
-## Questions to ask when reading an architecture
+## Check your understanding
+
+### Questions to ask when reading an architecture
 
 1. **Which modalities actually enter and leave?** Do not infer generation from input understanding alone.
 2. **Where are the boundaries?** Identify encoders, projectors, language models, generators, codecs, and runtime.
 3. **Which representation is predicted?** Text tokens, audio codes, visual tokens, patches, or latent states.
 4. **Which mechanism produces the output?** Autoregressive decoding, iterative denoising, codec decoding, or an external call.
 5. **What evidence supports the comparison?** A published architecture does not by itself prove better quality, cost, or speed.
+
+<details>
+<summary>Self-assessment criteria</summary>
+
+A defensible analysis should:
+
+- specify input and output modalities separately, without inferring generation from input understanding;
+- locate the boundaries between encoders, projectors, language models, generators, codecs, and runtime, using evidence rather than names alone;
+- identify the representation actually predicted or transformed at each stage;
+- distinguish model-internal generation from iterative decoding, codec decoding, or external tool calls;
+- compare systems only with evidence appropriate to the claim, such as matched evaluation conditions and separately reported quality, latency, and cost.
+
+If public documentation does not expose a component or training detail, mark it as unknown rather than filling the gap by analogy.
+
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/multimodal-architectures.qmd) · [English](../../en/exercises/multimodal-architectures.qmd)
