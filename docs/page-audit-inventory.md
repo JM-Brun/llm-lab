@@ -2194,3 +2194,25 @@ Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modifi
 La [matrice consolidée des contributions](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md) rassemble une ligne par leçon canonique bilingue de `data/guided-route.yml`, avec les apports distinctifs à préserver et les dossiers/pilotes qui constituent les preuves détaillées.
 
 Elle confirme la couverture source de toutes les leçons Understand du parcours principal. Elle ne certifie pas leur rendu visuel ni leur accessibilité. Le contrat de modélisation retient les structures existantes — catalogue/extractions, dossiers de synthèse, concepts, graphe computationnel, parcours et page-map — sans ajouter de champ `intellectual_contributions` ou de registre exécutable parallèle. La maintenance doit mettre à jour la matrice et les dossiers de preuve lors de toute refonte.
+
+
+## 2026-11-28: concept bridge `language-representation` — shared Practice destination
+
+**Scope.** Source-level FR/EN audit of the published `language-representation` concept bridge in the `text-input` stage, its hand-off to `text-data`, and the existing bilingual `exercises/text-data.qmd` companion hub. Cross-checked `data/guided-route.yml`, inline PAGE-MAP metadata, the companion's questions and the generated learning-map payloads. This is a bounded source/metadata audit; it is not a rendered-browser, screen-reader or learner-validation result.
+
+### Findings
+
+- **Route identity and denominator.** The `text-input` stage contains two core destinations: `language-representation` (type `concept-bridge`) and `text-data` (type `concept-lesson`). The bridge is a published Understand page and must be represented in route-wide page inventories, but it is not one of the 20 canonical concept lessons counted by the #1739 intellectual-contribution matrix. Keep the two denominators explicit: 20 canonical lessons, plus this separate bridge page.
+- **Distinct role.** `language-representation` motivates why neural networks use learnable numerical representations. It distinguishes symbolic units, arbitrary vocabulary IDs, learned vectors, distributional regularities, and occurrence-specific contextualized states. It deliberately leaves concrete tokenization, detailed lookup, vector geometry and Transformer mechanisms to their dedicated pages.
+- **The shared Practice hub already assesses the bridge's core distinctions.** Its bilingual checks ask whether repeated occurrences of one ID select the same initial vector, whether an ID encodes meaning, and whether IDs from different tokenizers can be compared. Its applied exercises trace text → IDs → embedding rows and the first-block input, then distinguish lookup invariants from positional/contextual transformations. The broader text-data collection supplies the extended tokenizer, lookup and windowing tasks.
+- **A separate bridge-only exercise page would duplicate existing assessment.** The existing `exercises/text-data.qmd` hub is a coherent group destination for the bridge and the following `text-data` lesson: both occupy the same route stage and share the ID → initial-vector → contextualized-state distinctions. The `embedding-space` lesson retains its own dedicated companion; its cross-cutting links to the text-data collection are not reclassified as part of this group.
+- **A real navigation omission was present.** Neither language version of `language-representation` exposed a Practice section or companion link, and the shared hub did not link back to the bridge. The source pages now expose a short link-only Practice section; the hub names the shared group and provides return links to both lessons.
+- **Metadata and generated projections.** The bridge and shared hub now have reciprocal PAGE-MAP `related` references. The tracked FR/EN learning-map JSON and inline map-data payloads were updated only for the affected `related` arrays and the new section heading. No guided-route stage, concept, computational edge, metadata field or navigation system was added.
+
+### Decision
+
+Retain `language-representation` as a concept bridge, not as a new canonical concept lesson. Reuse the existing `text-data` Practice hub as an explicitly justified shared companion for the two pages in the text-input stage. Do not create another exercise page or duplicate the current ID/lookup/context questions. Keep the extended tokenizer and windowing tasks in the existing Text data collection.
+
+### Validation boundary and follow-up
+
+Source links and reciprocal page-map references were checked against the exact bilingual file paths. The map payload changes mirror the generator's serialization contract, but the official map-generation command and freshness tests have not been run locally in this pass. Require the existing CI freshness checks, full Quarto render and browser review on the final PR head. Manual screen-reader and learner checks remain separate and are not claimed here.
