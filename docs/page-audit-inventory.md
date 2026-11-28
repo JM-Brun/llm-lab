@@ -2236,3 +2236,20 @@ Audit de destination FR/EN de la leçon Understand `generation` et de ses deux c
 Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. L'aperçu précoce de la génération et sa reprise détaillée ont des fonctions pédagogiques différentes et doivent rester une seule identité canonique. Le scoring sur préfixe observé et le teacher forcing ne doivent pas être assimilés à la génération libre.
 
 Ce lot est source-only. Le rendu déployé, les figures, l'affichage mobile, le clavier, le lecteur d'écran et la compréhension réelle restent à vérifier séparément.
+
+
+## Issue #1739 — ICL et context engineering (2026-11-28)
+
+Audit de destination FR/EN des leçons Understand in-context-learning et context-engineering et de leurs quatre compagnons Practice. Le dossier [preuves de destination — lot 6](source-syntheses/understand-destination-evidence-batch-6-2026-11.md) réutilise l'audit scientifique du 27 novembre.
+
+### Résultats
+
+- **ICL :** usage d'instructions et de démonstrations effectivement présentes dans le prompt, à paramètres fixes ; distinction zero-shot/one-shot/few-shot ; ICL ≠ fine-tuning ≠ RAG ; imitation de format ≠ généralisation ; induction heads limitées à une hypothèse mécaniste partielle.
+- **Context engineering :** séparation entre informations disponibles au système, séquence effectivement transmise et positions accessibles ; stocké/récupéré/transmis/accessibilité ne sont pas synonymes ; fenêtre de contexte = budget, pas métrique de qualité ; provenance, sécurité et évaluation appartiennent à la conception système.
+- Les deux leçons ont des compagnons Practice distincts et alignés FR/EN. Le transfert ICL → context engineering est une progression pédagogique, pas une succession d'opérations internes du Transformer.
+
+### Décisions et limites
+
+Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. Ne pas fusionner ICL, context engineering, RAG, mémoire et représentations contextualisées. Les tests de généralisation, de provenance, d'injection indirecte et de contexte entre appels restent dans Practice.
+
+Audit source-only : les ancres automatiques, les diagrammes rendus, le responsive, le clavier, le lecteur d'écran et les résultats d'apprentissage restent à vérifier.
