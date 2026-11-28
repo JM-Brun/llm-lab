@@ -24,13 +24,30 @@ tags: ["type:exercise-hub", "destination:practice", "topic:multimodal-architectu
 
 [← Retour à la leçon : Architectures multimodales](../multimodal-architectures.qmd)
 
-## Questions à poser devant une architecture
+## Vérifier sa compréhension
+
+### Questions à poser devant une architecture
 
 1. **Quelles modalités entrent et sortent réellement ?** Ne pas inférer la génération à partir de la seule compréhension.
 2. **Où sont les frontières ?** Identifier encodeurs, projecteurs, modèle de langage, générateurs, codecs et runtime.
 3. **Quelle représentation est prédite ?** Tokens textuels, codes audio, tokens visuels, patches ou états latents.
 4. **Quel mécanisme produit la sortie ?** Décodage autorégressif, débruitage itératif, décodage de codec ou appel externe.
 5. **Quelle preuve soutient la comparaison ?** Une architecture publiée ne prouve pas à elle seule une supériorité de qualité, de coût ou de vitesse.
+
+<details>
+<summary>Critères d'auto-évaluation</summary>
+
+Une analyse défendable doit :
+
+- préciser séparément les modalités d'entrée et de sortie, sans déduire la génération de la seule compréhension en entrée ;
+- situer les frontières entre encodeurs, projecteurs, modèles de langage, générateurs, codecs et runtime à partir de preuves, pas seulement de leurs noms ;
+- identifier la représentation effectivement prédite ou transformée à chaque étape ;
+- distinguer la génération interne au modèle du décodage itératif, du décodage par codec ou des appels à des outils externes ;
+- comparer les systèmes avec des preuves adaptées à l'affirmation, par exemple des conditions d'évaluation comparables et des mesures séparées de qualité, latence et coût.
+
+Si la documentation publique ne décrit pas un composant ou un détail d'entraînement, indiquez qu'il est inconnu au lieu de combler le manque par analogie.
+
+</details>
 
 ::: {.language-switch}
 **Langue:** [Français](../../fr/exercises/multimodal-architectures.qmd) · [English](../../en/exercises/multimodal-architectures.qmd)
