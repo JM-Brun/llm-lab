@@ -8,7 +8,7 @@ The calendar remains **implemented but not collection-validated or learner-valid
 
 - [PR #1815](https://github.com/JM-Brun/llm-lab/pull/1815) merged. Day 02's bilingual manifest question now distinguishes observed-token surprisal from predictive uncertainty. All required checks, including Quarto/browser, passed. This is metadata-only; #1666 remains open.
 - The first-five FR/EN source comparison is documented in a new comment on [#1664](https://github.com/JM-Brun/llm-lab/issues/1664). It is explicitly source-level, not a rendered or learner review.
-- [PR #1816](https://github.com/JM-Brun/llm-lab/pull/1816) adds the missing XOR visual and four-case worked calculation to the canonical Day 04 FR/EN pages. Python quality, tests and secret scanning passed at last inspection; Quarto/browser was still running.
+- [PR #1816](https://github.com/JM-Brun/llm-lab/pull/1816) is merged. The canonical Day 04 FR/EN pages now include the XOR visual and four-case worked calculation. All required checks, including Quarto/browser, passed.
 - [PR #1817](https://github.com/JM-Brun/llm-lab/pull/1817) brings the controlled *bank* contrast to the opening of the canonical Day 05 FR/EN pages and adds a conceptual diagram. Checks were running at last inspection except secret scanning, which passed.
 - Days 04–05 reuse their canonical Deepen pages. No duplicate calendar pages, concepts, computational nodes, prerequisite edges or per-concept workflows were introduced.
 
@@ -19,7 +19,7 @@ The calendar remains **implemented but not collection-validated or learner-valid
 | 01 — Zipf | Strong source-level story; not accepted | Verify 217/125 counts and table; obtain non-specialist read in #1653 |
 | 02 — Surprisal | Quantitative core and manifest wording aligned; not accepted | Scientific/rendered/novice review in #1666 |
 | 03 — Tokenizer | Narrative and cost boundaries implemented; reuse audit open | Mobile/browser, anchors, rights, reproducibility and novice review in #1667 |
-| 04 — Geometry | XOR visual and worked calculation proposed in #1816 | CI/browser, mobile/accessibility, sources and novice review in #1668 |
+| 04 — Geometry | XOR visual and worked calculation merged via #1816 | Mobile/accessibility, sources and novice review in #1668 |
 | 05 — Contextualization | Story-led opening and controlled-context diagram proposed in #1817 | CI/browser, mobile/accessibility, anchor and novice review in #1669 |
 
 Days 01–03 remain complementary statistical perspectives, **not prerequisites**: marginal lexical frequency, conditional surprisal and tokenizer segmentation answer different questions. Days 04–05 need distinct concrete contrasts but must not duplicate canonical explanations.
