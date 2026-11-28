@@ -530,7 +530,7 @@
         "Pourquoi ce n'est pas du fine-tuning",
         "Où se fait l'adaptation ?",
         "Ce que l'ICL permet — et ses limites",
-        "Relation avec l'ingénierie du contexte"
+        "Ce qu'une démonstration communique réellement"
       ],
       "route": {
         "previous": "fr/generation",
