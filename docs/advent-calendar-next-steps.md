@@ -10,7 +10,7 @@ The calendar remains **implemented but not collection-validated or learner-valid
 - The first-five FR/EN source comparison is documented in a new comment on [#1664](https://github.com/JM-Brun/llm-lab/issues/1664). It is explicitly source-level, not a rendered or learner review.
 - [PR #1816](https://github.com/JM-Brun/llm-lab/pull/1816) is merged. The canonical Day 04 FR/EN pages now include the XOR visual and four-case worked calculation. All required checks, including Quarto/browser, passed.
 - [PR #1817](https://github.com/JM-Brun/llm-lab/pull/1817) is merged. It brings the controlled *bank* contrast to the opening of the canonical Day 05 FR/EN pages and adds a conceptual diagram. All required checks, including Quarto/browser, passed.
-- [PR #1819](https://github.com/JM-Brun/llm-lab/pull/1819) is open for Day 03. It adds the existing published bilingual `exercises-text-data` collection as the manifest `practice_page` and exposes its tokenizer-inspection anchor in a dedicated Practice section; no new exercise page is created.
+- [PR #1819](https://github.com/JM-Brun/llm-lab/pull/1819) is merged (squash commit `a75b1a0f9ba4bf48ddf2c884f54cded4a1432db2`). Day 03 now points to the existing published bilingual `exercises-text-data` collection through `practice_page` and exposes its tokenizer-inspection anchor in a dedicated Practice section; no new exercise page was created. CI, Quarto site and secret scanning all passed.
 - Days 04–05 reuse their canonical Deepen pages. No duplicate calendar pages, concepts, computational nodes, prerequisite edges or per-concept workflows were introduced.
 
 ### Updated first-five state
@@ -27,8 +27,8 @@ Days 01–03 remain complementary statistical perspectives, **not prerequisites*
 
 ### Next execution order
 
-1. Finish required checks for #1819 and merge only when all required checks pass.
-2. Manually inspect the merged Day 03–05 FR/EN pages at desktop/mobile widths, including figures, equations, links and accessibility.
+1. Manually inspect the merged Day 03–05 FR/EN pages at desktop/mobile widths, including figures, equations, Practice links and accessibility.
+2. Obtain novice evidence for Days 01–05 through the individual page issues; keep observations and accept/revise decisions page-specific.
 3. Obtain novice evidence for Days 01–05 through the individual page issues; do not generalize one reader's evidence.
 4. Complete #1664's shared editorial gate after the individual owners record their results.
 5. Continue the 24-day canonical crosswalk in #1513, preserving the distinct uses of the conditional distribution (generation, observed-target scoring/evaluation, training) and keeping Q/K/V inside Transformer blocks.
