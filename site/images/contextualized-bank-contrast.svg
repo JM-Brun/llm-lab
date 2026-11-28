@@ -28,8 +28,8 @@
   <text x="560" y="157" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
   <text x="913" y="121" text-anchor="middle" class="small">Contextualized state</text>
   <text x="913" y="157" text-anchor="middle" class="math">h_A^(ℓ)</text>
-  <path d="M362 139 H758" class="arrow"/>
-  <path d="M715 139 H758" class="arrow"/>
+  <path d="M362 112 H738 V124 H758" class="arrow"/>
+  <path d="M715 165 H738 V154 H758" class="arrow"/>
 
   <rect x="52" y="237" width="310" height="96" rx="10" class="context"/>
   <rect x="405" y="237" width="310" height="96" rx="10" class="token"/>
@@ -40,8 +40,8 @@
   <text x="560" y="303" text-anchor="middle" class="math">t=3 · ID_bank · E[ID_bank]</text>
   <text x="913" y="267" text-anchor="middle" class="small">Contextualized state</text>
   <text x="913" y="303" text-anchor="middle" class="math">h_B^(ℓ)</text>
-  <path d="M362 285 H758" class="arrow"/>
-  <path d="M715 285 H758" class="arrow"/>
+  <path d="M362 258 H738 V270 H758" class="arrow"/>
+  <path d="M715 311 H738 V300 H758" class="arrow"/>
 
   <text x="560" y="377" text-anchor="middle" class="small">Conceptual comparison · no real-model activations measured</text>
 </svg>
