@@ -80,6 +80,24 @@ $$
 
 {{< include ../../includes/generated-exercise-review-en-gradients-exercises-ex-score-to-parameter-update.qmd >}}
 
+## One SGD step on the output projection {#ex-sgd-output-projection}
+
+Take the [output matrix from the logits example](../logits.qmd#running-example-output-projection) and its state $h=(1,-1)^\top$. For the single target “They”, apply one SGD step with rate $\eta=0.1$ to the weights $W$ of this bias-free head. Keep the prefix, $h$ and the other parameters fixed. What is the new score for “They”? What is its new probability after normalizing across all four candidates?
+
+<details>
+<summary>Show the calculation and reasoning</summary>
+
+The weight gradient is the outer product $g_z h^\top$. The new weights are $W'=W-\eta g_z h^\top$. For the same state, the updated score vector is:
+
+$$
+z'=W'h=z-\eta\lVert h\rVert^2 g_z
+=(\ln 6+0.08,\ \ln 2-0.04,\ -0.02,\ -0.02).
+$$
+
+The score for “They” rises by $0.08$. A fresh softmax gives $p'(\text{They})\approx0.626$, up from $0.600$ before the update. This calculation shows the effect on **the target used in this step**.
+
+</details>
+
 **Return to:** [Overview](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
 
 ::: {.language-switch}
