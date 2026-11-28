@@ -636,7 +636,7 @@
       "domain": null,
       "scope": "Traces an ID sequence through lookup: sequence position, ID, selected row, and resulting initial vector. Distinguishes this result from positional processing and contextualized states.",
       "summary": "Follows an ID sequence to the initial vectors selected from the embedding matrix, preserving their order and repeated IDs.",
-      "purpose": "Given an ID sequence, retrieve the selected rows and vectors in order, explain why repeated IDs share the same vector with a fixed table, and predict the effect of coordinated renumbering.",
+      "purpose": "Given an ID sequence, retrieve the selected rows and vectors in order, explain why repeated IDs share the same vector with a fixed table, and place lookup before positional processing and contextualization.",
       "covered_stages": [],
       "section_headings": [
         "Start with the prefix supplied to the model",
