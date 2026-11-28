@@ -700,7 +700,8 @@
         "en/llm-evolution",
         "en/llm-limits",
         "en/rag-memory-boundaries",
-        "en/document-retrieval"
+        "en/document-retrieval",
+        "en/context-engineering-exercises"
       ],
       "rank": 42
     },
