@@ -169,6 +169,10 @@ The right decision is not “choose the tokenizer that compresses best,” but *
 
 The detailed WordPiece and Unigram training and encoding mechanisms are covered in [the tokenization strategies page](tokenization-strategies.qmd#wordpiece-unigram-mechanisms). Empirical findings, figures, and research resources are collected in [the multilingual tokenizer evaluation deep dive](tokenizer-multilingual-evaluation.qmd).
 
+## Practise
+
+The reproducible inspection of a real tokenizer and the exercises for the text → tokens → IDs pipeline are collected in the dedicated [Text data exercises](exercises-text-data.qmd#tokenizer-huggingface-probe). The practice collection can grow without making this story longer.
+
 ## Go further
 
 - [Multilingual tokenizer evaluation](tokenizer-multilingual-evaluation.qmd).

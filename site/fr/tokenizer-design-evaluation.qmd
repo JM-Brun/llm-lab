@@ -169,6 +169,10 @@ La bonne décision n'est donc pas « choisir le tokenizer qui compresse le mieux
 
 Les mécanismes d'apprentissage et d'encodage de WordPiece et Unigramme sont décrits dans [la page sur les stratégies de tokenisation](tokenization-strategies.qmd#mecanismes-wordpiece-unigramme). Les résultats empiriques détaillés, les figures et les ressources de recherche sont regroupés dans [l'évaluation multilingue des tokenizers](tokenizer-multilingual-evaluation.qmd).
 
+## S'exercer
+
+L'inspection reproductible d'un tokenizer réel et les exercices associés à la chaîne texte → tokens → identifiants sont regroupés dans la page dédiée [Exercices — Données textuelles](exercises-text-data.qmd#tokenizer-huggingface-probe). Cette page de pratique peut évoluer sans alourdir le récit.
+
 ## Pour aller plus loin
 
 - [Évaluation multilingue des tokenizers](tokenizer-multilingual-evaluation.qmd).
