@@ -45,6 +45,21 @@ Let $x_1,x_2\in\{0,1\}$ and $y=x_1\oplus x_2$. The positive examples are $(0,1)$
 
 But XOR is not “impossible to represent linearly” in an absolute sense. With a feature transformation, for example $\phi(x_1,x_2)=(x_1,x_2,x_1x_2)$, separation becomes linear in the transformed space. The lesson is that **linear separability depends on the representation and the chosen features**.
 
+We can make this transformation explicit. Let $u=x_1+x_2$ and $v=x_1x_2$. The score $s=u-2v$ is a linear combination of the transformed features. For the four inputs:
+
+| $(x_1,x_2)$ | $y=x_1\\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
+|---|---:|---:|---:|
+| $(0,0)$ | 0 | $(0,0)$ | 0 |
+| $(0,1)$ | 1 | $(1,0)$ | 1 |
+| $(1,0)$ | 1 | $(1,0)$ | 1 |
+| $(1,1)$ | 0 | $(2,1)$ | 0 |
+
+The threshold $s=0.5$ therefore separates the two classes in the transformed space. The XOR function has not changed; the representation used by the classifier has.
+
+![On the left, XOR classes alternate at the four corners and no line separates them. On the right, after transforming to $u=x_1+x_2$ and $v=x_1x_2$, the positive examples group together and a line separates them from the negative examples.](../images/advent-xor-linear-separability.svg){#fig-advent-xor-linear-separability fig-alt="In input space, XOR classes alternate at the four square corners; in transformed space (u,v), the negative points (0,0) and (2,1) are separated from the positive point (1,0) by the line u minus 2v equals 0.5." width=100%}
+
+*Teaching illustration: the two positive inputs $(0,1)$ and $(1,0)$ overlap at $(u,v)=(1,0)$ after transformation.*
+
 This is why a failed linear probe does not automatically prove that information is absent, and a successful probe does not establish a particular internal mechanism.
 
 ## 3. Superposition: more features than dimensions
