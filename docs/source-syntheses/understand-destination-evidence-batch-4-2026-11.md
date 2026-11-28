@@ -5,7 +5,7 @@
 **Scope:** canonical Understand lessons `logits`, `probabilites` / `probabilities`, and `entropy`; their bilingual counterparts and dedicated Practice pages. This follows batch 3 in canonical route order and stops before the separate inference branch.  
 **Method:** inspect current FR/EN Quarto sources, page-map scope/purpose, mathematical explanations, figures, cross-page links and Practice companions. Distinguish project-derived claims from claims supported by cited sources. This is a source-level destination audit, not a rendered-browser, accessibility or learner validation.
 
-## 1. Logits — `logits`
+## 1. Logits — `logits` {#logits}
 
 **Page identity:** `site/fr/logits.qmd` / `site/en/logits.qmd`  
 **Declared purpose:** identify the shape and axes of vocabulary logits and read the candidate ranking at one position.
@@ -20,7 +20,7 @@
 
 **Placement decision:** keep the projection, tensor shape, score interpretation and invariance derivation in Understand. Keep the calculations and answer keys in Practice. The supplementary implementation note about passing logits directly to a numerically stable cross-entropy loss remains a short boundary note; API details do not become a prerequisite.
 
-## 2. Probabilities — `probabilites` / `probabilities`
+## 2. Probabilities — `probabilites` / `probabilities` {#probabilities}
 
 **Page identity:** `site/fr/probabilites.qmd` / `site/en/probabilities.qmd`  
 **Declared purpose:** transform logits into a next-token distribution and distinguish normalization from calibration.
@@ -36,7 +36,7 @@
 
 **Placement decision:** keep the definition, conditional semantics, calibration caveat and distinction between distribution and selection in Understand. Keep calculations and question prompts in the existing Practice companion. Temperature derivations and decoding filters remain in Deepen; no additional page or route stage is needed.
 
-## 3. Entropy — `entropy`
+## 3. Entropy — `entropy` {#entropy}
 
 **Page identity:** `site/fr/entropy.qmd` / `site/en/entropy.qmd`  
 **Declared purpose:** compare distributions over the same vocabulary and distinguish expected uncertainty from one observed token's surprisal.
