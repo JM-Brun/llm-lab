@@ -4448,7 +4448,13 @@
       "summary": "Quatre questions de transfert associées à l'approfondissement sur la récupération documentaire.",
       "purpose": "Vérifier que le lecteur peut diagnostiquer à quelle étape un pipeline de recherche ou RAG perd une information pertinente.",
       "covered_stages": [],
-      "section_headings": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Mesurer le rappel des candidats",
+        "2. La limite du reranker",
+        "3. Calculer MRR@5",
+        "4. Récupération réussie, transmission échouée"
+      ],
       "route": {
         "previous": null,
         "next": null
@@ -4475,7 +4481,13 @@
       "summary": "Quatre questions de transfert associées à l'approfondissement sur le centrage du score.",
       "purpose": "Vérifier le transfert du raisonnement sans répéter la dérivation de Bernoulli travaillée dans la leçon.",
       "covered_stages": [],
-      "section_headings": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Calculer un centrage sur de nouvelles valeurs",
+        "2. Retrouver le cas on-policy",
+        "3. Distinguer trois « centrages »",
+        "4. Interpréter la frontière stat=ratio / stat=tv"
+      ],
       "route": {
         "previous": null,
         "next": null
@@ -4501,7 +4513,13 @@
       "summary": "Quatre exercices de transfert associés à la référence sur les formes et axes des tenseurs dans un Transformer.",
       "purpose": "Vérifier que le lecteur peut suivre les dimensions d'un calcul nouveau sans confondre compatibilité de forme et correction sémantique.",
       "covered_stages": [],
-      "section_headings": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Lookup et projection de sortie",
+        "2. Découpage en têtes",
+        "3. Softmax sur le mauvais axe",
+        "4. Coût des embeddings et poids liés"
+      ],
       "route": {
         "previous": null,
         "next": null
@@ -4527,7 +4545,14 @@
       "summary": "Sept questions de compréhension associées à l'approfondissement sur l'intelligence artificielle universelle.",
       "purpose": "Vérifier que le lecteur peut restituer les définitions et les limites sans confondre borne calculable, objet idéal et approximation calculable.",
       "covered_stages": [],
-      "section_headings": [],
+      "section_headings": [
+        "Vérifier sa compréhension",
+        "1. Complexité de Kolmogorov et borne calculable",
+        "2. Complexité et mélange universel",
+        "3. De la prédiction à la décision",
+        "4. Les deux bornes de AIXI(t,l)",
+        "5. Idéal et approximation calculable"
+      ],
       "route": {
         "previous": null,
         "next": null
