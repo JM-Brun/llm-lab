@@ -1,6 +1,6 @@
 ---
 title: "Exercices — Émergence des capacités"
-subtitle: "Questions de vérification, exercices et corrigés"
+subtitle: "Questions de vérification et exercices ouverts"
 description-meta: "Questions de vérification et exercices associés à la leçon Émergence des capacités."
 keywords: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/emergence-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Émergence des capacités."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+scope: "Regroupe les questions de vérification et les exercices ouverts de la leçon, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
 suggested_route:
   previous: null
@@ -29,6 +29,20 @@ tags: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises",
 1. Une exactitude stricte passe de 0 % à 60 %, alors qu'une mesure graduelle de proximité augmente régulièrement. Quelle conclusion est justifiée ?
 2. Pourquoi une comparaison entre deux tailles de modèles ne suffit-elle pas à isoler l'effet de l'échelle ?
 3. Proposez un protocole permettant de tester si une capacité apparaît réellement de façon discontinue.
+
+
+<details>
+<summary>Comment évaluer votre raisonnement</summary>
+
+Une réponse solide doit expliciter la frontière entre les observations et les conclusions :
+
+- **Question 1 :** distinguer le comportement du score mesuré de celui de la capacité évaluée. Expliquer pourquoi une exactitude stricte peut créer un seuil alors que la qualité des réponses progresse graduellement ; ne pas déduire une discontinuité du seul score.
+- **Question 2 :** identifier les variables susceptibles d'évoluer avec la taille du modèle : volume et composition des données, calcul et durée d'entraînement, architecture, post-entraînement et protocole d'évaluation. Expliquer pourquoi deux points ne suffisent ni à établir une loi d'échelle ni à isoler une cause.
+- **Question 3 :** proposer plusieurs tailles de modèles et points de contrôle d'entraînement dans des conditions contrôlées ; combiner métriques strictes et graduelles ; examiner les sorties brutes et les incertitudes ; tester contamination, formulation, échantillonnage et variantes de la tâche ; distinguer les effets du pré-entraînement, du post-entraînement et du calcul à l'inférence.
+
+Utilisez ces critères pour réviser votre réponse. Il s'agit d'une grille d'auto-évaluation, pas d'une solution unique ni d'une preuve qu'une capacité donnée est réellement discontinue.
+
+</details>
 
 [Exercices et expérimentations](../exercises.qmd).
 

@@ -1,6 +1,6 @@
 ---
 title: "Exercices — Évolution des modèles de langage"
-subtitle: "Questions de vérification, exercices et corrigés"
+subtitle: "Questions de vérification et exercices de transfert ouverts"
 description-meta: "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-evolution-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+scope: "Regroupe des questions ouvertes pour classer les évolutions des modèles selon plusieurs axes indépendants et justifier ces distinctions."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
 suggested_route:
   previous: null
@@ -31,6 +31,22 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercis
 3. Une API expose un appel d'outil asynchrone : qu'est-ce qui reste sous la responsabilité de l'application ?
 4. Une amélioration de benchmark suffit-elle à démontrer une modification d'architecture ? Pourquoi ?
 5. Classez MoE, KV cache, RLHF et inference-time compute selon l'axe principal auquel ils appartiennent.
+
+
+<details>
+<summary>Comment évaluer votre raisonnement</summary>
+
+Vérifiez que vos explications préservent les distinctions de la leçon :
+
+- **Question 1 :** les exemples few-shot sont fournis dans le prompt ; l'apprentissage en contexte ne met pas à jour les paramètres du modèle pour chaque tâche. Le fine-tuning, lui, modifie les paramètres.
+- **Question 2 :** le pré-entraînement et le post-entraînement sont deux procédures d'apprentissage distinctes. Le post-entraînement adapte un modèle déjà pré-entraîné ; il ne consiste pas simplement à ajouter des instructions au contexte.
+- **Question 3 :** distinguer le comportement du modèle des responsabilités de l'application. Un appel d'outil asynchrone nécessite toujours une orchestration côté application, l'exécution de l'outil, le traitement du résultat et le contrôle du flot d'exécution.
+- **Question 4 :** un score de benchmark est un résultat observé, pas une preuve directe d'une modification architecturale précise. Les données, l'entraînement, le post-entraînement, le calcul à l'inférence et le protocole d'évaluation peuvent aussi expliquer l'amélioration.
+- **Question 5 :** classer chaque exemple selon son axe principal, tout en notant que les axes peuvent interagir : MoE concerne l'architecture, le routage et l'efficacité ; le KV cache concerne la mémoire et la recomputation à l'inférence ; RLHF est une approche de post-entraînement ; le calcul à l'inférence désigne du calcul supplémentaire pendant l'utilisation.
+
+Une bonne réponse nomme l'axe concerné, explique le mécanisme et évite de traiter les six axes comme une succession chronologique obligatoire. Il s'agit de critères d'auto-évaluation, pas d'affirmer que chaque système utilise toutes ces techniques.
+
+</details>
 
 [Exercices et expérimentations](../exercises.qmd).
 
