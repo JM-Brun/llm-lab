@@ -2253,3 +2253,21 @@ Audit de destination FR/EN des leçons Understand in-context-learning et context
 Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. Ne pas fusionner ICL, context engineering, RAG, mémoire et représentations contextualisées. Les tests de généralisation, de provenance, d'injection indirecte et de contexte entre appels restent dans Practice.
 
 Audit source-only : les ancres automatiques, les diagrammes rendus, le responsive, le clavier, le lecteur d'écran et les résultats d'apprentissage restent à vérifier.
+
+
+## Issue #1739 — scoring et apprentissage (2026-11-28)
+
+Audit de destination FR/EN des quatre dernières leçons Understand : vraisemblance/likelihood, loss, gradients et training-loop, avec leurs huit compagnons Practice. Le dossier [preuves de destination — lot 7](source-syntheses/understand-destination-evidence-batch-7-2026-11.md) réutilise l'audit scientifique du 27 novembre.
+
+### Résultats
+
+- **Vraisemblance :** factorisation autorégressive sur préfixes de référence ; scoring d'une continuation observée distinct de la génération et de l'apprentissage ; conventions tokenizer/positions/agrégation nécessaires à la comparaison.
+- **Loss :** alignement logits-cible par position, masquage des cibles valides, teacher forcing, distinction masque de loss/visibilité attentionnelle et réduction de batch.
+- **Gradients :** dérivée p−y sous hypothèses explicites, règle de chaîne, gradient distinct de la mise à jour et nuance sur les chemins indirects de gradient via attention pour des positions ignorées comme cibles.
+- **Training loop :** passe avant → loss → gradient → mise à jour, rôle distinct de l'optimiseur et du taux d'apprentissage, validation à paramètres fixes, test réservé et pré-entraînement comme même boucle à grande échelle.
+
+### Décisions et limites
+
+Les quatre leçons ont des destinations Practice dédiées et des apports distinctifs déjà présents. Aucune modification de leçon ou de parcours n'est justifiée par cet audit source. Une différence de structure de titres entre les pages Loss FR/EN est documentée : le calcul à trois tokens est un sous-titre séparé en français et un passage inline en anglais, sans perte de contenu mathématique.
+
+Avec les lots 1 à 7, les **20/20 leçons Understand** disposent maintenant d'une matrice de destination source → claim → FR/EN → présence/placement sur la branche PR #1814. Cela ne certifie pas les ancres déployées, le rendu responsive, le clavier, l'accessibilité manuelle ou la compréhension réelle. Ces contrôles restent des portes de validation distinctes.
