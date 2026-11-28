@@ -276,12 +276,13 @@ This section supersedes stale snapshots above where their PR states or next acti
 
 ### Next execution batch — destination evidence for the prediction-to-generation segment
 
-The next source-level batch is deliberately limited to four adjacent lessons:
+The next source-level batch is deliberately limited to the three adjacent prediction-stage lessons:
 
 1. **Logits:** trace the final-state/output-projection claim to the bilingual worked example, tensor shape, common-shift invariance, and the distinction between score, probability and truth.
 2. **Probabilities:** trace softmax, vocabulary-axis normalization, conditional dependence on the prefix, calibration limits and the hand-off to generation/scoring.
 3. **Entropy:** trace the whole-distribution expectation, the observed-token surprisal distinction, finite-vocabulary bound, and the explicit limits on confidence/calibration claims.
-4. **Generation:** trace the forward-pass → distribution → decoding → feedback loop, fixed parameters, stopping, and the distinct meanings of prefill, decode, decoding and teacher forcing.
+
+The **generation** lesson is the next branch-level batch after this prediction-stage audit. Its existing source audit already documents forward pass → distribution → decoding → feedback, fixed parameters, stopping, and the distinct meanings of prefill, decode, decoding and teacher forcing; its destination evidence must be verified separately.
 
 For each lesson, the destination record must compare FR and EN, name exact headings/anchors, distinguish core explanation from Practice/Deepen material, and identify any contribution whose presence is only partial. The batch is not complete until the evidence is recorded in the existing #1739 destination-evidence series and the current rendered pages/links are checked. Do not change lesson prose merely to make the matrix look complete.
 
