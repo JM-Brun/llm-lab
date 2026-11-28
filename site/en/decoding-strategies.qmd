@@ -95,7 +95,7 @@ We reuse the base distribution from the [output probabilities lesson](probabilit
 :::
 ### Explore the effect of temperature
 
-At temperature 1, “They” receives 60% in the course's illustrative example. Before moving to $\tau=0.5$, predict what will change: the probability distribution, the leading token, or both?
+The explorer shows how temperature changes the distribution. The logit ranking remains unchanged for every strictly positive temperature. The numerical prediction and its reasoning are collected on the dedicated Practice page.
 
 ```{=html}
 <div class='interactive-toy-box' id='temp-explorer-en' data-temperature-explorer hidden>
@@ -112,12 +112,7 @@ At temperature 1, “They” receives 60% in the course's illustrative example. 
 <script src='../scripts/temperature-explorer.js' defer></script>
 ```
 
-<details>
-<summary>Check your prediction</summary>
 
-At $\tau=0.5$, dividing logits by the temperature doubles them. Their exponentials go from $(6,2,1,1)$ to $(36,4,1,1)$. Softmax then divides each value by $42$. “They” rises from 60% to about 85.7% and remains first.
-
-</details>
 
 With finite logits, the distribution approaches uniformity as temperature increases: as $\tau\to\infty$, each probability tends to $1/V$. At low temperature, unfiltered sampling can still select a candidate with positive probability. For temperature $T$, probability ratios satisfy $p_i(T)/p_j(T)=\exp((z_i-z_j)/T)$: temperature changes probability ratios, but not the ranking of logits.
 
@@ -381,7 +376,7 @@ Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are in
 
 ## Practice
 
-To check the distinction between local transformations and sequence search, start with the [dedicated decoding-strategies comprehension question](exercises/decoding-strategies.qmd). To calculate temperature effects and compare top-k with top-p on a concrete distribution, also use the Generation exercises on [temperature](exercises-generation.qmd#ge-f-temperature-and-concentration) and [top-k/top-p](exercises-generation.qmd#ge-g-top-k-and-top-p). These activities are optional and include worked solutions; they do not replace evaluating output quality on real tasks.
+To calculate temperature effects and compare top-k with top-p on a concrete distribution, also use the Generation exercises on [temperature](exercises-generation.qmd#ge-f-temperature-and-concentration) and [top-k/top-p](exercises-generation.qmd#ge-g-top-k-and-top-p). These activities are optional and include worked solutions; they do not replace evaluating output quality on real tasks.
 
 ## Research references
 
