@@ -250,3 +250,48 @@ Le contrat éditorial, l'état source-level FR/EN, la carte d'utilisation par é
 Décision : conserver le fil rouge comme support de raisonnement récurrent mais facultatif. Les exemples français et anglais peuvent être localisés différemment ; leur parité est conceptuelle et computationnelle, pas littérale. Ne pas forcer le clin d'œil dans chaque page, dans les exemples spécialisés d'ICL/context engineering ou dans les fixtures Build.
 
 Le travail restant est borné : contrôler le rendu publié après déploiement, compléter éventuellement une expérience ICL à paramètres fixes et poursuivre la vérification des traces numériques FR/EN. La leçon de tokenisation prend désormais le préfixe du fil rouge comme matériau principal, y compris pour la comparaison de tokenizers et la trace de lookup ; le contraste d'espace initial dans Deepen réutilise également `situation` / ` situation`. L'intégration dans Build reste différée et appartient à [#924](https://github.com/JM-Brun/llm-lab/issues/924). Aucun nouveau registre, graphe, workflow ou parcours n'est requis.
+
+
+
+## Reconciliation — 2026-11-28 (current main-route backlog)
+
+This section supersedes stale snapshots above where their PR states or next actions have changed. It does not close the broader issues; it records the current execution order and the evidence boundary.
+
+### Integrated since the previous snapshot
+
+- [x] **Scoring transition and map projections:** PRs [#1604](https://github.com/JM-Brun/llm-lab/pull/1604) and [#1606](https://github.com/JM-Brun/llm-lab/pull/1606) are merged. The old P0 checklist for these PRs is historical; do not rerun or repair their former CI failures absent a reproducible regression on main.
+- [x] **Understand/Practice migrations:** PRs [#1810](https://github.com/JM-Brun/llm-lab/pull/1810) and [#1811](https://github.com/JM-Brun/llm-lab/pull/1811) are merged. Training-example alignment/debugging and the SGD exercise now point to their dedicated companions; the decoding temperature prediction and worked answer are also in Practice. Their earlier pending-validation descriptions are superseded by the merged state.
+- [x] **Source-level intellectual-contribution inventory:** the 20 canonical Understand lessons are covered in [the consolidated #1739 matrix](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md). This is source-level coverage, not proof that every contribution has a current bilingual published destination.
+
+### Current open work and ownership
+
+| Workstream | Verified state | Next action / owner |
+|---|---|---|
+| Dedicated Practice inventory — [#1512](https://github.com/JM-Brun/llm-lab/issues/1512) | 51 companion pages per language plus one catalogue page are on main. PRs #1810/#1811 are merged. [#1813](https://github.com/JM-Brun/llm-lab/pull/1813) remains open; its map freshness check was rerunning at the last inspection, and its earlier browser evidence is from the previous content head. | Reconcile the current #1813 head, map projection and final CI/Quarto/browser evidence before merge. Then continue the full lesson→companion inventory; page counts alone do not prove semantic parity or that every assessment prompt has moved. |
+| Intellectual contribution and destination evidence — [#1739](https://github.com/JM-Brun/llm-lab/issues/1739) | Source-level contribution coverage is 20/20. Exact source→claim→FR/EN destination evidence is documented for 10/20 lessons (overview, text-data, embedding-space, positional-encoding, contextualized-representations, transformer, Q/K/V, scaled attention, causal masking and cross-entropy). | Complete the remaining 10 destination-evidence records using the #1778 contract. Start with the contiguous logits→probabilities→entropy→generation slice, then score/learning/context pages. Record exact anchors and current substantive presence; do not infer coverage from a bibliography, related link or old migration decision. Rendered review and learner validation remain separate. |
+| Understand route structure and duration — [#1208](https://github.com/JM-Brun/llm-lab/issues/1208), [#280](https://github.com/JM-Brun/llm-lab/issues/280) | The 20-lesson / 9-chapter migration ledger exists. Content pilots and browser coverage have advanced; PR #1803 is merged. The current issue still requires the exhaustive conservation matrix and rendered reading-time / learner checks. | Continue section-level source→destination reconciliation before shortening or splitting any lesson. Measure required rendered path in FR/EN; do not split by word count or duplicate canonical concepts. Keep this redesign distinct from the existing nine-stage route registry until the migration map is approved. |
+| Computational-spine integration — [#584](https://github.com/JM-Brun/llm-lab/issues/584) | The shared model and generated route architecture are integrated. Remaining work is manual screen-reader review, lesson-level breadcrumb semantics and bounded rendered checks; automated Axe/DOM evidence is not a substitute. | Coordinate manual FR/EN screen-reader and breadcrumb review with #988 for shared navigation. Transfer graph-edge review to #416 and learner comprehension to #447; do not duplicate their audits. |
+| Foundations architecture — [#1732](https://github.com/JM-Brun/llm-lab/issues/1732) | Open architectural proposal; no parallel registry or independent curriculum should be created. | Keep as a cross-cutting design decision. Before implementation, map candidate formal material to existing Understand/Build/Deepen/Practice owners and confirm that Foundations adds a genuinely distinct learning outcome. |
+| Common misconceptions — [#1633](https://github.com/JM-Brun/llm-lab/issues/1633) | Evidence-backed coverage proposal is open; no validated global registry yet. | Continue the six-case pilot and reuse existing lessons/Practice destinations. Do not create a slogan-based “myths” course or another per-concept workflow. |
+
+### Next execution batch — destination evidence for the prediction-to-generation segment
+
+The next source-level batch is deliberately limited to four adjacent lessons:
+
+1. **Logits:** trace the final-state/output-projection claim to the bilingual worked example, tensor shape, common-shift invariance, and the distinction between score, probability and truth.
+2. **Probabilities:** trace softmax, vocabulary-axis normalization, conditional dependence on the prefix, calibration limits and the hand-off to generation/scoring.
+3. **Entropy:** trace the whole-distribution expectation, the observed-token surprisal distinction, finite-vocabulary bound, and the explicit limits on confidence/calibration claims.
+4. **Generation:** trace the forward-pass → distribution → decoding → feedback loop, fixed parameters, stopping, and the distinct meanings of prefill, decode, decoding and teacher forcing.
+
+For each lesson, the destination record must compare FR and EN, name exact headings/anchors, distinguish core explanation from Practice/Deepen material, and identify any contribution whose presence is only partial. The batch is not complete until the evidence is recorded in the existing #1739 destination-evidence series and the current rendered pages/links are checked. Do not change lesson prose merely to make the matrix look complete.
+
+### Revised priority order
+
+1. **P0 — #1813 final-head reconciliation:** verify current branch/base, generated map freshness, CI, Quarto and browser artifact; merge only after final-head checks pass.
+2. **P1 — #1739 destination evidence, batch 4:** logits, probabilities, entropy and generation; then finish the remaining six lessons in canonical route order.
+3. **P1 — #1512 full bilingual Practice inventory:** continue after the latest merged moves; preserve worked explanations and only move genuinely learner-directed assessment/experimentation.
+4. **P1 — #1208/#280 lesson migration:** continue conservation and duration evidence in parallel, but do not modify the guided route until the section-level destination map is approved.
+5. **P2 — #584 manual accessibility:** schedule actual FR/EN assistive-technology and touch checks; reuse shared-navigation evidence from #988.
+6. **P2 — #447 learner validation:** test route reconstruction and branch distinctions after the relevant content and accessibility gates; use observed confusion to justify any route change.
+
+**Decision rule:** improve the main route through demonstrated continuity, explicit learning outcomes, complete bilingual destination evidence and reduced cognitive load. Do not add a stage, page, graph edge, metadata field or navigation widget merely because it appears structurally convenient.
