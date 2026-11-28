@@ -83,13 +83,16 @@ The current bilingual Quarto/browser workflow has now run successfully on the me
 
 ### P1 — Reconcile the guided route with the sibling branches
 
-The eight-stage projection is now integrated in `data/guided-route.yml` and the tracked bilingual route fragments:
+The original eight-stage projection was extended with an explicit context-use stage. The **current nine-stage reader-facing route** is integrated in `data/guided-route.yml` and the tracked bilingual route fragments:
 
-`orientation → text-input → representations → computation → prediction → inference → scoring → training`.
+`orientation → text-input → representations → computation → prediction → inference → context-use → scoring → training`.
+
+This is a pedagogical reading order, not a computational dependency chain. In particular, `context-use` describes how an application selects and assembles the input supplied to a model call; its position after the inference overview does not make context engineering an operation inside the Transformer or a required execution step between generation and scoring. The shared conditional distribution still supports sibling generation, observed-target scoring/evaluation and training uses.
 
 - [x] Map stage and page membership to the canonical module IDs in `docs/learning-path.md`.
 - [x] Keep the early generation page as a black-box preview and revisit the same canonical page for detailed inference.
 - [x] End `prediction` at logits, the conditional distribution and predictive entropy.
+- [x] Make application-level context design explicit in its own reader-facing stage without turning it into a computational-graph edge or prerequisite for the other branches.
 - [x] Put likelihood and cross-entropy in `scoring`; reuse cross-entropy as an optional bridge in `training`.
 - [x] Keep loss and gradients in `training`; keep `training-examples` optional as the Build bridge for shifted targets and teacher forcing.
 - [x] Keep evaluation cross-cutting; the current scientific-passage ranking exercise remains in Practice and is not misrepresented as an LLM-evaluation lesson.
