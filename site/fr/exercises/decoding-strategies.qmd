@@ -1,7 +1,7 @@
 ---
-title: "Question — Stratégies de décodage"
-subtitle: "Question de compréhension et corrigé"
-description-meta: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
+title: "Questions — Stratégies de décodage"
+subtitle: "Questions de compréhension et corrigés"
+description-meta: "Questions de compréhension sur la transformation locale des distributions et la recherche sur plusieurs séquences."
 keywords: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/decoding-strategies-exercises"
-summary: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
-scope: "Question de compréhension sur la différence entre transformation locale d'une distribution et recherche sur plusieurs séquences."
+summary: "Questions de compréhension sur les stratégies de décodage."
+scope: "Questions de compréhension et corrigés sur les stratégies de décodage."
 purpose: "Distinguer les transformations locales de la distribution des méthodes de recherche sur plusieurs séquences."
 suggested_route:
   previous: null
@@ -24,14 +24,23 @@ tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-e
 
 [← Retour à la leçon : Stratégies de décodage](../decoding-strategies.qmd)
 
-## Question de compréhension
+## Vérifier sa compréhension
 
-Pouvez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+1. Pouvez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 
 <details>
 <summary>Afficher le corrigé</summary>
 
 Une transformation locale modifie les probabilités des tokens candidats à une position donnée (par exemple avec la température, top-k ou top-p). Une recherche sur les séquences compare plusieurs continuations sur plusieurs étapes et cumule leurs scores (par exemple avec beam search). La première agit sur une distribution locale ; la seconde explore plusieurs hypothèses de séquence.
+
+</details>
+
+2. À température 1, « Vous » reçoit 60 % dans l'exemple du parcours. Si l'on passe à $\tau=0{,}5$, que devient la distribution ? Le token en tête change-t-il ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Diviser les logits par $0{,}5$ les double. Les exponentielles passent de $(6,2,1,1)$ à $(36,4,1,1)$, dont la somme vaut $42$. La probabilité du premier token passe donc de $6/10=60\%$ à $36/42\approx85{,}7\%$. La distribution change, mais pas le token en tête : diviser tous les logits par une température strictement positive conserve leur ordre.
 
 </details>
 

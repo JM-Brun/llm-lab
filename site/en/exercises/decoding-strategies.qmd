@@ -1,7 +1,7 @@
 ---
-title: "Question — Decoding strategies"
-subtitle: "Comprehension question and worked answer"
-description-meta: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
+title: "Questions — Decoding strategies"
+subtitle: "Comprehension questions and worked answers"
+description-meta: "Comprehension questions about local distribution transformations and search over multiple sequences."
 keywords: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,8 +9,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/decoding-strategies-exercises"
-summary: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
-scope: "A comprehension question about the difference between local distribution transformation and search over multiple sequences."
+summary: "Comprehension questions about decoding strategies."
+scope: "Comprehension questions and worked answers about decoding strategies."
 purpose: "Distinguish local distribution transformations from search methods over multiple sequences."
 suggested_route:
   previous: null
@@ -24,14 +24,23 @@ tags: ["type:exercise-hub", "destination:practice", "topic:decoding-strategies-e
 
 [← Back to the lesson: Decoding strategies](../decoding-strategies.qmd)
 
-## Comprehension question
+## Check your understanding
 
-Can you distinguish transforming a distribution at one position from searching over multiple sequences?
+1. Can you distinguish transforming a distribution at one position from searching over multiple sequences?
 
 <details>
 <summary>Show the worked answer</summary>
 
 A local transformation changes candidate-token probabilities at one position (for example through temperature, top-k, or top-p). Sequence search compares several continuations across multiple steps and accumulates their scores (for example with beam search). The first acts on a local distribution; the second explores multiple sequence hypotheses.
+
+</details>
+
+2. At temperature 1, “They” receives 60% in the course example. If we move to $\tau=0.5$, what happens to the distribution? Does the leading token change?
+
+<details>
+<summary>Show the worked answer</summary>
+
+Dividing logits by $0.5$ doubles them. Their exponentials change from $(6,2,1,1)$ to $(36,4,1,1)$, which sum to $42$. The leading token's probability therefore rises from $6/10=60\%$ to $36/42\approx85.7\%$. The distribution changes, but the leading token does not: dividing all logits by a strictly positive temperature preserves their order.
 
 </details>
 
