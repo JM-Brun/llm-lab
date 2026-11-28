@@ -16,7 +16,7 @@ The calendar remains **implemented but not collection-validated or learner-valid
 
 | Day | Current decision | Remaining evidence |
 |---|---|---|
-| 01 — Zipf | Strong source-level story; not accepted | Verify 217/125 counts and table; obtain non-specialist read in #1653 |
+| 01 — Zipf | Strong source-level story; not accepted | FR 217/125 and EN 196/127 counts, top ranks and hapax counts reproduced from the two language-specific sample passages; obtain non-specialist read in #1653 |
 | 02 — Surprisal | Quantitative core and manifest wording aligned; not accepted | Scientific/rendered/novice review in #1666 |
 | 03 — Tokenizer | Narrative and cost boundaries implemented; reuse audit open | Mobile/browser, anchors, rights, reproducibility and novice review in #1667 |
 | 04 — Geometry | XOR visual and worked calculation merged via #1816 | Mobile/accessibility, sources and novice review in #1668 |
