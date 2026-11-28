@@ -26,7 +26,13 @@ tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representat
 {{< include ../includes/generated-guided-context-en-contextualized-representations-advanced.qmd >}}
 
 
-This page extends the [introductory explanation of contextualized representations](contextualized-representations.qmd). It assumes readers can already distinguish a token ID, its lookup vector, and a hidden state produced by the network.
+Consider two sentences: “The river bank eroded” and “The financial bank collapsed”. Under the simplifying assumption of one token per word, `bank` occupies the same position in both sentences and has the same ID. Its initial lookup is therefore identical. Yet in a causal decoder, the accessible prefixes differ.
+
+How can the same starting point lead to different contextualized states? The diagram isolates what is held fixed and what changes. It is conceptual: no activations from a real model are measured here.
+
+![Two sentences contain the same bank token at the same position. The ID and lookup vector are shared; the causal prefixes differ and may lead to different hidden states.](../images/contextualized-bank-contrast.svg){#fig-contextualized-bank-contrast fig-alt="Both contexts contain bank at position three. The ID and lookup E[ID_bank] are identical, but the accessible prefixes The river and The financial differ; the contextualized states at that position may therefore differ." width=100%}
+
+**Prerequisite:** distinguish a token ID, its lookup vector, and a hidden state produced by the network.
 
 ## 1. From the initial embedding to the network input
 
