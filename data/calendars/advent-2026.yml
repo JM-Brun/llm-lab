@@ -73,6 +73,9 @@ days:
       en: "en/tokenizer-design-evaluation"
     page_status: reuse-audit
     lesson_scope: "Récit central : comparer des segmentations, comprendre le compromis entre taille du vocabulaire et longueur, distinguer coût de représentation, coût système et qualité en aval ; les études comparatives détaillées sont dans tokenizer-multilingual-evaluation."
+    practice_page:
+      fr: "fr/exercises-text-data"
+      en: "en/exercises-text-data"
     experiment: "Comparer plusieurs segmentations d’un même corpus et mesurer les longueurs obtenues."
   - day: 4
     id: geometry-of-meaning
