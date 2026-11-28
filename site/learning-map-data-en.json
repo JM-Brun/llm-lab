@@ -204,13 +204,13 @@
       "domain": null,
       "scope": "Explains why neural networks use numerical objects to process language, what learned vectors make computable, and why representations are subsequently context-dependent. Concrete tokenization, detailed lookup, vector geometry, and Transformer mechanisms remain in their dedicated lessons.",
       "summary": "Introduces the motivation for numerical language representations and distinguishes identifiers from learned vectors and contextualized states.",
-      "purpose": "Explain why an integer identifier is not enough to represent a token for neural computation, distinguish a lookup address from a learned vector, and connect initial representations to contextualized states.",
+      "purpose": "Explain why language must be represented by mathematical objects a network can manipulate, how learned vectors make linguistic regularities usable by the network, and why context subsequently transforms these representations.",
       "covered_stages": [],
       "section_headings": [
-        "1. The problem: moving from symbols to computation",
-        "2. An identifier is not a representation of meaning",
-        "3. The learned vector: an object the network can compute with",
-        "4. What vector representations make possible",
+        "1. Why make language computable?",
+        "2. Why is an integer label not enough?",
+        "3. Why represent units with vectors?",
+        "4. How does this help model meaning?",
         "5. Why must context still transform these vectors?",
         "6. Where the learning path goes next"
       ],
@@ -223,7 +223,8 @@
       "related": [
         "en/text-data",
         "en/embedding-space",
-        "en/contextualized-representations"
+        "en/contextualized-representations",
+        "en/text-data-exercises"
       ],
       "rank": 9
     },
@@ -4257,9 +4258,9 @@
       "type": "exercise-hub",
       "topic": "text-data-exercises",
       "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Text and data lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "scope": "Collects the shared checks for the conceptual bridge Why represent language numerically? and the Text and data lesson: identifiers, initial vectors, and contextualization. Extended tokenization, lookup, and windowing exercises remain in their dedicated collections.",
+      "summary": "Self-check questions and exercises shared by the language-representation bridge and the Text and data lesson.",
+      "purpose": "Check the shared distinctions between symbolic representation, token ID, initial vector, and contextualized state, then apply the concepts specific to turning text into data.",
       "covered_stages": [],
       "section_headings": [
         "Check your understanding",
@@ -4274,6 +4275,7 @@
       "parents": [],
       "children": [],
       "related": [
+        "en/language-representation",
         "en/text-data",
         "en/embedding-space"
       ],
