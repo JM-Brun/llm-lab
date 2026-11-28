@@ -266,14 +266,14 @@ assert Z.shape == (15, 2)
 
 #### Inspecter un tokenizer Hugging Face {#tokenizer-huggingface-probe}
 
-L'exemple suivant inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
+L'exemple ci-dessous inspecte un tokenizer Hugging Face précis. Il épingle le dépôt et sa révision Git immuable ; la version de `transformers` est également affichée pour que l'environnement logiciel utilisé puisse être consigné. Le premier chargement peut nécessiter un accès réseau.
 
 ```python
 from importlib.metadata import version
 from transformers import AutoTokenizer
 
-model_id = "gpt2"
-revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+model_id = "openai-community/gpt2"
+revision = "607a30d783dfa663caf39e06633721c8d4cfcd7e"
 tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
 text = "C'est une bonne situation, ça, scribe ?"
 
@@ -282,6 +282,7 @@ tokens = tokenizer.convert_ids_to_tokens(ids)
 
 print("transformers:", version("transformers"))
 print("tokenizer:", model_id)
+print("revision:", revision)
 print("tokens:", tokens)
 print("IDs:", ids)
 print("count:", len(ids))
