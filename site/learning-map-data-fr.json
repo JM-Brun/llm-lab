@@ -211,7 +211,8 @@
         "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
         "4. Ce que les vecteurs rendent possible",
         "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
-        "6. La suite du parcours"
+        "6. La suite du parcours",
+        "Exercices"
       ],
       "route": {
         "previous": "fr/llm-overview",
@@ -222,7 +223,8 @@
       "related": [
         "fr/text-data",
         "fr/embedding-space",
-        "fr/contextualized-representations"
+        "fr/contextualized-representations",
+        "fr/text-data-exercises"
       ],
       "rank": 9
     },
@@ -4205,7 +4207,8 @@
       "children": [],
       "related": [
         "fr/text-data",
-        "fr/embedding-space"
+        "fr/embedding-space",
+        "fr/language-representation"
       ],
       "rank": 101
     },
