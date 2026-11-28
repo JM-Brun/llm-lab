@@ -24,7 +24,11 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-
 
 [← Retour à l'approfondissement : plongements et géométrie des représentations](../embeddings-deep-dive.qmd)
 
-**Question :** les voisinages et groupes visibles dans une projection racontent-ils la même histoire que les vecteurs d'origine et les métadonnées ?
+## Vérifier sa compréhension
+
+**Question directrice :** les voisinages et groupes visibles dans une projection racontent-ils la même histoire que les vecteurs d'origine et les métadonnées ?
+
+### Protocole expérimental
 
 1. Choisissez un jeu de données dont les objets, métadonnées et vecteurs sont documentés. Notez le modèle d'embedding, sa version, le prétraitement, la métrique et la provenance. Ne mélangez pas des vecteurs issus de modèles ou de couches différents sans le signaler.
 2. Avant d'ouvrir l'atlas, prédisez quelle métadonnée devrait être associée aux voisinages ou groupes attendus ; indiquez ce qui pourrait réfuter cette prédiction.
@@ -33,6 +37,21 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embeddings-deep-dive-
 5. Modifiez un paramètre de projection ou de clustering et consignez ce qui change. Ne choisissez pas les paramètres après coup uniquement pour obtenir une image convaincante.
 
 **Débrief :** séparez (a) distance dans l'espace vectoriel d'origine, (b) proximité visuelle dans la projection, (c) appartenance à un cluster calculé et (d) catégorie fournie par les métadonnées. Ces notions ne sont pas équivalentes. Une projection 2D peut déformer distances, densités et formes ; un label automatique est une hypothèse descriptive, pas une vérité sémantique. Pour reproduire l'analyse, archivez dataset, modèle, prétraitement, métrique, paramètres et graine lorsque disponible.
+
+<details>
+<summary>Auto-évaluation : preuves et reproductibilité</summary>
+
+Avant d'accepter votre interprétation, vérifiez que vous avez :
+
+- consigné le dataset, la version du modèle d'embedding, le prétraitement, la source ou couche des vecteurs, la métrique de distance et la provenance ;
+- formulé une prédiction avant l'exploration et identifié une observation qui pourrait la réfuter ;
+- distingué les voisins dans l'espace vectoriel d'origine des voisins visuels dans la projection 2D ;
+- traité l'appartenance aux clusters et les labels des métadonnées comme des éléments distincts, pas comme une vérité sémantique ;
+- consigné les réglages de projection/clustering et la graine lorsque disponible, sans choisir les paramètres uniquement parce qu'ils confortent l'histoire attendue.
+
+Un bon débrief indique ce que l'expérience étaye, ce qui reste incertain et quelles affirmations ne peuvent pas être déduites de la seule projection.
+
+</details>
 
 Voir aussi [les exercices sur l'espace des embeddings](embedding-space.qmd), la [documentation](https://apple.github.io/embedding-atlas/overview.html), le [guide CLI](https://apple.github.io/embedding-atlas/tool.html) et l'[article de recherche](https://machinelearning.apple.com/research/embedding-atlas).
 
