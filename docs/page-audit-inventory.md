@@ -2194,3 +2194,80 @@ Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modifi
 La [matrice consolidée des contributions](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md) rassemble une ligne par leçon canonique bilingue de `data/guided-route.yml`, avec les apports distinctifs à préserver et les dossiers/pilotes qui constituent les preuves détaillées.
 
 Elle confirme la couverture source de toutes les leçons Understand du parcours principal. Elle ne certifie pas leur rendu visuel ni leur accessibilité. Le contrat de modélisation retient les structures existantes — catalogue/extractions, dossiers de synthèse, concepts, graphe computationnel, parcours et page-map — sans ajouter de champ `intellectual_contributions` ou de registre exécutable parallèle. La maintenance doit mettre à jour la matrice et les dossiers de preuve lors de toute refonte.
+
+
+## Issue #1739 — logits, probabilités et entropie (2026-11-28)
+
+Audit source FR/EN des trois leçons canoniques de l'étape prédiction : `logits`, `probabilites` / `probabilities`, et `entropy`. La matrice de destination, les claims, les localisateurs bilingues et les décisions de conservation sont consignés dans [le dossier de preuves du lot 4](source-syntheses/understand-destination-evidence-batch-4-2026-11.md).
+
+### Résultats
+
+- **Logits :** la projection de sortie produit un score par token du vocabulaire ; le vecteur à une position doit être distingué du tenseur `(B,T,V)`. L'argmax classe localement sans mesurer probabilité, calibration ou vérité. L'invariance au décalage commun et l'identité log-rapport/logit sont explicites dans les deux langues.
+- **Probabilités :** la softmax normalise l'axe vocabulaire et donne une distribution conditionnée par le préfixe. Normalisation, calibration et vérité sont séparées. La distribution de base est distinguée de la politique de décodage et de la sélection.
+- **Entropie :** l'entropie est l'espérance du surprisal sur toute la distribution ; elle est distincte du surprisal d'une cible observée et de la cross-entropie. Les bornes supposent un vocabulaire discret fini et des logarithmes naturels pour l'unité en nats. Faible entropie ne signifie ni vérité ni calibration.
+
+### Décisions
+
+Les trois pages ont des contributions substantielles déjà présentes. Aucune modification de leçon, nouveau concept, relation de graphe ou étape de parcours n'est justifiée par cet audit source. Les calculs et tâches de transfert restent dans les trois pages Practice dédiées ; les dérivations de température, compression et information théorique avancée restent dans Deepen.
+
+La séquence `logits → probabilités → entropie` est une progression cohérente au sein de l'étape prédiction. Le renvoi vers génération prépare une branche sœur ; il ne transforme pas génération en prérequis computationnel de l'entropie.
+
+### Limites et suite
+
+Ce lot vérifie les sources Quarto, les localisateurs et la cohérence FR/EN. Il ne certifie pas les ancres automatiques dans le HTML déployé, l'apparence des figures, le rendu responsive, le clavier, le lecteur d'écran ou la compréhension réelle. L'accès aux pages publiques n'a pas été disponible pendant cette revue ; les ancres automatiques sont donc identifiées depuis les titres source et restent à confirmer lors de la revue rendue.
+
+Le prochain lot #1739 doit traiter la destination de `generation` en réutilisant l'audit source du 27 novembre, puis poursuivre dans l'ordre canonique avec le contexte, le scoring et l'apprentissage.
+
+
+## Issue #1739 — génération autorégressive (2026-11-28)
+
+Audit de destination FR/EN de la leçon Understand `generation` et de ses deux compagnons Practice. Le dossier [preuves de destination — lot 5](source-syntheses/understand-destination-evidence-batch-5-2026-11.md) réutilise l'audit scientifique existant du 27 novembre et vérifie les localisateurs bilingues, les relations lesson→companion→collection et les décisions de placement.
+
+### Résultats
+
+- La leçon distingue la passe avant (contexte → distribution), le décodage (sélection) et la génération (boucle complète avec réinjection et arrêt).
+- Le token choisi devient le nouveau contexte ; un autre choix local peut modifier les distributions suivantes. Le greedy ne maximise pas nécessairement la vraisemblance de la séquence complète.
+- Les paramètres restent fixes. EOS, longueur maximale et règles applicatives sont des critères d'arrêt explicites.
+- Prefill, decode incrémental, politique de décodage et teacher forcing sont distingués ; le cache KV reste une optimisation facultative.
+- Les compagnons Practice FR/EN contiennent quatre auto-vérifications équivalentes et renvoient à la collection partagée pour les exercices plus longs.
+
+### Décisions et limites
+
+Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. L'aperçu précoce de la génération et sa reprise détaillée ont des fonctions pédagogiques différentes et doivent rester une seule identité canonique. Le scoring sur préfixe observé et le teacher forcing ne doivent pas être assimilés à la génération libre.
+
+Ce lot est source-only. Le rendu déployé, les figures, l'affichage mobile, le clavier, le lecteur d'écran et la compréhension réelle restent à vérifier séparément.
+
+
+## Issue #1739 — ICL et context engineering (2026-11-28)
+
+Audit de destination FR/EN des leçons Understand in-context-learning et context-engineering et de leurs quatre compagnons Practice. Le dossier [preuves de destination — lot 6](source-syntheses/understand-destination-evidence-batch-6-2026-11.md) réutilise l'audit scientifique du 27 novembre.
+
+### Résultats
+
+- **ICL :** usage d'instructions et de démonstrations effectivement présentes dans le prompt, à paramètres fixes ; distinction zero-shot/one-shot/few-shot ; ICL ≠ fine-tuning ≠ RAG ; imitation de format ≠ généralisation ; induction heads limitées à une hypothèse mécaniste partielle.
+- **Context engineering :** séparation entre informations disponibles au système, séquence effectivement transmise et positions accessibles ; stocké/récupéré/transmis/accessibilité ne sont pas synonymes ; fenêtre de contexte = budget, pas métrique de qualité ; provenance, sécurité et évaluation appartiennent à la conception système.
+- Les deux leçons ont des compagnons Practice distincts et alignés FR/EN. Le transfert ICL → context engineering est une progression pédagogique, pas une succession d'opérations internes du Transformer.
+
+### Décisions et limites
+
+Aucune modification de leçon, nouveau concept ou étape de parcours n'est justifiée. Ne pas fusionner ICL, context engineering, RAG, mémoire et représentations contextualisées. Les tests de généralisation, de provenance, d'injection indirecte et de contexte entre appels restent dans Practice.
+
+Audit source-only : les ancres automatiques, les diagrammes rendus, le responsive, le clavier, le lecteur d'écran et les résultats d'apprentissage restent à vérifier.
+
+
+## Issue #1739 — scoring et apprentissage (2026-11-28)
+
+Audit de destination FR/EN des quatre dernières leçons Understand : vraisemblance/likelihood, loss, gradients et training-loop, avec leurs huit compagnons Practice. Le dossier [preuves de destination — lot 7](source-syntheses/understand-destination-evidence-batch-7-2026-11.md) réutilise l'audit scientifique du 27 novembre.
+
+### Résultats
+
+- **Vraisemblance :** factorisation autorégressive sur préfixes de référence ; scoring d'une continuation observée distinct de la génération et de l'apprentissage ; conventions tokenizer/positions/agrégation nécessaires à la comparaison.
+- **Loss :** alignement logits-cible par position, masquage des cibles valides, teacher forcing, distinction masque de loss/visibilité attentionnelle et réduction de batch.
+- **Gradients :** dérivée p−y sous hypothèses explicites, règle de chaîne, gradient distinct de la mise à jour et nuance sur les chemins indirects de gradient via attention pour des positions ignorées comme cibles.
+- **Training loop :** passe avant → loss → gradient → mise à jour, rôle distinct de l'optimiseur et du taux d'apprentissage, validation à paramètres fixes, test réservé et pré-entraînement comme même boucle à grande échelle.
+
+### Décisions et limites
+
+Les quatre leçons ont des destinations Practice dédiées et des apports distinctifs déjà présents. Aucune modification de leçon ou de parcours n'est justifiée par cet audit source. Une différence de structure de titres entre les pages Loss FR/EN est documentée : le calcul à trois tokens est un sous-titre séparé en français et un passage inline en anglais, sans perte de contenu mathématique.
+
+Avec les lots 1 à 7, les **20/20 leçons Understand** disposent maintenant d'une matrice de destination source → claim → FR/EN → présence/placement sur la branche PR #1814. Cela ne certifie pas les ancres déployées, le rendu responsive, le clavier, l'accessibilité manuelle ou la compréhension réelle. Ces contrôles restent des portes de validation distinctes.
