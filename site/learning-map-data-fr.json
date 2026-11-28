@@ -206,10 +206,10 @@
       "purpose": "Expliquer pourquoi le langage doit être représenté par des objets mathématiques manipulables, comment des vecteurs appris rendent certaines régularités linguistiques exploitables par le réseau, et pourquoi le contexte transforme ensuite ces représentations.",
       "covered_stages": [],
       "section_headings": [
-        "1. Le problème : passer des symboles au calcul",
-        "2. Un identifiant n'est pas une représentation du sens",
-        "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
-        "4. Ce que les vecteurs rendent possible",
+        "1. Pourquoi rendre le langage calculable ?",
+        "2. Pourquoi un numéro ne suffit-il pas ?",
+        "3. Pourquoi représenter les unités par des vecteurs ?",
+        "4. En quoi cela aide-t-il à modéliser le sens ?",
         "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
         "6. La suite du parcours",
         "Exercices"
