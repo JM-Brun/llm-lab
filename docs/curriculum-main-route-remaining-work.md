@@ -295,6 +295,7 @@ The four scoring/training lessons are documented in [batch 7](source-syntheses/u
 2. Inspect the complete prediction → inference/scoring → training branches in rendered order. Check that the three uses of the shared predictive distribution remain visible and are not presented as one mandatory linear execution chain.
 3. Run representative desktop/mobile and keyboard checks, then manual screen-reader review for the central route, generated maps and breadcrumb transitions. Reuse shared-navigation evidence rather than creating duplicate audits.
 4. Conduct the learner review owned by #447: ask learners to reconstruct generation, scoring and training from the shared model and explain the role of context, targets, loss and updates. Record observed confusion before changing route order or adding pages.
+5. Refresh the 2026-11-16 visual-pedagogy audit against current source assets before authoring any new figures. Bilingual SVGs now exist for generation/prefill-decode, context engineering, sequence likelihood, loss/attention masks, gradients/backpropagation, the training loop and causal masking. Distinguish source presence from rendered responsiveness, alternative text and learner comprehension; do not duplicate diagrams without evidence of a remaining gap.
 
 ### Revised priority order
 
