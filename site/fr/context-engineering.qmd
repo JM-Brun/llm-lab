@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits", "fr/rag-memory-boundaries", "fr/document-retrieval"]
+related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/context-engineering-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
