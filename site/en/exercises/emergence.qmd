@@ -1,6 +1,6 @@
 ---
 title: "Exercises — Emergent capabilities"
-subtitle: "Self-check questions, exercises, and worked answers"
+subtitle: "Open-ended self-check questions and experimental-design prompts"
 description-meta: "Self-check questions and exercises associated with the Emergent capabilities lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises", "level:applied", "language:en", "status:published"]
 lang: en
@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/emergence-exercises"
 summary: "Self-check questions and exercises associated with the Emergent capabilities lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+scope: "Collects the lesson’s open-ended self-check questions and experimental-design prompts without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
 suggested_route:
   previous: null
@@ -29,6 +29,20 @@ tags: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises",
 1. Exact-match accuracy jumps from 0% to 60%, while a graded similarity measure increases steadily. Which conclusion is justified?
 2. Why is a comparison between only two model sizes insufficient to isolate the effect of scale?
 3. Propose a protocol for testing whether a capability truly appears discontinuously.
+
+
+<details>
+<summary>How to assess your reasoning</summary>
+
+A strong response should make the evidence-to-claim boundary explicit:
+
+- **Question 1:** distinguish the behavior of the measured score from the capability being measured. Explain why exact-match scoring can create a threshold even when answer quality improves gradually; do not infer a discontinuity from the score alone.
+- **Question 2:** identify variables that may change alongside model size, such as data volume or composition, training compute and duration, architecture, post-training, and evaluation protocol. Explain why two points cannot establish a scaling pattern or isolate a cause.
+- **Question 3:** propose several model sizes and training checkpoints under controlled conditions; combine strict and graded metrics; inspect raw outputs and uncertainty; test contamination, wording, sampling, and task variants; and separate pretraining-scale effects from post-training and inference-compute effects.
+
+Use these criteria to revise your answer. They are an assessment guide, not a unique solution or evidence that any particular capability is genuinely discontinuous.
+
+</details>
 
 [Exercises and experiments](../exercises.qmd).
 
