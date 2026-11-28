@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/text-data", "fr/embedding-space", "fr/contextualized-representations"]
+related: ["fr/text-data", "fr/embedding-space", "fr/contextualized-representations", "fr/text-data-exercises"]
 revision_support:
   status: integrated_sufficient
   evidence:
