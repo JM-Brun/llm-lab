@@ -2194,3 +2194,26 @@ Les deux pages disposent déjà d'apports distinctifs suffisants ; aucune modifi
 La [matrice consolidée des contributions](source-syntheses/understand-route-intellectual-contributions-index-2026-11.md) rassemble une ligne par leçon canonique bilingue de `data/guided-route.yml`, avec les apports distinctifs à préserver et les dossiers/pilotes qui constituent les preuves détaillées.
 
 Elle confirme la couverture source de toutes les leçons Understand du parcours principal. Elle ne certifie pas leur rendu visuel ni leur accessibilité. Le contrat de modélisation retient les structures existantes — catalogue/extractions, dossiers de synthèse, concepts, graphe computationnel, parcours et page-map — sans ajouter de champ `intellectual_contributions` ou de registre exécutable parallèle. La maintenance doit mettre à jour la matrice et les dossiers de preuve lors de toute refonte.
+
+
+## Issue #1739 — logits, probabilités et entropie (2026-11-28)
+
+Audit source FR/EN des trois leçons canoniques de l'étape prédiction : `logits`, `probabilites` / `probabilities`, et `entropy`. La matrice de destination, les claims, les localisateurs bilingues et les décisions de conservation sont consignés dans [le dossier de preuves du lot 4](source-syntheses/understand-destination-evidence-batch-4-2026-11.md).
+
+### Résultats
+
+- **Logits :** la projection de sortie produit un score par token du vocabulaire ; le vecteur à une position doit être distingué du tenseur `(B,T,V)`. L'argmax classe localement sans mesurer probabilité, calibration ou vérité. L'invariance au décalage commun et l'identité log-rapport/logit sont explicites dans les deux langues.
+- **Probabilités :** la softmax normalise l'axe vocabulaire et donne une distribution conditionnée par le préfixe. Normalisation, calibration et vérité sont séparées. La distribution de base est distinguée de la politique de décodage et de la sélection.
+- **Entropie :** l'entropie est l'espérance du surprisal sur toute la distribution ; elle est distincte du surprisal d'une cible observée et de la cross-entropie. Les bornes supposent un vocabulaire discret fini et des logarithmes naturels pour l'unité en nats. Faible entropie ne signifie ni vérité ni calibration.
+
+### Décisions
+
+Les trois pages ont des contributions substantielles déjà présentes. Aucune modification de leçon, nouveau concept, relation de graphe ou étape de parcours n'est justifiée par cet audit source. Les calculs et tâches de transfert restent dans les trois pages Practice dédiées ; les dérivations de température, compression et information théorique avancée restent dans Deepen.
+
+La séquence `logits → probabilités → entropie` est une progression cohérente au sein de l'étape prédiction. Le renvoi vers génération prépare une branche sœur ; il ne transforme pas génération en prérequis computationnel de l'entropie.
+
+### Limites et suite
+
+Ce lot vérifie les sources Quarto, les localisateurs et la cohérence FR/EN. Il ne certifie pas les ancres automatiques dans le HTML déployé, l'apparence des figures, le rendu responsive, le clavier, le lecteur d'écran ou la compréhension réelle. L'accès aux pages publiques n'a pas été disponible pendant cette revue ; les ancres automatiques sont donc identifiées depuis les titres source et restent à confirmer lors de la revue rendue.
+
+Le prochain lot #1739 doit traiter la destination de `generation` en réutilisant l'audit source du 27 novembre, puis poursuivre dans l'ordre canonique avec le contexte, le scoring et l'apprentissage.
