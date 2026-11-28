@@ -34,13 +34,14 @@ tags: ["type:exercise-hub", "destination:practice", "topic:sinusoidal-positional
 5. Is $PE(p)^\top PE(q)$ a learned attention score?
 :::
 
-::: {.callout-note collapse="true" title="Answer sketch"}
+<details>
+<summary>Show the answer sketch</summary>
 1. The number of pairs changes from $d_{\text{model}}/2$ to $d_{\text{model}}$.
 2. It increases: $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
 3. Addition identities express the sine and cosine at $p+k$ as a linear combination of those at $p$, with coefficients depending only on $k$ and $\omega_i$.
 4. The first is a property of the formula; the second depends on the model's learned behaviour and must be evaluated empirically.
 5. No. It is a similarity between fixed positional vectors; an attention score depends on learned projections of representations.
-:::
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/sinusoidal-positional-encoding.qmd) · [English](../../en/exercises/sinusoidal-positional-encoding.qmd)
