@@ -203,13 +203,13 @@
       "domain": null,
       "scope": "Explique pourquoi les réseaux neuronaux utilisent des objets numériques pour traiter le langage, ce que les vecteurs appris rendent calculable et pourquoi les représentations dépendent ensuite du contexte. La tokenisation concrète, le lookup détaillé, la géométrie vectorielle et les mécanismes du Transformer restent dans leurs leçons dédiées.",
       "summary": "Présente la motivation de la représentation numérique du langage et distingue les identifiants des vecteurs appris et des états contextualisés.",
-      "purpose": "Expliquer pourquoi un identifiant entier ne suffit pas à représenter un token pour le calcul neuronal, distinguer l'adresse de lookup du vecteur appris, et relier les représentations initiales aux états contextualisés.",
+      "purpose": "Expliquer pourquoi le langage doit être représenté par des objets mathématiques manipulables, comment des vecteurs appris rendent certaines régularités linguistiques exploitables par le réseau, et pourquoi le contexte transforme ensuite ces représentations.",
       "covered_stages": [],
       "section_headings": [
-        "1. Le problème : passer des symboles au calcul",
-        "2. Un identifiant n'est pas une représentation du sens",
-        "3. Le vecteur appris : un objet sur lequel le réseau peut calculer",
-        "4. Ce que les vecteurs rendent possible",
+        "1. Pourquoi rendre le langage calculable ?",
+        "2. Pourquoi un numéro ne suffit-il pas ?",
+        "3. Pourquoi représenter les unités par des vecteurs ?",
+        "4. En quoi cela aide-t-il à modéliser le sens ?",
         "5. Pourquoi le contexte doit-il encore transformer ces vecteurs ?",
         "6. La suite du parcours"
       ],
@@ -222,7 +222,8 @@
       "related": [
         "fr/text-data",
         "fr/embedding-space",
-        "fr/contextualized-representations"
+        "fr/contextualized-representations",
+        "fr/text-data-exercises"
       ],
       "rank": 9
     },
@@ -4187,9 +4188,9 @@
       "type": "exercise-hub",
       "topic": "text-data-exercises",
       "domain": null,
-      "scope": "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle.",
-      "summary": "Questions de vérification et exercices associés à la leçon Texte et données.",
-      "purpose": "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon.",
+      "scope": "Regroupe les vérifications communes au pont conceptuel Pourquoi représenter le langage numériquement ? et à la leçon Texte et données : identifiants, vecteurs initiaux et contextualisation. Les exercices étendus de tokenisation, lookup et fenêtres restent dans les collections dédiées.",
+      "summary": "Questions de vérification et exercices partagés par le pont langage-représentations et la leçon Texte et données.",
+      "purpose": "Vérifier les distinctions partagées entre représentation symbolique, identifiant, vecteur initial et état contextualisé, puis appliquer les notions propres au passage du texte aux données.",
       "covered_stages": [],
       "section_headings": [
         "Vérifier sa compréhension",
@@ -4204,6 +4205,7 @@
       "parents": [],
       "children": [],
       "related": [
+        "fr/language-representation",
         "fr/text-data",
         "fr/embedding-space"
       ],
