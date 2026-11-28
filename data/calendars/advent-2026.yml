@@ -46,8 +46,8 @@ days:
       fr: "Combien de bits contient la surprise d’un événement ?"
       en: "How many bits of surprise does an event contain?"
     question:
-      fr: "Comment quantifier l’incertitude avant de connaître le résultat ?"
-      en: "How can uncertainty be quantified before an outcome is known?"
+      fr: "Comment quantifier la surprise d’un token observé sans la confondre avec l’incertitude de la distribution avant observation ?"
+      en: "How can we quantify the surprisal of an observed token without confusing it with the distribution’s uncertainty before observation?"
     deepen_domain: "Probabilités et théorie de l’information"
     lesson_page:
       fr: "fr/surprisal-information-content"
