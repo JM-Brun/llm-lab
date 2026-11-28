@@ -4259,9 +4259,9 @@
       "type": "exercise-hub",
       "topic": "text-data-exercises",
       "domain": null,
-      "scope": "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation.",
-      "summary": "Self-check questions and exercises associated with the Text and data lesson.",
-      "purpose": "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises.",
+      "scope": "Collects the shared checks for the conceptual bridge Why represent language numerically? and the Text and data lesson: identifiers, initial vectors, and contextualization. Extended tokenization, lookup, and windowing exercises remain in their dedicated collections.",
+      "summary": "Self-check questions and exercises shared by the language-representation bridge and the Text and data lesson.",
+      "purpose": "Check the shared distinctions between symbolic representation, token ID, initial vector, and contextualized state, then apply the concepts specific to turning text into data.",
       "covered_stages": [],
       "section_headings": [
         "Check your understanding",
