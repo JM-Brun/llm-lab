@@ -47,7 +47,7 @@ But XOR is not “impossible to represent linearly” in an absolute sense. With
 
 We can make this transformation explicit. Let $u=x_1+x_2$ and $v=x_1x_2$. The score $s=u-2v$ is a linear combination of the transformed features. For the four inputs:
 
-| $(x_1,x_2)$ | $y=x_1\\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
+| $(x_1,x_2)$ | $y=x_1\oplus x_2$ | $(u,v)$ | $s=u-2v$ |
 |---|---:|---:|---:|
 | $(0,0)$ | 0 | $(0,0)$ | 0 |
 | $(0,1)$ | 1 | $(1,0)$ | 1 |
